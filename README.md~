@@ -5,13 +5,11 @@ Goals
 -----
 
 - Simple retro-themed dungeon crawler
-- Multiplayer support
+- Multiplayer support *(if it'll prove to make sense)*
 
 
 Features
 --------
-
-**SUBJECT TO CHANGE!**
 
 - Randomly generated floors
 - Hybrid turn-based gameplay (lower and upper time limit)
