@@ -2,16 +2,35 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/gdx-backend-lwjgl-natives.jar"/>
-	<classpathentry kind="lib" path="lib/gdx-freetype-natives.jar"/>
-	<classpathentry kind="lib" path="lib/gdx-freetype.jar" sourcepath="lib/gdx-freetype-sources.jar"/>
-	<classpathentry kind="lib" path="lib/gdx-natives.jar"/>
-	<classpathentry kind="lib" path="lib/gdx.jar" sourcepath="lib/gdx-sources.jar"/>
-	<classpathentry kind="lib" path="lib/mini2Dx-dependency-injection-desktop.jar" sourcepath="lib/mini2Dx-dependency-injection-desktop-source.zip"/>
-	<classpathentry kind="lib" path="lib/mini2Dx-core.jar" sourcepath="lib/mini2Dx-core-source.zip"/>
-	<classpathentry kind="lib" path="lib/mini2Dx-dependency-injection.jar" sourcepath="lib/mini2Dx-dependency-injection-source.zip"/>
-	<classpathentry kind="lib" path="lib/mini2Dx-ecs-source.zip" sourcepath="lib/mini2Dx-ecs-source.zip"/>
-	<classpathentry kind="lib" path="lib/mini2Dx-tiled.jar" sourcepath="lib/mini2Dx-tiled-source.zip"/>
-	<classpathentry kind="lib" path="lib/gdx-backend-lwjgl.jar" sourcepath="lib/gdx-backend-lwjgl-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jinput.jar" sourcepath="lib/lwjgl-source-2.8.4.zip">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="PR2-game/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jogg-0.0.7.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="PR2-game/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar" sourcepath="lib/lwjgl-source-2.8.4.zip">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="PR2-game/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl_util.jar" sourcepath="lib/lwjgl-source-2.8.4.zip">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="PR2-game/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lwjgl.jar" sourcepath="lib/lwjgl-source-2.8.4.zip">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="PR2-game/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/slick-util.jar" sourcepath="lib/slick-util-src.zip">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="PR2-game/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

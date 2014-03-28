@@ -11,21 +11,18 @@ Goals
 Features
 --------
 
-**SUBJECT TO CHANGE!**
-
 - Randomly generated floors
-- Hybrid turn-based gameplay (lower and upper time limit)
-- Automatic turn-based combat
-- Health, hunger, experience meters; levels
-- Entities with basic AI (Monsters)
-- Items, weapons, armor
-- Treasure chests
-- Potions
-- Inventory system with 12 slots (+ armor)
+- Hybrid turn-based gameplay
+- Stats and leveling
+- Monsters
+- Collectable items
+- Potions, food
+- Simple inventory system
 
 
 Used libraries
 --------------
 
-- libGDX
-- mini2Dx
+- Slick2D
+- NiftyGUI
+- LWJGL
