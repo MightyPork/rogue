@@ -10,18 +10,18 @@ import mightypork.utils.objects.Mutable;
  * 
  * @author MightyPork
  */
-public class JointVolume extends Mutable<Float> {
+public class JointVolume extends Mutable<Double> {
 
-	private Mutable<Float>[] volumes;
+	private Mutable<Double>[] volumes;
 
 
 	/**
-	 * CReate joint volume with master gain of 1
+	 * Create joint volume with master gain of 1
 	 * 
 	 * @param volumes individual volumes to join
 	 */
-	public JointVolume(Mutable<Float>... volumes) {
-		super(1F);
+	public JointVolume(Mutable<Double>... volumes) {
+		super(1D);
 		this.volumes = volumes;
 	}
 
@@ -30,13 +30,13 @@ public class JointVolume extends Mutable<Float> {
 	 * Get combined gain (multiplied)
 	 */
 	@Override
-	public Float get()
+	public Double get()
 	{
-		float f = super.get();
-		for (Mutable<Float> v : volumes)
-			f *= v.get();
+		double d = super.get();
+		for (Mutable<Double> v : volumes)
+			d *= v.get();
 
-		return Calc.clampf(f, 0, 1);
+		return Calc.clampd(d, 0, 1);
 	}
 
 
@@ -44,7 +44,7 @@ public class JointVolume extends Mutable<Float> {
 	 * Set master gain
 	 */
 	@Override
-	public void set(Float o)
+	public void set(Double o)
 	{
 		super.set(o);
 	}

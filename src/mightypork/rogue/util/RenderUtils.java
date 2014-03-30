@@ -4,6 +4,7 @@ package mightypork.rogue.util;
 import static org.lwjgl.opengl.GL11.*;
 import mightypork.rogue.textures.TextureManager;
 import mightypork.rogue.textures.TxQuad;
+import mightypork.utils.math.Calc.Deg;
 import mightypork.utils.math.color.HSV;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
@@ -18,6 +19,10 @@ import org.newdawn.slick.opengl.Texture;
  * @author MightyPork
  */
 public class RenderUtils {
+	
+	private static final Coord AXIS_X = new Coord(1, 0, 0);
+	private static final Coord AXIS_Y = new Coord(0, 1, 0);
+	private static final Coord AXIS_Z = new Coord(0, 0, 1);
 
 	/**
 	 * Render quad 2D
@@ -471,15 +476,15 @@ public class RenderUtils {
 	 */
 	public static void quadTexturedAbs(Rect quad, Rect textureCoords)
 	{
-		double left = quad.x1();
-		double bottom = quad.y2();
-		double right = quad.x2();
-		double top = quad.y1();
+		double left = quad.xMin();
+		double bottom = quad.yMax();
+		double right = quad.xMax();
+		double top = quad.yMin();
 
-		double tleft = textureCoords.x1();
-		double tbottom = textureCoords.y1();
-		double tright = textureCoords.x2();
-		double ttop = textureCoords.y2();
+		double tleft = textureCoords.xMin();
+		double tbottom = textureCoords.yMin();
+		double tright = textureCoords.xMax();
+		double ttop = textureCoords.yMax();
 
 		glBegin(GL_QUADS);
 		glTexCoord2d(tleft, ttop);
@@ -584,18 +589,18 @@ public class RenderUtils {
 
 		int yOffset = yOffsetTimes * frameHeight;
 
-		double x1 = quadRect.x1();
-		double y1 = quadRect.y1();
-		double x2 = quadRect.x2();
-		double y2 = quadRect.y2();
+		double x1 = quadRect.xMin();
+		double y1 = quadRect.yMin();
+		double x2 = quadRect.xMax();
+		double y2 = quadRect.yMax();
 
 		double w = x2 - x1;
 		double h = y2 - y1;
 
-		double tx1 = textureRect.x1();
-		double ty1 = textureRect.y1();
-		double tx2 = textureRect.x2();
-		double ty2 = textureRect.y2();
+		double tx1 = textureRect.xMin();
+		double ty1 = textureRect.yMin();
+		double tx2 = textureRect.xMax();
+		double ty2 = textureRect.yMax();
 
 		double halfY = h / 2D;
 		double halfX = w / 2D;
@@ -713,15 +718,15 @@ public class RenderUtils {
 	{
 		Texture tx = texture;
 
-		double x1 = quadRect.x1();
-		double y1 = quadRect.y1();
-		double x2 = quadRect.x2();
-		double y2 = quadRect.y2();
+		double x1 = quadRect.xMin();
+		double y1 = quadRect.yMin();
+		double x2 = quadRect.xMax();
+		double y2 = quadRect.yMax();
 
-		double tx1 = textureRect.x1();
-		double ty1 = textureRect.y1();
-		double tx2 = textureRect.x2();
-		double ty2 = textureRect.y2();
+		double tx1 = textureRect.xMin();
+		double ty1 = textureRect.yMin();
+		double tx2 = textureRect.xMax();
+		double ty2 = textureRect.yMax();
 
 		// lt, mi, rt
 
@@ -802,15 +807,15 @@ public class RenderUtils {
 	{
 		Texture tx = texture;
 
-		double x1 = quadRect.x1();
-		double y1 = quadRect.y1();
-		double x2 = quadRect.x2();
-		double y2 = quadRect.y2();
+		double x1 = quadRect.xMin();
+		double y1 = quadRect.yMin();
+		double x2 = quadRect.xMax();
+		double y2 = quadRect.yMax();
 
-		double tx1 = textureRect.x1();
-		double ty1 = textureRect.y1();
-		double tx2 = textureRect.x2();
-		double ty2 = textureRect.y2();
+		double tx1 = textureRect.xMin();
+		double ty1 = textureRect.yMin();
+		double tx2 = textureRect.xMax();
+		double ty2 = textureRect.yMax();
 
 		// tp
 		// mi
@@ -915,5 +920,30 @@ public class RenderUtils {
 	public static void translate(Coord coord)
 	{
 		glTranslated(coord.x, coord.y, coord.z);
+	}
+
+
+	public static void rotateX(double angle)
+	{
+		rotate(angle, AXIS_X);
+	}
+
+
+	public static void rotateY(double angle)
+	{
+		rotate(angle, AXIS_Y);
+	}
+
+
+	public static void rotateZ(double angle)
+	{
+		rotate(angle, AXIS_Z);
+	}
+
+
+	public static void rotate(double angle, Coord axis)
+	{
+		Coord vec = axis.norm(1);
+		glRotated(angle, vec.x, vec.y, vec.z);
 	}
 }

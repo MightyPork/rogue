@@ -4,7 +4,6 @@ package mightypork.utils.objects;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.Range;
 import mightypork.utils.math.coord.Coord;
-import mightypork.utils.math.coord.CoordI;
 
 
 /**
@@ -154,7 +153,6 @@ public class Convertor {
 				return new Coord(Double.parseDouble(parts[0].trim()), Double.parseDouble(parts[1].trim()));
 			}
 			if (o instanceof Coord) return new Coord((Coord) o);
-			if (o instanceof CoordI) return ((CoordI) o).toCoord();
 		} catch (NumberFormatException e) {
 			// ignore
 		}
@@ -267,7 +265,7 @@ public class Convertor {
 	 */
 	public static Coord getCoord(Object o)
 	{
-		return getCoord(o, Coord.ZERO.copy());
+		return getCoord(o, Coord.zero());
 	}
 
 

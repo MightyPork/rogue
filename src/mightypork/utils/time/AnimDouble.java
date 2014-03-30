@@ -2,6 +2,7 @@ package mightypork.utils.time;
 
 
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.easing.Easing;
 
 
 /**
@@ -12,10 +13,10 @@ import mightypork.utils.math.Calc;
 public class AnimDouble implements Updateable, Pauseable {
 
 	/** target double */
-	protected double endValue = 0;
+	protected double to = 0;
 
 	/** last tick double */
-	protected double startValue = 0;
+	protected double from = 0;
 
 	/** how long the transition should last */
 	protected double duration = 0;
@@ -26,17 +27,57 @@ public class AnimDouble implements Updateable, Pauseable {
 	/** True if this animator is paused */
 	protected boolean paused = false;
 
+	/** Easing fn */
+	protected Easing easing = Easing.LINEAR;
+
 
 	/**
-	 * @param value value
+	 * Create linear animator
+	 * 
+	 * @param value initial value
 	 */
 	public AnimDouble(double value) {
 		setTo(value);
 	}
 
 
+	/**
+	 * Create animator with easing
+	 * 
+	 * @param value initial value
+	 * @param easing easing function
+	 */
+	public AnimDouble(double value, Easing easing) {
+		setTo(value);
+		setEasing(easing);
+	}
+
+
+	/**
+	 * Create as copy of another
+	 * 
+	 * @param other other animator
+	 */
 	public AnimDouble(AnimDouble other) {
 		setTo(other);
+	}
+
+
+	/**
+	 * @return easing function
+	 */
+	public Easing getEasing()
+	{
+		return easing;
+	}
+
+
+	/**
+	 * @param easing easing function
+	 */
+	public void setEasing(Easing easing)
+	{
+		this.easing = easing;
 	}
 
 
@@ -45,9 +86,20 @@ public class AnimDouble implements Updateable, Pauseable {
 	 * 
 	 * @return number
 	 */
-	public double getStartValue()
+	public double getFrom()
 	{
-		return startValue;
+		return from;
+	}
+
+
+	/**
+	 * Get end value
+	 * 
+	 * @return number
+	 */
+	public double getTo()
+	{
+		return to;
 	}
 
 
@@ -58,19 +110,8 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public double getCurrentValue()
 	{
-		if (duration == 0) return endValue;
-		return Calc.interpolate(startValue, endValue, elapsedTime / duration);
-	}
-
-
-	/**
-	 * Get end value
-	 * 
-	 * @return number
-	 */
-	public double getEndValue()
-	{
-		return endValue;
+		if (duration == 0) return to;
+		return Calc.interpolate(from, to, (elapsedTime / duration), easing);
 	}
 
 
@@ -89,11 +130,13 @@ public class AnimDouble implements Updateable, Pauseable {
 	@Override
 	public void update(double delta)
 	{
+		if (paused) return;
+
 		elapsedTime = Calc.clampd(elapsedTime + delta, 0, duration);
 		if (isFinished()) {
 			duration = 0;
 			elapsedTime = 0;
-			startValue = endValue;
+			from = to;
 		}
 	}
 
@@ -116,7 +159,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void setTo(double value)
 	{
-		startValue = endValue = value;
+		from = to = value;
 		elapsedTime = 0;
 		duration = 0;
 	}
@@ -129,27 +172,12 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void setTo(AnimDouble other)
 	{
-		this.startValue = other.startValue;
-		this.endValue = other.endValue;
+		this.from = other.from;
+		this.to = other.to;
 		this.duration = other.duration;
 		this.elapsedTime = other.elapsedTime;
 		this.paused = other.paused;
-	}
-
-
-	/**
-	 * Animate between two states, discard current state
-	 * 
-	 * @param from initial state
-	 * @param to target state
-	 * @param time animation time (secs)
-	 */
-	public void animate(double from, double to, double time)
-	{
-		startValue = from;
-		endValue = to;
-		duration = time;
-		elapsedTime = 0;
+		this.easing = other.easing;
 	}
 
 
@@ -160,21 +188,45 @@ public class AnimDouble implements Updateable, Pauseable {
 	 * @param to target state
 	 * @param time animation time (secs)
 	 */
-	public void fadeTo(double from, double to, double time)
+	public void animate(double from, double to, double time)
 	{
 		double current = getCurrentValue();
 
-		startValue = from;
-		endValue = to;
-		duration = time;
-		elapsedTime = 0;
+		this.from = from;
+		this.to = to;
+		this.duration = time * (1 - getProgressFromValue(current));
+		this.elapsedTime = 0;
+	}
 
-		// if in between, pick up from where it is
-		if (current >= from && current <= to) { // up
-			elapsedTime = ((current - from) / (to - from)) * time;
-		} else if (current >= to && current <= from) { // down
-			elapsedTime = ((from - current) / (from - to)) * time;
+
+	protected double getProgressFromValue(double value)
+	{
+		double p = 0;
+
+		if (value >= from && value <= to) { // up
+			p = ((value - from) / (to - from));
+		} else if (value >= to && value <= from) { // down
+			p = ((from - value) / (from - to));
 		}
+
+		return p;
+	}
+
+
+	/**
+	 * Animate to a value from curretn value
+	 * 
+	 * @param to target state
+	 * @param time animation time (secs)
+	 */
+	public void fadeTo(double to, double time)
+	{
+		double current = getCurrentValue();
+
+		this.from = current;
+		this.to = to;
+		this.duration = time;
+		this.elapsedTime = 0;
 	}
 
 
@@ -185,7 +237,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void fadeIn(double time)
 	{
-		fadeTo(0, 1, time);
+		animate(0, 1, time);
 	}
 
 
@@ -196,7 +248,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void fadeOut(double time)
 	{
-		fadeTo(1, 0, time);
+		animate(1, 0, time);
 	}
 
 
@@ -214,7 +266,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	@Override
 	public String toString()
 	{
-		return "Animation(" + startValue + " -> " + endValue + ", t=" + duration + "s, elapsed=" + elapsedTime + "s)";
+		return "Animation(" + from + " -> " + to + ", t=" + duration + "s, elapsed=" + elapsedTime + "s)";
 	}
 
 
@@ -223,7 +275,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void clear()
 	{
-		startValue = endValue = 0;
+		from = to = 0;
 		elapsedTime = 0;
 		duration = 0;
 		paused = false;
@@ -235,7 +287,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void stop()
 	{
-		startValue = endValue = getCurrentValue();
+		from = to = getCurrentValue();
 		elapsedTime = 0;
 		duration = 0;
 	}

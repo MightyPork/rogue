@@ -5,9 +5,9 @@ import mightypork.utils.math.coord.Coord;
 import mightypork.utils.objects.Mutable;
 
 
-public class EffectPlayer extends AudioPlayer {
+public class EffectPlayer extends BaseAudioPlayer {
 
-	public EffectPlayer(AudioX track, double basePitch, double baseGain, Mutable<Float> gainMultiplier) {
+	public EffectPlayer(AudioX track, double basePitch, double baseGain, Mutable<Double> gainMultiplier) {
 		super(track, (float) basePitch, (float) baseGain, gainMultiplier);
 	}
 
@@ -16,7 +16,7 @@ public class EffectPlayer extends AudioPlayer {
 	{
 		if (!canPlay()) return -1;
 
-		return getAudio().playAsSoundEffect(getPitch(pitch), getGain(gain), false);
+		return getAudio().playAsEffect(getPitch(pitch), getGain(gain), false);
 	}
 
 
@@ -30,7 +30,7 @@ public class EffectPlayer extends AudioPlayer {
 	{
 		if (!canPlay()) return -1;
 
-		return getAudio().playAsSoundEffect(getPitch(pitch), getGain(gain), false, pos);
+		return getAudio().playAsEffect(getPitch(pitch), getGain(gain), false, pos);
 	}
 
 }

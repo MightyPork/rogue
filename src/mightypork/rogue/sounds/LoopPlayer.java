@@ -9,7 +9,7 @@ import mightypork.utils.time.Updateable;
 import org.lwjgl.openal.AL10;
 
 
-public class LoopPlayer extends AudioPlayer implements Updateable, Pauseable {
+public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable {
 
 	private int sourceID = -1;
 
@@ -28,7 +28,7 @@ public class LoopPlayer extends AudioPlayer implements Updateable, Pauseable {
 	private double outTime = 1;
 
 
-	public LoopPlayer(AudioX track, double pitch, double baseGain, Mutable<Float> gainMultiplier) {
+	public LoopPlayer(AudioX track, double pitch, double baseGain, Mutable<Double> gainMultiplier) {
 		super(track, (float) pitch, (float) baseGain, gainMultiplier);
 
 		paused = true;
@@ -45,7 +45,7 @@ public class LoopPlayer extends AudioPlayer implements Updateable, Pauseable {
 	private void initLoop()
 	{
 		if (!canPlay() && sourceID == -1) {
-			sourceID = getAudio().playAsSoundEffect(getPitch(1), getGain(1), true);
+			sourceID = getAudio().playAsEffect(getPitch(1), getGain(1), true);
 			getAudio().pauseLoop();
 		}
 	}

@@ -4,6 +4,7 @@ package mightypork.rogue.sounds;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.coord.Coord;
+import mightypork.utils.patterns.Destroyable;
 
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;
@@ -14,7 +15,7 @@ import org.newdawn.slick.openal.SoundStore;
  * 
  * @author MightyPork
  */
-public class AudioX implements Audio {
+public class AudioX implements Destroyable {
 
 	private enum PlayMode
 	{
@@ -22,14 +23,26 @@ public class AudioX implements Audio {
 	};
 
 	private Audio audio = null;
-	private float pauseLoopPosition = 0;
+	private double pauseLoopPosition = 0;
 	private boolean looping = false;
 	private boolean paused = false;
 	private PlayMode mode = PlayMode.EFFECT;
-	private float pitch = 1;
-	private float gain = 1;
+	private double lastPlayPitch = 1;
+	private double lastPlayGain = 1;
 
-	private String resourcePath;
+	private final String resourcePath;
+	private boolean loadFailed = false;
+
+
+	/**
+	 * Create deferred primitive audio player
+	 * 
+	 * @param resourceName resource to load when needed
+	 */
+	public AudioX(String resourceName) {
+		this.audio = null;
+		this.resourcePath = resourceName;
+	}
 
 
 	/**
@@ -37,7 +50,7 @@ public class AudioX implements Audio {
 	 */
 	public void pauseLoop()
 	{
-		if (!ensureLoaded()) return;
+		if (!load()) return;
 
 		if (isPlaying() && looping) {
 			pauseLoopPosition = audio.getPosition();
@@ -54,16 +67,16 @@ public class AudioX implements Audio {
 	 */
 	public int resumeLoop()
 	{
-		if (!ensureLoaded()) return -1;
+		if (!load()) return -1;
 
 		int source = -1;
 		if (looping && paused) {
 			if (mode == PlayMode.MUSIC) {
-				source = audio.playAsMusic(pitch, gain, true);
+				source = audio.playAsMusic((float) lastPlayPitch, (float) lastPlayGain, true);
 			} else {
-				source = audio.playAsSoundEffect(pitch, gain, true);
+				source = audio.playAsSoundEffect((float) lastPlayPitch, (float) lastPlayGain, true);
 			}
-			audio.setPosition(pauseLoopPosition);
+			audio.setPosition((float) pauseLoopPosition);
 			paused = false;
 		}
 		return source;
@@ -71,34 +84,27 @@ public class AudioX implements Audio {
 
 
 	/**
-	 * Create deferred primitive audio player
+	 * Check if resource is loaded
 	 * 
-	 * @param resourceName resource to load when needed
+	 * @return resource is loaded
 	 */
-	public AudioX(String resourceName) {
-		this.audio = null;
-		this.resourcePath = resourceName;
-	}
-
-
-	/**
-	 * Check if can play, if not, try to load sound.
-	 * 
-	 * @return can now play
-	 */
-	private boolean ensureLoaded()
+	private boolean isLoaded()
 	{
-		load();
-
 		return audio != null;
 	}
 
 
-	public void load()
+	/**
+	 * Try to load if not loaded already
+	 * 
+	 * @return is loaded
+	 */
+	public boolean load()
 	{
-		if (audio != null) return; // already loaded
-		if (resourcePath == null) return; // not loaded, but can't load anyway
+		if (isLoaded()) return true; // already loaded
+		if (loadFailed || resourcePath == null) return false; // not loaded, but can't load anyway
 
+		loadFailed = false;
 		try {
 			String ext = FileUtils.getExtension(resourcePath);
 
@@ -112,119 +118,168 @@ public class AudioX implements Audio {
 			} else if (ext.equalsIgnoreCase("mod")) {
 				audio = SoundStore.get().getMOD(resourcePath);
 			} else {
-				resourcePath = null; // don't try next time
 				Log.e("Invalid audio file extension: " + resourcePath);
+				loadFailed = true; // don't try next time
 			}
 
 		} catch (Exception e) {
 			Log.e("Could not load " + resourcePath, e);
-			resourcePath = null; // don't try next time
+			loadFailed = true; // don't try next time
 		}
+
+		return isLoaded();
 	}
 
 
-	@Override
 	public void stop()
 	{
-		if (!ensureLoaded()) return;
+		if (!isLoaded()) return;
 
 		audio.stop();
 		paused = false;
 	}
 
 
-	@Override
-	public int getBufferID()
-	{
-		if (!ensureLoaded()) return -1;
-
-		return audio.getBufferID();
-	}
-
-
-	@Override
 	public boolean isPlaying()
 	{
-		if (!ensureLoaded()) return false;
+		if (!isLoaded()) return false;
 
 		return audio.isPlaying();
 	}
 
 
-	@Override
 	public boolean isPaused()
 	{
-		if (!ensureLoaded()) return false;
+		if (!isLoaded()) return false;
 
 		return audio.isPaused();
 	}
 
 
-	@Override
-	public int playAsSoundEffect(float pitch, float gain, boolean loop)
+	/**
+	 * Play as sound effect at listener position
+	 * 
+	 * @param pitch pitch (1 = default)
+	 * @param gain gain (0-1)
+	 * @param loop looping
+	 * @return source id
+	 */
+	public int playAsEffect(double pitch, double gain, boolean loop)
 	{
-		return playAsSoundEffect(pitch, gain, loop, SoundManager.get().listener);
-	}
-
-
-	@Override
-	public int playAsSoundEffect(float pitch, float gain, boolean loop, float x, float y, float z)
-	{
-		if (!ensureLoaded()) return -1;
-
-		this.pitch = pitch;
-		this.gain = gain;
-		looping = loop;
-		mode = PlayMode.EFFECT;
-		return audio.playAsSoundEffect(pitch, gain, loop, x, y, z);
+		return playAsEffect(pitch, gain, loop, SoundSystem.getListener());
 	}
 
 
 	/**
-	 * Play this sound as a sound effect
+	 * Play as sound effect at given X-Y position
 	 * 
-	 * @param pitch The pitch of the play back
-	 * @param gain The gain of the play back
-	 * @param loop True if we should loop
-	 * @param pos The position of the sound
-	 * @return The ID of the source playing the sound
+	 * @param pitch pitch (1 = default)
+	 * @param gain gain (0-1)
+	 * @param loop looping
+	 * @param x
+	 * @param y
+	 * @return source id
 	 */
-	public int playAsSoundEffect(float pitch, float gain, boolean loop, Coord pos)
+	public int playAsEffect(double pitch, double gain, boolean loop, double x, double y)
 	{
-		return playAsSoundEffect(pitch, gain, loop, (float) pos.x, (float) pos.y, (float) pos.z);
+		return playAsEffect(pitch, gain, loop, x, y, SoundSystem.getListener().z);
 	}
 
 
-	@Override
-	public int playAsMusic(float pitch, float gain, boolean loop)
+	/**
+	 * Play as sound effect at given position
+	 * 
+	 * @param pitch pitch (1 = default)
+	 * @param gain gain (0-1)
+	 * @param loop looping
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return source id
+	 */
+	public int playAsEffect(double pitch, double gain, boolean loop, double x, double y, double z)
 	{
-		this.pitch = pitch;
-		this.gain = gain;
+		if (!load()) return -1;
+
+		this.lastPlayPitch = pitch;
+		this.lastPlayGain = gain;
+		looping = loop;
+		mode = PlayMode.EFFECT;
+		return audio.playAsSoundEffect((float) pitch, (float) gain, loop, (float) x, (float) y, (float) z);
+	}
+
+
+	/**
+	 * Play as sound effect at given position
+	 * 
+	 * @param pitch pitch (1 = default)
+	 * @param gain gain (0-1)
+	 * @param loop looping
+	 * @param pos coord
+	 * @return source id
+	 */
+	public int playAsEffect(double pitch, double gain, boolean loop, Coord pos)
+	{
+		if (!load()) return -1;
+
+		return playAsEffect(pitch, gain, loop, pos.x, pos.y, pos.z);
+	}
+
+
+	/**
+	 * Play as music using source 0.<br>
+	 * Discouraged, since this does not allow cross-fading.
+	 * 
+	 * @param pitch play pitch
+	 * @param gain play gain
+	 * @param loop looping
+	 * @return source
+	 */
+	public int playAsMusic(double pitch, double gain, boolean loop)
+	{
+		if (!load()) return -1;
+
+		this.lastPlayPitch = (float) pitch;
+		this.lastPlayGain = (float) gain;
 		looping = loop;
 		mode = PlayMode.MUSIC;
-		return audio.playAsMusic(pitch, gain, loop);
+		return audio.playAsMusic((float) pitch, (float) gain, loop);
 	}
 
 
 	@Override
-	public boolean setPosition(float position)
+	public void destroy()
 	{
-		return audio.setPosition(position);
-	}
+		if (!isLoaded()) return;
 
-
-	@Override
-	public float getPosition()
-	{
-		return audio.getPosition();
-	}
-
-
-	@Override
-	public void release()
-	{
 		audio.release();
 		audio = null;
+	}
+
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((resourcePath == null) ? 0 : resourcePath.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (!(obj instanceof AudioX)) return false;
+		AudioX other = (AudioX) obj;
+		if (resourcePath == null) {
+			if (other.resourcePath != null) return false;
+		} else if (!resourcePath.equals(other.resourcePath)) {
+			return false;
+		}
+		return true;
 	}
 
 }

@@ -1,6 +1,8 @@
 package mightypork.utils.math;
 
 
+import mightypork.utils.math.Calc.Deg;
+import mightypork.utils.math.Calc.Rad;
 import mightypork.utils.math.coord.Coord;
 
 
@@ -12,18 +14,87 @@ import mightypork.utils.math.coord.Coord;
 public class Polar {
 
 	/** angle in radians */
-	public double angle = 0;
+	private double angle = 0;
+
 	/** distance in units */
-	public double distance = 0;
+	private double radius = 0;
 
 
 	/**
-	 * @param angle angle in radians
+	 * Create a polar
+	 * 
+	 * @param angle angle in RAD
 	 * @param distance distance from origin
 	 */
 	public Polar(double angle, double distance) {
+		this(angle, false, distance);
+	}
+
+
+	/**
+	 * Create a polar
+	 * 
+	 * @param angle angle
+	 * @param deg angle is in DEG
+	 * @param distance radius
+	 */
+	public Polar(double angle, boolean deg, double distance) {
+		this.radius = distance;
+		this.angle = deg ? Deg.toRad(angle) : angle;
+	}
+
+
+	/**
+	 * @return angle in RAD
+	 */
+	public double getAngle()
+	{
+		return angle;
+	}
+
+
+	/**
+	 * @return angle in DEG
+	 */
+	public double getAngleDeg()
+	{
+		return Rad.toDeg(angle);
+	}
+
+
+	/**
+	 * @param angle angle in RAD
+	 */
+	public void setAngle(double angle)
+	{
 		this.angle = angle;
-		this.distance = distance;
+	}
+
+
+	/**
+	 * @param angle angle in DEG
+	 */
+	public void setAngleDeg(double angle)
+	{
+		this.angle = Deg.toRad(angle);
+	}
+
+
+	/**
+	 * @return radius
+	 */
+	public double getRadius()
+	{
+		return radius;
+	}
+
+
+	/**
+	 * @param r radius
+	 */
+	public void setRadius(double r)
+	{
+		this.radius = r;
 	}
 
 
@@ -53,55 +124,46 @@ public class Polar {
 
 
 	/**
-	 * Make polar from coords
-	 * 
-	 * @param x x coord
-	 * @param z z coord
-	 * @return polar
-	 */
-	public static Polar fromCoordXZ(double x, double z)
-	{
-		return Polar.fromCoordXZ(new Coord(x, 0, z));
-	}
-
-
-	/**
 	 * Get coord from polar
 	 * 
 	 * @return coord
 	 */
 	public Coord toCoord()
 	{
-		return new Coord(distance * Math.cos(angle), distance * Math.sin(angle));
-	}
-
-
-	/**
-	 * Get X,0,Y coord from polar
-	 * 
-	 * @return coord
-	 */
-	public Coord toCoordXZ()
-	{
-		return new Coord(distance * Math.cos(angle), 0, distance * Math.sin(angle));
+		return new Coord(radius * Math.cos(angle), radius * Math.sin(angle));
 	}
 
 
 	@Override
 	public String toString()
 	{
-		return "Polar(theta=" + angle + ", r=" + distance + ")";
+		return "Polar(" + angle + "rad, " + radius + ")";
 	}
 
 
-	/**
-	 * Build polar from X,Z instead of X,Y
-	 * 
-	 * @param coord cpprd with X,Z
-	 * @return polar
-	 */
-	public static Polar fromCoordXZ(Coord coord)
+	@Override
+	public int hashCode()
 	{
-		return fromCoord(coord.x, coord.z);
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(angle);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(radius);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (!(obj instanceof Polar)) return false;
+		Polar other = (Polar) obj;
+		if (Double.doubleToLongBits(angle) != Double.doubleToLongBits(other.angle)) return false;
+		if (Double.doubleToLongBits(radius) != Double.doubleToLongBits(other.radius)) return false;
+		return true;
 	}
 }

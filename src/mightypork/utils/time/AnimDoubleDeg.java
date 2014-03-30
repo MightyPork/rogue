@@ -2,40 +2,49 @@ package mightypork.utils.time;
 
 
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.Calc.Deg;
+import mightypork.utils.math.easing.Easing;
 
 
 /**
- * Double which supports delta timing
+ * Degree animator
  * 
  * @author MightyPork
  */
 public class AnimDoubleDeg extends AnimDouble {
 
-	/**
-	 * new AnimDoubleDeg
-	 * 
-	 * @param d value
-	 */
-	public AnimDoubleDeg(double d) {
-		super(d);
+	public AnimDoubleDeg(AnimDouble other) {
+		super(other);
 	}
 
 
-	/**
-	 * Get value at delta time
-	 * 
-	 * @return the value
-	 */
+	public AnimDoubleDeg(double value) {
+		super(value);
+	}
+
+
+	public AnimDoubleDeg(double value, Easing easing) {
+		super(value, easing);
+	}
+
+
 	@Override
 	public double getCurrentValue()
 	{
-		return Calc.interpolateDeg(startValue, endValue, elapsedTime / duration);
+		if (duration == 0) return Deg.norm(to);
+		return Calc.interpolateDeg(from, to, (elapsedTime / duration), easing);
 	}
 
 
 	@Override
-	public void fadeTo(double from, double to, double time)
+	protected double getProgressFromValue(double value)
 	{
-		throw new UnsupportedOperationException("Cannot fadeTo in AnimDoubleDeg. Use animate() instead.");
+		double whole = Deg.diff(from, to);
+		if (Deg.diff(value, from) < whole && Deg.diff(value, to) < whole) {
+			double partial = Deg.diff(from, value);
+			return partial / whole;
+		}
+
+		return 0;
 	}
 }

@@ -4,7 +4,6 @@ package mightypork.utils.math.coord;
 import java.util.Random;
 
 import mightypork.utils.math.Calc;
-import mightypork.utils.time.Updateable;
 
 
 /**
@@ -12,13 +11,7 @@ import mightypork.utils.time.Updateable;
  * 
  * @author MightyPork
  */
-public class Coord implements Updateable {
-
-	/** Coord [1;1;1] */
-	public static final Coord ONE = new Coord(1, 1, 1);
-
-	/** Zero Coord */
-	public static final Coord ZERO = new Coord(0, 0);
+public class Coord {
 
 	/** RNG */
 	protected static Random rand = new Random();
@@ -62,14 +55,6 @@ public class Coord implements Updateable {
 		return new Coord((rand.nextBoolean() ? -1 : 1) * (min + rand.nextDouble() * (max - min)), (rand.nextBoolean() ? -1 : 1) * (min + rand.nextDouble() * (max - min)),
 				(rand.nextBoolean() ? -1 : 1) * (min + rand.nextDouble() * (max - min)));
 	}
-
-	private double animTime = 0;
-
-	private Vec offs;
-
-	private Coord start;
-
-	private double time = 0;
 
 	/** X coordinate */
 	public double x = 0;
@@ -130,7 +115,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord add(Coord vec)
 	{
-		return copy().add_ip(vec);
+		return getCopy().add_ip(vec);
 	}
 
 
@@ -143,7 +128,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord add(Number x, Number y)
 	{
-		return copy().add_ip(x, y);
+		return getCopy().add_ip(x, y);
 	}
 
 
@@ -157,7 +142,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord add(Number x, Number y, Number z)
 	{
-		return copy().add_ip(x, y, z);
+		return getCopy().add_ip(x, y, z);
 	}
 
 
@@ -209,24 +194,9 @@ public class Coord implements Updateable {
 
 
 	/**
-	 * Start animation
-	 * 
-	 * @param time anim length
-	 */
-	public void animate(double time)
-	{
-		if (start == null) start = new Coord();
-		if (offs == null) offs = new Vec();
-		this.time = time;
-		animTime = 0;
-		offs = start.vecTo(this);
-	}
-
-
-	/**
 	 * @return copy of this vector
 	 */
-	public Coord copy()
+	public Coord getCopy()
 	{
 		return new Coord(x, y, z);
 	}
@@ -252,7 +222,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord div(double d)
 	{
-		return copy().div_ip(d);
+		return getCopy().div_ip(d);
 	}
 
 
@@ -269,48 +239,6 @@ public class Coord implements Updateable {
 		y /= d;
 		z /= d;
 		return this;
-	}
-
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (obj == null) return false;
-		if (!obj.getClass().isAssignableFrom(Coord.class)) return false;
-		Coord other = (Coord) obj;
-		return x == other.x && y == other.y && z == other.z;
-	}
-
-
-	/**
-	 * Get current value (animated)
-	 * 
-	 * @return curent value
-	 */
-	public Coord getDelta()
-	{
-		if (start == null) start = new Coord();
-		if (offs == null) offs = new Vec();
-		if (isFinished()) return this;
-		return new Coord(start.add(offs.scale(animTime / time)));
-	}
-
-
-	@Override
-	public int hashCode()
-	{
-		return Double.valueOf(x).hashCode() ^ Double.valueOf(y).hashCode() ^ Double.valueOf(z).hashCode();
-	}
-
-
-	/**
-	 * Get if animation is finished
-	 * 
-	 * @return is finished
-	 */
-	public boolean isFinished()
-	{
-		return animTime >= time;
 	}
 
 
@@ -347,7 +275,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord midTo(Coord other)
 	{
-		return add(vecTo(other).scale(0.5));
+		return add(vecTo(other).mul_ip(0.5));
 	}
 
 
@@ -359,7 +287,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord mul(double d)
 	{
-		return copy().mul_ip(d);
+		return getCopy().mul_ip(d);
 	}
 
 
@@ -373,7 +301,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord mul(double xd, double yd, double zd)
 	{
-		return copy().mul_ip(xd, yd, zd);
+		return getCopy().mul_ip(xd, yd, zd);
 	}
 
 
@@ -417,10 +345,9 @@ public class Coord implements Updateable {
 	 */
 	public Coord random_offset(double max)
 	{
-		Coord r = random(1);
-		Vec v = new Vec(r);
-		v.norm_ip(0.00001 + rand.nextDouble() * max);
-		return copy().add_ip(v);
+		Coord v = random(1).norm_ip(0.00001 + rand.nextDouble() * max);
+
+		return getCopy().add_ip(v);
 	}
 
 
@@ -433,7 +360,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord random_offset(double min, double max)
 	{
-		return copy().add_ip(random(min, max));
+		return getCopy().add_ip(random(min, max));
 	}
 
 
@@ -464,24 +391,13 @@ public class Coord implements Updateable {
 
 
 	/**
-	 * Remember position (other changes will be for animation)
-	 */
-	public void remember()
-	{
-		if (start == null) start = new Coord();
-		if (offs == null) offs = new Vec();
-		start.setTo(this);
-	}
-
-
-	/**
 	 * Get a copy with rounded coords
 	 * 
 	 * @return rounded copy
 	 */
 	public Coord round()
 	{
-		return copy().round_ip();
+		return getCopy().round_ip();
 	}
 
 
@@ -577,7 +493,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord setX(Number x)
 	{
-		return copy().setX_ip(x);
+		return getCopy().setX_ip(x);
 	}
 
 
@@ -602,7 +518,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord setY(Number y)
 	{
-		return copy().setY_ip(y);
+		return getCopy().setY_ip(y);
 	}
 
 
@@ -627,7 +543,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord setZ(Number z)
 	{
-		return copy().setZ_ip(z);
+		return getCopy().setZ_ip(z);
 	}
 
 
@@ -645,17 +561,6 @@ public class Coord implements Updateable {
 
 
 	/**
-	 * Get size
-	 * 
-	 * @return size
-	 */
-	public double size()
-	{
-		return new Vec(this).size();
-	}
-
-
-	/**
 	 * Get a copy subtracted by vector
 	 * 
 	 * @param vec offset
@@ -663,7 +568,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord sub(Coord vec)
 	{
-		return copy().sub_ip(vec);
+		return getCopy().sub_ip(vec);
 	}
 
 
@@ -676,7 +581,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord sub(Number x, Number y)
 	{
-		return copy().sub_ip(x, y);
+		return getCopy().sub_ip(x, y);
 	}
 
 
@@ -690,7 +595,7 @@ public class Coord implements Updateable {
 	 */
 	public Coord sub(Number x, Number y, Number z)
 	{
-		return copy().sub_ip(x, y, z);
+		return getCopy().sub_ip(x, y, z);
 	}
 
 
@@ -742,51 +647,14 @@ public class Coord implements Updateable {
 
 
 	/**
-	 * Convert X and Y coordinates of this coord to a new CoordI.
-	 * 
-	 * @return the new CoordI
-	 */
-	public CoordI toCoordI()
-	{
-		return new CoordI((int) Math.round(x), (int) Math.round(y));
-	}
-
-
-	@Override
-	public String toString()
-	{
-		return "[ " + x + " ; " + y + " ; " + z + " ]";
-	}
-
-
-	/**
-	 * Update delta timing
-	 * 
-	 * @param delta delta time to add
-	 */
-	@Override
-	public void update(double delta)
-	{
-		if (start == null) start = new Coord();
-		if (offs == null) offs = new Vec();
-		animTime = Calc.clampd(animTime + delta, 0, time);
-		if (isFinished()) {
-			time = 0;
-			animTime = 0;
-			start.setTo(this);
-		}
-	}
-
-
-	/**
 	 * Create vector from this point to other point
 	 * 
 	 * @param point second point
 	 * @return vector
 	 */
-	public Vec vecTo(Coord point)
+	public Coord vecTo(Coord point)
 	{
-		return (Vec) (new Vec(point)).add(new Vec(this).neg());
+		return point.sub(this);
 	}
 
 
@@ -895,5 +763,214 @@ public class Coord implements Updateable {
 	public int zi()
 	{
 		return (int) Math.round(z);
+	}
+
+
+	/**
+	 * Get cross product of two vectors
+	 * 
+	 * @param a 1st vector
+	 * @param b 2nd vector
+	 * @return cross product
+	 */
+	public static Coord cross(Coord a, Coord b)
+	{
+		return a.cross(b);
+	}
+
+
+	/**
+	 * Get dot product of two vectors
+	 * 
+	 * @param a 1st vector
+	 * @param b 2nd vector
+	 * @return dot product
+	 */
+	public static double dot(Coord a, Coord b)
+	{
+		return a.dot(b);
+	}
+
+
+	/**
+	 * Multiply by other vector, vector multiplication
+	 * 
+	 * @param vec other vector
+	 * @return copy multiplied
+	 */
+	public Coord cross(Coord vec)
+	{
+		return getCopy().cross_ip(vec);
+	}
+
+
+	/**
+	 * Multiply by other vector, vector multiplication; in place
+	 * 
+	 * @param vec other vector
+	 * @return this
+	 */
+	public Coord cross_ip(Coord vec)
+	{
+		setTo(y * vec.z - z * vec.y, z * vec.x - x * vec.z, x * vec.y - y * vec.x);
+		return this;
+	}
+
+
+	/**
+	 * Get dot product
+	 * 
+	 * @param vec other vector
+	 * @return dot product
+	 */
+	public double dot(Coord vec)
+	{
+		return x * vec.x + y * vec.y + z * vec.z;
+	}
+
+
+	/**
+	 * Negate all coordinates (* -1)
+	 * 
+	 * @return negated coordinate
+	 */
+	public Coord neg()
+	{
+		return getCopy().neg_ip();
+	}
+
+
+	/**
+	 * Negate all coordinates (* -1), in place
+	 * 
+	 * @return this
+	 */
+	public Coord neg_ip()
+	{
+		mul_ip(-1);
+		return this;
+	}
+
+
+	/**
+	 * Scale vector to given size
+	 * 
+	 * @param size size we need
+	 * @return scaled vector
+	 */
+	public Coord norm(double size)
+	{
+		return getCopy().norm_ip(size);
+	}
+
+
+	/**
+	 * Scale vector to given size, in place
+	 * 
+	 * @param size size we need
+	 * @return scaled vector
+	 */
+	public Coord norm_ip(double size)
+	{
+		if (size() == 0) {
+			z = -1;
+		}
+		if (size == 0) {
+			setTo(0, 0, 0);
+			return this;
+		}
+		double k = size / size();
+		mul_ip(k);
+		return this;
+	}
+
+
+	/**
+	 * Get vector size
+	 * 
+	 * @return vector size in units
+	 */
+	public double size()
+	{
+		return Math.sqrt(x * x + y * y + z * z);
+	}
+
+
+	/**
+	 * Get copy divided by two
+	 * @return copy halved
+	 */
+	public Coord half()
+	{
+		return getCopy().half_ip();
+	}
+
+
+	/**
+	 * Divide in place by two
+	 * @return this
+	 */
+	public Coord half_ip()
+	{
+		mul_ip(0.5);
+		return this;
+	}
+
+
+	@Override
+	public String toString()
+	{
+		return "[" + x + ", " + y + ", " + z + "]";
+	}
+
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(y);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(z);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (!(obj instanceof Coord)) return false;
+		Coord other = (Coord) obj;
+		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) return false;
+		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) return false;
+		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) return false;
+		return true;
+	}
+
+
+	/**
+	 * @return true if this coord is a zero coord
+	 */
+	public boolean isZero()
+	{
+		return x == 0 && y == 0 && z == 0;
+	}
+
+
+	public static Coord zero()
+	{
+		return new Coord(0, 0, 0);
+	}
+
+
+	public static Coord one()
+	{
+		return new Coord(1, 1, 1);
 	}
 }

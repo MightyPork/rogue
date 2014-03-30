@@ -112,96 +112,96 @@ public class FontManager {
 		OUTLINE;
 	}
 
-	/**
-	 * Preloaded font identifier [name, size, style]
-	 * 
-	 * @author MightyPork
-	 */
-	public static class FontId {
-
-		/** font size (pt) */
-		public float size = 24;
-		/** font name, registered with registerFile */
-		public String name = "";
-		/** font style. The given style must be in a file. */
-		public Style style;
-
-		/** Set of glyphs in this ID */
-		public String glyphs = "";
-
-		/** Index for faster comparision of glyph ids. */
-		public int glyphset_id = 0;
-
-
-		/**
-		 * Preloaded font identifier
-		 * 
-		 * @param name font name (registerFile)
-		 * @param size font size (pt)
-		 * @param style font style
-		 * @param glyphs glyphs to load
-		 */
-		public FontId(String name, double size, Style style, String glyphs) {
-			this.name = name;
-			this.size = (float) size;
-			this.style = style;
-
-			if (glyphs.equals(Glyphs.basic)) {
-				glyphset_id = 1;
-			} else if (glyphs.equals(Glyphs.alnum)) {
-				glyphset_id = 2;
-			} else if (glyphs.equals(Glyphs.basic_text)) {
-				glyphset_id = 3;
-			} else if (glyphs.equals(Glyphs.numbers)) {
-				glyphset_id = 4;
-			} else if (glyphs.equals(Glyphs.alpha)) {
-				glyphset_id = 5;
-			} else if (glyphs.equals(Glyphs.all)) {
-				glyphset_id = 6;
-			} else if (glyphs.equals(Glyphs.alnum_extra)) {
-				glyphset_id = 7;
-			} else if (glyphs.equals(Glyphs.signs)) {
-				glyphset_id = 8;
-			} else if (glyphs.equals(Glyphs.signs_extra)) {
-				glyphset_id = 9;
-			} else {
-				this.glyphs = glyphs;
-			}
-		}
-
-
-		@Override
-		public boolean equals(Object obj)
-		{
-			if (obj == null) return false;
-			if (!(obj.getClass().isAssignableFrom(getClass()))) return false;
-			if (obj instanceof FontId) {
-				if (obj == this) return true;
-				FontId id2 = ((FontId) obj);
-				boolean flag = true;
-				flag &= id2.size == size;
-				flag &= id2.name.equals(name);
-				flag &= id2.style == style;
-				flag &= ((id2.glyphset_id != -1 && id2.glyphset_id == glyphset_id) || id2.glyphs.equals(glyphs));
-				return flag;
-			}
-			return false;
-		}
-
-
-		@Override
-		public int hashCode()
-		{
-			return (new Float(size).hashCode()) ^ name.hashCode() ^ style.hashCode() ^ glyphset_id;
-		}
-
-
-		@Override
-		public String toString()
-		{
-			return "[" + name + ", " + size + ", " + style + (glyphset_id > 0 ? ", g=" + glyphset_id : ", g=custom") + "]";
-		}
-	}
+//	/**
+//	 * Preloaded font identifier [name, size, style]
+//	 * 
+//	 * @author MightyPork
+//	 */
+//	public static class FontId {
+//
+//		/** font size (pt) */
+//		public float size = 24;
+//		/** font name, registered with registerFile */
+//		public String name = "";
+//		/** font style. The given style must be in a file. */
+//		public Style style;
+//
+//		/** Set of glyphs in this ID */
+//		public String glyphs = "";
+//
+//		/** Index for faster comparision of glyph ids. */
+//		public int glyphset_id = 0;
+//
+//
+//		/**
+//		 * Preloaded font identifier
+//		 * 
+//		 * @param name font name (registerFile)
+//		 * @param size font size (pt)
+//		 * @param style font style
+//		 * @param glyphs glyphs to load
+//		 */
+//		public FontId(String name, double size, Style style, String glyphs) {
+//			this.name = name;
+//			this.size = (float) size;
+//			this.style = style;
+//
+//			if (glyphs.equals(Glyphs.basic)) {
+//				glyphset_id = 1;
+//			} else if (glyphs.equals(Glyphs.alnum)) {
+//				glyphset_id = 2;
+//			} else if (glyphs.equals(Glyphs.basic_text)) {
+//				glyphset_id = 3;
+//			} else if (glyphs.equals(Glyphs.numbers)) {
+//				glyphset_id = 4;
+//			} else if (glyphs.equals(Glyphs.alpha)) {
+//				glyphset_id = 5;
+//			} else if (glyphs.equals(Glyphs.all)) {
+//				glyphset_id = 6;
+//			} else if (glyphs.equals(Glyphs.alnum_extra)) {
+//				glyphset_id = 7;
+//			} else if (glyphs.equals(Glyphs.signs)) {
+//				glyphset_id = 8;
+//			} else if (glyphs.equals(Glyphs.signs_extra)) {
+//				glyphset_id = 9;
+//			} else {
+//				this.glyphs = glyphs;
+//			}
+//		}
+//
+//
+//		@Override
+//		public boolean equals(Object obj)
+//		{
+//			if (obj == null) return false;
+//			if (!(obj.getClass().isAssignableFrom(getClass()))) return false;
+//			if (obj instanceof FontId) {
+//				if (obj == this) return true;
+//				FontId id2 = ((FontId) obj);
+//				boolean flag = true;
+//				flag &= id2.size == size;
+//				flag &= id2.name.equals(name);
+//				flag &= id2.style == style;
+//				flag &= ((id2.glyphset_id != -1 && id2.glyphset_id == glyphset_id) || id2.glyphs.equals(glyphs));
+//				return flag;
+//			}
+//			return false;
+//		}
+//
+//
+//		@Override
+//		public int hashCode()
+//		{
+//			return (new Float(size).hashCode()) ^ name.hashCode() ^ style.hashCode() ^ glyphset_id;
+//		}
+//
+//
+//		@Override
+//		public String toString()
+//		{
+//			return "[" + name + ", " + size + ", " + style + (glyphset_id > 0 ? ", g=" + glyphset_id : ", g=custom") + "]";
+//		}
+//	}
 
 	/**
 	 * Group of styles of one font.
@@ -255,7 +255,7 @@ public class FontManager {
 	 */
 	public static LoadedFont loadFont(String name, double size, Style style, String glyphs)
 	{
-		return loadFont(name, size, style, glyphs, 9, 8, Coord.ONE, 0, 0);
+		return loadFont(name, size, style, glyphs, 9, 8, Coord.one(), 0, 0);
 	}
 
 

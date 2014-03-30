@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Log {
 
 	/** enable static logging */
-	private static boolean esl;
+	private static boolean esl = true;
 
 
 	/**

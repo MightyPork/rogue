@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import mightypork.utils.math.coord.Coord;
-import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.easing.Easing;
 
 import org.lwjgl.BufferUtils;
 
@@ -31,7 +31,7 @@ public class Calc {
 	 * @param point point coordinate
 	 * @return distance
 	 */
-	public static double linePointDist(Vec lineDirVec, Coord linePoint, Coord point)
+	public static double linePointDist(Coord lineDirVec, Coord linePoint, Coord point)
 	{
 		// line point L[lx,ly]
 		double lx = linePoint.x;
@@ -59,9 +59,9 @@ public class Calc {
 	 * @param point point coordinate
 	 * @return distance
 	 */
-	public static double linePointDistXZ(Vec lineDirVec, Coord linePoint, Coord point)
+	public static double linePointDistXZ(Coord lineDirVec, Coord linePoint, Coord point)
 	{
-		return linePointDist(new Vec(lineDirVec.x, lineDirVec.z), new Coord(linePoint.x, linePoint.z), new Coord(point.x, point.z));
+		return linePointDist(new Coord(lineDirVec.x, lineDirVec.z), new Coord(linePoint.x, linePoint.z), new Coord(point.x, point.z));
 	}
 
 
@@ -739,28 +739,45 @@ public class Calc {
 	/**
 	 * Get number from A to B at delta time (tween A to B)
 	 * 
-	 * @param last last number
-	 * @param now new number
-	 * @param dtime delta time
+	 * @param from last number
+	 * @param to new number
+	 * @param time time 0..1
+	 * @param easing easing function
 	 * @return current number to render
 	 */
-	public static double interpolate(double last, double now, double dtime)
-	{
-		return last + (now - last) * dtime;
+	public static double interpolate(double from, double to, double time, Easing easing)
+	{		
+		return from + (to - from) * easing.get(time);
 	}
 
 
 	/**
 	 * Get angle [degrees] from A to B at delta time (tween A to B)
 	 * 
-	 * @param last last angle
-	 * @param now new angle
-	 * @param delta delta time
+	 * @param from last angle
+	 * @param to new angle
+	 * @param time time 0..1
+	 * @param easing  easing function
 	 * @return current angle to render
 	 */
-	public static double interpolateDeg(double last, double now, double delta)
+	public static double interpolateDeg(double from, double to, double time, Easing easing)
 	{
-		return Deg.norm(last + Deg.delta(now, last) * delta);
+		return Deg.norm(from - Deg.delta(to, from) * easing.get(time));		
+	}
+
+
+	/**
+	 * Get angle [radians] from A to B at delta time (tween A to B)
+	 * 
+	 * @param from last angle
+	 * @param to new angle
+	 * @param time time 0..1
+	 * @param easing  easing function
+	 * @return current angle to render
+	 */
+	public static double interpolateRad(double from, double to, double time, Easing easing)
+	{
+		return Rad.norm(from - Rad.delta(to, from) * easing.get(time));		
 	}
 
 

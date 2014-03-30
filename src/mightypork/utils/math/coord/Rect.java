@@ -38,7 +38,7 @@ public class Rect {
 	 * @param height size y
 	 * @return the new rect
 	 */
-	public static Rect fromSize(Coord min, int width, int height)
+	public static Rect fromSize(Coord min, double width, double height)
 	{
 		return new Rect(min, min.add(width, height));
 	}
@@ -47,36 +47,36 @@ public class Rect {
 	/**
 	 * Rectangle from size
 	 * 
-	 * @param i min X
-	 * @param j min Y
+	 * @param x min X
+	 * @param y min Y
 	 * @param size rect size
 	 * @return the rect
 	 */
-	public static Rect fromSize(int i, int j, CoordI size)
+	public static Rect fromSize(int x, int y, Coord size)
 	{
-		return fromSize(i, j, size.x, size.y);
+		return fromSize(x, y, size.x, size.y);
 	}
 
 
 	/**
 	 * Make rect from min coord and size
 	 * 
-	 * @param x1 min x
-	 * @param y1 min y
+	 * @param xMin min x
+	 * @param yMin min y
 	 * @param width size x
 	 * @param height size y
 	 * @return the new rect
 	 */
-	public static Rect fromSize(int x1, int y1, int width, int height)
+	public static Rect fromSize(double xMin, double yMin, double width, double height)
 	{
-		return new Rect(x1, y1, x1 + width, y1 + height);
+		return new Rect(xMin, yMin, xMin + width, yMin + height);
 	}
-
-	/** Highest coordinates xy */
-	protected Coord max = new Coord();
 
 	/** Lowest coordinates xy */
 	protected Coord min = new Coord();
+
+	/** Highest coordinates xy */
+	protected Coord max = new Coord();
 
 
 	/**
@@ -127,7 +127,7 @@ public class Rect {
 	 * @param x width
 	 * @param y height
 	 */
-	public Rect(int x, int y) {
+	public Rect(double x, double y) {
 		this(0, 0, x, y);
 	}
 
@@ -163,7 +163,7 @@ public class Rect {
 	 */
 	public Rect add(double x, double y)
 	{
-		return add(new Vec(x, y));
+		return add(new Coord(x, y));
 	}
 
 
@@ -190,7 +190,7 @@ public class Rect {
 	 */
 	public Rect add_ip(double x, double y)
 	{
-		return add_ip(new Vec(x, y));
+		return add_ip(new Coord(x, y));
 	}
 
 
@@ -718,7 +718,7 @@ public class Rect {
 	 */
 	public Rect sub(double x, double y)
 	{
-		return sub(new Vec(x, y));
+		return sub(new Coord(x, y));
 	}
 
 
@@ -728,7 +728,7 @@ public class Rect {
 	 * @param move offset vector
 	 * @return offset copy
 	 */
-	public Rect sub(Vec move)
+	public Rect sub(Coord move)
 	{
 		return copy().sub_ip(move);
 	}
@@ -743,7 +743,7 @@ public class Rect {
 	 */
 	public Rect sub_ip(double x, double y)
 	{
-		return sub_ip(new Vec(x, y));
+		return sub_ip(new Coord(x, y));
 	}
 
 
@@ -753,7 +753,7 @@ public class Rect {
 	 * @param move offset vector
 	 * @return this
 	 */
-	public Rect sub_ip(Vec move)
+	public Rect sub_ip(Coord move)
 	{
 		min.sub_ip(move);
 		max.sub_ip(move);
@@ -771,7 +771,7 @@ public class Rect {
 	/**
 	 * @return lower x
 	 */
-	public double x1()
+	public double xMin()
 	{
 		return min.x;
 	}
@@ -780,7 +780,7 @@ public class Rect {
 	/**
 	 * @return upper x
 	 */
-	public double x2()
+	public double xMax()
 	{
 		return max.x;
 	}
@@ -789,7 +789,7 @@ public class Rect {
 	/**
 	 * @return lower y
 	 */
-	public double y1()
+	public double yMin()
 	{
 		return min.y;
 	}
@@ -798,7 +798,7 @@ public class Rect {
 	/**
 	 * @return upper y
 	 */
-	public double y2()
+	public double yMax()
 	{
 		return max.y;
 	}

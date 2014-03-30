@@ -1,93 +1,57 @@
 package mightypork.rogue;
 
 
-import static org.lwjgl.opengl.GL11.*;
-
 import java.io.File;
 import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
 import java.nio.channels.FileLock;
 
 import javax.swing.JOptionPane;
 
-import mightypork.rogue.input.Keys;
-import mightypork.rogue.screens.ScreenSplash;
-import mightypork.rogue.sounds.SoundManager;
-import mightypork.rogue.threads.ThreadSaveScreenshot;
-import mightypork.rogue.threads.ThreadScreenshotTrigger;
+import mightypork.rogue.display.DisplaySystem;
+import mightypork.rogue.display.Screen;
+import mightypork.rogue.display.ScreenSplash;
+import mightypork.rogue.input.InputSystem;
+import mightypork.rogue.input.KeyStroke;
+import mightypork.rogue.input.events.MouseMotionEvent;
+import mightypork.rogue.sounds.SoundSystem;
+import mightypork.rogue.tasks.TaskTakeScreenshot;
+import mightypork.rogue.util.Utils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogInstance;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.patterns.Destroyable;
+import mightypork.utils.patterns.subscription.MessageBus;
 import mightypork.utils.time.TimerDelta;
 import mightypork.utils.time.TimerInterpolating;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 
 
-public class App {
+public class App implements Destroyable {
 
-	/** instance */
-	public static App inst;
-	/** Current delta time (secs since last render) */
-	public static double currentDelta = 0;
+	/** instance pointer */
+	private static App inst;
 
-	private static DisplayMode windowDisplayMode = null;
+	private InputSystem input;
+	private SoundSystem sounds;
+	private DisplaySystem display;
+	private MessageBus events;
 
 	/** current screen */
-	public static Screen screen = null;
+	private Screen screen;
 
 	/** Flag that screenshot is scheduled to be taken next loop */
-	public static boolean scheduledScreenshot = false;
-
-
-	private static boolean lockInstance()
-	{
-		if (Config.SINGLE_INSTANCE == false) return true; // bypass lock
-
-		final File lockFile = new File(Paths.WORKDIR, ".lock");
-		try {
-			final RandomAccessFile randomAccessFile = new RandomAccessFile(lockFile, "rw");
-			final FileLock fileLock = randomAccessFile.getChannel().tryLock();
-			if (fileLock != null) {
-				Runtime.getRuntime().addShutdownHook(new Thread() {
-
-					@Override
-					public void run()
-					{
-						try {
-							fileLock.release();
-							randomAccessFile.close();
-							lockFile.delete();
-						} catch (Exception e) {
-							System.out.println("Unable to remove lock file.");
-							e.printStackTrace();
-						}
-					}
-				});
-				return true;
-			}
-		} catch (Exception e) {
-			System.out.println("Unable to create and/or lock file.");
-			e.printStackTrace();
-		}
-		return false;
-	}
+	private boolean scheduledScreenshot = false;
 
 
 	/**
-	 * Is if FS
+	 * Get the instance
 	 * 
-	 * @return is in fs
+	 * @return instance of App
 	 */
-	public static boolean isFullscreen()
+	public static App inst()
 	{
-		return Display.isFullscreen();
+		return inst;
 	}
 
 
@@ -116,24 +80,19 @@ public class App {
 	 */
 	public static void onCrash(Throwable error)
 	{
-		Log.e("The game has crashed.");
+		Log.e("The game has crashed.", error);
 
-		Log.e(error);
-
-		try {
-			inst.deinit();
-		} catch (Throwable t) {
-			// ignore
-		}
+		inst.exit();
 	}
 
 
 	/**
-	 * Quit to OS
+	 * Quit to OS<br>
+	 * Destroy app & exit VM
 	 */
 	public void exit()
 	{
-		deinit();
+		destroy();
 		System.exit(0);
 	}
 
@@ -143,58 +102,36 @@ public class App {
 	 * 
 	 * @return screen
 	 */
-	public Screen getScreen()
+	public Screen getCurrentScreen()
 	{
 		return screen;
 	}
 
 
-	/**
-	 * Get screen size
-	 * 
-	 * @return size
-	 */
-	public Coord getSize()
+	public void initialize()
 	{
-		return new Coord(Display.getWidth(), Display.getHeight());
+		Log.i("Initializing subsystems");
+		initLock();
+		initBus();
+		initLogger();
+		initDisplay();
+		initSound();
+		initInput();
 	}
 
 
-	private void init() throws LWJGLException
+	@Override
+	public void destroy()
 	{
-		// initialize main logger
-		LogInstance li = Log.create("runtime", Paths.LOGS, 10);
-		li.enable(Config.LOGGING_ENABLED);
-		li.enableSysout(Config.LOG_TO_STDOUT);
-
-		// initialize display
-		Display.setDisplayMode(windowDisplayMode = new DisplayMode(Const.WINDOW_SIZE_X, Const.WINDOW_SIZE_Y));
-		Display.setResizable(true);
-		Display.setVSyncEnabled(true);
-		Display.setTitle(Const.TITLEBAR);
-		Display.create();
-
-		if (Config.START_IN_FS) {
-			switchFullscreen();
-			Display.update();
-		}
-
-		// initialize inputs		
-		Mouse.create();
-		Keyboard.create();
-		Keyboard.enableRepeatEvents(false);
-
-		// initialize sound system
-		SoundManager.get().setListener(Const.LISTENER_POS);
-		SoundManager.get().setMasterVolume(1F);
-
-		// start async screenshot trigger listener
-		(new ThreadScreenshotTrigger()).start();
+		if (sounds != null) sounds.destroy();
+		if (input != null) input.destroy();
+		if (display != null) display.destroy();
 	}
 
 
-	private void start() throws LWJGLException
+	private void initLock()
 	{
+		if (!Config.SINGLE_INSTANCE) return;
 
 		if (!lockInstance()) {
 			System.out.println("Working directory is locked.\nOnly one instance can run at a time.");
@@ -211,207 +148,235 @@ public class App {
 			exit();
 			return;
 		}
-
-		init();
-		mainLoop();
-		deinit();
 	}
 
 
-	private void deinit()
+	private boolean lockInstance()
 	{
-		Display.destroy();
-		Mouse.destroy();
-		Keyboard.destroy();
-		SoundManager.get().destroy();
-		AL.destroy();
+		final File lockFile = new File(Paths.WORKDIR, ".lock");
+		try {
+			final RandomAccessFile randomAccessFile = new RandomAccessFile(lockFile, "rw");
+			final FileLock fileLock = randomAccessFile.getChannel().tryLock();
+			if (fileLock != null) {
+				Runtime.getRuntime().addShutdownHook(new Thread() {
+
+					@Override
+					public void run()
+					{
+						try {
+							fileLock.release();
+							randomAccessFile.close();
+							lockFile.delete();
+						} catch (Exception e) {
+							System.err.println("Unable to remove lock file.");
+							e.printStackTrace();
+						}
+					}
+				});
+				return true;
+			}
+		} catch (Exception e) {
+			System.err.println("Unable to create and/or lock file.");
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+
+	/**
+	 * initialize inputs
+	 */
+	private void initBus()
+	{
+		events = new MessageBus();
+		events.addSubscriber(this);
+	}
+
+
+	/**
+	 * initialize sound system
+	 */
+	private void initSound()
+	{
+		sounds = new SoundSystem();
+		sounds.setMasterVolume(1);
+	}
+
+
+	/**
+	 * initialize inputs
+	 */
+	private void initInput()
+	{
+		input = new InputSystem();
+
+		input.bindKeyStroke(new KeyStroke(Keyboard.KEY_F2), new Runnable() {
+
+			@Override
+			public void run()
+			{
+				Log.f3("F2, taking screenshot.");
+				scheduledScreenshot = true;
+			}
+		});
+
+		input.bindKeyStroke(new KeyStroke(false, Keyboard.KEY_F11), new Runnable() {
+
+			@Override
+			public void run()
+			{
+				Log.f3("F11, toggling fullscreen.");
+				display.switchFullscreen();
+			}
+		});
+
+		input.bindKeyStroke(new KeyStroke(Keyboard.KEY_LCONTROL, Keyboard.KEY_Q), new Runnable() {
+
+			@Override
+			public void run()
+			{
+				Log.f3("CTRL+Q, shutting down.");
+				exit();
+			}
+		});
+	}
+
+
+	/**
+	 * initialize display
+	 */
+	private void initDisplay()
+	{
+		display = new DisplaySystem();
+		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.START_IN_FS, Const.TITLEBAR);
+		display.setTargetFps(Const.FPS_RENDER);
+	}
+
+
+	/**
+	 * initialize main logger
+	 */
+	private void initLogger()
+	{
+		LogInstance li = Log.create("runtime", Paths.LOGS, 10);
+		li.enable(Config.LOGGING_ENABLED);
+		li.enableSysout(Config.LOG_TO_STDOUT);
+	}
+
+
+	private void start()
+	{
+		initialize();
+		mainLoop();
+		exit();
 	}
 
 	/** timer */
 	private TimerDelta timerRender;
 	private TimerInterpolating timerGui;
 
-	private int timerAfterResize = 0;
-
 
 	private void mainLoop()
 	{
 		screen = new ScreenSplash();
 
-		screen.init();
+		screen.setActive(true);
 
 		timerRender = new TimerDelta();
 		timerGui = new TimerInterpolating(Const.FPS_GUI_UPDATE);
 
-		while (!Display.isCloseRequested()) {
-			glLoadIdentity();
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		while (!display.isCloseRequested()) {
+			display.beginFrame();
 
+			// gui update
 			timerGui.sync();
-
 			int ticks = timerGui.getSkipped();
-
 			if (ticks >= 1) {
-				screen.updateGui();
+				input.poll();
 				timerGui.startNewFrame();
 			}
 
-			currentDelta = timerRender.getDelta();
+			double delta = timerRender.getDelta();
 
-			// RENDER
-			screen.render(currentDelta);
-			SoundManager.get().update(currentDelta);
+			sounds.update(delta);
 
-			Display.update();
+			// Screen
+			screen.update(delta);
 
 			if (scheduledScreenshot) {
 				takeScreenshot();
 				scheduledScreenshot = false;
 			}
 
-			if (Keys.justPressed(Keyboard.KEY_F11)) {
-				Log.f2("F11, toggle fullscreen.");
-				switchFullscreen();
-				screen.onFullscreenChange();
-				Keys.destroyChangeState(Keyboard.KEY_F11);
-			}
-
-			if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-				if (Keyboard.isKeyDown(Keyboard.KEY_Q)) {
-					Log.f2("Ctrl+Q, force quit.");
-					Keys.destroyChangeState(Keyboard.KEY_Q);
-					exit();
-					return;
-				}
-
-//				if (Keyboard.isKeyDown(Keyboard.KEY_M)) {
-//					Log.f2("Ctrl+M, go to main menu.");
-//					Keys.destroyChangeState(Keyboard.KEY_M);
-//					replaceScreen(new ScreenMenuMain());
-//				}
-
-				if (Keyboard.isKeyDown(Keyboard.KEY_F)) {
-					Log.f2("Ctrl+F, switch fullscreen.");
-					Keys.destroyChangeState(Keyboard.KEY_F);
-					switchFullscreen();
-					screen.onFullscreenChange();
-				}
-			}
-
-			if (Display.wasResized()) {
-				screen.onWindowResize();
-				timerAfterResize = 0;
-			} else {				// ensure screen has even size
-				timerAfterResize++;
-				if (timerAfterResize > Const.FPS_GUI_UPDATE * 0.3) {
-					timerAfterResize = 0;
-					int x = Display.getX();
-					int y = Display.getY();
-
-					int w = Display.getWidth();
-					int h = Display.getHeight();
-					if (w % 2 != 0 || h % 2 != 0) {
-						try {
-							Display.setDisplayMode(windowDisplayMode = new DisplayMode(w - w % 2, h - h % 2));
-							screen.onWindowResize();
-							Display.setLocation(x, y);
-						} catch (LWJGLException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-
-			try {
-				Display.sync(Const.FPS_RENDER);
-			} catch (Throwable t) {
-				Log.e("Your graphics card driver does not support fullscreen properly.", t);
-
-				try {
-					Display.setDisplayMode(windowDisplayMode);
-				} catch (LWJGLException e) {
-					Log.e("Error going back from corrupted fullscreen.");
-					onCrash(e);
-				}
-			}
+			display.endFrame();
 		}
 	}
 
-
-// UPDATE LOOP END
 
 	/**
 	 * Do take a screenshot
 	 */
 	public void takeScreenshot()
 	{
-		//Effects.play("gui.screenshot");
+		sounds.getEffect("gui.shutter").play(1);
+		Utils.runAsThread(new TaskTakeScreenshot());
+	}
 
-		glReadBuffer(GL_FRONT);
-		int width = Display.getDisplayMode().getWidth();
-		int height = Display.getDisplayMode().getHeight();
-		int bpp = 4; // Assuming a 32-bit display with a byte each for red, green, blue, and alpha.
-		ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
-		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
-		(new ThreadSaveScreenshot(buffer, width, height, bpp)).start();
+	//
+	//  static accessors
+	//
+
+	/**
+	 * @return sound system of the running instance
+	 */
+	public static SoundSystem soundsys()
+	{
+		return inst.sounds;
 	}
 
 
 	/**
-	 * Replace screen
-	 * 
-	 * @param newScreen new screen
+	 * @return input system of the running instance
 	 */
-	public void replaceScreen(Screen newScreen)
+	public static InputSystem input()
 	{
-		screen = newScreen;
-		screen.init();
+		return inst.input;
 	}
 
 
 	/**
-	 * Replace screen, don't init it
-	 * 
-	 * @param newScreen new screen
+	 * @return display system of the running instance
 	 */
-	public void replaceScreenNoInit(Screen newScreen)
+	public static DisplaySystem disp()
 	{
-		screen = newScreen;
+		return inst.display;
 	}
 
 
 	/**
-	 * Toggle FS if possible
+	 * @return event bus of the running instance
 	 */
-	public void switchFullscreen()
+	public static MessageBus msgbus()
 	{
-		try {
-			if (!Display.isFullscreen()) {
-				Log.f3("Entering fullscreen.");
-				// save window resize
-				windowDisplayMode = new DisplayMode(Display.getWidth(), Display.getHeight());
-
-				Display.setDisplayMode(Display.getDesktopDisplayMode());
-				Display.setFullscreen(true);
-				Display.update();
-//				
-//				
-//				DisplayMode mode = Display.getDesktopDisplayMode(); //findDisplayMode(WIDTH, HEIGHT);
-//				Display.setDisplayModeAndFullscreen(mode);
-			} else {
-				Log.f3("Leaving fullscreen.");
-				Display.setDisplayMode(windowDisplayMode);
-				Display.update();
-			}
-		} catch (Throwable t) {
-			Log.e("Failed to toggle fullscreen mode.", t);
-			try {
-				Display.setDisplayMode(windowDisplayMode);
-				Display.update();
-			} catch (Throwable t1) {
-				onCrash(t1);
-			}
-		}
+		return inst.events;
 	}
+
+
+	/**
+	 * @return screen of the running instance
+	 */
+	public static Screen screen()
+	{
+		return inst.getCurrentScreen();
+	}
+
+
+	public static boolean broadcast(Object message)
+	{
+		boolean was = msgbus().broadcast(message);
+		if (!was) Log.w("Message not accepted by any channel: " + message);
+		return was;
+	}
+
 }

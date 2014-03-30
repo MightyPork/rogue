@@ -21,7 +21,6 @@ import mightypork.rogue.Config;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
-import mightypork.utils.math.coord.CoordI;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -598,35 +597,9 @@ public class LoadedFont {
 	}
 
 
-	/**
-	 * Draw string with font.
-	 * 
-	 * @param pos coord
-	 * @param text text to draw
-	 * @param color render color
-	 * @param align (-1,0,1)
-	 */
-	public void draw(CoordI pos, String text, RGB color, int align)
-	{
-		drawString(pos.x, pos.y, text, 1, 1, color, align);
-	}
-
-
 	public void drawFuzzy(Coord pos, String text, int align, RGB textColor, RGB blurColor, int blurSize)
 	{
 		drawFuzzy(pos, text, align, textColor, blurColor, blurSize, true);
-	}
-
-
-	public void drawFuzzy(CoordI pos, String text, int align, RGB textColor, RGB blurColor, int blurSize)
-	{
-		drawFuzzy(pos.toCoord(), text, align, textColor, blurColor, blurSize, true);
-	}
-
-
-	public void drawFuzzy(CoordI pos, String text, int align, RGB textColor, RGB blurColor, int blurSize, boolean smooth)
-	{
-		drawFuzzy(pos.toCoord(), text, align, textColor, blurColor, blurSize, smooth);
 	}
 
 
