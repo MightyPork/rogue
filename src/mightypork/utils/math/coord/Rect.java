@@ -206,32 +206,6 @@ public class Rect {
 
 
 	/**
-	 * Divide in copy
-	 * 
-	 * @param factor divisor
-	 * @return offset copy
-	 */
-	public Rect div(double factor)
-	{
-		return copy().div_ip(factor);
-	}
-
-
-	/**
-	 * Divide coord in place
-	 * 
-	 * @param factor divisor
-	 * @return this
-	 */
-	public Rect div_ip(double factor)
-	{
-		min.div_ip(factor);
-		max.div_ip(factor);
-		return this;
-	}
-
-
-	/**
 	 * Get copy with the same center and height=0
 	 * 
 	 * @return line
@@ -375,7 +349,7 @@ public class Rect {
 
 
 	/**
-	 * @return highjest coordinates xy
+	 * @return highest coordinates xy
 	 */
 	public Coord getMax()
 	{
@@ -386,7 +360,7 @@ public class Rect {
 	/**
 	 * @return lowest coordinates xy
 	 */
-	public Coord getMin()
+	public Coord getOrigin()
 	{
 		return min;
 	}
@@ -764,7 +738,7 @@ public class Rect {
 	@Override
 	public String toString()
 	{
-		return "rect{ " + min + " - " + max + " }";
+		return String.format("[( %4d, %4d )-( %4d, %4d )]", (int) min.x, (int) min.y, (int) max.x, (int) max.y);
 	}
 
 

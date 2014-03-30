@@ -19,10 +19,11 @@ import org.newdawn.slick.opengl.Texture;
  * @author MightyPork
  */
 public class RenderUtils {
-	
+
 	private static final Coord AXIS_X = new Coord(1, 0, 0);
 	private static final Coord AXIS_Y = new Coord(0, 1, 0);
 	private static final Coord AXIS_Z = new Coord(0, 0, 1);
+
 
 	/**
 	 * Render quad 2D
@@ -371,7 +372,7 @@ public class RenderUtils {
 	 */
 	public static void quadRect(Rect rect)
 	{
-		quadCoord(rect.getMin(), rect.getMax());
+		quadCoord(rect.getOrigin(), rect.getMax());
 	}
 
 
@@ -384,7 +385,7 @@ public class RenderUtils {
 	public static void quadRect(Rect rect, RGB color)
 	{
 		setColor(color);
-		quadCoord(rect.getMin(), rect.getMax());
+		quadCoord(rect.getOrigin(), rect.getMax());
 	}
 
 
@@ -398,7 +399,7 @@ public class RenderUtils {
 	 */
 	public static void quadBorder(Rect rect, double border, RGB borderColor, RGB insideColor)
 	{
-		quadCoordBorder(rect.getMin(), rect.getMax(), border, borderColor, insideColor);
+		quadCoordBorder(rect.getOrigin(), rect.getMax(), border, borderColor, insideColor);
 	}
 
 
@@ -411,7 +412,7 @@ public class RenderUtils {
 	 */
 	public static void quadGradH(Rect rect, RGB colorLeft, RGB colorRight)
 	{
-		quadCoordGradH(rect.getMin(), rect.getMax(), colorLeft, colorRight);
+		quadCoordGradH(rect.getOrigin(), rect.getMax(), colorLeft, colorRight);
 	}
 
 
@@ -424,7 +425,7 @@ public class RenderUtils {
 	 */
 	public static void quadGradHBilinear(Rect rect, RGB colorOuter, RGB colorMiddle)
 	{
-		quadCoordGradHBilinear(rect.getMin(), rect.getMax(), colorOuter, colorMiddle);
+		quadCoordGradHBilinear(rect.getOrigin(), rect.getMax(), colorOuter, colorMiddle);
 	}
 
 
@@ -437,7 +438,7 @@ public class RenderUtils {
 	 */
 	public static void quadGradV(Rect rect, RGB colorTop, RGB colorBottom)
 	{
-		quadCoordGradV(rect.getMin(), rect.getMax(), colorTop, colorBottom);
+		quadCoordGradV(rect.getOrigin(), rect.getMax(), colorTop, colorBottom);
 	}
 
 
@@ -450,7 +451,7 @@ public class RenderUtils {
 	 */
 	public static void quadGradVBilinear(Rect rect, RGB colorOuter, RGB colorMiddle)
 	{
-		quadCoordGradVBilinear(rect.getMin(), rect.getMax(), colorOuter, colorMiddle);
+		quadCoordGradVBilinear(rect.getOrigin(), rect.getMax(), colorOuter, colorMiddle);
 	}
 
 
@@ -464,7 +465,7 @@ public class RenderUtils {
 	 */
 	public static void quadRectOutset(Rect rect, double border, RGB fill, boolean inset)
 	{
-		quadCoordOutset(rect.getMin(), rect.getMax(), border, fill, inset);
+		quadCoordOutset(rect.getOrigin(), rect.getMax(), border, fill, inset);
 	}
 
 
@@ -526,7 +527,7 @@ public class RenderUtils {
 		setColor(tint);
 		TextureManager.bind(texture);
 
-		quadTexturedAbs(quad, txCoords.div(texture.getImageHeight()));
+		quadTexturedAbs(quad, txCoords.mul(1 / texture.getImageHeight()));
 
 		TextureManager.unbind();
 		glDisable(GL_TEXTURE_2D);

@@ -7,13 +7,12 @@ import mightypork.utils.math.Calc;
 
 
 /**
- * Coordinate class, object with three or two double coordinates.<br>
+ * Coordinate in 3D space, or a vector of three {@link Double}s<br>
  * 
  * @author MightyPork
  */
 public class Coord {
 
-	/** RNG */
 	protected static Random rand = new Random();
 
 
@@ -27,33 +26,6 @@ public class Coord {
 	public static double dist(Coord a, Coord b)
 	{
 		return a.distTo(b);
-	}
-
-
-	/**
-	 * Generate random coord (gaussian)
-	 * 
-	 * @param max max distance from 0
-	 * @return new coord
-	 */
-	public static Coord random(double max)
-	{
-		return new Coord(Calc.clampd(rand.nextGaussian() * max, -max * 2, max * 2), Calc.clampd(rand.nextGaussian() * max, -max * 2, max * 2),
-				Calc.clampd(rand.nextGaussian() * max, -max * 2, max * 2));
-	}
-
-
-	/**
-	 * Generate random coord (min-max)
-	 * 
-	 * @param min min offset
-	 * @param max max offset
-	 * @return new coord
-	 */
-	public static Coord random(double min, double max)
-	{
-		return new Coord((rand.nextBoolean() ? -1 : 1) * (min + rand.nextDouble() * (max - min)), (rand.nextBoolean() ? -1 : 1) * (min + rand.nextDouble() * (max - min)),
-				(rand.nextBoolean() ? -1 : 1) * (min + rand.nextDouble() * (max - min)));
 	}
 
 	/** X coordinate */
@@ -78,9 +50,7 @@ public class Coord {
 	 * @param copied copied coord
 	 */
 	public Coord(Coord copied) {
-		this.x = copied.x;
-		this.y = copied.y;
-		this.z = copied.z;
+		setTo(copied);
 	}
 
 
@@ -108,61 +78,46 @@ public class Coord {
 
 
 	/**
-	 * Get a copy offset by vector
+	 * Add a vector, in a copy
 	 * 
 	 * @param vec offset
-	 * @return the offset copy
+	 * @return changed copy
 	 */
 	public Coord add(Coord vec)
 	{
-		return getCopy().add_ip(vec);
+		return copy().add_ip(vec);
 	}
 
 
 	/**
-	 * Get a copy offset by 2D coordinate
-	 * 
-	 * @param x x offset
-	 * @param y y offset
-	 * @return the offset copy
-	 */
-	public Coord add(Number x, Number y)
-	{
-		return getCopy().add_ip(x, y);
-	}
-
-
-	/**
-	 * Get a copy offset by 3D coordinate
-	 * 
-	 * @param x x offset
-	 * @param y y offset
-	 * @param z z offset
-	 * @return the offset copy
-	 */
-	public Coord add(Number x, Number y, Number z)
-	{
-		return getCopy().add_ip(x, y, z);
-	}
-
-
-	/**
-	 * Offset by vector in place
+	 * Add a vector, in place
 	 * 
 	 * @param vec offset
 	 * @return this
 	 */
 	public Coord add_ip(Coord vec)
 	{
-		this.x += vec.x;
-		this.y += vec.y;
-		this.z += vec.z;
-		return this;
+		return add_ip(vec.x, vec.y, vec.z);
 	}
 
 
 	/**
-	 * Offset by 2D coordinate in place
+	 * Add to each component, in a copy.<br>
+	 * Z is unchanged.
+	 * 
+	 * @param x x offset
+	 * @param y y offset
+	 * @return changed copy
+	 */
+	public Coord add(Number x, Number y)
+	{
+		return copy().add_ip(x, y);
+	}
+
+
+	/**
+	 * Add to each component, in place.<br>
+	 * Z is unchanged.
 	 * 
 	 * @param x x offset
 	 * @param y y offset
@@ -170,14 +125,26 @@ public class Coord {
 	 */
 	public Coord add_ip(Number x, Number y)
 	{
-		this.x += x.doubleValue();
-		this.y += y.doubleValue();
-		return this;
+		return add_ip(x, y, 0);
 	}
 
 
 	/**
-	 * Offset by 3D coordinate in place
+	 * Add to each component, in a copy.
+	 * 
+	 * @param x x offset
+	 * @param y y offset
+	 * @param z z offset
+	 * @return changed copy
+	 */
+	public Coord add(Number x, Number y, Number z)
+	{
+		return copy().add_ip(x, y, z);
+	}
+
+
+	/**
+	 * Add to each component, in place.
 	 * 
 	 * @param x x offset
 	 * @param y y offset
@@ -194,9 +161,11 @@ public class Coord {
 
 
 	/**
-	 * @return copy of this vector
+	 * Make a copy
+	 * 
+	 * @return a copy
 	 */
-	public Coord getCopy()
+	public Coord copy()
 	{
 		return new Coord(x, y, z);
 	}
@@ -215,30 +184,14 @@ public class Coord {
 
 
 	/**
-	 * Get copy divided by number
+	 * Check if this rectangle in inside a rectangular zone
 	 * 
-	 * @param d number to divide by
-	 * @return divided copy
+	 * @param rect checked rect.
+	 * @return is inside
 	 */
-	public Coord div(double d)
+	public boolean isInRect(Rect rect)
 	{
-		return getCopy().div_ip(d);
-	}
-
-
-	/**
-	 * Divide by number in place
-	 * 
-	 * @param d number to divide by
-	 * @return this
-	 */
-	public Coord div_ip(double d)
-	{
-		if (d == 0) return this;
-		x /= d;
-		y /= d;
-		z /= d;
-		return this;
+		return isInRect(rect.min, rect.max);
 	}
 
 
@@ -256,18 +209,6 @@ public class Coord {
 
 
 	/**
-	 * Check if this rectangle in inside a rectangular zone
-	 * 
-	 * @param rect checked rect.
-	 * @return is inside
-	 */
-	public boolean isInRect(Rect rect)
-	{
-		return isInRect(rect.min, rect.max);
-	}
-
-
-	/**
 	 * Get middle of line to other point
 	 * 
 	 * @param other other point
@@ -275,79 +216,155 @@ public class Coord {
 	 */
 	public Coord midTo(Coord other)
 	{
-		return add(vecTo(other).mul_ip(0.5));
+		return add(vecTo(other).half_ip());
 	}
 
 
 	/**
-	 * Multiply by number
+	 * Get copy divided by two
 	 * 
-	 * @param d number
-	 * @return multiplied copy
+	 * @return copy halved
+	 */
+	public Coord half()
+	{
+		return copy().half_ip();
+	}
+
+
+	/**
+	 * Divide in place by two
+	 * 
+	 * @return this
+	 */
+	public Coord half_ip()
+	{
+		mul_ip(0.5);
+		return this;
+	}
+
+
+	/**
+	 * Multiply each component, in a copy.
+	 * 
+	 * @param d multiplier
+	 * @return changed copy
 	 */
 	public Coord mul(double d)
 	{
-		return getCopy().mul_ip(d);
+		return copy().mul_ip(d);
 	}
 
 
 	/**
-	 * Multiply coords by number
-	 * 
-	 * @param xd x multiplier
-	 * @param yd y multiplier
-	 * @param zd z multiplier
-	 * @return multiplied copy
-	 */
-	public Coord mul(double xd, double yd, double zd)
-	{
-		return getCopy().mul_ip(xd, yd, zd);
-	}
-
-
-	/**
-	 * Multiply by number in place
+	 * Multiply each component, in place.
 	 * 
 	 * @param d multiplier
 	 * @return this
 	 */
 	public Coord mul_ip(double d)
 	{
-		x *= d;
-		y *= d;
-		z *= d;
-		return this;
+		return mul_ip(d, d, d);
 	}
 
 
 	/**
-	 * Multiply coords by number in place
+	 * Multiply each component, in a copy.
 	 * 
-	 * @param xd x multiplier
-	 * @param yd y multiplier
-	 * @param zd z multiplier
+	 * @param vec vector of multipliers
+	 * @return changed copy
+	 */
+	public Coord mul(Coord vec)
+	{
+		return copy().mul_ip(vec);
+	}
+
+
+	/**
+	 * Multiply each component, in a copy.<br>
+	 * Z is unchanged.
+	 * 
+	 * @param x x multiplier
+	 * @param y y multiplier
+	 * @return changed copy
+	 */
+	public Coord mul(double x, int y)
+	{
+		return copy().mul_ip(x, y);
+	}
+
+
+	/**
+	 * Multiply each component, in place.<br>
+	 * Z is unchanged.
+	 * 
+	 * @param x x multiplier
+	 * @param y y multiplier
 	 * @return this
 	 */
-	public Coord mul_ip(double xd, double yd, double zd)
+	public Coord mul_ip(double x, double y)
 	{
-		x *= xd;
-		y *= yd;
-		z *= zd;
-		return this;
+		return mul_ip(x, y, 1);
 	}
 
 
 	/**
-	 * offset randomly
+	 * Multiply each component, in a copy.
 	 * 
-	 * @param max max +- offset
-	 * @return offset coord
+	 * @param x x multiplier
+	 * @param y y multiplier
+	 * @param z z multiplier
+	 * @return changed copy
 	 */
+	public Coord mul(double x, double y, double z)
+	{
+		return copy().mul_ip(x, y, z);
+	}
+
+
+	/**
+	 * Multiply each component, in place.
+	 * 
+	 * @param vec vector of multipliers
+	 * @return this
+	 */
+	public Coord mul_ip(Coord vec)
+	{
+		return mul_ip(vec.x, vec.y, vec.z);
+	}
+
+
+	/**
+	 * Multiply each component, in place.
+	 * 
+	 * @param x x multiplier
+	 * @param y y multiplier
+	 * @param z z multiplier
+	 * @return this
+	 */
+	public Coord mul_ip(double x, double y, double z)
+	{
+		this.x *= x;
+		this.y *= y;
+		this.z *= z;
+		return this;
+	}
+
+
 	public Coord random_offset(double max)
 	{
-		Coord v = random(1).norm_ip(0.00001 + rand.nextDouble() * max);
+		return copy().random_offset_ip(max);
+	}
 
-		return getCopy().add_ip(v);
+
+	/**
+	 * offset randomly in place
+	 * 
+	 * @param max max +- offset
+	 * @return this
+	 */
+	public Coord random_offset_ip(double max)
+	{
+		return add(random(1).norm_ip(rand.nextDouble() * max));
 	}
 
 
@@ -360,19 +377,7 @@ public class Coord {
 	 */
 	public Coord random_offset(double min, double max)
 	{
-		return getCopy().add_ip(random(min, max));
-	}
-
-
-	/**
-	 * offset randomly in place
-	 * 
-	 * @param max max +- offset
-	 * @return this
-	 */
-	public Coord random_offset_ip(double max)
-	{
-		return add(random(max));
+		return copy().random_offset_ip(min, max);
 	}
 
 
@@ -385,7 +390,7 @@ public class Coord {
 	 */
 	public Coord random_offset_ip(double min, double max)
 	{
-		add(random(min, max));
+		add_ip(random(min, max));
 		return this;
 	}
 
@@ -397,7 +402,7 @@ public class Coord {
 	 */
 	public Coord round()
 	{
-		return getCopy().round_ip();
+		return copy().round_ip();
 	}
 
 
@@ -420,7 +425,7 @@ public class Coord {
 	 * 
 	 * @param other other coord
 	 */
-	public void setMax(Coord other)
+	public void setToMax(Coord other)
 	{
 		x = Math.max(x, other.x);
 		y = Math.max(y, other.y);
@@ -433,7 +438,7 @@ public class Coord {
 	 * 
 	 * @param other other coord
 	 */
-	public void setMin(Coord other)
+	public void setToMin(Coord other)
 	{
 		x = Math.min(x, other.x);
 		y = Math.min(y, other.y);
@@ -449,8 +454,7 @@ public class Coord {
 	 */
 	public Coord setTo(Coord copied)
 	{
-		setTo(copied.x, copied.y, copied.z);
-		return this;
+		return setTo(copied.x, copied.y, copied.z);
 	}
 
 
@@ -463,8 +467,7 @@ public class Coord {
 	 */
 	public Coord setTo(Number x, Number y)
 	{
-		setTo(x, y, 0);
-		return this;
+		return setTo(x, y, 0);
 	}
 
 
@@ -493,7 +496,7 @@ public class Coord {
 	 */
 	public Coord setX(Number x)
 	{
-		return getCopy().setX_ip(x);
+		return copy().setX_ip(x);
 	}
 
 
@@ -518,7 +521,7 @@ public class Coord {
 	 */
 	public Coord setY(Number y)
 	{
-		return getCopy().setY_ip(y);
+		return copy().setY_ip(y);
 	}
 
 
@@ -543,7 +546,7 @@ public class Coord {
 	 */
 	public Coord setZ(Number z)
 	{
-		return getCopy().setZ_ip(z);
+		return copy().setZ_ip(z);
 	}
 
 
@@ -568,7 +571,7 @@ public class Coord {
 	 */
 	public Coord sub(Coord vec)
 	{
-		return getCopy().sub_ip(vec);
+		return copy().sub_ip(vec);
 	}
 
 
@@ -581,7 +584,7 @@ public class Coord {
 	 */
 	public Coord sub(Number x, Number y)
 	{
-		return getCopy().sub_ip(x, y);
+		return copy().sub_ip(x, y);
 	}
 
 
@@ -595,7 +598,7 @@ public class Coord {
 	 */
 	public Coord sub(Number x, Number y, Number z)
 	{
-		return getCopy().sub_ip(x, y, z);
+		return copy().sub_ip(x, y, z);
 	}
 
 
@@ -607,10 +610,7 @@ public class Coord {
 	 */
 	public Coord sub_ip(Coord vec)
 	{
-		this.x -= vec.x;
-		this.y -= vec.y;
-		this.z -= vec.z;
-		return this;
+		return sub_ip(vec.x, vec.y, vec.z);
 	}
 
 
@@ -623,9 +623,7 @@ public class Coord {
 	 */
 	public Coord sub_ip(Number x, Number y)
 	{
-		this.x -= x.doubleValue();
-		this.y -= y.doubleValue();
-		return this;
+		return sub_ip(x, y, 0);
 	}
 
 
@@ -668,24 +666,6 @@ public class Coord {
 
 
 	/**
-	 * @return X as double
-	 */
-	public double xd()
-	{
-		return x;
-	}
-
-
-	/**
-	 * @return X as float
-	 */
-	public float xf()
-	{
-		return (float) x;
-	}
-
-
-	/**
 	 * @return X as int
 	 */
 	public int xi()
@@ -704,24 +684,6 @@ public class Coord {
 
 
 	/**
-	 * @return Y as double
-	 */
-	public double yd()
-	{
-		return y;
-	}
-
-
-	/**
-	 * @return Y as float
-	 */
-	public float yf()
-	{
-		return (float) y;
-	}
-
-
-	/**
 	 * @return Y as int
 	 */
 	public int yi()
@@ -736,24 +698,6 @@ public class Coord {
 	public double z()
 	{
 		return z;
-	}
-
-
-	/**
-	 * @return Z as double
-	 */
-	public double zd()
-	{
-		return z;
-	}
-
-
-	/**
-	 * @return Z as float
-	 */
-	public float zf()
-	{
-		return (float) z;
 	}
 
 
@@ -796,11 +740,11 @@ public class Coord {
 	 * Multiply by other vector, vector multiplication
 	 * 
 	 * @param vec other vector
-	 * @return copy multiplied
+	 * @return changed copy
 	 */
 	public Coord cross(Coord vec)
 	{
-		return getCopy().cross_ip(vec);
+		return copy().cross_ip(vec);
 	}
 
 
@@ -812,7 +756,13 @@ public class Coord {
 	 */
 	public Coord cross_ip(Coord vec)
 	{
-		setTo(y * vec.z - z * vec.y, z * vec.x - x * vec.z, x * vec.y - y * vec.x);
+		//@formatter:off
+		setTo(
+				y * vec.z - z * vec.y,
+				z * vec.x - x * vec.z,
+				x * vec.y - y * vec.x
+		);
+		//@formatter:on
 		return this;
 	}
 
@@ -832,11 +782,11 @@ public class Coord {
 	/**
 	 * Negate all coordinates (* -1)
 	 * 
-	 * @return negated coordinate
+	 * @return negated copy
 	 */
 	public Coord neg()
 	{
-		return getCopy().neg_ip();
+		return copy().neg_ip();
 	}
 
 
@@ -860,60 +810,45 @@ public class Coord {
 	 */
 	public Coord norm(double size)
 	{
-		return getCopy().norm_ip(size);
+		return copy().norm_ip(size);
 	}
 
 
 	/**
-	 * Scale vector to given size, in place
+	 * Scale vector to given size, in place.<br>
+	 * Zero vector remains zero.
 	 * 
 	 * @param size size we need
 	 * @return scaled vector
 	 */
 	public Coord norm_ip(double size)
 	{
-		if (size() == 0) {
-			z = -1;
-		}
-		if (size == 0) {
-			setTo(0, 0, 0);
-			return this;
-		}
+		if (isZero()) return this;
+
 		double k = size / size();
-		mul_ip(k);
-		return this;
+		return mul_ip(k);
 	}
 
 
 	/**
 	 * Get vector size
 	 * 
-	 * @return vector size in units
+	 * @return size in units
 	 */
 	public double size()
 	{
+		if (isZero()) return 0;
+
 		return Math.sqrt(x * x + y * y + z * z);
 	}
 
 
 	/**
-	 * Get copy divided by two
-	 * @return copy halved
+	 * @return true if this coord is a zero coord
 	 */
-	public Coord half()
+	public boolean isZero()
 	{
-		return getCopy().half_ip();
-	}
-
-
-	/**
-	 * Divide in place by two
-	 * @return this
-	 */
-	public Coord half_ip()
-	{
-		mul_ip(0.5);
-		return this;
+		return x == 0 && y == 0 && z == 0;
 	}
 
 
@@ -955,22 +890,60 @@ public class Coord {
 
 
 	/**
-	 * @return true if this coord is a zero coord
+	 * Generate a zero coordinate
+	 * 
+	 * @return coord of all zeros
 	 */
-	public boolean isZero()
-	{
-		return x == 0 && y == 0 && z == 0;
-	}
-
-
 	public static Coord zero()
 	{
 		return new Coord(0, 0, 0);
 	}
 
 
+	/**
+	 * Generate a unit coordinate
+	 * 
+	 * @return coord of all ones
+	 */
 	public static Coord one()
 	{
 		return new Coord(1, 1, 1);
+	}
+
+
+	/**
+	 * Generate random coord (gaussian)
+	 * 
+	 * @param max max distance from 0
+	 * @return new coord
+	 */
+	public static Coord random(double max)
+	{
+		//@formatter:off
+		return new Coord(
+				Calc.clampd(rand.nextGaussian() * max, -max * 2, max * 2),
+				Calc.clampd(rand.nextGaussian() * max, -max * 2, max * 2),
+				Calc.clampd(rand.nextGaussian() * max, -max * 2, max * 2)
+		);
+		//@formatter:on
+	}
+
+
+	/**
+	 * Generate random coord (min-max)
+	 * 
+	 * @param min min offset
+	 * @param max max offset
+	 * @return new coord
+	 */
+	public static Coord random(double min, double max)
+	{
+		//@formatter:off
+		return new Coord(
+				(rand.nextBoolean() ? -1 : 1) * (min + rand.nextDouble() * (max - min)),
+				(rand.nextBoolean() ? -1 : 1) * (min + rand.nextDouble() * (max - min)),
+				(rand.nextBoolean() ? -1 : 1) * (min + rand.nextDouble() * (max - min))
+		);
+		//@formatter:on
 	}
 }

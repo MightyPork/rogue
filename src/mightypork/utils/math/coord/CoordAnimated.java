@@ -4,6 +4,11 @@ import mightypork.utils.math.Calc;
 import mightypork.utils.time.Updateable;
 
 
+/**
+ * TODO revise
+ * 
+ * @author MightyPork
+ */
 public class CoordAnimated extends Coord implements Updateable {
 
 	private double animTime = 0;
@@ -81,7 +86,7 @@ public class CoordAnimated extends Coord implements Updateable {
 	 */
 	public Coord animGetCurrent()
 	{
-		if (time == 0) return getCopy(); // avoid zero division
+		if (time == 0) return copy(); // avoid zero division
 	
 		if (start == null) start = new Coord();
 		if (offs == null) offs = new Coord();

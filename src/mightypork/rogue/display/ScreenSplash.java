@@ -2,7 +2,6 @@ package mightypork.rogue.display;
 
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import mightypork.rogue.App;
