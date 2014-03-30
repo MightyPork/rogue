@@ -3,10 +3,9 @@ package mightypork.rogue.display;
 
 import java.util.Random;
 
-import mightypork.rogue.App;
+import mightypork.rogue.AppAccess;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.input.events.MouseButtonEvent;
-import mightypork.rogue.input.events.MouseMotionEvent;
 import mightypork.rogue.util.RenderUtils;
 import mightypork.utils.math.Polar;
 import mightypork.utils.math.color.RGB;
@@ -19,8 +18,12 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 
-public class ScreenTestAnimations extends Screen {
-	
+public class ScreenTestAnimations extends Screen implements MouseButtonEvent.Listener {
+
+	public ScreenTestAnimations(AppAccess app) {
+		super(app);
+	}
+
 	private Random rand = new Random();
 
 	private AnimDoubleDeg degAnim = new AnimDoubleDeg(0, Easing.ELASTIC_OUT);
@@ -94,7 +97,7 @@ public class ScreenTestAnimations extends Screen {
 	//@formatter:on
 
 	@Override
-	public void initialize()
+	public void initScreen()
 	{
 		bindKeyStroke(new KeyStroke(Keyboard.KEY_RIGHT), new Runnable() {
 
@@ -102,7 +105,7 @@ public class ScreenTestAnimations extends Screen {
 			public void run()
 			{
 				for (AnimDouble a : anims) {
-					a.animate(0, 1, 1+rand.nextDouble()*1);
+					a.animate(0, 1, 1 + rand.nextDouble() * 1);
 				}
 			}
 		});
@@ -113,10 +116,42 @@ public class ScreenTestAnimations extends Screen {
 			public void run()
 			{
 				for (AnimDouble a : anims) {
-					a.animate(1, 0, 1+rand.nextDouble()*1);
+					a.animate(1, 0, 1 + rand.nextDouble() * 1);
 				}
 			}
 		});
+	}
+
+
+	@Override
+	protected void deinitScreen()
+	{
+		// no impl
+	}
+
+
+	@Override
+	protected void onScreenEnter()
+	{
+		// no impl
+	}
+
+
+	@Override
+	protected void onScreenLeave()
+	{
+		// no impl
+	}
+
+
+	@Override
+	protected void updateScreen(double delta)
+	{
+		degAnim.update(delta);
+
+		for (AnimDouble a : anims) {
+			a.update(delta);
+		}
 	}
 
 
@@ -144,56 +179,14 @@ public class ScreenTestAnimations extends Screen {
 
 
 	@Override
-	public void receive(MouseMotionEvent event)
-	{
-		//
-	}
-
-
-	@Override
 	public void receive(MouseButtonEvent event)
 	{
 		if (event.isDown()) {
-			Coord vec = App.disp().getSize().half().vecTo(event.getPos());
+			Coord vec = disp().getSize().half().vecTo(event.getPos());
 
 			Polar p = Polar.fromCoord(vec);
 
 			degAnim.fadeTo(p.getAngleDeg() - 90, 1.5);
-		}
-	}
-
-
-	@Override
-	protected void onEnter()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	protected void onLeave()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	protected void onSizeChanged(Coord size)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	protected void updateScreen(double delta)
-	{
-		degAnim.update(delta);
-
-		for (AnimDouble a : anims) {
-			a.update(delta);
 		}
 	}
 

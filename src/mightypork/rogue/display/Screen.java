@@ -2,17 +2,15 @@ package mightypork.rogue.display;
 
 
 import static org.lwjgl.opengl.GL11.*;
-import mightypork.rogue.App;
+import mightypork.rogue.AppAccess;
+import mightypork.rogue.AppSubsystem;
+import mightypork.rogue.display.constraints.ConstraintContext;
 import mightypork.rogue.display.events.ScreenChangeEvent;
 import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
-import mightypork.rogue.input.events.KeyboardEvent;
-import mightypork.rogue.input.events.MouseButtonEvent;
-import mightypork.rogue.input.events.MouseMotionEvent;
 import mightypork.utils.math.coord.Coord;
-import mightypork.utils.patterns.Initializable;
-import mightypork.utils.time.Updateable;
+import mightypork.utils.math.coord.Rect;
 
 
 /**
@@ -22,27 +20,27 @@ import mightypork.utils.time.Updateable;
  * 
  * @author MightyPork
  */
-public abstract class Screen implements KeyBinder, Updateable, Initializable, KeyboardEvent.Listener, MouseMotionEvent.Listener, MouseButtonEvent.Listener, ScreenChangeEvent.Listener {
+public abstract class Screen extends AppSubsystem implements KeyBinder, ConstraintContext, ScreenChangeEvent.Listener {
 
-	private KeyBindingPool keybindings = new KeyBindingPool();
+	private KeyBindingPool keybindings;
 
 	private boolean active;
 
 
-	public Screen() {
-		initialize();
+	public Screen(AppAccess app) {
+		super(app, false);
 	}
 
 
 	@Override
-	public void bindKeyStroke(KeyStroke stroke, Runnable task)
+	public final void bindKeyStroke(KeyStroke stroke, Runnable task)
 	{
 		keybindings.bindKeyStroke(stroke, task);
 	}
 
 
 	@Override
-	public void unbindKeyStroke(KeyStroke stroke)
+	public final void unbindKeyStroke(KeyStroke stroke)
 	{
 		keybindings.unbindKeyStroke(stroke);
 	}
@@ -59,13 +57,19 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 			active = true;
 			setupGraphics();
 			setupViewport();
-			onSizeChanged(App.disp().getSize());
-			onEnter();
-			App.msgbus().addSubscriber(this);
+			onSizeChanged(getRect().getSize());
+			onScreenEnter();
+
+			// subscribe to event bus
+			enableEvents(true);
+
 		} else {
+			onScreenLeave();
+
 			active = false;
-			onLeave();
-			App.msgbus().removeSubscriber(this);
+
+			// unsusbcribe from event bus
+			enableEvents(false);
 		}
 	}
 
@@ -99,7 +103,7 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 		// fix projection for changed size
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		Coord s = App.disp().getSize();
+		Coord s = disp().getSize();
 		glViewport(0, 0, s.xi(), s.yi());
 		glOrtho(0, s.x, 0, s.y, -1000, 1000);
 
@@ -108,25 +112,47 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 	}
 
 
+	@Override
+	protected final void init()
+	{
+		keybindings = new KeyBindingPool();
+
+		addChildSubscriber(keybindings);
+
+		initScreen();
+	}
+
+
+	@Override
+	protected final void deinit()
+	{
+		deinitScreen();
+	}
+
+
 	/**
 	 * Initialize screen layout and key bindings.<br>
-	 * Called when the screen is created, not when it comes to front. For that,
-	 * use onEnter().
+	 * Called during screen construction.
 	 */
-	@Override
-	public abstract void initialize();
+	protected abstract void initScreen();
+
+
+	/**
+	 * Clean up before screen is destroyed.
+	 */
+	protected abstract void deinitScreen();
 
 
 	/**
 	 * Called when the screen becomes active
 	 */
-	protected abstract void onEnter();
+	protected abstract void onScreenEnter();
 
 
 	/**
 	 * Called when the screen is no longer active
 	 */
-	protected abstract void onLeave();
+	protected abstract void onScreenLeave();
 
 
 	/**
@@ -134,7 +160,10 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 	 * 
 	 * @param size screen size
 	 */
-	protected abstract void onSizeChanged(Coord size);
+	protected void onSizeChanged(Coord size)
+	{
+		// no impl
+	}
 
 
 	/**
@@ -154,7 +183,7 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 	/**
 	 * Render screen
 	 */
-	private final void renderBegin()
+	private void renderBegin()
 	{
 		glPushAttrib(GL_ENABLE_BIT);
 		glPushMatrix();
@@ -164,7 +193,7 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 	/**
 	 * Render screen
 	 */
-	private final void renderEnd()
+	private void renderEnd()
 	{
 		glPopAttrib();
 		glPopMatrix();
@@ -172,24 +201,9 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 
 
 	/**
-	 * Update and render the screen
-	 */
-	@Override
-	public final void update(double delta)
-	{
-		if (!isActive()) return;
-
-		updateScreen(delta);
-		renderBegin();
-		renderScreen();
-		renderEnd();
-	};
-
-
-	/**
 	 * @return true if screen is the curretn screen
 	 */
-	protected final boolean isActive()
+	public final boolean isActive()
 	{
 		return active;
 	}
@@ -206,11 +220,24 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 	}
 
 
+	/**
+	 * Update and render the screen
+	 */
 	@Override
-	public final void receive(KeyboardEvent event)
+	public final void update(double delta)
 	{
-		if (!isActive()) return;
-		keybindings.receive(event);
+		updateScreen(delta);
+
+		renderBegin();
+		renderScreen();
+		renderEnd();
+	}
+
+
+	@Override
+	public final Rect getRect()
+	{
+		return disp().getRect();
 	}
 
 }

@@ -7,11 +7,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import mightypork.rogue.AppAccess;
+import mightypork.rogue.AppSubsystem;
+import mightypork.utils.logging.Log;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.objects.Mutable;
-import mightypork.utils.patterns.Destroyable;
-import mightypork.utils.time.Updateable;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
@@ -24,13 +25,13 @@ import org.newdawn.slick.openal.SoundStore;
  * @author MightyPork
  */
 @SuppressWarnings("unchecked")
-// needed for JointVolume
-public class SoundSystem implements Updateable, Destroyable {
-
-	// static
+public class SoundSystem extends AppSubsystem {
 
 	private static final Coord INITIAL_LISTENER_POS = new Coord(0, 0, 0);
 	private static final int MAX_SOURCES = 256;
+	private static final AudioX NO_SOUND = new NullAudio();
+	private static final LoopPlayer NULL_LOOP = new LoopPlayer(NO_SOUND, 0, 0, null);
+	private static final EffectPlayer NULL_EFFECT = new EffectPlayer(NO_SOUND, 0, 0, null);
 
 	private static Coord listener = new Coord();
 
@@ -65,13 +66,7 @@ public class SoundSystem implements Updateable, Destroyable {
 		buf3 = buf6 = null;
 	}
 
-
-	public static Coord getListener()
-	{
-		return listener;
-	}
-
-	// instance
+	// -- instance --
 
 	public Mutable<Double> masterVolume = new Mutable<Double>(1D);
 	public Mutable<Double> effectsVolume = new JointVolume(masterVolume);
@@ -80,6 +75,45 @@ public class SoundSystem implements Updateable, Destroyable {
 	private Map<String, EffectPlayer> effects = new HashMap<String, EffectPlayer>();
 	private Map<String, LoopPlayer> loops = new HashMap<String, LoopPlayer>();
 	private Set<AudioX> resources = new HashSet<AudioX>();
+
+
+	public SoundSystem(AppAccess app) {
+		super(app, true);
+	}
+
+
+	@Override
+	protected void init()
+	{
+		// empty
+	}
+
+
+	@Override
+	public void deinit()
+	{
+		for (AudioX r : resources) {
+			r.destroy();
+		}
+
+		SoundStore.get().clear();
+		AL.destroy();
+	}
+
+
+	@Override
+	public void update(double delta)
+	{
+		for (LoopPlayer lp : loops.values()) {
+			lp.update(delta);
+		}
+	}
+
+
+	public static Coord getListener()
+	{
+		return listener;
+	}
 
 
 	/**
@@ -141,7 +175,8 @@ public class SoundSystem implements Updateable, Destroyable {
 	{
 		LoopPlayer p = loops.get(key);
 		if (p == null) {
-			throw new IllegalArgumentException("Requesting unknown sound loop \"" + key + "\".");
+			Log.w("Requesting unknown sound loop \"" + key + "\".");
+			return NULL_LOOP;
 		}
 		return p;
 	}
@@ -157,7 +192,8 @@ public class SoundSystem implements Updateable, Destroyable {
 	{
 		EffectPlayer p = effects.get(key);
 		if (p == null) {
-			throw new IllegalArgumentException("Requesting unknown sound effect \"" + key + "\".");
+			Log.w("Requesting unknown sound effect \"" + key + "\".");
+			return NULL_EFFECT;
 		}
 		return p;
 	}
@@ -253,15 +289,6 @@ public class SoundSystem implements Updateable, Destroyable {
 	}
 
 
-	@Override
-	public void update(double delta)
-	{
-		for (LoopPlayer lp : loops.values()) {
-			lp.update(delta);
-		}
-	}
-
-
 	/**
 	 * Set level of master volume
 	 * 
@@ -293,17 +320,4 @@ public class SoundSystem implements Updateable, Destroyable {
 	{
 		loopsVolume.set(d);
 	}
-
-
-	@Override
-	public void destroy()
-	{
-		for (AudioX r : resources) {
-			r.destroy();
-		}
-
-		SoundStore.get().clear();
-		AL.destroy();
-	}
-
 }

@@ -11,7 +11,6 @@ import mightypork.utils.logging.Log;
  * 
  * @author Rapus
  */
-@SuppressWarnings("javadoc")
 public class Fonts {
 
 	public static LoadedFont splash_info;

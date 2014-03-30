@@ -16,6 +16,8 @@ import java.util.Map;
  * 
  * 
  * 
+ * 
+ * 
  * Object[] array = { &quot;one&quot;, 1, &quot;two&quot;, 4, &quot;three&quot;, 9, &quot;four&quot;, 16 };
  * Map&lt;String, Integer&gt; args = new VarargsParser&lt;String, Integer&gt;().parse(array);
  * </pre>

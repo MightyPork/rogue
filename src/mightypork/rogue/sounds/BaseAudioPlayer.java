@@ -30,6 +30,8 @@ public abstract class BaseAudioPlayer {
 		this.baseGain = baseGain;
 		this.basePitch = basePitch;
 
+		if (gainMultiplier == null) gainMultiplier = new Mutable<Double>(1D);
+
 		this.gainMultiplier = gainMultiplier;
 	}
 

@@ -1,13 +1,12 @@
 package mightypork.rogue.input;
 
 
-import mightypork.rogue.App;
+import mightypork.rogue.AppAccess;
+import mightypork.rogue.AppSubsystem;
 import mightypork.rogue.input.events.KeyboardEvent;
 import mightypork.rogue.input.events.MouseButtonEvent;
 import mightypork.rogue.input.events.MouseMotionEvent;
 import mightypork.utils.math.coord.Coord;
-import mightypork.utils.patterns.Destroyable;
-import mightypork.utils.patterns.Initializable;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -15,31 +14,35 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 
-public class InputSystem implements KeyBinder, Destroyable, Initializable {
-
-	private boolean initialized;
+public class InputSystem extends AppSubsystem implements KeyBinder {
 
 	// listeners
 	private KeyBindingPool keybindings;
 
 
-	public InputSystem() {
-		initialize();
+	public InputSystem(AppAccess app) {
+		super(app, true);
 	}
 
 
 	@Override
-	public void initialize()
+	protected void init()
 	{
-		if (initialized) return;
-
 		initDevices();
 
 		initChannels();
 
+		// global keybindings
 		keybindings = new KeyBindingPool();
+		addChildSubscriber(keybindings);
+	}
 
-		App.msgbus().addSubscriber(keybindings);
+
+	@Override
+	public void deinit()
+	{
+		Mouse.destroy();
+		Keyboard.destroy();
 	}
 
 
@@ -57,17 +60,9 @@ public class InputSystem implements KeyBinder, Destroyable, Initializable {
 
 	private void initChannels()
 	{
-		App.msgbus().registerMessageType(KeyboardEvent.class, KeyboardEvent.Listener.class);
-		App.msgbus().registerMessageType(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
-		App.msgbus().registerMessageType(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
-	}
-
-
-	@Override
-	public void destroy()
-	{
-		Mouse.destroy();
-		Keyboard.destroy();
+		msgbus().createChannel(KeyboardEvent.class, KeyboardEvent.Listener.class);
+		msgbus().createChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
+		msgbus().createChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
 	}
 
 
@@ -85,25 +80,6 @@ public class InputSystem implements KeyBinder, Destroyable, Initializable {
 	}
 
 
-	/**
-	 * Update inputs
-	 */
-	public final void poll()
-	{
-		Display.processMessages(); // redundant if Display.update() is called in main loop
-		Mouse.poll();
-		Keyboard.poll();
-
-		while (Mouse.next()) {
-			onMouseEvent();
-		}
-
-		while (Keyboard.next()) {
-			onKeyEvent();
-		}
-	}
-
-
 	private void onMouseEvent()
 	{
 		int button = Mouse.getEventButton();
@@ -112,8 +88,8 @@ public class InputSystem implements KeyBinder, Destroyable, Initializable {
 		Coord move = new Coord(Mouse.getEventDX(), Mouse.getEventDY());
 		int wheeld = Mouse.getEventDWheel();
 
-		if (button != -1 || wheeld != 0) App.broadcast(new MouseButtonEvent(pos, button, down, wheeld));
-		if (!move.isZero()) App.broadcast(new MouseMotionEvent(pos, move));
+		if (button != -1 || wheeld != 0) msgbus().broadcast(new MouseButtonEvent(pos, button, down, wheeld));
+		if (!move.isZero()) msgbus().broadcast(new MouseMotionEvent(pos, move));
 	}
 
 
@@ -122,6 +98,21 @@ public class InputSystem implements KeyBinder, Destroyable, Initializable {
 		int key = Keyboard.getEventKey();
 		boolean down = Keyboard.getEventKeyState();
 		char c = Keyboard.getEventCharacter();
-		App.broadcast(new KeyboardEvent(key, c, down));
+		msgbus().broadcast(new KeyboardEvent(key, c, down));
+	}
+
+
+	@Override
+	public void update(double delta)
+	{
+		Display.processMessages(); // redundant if Display.update() is called in main loop
+
+		while (Mouse.next()) {
+			onMouseEvent();
+		}
+
+		while (Keyboard.next()) {
+			onKeyEvent();
+		}
 	}
 }

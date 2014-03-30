@@ -6,7 +6,6 @@ package mightypork.rogue.fonts;
  * 
  * @author MightyPork
  */
-@SuppressWarnings("javadoc")
 public class Align {
 
 	public static final int LEFT = -1;

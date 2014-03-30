@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import mightypork.rogue.display.DisplaySystem;
 import mightypork.rogue.display.Screen;
 import mightypork.rogue.display.ScreenTestAnimations;
+import mightypork.rogue.display.events.UpdateEvent;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.sounds.SoundSystem;
@@ -20,12 +21,11 @@ import mightypork.utils.logging.LogInstance;
 import mightypork.utils.patterns.Destroyable;
 import mightypork.utils.patterns.subscription.MessageBus;
 import mightypork.utils.time.TimerDelta;
-import mightypork.utils.time.TimerInterpolating;
 
 import org.lwjgl.input.Keyboard;
 
 
-public class App implements Destroyable {
+public class App implements Destroyable, AppAccess {
 
 	/** instance pointer */
 	private static App inst;
@@ -40,17 +40,6 @@ public class App implements Destroyable {
 
 	/** Flag that screenshot is scheduled to be taken next loop */
 	private boolean scheduledScreenshot = false;
-
-
-	/**
-	 * Get the instance
-	 * 
-	 * @return instance of App
-	 */
-	public static App inst()
-	{
-		return inst;
-	}
 
 
 	/**
@@ -80,7 +69,7 @@ public class App implements Destroyable {
 	{
 		Log.e("The game has crashed.", error);
 
-		inst.exit();
+		if (inst != null) inst.exit();
 	}
 
 
@@ -92,17 +81,6 @@ public class App implements Destroyable {
 	{
 		destroy();
 		System.exit(0);
-	}
-
-
-	/**
-	 * Get current screen
-	 * 
-	 * @return screen
-	 */
-	public Screen getCurrentScreen()
-	{
-		return screen;
 	}
 
 
@@ -188,6 +166,8 @@ public class App implements Destroyable {
 	{
 		events = new MessageBus();
 		events.addSubscriber(this);
+
+		events.createChannel(UpdateEvent.class, UpdateEvent.Listener.class);
 	}
 
 
@@ -196,7 +176,7 @@ public class App implements Destroyable {
 	 */
 	private void initSound()
 	{
-		sounds = new SoundSystem();
+		sounds = new SoundSystem(this);
 		sounds.setMasterVolume(1);
 	}
 
@@ -206,7 +186,7 @@ public class App implements Destroyable {
 	 */
 	private void initInput()
 	{
-		input = new InputSystem();
+		input = new InputSystem(this);
 
 		input.bindKeyStroke(new KeyStroke(Keyboard.KEY_F2), new Runnable() {
 
@@ -245,7 +225,7 @@ public class App implements Destroyable {
 	 */
 	private void initDisplay()
 	{
-		display = new DisplaySystem();
+		display = new DisplaySystem(this);
 		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.START_IN_FS, Const.TITLEBAR);
 		display.setTargetFps(Const.FPS_RENDER);
 	}
@@ -275,8 +255,7 @@ public class App implements Destroyable {
 
 	private void mainLoop()
 	{
-		screen = new ScreenTestAnimations();
-
+		screen = new ScreenTestAnimations(this);
 		screen.setActive(true);
 
 		timerRender = new TimerDelta();
@@ -284,14 +263,7 @@ public class App implements Destroyable {
 		while (!display.isCloseRequested()) {
 			display.beginFrame();
 
-			input.poll();
-
-			double delta = timerRender.getDelta();
-
-			sounds.update(delta);
-
-			// Screen
-			screen.update(delta);
+			events.broadcast(new UpdateEvent(timerRender.getDelta()));
 
 			if (scheduledScreenshot) {
 				takeScreenshot();
@@ -309,7 +281,7 @@ public class App implements Destroyable {
 	public void takeScreenshot()
 	{
 		sounds.getEffect("gui.shutter").play(1);
-		Utils.runAsThread(new TaskTakeScreenshot());
+		Utils.runAsThread(new TaskTakeScreenshot(display));
 	}
 
 
@@ -320,53 +292,40 @@ public class App implements Destroyable {
 	/**
 	 * @return sound system of the running instance
 	 */
-	public static SoundSystem soundsys()
+	@Override
+	public SoundSystem soundsys()
 	{
-		return inst.sounds;
+		return sounds;
 	}
 
 
 	/**
 	 * @return input system of the running instance
 	 */
-	public static InputSystem input()
+	@Override
+	public InputSystem input()
 	{
-		return inst.input;
+		return input;
 	}
 
 
 	/**
 	 * @return display system of the running instance
 	 */
-	public static DisplaySystem disp()
+	@Override
+	public DisplaySystem disp()
 	{
-		return inst.display;
+		return display;
 	}
 
 
 	/**
-	 * @return event bus of the running instance
+	 * @return event bus
 	 */
-	public static MessageBus msgbus()
+	@Override
+	public MessageBus msgbus()
 	{
-		return inst.events;
-	}
-
-
-	/**
-	 * @return screen of the running instance
-	 */
-	public static Screen screen()
-	{
-		return inst.getCurrentScreen();
-	}
-
-
-	public static boolean broadcast(Object message)
-	{
-		boolean was = msgbus().broadcast(message);
-		if (!was) Log.w("Message not accepted by any channel: " + message);
-		return was;
+		return events;
 	}
 
 }

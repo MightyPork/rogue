@@ -6,12 +6,13 @@ import static org.lwjgl.opengl.GL11.*;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 
-import mightypork.rogue.App;
+import mightypork.rogue.AppAccess;
+import mightypork.rogue.AppSubsystem;
+import mightypork.rogue.display.constraints.ConstraintContext;
 import mightypork.rogue.display.events.ScreenChangeEvent;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.coord.Coord;
-import mightypork.utils.patterns.Destroyable;
-import mightypork.utils.patterns.Initializable;
+import mightypork.utils.math.coord.Rect;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -19,27 +20,29 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 
-public class DisplaySystem implements Initializable, Destroyable {
-
-	private boolean initialized;
+public class DisplaySystem extends AppSubsystem implements ConstraintContext {
 
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
 
 
-	public DisplaySystem() {
-		initialize();
+	public DisplaySystem(AppAccess app) {
+		super(app, true);
+		enableUpdates(false);
 	}
 
 
 	@Override
-	public void initialize()
+	protected void init()
 	{
-		if (initialized) return;
-
 		initChannels();
+	}
 
-		initialized = true;
+
+	@Override
+	public void deinit()
+	{
+		Display.destroy();
 	}
 
 
@@ -48,14 +51,7 @@ public class DisplaySystem implements Initializable, Destroyable {
 	 */
 	private void initChannels()
 	{
-		App.msgbus().registerMessageType(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
-	}
-
-
-	@Override
-	public void destroy()
-	{
-		Display.destroy();
+		msgbus().createChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
 	}
 
 
@@ -105,7 +101,7 @@ public class DisplaySystem implements Initializable, Destroyable {
 				Display.update();
 			}
 
-			App.broadcast(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
+			msgbus().broadcast(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
 
 		} catch (Throwable t) {
 			Log.e("Failed to toggle fullscreen mode.", t);
@@ -182,7 +178,7 @@ public class DisplaySystem implements Initializable, Destroyable {
 	public void beginFrame()
 	{
 		if (Display.wasResized()) {
-			App.broadcast(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
+			msgbus().broadcast(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
 		}
 
 		glLoadIdentity();
@@ -197,5 +193,12 @@ public class DisplaySystem implements Initializable, Destroyable {
 	{
 		Display.update(false); // don't poll input devices
 		Display.sync(targetFps);
+	}
+
+
+	@Override
+	public Rect getRect()
+	{
+		return new Rect(getSize());
 	}
 }

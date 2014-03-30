@@ -10,8 +10,8 @@ import java.util.Date;
 
 import javax.imageio.ImageIO;
 
-import mightypork.rogue.App;
 import mightypork.rogue.Paths;
+import mightypork.rogue.display.DisplaySystem;
 import mightypork.utils.logging.Log;
 
 
@@ -20,8 +20,8 @@ public class TaskTakeScreenshot implements Runnable {
 	private BufferedImage image;
 
 
-	public TaskTakeScreenshot() {
-		this.image = App.disp().takeScreenshot();
+	public TaskTakeScreenshot(DisplaySystem disp) {
+		this.image = disp.takeScreenshot();
 	}
 
 

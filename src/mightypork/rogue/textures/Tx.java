@@ -6,7 +6,6 @@ package mightypork.rogue.textures;
  * 
  * @author MightyPork
  */
-@SuppressWarnings("javadoc")
 public class Tx {
 
 	// logo

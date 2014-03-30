@@ -16,6 +16,7 @@ public class MessageBus implements Subscribable {
 
 	private Set<MessageChannel<?, ?>> channels = new LinkedHashSet<MessageChannel<?, ?>>();
 	private Set<Object> clients = new LinkedHashSet<Object>();
+	private boolean warn_unsent = true;
 
 
 	/**
@@ -72,6 +73,8 @@ public class MessageBus implements Subscribable {
 		for (MessageChannel<?, ?> b : channels) {
 			sent |= b.broadcast(message);
 		}
+		if (!sent && warn_unsent) Log.w("Message not accepted by any channel: " + message);
+
 		return sent;
 	}
 
@@ -80,11 +83,13 @@ public class MessageBus implements Subscribable {
 	 * Subscribe a client to the bus. The client will be connected to all
 	 * current and future channels, until removed from the bus.
 	 * 
-	 * @return <code>true</code>
+	 * @return true on success
 	 */
 	@Override
 	public boolean addSubscriber(Object client)
 	{
+		if (client == null) return false;
+
 		for (MessageChannel<?, ?> b : channels) {
 			b.addSubscriber(client);
 		}
@@ -107,13 +112,24 @@ public class MessageBus implements Subscribable {
 
 
 	/**
+	 * Enable logging of unsent messages
+	 * 
+	 * @param enable
+	 */
+	public void enableLoggingUnsent(boolean enable)
+	{
+		this.warn_unsent = enable;
+	}
+
+
+	/**
 	 * Add a channel for given message and client type.
 	 * 
 	 * @param messageClass message type
 	 * @param clientClass client type
 	 * @return the created channel instance
 	 */
-	public <F_MESSAGE extends Handleable<F_CLIENT>, F_CLIENT> MessageChannel<?, ?> registerMessageType(Class<F_MESSAGE> messageClass, Class<F_CLIENT> clientClass)
+	public <F_MESSAGE extends Handleable<F_CLIENT>, F_CLIENT> MessageChannel<?, ?> createChannel(Class<F_MESSAGE> messageClass, Class<F_CLIENT> clientClass)
 	{
 		MessageChannel<F_MESSAGE, F_CLIENT> bc = new MessageChannel<F_MESSAGE, F_CLIENT>(messageClass, clientClass);
 		return addChannel(bc);

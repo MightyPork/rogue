@@ -11,8 +11,6 @@ import org.newdawn.slick.opengl.Texture;
  * 
  * @author MightyPork
  */
-@SuppressWarnings("javadoc")
-// unrelevant
 public class Textures {
 
 	protected static Texture buttons_menu;
