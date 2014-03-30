@@ -4,7 +4,6 @@ package mightypork.rogue.util;
 import static org.lwjgl.opengl.GL11.*;
 import mightypork.rogue.textures.TextureManager;
 import mightypork.rogue.textures.TxQuad;
-import mightypork.utils.math.Calc.Deg;
 import mightypork.utils.math.color.HSV;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;

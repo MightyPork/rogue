@@ -1,8 +1,10 @@
-package mightypork.utils.time;
+package mightypork.utils.time.animation;
 
 
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.easing.Easing;
+import mightypork.utils.time.Pauseable;
+import mightypork.utils.time.Updateable;
 
 
 /**
@@ -194,7 +196,12 @@ public class AnimDouble implements Updateable, Pauseable {
 
 		this.from = from;
 		this.to = to;
-		this.duration = time * (1 - getProgressFromValue(current));
+
+		double progress = getProgressFromValue(current);
+
+		this.from = (progress > 0 ? current : from);
+
+		this.duration = time * (1 - progress);
 		this.elapsedTime = 0;
 	}
 
@@ -202,6 +209,8 @@ public class AnimDouble implements Updateable, Pauseable {
 	protected double getProgressFromValue(double value)
 	{
 		double p = 0;
+
+		if (from == to) return 0;
 
 		if (value >= from && value <= to) { // up
 			p = ((value - from) / (to - from));

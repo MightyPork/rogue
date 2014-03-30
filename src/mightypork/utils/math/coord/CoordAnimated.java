@@ -1,5 +1,6 @@
 package mightypork.utils.math.coord;
 
+
 import mightypork.utils.math.Calc;
 import mightypork.utils.time.Updateable;
 
@@ -15,6 +16,7 @@ public class CoordAnimated extends Coord implements Updateable {
 	private Coord offs;
 	private Coord start;
 	private double time = 0;
+
 
 	/**
 	 * Update delta timing
@@ -34,6 +36,7 @@ public class CoordAnimated extends Coord implements Updateable {
 		}
 	}
 
+
 	/**
 	 * Remember position (other changes will be for animation)
 	 */
@@ -44,6 +47,7 @@ public class CoordAnimated extends Coord implements Updateable {
 		start.setTo(this);
 		offs = Coord.zero();
 	}
+
 
 	/**
 	 * Start animation
@@ -59,6 +63,7 @@ public class CoordAnimated extends Coord implements Updateable {
 		offs = start.vecTo(this);
 	}
 
+
 	/**
 	 * Stop animation, assign to current value
 	 */
@@ -68,6 +73,7 @@ public class CoordAnimated extends Coord implements Updateable {
 		animRemember();
 		animTime = 0;
 	}
+
 
 	/**
 	 * Get if animation is finished
@@ -79,6 +85,7 @@ public class CoordAnimated extends Coord implements Updateable {
 		return animTime >= time;
 	}
 
+
 	/**
 	 * Get current value (animated)
 	 * 
@@ -87,12 +94,12 @@ public class CoordAnimated extends Coord implements Updateable {
 	public Coord animGetCurrent()
 	{
 		if (time == 0) return copy(); // avoid zero division
-	
+
 		if (start == null) start = new Coord();
 		if (offs == null) offs = new Coord();
-	
+
 		if (animIsFinished()) return this;
-	
+
 		return start.add(offs.mul(animTime / time));
 	}
 

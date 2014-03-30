@@ -61,8 +61,8 @@ public class Mutable<T> {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof Mutable)) return false;
-		
-		Mutable<?> other = (Mutable<?>) obj;		
+
+		Mutable<?> other = (Mutable<?>) obj;
 		if (o == null) {
 			if (other.o != null) return false;
 		} else if (!o.equals(other.o)) {
@@ -70,11 +70,12 @@ public class Mutable<T> {
 		}
 		return true;
 	}
-	
+
+
 	@Override
 	public String toString()
 	{
-		if(o == null) return "<null>";
+		if (o == null) return "<null>";
 		return o.toString();
 	}
 }

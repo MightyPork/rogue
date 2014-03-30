@@ -7,6 +7,7 @@ package mightypork.utils.patterns;
  * @author MightyPork
  */
 public interface Initializable {
+
 	/**
 	 * Initialize if not initialized yet
 	 */

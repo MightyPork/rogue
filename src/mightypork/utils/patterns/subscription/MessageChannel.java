@@ -23,9 +23,9 @@ public final class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> im
 
 
 	public MessageChannel(Class<MESSAGE> messageClass, Class<CLIENT> clientClass) {
-		
-		if(messageClass == null || clientClass == null) throw new IllegalArgumentException("Null Message or Client class.");
-		
+
+		if (messageClass == null || clientClass == null) throw new IllegalArgumentException("Null Message or Client class.");
+
 		this.clientClass = clientClass;
 		this.messageClass = messageClass;
 	}
@@ -124,7 +124,7 @@ public final class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> im
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof MessageChannel)) return false;
-		
+
 		MessageChannel<?, ?> other = (MessageChannel<?, ?>) obj;
 
 		if (!clientClass.getName().equals(other.clientClass.getName())) return false;
@@ -133,11 +133,12 @@ public final class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> im
 
 		return true;
 	}
-	
+
+
 	@Override
 	public String toString()
 	{
-		return "CHANNEL( "+messageClass.getSimpleName()+" -> "+clientClass.getSimpleName()+" )";
+		return "CHANNEL( " + messageClass.getSimpleName() + " -> " + clientClass.getSimpleName() + " )";
 	}
 
 

@@ -2,19 +2,15 @@ package mightypork.rogue.display;
 
 
 import static org.lwjgl.opengl.GL11.*;
-
-import java.util.Random;
-
 import mightypork.rogue.App;
 import mightypork.rogue.display.events.ScreenChangeEvent;
 import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.input.events.KeyboardEvent;
-import mightypork.rogue.input.events.MouseMotionEvent;
 import mightypork.rogue.input.events.MouseButtonEvent;
+import mightypork.rogue.input.events.MouseMotionEvent;
 import mightypork.utils.math.coord.Coord;
-import mightypork.utils.patterns.Destroyable;
 import mightypork.utils.patterns.Initializable;
 import mightypork.utils.time.Updateable;
 
@@ -54,6 +50,7 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 
 	/**
 	 * Prepare for being shown
+	 * 
 	 * @param shown true to show, false to hide
 	 */
 	public final void setActive(boolean shown)
@@ -110,13 +107,15 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 		glMatrixMode(GL_MODELVIEW);
 	}
 
-	
+
 	/**
 	 * Initialize screen layout and key bindings.<br>
-	 * Called when the screen is created, not when it comes to front. For that, use onEnter().
+	 * Called when the screen is created, not when it comes to front. For that,
+	 * use onEnter().
 	 */
 	@Override
 	public abstract void initialize();
+
 
 	/**
 	 * Called when the screen becomes active
@@ -172,6 +171,9 @@ public abstract class Screen implements KeyBinder, Updateable, Initializable, Ke
 	}
 
 
+	/**
+	 * Update and render the screen
+	 */
 	@Override
 	public final void update(double delta)
 	{

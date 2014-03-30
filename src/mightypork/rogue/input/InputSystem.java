@@ -8,6 +8,7 @@ import mightypork.rogue.input.events.MouseMotionEvent;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.patterns.Destroyable;
 import mightypork.utils.patterns.Initializable;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -112,7 +113,7 @@ public class InputSystem implements KeyBinder, Destroyable, Initializable {
 		int wheeld = Mouse.getEventDWheel();
 
 		if (button != -1 || wheeld != 0) App.broadcast(new MouseButtonEvent(pos, button, down, wheeld));
-		if(!move.isZero()) App.broadcast(new MouseMotionEvent(pos, move));
+		if (!move.isZero()) App.broadcast(new MouseMotionEvent(pos, move));
 	}
 
 

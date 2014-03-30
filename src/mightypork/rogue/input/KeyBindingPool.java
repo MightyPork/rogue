@@ -30,7 +30,7 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 	{
 		for (KeyBinding kb : bindings) {
 			if (kb.matches(stroke)) {
-				Log.w("Duplicate KeyBinding ("+stroke+"), using newest handler.");
+				Log.w("Duplicate KeyBinding (" + stroke + "), using newest handler.");
 				kb.setHandler(task);
 				return;
 			}
@@ -42,6 +42,7 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 
 	/**
 	 * Remove handler from keystroke (id any)
+	 * 
 	 * @param stroke stroke
 	 */
 	@Override
@@ -58,11 +59,12 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 		}
 	}
 
+
 	@Override
 	public void receive(KeyboardEvent event)
 	{
-		for(KeyBinding kb: bindings) {
-			kb.receive(event);			
+		for (KeyBinding kb : bindings) {
+			kb.receive(event);
 		}
 	}
 }

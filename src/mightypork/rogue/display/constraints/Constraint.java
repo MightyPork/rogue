@@ -1,5 +1,6 @@
 package mightypork.rogue.display.constraints;
 
+
 import mightypork.utils.math.coord.Coord;
 
 
@@ -11,9 +12,10 @@ public abstract class Constraint implements ConstraintContext {
 	public Constraint(ConstraintContext context) {
 		this.context = context;
 	}
-	
-	
-	public void setContext(ConstraintContext context) {
+
+
+	public void setContext(ConstraintContext context)
+	{
 		this.context = context;
 	}
 
@@ -22,12 +24,16 @@ public abstract class Constraint implements ConstraintContext {
 	{
 		return context;
 	}
-	
-	protected Coord origin() {
+
+
+	protected Coord origin()
+	{
 		return context.getRect().getOrigin();
 	}
-	
-	protected Coord size() {
+
+
+	protected Coord size()
+	{
 		return context.getRect().getSize();
 	}
 

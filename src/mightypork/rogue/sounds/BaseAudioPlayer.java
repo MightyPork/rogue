@@ -5,7 +5,7 @@ import mightypork.utils.objects.Mutable;
 
 
 public abstract class BaseAudioPlayer {
-	
+
 	/** the track */
 	private AudioX audio;
 

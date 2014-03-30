@@ -9,10 +9,9 @@ import javax.swing.JOptionPane;
 
 import mightypork.rogue.display.DisplaySystem;
 import mightypork.rogue.display.Screen;
-import mightypork.rogue.display.ScreenSplash;
+import mightypork.rogue.display.ScreenTestAnimations;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
-import mightypork.rogue.input.events.MouseMotionEvent;
 import mightypork.rogue.sounds.SoundSystem;
 import mightypork.rogue.tasks.TaskTakeScreenshot;
 import mightypork.rogue.util.Utils;
@@ -24,7 +23,6 @@ import mightypork.utils.time.TimerDelta;
 import mightypork.utils.time.TimerInterpolating;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
 
 
 public class App implements Destroyable {
@@ -273,28 +271,20 @@ public class App implements Destroyable {
 
 	/** timer */
 	private TimerDelta timerRender;
-	private TimerInterpolating timerGui;
 
 
 	private void mainLoop()
 	{
-		screen = new ScreenSplash();
+		screen = new ScreenTestAnimations();
 
 		screen.setActive(true);
 
 		timerRender = new TimerDelta();
-		timerGui = new TimerInterpolating(Const.FPS_GUI_UPDATE);
 
 		while (!display.isCloseRequested()) {
 			display.beginFrame();
 
-			// gui update
-			timerGui.sync();
-			int ticks = timerGui.getSkipped();
-			if (ticks >= 1) {
-				input.poll();
-				timerGui.startNewFrame();
-			}
+			input.poll();
 
 			double delta = timerRender.getDelta();
 

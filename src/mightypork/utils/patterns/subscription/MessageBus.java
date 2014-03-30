@@ -1,5 +1,6 @@
 package mightypork.utils.patterns.subscription;
 
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class MessageBus implements Subscribable {
 		// if the channel already exists, return this instance instead.
 		for (MessageChannel<?, ?> ch : channels) {
 			if (ch.equals(channel)) {
-				Log.w("Channel of type "+channel+" already registered.");
+				Log.w("Channel of type " + channel + " already registered.");
 				return ch;
 			}
 		}

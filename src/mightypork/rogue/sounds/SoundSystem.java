@@ -34,7 +34,6 @@ public class SoundSystem implements Updateable, Destroyable {
 
 	private static Coord listener = new Coord();
 
-	
 	static {
 		// initialize sound system
 		SoundStore.get().setMaxSources(MAX_SOURCES);
@@ -114,18 +113,19 @@ public class SoundSystem implements Updateable, Destroyable {
 		p.setFadeTimes(fadeIn, fadeOut);
 		loops.put(key, p);
 	}
-	
-	
+
+
 	/**
 	 * Create {@link AudioX} for a resource
+	 * 
 	 * @param res a resource name
 	 * @return the resource
-	 * 
 	 * @throws IllegalArgumentException if resource is already registered
 	 */
-	private AudioX getResource(String res) {
+	private AudioX getResource(String res)
+	{
 		AudioX a = new AudioX(res);
-		if(resources.contains(a)) throw new IllegalArgumentException("Sound resource "+res+" is already registered.");
+		if (resources.contains(a)) throw new IllegalArgumentException("Sound resource " + res + " is already registered.");
 		resources.add(a);
 		return a;
 	}
@@ -298,10 +298,10 @@ public class SoundSystem implements Updateable, Destroyable {
 	@Override
 	public void destroy()
 	{
-		for(AudioX r: resources) {
+		for (AudioX r : resources) {
 			r.destroy();
 		}
-		
+
 		SoundStore.get().clear();
 		AL.destroy();
 	}

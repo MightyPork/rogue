@@ -1,9 +1,9 @@
 package mightypork.rogue.input.events;
 
 
-import org.lwjgl.input.Keyboard;
-
 import mightypork.utils.patterns.subscription.Handleable;
+
+import org.lwjgl.input.Keyboard;
 
 
 /**
@@ -41,7 +41,8 @@ public class KeyboardEvent implements Handleable<KeyboardEvent.Listener> {
 	{
 		return down;
 	}
-	
+
+
 	/**
 	 * @return true if key was just released
 	 */
@@ -75,11 +76,12 @@ public class KeyboardEvent implements Handleable<KeyboardEvent.Listener> {
 		 */
 		public void receive(KeyboardEvent event);
 	}
-	
+
+
 	@Override
 	public String toString()
 	{
-		return Keyboard.getKeyName(key)+":"+(down?"DOWN":"UP");
+		return Keyboard.getKeyName(key) + ":" + (down ? "DOWN" : "UP");
 	}
 
 }

@@ -14,6 +14,7 @@ public interface KeyBinder {
 
 	/**
 	 * Remove handler from a keystroke (id any)
+	 * 
 	 * @param stroke stroke
 	 */
 	abstract void unbindKeyStroke(KeyStroke stroke);

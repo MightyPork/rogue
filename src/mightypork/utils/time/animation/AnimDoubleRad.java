@@ -1,4 +1,4 @@
-package mightypork.utils.time;
+package mightypork.utils.time.animation;
 
 
 import mightypork.utils.math.Calc;

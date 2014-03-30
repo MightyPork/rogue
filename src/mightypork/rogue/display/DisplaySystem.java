@@ -6,43 +6,43 @@ import static org.lwjgl.opengl.GL11.*;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-
 import mightypork.rogue.App;
-import mightypork.rogue.Const;
 import mightypork.rogue.display.events.ScreenChangeEvent;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.patterns.Destroyable;
 import mightypork.utils.patterns.Initializable;
-import mightypork.utils.time.Updateable;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 
 
 public class DisplaySystem implements Initializable, Destroyable {
 
 	private boolean initialized;
-	
+
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
-	
-	
+
+
 	public DisplaySystem() {
 		initialize();
 	}
 
+
 	@Override
 	public void initialize()
 	{
-		if(initialized) return;
-		
+		if (initialized) return;
+
 		initChannels();
-		
+
 		initialized = true;
 	}
-	
+
+
 	/**
 	 * Initialize event channels
 	 */
@@ -50,6 +50,7 @@ public class DisplaySystem implements Initializable, Destroyable {
 	{
 		App.msgbus().registerMessageType(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
 	}
+
 
 	@Override
 	public void destroy()
@@ -103,7 +104,7 @@ public class DisplaySystem implements Initializable, Destroyable {
 				Display.setDisplayMode(windowDisplayMode);
 				Display.update();
 			}
-			
+
 			App.broadcast(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
 
 		} catch (Throwable t) {
@@ -180,10 +181,10 @@ public class DisplaySystem implements Initializable, Destroyable {
 	 */
 	public void beginFrame()
 	{
-		if(Display.wasResized()) {
+		if (Display.wasResized()) {
 			App.broadcast(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
 		}
-		
+
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}

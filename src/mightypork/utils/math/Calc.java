@@ -746,7 +746,7 @@ public class Calc {
 	 * @return current number to render
 	 */
 	public static double interpolate(double from, double to, double time, Easing easing)
-	{		
+	{
 		return from + (to - from) * easing.get(time);
 	}
 
@@ -757,12 +757,12 @@ public class Calc {
 	 * @param from last angle
 	 * @param to new angle
 	 * @param time time 0..1
-	 * @param easing  easing function
+	 * @param easing easing function
 	 * @return current angle to render
 	 */
 	public static double interpolateDeg(double from, double to, double time, Easing easing)
 	{
-		return Deg.norm(from - Deg.delta(to, from) * easing.get(time));		
+		return Deg.norm(from - Deg.delta(to, from) * easing.get(time));
 	}
 
 
@@ -772,12 +772,12 @@ public class Calc {
 	 * @param from last angle
 	 * @param to new angle
 	 * @param time time 0..1
-	 * @param easing  easing function
+	 * @param easing easing function
 	 * @return current angle to render
 	 */
 	public static double interpolateRad(double from, double to, double time, Easing easing)
 	{
-		return Rad.norm(from - Rad.delta(to, from) * easing.get(time));		
+		return Rad.norm(from - Rad.delta(to, from) * easing.get(time));
 	}
 
 
