@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import mightypork.rogue.input.events.KeyboardEvent;
+import mightypork.rogue.bus.events.KeyboardEvent;
 import mightypork.utils.logging.Log;
 
 

@@ -1,8 +1,8 @@
 package mightypork.rogue.testing;
 
 
+import mightypork.rogue.display.constraints.Bounding;
 import mightypork.rogue.display.constraints.Constraint;
-import mightypork.rogue.display.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -11,7 +11,7 @@ public class TestConstraints {
 
 	public static void main(String[] args)
 	{
-		ConstraintContext context = new ConstraintContext() {
+		Bounding context = new Bounding() {
 
 			@Override
 			public Rect getRect()
@@ -25,7 +25,7 @@ public class TestConstraints {
 			private double height;
 
 
-			public Navbar(ConstraintContext context, double height) {
+			public Navbar(Bounding context, double height) {
 				super(context);
 				this.height = height;
 			}
@@ -44,7 +44,7 @@ public class TestConstraints {
 			private int tile;
 
 
-			public TileHorizontal(ConstraintContext context, int tileCount, int aTile) {
+			public TileHorizontal(Bounding context, int tileCount, int aTile) {
 				super(context);
 				this.count = tileCount;
 				setTile(aTile);

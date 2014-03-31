@@ -5,11 +5,11 @@ import mightypork.utils.math.coord.Rect;
 
 
 /**
- * Constraints can be based on this
+ * Bounding box provider - context for {@link Constraint}
  * 
  * @author MightyPork
  */
-public interface ConstraintContext {
+public interface Bounding {
 
 	/**
 	 * @return bounding rectangle

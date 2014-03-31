@@ -2,39 +2,58 @@ package mightypork.rogue.display.constraints;
 
 
 import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.coord.Rect;
 
 
-public abstract class Constraint implements ConstraintContext {
+public abstract class Constraint implements Bounding {
 
-	protected ConstraintContext context;
+	protected Bounding context;
 
 
-	public Constraint(ConstraintContext context) {
+	public Constraint(Bounding context) {
 		this.context = context;
 	}
 
 
-	public void setContext(ConstraintContext context)
+	/**
+	 * Assign a context
+	 * 
+	 * @param context
+	 */
+	public void setContext(Bounding context)
 	{
 		this.context = context;
 	}
 
 
-	public ConstraintContext getContext()
+	/**
+	 * @return context
+	 */
+	public Bounding getContext()
 	{
 		return context;
 	}
 
 
+	/**
+	 * @return context rect origin
+	 */
 	protected Coord origin()
 	{
 		return context.getRect().getOrigin();
 	}
 
 
+	/**
+	 * @return context rect size
+	 */
 	protected Coord size()
 	{
 		return context.getRect().getSize();
 	}
+
+
+	@Override
+	public abstract Rect getRect();
 
 }

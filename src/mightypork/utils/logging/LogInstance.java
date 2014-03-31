@@ -99,18 +99,25 @@ public class LogInstance {
 
 	private void cleanup()
 	{
+		if (logs_to_keep == 0) return; // overwrite
+
 		for (File f : FileUtils.listDirectory(file.getParentFile())) {
 			if (!f.isFile()) continue;
 			if (f.equals(file)) {
 				Date d = new Date(f.lastModified());
 
-				String fname = name + '_' + (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(d) + getSuffix();
+				String fbase = name + '_' + (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(d);
+				String suff = getSuffix();
+				String cntStr = "";
+				File f2;
 
-				File f2 = new File(dir, fname);
+				for (int cnt = 0; (f2 = new File(dir, fbase + cntStr + suff)).exists(); cntStr = "_" + (++cnt));
 
 				f.renameTo(f2);
 			}
 		}
+
+		if (logs_to_keep == -1) return; // keep all
 
 		List<File> oldLogs = FileUtils.listDirectory(dir, new FileFilter() {
 

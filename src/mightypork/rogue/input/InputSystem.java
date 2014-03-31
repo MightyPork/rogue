@@ -2,10 +2,10 @@ package mightypork.rogue.input;
 
 
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.AppSubsystem;
-import mightypork.rogue.input.events.KeyboardEvent;
-import mightypork.rogue.input.events.MouseButtonEvent;
-import mightypork.rogue.input.events.MouseMotionEvent;
+import mightypork.rogue.bus.DelegatingBusClient;
+import mightypork.rogue.bus.events.KeyboardEvent;
+import mightypork.rogue.bus.events.MouseButtonEvent;
+import mightypork.rogue.bus.events.MouseMotionEvent;
 import mightypork.utils.math.coord.Coord;
 
 import org.lwjgl.LWJGLException;
@@ -14,7 +14,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 
-public class InputSystem extends AppSubsystem implements KeyBinder {
+public class InputSystem extends DelegatingBusClient implements KeyBinder {
 
 	// listeners
 	private KeyBindingPool keybindings;
@@ -60,9 +60,9 @@ public class InputSystem extends AppSubsystem implements KeyBinder {
 
 	private void initChannels()
 	{
-		msgbus().createChannel(KeyboardEvent.class, KeyboardEvent.Listener.class);
-		msgbus().createChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
-		msgbus().createChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
+		bus().createChannel(KeyboardEvent.class, KeyboardEvent.Listener.class);
+		bus().createChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
+		bus().createChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
 	}
 
 
@@ -80,32 +80,10 @@ public class InputSystem extends AppSubsystem implements KeyBinder {
 	}
 
 
-	private void onMouseEvent()
-	{
-		int button = Mouse.getEventButton();
-		boolean down = Mouse.getEventButtonState();
-		Coord pos = new Coord(Mouse.getEventX(), Mouse.getEventY());
-		Coord move = new Coord(Mouse.getEventDX(), Mouse.getEventDY());
-		int wheeld = Mouse.getEventDWheel();
-
-		if (button != -1 || wheeld != 0) msgbus().broadcast(new MouseButtonEvent(pos, button, down, wheeld));
-		if (!move.isZero()) msgbus().broadcast(new MouseMotionEvent(pos, move));
-	}
-
-
-	private void onKeyEvent()
-	{
-		int key = Keyboard.getEventKey();
-		boolean down = Keyboard.getEventKeyState();
-		char c = Keyboard.getEventCharacter();
-		msgbus().broadcast(new KeyboardEvent(key, c, down));
-	}
-
-
 	@Override
 	public void update(double delta)
 	{
-		Display.processMessages(); // redundant if Display.update() is called in main loop
+		Display.processMessages();
 
 		while (Mouse.next()) {
 			onMouseEvent();
@@ -114,5 +92,27 @@ public class InputSystem extends AppSubsystem implements KeyBinder {
 		while (Keyboard.next()) {
 			onKeyEvent();
 		}
+	}
+
+
+	private void onMouseEvent()
+	{
+		int button = Mouse.getEventButton();
+		boolean down = Mouse.getEventButtonState();
+		Coord pos = new Coord(Mouse.getEventX(), Mouse.getEventY());
+		Coord move = new Coord(Mouse.getEventDX(), Mouse.getEventDY());
+		int wheeld = Mouse.getEventDWheel();
+
+		if (button != -1 || wheeld != 0) bus().broadcast(new MouseButtonEvent(pos, button, down, wheeld));
+		if (!move.isZero()) bus().broadcast(new MouseMotionEvent(pos, move));
+	}
+
+
+	private void onKeyEvent()
+	{
+		int key = Keyboard.getEventKey();
+		boolean down = Keyboard.getEventKeyState();
+		char c = Keyboard.getEventCharacter();
+		bus().broadcast(new KeyboardEvent(key, c, down));
 	}
 }

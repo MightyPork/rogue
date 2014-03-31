@@ -1,4 +1,4 @@
-package mightypork.rogue.input.events;
+package mightypork.rogue.bus.events;
 
 
 import mightypork.utils.math.coord.Coord;

@@ -1,7 +1,7 @@
 package mightypork.rogue.input;
 
 
-import mightypork.rogue.input.events.KeyboardEvent;
+import mightypork.rogue.bus.events.KeyboardEvent;
 
 
 public class KeyBinding implements KeyboardEvent.Listener {

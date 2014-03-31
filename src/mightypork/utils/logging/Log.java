@@ -141,6 +141,26 @@ public class Log {
 	}
 
 
+	/**
+	 * Create a logger. If this is the first logger made, then it'll be made
+	 * available via the static methods.<br>
+	 * Old logs will be kept.
+	 * 
+	 * @param logName log name (used for filename, must be application-unique)
+	 * @param logsDir directory to store logs in
+	 * @return the created Log instance
+	 */
+	public static synchronized LogInstance create(String logName, File logsDir)
+	{
+		if (logs.containsKey(logName)) return logs.get(logName);
+		LogInstance log = new LogInstance(logName, logsDir, -1);
+		if (main == null) main = log;
+		logs.put(logName, log);
+
+		return log;
+	}
+
+
 	public int addMonitor(LogMonitor mon)
 	{
 		if (main == null) throw new IllegalStateException("Main logger not initialized.");

@@ -1,6 +1,8 @@
 package mightypork.rogue.textures;
 
 
+// TODO rewrite
+
 /**
  * List of texture quads for GUIs
  * 

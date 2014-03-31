@@ -1,22 +1,22 @@
 package mightypork.utils.patterns.subscription;
 
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
+
+import mightypork.utils.logging.Log;
+import mightypork.utils.patterns.subscription.clients.DelegatingClient;
+import mightypork.utils.patterns.subscription.clients.ToggleableClient;
 
 
 /**
- * Message subsystem (broadcaster with clients) to which clients can subscribe.<br>
- * If more than one type of message is needed, {@link MessageBus} is a better
- * choice.
+ * Message channel, module of {@link MessageBus}
  * 
  * @author MightyPork
  * @param <MESSAGE> message type
  * @param <CLIENT> client (subscriber) type
  */
-public final class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> implements Subscribable {
-
-	private Set<CLIENT> clients = new HashSet<CLIENT>();
+final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 
 	private Class<CLIENT> clientClass;
 	private Class<MESSAGE> messageClass;
@@ -24,27 +24,10 @@ public final class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> im
 
 	public MessageChannel(Class<MESSAGE> messageClass, Class<CLIENT> clientClass) {
 
-		if (messageClass == null || clientClass == null) throw new IllegalArgumentException("Null Message or Client class.");
+		if (messageClass == null || clientClass == null) throw new NullPointerException("Null Message or Client class.");
 
 		this.clientClass = clientClass;
 		this.messageClass = messageClass;
-	}
-
-
-	@Override
-	public boolean addSubscriber(Object client)
-	{
-		if (!canSubscribe(client)) return false;
-
-		clients.add(clientClass.cast(client));
-		return true;
-	}
-
-
-	@Override
-	public void removeSubscriber(Object client)
-	{
-		clients.remove(client);
 	}
 
 
@@ -52,33 +35,63 @@ public final class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> im
 	 * Try to broadcast a message.<br>
 	 * If message is of wrong type, <code>false</code> is returned.
 	 * 
-	 * @param message a message to send
-	 * @return true if message was sent
+	 * @param message a message to be sent
+	 * @param clients collection of clients
+	 * @return true if message was accepted by this channel
 	 */
-	public boolean broadcast(Object message)
+	public boolean broadcast(Object message, Collection<Object> clients)
 	{
-
 		if (!canBroadcast(message)) return false;
 
 		MESSAGE evt = messageClass.cast(message);
 
-		for (CLIENT client : clients) {
-			sendTo(client, evt);
-		}
+		doBroadcast(evt, clients, new HashSet<Object>());
 
 		return true;
 	}
 
 
+	private void doBroadcast(MESSAGE message, Collection<Object> clients, Collection<Object> processed)
+	{
+		for (Object client : clients) {
+
+			// circular reference check
+			if (processed.contains(client)) {
+				Log.w("Client already served (subscribing twice?)");
+				continue;
+			}
+			processed.add(client);
+
+			// opt-out
+			if (client instanceof ToggleableClient) {
+				if (!((ToggleableClient) client).doesSubscribe()) {
+					continue;
+				}
+			}
+
+			sendTo(client, message);
+
+			if (client instanceof DelegatingClient) {
+				if (((DelegatingClient) client).doesDelegate()) {
+					doBroadcast(message, ((DelegatingClient) client).getChildClients(), processed);
+				}
+			}
+		}
+	}
+
+
 	/**
-	 * Send a message to a client
+	 * Send a message to a client.
 	 * 
 	 * @param client target client
 	 * @param message message to send
 	 */
-	private void sendTo(CLIENT client, MESSAGE message)
+	@SuppressWarnings("unchecked")
+	private void sendTo(Object client, MESSAGE message)
 	{
-		((Handleable<CLIENT>) message).handleBy(client);
+		if (clientClass.isInstance(client)) {
+			((Handleable<CLIENT>) message).handleBy((CLIENT) client);
+		}
 	}
 
 
@@ -86,34 +99,22 @@ public final class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> im
 	 * Check if the given message can be broadcasted by this
 	 * {@link MessageChannel}
 	 * 
-	 * @param maybeMessage event object
+	 * @param message event object
 	 * @return can be broadcasted
 	 */
-	private boolean canBroadcast(Object maybeMessage)
+	public boolean canBroadcast(Object message)
 	{
-		return messageClass.isInstance(maybeMessage);
-	}
-
-
-	/**
-	 * Check if a client can subscribe to this {@link MessageChannel}
-	 * 
-	 * @param maybeClient client asking for subscription
-	 * @return can subscribe
-	 */
-	public boolean canSubscribe(Object maybeClient)
-	{
-		return clientClass.isInstance(maybeClient);
+		return message != null && messageClass.isInstance(message);
 	}
 
 
 	@Override
 	public int hashCode()
 	{
-		final int prime = 31;
+		final int prime = 13;
 		int result = 1;
-		result = prime * result + clientClass.getName().hashCode();
-		result = prime * result + messageClass.getName().hashCode();
+		result = prime * result + ((clientClass == null) ? 0 : clientClass.hashCode());
+		result = prime * result + ((messageClass == null) ? 0 : messageClass.hashCode());
 		return result;
 	}
 
@@ -124,13 +125,13 @@ public final class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> im
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof MessageChannel)) return false;
-
 		MessageChannel<?, ?> other = (MessageChannel<?, ?>) obj;
-
-		if (!clientClass.getName().equals(other.clientClass.getName())) return false;
-
-		if (!messageClass.getName().equals(other.messageClass.getName())) return false;
-
+		if (clientClass == null) {
+			if (other.clientClass != null) return false;
+		} else if (!clientClass.equals(other.clientClass)) return false;
+		if (messageClass == null) {
+			if (other.messageClass != null) return false;
+		} else if (!messageClass.equals(other.messageClass)) return false;
 		return true;
 	}
 

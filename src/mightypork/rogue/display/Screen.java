@@ -3,9 +3,9 @@ package mightypork.rogue.display;
 
 import static org.lwjgl.opengl.GL11.*;
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.AppSubsystem;
-import mightypork.rogue.display.constraints.ConstraintContext;
-import mightypork.rogue.display.events.ScreenChangeEvent;
+import mightypork.rogue.bus.DelegatingBusClient;
+import mightypork.rogue.bus.events.ScreenChangeEvent;
+import mightypork.rogue.display.constraints.Bounding;
 import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
@@ -20,7 +20,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class Screen extends AppSubsystem implements KeyBinder, ConstraintContext, ScreenChangeEvent.Listener {
+public abstract class Screen extends DelegatingBusClient implements KeyBinder, Bounding, ScreenChangeEvent.Listener {
 
 	private KeyBindingPool keybindings;
 
@@ -28,7 +28,10 @@ public abstract class Screen extends AppSubsystem implements KeyBinder, Constrai
 
 
 	public Screen(AppAccess app) {
-		super(app, false);
+		super(app, true);
+
+		// disable events initially
+		enableEvents(false);
 	}
 
 

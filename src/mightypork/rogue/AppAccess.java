@@ -17,7 +17,7 @@ public interface AppAccess {
 	/**
 	 * @return sound system
 	 */
-	abstract SoundSystem soundsys();
+	abstract SoundSystem snd();
 
 
 	/**
@@ -35,6 +35,13 @@ public interface AppAccess {
 	/**
 	 * @return event bus
 	 */
-	abstract MessageBus msgbus();
+	abstract MessageBus bus();
+
+
+	/**
+	 * Quit to OS<br>
+	 * Destroy app & exit VM
+	 */
+	abstract void shutdown();
 
 }

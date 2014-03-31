@@ -1,8 +1,8 @@
 package mightypork.utils.patterns.subscription;
 
 
+import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.Set;
 
 import mightypork.utils.logging.Log;
 
@@ -12,10 +12,12 @@ import mightypork.utils.logging.Log;
  * 
  * @author MightyPork
  */
-public class MessageBus implements Subscribable {
+final public class MessageBus {
 
-	private Set<MessageChannel<?, ?>> channels = new LinkedHashSet<MessageChannel<?, ?>>();
-	private Set<Object> clients = new LinkedHashSet<Object>();
+	private Collection<MessageChannel<?, ?>> channels = new LinkedHashSet<MessageChannel<?, ?>>();
+
+	private Collection<Object> clients = new LinkedHashSet<Object>();
+
 	private boolean warn_unsent = true;
 
 
@@ -38,10 +40,6 @@ public class MessageBus implements Subscribable {
 
 		channels.add(channel);
 
-		for (Object c : clients) {
-			channel.addSubscriber(c);
-		}
-
 		return channel;
 	}
 
@@ -54,10 +52,6 @@ public class MessageBus implements Subscribable {
 	public void removeChannel(MessageChannel<?, ?> channel)
 	{
 		channels.remove(channel);
-
-		for (Object c : clients) {
-			channel.removeSubscriber(c);
-		}
 	}
 
 
@@ -70,9 +64,11 @@ public class MessageBus implements Subscribable {
 	public boolean broadcast(Object message)
 	{
 		boolean sent = false;
+
 		for (MessageChannel<?, ?> b : channels) {
-			sent |= b.broadcast(message);
+			sent |= b.broadcast(message, clients);
 		}
+
 		if (!sent && warn_unsent) Log.w("Message not accepted by any channel: " + message);
 
 		return sent;
@@ -80,19 +76,15 @@ public class MessageBus implements Subscribable {
 
 
 	/**
-	 * Subscribe a client to the bus. The client will be connected to all
-	 * current and future channels, until removed from the bus.
+	 * Connect a client to the bus. The client will be connected to all current
+	 * and future channels, until removed from the bus.
 	 * 
+	 * @param client the client
 	 * @return true on success
 	 */
-	@Override
-	public boolean addSubscriber(Object client)
+	public boolean subscribe(Object client)
 	{
 		if (client == null) return false;
-
-		for (MessageChannel<?, ?> b : channels) {
-			b.addSubscriber(client);
-		}
 
 		clients.add(client);
 
@@ -100,13 +92,13 @@ public class MessageBus implements Subscribable {
 	}
 
 
-	@Override
-	public void removeSubscriber(Object client)
+	/**
+	 * Disconnect a client from the bus.
+	 * 
+	 * @param client the client
+	 */
+	public void unsubscribe(Object client)
 	{
-		for (MessageChannel<?, ?> b : channels) {
-			b.removeSubscriber(client);
-		}
-
 		clients.remove(client);
 	}
 

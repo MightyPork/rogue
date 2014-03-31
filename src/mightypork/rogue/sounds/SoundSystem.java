@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.AppSubsystem;
+import mightypork.rogue.bus.DelegatingBusClient;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.coord.Coord;
@@ -25,7 +25,7 @@ import org.newdawn.slick.openal.SoundStore;
  * @author MightyPork
  */
 @SuppressWarnings("unchecked")
-public class SoundSystem extends AppSubsystem {
+public class SoundSystem extends DelegatingBusClient {
 
 	private static final Coord INITIAL_LISTENER_POS = new Coord(0, 0, 0);
 	private static final int MAX_SOURCES = 256;

@@ -1,5 +1,5 @@
-Dungeon crawler RPG
-===================
+Rogue - dungeon crawler
+=======================
 
 Goals
 -----
@@ -11,10 +11,19 @@ Goals
 Features
 --------
 
-- Randomly generated floors
-- Hybrid turn-based gameplay
+- Full OOP design
+- Event driven
+- OpenGL 2D rendering
+
+- Random floors
+- Real-time gameplay
+- Monsters with AI (-> combat system)
+
+
+Possibly added
+--------------
+
 - Stats and leveling
-- Monsters
 - Collectable items
 - Potions, food
 - Simple inventory system
@@ -24,5 +33,4 @@ Used libraries
 --------------
 
 - Slick2D
-- NiftyGUI
 - LWJGL

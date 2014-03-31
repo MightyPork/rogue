@@ -7,10 +7,10 @@ import java.nio.channels.FileLock;
 
 import javax.swing.JOptionPane;
 
+import mightypork.rogue.bus.events.UpdateEvent;
 import mightypork.rogue.display.DisplaySystem;
 import mightypork.rogue.display.Screen;
 import mightypork.rogue.display.ScreenTestAnimations;
-import mightypork.rogue.display.events.UpdateEvent;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.sounds.SoundSystem;
@@ -25,6 +25,11 @@ import mightypork.utils.time.TimerDelta;
 import org.lwjgl.input.Keyboard;
 
 
+/**
+ * Main class
+ * 
+ * @author MightyPork
+ */
 public class App implements Destroyable, AppAccess {
 
 	/** instance pointer */
@@ -61,7 +66,7 @@ public class App implements Destroyable, AppAccess {
 
 
 	/**
-	 * Show crash report dialog with error stack trace.
+	 * Handle a crash
 	 * 
 	 * @param error
 	 */
@@ -69,15 +74,12 @@ public class App implements Destroyable, AppAccess {
 	{
 		Log.e("The game has crashed.", error);
 
-		if (inst != null) inst.exit();
+		if (inst != null) inst.shutdown();
 	}
 
 
-	/**
-	 * Quit to OS<br>
-	 * Destroy app & exit VM
-	 */
-	public void exit()
+	@Override
+	public void shutdown()
 	{
 		destroy();
 		System.exit(0);
@@ -121,7 +123,7 @@ public class App implements Destroyable, AppAccess {
 			);
 			//@formatter:on
 
-			exit();
+			shutdown();
 			return;
 		}
 	}
@@ -165,7 +167,7 @@ public class App implements Destroyable, AppAccess {
 	private void initBus()
 	{
 		events = new MessageBus();
-		events.addSubscriber(this);
+		events.subscribe(this);
 
 		events.createChannel(UpdateEvent.class, UpdateEvent.Listener.class);
 	}
@@ -214,7 +216,7 @@ public class App implements Destroyable, AppAccess {
 			public void run()
 			{
 				Log.f3("CTRL+Q, shutting down.");
-				exit();
+				shutdown();
 			}
 		});
 	}
@@ -246,7 +248,7 @@ public class App implements Destroyable, AppAccess {
 	{
 		initialize();
 		mainLoop();
-		exit();
+		shutdown();
 	}
 
 	/** timer */
@@ -293,7 +295,7 @@ public class App implements Destroyable, AppAccess {
 	 * @return sound system of the running instance
 	 */
 	@Override
-	public SoundSystem soundsys()
+	public SoundSystem snd()
 	{
 		return sounds;
 	}
@@ -323,7 +325,7 @@ public class App implements Destroyable, AppAccess {
 	 * @return event bus
 	 */
 	@Override
-	public MessageBus msgbus()
+	public MessageBus bus()
 	{
 		return events;
 	}

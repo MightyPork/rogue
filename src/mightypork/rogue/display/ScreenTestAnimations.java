@@ -4,8 +4,8 @@ package mightypork.rogue.display;
 import java.util.Random;
 
 import mightypork.rogue.AppAccess;
+import mightypork.rogue.bus.events.MouseButtonEvent;
 import mightypork.rogue.input.KeyStroke;
-import mightypork.rogue.input.events.MouseButtonEvent;
 import mightypork.rogue.util.RenderUtils;
 import mightypork.utils.math.Polar;
 import mightypork.utils.math.color.RGB;

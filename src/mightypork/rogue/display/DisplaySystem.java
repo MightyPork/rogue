@@ -7,9 +7,9 @@ import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.AppSubsystem;
-import mightypork.rogue.display.constraints.ConstraintContext;
-import mightypork.rogue.display.events.ScreenChangeEvent;
+import mightypork.rogue.bus.DelegatingBusClient;
+import mightypork.rogue.bus.events.ScreenChangeEvent;
+import mightypork.rogue.display.constraints.Bounding;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
@@ -20,7 +20,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 
-public class DisplaySystem extends AppSubsystem implements ConstraintContext {
+public class DisplaySystem extends DelegatingBusClient implements Bounding {
 
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
@@ -51,7 +51,7 @@ public class DisplaySystem extends AppSubsystem implements ConstraintContext {
 	 */
 	private void initChannels()
 	{
-		msgbus().createChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
+		bus().createChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
 	}
 
 
@@ -101,7 +101,7 @@ public class DisplaySystem extends AppSubsystem implements ConstraintContext {
 				Display.update();
 			}
 
-			msgbus().broadcast(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
+			bus().broadcast(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
 
 		} catch (Throwable t) {
 			Log.e("Failed to toggle fullscreen mode.", t);
@@ -178,7 +178,7 @@ public class DisplaySystem extends AppSubsystem implements ConstraintContext {
 	public void beginFrame()
 	{
 		if (Display.wasResized()) {
-			msgbus().broadcast(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
+			bus().broadcast(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
 		}
 
 		glLoadIdentity();
