@@ -1,5 +1,6 @@
 package mightypork.utils.patterns.subscription;
 
+
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -12,10 +13,8 @@ import mightypork.utils.patterns.subscription.clients.ToggleableClient;
  * Message channel, module of {@link MessageBus}
  * 
  * @author MightyPork
- * @param <MESSAGE>
- *            message type
- * @param <CLIENT>
- *            client (subscriber) type
+ * @param <MESSAGE> message type
+ * @param <CLIENT> client (subscriber) type
  */
 final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	
@@ -36,10 +35,8 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	 * Try to broadcast a message.<br>
 	 * If message is of wrong type, <code>false</code> is returned.
 	 * 
-	 * @param message
-	 *            a message to be sent
-	 * @param clients
-	 *            collection of clients
+	 * @param message a message to be sent
+	 * @param clients collection of clients
 	 * @return true if message was accepted by this channel
 	 */
 	public boolean broadcast(Object message, Collection<Object> clients)
@@ -86,10 +83,8 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	/**
 	 * Send a message to a client.
 	 * 
-	 * @param client
-	 *            target client
-	 * @param message
-	 *            message to send
+	 * @param client target client
+	 * @param message message to send
 	 */
 	@SuppressWarnings("unchecked")
 	private void sendTo(Object client, MESSAGE message)
@@ -104,8 +99,7 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	 * Check if the given message can be broadcasted by this
 	 * {@link MessageChannel}
 	 * 
-	 * @param message
-	 *            event object
+	 * @param message event object
 	 * @return can be broadcasted
 	 */
 	public boolean canBroadcast(Object message)
@@ -152,10 +146,8 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	/**
 	 * Create an instance for given types
 	 * 
-	 * @param messageClass
-	 *            event class
-	 * @param clientClass
-	 *            client class
+	 * @param messageClass event class
+	 * @param clientClass client class
 	 * @return the broadcaster
 	 */
 	public static <F_MESSAGE extends Handleable<F_CLIENT>, F_CLIENT> MessageChannel<F_MESSAGE, F_CLIENT> create(Class<F_MESSAGE> messageClass, Class<F_CLIENT> clientClass)

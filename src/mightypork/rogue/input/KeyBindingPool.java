@@ -1,5 +1,6 @@
 package mightypork.rogue.input;
 
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -21,10 +22,8 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 	/**
 	 * Bind handler to a keystroke, replace current handler if any
 	 * 
-	 * @param stroke
-	 *            trigger keystroke
-	 * @param task
-	 *            handler
+	 * @param stroke trigger keystroke
+	 * @param task handler
 	 */
 	@Override
 	public void bindKeyStroke(KeyStroke stroke, Runnable task)
@@ -44,8 +43,7 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 	/**
 	 * Remove handler from keystroke (id any)
 	 * 
-	 * @param stroke
-	 *            stroke
+	 * @param stroke stroke
 	 */
 	@Override
 	public void unbindKeyStroke(KeyStroke stroke)

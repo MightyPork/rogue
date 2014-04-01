@@ -1,11 +1,13 @@
 package mightypork.utils.files;
 
+
 import java.io.File;
 
 
 public class OsUtils {
 	
-	public static enum EnumOS {
+	public static enum EnumOS
+	{
 		linux, macos, solaris, unknown, windows;
 		
 		public boolean isLinux()

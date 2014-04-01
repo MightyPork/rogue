@@ -1,5 +1,6 @@
 package mightypork.utils.files;
 
+
 import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
@@ -195,10 +196,8 @@ public class PropertyManager {
 		/**
 		 * Set additional comment to a key
 		 * 
-		 * @param key
-		 *            key for comment
-		 * @param comment
-		 *            the comment
+		 * @param key key for comment
+		 * @param comment the comment
 		 */
 		public void setKeyComment(String key, String comment)
 		{
@@ -263,7 +262,6 @@ public class PropertyManager {
 			bw.flush();
 		}
 	}
-	
 	
 	/**
 	 * Helper class which loads Properties from UTF-8 file (Properties use
@@ -339,7 +337,6 @@ public class PropertyManager {
 		}
 	}
 	
-	
 	/**
 	 * Property entry in Property manager.
 	 * 
@@ -366,14 +363,10 @@ public class PropertyManager {
 		/**
 		 * Property
 		 * 
-		 * @param key
-		 *            key
-		 * @param default_value
-		 *            default value
-		 * @param entry_type
-		 *            type
-		 * @param entry_comment
-		 *            entry comment
+		 * @param key key
+		 * @param default_value default value
+		 * @param entry_type type
+		 * @param entry_comment entry comment
 		 */
 		public Property(String key, boolean default_value, PropertyType entry_type, String entry_comment) {
 			name = key;
@@ -386,14 +379,10 @@ public class PropertyManager {
 		/**
 		 * Property entry
 		 * 
-		 * @param key
-		 *            property key
-		 * @param default_value
-		 *            default value
-		 * @param entry_type
-		 *            property type from enum
-		 * @param entry_comment
-		 *            property comment or null
+		 * @param key property key
+		 * @param default_value default value
+		 * @param entry_type property type from enum
+		 * @param entry_comment property comment or null
 		 */
 		public Property(String key, double default_value, PropertyType entry_type, String entry_comment) {
 			name = key;
@@ -406,14 +395,10 @@ public class PropertyManager {
 		/**
 		 * Property
 		 * 
-		 * @param key
-		 *            key
-		 * @param default_value
-		 *            default value
-		 * @param entry_type
-		 *            type
-		 * @param entry_comment
-		 *            entry comment
+		 * @param key key
+		 * @param default_value default value
+		 * @param entry_type type
+		 * @param entry_comment entry comment
 		 */
 		public Property(String key, String default_value, PropertyType entry_type, String entry_comment) {
 			name = key;
@@ -491,8 +476,7 @@ public class PropertyManager {
 		/**
 		 * Load property value from a file
 		 * 
-		 * @param string
-		 *            the string loaded
+		 * @param string the string loaded
 		 * @return was OK
 		 */
 		public boolean parse(String string)
@@ -597,11 +581,11 @@ public class PropertyManager {
 		}
 	}
 	
-	
 	/**
 	 * Property types
 	 */
-	private enum PropertyType {
+	private enum PropertyType
+	{
 		BOOLEAN, INT, STRING, DOUBLE;
 	}
 	
@@ -626,10 +610,8 @@ public class PropertyManager {
 	/**
 	 * Create property manager from file path and an initial comment.
 	 * 
-	 * @param file
-	 *            file with the props
-	 * @param comment
-	 *            the initial comment. Use \n in it if you want.
+	 * @param file file with the props
+	 * @param comment the initial comment. Use \n in it if you want.
 	 */
 	public PropertyManager(File file, String comment) {
 		this.file = file;
@@ -729,8 +711,7 @@ public class PropertyManager {
 	
 	
 	/**
-	 * @param newlineBeforeComments
-	 *            put newline before comments
+	 * @param newlineBeforeComments put newline before comments
 	 */
 	public void cfgNewlineBeforeComments(boolean newlineBeforeComments)
 	{
@@ -739,8 +720,7 @@ public class PropertyManager {
 	
 	
 	/**
-	 * @param separateSections
-	 *            do separate sections by newline
+	 * @param separateSections do separate sections by newline
 	 */
 	public void cfgSeparateSections(boolean separateSections)
 	{
@@ -749,8 +729,7 @@ public class PropertyManager {
 	
 	
 	/**
-	 * @param forceSave
-	 *            save even if unchanged.
+	 * @param forceSave save even if unchanged.
 	 */
 	public void cfgForceSave(boolean forceSave)
 	{
@@ -759,8 +738,7 @@ public class PropertyManager {
 	
 	
 	/**
-	 * @param validate
-	 *            enable validation
+	 * @param validate enable validation
 	 */
 	public void enableValidation(boolean validate)
 	{
@@ -771,8 +749,7 @@ public class PropertyManager {
 	/**
 	 * Get a property entry (rarely used)
 	 * 
-	 * @param n
-	 *            key
+	 * @param n key
 	 * @return the entry
 	 */
 	private Property get(String n)
@@ -788,8 +765,7 @@ public class PropertyManager {
 	/**
 	 * Get boolean property
 	 * 
-	 * @param n
-	 *            key
+	 * @param n key
 	 * @return the boolean found, or false
 	 */
 	public Boolean getBoolean(String n)
@@ -805,8 +781,7 @@ public class PropertyManager {
 	/**
 	 * Get numeric property
 	 * 
-	 * @param n
-	 *            key
+	 * @param n key
 	 * @return the int found, or null
 	 */
 	public Integer getInteger(String n)
@@ -822,8 +797,7 @@ public class PropertyManager {
 	/**
 	 * Get numeric property as double
 	 * 
-	 * @param n
-	 *            key
+	 * @param n key
 	 * @return the double found, or null
 	 */
 	public Double getDouble(String n)
@@ -839,8 +813,7 @@ public class PropertyManager {
 	/**
 	 * Get string property
 	 * 
-	 * @param n
-	 *            key
+	 * @param n key
 	 * @return the string found, or null
 	 */
 	public String getString(String n)
@@ -856,10 +829,8 @@ public class PropertyManager {
 	/**
 	 * Add a boolean property
 	 * 
-	 * @param n
-	 *            key
-	 * @param d
-	 *            default value
+	 * @param n key
+	 * @param d default value
 	 */
 	public void putBoolean(String n, boolean d)
 	{
@@ -871,12 +842,9 @@ public class PropertyManager {
 	/**
 	 * Add a boolean property
 	 * 
-	 * @param n
-	 *            key
-	 * @param d
-	 *            default value
-	 * @param comment
-	 *            the in-file comment
+	 * @param n key
+	 * @param d default value
+	 * @param comment the in-file comment
 	 */
 	public void putBoolean(String n, boolean d, String comment)
 	{
@@ -888,10 +856,8 @@ public class PropertyManager {
 	/**
 	 * Add a numeric property (double)
 	 * 
-	 * @param n
-	 *            key
-	 * @param d
-	 *            default value
+	 * @param n key
+	 * @param d default value
 	 */
 	public void putDouble(String n, int d)
 	{
@@ -903,12 +869,9 @@ public class PropertyManager {
 	/**
 	 * Add a numeric property (double)
 	 * 
-	 * @param n
-	 *            key
-	 * @param d
-	 *            default value
-	 * @param comment
-	 *            the in-file comment
+	 * @param n key
+	 * @param d default value
+	 * @param comment the in-file comment
 	 */
 	public void putDouble(String n, int d, String comment)
 	{
@@ -920,10 +883,8 @@ public class PropertyManager {
 	/**
 	 * Add a numeric property
 	 * 
-	 * @param n
-	 *            key
-	 * @param d
-	 *            default value
+	 * @param n key
+	 * @param d default value
 	 */
 	public void putInteger(String n, int d)
 	{
@@ -935,12 +896,9 @@ public class PropertyManager {
 	/**
 	 * Add a numeric property
 	 * 
-	 * @param n
-	 *            key
-	 * @param d
-	 *            default value
-	 * @param comment
-	 *            the in-file comment
+	 * @param n key
+	 * @param d default value
+	 * @param comment the in-file comment
 	 */
 	public void putInteger(String n, int d, String comment)
 	{
@@ -952,10 +910,8 @@ public class PropertyManager {
 	/**
 	 * Add a string property
 	 * 
-	 * @param n
-	 *            key
-	 * @param d
-	 *            default value
+	 * @param n key
+	 * @param d default value
 	 */
 	public void putString(String n, String d)
 	{
@@ -967,12 +923,9 @@ public class PropertyManager {
 	/**
 	 * Add a string property
 	 * 
-	 * @param n
-	 *            key
-	 * @param d
-	 *            default value
-	 * @param comment
-	 *            the in-file comment
+	 * @param n key
+	 * @param d default value
+	 * @param comment the in-file comment
 	 */
 	public void putString(String n, String d, String comment)
 	{
@@ -984,10 +937,8 @@ public class PropertyManager {
 	/**
 	 * Rename key before doing "apply"; value is preserved
 	 * 
-	 * @param oldKey
-	 *            old key
-	 * @param newKey
-	 *            new key
+	 * @param oldKey old key
+	 * @param newKey new key
 	 */
 	public void renameKey(String oldKey, String newKey)
 	{
@@ -1000,10 +951,8 @@ public class PropertyManager {
 	 * Set value saved to certain key; use to save runtime-changed configuration
 	 * values.
 	 * 
-	 * @param key
-	 *            key
-	 * @param value
-	 *            the saved value
+	 * @param key key
+	 * @param value the saved value
 	 */
 	public void setValue(String key, Object value)
 	{

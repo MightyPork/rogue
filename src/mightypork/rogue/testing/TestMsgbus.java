@@ -1,5 +1,6 @@
 package mightypork.rogue.testing;
 
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -181,7 +182,6 @@ class StringMessage implements Handleable<StringMessage.Listener> {
 		this.s = str;
 	}
 	
-	
 	public interface Listener {
 		
 		public void receive(StringMessage message);
@@ -204,7 +204,6 @@ class IntMessage implements Handleable<IntMessage.Listener> {
 	IntMessage(int i) {
 		this.i = i;
 	}
-	
 	
 	public interface Listener {
 		

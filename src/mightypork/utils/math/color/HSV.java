@@ -1,5 +1,6 @@
 package mightypork.utils.math.color;
 
+
 import java.awt.Color;
 
 import mightypork.utils.math.Calc;
@@ -72,8 +73,7 @@ public class HSV {
 	/**
 	 * Set color to other color
 	 * 
-	 * @param copied
-	 *            copied color
+	 * @param copied copied color
 	 * @return this
 	 */
 	public HSV setTo(HSV copied)
@@ -90,12 +90,9 @@ public class HSV {
 	/**
 	 * Set to H,S,V 0-1
 	 * 
-	 * @param h
-	 *            hue
-	 * @param s
-	 *            saturation
-	 * @param v
-	 *            value
+	 * @param h hue
+	 * @param s saturation
+	 * @param v value
 	 * @return this
 	 */
 	public HSV setTo(Number h, Number s, Number v)
@@ -137,8 +134,7 @@ public class HSV {
 	/**
 	 * Make from RGB
 	 * 
-	 * @param color
-	 *            RGB
+	 * @param color RGB
 	 * @return HSV
 	 */
 	public static HSV fromRGB(RGB color)

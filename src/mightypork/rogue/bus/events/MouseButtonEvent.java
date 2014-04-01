@@ -1,5 +1,6 @@
 package mightypork.rogue.bus.events;
 
+
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.patterns.subscription.Handleable;
 
@@ -24,14 +25,10 @@ public class MouseButtonEvent implements Handleable<MouseButtonEvent.Listener> {
 	/**
 	 * Mouse button event
 	 * 
-	 * @param pos
-	 *            event position
-	 * @param button
-	 *            button id
-	 * @param down
-	 *            button pressed
-	 * @param wheeld
-	 *            wheel change
+	 * @param pos event position
+	 * @param button button id
+	 * @param down button pressed
+	 * @param wheeld wheel change
 	 */
 	public MouseButtonEvent(Coord pos, int button, boolean down, int wheeld) {
 		this.button = button;
@@ -110,14 +107,12 @@ public class MouseButtonEvent implements Handleable<MouseButtonEvent.Listener> {
 		handler.receive(this);
 	}
 	
-	
 	public interface Listener {
 		
 		/**
 		 * Handle an event
 		 * 
-		 * @param event
-		 *            event
+		 * @param event event
 		 */
 		public void receive(MouseButtonEvent event);
 	}

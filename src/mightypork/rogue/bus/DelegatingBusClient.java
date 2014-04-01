@@ -1,5 +1,6 @@
 package mightypork.rogue.bus;
 
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -60,8 +61,7 @@ public abstract class DelegatingBusClient extends AppAdapter implements Delegati
 	/**
 	 * Remove a child subscriber
 	 * 
-	 * @param client
-	 *            subscriber to remove
+	 * @param client subscriber to remove
 	 */
 	public final void removeChildSubscriber(Object client)
 	{

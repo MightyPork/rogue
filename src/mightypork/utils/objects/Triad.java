@@ -1,5 +1,6 @@
 package mightypork.utils.objects;
 
+
 import mightypork.utils.math.Calc;
 
 
@@ -8,12 +9,9 @@ import mightypork.utils.math.Calc;
  * 
  * @author MightyPork
  * @copy (c) 2012
- * @param <T1>
- *            1st object class
- * @param <T2>
- *            2nd object class
- * @param <T3>
- *            3rd object class
+ * @param <T1> 1st object class
+ * @param <T2> 2nd object class
+ * @param <T3> 3rd object class
  */
 public class Triad<T1, T2, T3> extends Pair<T1, T2> {
 	
@@ -26,12 +24,9 @@ public class Triad<T1, T2, T3> extends Pair<T1, T2> {
 	/**
 	 * Make structure of 3 objects
 	 * 
-	 * @param objA
-	 *            1st object
-	 * @param objB
-	 *            2nd object
-	 * @param objC
-	 *            3rd object
+	 * @param objA 1st object
+	 * @param objB 2nd object
+	 * @param objC 3rd object
 	 */
 	public Triad(T1 objA, T2 objB, T3 objC) {
 		super(objA, objB);
@@ -51,8 +46,7 @@ public class Triad<T1, T2, T3> extends Pair<T1, T2> {
 	/**
 	 * Set 1st object
 	 * 
-	 * @param obj
-	 *            1st object
+	 * @param obj 1st object
 	 */
 	public void setThird(T3 obj)
 	{

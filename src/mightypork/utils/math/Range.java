@@ -1,5 +1,6 @@
 package mightypork.utils.math;
 
+
 import java.util.Random;
 
 
@@ -26,10 +27,8 @@ public class Range {
 	/**
 	 * Create new range
 	 * 
-	 * @param min
-	 *            min number
-	 * @param max
-	 *            max number
+	 * @param min min number
+	 * @param max max number
 	 */
 	public Range(double min, double max) {
 		if (min > max) {
@@ -45,8 +44,7 @@ public class Range {
 	/**
 	 * Create new range
 	 * 
-	 * @param minmax
-	 *            min = max number
+	 * @param minmax min = max number
 	 */
 	public Range(double minmax) {
 		this.min = minmax;
@@ -123,8 +121,7 @@ public class Range {
 	/**
 	 * Set min
 	 * 
-	 * @param min
-	 *            min value
+	 * @param min min value
 	 */
 	public void setMin(double min)
 	{
@@ -135,8 +132,7 @@ public class Range {
 	/**
 	 * Set max
 	 * 
-	 * @param max
-	 *            max value
+	 * @param max max value
 	 */
 	public void setMax(double max)
 	{
@@ -165,8 +161,7 @@ public class Range {
 	/**
 	 * Set to value of other range
 	 * 
-	 * @param other
-	 *            copied range
+	 * @param other copied range
 	 */
 	public void setTo(Range other)
 	{
@@ -185,10 +180,8 @@ public class Range {
 	/**
 	 * Set to min-max values
 	 * 
-	 * @param min
-	 *            min value
-	 * @param max
-	 *            max value
+	 * @param min min value
+	 * @param max max value
 	 */
 	public void setTo(double min, double max)
 	{

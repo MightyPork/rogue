@@ -1,5 +1,6 @@
 package mightypork.utils.objects;
 
+
 import mightypork.utils.math.Calc;
 
 
@@ -8,10 +9,8 @@ import mightypork.utils.math.Calc;
  * 
  * @author MightyPork
  * @copy (c) 2012
- * @param <T1>
- *            1st object class
- * @param <T2>
- *            2nd object class
+ * @param <T1> 1st object class
+ * @param <T2> 2nd object class
  */
 public class Pair<T1, T2> {
 	
@@ -29,10 +28,8 @@ public class Pair<T1, T2> {
 	/**
 	 * Make structure of 2 objects
 	 * 
-	 * @param first
-	 *            1st object
-	 * @param second
-	 *            2nd object
+	 * @param first 1st object
+	 * @param second 2nd object
 	 */
 	public Pair(T1 first, T2 second) {
 		this.first = first;

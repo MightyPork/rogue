@@ -1,5 +1,6 @@
 package mightypork.utils.math;
 
+
 import mightypork.utils.math.Calc.Deg;
 import mightypork.utils.math.Calc.Rad;
 import mightypork.utils.math.coord.Coord;
@@ -22,10 +23,8 @@ public class Polar {
 	/**
 	 * Create a polar
 	 * 
-	 * @param angle
-	 *            angle in RAD
-	 * @param distance
-	 *            distance from origin
+	 * @param angle angle in RAD
+	 * @param distance distance from origin
 	 */
 	public Polar(double angle, double distance) {
 		this(angle, false, distance);
@@ -35,12 +34,9 @@ public class Polar {
 	/**
 	 * Create a polar
 	 * 
-	 * @param angle
-	 *            angle
-	 * @param deg
-	 *            angle is in DEG
-	 * @param distance
-	 *            radius
+	 * @param angle angle
+	 * @param deg angle is in DEG
+	 * @param distance radius
 	 */
 	public Polar(double angle, boolean deg, double distance) {
 		this.radius = distance;
@@ -67,8 +63,7 @@ public class Polar {
 	
 	
 	/**
-	 * @param angle
-	 *            angle in RAD
+	 * @param angle angle in RAD
 	 */
 	public void setAngle(double angle)
 	{
@@ -77,8 +72,7 @@ public class Polar {
 	
 	
 	/**
-	 * @param angle
-	 *            angle in DEG
+	 * @param angle angle in DEG
 	 */
 	public void setAngleDeg(double angle)
 	{
@@ -96,8 +90,7 @@ public class Polar {
 	
 	
 	/**
-	 * @param r
-	 *            radius
+	 * @param r radius
 	 */
 	public void setRadius(double r)
 	{
@@ -108,8 +101,7 @@ public class Polar {
 	/**
 	 * Make polar from coord
 	 * 
-	 * @param coord
-	 *            coord
+	 * @param coord coord
 	 * @return polar
 	 */
 	public static Polar fromCoord(Coord coord)
@@ -121,10 +113,8 @@ public class Polar {
 	/**
 	 * Make polar from coords
 	 * 
-	 * @param x
-	 *            x coord
-	 * @param y
-	 *            y coord
+	 * @param x x coord
+	 * @param y y coord
 	 * @return polar
 	 */
 	public static Polar fromCoord(double x, double y)

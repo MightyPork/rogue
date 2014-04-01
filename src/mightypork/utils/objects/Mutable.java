@@ -1,11 +1,11 @@
 package mightypork.utils.objects;
 
+
 /**
  * Mutable object
  * 
  * @author MightyPork
- * @param <T>
- *            type
+ * @param <T> type
  */
 public class Mutable<T> {
 	
@@ -16,8 +16,7 @@ public class Mutable<T> {
 	/**
 	 * New mutable object
 	 * 
-	 * @param o
-	 *            value
+	 * @param o value
 	 */
 	public Mutable(T o) {
 		this.o = o;
@@ -38,8 +37,7 @@ public class Mutable<T> {
 	/**
 	 * Set value
 	 * 
-	 * @param o
-	 *            new value to set
+	 * @param o new value to set
 	 */
 	public void set(T o)
 	{

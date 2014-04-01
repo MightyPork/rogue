@@ -1,5 +1,6 @@
 package mightypork.rogue.util;
 
+
 import static org.lwjgl.opengl.GL11.*;
 import mightypork.rogue.textures.TextureManager;
 import mightypork.rogue.textures.TxQuad;
@@ -26,10 +27,8 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D
 	 * 
-	 * @param min
-	 *            min coord
-	 * @param max
-	 *            max coord
+	 * @param min min coord
+	 * @param max max coord
 	 */
 	public static void quadCoord(Coord min, Coord max)
 	{
@@ -40,14 +39,10 @@ public class RenderUtils {
 	/**
 	 * Render quad with absolute coords (from screen bottom)
 	 * 
-	 * @param left
-	 *            left x
-	 * @param bottom
-	 *            bottom y
-	 * @param right
-	 *            right x
-	 * @param top
-	 *            top y
+	 * @param left left x
+	 * @param bottom bottom y
+	 * @param right right x
+	 * @param top top y
 	 */
 	public static void quadCoord(double left, double bottom, double right, double top)
 	{
@@ -63,16 +58,11 @@ public class RenderUtils {
 	/**
 	 * Render quad with coloured border
 	 * 
-	 * @param min
-	 *            min
-	 * @param max
-	 *            max
-	 * @param border
-	 *            border width
-	 * @param borderColor
-	 *            border color
-	 * @param insideColor
-	 *            filling color
+	 * @param min min
+	 * @param max max
+	 * @param border border width
+	 * @param borderColor border color
+	 * @param insideColor filling color
 	 */
 	public static void quadCoordBorder(Coord min, Coord max, double border, RGB borderColor, RGB insideColor)
 	{
@@ -83,20 +73,13 @@ public class RenderUtils {
 	/**
 	 * Render quad with coloured border
 	 * 
-	 * @param minX
-	 *            min x
-	 * @param minY
-	 *            min y
-	 * @param maxX
-	 *            max x
-	 * @param maxY
-	 *            max y
-	 * @param border
-	 *            border width
-	 * @param borderColor
-	 *            border color
-	 * @param insideColor
-	 *            filling color
+	 * @param minX min x
+	 * @param minY min y
+	 * @param maxX max x
+	 * @param maxY max y
+	 * @param border border width
+	 * @param borderColor border color
+	 * @param insideColor filling color
 	 */
 	public static void quadCoordBorder(double minX, double minY, double maxX, double maxY, double border, RGB borderColor, RGB insideColor)
 	{
@@ -121,14 +104,10 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient horizontal
 	 * 
-	 * @param min
-	 *            min coord
-	 * @param max
-	 *            max coord
-	 * @param colorLeft
-	 *            color left
-	 * @param colorRight
-	 *            color right
+	 * @param min min coord
+	 * @param max max coord
+	 * @param colorLeft color left
+	 * @param colorRight color right
 	 */
 	public static void quadCoordGradH(Coord min, Coord max, RGB colorLeft, RGB colorRight)
 	{
@@ -139,18 +118,12 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient horizontal
 	 * 
-	 * @param minX
-	 *            units from left
-	 * @param minY
-	 *            units from bottom
-	 * @param maxX
-	 *            quad width
-	 * @param maxY
-	 *            quad height
-	 * @param colorLeft
-	 *            color left
-	 * @param colorRight
-	 *            color right
+	 * @param minX units from left
+	 * @param minY units from bottom
+	 * @param maxX quad width
+	 * @param maxY quad height
+	 * @param colorLeft color left
+	 * @param colorRight color right
 	 */
 	public static void quadCoordGradH(double minX, double minY, double maxX, double maxY, RGB colorLeft, RGB colorRight)
 	{
@@ -171,14 +144,10 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient horizontal
 	 * 
-	 * @param min
-	 *            min coord
-	 * @param max
-	 *            max coord
-	 * @param colorOuter
-	 *            color outer
-	 * @param colorMiddle
-	 *            color inner
+	 * @param min min coord
+	 * @param max max coord
+	 * @param colorOuter color outer
+	 * @param colorMiddle color inner
 	 */
 	public static void quadCoordGradHBilinear(Coord min, Coord max, RGB colorOuter, RGB colorMiddle)
 	{
@@ -189,18 +158,12 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient horizontal
 	 * 
-	 * @param minX
-	 *            min x
-	 * @param minY
-	 *            min y
-	 * @param maxX
-	 *            max x
-	 * @param maxY
-	 *            max y
-	 * @param colorOuter
-	 *            color outer
-	 * @param colorMiddle
-	 *            color inner
+	 * @param minX min x
+	 * @param minY min y
+	 * @param maxX max x
+	 * @param maxY max y
+	 * @param colorOuter color outer
+	 * @param colorMiddle color inner
 	 */
 	public static void quadCoordGradHBilinear(double minX, double minY, double maxX, double maxY, RGB colorOuter, RGB colorMiddle)
 	{
@@ -231,14 +194,10 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient vertical
 	 * 
-	 * @param min
-	 *            min coord
-	 * @param max
-	 *            max coord
-	 * @param colorTop
-	 *            top color
-	 * @param colorBottom
-	 *            bottom color
+	 * @param min min coord
+	 * @param max max coord
+	 * @param colorTop top color
+	 * @param colorBottom bottom color
 	 */
 	public static void quadCoordGradV(Coord min, Coord max, RGB colorTop, RGB colorBottom)
 	{
@@ -249,18 +208,12 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient vertical
 	 * 
-	 * @param minX
-	 *            min X
-	 * @param minY
-	 *            min Y
-	 * @param maxX
-	 *            max X
-	 * @param maxY
-	 *            max Y
-	 * @param colorTop
-	 *            top color
-	 * @param colorBottom
-	 *            bottom color
+	 * @param minX min X
+	 * @param minY min Y
+	 * @param maxX max X
+	 * @param maxY max Y
+	 * @param colorTop top color
+	 * @param colorBottom bottom color
 	 */
 	public static void quadCoordGradV(double minX, double minY, double maxX, double maxY, RGB colorTop, RGB colorBottom)
 	{
@@ -280,14 +233,10 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient vertical
 	 * 
-	 * @param min
-	 *            min coord
-	 * @param max
-	 *            max coord
-	 * @param colorOuter
-	 *            outer color
-	 * @param colorMiddle
-	 *            middle color
+	 * @param min min coord
+	 * @param max max coord
+	 * @param colorOuter outer color
+	 * @param colorMiddle middle color
 	 */
 	public static void quadCoordGradVBilinear(Coord min, Coord max, RGB colorOuter, RGB colorMiddle)
 	{
@@ -298,18 +247,12 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient vertical
 	 * 
-	 * @param minX
-	 *            min X
-	 * @param minY
-	 *            min Y
-	 * @param maxX
-	 *            max X
-	 * @param maxY
-	 *            max Y
-	 * @param colorOuter
-	 *            outer color
-	 * @param colorMiddle
-	 *            middle color
+	 * @param minX min X
+	 * @param minY min Y
+	 * @param maxX max X
+	 * @param maxY max Y
+	 * @param colorOuter outer color
+	 * @param colorMiddle middle color
 	 */
 	public static void quadCoordGradVBilinear(double minX, double minY, double maxX, double maxY, RGB colorOuter, RGB colorMiddle)
 	{
@@ -338,16 +281,11 @@ public class RenderUtils {
 	/**
 	 * Render quad with coloured border with outset effect
 	 * 
-	 * @param min
-	 *            min coord
-	 * @param max
-	 *            max coord
-	 * @param border
-	 *            border width
-	 * @param fill
-	 *            fill color
-	 * @param inset
-	 *            true for inset, false for outset
+	 * @param min min coord
+	 * @param max max coord
+	 * @param border border width
+	 * @param fill fill color
+	 * @param inset true for inset, false for outset
 	 */
 	public static void quadCoordOutset(Coord min, Coord max, double border, RGB fill, boolean inset)
 	{
@@ -358,20 +296,13 @@ public class RenderUtils {
 	/**
 	 * Render quad with coloured border with outset effect
 	 * 
-	 * @param minX
-	 *            left X
-	 * @param minY
-	 *            bottom Y
-	 * @param maxX
-	 *            right X
-	 * @param maxY
-	 *            top Y
-	 * @param border
-	 *            border width
-	 * @param fill
-	 *            fill color
-	 * @param inset
-	 *            true for inset, false for outset
+	 * @param minX left X
+	 * @param minY bottom Y
+	 * @param maxX right X
+	 * @param maxY top Y
+	 * @param border border width
+	 * @param fill fill color
+	 * @param inset true for inset, false for outset
 	 */
 	public static void quadCoordOutset(double minX, double minY, double maxX, double maxY, double border, RGB fill, boolean inset)
 	{
@@ -436,8 +367,7 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D
 	 * 
-	 * @param rect
-	 *            rectangle
+	 * @param rect rectangle
 	 */
 	public static void quadRect(Rect rect)
 	{
@@ -448,10 +378,8 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D
 	 * 
-	 * @param rect
-	 *            rectangle
-	 * @param color
-	 *            draw color
+	 * @param rect rectangle
+	 * @param color draw color
 	 */
 	public static void quadRect(Rect rect, RGB color)
 	{
@@ -463,14 +391,10 @@ public class RenderUtils {
 	/**
 	 * Render quad with coloured border
 	 * 
-	 * @param rect
-	 *            rect
-	 * @param border
-	 *            border width
-	 * @param borderColor
-	 *            border color
-	 * @param insideColor
-	 *            filling color
+	 * @param rect rect
+	 * @param border border width
+	 * @param borderColor border color
+	 * @param insideColor filling color
 	 */
 	public static void quadBorder(Rect rect, double border, RGB borderColor, RGB insideColor)
 	{
@@ -481,12 +405,9 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient horizontal
 	 * 
-	 * @param rect
-	 *            rect
-	 * @param colorLeft
-	 *            color left
-	 * @param colorRight
-	 *            color right
+	 * @param rect rect
+	 * @param colorLeft color left
+	 * @param colorRight color right
 	 */
 	public static void quadGradH(Rect rect, RGB colorLeft, RGB colorRight)
 	{
@@ -497,12 +418,9 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient horizontal
 	 * 
-	 * @param rect
-	 *            rect
-	 * @param colorOuter
-	 *            color outer
-	 * @param colorMiddle
-	 *            color inner
+	 * @param rect rect
+	 * @param colorOuter color outer
+	 * @param colorMiddle color inner
 	 */
 	public static void quadGradHBilinear(Rect rect, RGB colorOuter, RGB colorMiddle)
 	{
@@ -513,12 +431,9 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient vertical
 	 * 
-	 * @param rect
-	 *            rect
-	 * @param colorTop
-	 *            top color
-	 * @param colorBottom
-	 *            bottom color
+	 * @param rect rect
+	 * @param colorTop top color
+	 * @param colorBottom bottom color
 	 */
 	public static void quadGradV(Rect rect, RGB colorTop, RGB colorBottom)
 	{
@@ -529,12 +444,9 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D with gradient vertical
 	 * 
-	 * @param rect
-	 *            rect
-	 * @param colorOuter
-	 *            outer color
-	 * @param colorMiddle
-	 *            middle color
+	 * @param rect rect
+	 * @param colorOuter outer color
+	 * @param colorMiddle middle color
 	 */
 	public static void quadGradVBilinear(Rect rect, RGB colorOuter, RGB colorMiddle)
 	{
@@ -545,14 +457,10 @@ public class RenderUtils {
 	/**
 	 * Render quad with coloured border with outset effect
 	 * 
-	 * @param rect
-	 *            rectangle
-	 * @param border
-	 *            border width
-	 * @param fill
-	 *            fill color
-	 * @param inset
-	 *            true for inset, false for outset
+	 * @param rect rectangle
+	 * @param border border width
+	 * @param fill fill color
+	 * @param inset true for inset, false for outset
 	 */
 	public static void quadRectOutset(Rect rect, double border, RGB fill, boolean inset)
 	{
@@ -563,10 +471,8 @@ public class RenderUtils {
 	/**
 	 * Render textured rect (texture must be binded already)
 	 * 
-	 * @param quad
-	 *            rectangle (px)
-	 * @param textureCoords
-	 *            texture coords (0-1)
+	 * @param quad rectangle (px)
+	 * @param textureCoords texture coords (0-1)
 	 */
 	public static void quadTexturedAbs(Rect quad, Rect textureCoords)
 	{
@@ -596,12 +502,9 @@ public class RenderUtils {
 	/**
 	 * Render textured rect
 	 * 
-	 * @param quad
-	 *            rectangle (px)
-	 * @param txCoords
-	 *            texture coords rectangle (px)
-	 * @param texture
-	 *            texture instance
+	 * @param quad rectangle (px)
+	 * @param txCoords texture coords rectangle (px)
+	 * @param texture texture instance
 	 */
 	public static void quadTextured(Rect quad, Rect txCoords, Texture texture)
 	{
@@ -612,14 +515,10 @@ public class RenderUtils {
 	/**
 	 * Render textured rect
 	 * 
-	 * @param quad
-	 *            rectangle (px)
-	 * @param txCoords
-	 *            texture coords rectangle (px)
-	 * @param texture
-	 *            texture instance
-	 * @param tint
-	 *            color tint
+	 * @param quad rectangle (px)
+	 * @param txCoords texture coords rectangle (px)
+	 * @param texture texture instance
+	 * @param tint color tint
 	 */
 	public static void quadTextured(Rect quad, Rect txCoords, Texture texture, RGB tint)
 	{
@@ -637,10 +536,8 @@ public class RenderUtils {
 	/**
 	 * Render textured rect
 	 * 
-	 * @param quad
-	 *            rectangle (px)
-	 * @param txquad
-	 *            texture quad
+	 * @param quad rectangle (px)
+	 * @param txquad texture quad
 	 */
 	public static void quadTextured(Rect quad, TxQuad txquad)
 	{
@@ -651,12 +548,9 @@ public class RenderUtils {
 	/**
 	 * Render textured rect
 	 * 
-	 * @param quad
-	 *            rectangle (px)
-	 * @param txquad
-	 *            texture instance
-	 * @param tint
-	 *            color tint
+	 * @param quad rectangle (px)
+	 * @param txquad texture instance
+	 * @param tint color tint
 	 */
 	public static void quadTextured(Rect quad, TxQuad txquad, RGB tint)
 	{
@@ -667,14 +561,10 @@ public class RenderUtils {
 	/**
 	 * Render textured frame with borders
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param textureRect
-	 *            rectangle in texture with the basic frame (px)
-	 * @param yOffsetTimes
-	 *            offset count (move frame down n times)
-	 * @param texture
-	 *            the texture
+	 * @param quadRect drawn rectangle (px)
+	 * @param textureRect rectangle in texture with the basic frame (px)
+	 * @param yOffsetTimes offset count (move frame down n times)
+	 * @param texture the texture
 	 */
 	public static void quadTexturedFrame(Rect quadRect, Rect textureRect, int yOffsetTimes, Texture texture)
 	{
@@ -685,16 +575,11 @@ public class RenderUtils {
 	/**
 	 * Render textured frame with borders
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param textureRect
-	 *            rectangle in texture with the basic frame (px)
-	 * @param yOffsetTimes
-	 *            offset count (move frame down n times)
-	 * @param texture
-	 *            the texture
-	 * @param tint
-	 *            color tint
+	 * @param quadRect drawn rectangle (px)
+	 * @param textureRect rectangle in texture with the basic frame (px)
+	 * @param yOffsetTimes offset count (move frame down n times)
+	 * @param texture the texture
+	 * @param tint color tint
 	 */
 	public static void quadTexturedFrame(Rect quadRect, Rect textureRect, int yOffsetTimes, Texture texture, RGB tint)
 	{
@@ -755,12 +640,9 @@ public class RenderUtils {
 	/**
 	 * Render textured frame with borders
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param textureRect
-	 *            rectangle in texture with the basic frame (px)
-	 * @param texture
-	 *            the texture
+	 * @param quadRect drawn rectangle (px)
+	 * @param textureRect rectangle in texture with the basic frame (px)
+	 * @param texture the texture
 	 */
 	public static void quadTexturedFrame(Rect quadRect, Rect textureRect, Texture texture)
 	{
@@ -771,10 +653,8 @@ public class RenderUtils {
 	/**
 	 * Render textured frame with borders
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param txquad
-	 *            texture quad
+	 * @param quadRect drawn rectangle (px)
+	 * @param txquad texture quad
 	 */
 	public static void quadTexturedFrame(Rect quadRect, TxQuad txquad)
 	{
@@ -785,12 +665,9 @@ public class RenderUtils {
 	/**
 	 * Render textured frame with borders
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param txquad
-	 *            texture quad
-	 * @param yOffsetTimes
-	 *            offset count (move frame down n times)
+	 * @param quadRect drawn rectangle (px)
+	 * @param txquad texture quad
+	 * @param yOffsetTimes offset count (move frame down n times)
 	 */
 	public static void quadTexturedFrame(Rect quadRect, TxQuad txquad, int yOffsetTimes)
 	{
@@ -801,14 +678,10 @@ public class RenderUtils {
 	/**
 	 * Render textured frame with borders
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param txquad
-	 *            texture quad
-	 * @param yOffsetTimes
-	 *            offset count (move frame down n times)
-	 * @param tint
-	 *            color tint
+	 * @param quadRect drawn rectangle (px)
+	 * @param txquad texture quad
+	 * @param yOffsetTimes offset count (move frame down n times)
+	 * @param tint color tint
 	 */
 	public static void quadTexturedFrame(Rect quadRect, TxQuad txquad, int yOffsetTimes, RGB tint)
 	{
@@ -820,14 +693,10 @@ public class RenderUtils {
 	 * Render textured frame stretching horizontally (rect height = texture rect
 	 * height)
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param textureRect
-	 *            rectangle in texture with the basic frame (px)
-	 * @param borderSize
-	 *            size of the unstretched horizontal border
-	 * @param texture
-	 *            the texture
+	 * @param quadRect drawn rectangle (px)
+	 * @param textureRect rectangle in texture with the basic frame (px)
+	 * @param borderSize size of the unstretched horizontal border
+	 * @param texture the texture
 	 */
 	public static void quadTexturedStretchH(Rect quadRect, Rect textureRect, int borderSize, Texture texture)
 	{
@@ -839,16 +708,11 @@ public class RenderUtils {
 	 * Render textured frame stretching horizontally (rect height = texture rect
 	 * height)
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param textureRect
-	 *            rectangle in texture with the basic frame (px)
-	 * @param borderSize
-	 *            size of the unstretched horizontal border
-	 * @param texture
-	 *            the texture
-	 * @param tint
-	 *            color tint
+	 * @param quadRect drawn rectangle (px)
+	 * @param textureRect rectangle in texture with the basic frame (px)
+	 * @param borderSize size of the unstretched horizontal border
+	 * @param texture the texture
+	 * @param tint color tint
 	 */
 	public static void quadTexturedStretchH(Rect quadRect, Rect textureRect, int borderSize, Texture texture, RGB tint)
 	{
@@ -889,12 +753,9 @@ public class RenderUtils {
 	 * Render textured frame stretching horizontally (rect height = texture rect
 	 * height)
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param txquad
-	 *            texture quad
-	 * @param borderSize
-	 *            size of the unstretched horizontal border
+	 * @param quadRect drawn rectangle (px)
+	 * @param txquad texture quad
+	 * @param borderSize size of the unstretched horizontal border
 	 */
 	public static void quadTexturedStretchH(Rect quadRect, TxQuad txquad, int borderSize)
 	{
@@ -906,14 +767,10 @@ public class RenderUtils {
 	 * Render textured frame stretching horizontally (rect height = texture rect
 	 * height)
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param txquad
-	 *            texture quad
-	 * @param borderSize
-	 *            size of the unstretched horizontal border
-	 * @param tint
-	 *            color tint
+	 * @param quadRect drawn rectangle (px)
+	 * @param txquad texture quad
+	 * @param borderSize size of the unstretched horizontal border
+	 * @param tint color tint
 	 */
 	public static void quadTexturedStretchH(Rect quadRect, TxQuad txquad, int borderSize, RGB tint)
 	{
@@ -925,14 +782,10 @@ public class RenderUtils {
 	 * Render textured frame stretching vertically (rect width = texture rect
 	 * width)
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param textureRect
-	 *            rectangle in texture with the basic frame (px)
-	 * @param borderSize
-	 *            size of the unstretched horizontal border
-	 * @param texture
-	 *            the texture
+	 * @param quadRect drawn rectangle (px)
+	 * @param textureRect rectangle in texture with the basic frame (px)
+	 * @param borderSize size of the unstretched horizontal border
+	 * @param texture the texture
 	 */
 	public static void quadTexturedStretchV(Rect quadRect, Rect textureRect, int borderSize, Texture texture)
 	{
@@ -944,16 +797,11 @@ public class RenderUtils {
 	 * Render textured frame stretching vertically (rect width = texture rect
 	 * width)
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param textureRect
-	 *            rectangle in texture with the basic frame (px)
-	 * @param borderSize
-	 *            size of the unstretched horizontal border
-	 * @param texture
-	 *            the texture
-	 * @param tint
-	 *            color tint
+	 * @param quadRect drawn rectangle (px)
+	 * @param textureRect rectangle in texture with the basic frame (px)
+	 * @param borderSize size of the unstretched horizontal border
+	 * @param texture the texture
+	 * @param tint color tint
 	 */
 	public static void quadTexturedStretchV(Rect quadRect, Rect textureRect, int borderSize, Texture texture, RGB tint)
 	{
@@ -996,12 +844,9 @@ public class RenderUtils {
 	 * Render textured frame stretching vertically (rect width = texture rect
 	 * width)
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param txquad
-	 *            texture quad
-	 * @param borderSize
-	 *            size of the unstretched horizontal border
+	 * @param quadRect drawn rectangle (px)
+	 * @param txquad texture quad
+	 * @param borderSize size of the unstretched horizontal border
 	 */
 	public static void quadTexturedStretchV(Rect quadRect, TxQuad txquad, int borderSize)
 	{
@@ -1013,14 +858,10 @@ public class RenderUtils {
 	 * Render textured frame stretching vertically (rect width = texture rect
 	 * width)
 	 * 
-	 * @param quadRect
-	 *            drawn rectangle (px)
-	 * @param txquad
-	 *            texture quad
-	 * @param borderSize
-	 *            size of the unstretched horizontal border
-	 * @param tint
-	 *            color tint
+	 * @param quadRect drawn rectangle (px)
+	 * @param txquad texture quad
+	 * @param borderSize size of the unstretched horizontal border
+	 * @param tint color tint
 	 */
 	public static void quadTexturedStretchV(Rect quadRect, TxQuad txquad, int borderSize, RGB tint)
 	{
@@ -1032,14 +873,10 @@ public class RenderUtils {
 	/**
 	 * Render quad 2D
 	 * 
-	 * @param left
-	 *            units from left
-	 * @param bottom
-	 *            units from bottom
-	 * @param width
-	 *            quad width
-	 * @param height
-	 *            quad height
+	 * @param left units from left
+	 * @param bottom units from bottom
+	 * @param width quad width
+	 * @param height quad height
 	 */
 	public static void quadSize(double left, double bottom, double width, double height)
 	{
@@ -1055,8 +892,7 @@ public class RenderUtils {
 	/**
 	 * Bind GL color
 	 * 
-	 * @param color
-	 *            RGB color
+	 * @param color RGB color
 	 */
 	public static void setColor(RGB color)
 	{
@@ -1067,10 +903,8 @@ public class RenderUtils {
 	/**
 	 * Bind GL color
 	 * 
-	 * @param color
-	 *            RGB color
-	 * @param alpha
-	 *            alpha multiplier
+	 * @param color RGB color
+	 * @param alpha alpha multiplier
 	 */
 	public static void setColor(RGB color, double alpha)
 	{
@@ -1081,8 +915,7 @@ public class RenderUtils {
 	/**
 	 * Translate with coord
 	 * 
-	 * @param coord
-	 *            coord
+	 * @param coord coord
 	 */
 	public static void translate(Coord coord)
 	{

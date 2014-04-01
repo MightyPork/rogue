@@ -1,5 +1,6 @@
 package mightypork.rogue.bus.events;
 
+
 import mightypork.utils.patterns.subscription.Handleable;
 
 import org.lwjgl.input.Keyboard;
@@ -66,14 +67,12 @@ public class KeyboardEvent implements Handleable<KeyboardEvent.Listener> {
 		keh.receive(this);
 	}
 	
-	
 	public interface Listener {
 		
 		/**
 		 * Handle an event
 		 * 
-		 * @param event
-		 *            event
+		 * @param event event
 		 */
 		public void receive(KeyboardEvent event);
 	}

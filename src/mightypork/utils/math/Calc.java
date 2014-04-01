@@ -1,5 +1,6 @@
 package mightypork.utils.math;
 
+
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +26,9 @@ public class Calc {
 	/**
 	 * Get distance from 2D line to 2D point [X,Y]
 	 * 
-	 * @param lineDirVec
-	 *            line directional vector
-	 * @param linePoint
-	 *            point of line
-	 * @param point
-	 *            point coordinate
+	 * @param lineDirVec line directional vector
+	 * @param linePoint point of line
+	 * @param point point coordinate
 	 * @return distance
 	 */
 	public static double linePointDist(Coord lineDirVec, Coord linePoint, Coord point)
@@ -56,12 +54,9 @@ public class Calc {
 	/**
 	 * Get distance from 2D line to 2D point [X,Z]
 	 * 
-	 * @param lineDirVec
-	 *            line directional vector
-	 * @param linePoint
-	 *            point of line
-	 * @param point
-	 *            point coordinate
+	 * @param lineDirVec line directional vector
+	 * @param linePoint point of line
+	 * @param point point coordinate
 	 * @return distance
 	 */
 	public static double linePointDistXZ(Coord lineDirVec, Coord linePoint, Coord point)
@@ -73,10 +68,8 @@ public class Calc {
 	/**
 	 * Get longest side of a right-angled triangle
 	 * 
-	 * @param a
-	 *            side a (opposite)
-	 * @param b
-	 *            side b (adjacent)
+	 * @param a side a (opposite)
+	 * @param b side b (adjacent)
 	 * @return longest side (hypotenuse)
 	 */
 	public static double pythC(double a, double b)
@@ -88,10 +81,8 @@ public class Calc {
 	/**
 	 * Get adjacent side of a right-angled triangle
 	 * 
-	 * @param a
-	 *            side a (opposite)
-	 * @param c
-	 *            side c (hypotenuse)
+	 * @param a side a (opposite)
+	 * @param c side c (hypotenuse)
 	 * @return side b (adjacent)
 	 */
 	public static double pythB(double a, double c)
@@ -103,17 +94,14 @@ public class Calc {
 	/**
 	 * Get opposite side of a right-angled triangle
 	 * 
-	 * @param b
-	 *            side b (adjacent)
-	 * @param c
-	 *            side c (hypotenuse)
+	 * @param b side b (adjacent)
+	 * @param c side c (hypotenuse)
 	 * @return side a (opposite)
 	 */
 	public static double pythA(double b, double c)
 	{
 		return Math.sqrt(square(c) - square(b));
 	}
-	
 	
 	private static class Angles {
 		
@@ -138,7 +126,6 @@ public class Calc {
 		}
 	}
 	
-	
 	/**
 	 * Calc subclass with buffer utils.
 	 * 
@@ -149,8 +136,7 @@ public class Calc {
 		/**
 		 * Create java.nio.FloatBuffer of given floats, and flip it.
 		 * 
-		 * @param obj
-		 *            floats or float array
+		 * @param obj floats or float array
 		 * @return float buffer
 		 */
 		public static FloatBuffer mkFillBuff(float... obj)
@@ -175,8 +161,7 @@ public class Calc {
 		/**
 		 * Create new java.nio.FloatBuffer of given length
 		 * 
-		 * @param count
-		 *            elements
+		 * @param count elements
 		 * @return the new java.nio.FloatBuffer
 		 */
 		public static FloatBuffer alloc(int count)
@@ -185,7 +170,6 @@ public class Calc {
 		}
 		
 	}
-	
 	
 	/**
 	 * Angle calculations for degrees.
@@ -209,10 +193,8 @@ public class Calc {
 		/**
 		 * Subtract two angles alpha - beta
 		 * 
-		 * @param alpha
-		 *            first angle
-		 * @param beta
-		 *            second angle
+		 * @param alpha first angle
+		 * @param beta second angle
 		 * @return (alpha - beta) in degrees
 		 */
 		public static double delta(double alpha, double beta)
@@ -224,10 +206,8 @@ public class Calc {
 		/**
 		 * Difference of two angles (absolute value of delta)
 		 * 
-		 * @param alpha
-		 *            first angle
-		 * @param beta
-		 *            second angle
+		 * @param alpha first angle
+		 * @param beta second angle
 		 * @return difference in radians
 		 */
 		public static double diff(double alpha, double beta)
@@ -239,8 +219,7 @@ public class Calc {
 		/**
 		 * Cosinus in degrees
 		 * 
-		 * @param deg
-		 *            angle in degrees
+		 * @param deg angle in degrees
 		 * @return cosinus
 		 */
 		public static double cos(double deg)
@@ -252,8 +231,7 @@ public class Calc {
 		/**
 		 * Sinus in degrees
 		 * 
-		 * @param deg
-		 *            angle in degrees
+		 * @param deg angle in degrees
 		 * @return sinus
 		 */
 		public static double sin(double deg)
@@ -265,8 +243,7 @@ public class Calc {
 		/**
 		 * Tangents in degrees
 		 * 
-		 * @param deg
-		 *            angle in degrees
+		 * @param deg angle in degrees
 		 * @return tangents
 		 */
 		public static double tan(double deg)
@@ -278,8 +255,7 @@ public class Calc {
 		/**
 		 * Angle normalized to 0-360 range
 		 * 
-		 * @param angle
-		 *            angle to normalize
+		 * @param angle angle to normalize
 		 * @return normalized angle
 		 */
 		public static double norm(double angle)
@@ -291,8 +267,7 @@ public class Calc {
 		/**
 		 * Convert to radians
 		 * 
-		 * @param deg
-		 *            degrees
+		 * @param deg degrees
 		 * @return radians
 		 */
 		public static double toRad(double deg)
@@ -304,10 +279,8 @@ public class Calc {
 		/**
 		 * Round angle to 0,45,90,135...
 		 * 
-		 * @param deg
-		 *            angle in deg. to round
-		 * @param x
-		 *            rounding increment (45 - round to 0,45,90...)
+		 * @param deg angle in deg. to round
+		 * @param x rounding increment (45 - round to 0,45,90...)
 		 * @return rounded
 		 */
 		public static int roundX(double deg, double x)
@@ -325,8 +298,7 @@ public class Calc {
 		/**
 		 * Round angle to 0,45,90,135...
 		 * 
-		 * @param deg
-		 *            angle in deg. to round
+		 * @param deg angle in deg. to round
 		 * @return rounded
 		 */
 		public static int round45(double deg)
@@ -338,8 +310,7 @@ public class Calc {
 		/**
 		 * Round angle to 0,90,180,270
 		 * 
-		 * @param deg
-		 *            angle in deg. to round
+		 * @param deg angle in deg. to round
 		 * @return rounded
 		 */
 		public static int round90(double deg)
@@ -351,8 +322,7 @@ public class Calc {
 		/**
 		 * Round angle to 0,15,30,45,60,75,90...
 		 * 
-		 * @param deg
-		 *            angle in deg to round
+		 * @param deg angle in deg to round
 		 * @return rounded
 		 */
 		public static int round15(double deg)
@@ -360,7 +330,6 @@ public class Calc {
 			return roundX(deg, 15);
 		}
 	}
-	
 	
 	/**
 	 * Angle calculations for radians.
@@ -384,10 +353,8 @@ public class Calc {
 		/**
 		 * Subtract two angles alpha - beta
 		 * 
-		 * @param alpha
-		 *            first angle
-		 * @param beta
-		 *            second angle
+		 * @param alpha first angle
+		 * @param beta second angle
 		 * @return (alpha - beta) in radians
 		 */
 		public static double delta(double alpha, double beta)
@@ -399,10 +366,8 @@ public class Calc {
 		/**
 		 * Difference of two angles (absolute value of delta)
 		 * 
-		 * @param alpha
-		 *            first angle
-		 * @param beta
-		 *            second angle
+		 * @param alpha first angle
+		 * @param beta second angle
 		 * @return difference in radians
 		 */
 		public static double diff(double alpha, double beta)
@@ -414,8 +379,7 @@ public class Calc {
 		/**
 		 * Cos
 		 * 
-		 * @param rad
-		 *            angle in rads
+		 * @param rad angle in rads
 		 * @return cos
 		 */
 		public static double cos(double rad)
@@ -427,8 +391,7 @@ public class Calc {
 		/**
 		 * Sin
 		 * 
-		 * @param rad
-		 *            angle in rads
+		 * @param rad angle in rads
 		 * @return sin
 		 */
 		public static double sin(double rad)
@@ -440,8 +403,7 @@ public class Calc {
 		/**
 		 * Tan
 		 * 
-		 * @param rad
-		 *            angle in rads
+		 * @param rad angle in rads
 		 * @return tan
 		 */
 		public static double tan(double rad)
@@ -453,8 +415,7 @@ public class Calc {
 		/**
 		 * Angle normalized to 0-2*PI range
 		 * 
-		 * @param angle
-		 *            angle to normalize
+		 * @param angle angle to normalize
 		 * @return normalized angle
 		 */
 		public static double norm(double angle)
@@ -466,8 +427,7 @@ public class Calc {
 		/**
 		 * Convert to degrees
 		 * 
-		 * @param rad
-		 *            radians
+		 * @param rad radians
 		 * @return degrees
 		 */
 		public static double toDeg(double rad)
@@ -482,8 +442,7 @@ public class Calc {
 	/**
 	 * Get volume of a sphere
 	 * 
-	 * @param radius
-	 *            sphere radius
+	 * @param radius sphere radius
 	 * @return volume in cubic units
 	 */
 	public static double sphereGetVolume(double radius)
@@ -495,8 +454,7 @@ public class Calc {
 	/**
 	 * Get radius of a sphere
 	 * 
-	 * @param volume
-	 *            sphere volume
+	 * @param volume sphere volume
 	 * @return radius in units
 	 */
 	public static double sphereGetRadius(double volume)
@@ -508,8 +466,7 @@ public class Calc {
 	/**
 	 * Get surface of a circle
 	 * 
-	 * @param radius
-	 *            circle radius
+	 * @param radius circle radius
 	 * @return volume in square units
 	 */
 	public static double circleGetSurface(double radius)
@@ -521,8 +478,7 @@ public class Calc {
 	/**
 	 * Get radius of a circle
 	 * 
-	 * @param surface
-	 *            circle volume
+	 * @param surface circle volume
 	 * @return radius in units
 	 */
 	public static double circleGetRadius(double surface)
@@ -547,12 +503,9 @@ public class Calc {
 	/**
 	 * Private clamping helper.
 	 * 
-	 * @param number
-	 *            number to be clamped
-	 * @param min
-	 *            min value
-	 * @param max
-	 *            max value
+	 * @param number number to be clamped
+	 * @param min min value
+	 * @param max max value
 	 * @return clamped double
 	 */
 	private static double clamp_double(Number number, Number min, Number max)
@@ -570,10 +523,8 @@ public class Calc {
 	/**
 	 * Private clamping helper.
 	 * 
-	 * @param number
-	 *            number to be clamped
-	 * @param min
-	 *            min value
+	 * @param number number to be clamped
+	 * @param min min value
 	 * @return clamped double
 	 */
 	private static double clamp_double(Number number, Number min)
@@ -589,12 +540,9 @@ public class Calc {
 	 * Clamp number to min and max bounds, inclusive.<br>
 	 * DOUBLE version
 	 * 
-	 * @param number
-	 *            clamped number
-	 * @param min
-	 *            minimal allowed value
-	 * @param max
-	 *            maximal allowed value
+	 * @param number clamped number
+	 * @param min minimal allowed value
+	 * @param max maximal allowed value
 	 * @return result
 	 */
 	public static double clampd(Number number, Number min, Number max)
@@ -607,12 +555,9 @@ public class Calc {
 	 * Clamp number to min and max bounds, inclusive.<br>
 	 * FLOAT version
 	 * 
-	 * @param number
-	 *            clamped number
-	 * @param min
-	 *            minimal allowed value
-	 * @param max
-	 *            maximal allowed value
+	 * @param number clamped number
+	 * @param min minimal allowed value
+	 * @param max maximal allowed value
 	 * @return result
 	 */
 	public static float clampf(Number number, Number min, Number max)
@@ -625,12 +570,9 @@ public class Calc {
 	 * Clamp number to min and max bounds, inclusive.<br>
 	 * INTEGER version
 	 * 
-	 * @param number
-	 *            clamped number
-	 * @param min
-	 *            minimal allowed value
-	 * @param max
-	 *            maximal allowed value
+	 * @param number clamped number
+	 * @param min minimal allowed value
+	 * @param max maximal allowed value
 	 * @return result
 	 */
 	public static int clampi(Number number, Number min, Number max)
@@ -643,10 +585,8 @@ public class Calc {
 	 * Clamp number to min and max bounds, inclusive.<br>
 	 * INTEGER version
 	 * 
-	 * @param number
-	 *            clamped number
-	 * @param range
-	 *            range
+	 * @param number clamped number
+	 * @param range range
 	 * @return result
 	 */
 	public static int clampi(Number number, Range range)
@@ -659,10 +599,8 @@ public class Calc {
 	 * Clamp number to min and max bounds, inclusive.<br>
 	 * DOUBLE version
 	 * 
-	 * @param number
-	 *            clamped number
-	 * @param range
-	 *            range
+	 * @param number clamped number
+	 * @param range range
 	 * @return result
 	 */
 	public static double clampd(Number number, Range range)
@@ -675,10 +613,8 @@ public class Calc {
 	 * Clamp number to min and max bounds, inclusive.<br>
 	 * FLOAT version
 	 * 
-	 * @param number
-	 *            clamped number
-	 * @param range
-	 *            range
+	 * @param number clamped number
+	 * @param range range
 	 * @return result
 	 */
 	public static float clampf(Number number, Range range)
@@ -691,10 +627,8 @@ public class Calc {
 	 * Clamp number to min and infinite bounds, inclusive.<br>
 	 * DOUBLE version
 	 * 
-	 * @param number
-	 *            clamped number
-	 * @param min
-	 *            minimal allowed value
+	 * @param number clamped number
+	 * @param min minimal allowed value
 	 * @return result
 	 */
 	public static double clampd(Number number, Number min)
@@ -707,10 +641,8 @@ public class Calc {
 	 * Clamp number to min and infinite bounds, inclusive.<br>
 	 * FLOAT version
 	 * 
-	 * @param number
-	 *            clamped number
-	 * @param min
-	 *            minimal allowed value
+	 * @param number clamped number
+	 * @param min minimal allowed value
 	 * @return result
 	 */
 	public static float clampf(Number number, Number min)
@@ -723,10 +655,8 @@ public class Calc {
 	 * Clamp number to min and infinite bounds, inclusive.<br>
 	 * INTEGER version
 	 * 
-	 * @param number
-	 *            clamped number
-	 * @param min
-	 *            minimal allowed value
+	 * @param number clamped number
+	 * @param min minimal allowed value
 	 * @return result
 	 */
 	public static int clampi(Number number, Number min)
@@ -738,8 +668,7 @@ public class Calc {
 	/**
 	 * Get class simple name
 	 * 
-	 * @param obj
-	 *            object
+	 * @param obj object
 	 * @return simple name
 	 */
 	public static String cname(Object obj)
@@ -752,8 +681,7 @@ public class Calc {
 	/**
 	 * Cube a double
 	 * 
-	 * @param a
-	 *            squared double
+	 * @param a squared double
 	 * @return square
 	 */
 	public static double cube(double a)
@@ -765,8 +693,7 @@ public class Calc {
 	/**
 	 * Convert double to string, remove the mess at the end.
 	 * 
-	 * @param d
-	 *            double
+	 * @param d double
 	 * @return string
 	 */
 	public static String doubleToString(double d)
@@ -782,8 +709,7 @@ public class Calc {
 	/**
 	 * Convert float to string, remove the mess at the end.
 	 * 
-	 * @param f
-	 *            float
+	 * @param f float
 	 * @return string
 	 */
 	public static String floatToString(float f)
@@ -799,12 +725,9 @@ public class Calc {
 	/**
 	 * Check if number is in range
 	 * 
-	 * @param number
-	 *            checked
-	 * @param left
-	 *            lower end
-	 * @param right
-	 *            upper end
+	 * @param number checked
+	 * @param left lower end
+	 * @param right upper end
 	 * @return is in range
 	 */
 	public static boolean inRange(double number, double left, double right)
@@ -816,14 +739,10 @@ public class Calc {
 	/**
 	 * Get number from A to B at delta time (tween A to B)
 	 * 
-	 * @param from
-	 *            last number
-	 * @param to
-	 *            new number
-	 * @param time
-	 *            time 0..1
-	 * @param easing
-	 *            easing function
+	 * @param from last number
+	 * @param to new number
+	 * @param time time 0..1
+	 * @param easing easing function
 	 * @return current number to render
 	 */
 	public static double interpolate(double from, double to, double time, Easing easing)
@@ -835,14 +754,10 @@ public class Calc {
 	/**
 	 * Get angle [degrees] from A to B at delta time (tween A to B)
 	 * 
-	 * @param from
-	 *            last angle
-	 * @param to
-	 *            new angle
-	 * @param time
-	 *            time 0..1
-	 * @param easing
-	 *            easing function
+	 * @param from last angle
+	 * @param to new angle
+	 * @param time time 0..1
+	 * @param easing easing function
 	 * @return current angle to render
 	 */
 	public static double interpolateDeg(double from, double to, double time, Easing easing)
@@ -854,14 +769,10 @@ public class Calc {
 	/**
 	 * Get angle [radians] from A to B at delta time (tween A to B)
 	 * 
-	 * @param from
-	 *            last angle
-	 * @param to
-	 *            new angle
-	 * @param time
-	 *            time 0..1
-	 * @param easing
-	 *            easing function
+	 * @param from last angle
+	 * @param to new angle
+	 * @param time time 0..1
+	 * @param easing easing function
 	 * @return current angle to render
 	 */
 	public static double interpolateRad(double from, double to, double time, Easing easing)
@@ -873,8 +784,7 @@ public class Calc {
 	/**
 	 * Get highest number of a list
 	 * 
-	 * @param numbers
-	 *            numbers
+	 * @param numbers numbers
 	 * @return lowest
 	 */
 	public static double max(double... numbers)
@@ -890,8 +800,7 @@ public class Calc {
 	/**
 	 * Get highest number of a list
 	 * 
-	 * @param numbers
-	 *            numbers
+	 * @param numbers numbers
 	 * @return lowest
 	 */
 	public static float max(float... numbers)
@@ -907,8 +816,7 @@ public class Calc {
 	/**
 	 * Get highest number of a list
 	 * 
-	 * @param numbers
-	 *            numbers
+	 * @param numbers numbers
 	 * @return lowest
 	 */
 	public static int max(int... numbers)
@@ -924,8 +832,7 @@ public class Calc {
 	/**
 	 * Get lowest number of a list
 	 * 
-	 * @param numbers
-	 *            numbers
+	 * @param numbers numbers
 	 * @return lowest
 	 */
 	public static double min(double... numbers)
@@ -941,8 +848,7 @@ public class Calc {
 	/**
 	 * Get lowest number of a list
 	 * 
-	 * @param numbers
-	 *            numbers
+	 * @param numbers numbers
 	 * @return lowest
 	 */
 	public static float min(float... numbers)
@@ -958,8 +864,7 @@ public class Calc {
 	/**
 	 * Get lowest number of a list
 	 * 
-	 * @param numbers
-	 *            numbers
+	 * @param numbers numbers
 	 * @return lowest
 	 */
 	public static int min(int... numbers)
@@ -975,8 +880,7 @@ public class Calc {
 	/**
 	 * Split comma separated list of integers.
 	 * 
-	 * @param list
-	 *            String containing the list.
+	 * @param list String containing the list.
 	 * @return array of integers or null.
 	 */
 	public static List<Integer> parseIntList(String list)
@@ -991,8 +895,7 @@ public class Calc {
 		for (String part : parts) {
 			try {
 				intList.add(Integer.parseInt(part));
-			} catch (NumberFormatException e) {
-			}
+			} catch (NumberFormatException e) {}
 		}
 		
 		return intList;
@@ -1003,8 +906,7 @@ public class Calc {
 	/**
 	 * Pick random element from a given list.
 	 * 
-	 * @param list
-	 *            list of choices
+	 * @param list list of choices
 	 * @return picked element
 	 */
 	public static Object pick(List<?> list)
@@ -1017,8 +919,7 @@ public class Calc {
 	/**
 	 * Square a double
 	 * 
-	 * @param a
-	 *            squared double
+	 * @param a squared double
 	 * @return square
 	 */
 	public static double square(double a)

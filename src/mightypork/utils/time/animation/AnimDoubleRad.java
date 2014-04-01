@@ -1,5 +1,6 @@
 package mightypork.utils.time.animation;
 
+
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.Calc.Rad;
 import mightypork.utils.math.easing.Easing;

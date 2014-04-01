@@ -1,5 +1,6 @@
 package mightypork.utils.math.coord;
 
+
 import java.util.Random;
 
 import mightypork.utils.math.Calc;
@@ -18,10 +19,8 @@ public class Coord {
 	/**
 	 * Get distance to other point
 	 * 
-	 * @param a
-	 *            point a
-	 * @param b
-	 *            point b
+	 * @param a point a
+	 * @param b point b
 	 * @return distance in units
 	 */
 	public static double dist(Coord a, Coord b)
@@ -49,8 +48,7 @@ public class Coord {
 	/**
 	 * Create coord as a copy of another
 	 * 
-	 * @param copied
-	 *            copied coord
+	 * @param copied copied coord
 	 */
 	public Coord(Coord copied) {
 		setTo(copied);
@@ -60,10 +58,8 @@ public class Coord {
 	/**
 	 * Create 2D coord
 	 * 
-	 * @param x
-	 *            x coordinate
-	 * @param y
-	 *            y coordinate
+	 * @param x x coordinate
+	 * @param y y coordinate
 	 */
 	public Coord(Number x, Number y) {
 		setTo(x, y);
@@ -73,12 +69,9 @@ public class Coord {
 	/**
 	 * Create 3D coord
 	 * 
-	 * @param x
-	 *            x coordinate
-	 * @param y
-	 *            y coordinate
-	 * @param z
-	 *            z coordinate
+	 * @param x x coordinate
+	 * @param y y coordinate
+	 * @param z z coordinate
 	 */
 	public Coord(Number x, Number y, Number z) {
 		setTo(x, y, z);
@@ -88,8 +81,7 @@ public class Coord {
 	/**
 	 * Add a vector, in a copy
 	 * 
-	 * @param vec
-	 *            offset
+	 * @param vec offset
 	 * @return changed copy
 	 */
 	public Coord add(Coord vec)
@@ -101,8 +93,7 @@ public class Coord {
 	/**
 	 * Add a vector, in place
 	 * 
-	 * @param vec
-	 *            offset
+	 * @param vec offset
 	 * @return this
 	 */
 	public Coord add_ip(Coord vec)
@@ -115,10 +106,8 @@ public class Coord {
 	 * Add to each component, in a copy.<br>
 	 * Z is unchanged.
 	 * 
-	 * @param x
-	 *            x offset
-	 * @param y
-	 *            y offset
+	 * @param x x offset
+	 * @param y y offset
 	 * @return changed copy
 	 */
 	public Coord add(Number x, Number y)
@@ -131,10 +120,8 @@ public class Coord {
 	 * Add to each component, in place.<br>
 	 * Z is unchanged.
 	 * 
-	 * @param x
-	 *            x offset
-	 * @param y
-	 *            y offset
+	 * @param x x offset
+	 * @param y y offset
 	 * @return this
 	 */
 	public Coord add_ip(Number x, Number y)
@@ -146,12 +133,9 @@ public class Coord {
 	/**
 	 * Add to each component, in a copy.
 	 * 
-	 * @param x
-	 *            x offset
-	 * @param y
-	 *            y offset
-	 * @param z
-	 *            z offset
+	 * @param x x offset
+	 * @param y y offset
+	 * @param z z offset
 	 * @return changed copy
 	 */
 	public Coord add(Number x, Number y, Number z)
@@ -163,12 +147,9 @@ public class Coord {
 	/**
 	 * Add to each component, in place.
 	 * 
-	 * @param x
-	 *            x offset
-	 * @param y
-	 *            y offset
-	 * @param z
-	 *            z offset
+	 * @param x x offset
+	 * @param y y offset
+	 * @param z z offset
 	 * @return this
 	 */
 	public Coord add_ip(Number x, Number y, Number z)
@@ -194,8 +175,7 @@ public class Coord {
 	/**
 	 * Get distance to other point
 	 * 
-	 * @param point
-	 *            other point
+	 * @param point other point
 	 * @return distance in units
 	 */
 	public double distTo(Coord point)
@@ -207,8 +187,7 @@ public class Coord {
 	/**
 	 * Check if this rectangle in inside a rectangular zone
 	 * 
-	 * @param rect
-	 *            checked rect.
+	 * @param rect checked rect.
 	 * @return is inside
 	 */
 	public boolean isInRect(Rect rect)
@@ -220,10 +199,8 @@ public class Coord {
 	/**
 	 * Check if this rectangle in inside a rectangular zone
 	 * 
-	 * @param min
-	 *            min coord
-	 * @param max
-	 *            max coord
+	 * @param min min coord
+	 * @param max max coord
 	 * @return is inside
 	 */
 	public boolean isInRect(Coord min, Coord max)
@@ -235,8 +212,7 @@ public class Coord {
 	/**
 	 * Get middle of line to other point
 	 * 
-	 * @param other
-	 *            other point
+	 * @param other other point
 	 * @return middle
 	 */
 	public Coord midTo(Coord other)
@@ -271,8 +247,7 @@ public class Coord {
 	/**
 	 * Multiply each component, in a copy.
 	 * 
-	 * @param d
-	 *            multiplier
+	 * @param d multiplier
 	 * @return changed copy
 	 */
 	public Coord mul(double d)
@@ -284,8 +259,7 @@ public class Coord {
 	/**
 	 * Multiply each component, in place.
 	 * 
-	 * @param d
-	 *            multiplier
+	 * @param d multiplier
 	 * @return this
 	 */
 	public Coord mul_ip(double d)
@@ -297,8 +271,7 @@ public class Coord {
 	/**
 	 * Multiply each component, in a copy.
 	 * 
-	 * @param vec
-	 *            vector of multipliers
+	 * @param vec vector of multipliers
 	 * @return changed copy
 	 */
 	public Coord mul(Coord vec)
@@ -311,10 +284,8 @@ public class Coord {
 	 * Multiply each component, in a copy.<br>
 	 * Z is unchanged.
 	 * 
-	 * @param x
-	 *            x multiplier
-	 * @param y
-	 *            y multiplier
+	 * @param x x multiplier
+	 * @param y y multiplier
 	 * @return changed copy
 	 */
 	public Coord mul(double x, int y)
@@ -327,10 +298,8 @@ public class Coord {
 	 * Multiply each component, in place.<br>
 	 * Z is unchanged.
 	 * 
-	 * @param x
-	 *            x multiplier
-	 * @param y
-	 *            y multiplier
+	 * @param x x multiplier
+	 * @param y y multiplier
 	 * @return this
 	 */
 	public Coord mul_ip(double x, double y)
@@ -342,12 +311,9 @@ public class Coord {
 	/**
 	 * Multiply each component, in a copy.
 	 * 
-	 * @param x
-	 *            x multiplier
-	 * @param y
-	 *            y multiplier
-	 * @param z
-	 *            z multiplier
+	 * @param x x multiplier
+	 * @param y y multiplier
+	 * @param z z multiplier
 	 * @return changed copy
 	 */
 	public Coord mul(double x, double y, double z)
@@ -359,8 +325,7 @@ public class Coord {
 	/**
 	 * Multiply each component, in place.
 	 * 
-	 * @param vec
-	 *            vector of multipliers
+	 * @param vec vector of multipliers
 	 * @return this
 	 */
 	public Coord mul_ip(Coord vec)
@@ -372,12 +337,9 @@ public class Coord {
 	/**
 	 * Multiply each component, in place.
 	 * 
-	 * @param x
-	 *            x multiplier
-	 * @param y
-	 *            y multiplier
-	 * @param z
-	 *            z multiplier
+	 * @param x x multiplier
+	 * @param y y multiplier
+	 * @param z z multiplier
 	 * @return this
 	 */
 	public Coord mul_ip(double x, double y, double z)
@@ -398,8 +360,7 @@ public class Coord {
 	/**
 	 * offset randomly in place
 	 * 
-	 * @param max
-	 *            max +- offset
+	 * @param max max +- offset
 	 * @return this
 	 */
 	public Coord random_offset_ip(double max)
@@ -411,10 +372,8 @@ public class Coord {
 	/**
 	 * offset randomly
 	 * 
-	 * @param min
-	 *            min offset
-	 * @param max
-	 *            max offset
+	 * @param min min offset
+	 * @param max max offset
 	 * @return offset coord
 	 */
 	public Coord random_offset(double min, double max)
@@ -426,10 +385,8 @@ public class Coord {
 	/**
 	 * offset randomly in place
 	 * 
-	 * @param min
-	 *            min offset
-	 * @param max
-	 *            max offset
+	 * @param min min offset
+	 * @param max max offset
 	 * @return this
 	 */
 	public Coord random_offset_ip(double min, double max)
@@ -467,8 +424,7 @@ public class Coord {
 	/**
 	 * Set to max values of this and other coord
 	 * 
-	 * @param other
-	 *            other coord
+	 * @param other other coord
 	 */
 	public void setToMax(Coord other)
 	{
@@ -481,8 +437,7 @@ public class Coord {
 	/**
 	 * Set to min values of this and other coord
 	 * 
-	 * @param other
-	 *            other coord
+	 * @param other other coord
 	 */
 	public void setToMin(Coord other)
 	{
@@ -495,8 +450,7 @@ public class Coord {
 	/**
 	 * Set coordinates to match other coord
 	 * 
-	 * @param copied
-	 *            coord whose coordinates are used
+	 * @param copied coord whose coordinates are used
 	 * @return this
 	 */
 	public Coord setTo(Coord copied)
@@ -508,10 +462,8 @@ public class Coord {
 	/**
 	 * Set 2D coordinates to
 	 * 
-	 * @param x
-	 *            x coordinate
-	 * @param y
-	 *            y coordinate
+	 * @param x x coordinate
+	 * @param y y coordinate
 	 * @return this
 	 */
 	public Coord setTo(Number x, Number y)
@@ -523,12 +475,9 @@ public class Coord {
 	/**
 	 * Set 3D coordinates to
 	 * 
-	 * @param x
-	 *            x coordinate
-	 * @param y
-	 *            y coordinate
-	 * @param z
-	 *            z coordinate
+	 * @param x x coordinate
+	 * @param y y coordinate
+	 * @param z z coordinate
 	 * @return this
 	 */
 	public Coord setTo(Number x, Number y, Number z)
@@ -543,8 +492,7 @@ public class Coord {
 	/**
 	 * Set X coordinate in a copy
 	 * 
-	 * @param x
-	 *            x coordinate
+	 * @param x x coordinate
 	 * @return copy with set coordinate
 	 */
 	public Coord setX(Number x)
@@ -556,8 +504,7 @@ public class Coord {
 	/**
 	 * Set X coordinate in place
 	 * 
-	 * @param x
-	 *            x coordinate
+	 * @param x x coordinate
 	 * @return this
 	 */
 	public Coord setX_ip(Number x)
@@ -570,8 +517,7 @@ public class Coord {
 	/**
 	 * Set Y coordinate in a copy
 	 * 
-	 * @param y
-	 *            y coordinate
+	 * @param y y coordinate
 	 * @return copy with set coordinate
 	 */
 	public Coord setY(Number y)
@@ -583,8 +529,7 @@ public class Coord {
 	/**
 	 * Set Y coordinate in place
 	 * 
-	 * @param y
-	 *            y coordinate
+	 * @param y y coordinate
 	 * @return this
 	 */
 	public Coord setY_ip(Number y)
@@ -597,8 +542,7 @@ public class Coord {
 	/**
 	 * Set Z coordinate in a copy
 	 * 
-	 * @param z
-	 *            z coordinate
+	 * @param z z coordinate
 	 * @return copy with set coordinate
 	 */
 	public Coord setZ(Number z)
@@ -610,8 +554,7 @@ public class Coord {
 	/**
 	 * Set Z coordinate in place
 	 * 
-	 * @param z
-	 *            z coordinate
+	 * @param z z coordinate
 	 * @return this
 	 */
 	public Coord setZ_ip(Number z)
@@ -624,8 +567,7 @@ public class Coord {
 	/**
 	 * Get a copy subtracted by vector
 	 * 
-	 * @param vec
-	 *            offset
+	 * @param vec offset
 	 * @return the offset copy
 	 */
 	public Coord sub(Coord vec)
@@ -637,10 +579,8 @@ public class Coord {
 	/**
 	 * Get a copy subtracted by 2D coordinate
 	 * 
-	 * @param x
-	 *            x offset
-	 * @param y
-	 *            y offset
+	 * @param x x offset
+	 * @param y y offset
 	 * @return the offset copy
 	 */
 	public Coord sub(Number x, Number y)
@@ -652,12 +592,9 @@ public class Coord {
 	/**
 	 * Get a copy subtracted by 3D coordinate
 	 * 
-	 * @param x
-	 *            x offset
-	 * @param y
-	 *            y offset
-	 * @param z
-	 *            z offset
+	 * @param x x offset
+	 * @param y y offset
+	 * @param z z offset
 	 * @return the offset copy
 	 */
 	public Coord sub(Number x, Number y, Number z)
@@ -669,8 +606,7 @@ public class Coord {
 	/**
 	 * Offset by vector in place
 	 * 
-	 * @param vec
-	 *            offset
+	 * @param vec offset
 	 * @return this
 	 */
 	public Coord sub_ip(Coord vec)
@@ -682,10 +618,8 @@ public class Coord {
 	/**
 	 * Offset by 2D coordinate in place
 	 * 
-	 * @param x
-	 *            x offset
-	 * @param y
-	 *            y offset
+	 * @param x x offset
+	 * @param y y offset
 	 * @return this
 	 */
 	public Coord sub_ip(Number x, Number y)
@@ -697,12 +631,9 @@ public class Coord {
 	/**
 	 * Offset by 3D coordinate in place
 	 * 
-	 * @param x
-	 *            x offset
-	 * @param y
-	 *            y offset
-	 * @param z
-	 *            z offset
+	 * @param x x offset
+	 * @param y y offset
+	 * @param z z offset
 	 * @return this
 	 */
 	public Coord sub_ip(Number x, Number y, Number z)
@@ -717,8 +648,7 @@ public class Coord {
 	/**
 	 * Create vector from this point to other point
 	 * 
-	 * @param point
-	 *            second point
+	 * @param point second point
 	 * @return vector
 	 */
 	public Coord vecTo(Coord point)
@@ -784,10 +714,8 @@ public class Coord {
 	/**
 	 * Get cross product of two vectors
 	 * 
-	 * @param a
-	 *            1st vector
-	 * @param b
-	 *            2nd vector
+	 * @param a 1st vector
+	 * @param b 2nd vector
 	 * @return cross product
 	 */
 	public static Coord cross(Coord a, Coord b)
@@ -799,10 +727,8 @@ public class Coord {
 	/**
 	 * Get dot product of two vectors
 	 * 
-	 * @param a
-	 *            1st vector
-	 * @param b
-	 *            2nd vector
+	 * @param a 1st vector
+	 * @param b 2nd vector
 	 * @return dot product
 	 */
 	public static double dot(Coord a, Coord b)
@@ -814,8 +740,7 @@ public class Coord {
 	/**
 	 * Multiply by other vector, vector multiplication
 	 * 
-	 * @param vec
-	 *            other vector
+	 * @param vec other vector
 	 * @return changed copy
 	 */
 	public Coord cross(Coord vec)
@@ -827,8 +752,7 @@ public class Coord {
 	/**
 	 * Multiply by other vector, vector multiplication; in place
 	 * 
-	 * @param vec
-	 *            other vector
+	 * @param vec other vector
 	 * @return this
 	 */
 	public Coord cross_ip(Coord vec)
@@ -847,8 +771,7 @@ public class Coord {
 	/**
 	 * Get dot product
 	 * 
-	 * @param vec
-	 *            other vector
+	 * @param vec other vector
 	 * @return dot product
 	 */
 	public double dot(Coord vec)
@@ -883,8 +806,7 @@ public class Coord {
 	/**
 	 * Scale vector to given size
 	 * 
-	 * @param size
-	 *            size we need
+	 * @param size size we need
 	 * @return scaled vector
 	 */
 	public Coord norm(double size)
@@ -897,8 +819,7 @@ public class Coord {
 	 * Scale vector to given size, in place.<br>
 	 * Zero vector remains zero.
 	 * 
-	 * @param size
-	 *            size we need
+	 * @param size size we need
 	 * @return scaled vector
 	 */
 	public Coord norm_ip(double size)
@@ -994,8 +915,7 @@ public class Coord {
 	/**
 	 * Generate random coord (gaussian)
 	 * 
-	 * @param max
-	 *            max distance from 0
+	 * @param max max distance from 0
 	 * @return new coord
 	 */
 	public static Coord random(double max)
@@ -1013,10 +933,8 @@ public class Coord {
 	/**
 	 * Generate random coord (min-max)
 	 * 
-	 * @param min
-	 *            min offset
-	 * @param max
-	 *            max offset
+	 * @param min min offset
+	 * @param max max offset
 	 * @return new coord
 	 */
 	public static Coord random(double min, double max)

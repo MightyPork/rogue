@@ -1,5 +1,6 @@
 package mightypork.utils.files;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,8 +26,7 @@ public class SimpleConfig {
 	/**
 	 * Load list from file
 	 * 
-	 * @param file
-	 *            file
+	 * @param file file
 	 * @return map of keys and values
 	 * @throws IOException
 	 */
@@ -41,8 +41,7 @@ public class SimpleConfig {
 	/**
 	 * Load map from file
 	 * 
-	 * @param file
-	 *            file
+	 * @param file file
 	 * @return map of keys and values
 	 * @throws IOException
 	 */
@@ -57,8 +56,7 @@ public class SimpleConfig {
 	/**
 	 * Load list from string
 	 * 
-	 * @param text
-	 *            text of the file
+	 * @param text text of the file
 	 * @return map of keys and values
 	 */
 	public static List<String> listFromString(String text)
@@ -88,8 +86,7 @@ public class SimpleConfig {
 	/**
 	 * Load map from string
 	 * 
-	 * @param text
-	 *            text of the file
+	 * @param text text of the file
 	 * @return map of keys and values
 	 */
 	public static Map<String, String> mapFromString(String text)
@@ -145,8 +142,7 @@ public class SimpleConfig {
 	 * 
 	 * @param target
 	 * @param data
-	 * @param allowNulls
-	 *            allow nulls.
+	 * @param allowNulls allow nulls.
 	 * @throws IOException
 	 */
 	public static void mapToFile(File target, Map<String, String> data, boolean allowNulls) throws IOException

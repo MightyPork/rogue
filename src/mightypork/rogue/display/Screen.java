@@ -1,5 +1,6 @@
 package mightypork.rogue.display;
 
+
 import static org.lwjgl.opengl.GL11.*;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.DelegatingBusClient;
@@ -51,8 +52,7 @@ public abstract class Screen extends DelegatingBusClient implements KeyBinder, B
 	/**
 	 * Prepare for being shown
 	 * 
-	 * @param shown
-	 *            true to show, false to hide
+	 * @param shown true to show, false to hide
 	 */
 	public final void setActive(boolean shown)
 	{
@@ -161,8 +161,7 @@ public abstract class Screen extends DelegatingBusClient implements KeyBinder, B
 	/**
 	 * Update GUI for new screen size
 	 * 
-	 * @param size
-	 *            screen size
+	 * @param size screen size
 	 */
 	protected void onSizeChanged(Coord size)
 	{
@@ -179,8 +178,7 @@ public abstract class Screen extends DelegatingBusClient implements KeyBinder, B
 	/**
 	 * Update animations and timing
 	 * 
-	 * @param delta
-	 *            time elapsed
+	 * @param delta time elapsed
 	 */
 	protected abstract void updateScreen(double delta);
 	

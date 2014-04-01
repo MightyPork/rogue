@@ -1,5 +1,6 @@
 package mightypork.rogue.fonts;
 
+
 import java.awt.Font;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -19,7 +20,6 @@ import org.newdawn.slick.util.ResourceLoader;
 public class FontManager {
 	
 	private static final boolean DEBUG = Config.LOG_FONTS;
-	
 	
 	/**
 	 * Glyph tables.
@@ -75,13 +75,13 @@ public class FontManager {
 		//@formatter:on
 	}
 	
-	
 	/**
 	 * Font style
 	 * 
 	 * @author MightyPork
 	 */
-	public static enum Style {
+	public static enum Style
+	{
 		/** Normal */
 		NORMAL,
 		/** Italic */
@@ -111,7 +111,6 @@ public class FontManager {
 		/** Outline variant of normal */
 		OUTLINE;
 	}
-	
 	
 	// /**
 	// * Preloaded font identifier [name, size, style]
@@ -224,12 +223,9 @@ public class FontManager {
 	/**
 	 * Register font file.
 	 * 
-	 * @param path
-	 *            resource path (res/fonts/...)
-	 * @param name
-	 *            font name (for binding)
-	 * @param style
-	 *            font style in this file
+	 * @param path resource path (res/fonts/...)
+	 * @param name font name (for binding)
+	 * @param style font style in this file
 	 */
 	public static void registerFile(String path, String name, Style style)
 	{
@@ -254,14 +250,10 @@ public class FontManager {
 	 * Preload font if needed, get preloaded font.<br>
 	 * If needed file is not available, throws runtime exception.
 	 * 
-	 * @param name
-	 *            font name (registerFile)
-	 * @param size
-	 *            font size (pt)
-	 * @param style
-	 *            font style
-	 * @param glyphs
-	 *            glyphs needed
+	 * @param name font name (registerFile)
+	 * @param size font size (pt)
+	 * @param style font style
+	 * @param glyphs glyphs needed
 	 * @return the loaded font.
 	 */
 	public static LoadedFont loadFont(String name, double size, Style style, String glyphs)
@@ -274,24 +266,16 @@ public class FontManager {
 	 * Preload font if needed, get preloaded font.<br>
 	 * If needed file is not available, throws runtime exception.
 	 * 
-	 * @param name
-	 *            font name (registerFile)
-	 * @param size
-	 *            font size (pt)
-	 * @param style
-	 *            font style
-	 * @param glyphs
-	 *            glyphs needed
-	 * @param correctLeft
-	 *            left horizontal correction
-	 * @param correctRight
-	 *            right horizontal correction
-	 * @param scale
-	 *            font scale (changing aspect ratio)
-	 * @param clipTop
-	 *            top clip (0-1) - top part of the font to be cut off
-	 * @param clipBottom
-	 *            bottom clip (0-1) - bottom part of the font to be cut off
+	 * @param name font name (registerFile)
+	 * @param size font size (pt)
+	 * @param style font style
+	 * @param glyphs glyphs needed
+	 * @param correctLeft left horizontal correction
+	 * @param correctRight right horizontal correction
+	 * @param scale font scale (changing aspect ratio)
+	 * @param clipTop top clip (0-1) - top part of the font to be cut off
+	 * @param clipBottom bottom clip (0-1) - bottom part of the font to be cut
+	 *            off
 	 * @return the loaded font.
 	 */
 	public static LoadedFont loadFont(String name, double size, Style style, String glyphs, int correctLeft, int correctRight, Coord scale, double clipTop, double clipBottom)

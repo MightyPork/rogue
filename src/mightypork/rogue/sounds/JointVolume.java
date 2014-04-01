@@ -1,5 +1,6 @@
 package mightypork.rogue.sounds;
 
+
 import mightypork.utils.math.Calc;
 import mightypork.utils.objects.Mutable;
 
@@ -17,8 +18,7 @@ public class JointVolume extends Mutable<Double> {
 	/**
 	 * Create joint volume with master gain of 1
 	 * 
-	 * @param volumes
-	 *            individual volumes to join
+	 * @param volumes individual volumes to join
 	 */
 	public JointVolume(Mutable<Double>... volumes) {
 		super(1D);

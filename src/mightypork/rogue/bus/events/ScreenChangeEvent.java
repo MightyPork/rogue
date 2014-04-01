@@ -1,5 +1,6 @@
 package mightypork.rogue.bus.events;
 
+
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.patterns.subscription.Handleable;
 
@@ -41,7 +42,6 @@ public class ScreenChangeEvent implements Handleable<ScreenChangeEvent.Listener>
 	{
 		handler.receive(this);
 	}
-	
 	
 	public interface Listener {
 		

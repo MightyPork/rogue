@@ -1,5 +1,6 @@
 package mightypork.utils.time.animation;
 
+
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.easing.Easing;
 import mightypork.utils.time.Pauseable;
@@ -35,8 +36,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	/**
 	 * Create linear animator
 	 * 
-	 * @param value
-	 *            initial value
+	 * @param value initial value
 	 */
 	public AnimDouble(double value) {
 		setTo(value);
@@ -46,10 +46,8 @@ public class AnimDouble implements Updateable, Pauseable {
 	/**
 	 * Create animator with easing
 	 * 
-	 * @param value
-	 *            initial value
-	 * @param easing
-	 *            easing function
+	 * @param value initial value
+	 * @param easing easing function
 	 */
 	public AnimDouble(double value, Easing easing) {
 		setTo(value);
@@ -60,8 +58,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	/**
 	 * Create as copy of another
 	 * 
-	 * @param other
-	 *            other animator
+	 * @param other other animator
 	 */
 	public AnimDouble(AnimDouble other) {
 		setTo(other);
@@ -78,8 +75,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	
 	
 	/**
-	 * @param easing
-	 *            easing function
+	 * @param easing easing function
 	 */
 	public void setEasing(Easing easing)
 	{
@@ -190,12 +186,9 @@ public class AnimDouble implements Updateable, Pauseable {
 	/**
 	 * Animate between two states, start from current value (if it's in between)
 	 * 
-	 * @param from
-	 *            start value
-	 * @param to
-	 *            target state
-	 * @param time
-	 *            animation time (secs)
+	 * @param from start value
+	 * @param to target state
+	 * @param time animation time (secs)
 	 */
 	public void animate(double from, double to, double time)
 	{
@@ -232,10 +225,8 @@ public class AnimDouble implements Updateable, Pauseable {
 	/**
 	 * Animate to a value from curretn value
 	 * 
-	 * @param to
-	 *            target state
-	 * @param time
-	 *            animation time (secs)
+	 * @param to target state
+	 * @param time animation time (secs)
 	 */
 	public void fadeTo(double to, double time)
 	{
@@ -251,8 +242,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	/**
 	 * Animate 0 to 1
 	 * 
-	 * @param time
-	 *            animation time (secs)
+	 * @param time animation time (secs)
 	 */
 	public void fadeIn(double time)
 	{
@@ -263,8 +253,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	/**
 	 * Animate 1 to 0
 	 * 
-	 * @param time
-	 *            animation time (secs)
+	 * @param time animation time (secs)
 	 */
 	public void fadeOut(double time)
 	{

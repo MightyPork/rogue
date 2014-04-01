@@ -1,5 +1,6 @@
 package mightypork.utils.patterns.subscription.clients;
 
+
 /**
  * Client that can toggle receiving messages.
  * 

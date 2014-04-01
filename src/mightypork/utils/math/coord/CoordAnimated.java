@@ -1,5 +1,6 @@
 package mightypork.utils.math.coord;
 
+
 import mightypork.utils.math.Calc;
 import mightypork.utils.time.Updateable;
 
@@ -20,8 +21,7 @@ public class CoordAnimated extends Coord implements Updateable {
 	/**
 	 * Update delta timing
 	 * 
-	 * @param delta
-	 *            delta time to add
+	 * @param delta delta time to add
 	 */
 	@Override
 	public void update(double delta)
@@ -52,8 +52,7 @@ public class CoordAnimated extends Coord implements Updateable {
 	/**
 	 * Start animation
 	 * 
-	 * @param time
-	 *            anim length
+	 * @param time anim length
 	 */
 	public void animStart(double time)
 	{

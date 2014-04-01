@@ -1,5 +1,6 @@
 package mightypork.rogue.textures;
 
+
 import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
@@ -51,10 +52,8 @@ public class TextureManager {
 	/**
 	 * Bind texture
 	 * 
-	 * @param texture
-	 *            the texture
-	 * @throws RuntimeException
-	 *             if not loaded yet
+	 * @param texture the texture
+	 * @throws RuntimeException if not loaded yet
 	 */
 	public static void bind(Texture texture) throws RuntimeException
 	{

@@ -1,5 +1,6 @@
 package mightypork.rogue.fonts;
 
+
 import static mightypork.rogue.fonts.Align.*;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -73,7 +74,6 @@ public class LoadedFont {
 	private double defScaleX = 1, defScaleY = 1;
 	private double clipVerticalT = 0;
 	private double clipVerticalB = 0;
-	
 	
 	private class CharStorageEntry {
 		
@@ -572,16 +572,11 @@ public class LoadedFont {
 	/**
 	 * Draw string with font.
 	 * 
-	 * @param x
-	 *            x coord
-	 * @param y
-	 *            y coord
-	 * @param text
-	 *            text to draw
-	 * @param color
-	 *            render color
-	 * @param align
-	 *            (-1,0,1)
+	 * @param x x coord
+	 * @param y y coord
+	 * @param text text to draw
+	 * @param color render color
+	 * @param align (-1,0,1)
 	 */
 	public void draw(double x, double y, String text, RGB color, int align)
 	{
@@ -592,14 +587,10 @@ public class LoadedFont {
 	/**
 	 * Draw string with font.
 	 * 
-	 * @param pos
-	 *            coord
-	 * @param text
-	 *            text to draw
-	 * @param color
-	 *            render color
-	 * @param align
-	 *            (-1,0,1)
+	 * @param pos coord
+	 * @param text text to draw
+	 * @param color render color
+	 * @param align (-1,0,1)
 	 */
 	public void draw(Coord pos, String text, RGB color, int align)
 	{

@@ -1,5 +1,6 @@
 package mightypork.utils.string;
 
+
 /**
  * General purpose string utilities
  * 
@@ -10,12 +11,9 @@ public class StringUtils {
 	/**
 	 * Get if string is in array
 	 * 
-	 * @param needle
-	 *            checked string
-	 * @param case_sensitive
-	 *            case sensitive comparision
-	 * @param haystack
-	 *            array of possible values
+	 * @param needle checked string
+	 * @param case_sensitive case sensitive comparision
+	 * @param haystack array of possible values
 	 * @return is in array
 	 */
 	public static boolean isInArray(String needle, boolean case_sensitive, String... haystack)
@@ -63,8 +61,7 @@ public class StringUtils {
 	/**
 	 * Repeat a string
 	 * 
-	 * @param repeated
-	 *            string
+	 * @param repeated string
 	 * @param count
 	 * @return output
 	 */
@@ -80,8 +77,7 @@ public class StringUtils {
 	/**
 	 * convert string to a same-length sequence of # marks
 	 * 
-	 * @param password
-	 *            password
+	 * @param password password
 	 * @return encoded
 	 */
 	public static String passwordify(String password)
@@ -93,10 +89,8 @@ public class StringUtils {
 	/**
 	 * convert string to a same-length sequence of chars
 	 * 
-	 * @param password
-	 *            password
-	 * @param replacing
-	 *            character used in output
+	 * @param password password
+	 * @param replacing character used in output
 	 * @return encoded
 	 */
 	public static String passwordify(String password, String replacing)
@@ -108,8 +102,7 @@ public class StringUtils {
 	/**
 	 * Get ordinal version of numbers (1 = 1st, 5 = 5th etc.)
 	 * 
-	 * @param number
-	 *            number
+	 * @param number number
 	 * @return ordinal, string
 	 */
 	public static String numberToOrdinal(int number)
@@ -126,8 +119,7 @@ public class StringUtils {
 	/**
 	 * Format number with thousands separated by a dot.
 	 * 
-	 * @param number
-	 *            number
+	 * @param number number
 	 * @return string 12.004.225
 	 */
 	public static String formatInt(long number)

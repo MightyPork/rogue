@@ -1,5 +1,6 @@
 package mightypork.utils.string.validation;
 
+
 public class FilenameCharValidator extends CharValidatorRegex {
 	
 	public FilenameCharValidator() {

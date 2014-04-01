@@ -1,5 +1,6 @@
 package mightypork.utils.time;
 
+
 /**
  * Timer for interpolated timing
  * 
@@ -19,8 +20,7 @@ public class TimerInterpolating {
 	/**
 	 * New interpolated timer
 	 * 
-	 * @param fps
-	 *            target FPS
+	 * @param fps target FPS
 	 */
 	public TimerInterpolating(long fps) {
 		FRAME = Math.round(SECOND / fps);

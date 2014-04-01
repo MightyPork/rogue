@@ -1,5 +1,6 @@
 package mightypork.utils.files;
 
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,9 @@ public class FileUtils {
 	/**
 	 * Copy directory recursively.
 	 * 
-	 * @param source
-	 *            source file
-	 * @param target
-	 *            target file
-	 * @throws IOException
-	 *             on error
+	 * @param source source file
+	 * @param target target file
+	 * @throws IOException on error
 	 */
 	public static void copyDirectory(File source, File target) throws IOException
 	{
@@ -30,16 +28,11 @@ public class FileUtils {
 	/**
 	 * Copy directory recursively - advanced variant.
 	 * 
-	 * @param source
-	 *            source file
-	 * @param target
-	 *            target file
-	 * @param filter
-	 *            filter accepting only files and dirs to be copied
-	 * @param filesCopied
-	 *            list into which all the target files will be added
-	 * @throws IOException
-	 *             on error
+	 * @param source source file
+	 * @param target target file
+	 * @param filter filter accepting only files and dirs to be copied
+	 * @param filesCopied list into which all the target files will be added
+	 * @throws IOException on error
 	 */
 	public static void copyDirectory(File source, File target, FileFilter filter, List<File> filesCopied) throws IOException
 	{
@@ -69,14 +62,10 @@ public class FileUtils {
 	/**
 	 * List directory recursively
 	 * 
-	 * @param source
-	 *            source file
-	 * @param filter
-	 *            filter accepting only files and dirs to be copied (or null)
-	 * @param files
-	 *            list of the found files
-	 * @throws IOException
-	 *             on error
+	 * @param source source file
+	 * @param filter filter accepting only files and dirs to be copied (or null)
+	 * @param files list of the found files
+	 * @throws IOException on error
 	 */
 	public static void listDirectoryRecursive(File source, StringFilter filter, List<File> files) throws IOException
 	{
@@ -99,12 +88,9 @@ public class FileUtils {
 	/**
 	 * Copy file using streams. Make sure target directory exists!
 	 * 
-	 * @param source
-	 *            source file
-	 * @param target
-	 *            target file
-	 * @throws IOException
-	 *             on error
+	 * @param source source file
+	 * @param target target file
+	 * @throws IOException on error
 	 */
 	public static void copyFile(File source, File target) throws IOException
 	{
@@ -134,12 +120,9 @@ public class FileUtils {
 	/**
 	 * Copy bytes from input to output stream, leaving out stream open
 	 * 
-	 * @param in
-	 *            input stream
-	 * @param out
-	 *            output stream
-	 * @throws IOException
-	 *             on error
+	 * @param in input stream
+	 * @param out output stream
+	 * @throws IOException on error
 	 */
 	public static void copyStream(InputStream in, OutputStream out) throws IOException
 	{
@@ -162,10 +145,8 @@ public class FileUtils {
 	/**
 	 * Improved delete
 	 * 
-	 * @param path
-	 *            deleted path
-	 * @param recursive
-	 *            recursive delete
+	 * @param path deleted path
+	 * @param recursive recursive delete
 	 * @return success
 	 */
 	public static boolean delete(File path, boolean recursive)
@@ -188,8 +169,7 @@ public class FileUtils {
 	/**
 	 * Read entire file to a string.
 	 * 
-	 * @param file
-	 *            file
+	 * @param file file
 	 * @return file contents
 	 * @throws IOException
 	 */
@@ -204,8 +184,7 @@ public class FileUtils {
 	/**
 	 * Get files in a folder (create folder if needed)
 	 * 
-	 * @param dir
-	 *            folder
+	 * @param dir folder
 	 * @return list of files
 	 */
 	public static List<File> listDirectory(File dir)
@@ -217,10 +196,8 @@ public class FileUtils {
 	/**
 	 * Get files in a folder (create folder if needed)
 	 * 
-	 * @param dir
-	 *            folder
-	 * @param filter
-	 *            file filter
+	 * @param dir folder
+	 * @param filter file filter
 	 * @return list of files
 	 */
 	public static List<File> listDirectory(File dir, FileFilter filter)
@@ -248,8 +225,7 @@ public class FileUtils {
 	/**
 	 * Remove extension.
 	 * 
-	 * @param file
-	 *            file
+	 * @param file file
 	 * @return filename without extension
 	 */
 	public static String[] getFilenameParts(File file)
@@ -300,8 +276,7 @@ public class FileUtils {
 	/**
 	 * Read entire input stream to a string, and close it.
 	 * 
-	 * @param in
-	 *            input stream
+	 * @param in input stream
 	 * @return file contents
 	 */
 	public static String streamToString(InputStream in)
@@ -313,10 +288,8 @@ public class FileUtils {
 	/**
 	 * Read input stream to a string, and close it.
 	 * 
-	 * @param in
-	 *            input stream
-	 * @param lines
-	 *            max number of lines (-1 to disable limit)
+	 * @param in input stream
+	 * @param lines max number of lines (-1 to disable limit)
 	 * @return file contents
 	 */
 	public static String streamToString(InputStream in, int lines)
@@ -384,12 +357,9 @@ public class FileUtils {
 	/**
 	 * Save string to file
 	 * 
-	 * @param file
-	 *            file
-	 * @param text
-	 *            string
-	 * @throws IOException
-	 *             on error
+	 * @param file file
+	 * @param text string
+	 * @throws IOException on error
 	 */
 	public static void stringToFile(File file, String text) throws IOException
 	{
@@ -427,8 +397,7 @@ public class FileUtils {
 	/**
 	 * Replace special characters with place holders in a filename.
 	 * 
-	 * @param filestring
-	 *            filename string
+	 * @param filestring filename string
 	 * @return escaped
 	 */
 	public static String escapeFileString(String filestring)
@@ -458,8 +427,7 @@ public class FileUtils {
 	/**
 	 * Unescape filename string obtained by escapeFileString().
 	 * 
-	 * @param filestring
-	 *            escaped string
+	 * @param filestring escaped string
 	 * @return clean string
 	 */
 	public static String unescapeFileString(String filestring)
@@ -474,8 +442,7 @@ public class FileUtils {
 	/**
 	 * Escape filename, keeping the same extension
 	 * 
-	 * @param filename
-	 *            filename
+	 * @param filename filename
 	 * @return escaped
 	 */
 	public static String escapeFilename(String filename)
@@ -489,8 +456,7 @@ public class FileUtils {
 	/**
 	 * Unescape filename, keeping the same extension
 	 * 
-	 * @param filename
-	 *            escaped filename
+	 * @param filename escaped filename
 	 * @return unesaped
 	 */
 	public static String unescapeFilename(String filename)
@@ -516,10 +482,8 @@ public class FileUtils {
 	/**
 	 * Copy resource to file
 	 * 
-	 * @param resname
-	 *            resource name
-	 * @param file
-	 *            out file
+	 * @param resname resource name
+	 * @param file out file
 	 * @throws IOException
 	 */
 	public static void resourceToFile(String resname, File file) throws IOException
@@ -552,8 +516,7 @@ public class FileUtils {
 	/**
 	 * Get resource as string, safely closing streams.
 	 * 
-	 * @param resname
-	 *            resource name
+	 * @param resname resource name
 	 * @return resource as string, empty string on failure
 	 */
 	public static String resourceToString(String resname)

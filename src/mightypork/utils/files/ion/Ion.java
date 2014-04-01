@@ -1,5 +1,6 @@
 package mightypork.utils.files.ion;
 
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,10 +32,8 @@ public class Ion {
 	/**
 	 * Register new Ionizable for direct reconstructing.
 	 * 
-	 * @param mark
-	 *            byte mark to be used, see {@link IonMarks} for reference.
-	 * @param objClass
-	 *            class of the registered Ionizable
+	 * @param mark byte mark to be used, see {@link IonMarks} for reference.
+	 * @param objClass class of the registered Ionizable
 	 * @throws IonException
 	 */
 	public static void registerIonizable(byte mark, Class<?> objClass) throws IonException
@@ -49,8 +48,7 @@ public class Ion {
 	/**
 	 * Load Ion object from file.
 	 * 
-	 * @param file
-	 *            file path
+	 * @param file file path
 	 * @return the loaded object
 	 * @throws IonException
 	 */
@@ -63,11 +61,9 @@ public class Ion {
 	/**
 	 * Load Ion object from file.
 	 * 
-	 * @param file
-	 *            file
+	 * @param file file
 	 * @return the loaded object
-	 * @throws IonException
-	 *             on failure
+	 * @throws IonException on failure
 	 */
 	public static Object fromFile(File file) throws IonException
 	{
@@ -94,8 +90,7 @@ public class Ion {
 	/**
 	 * Load Ion object from stream.
 	 * 
-	 * @param in
-	 *            input stream
+	 * @param in input stream
 	 * @return the loaded object
 	 * @throws IonException
 	 */
@@ -108,10 +103,8 @@ public class Ion {
 	/**
 	 * Store Ion object to file.
 	 * 
-	 * @param path
-	 *            file path
-	 * @param obj
-	 *            object to store
+	 * @param path file path
+	 * @param obj object to store
 	 * @throws IonException
 	 */
 	public static void toFile(String path, Object obj) throws IonException
@@ -123,10 +116,8 @@ public class Ion {
 	/**
 	 * Store Ion object to file.
 	 * 
-	 * @param path
-	 *            file path
-	 * @param obj
-	 *            object to store
+	 * @param path file path
+	 * @param obj object to store
 	 * @throws IonException
 	 */
 	public static void toFile(File path, Object obj) throws IonException
@@ -162,10 +153,8 @@ public class Ion {
 	/**
 	 * Store Ion object to output stream.
 	 * 
-	 * @param out
-	 *            output stream *
-	 * @param obj
-	 *            object to store
+	 * @param out output stream *
+	 * @param obj object to store
 	 * @throws IonException
 	 */
 	public static void toStream(OutputStream out, Object obj) throws IonException
@@ -177,8 +166,7 @@ public class Ion {
 	/**
 	 * Read single ionizable or primitive object from input stream
 	 * 
-	 * @param in
-	 *            input stream
+	 * @param in input stream
 	 * @return the loaded object
 	 * @throws IonException
 	 */
@@ -233,10 +221,8 @@ public class Ion {
 	/**
 	 * Write single ionizable or primitive object to output stream
 	 * 
-	 * @param out
-	 *            output stream
-	 * @param obj
-	 *            stored object
+	 * @param out output stream
+	 * @param obj stored object
 	 * @throws IonException
 	 */
 	public static void writeObject(OutputStream out, Object obj) throws IonException

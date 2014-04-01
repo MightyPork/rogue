@@ -1,5 +1,6 @@
 package mightypork.utils.files.ion;
 
+
 /**
  * Byte marks used to structure data in Ion files.
  * 

@@ -1,5 +1,6 @@
 package mightypork.utils.objects;
 
+
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -23,10 +24,8 @@ public class ObjectUtils {
 	/**
 	 * Sort a map by keys, maintaining key-value pairs.
 	 * 
-	 * @param map
-	 *            map to be sorted
-	 * @param comparator
-	 *            a comparator, or null for natural ordering
+	 * @param map map to be sorted
+	 * @param comparator a comparator, or null for natural ordering
 	 * @return linked hash map with sorted entries
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -54,10 +53,8 @@ public class ObjectUtils {
 	/**
 	 * Sort a map by values, maintaining key-value pairs.
 	 * 
-	 * @param map
-	 *            map to be sorted
-	 * @param comparator
-	 *            a comparator, or null for natural ordering
+	 * @param map map to be sorted
+	 * @param comparator a comparator, or null for natural ordering
 	 * @return linked hash map with sorted entries
 	 */
 	@SuppressWarnings("rawtypes")

@@ -1,5 +1,6 @@
 package mightypork.rogue.sounds;
 
+
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -118,14 +119,10 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Register effect resource
 	 * 
-	 * @param key
-	 *            sound key
-	 * @param resource
-	 *            resource path
-	 * @param pitch
-	 *            default pitch (1 = unchanged)
-	 * @param gain
-	 *            default gain (0-1)
+	 * @param key sound key
+	 * @param resource resource path
+	 * @param pitch default pitch (1 = unchanged)
+	 * @param gain default gain (0-1)
 	 */
 	public void addEffect(String key, String resource, double pitch, double gain)
 	{
@@ -137,18 +134,12 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Register loop resource (music / effect loop)
 	 * 
-	 * @param key
-	 *            sound key
-	 * @param resource
-	 *            resource path
-	 * @param pitch
-	 *            default pitch (1 = unchanged)
-	 * @param gain
-	 *            default gain (0-1)
-	 * @param fadeIn
-	 *            default time for fadeIn
-	 * @param fadeOut
-	 *            default time for fadeOut
+	 * @param key sound key
+	 * @param resource resource path
+	 * @param pitch default pitch (1 = unchanged)
+	 * @param gain default gain (0-1)
+	 * @param fadeIn default time for fadeIn
+	 * @param fadeOut default time for fadeOut
 	 */
 	public void addLoop(String key, String resource, double pitch, double gain, double fadeIn, double fadeOut)
 	{
@@ -161,11 +152,9 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Create {@link AudioX} for a resource
 	 * 
-	 * @param res
-	 *            a resource name
+	 * @param res a resource name
 	 * @return the resource
-	 * @throws IllegalArgumentException
-	 *             if resource is already registered
+	 * @throws IllegalArgumentException if resource is already registered
 	 */
 	private AudioX getResource(String res)
 	{
@@ -179,8 +168,7 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Get a loop player for key
 	 * 
-	 * @param key
-	 *            sound key
+	 * @param key sound key
 	 * @return loop player
 	 */
 	public LoopPlayer getLoop(String key)
@@ -197,8 +185,7 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Get a effect player for key
 	 * 
-	 * @param key
-	 *            sound key
+	 * @param key sound key
 	 * @return effect player
 	 */
 	public EffectPlayer getEffect(String key)
@@ -226,8 +213,7 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Fade in a loop (with default time)
 	 * 
-	 * @param key
-	 *            sound key
+	 * @param key sound key
 	 */
 	public void fadeInLoop(String key)
 	{
@@ -238,10 +224,8 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Fade in a loop
 	 * 
-	 * @param key
-	 *            sound key
-	 * @param seconds
-	 *            fade-in duration
+	 * @param key sound key
+	 * @param seconds fade-in duration
 	 */
 	public void fadeInLoop(String key, double seconds)
 	{
@@ -252,8 +236,7 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Fade out a loop (with default time)
 	 * 
-	 * @param key
-	 *            sound key
+	 * @param key sound key
 	 */
 	public void fadeOutLoop(String key)
 	{
@@ -264,10 +247,8 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Fade out a loop
 	 * 
-	 * @param key
-	 *            sound key
-	 * @param seconds
-	 *            fade-out duration
+	 * @param key sound key
+	 * @param seconds fade-out duration
 	 */
 	public void fadeOutLoop(String key, double seconds)
 	{
@@ -278,8 +259,7 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Pause a loop
 	 * 
-	 * @param key
-	 *            sound key
+	 * @param key sound key
 	 */
 	public void pauseLoop(String key)
 	{
@@ -301,8 +281,7 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Resume a loop
 	 * 
-	 * @param key
-	 *            sound key
+	 * @param key sound key
 	 */
 	public void resumeLoop(String key)
 	{
@@ -313,8 +292,7 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Set level of master volume
 	 * 
-	 * @param d
-	 *            level
+	 * @param d level
 	 */
 	public void setMasterVolume(double d)
 	{
@@ -325,8 +303,7 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Set level of effects volume
 	 * 
-	 * @param d
-	 *            level
+	 * @param d level
 	 */
 	public void setEffectsVolume(double d)
 	{
@@ -337,8 +314,7 @@ public class SoundSystem extends DelegatingBusClient {
 	/**
 	 * Set level of music volume
 	 * 
-	 * @param d
-	 *            level
+	 * @param d level
 	 */
 	public void setMusicVolume(double d)
 	{

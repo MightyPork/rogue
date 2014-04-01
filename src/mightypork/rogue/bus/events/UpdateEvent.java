@@ -1,5 +1,6 @@
 package mightypork.rogue.bus.events;
 
+
 import mightypork.utils.patterns.subscription.Handleable;
 
 
@@ -24,7 +25,6 @@ public class UpdateEvent implements Handleable<UpdateEvent.Listener> {
 	{
 		handler.receive(this);
 	}
-	
 	
 	public interface Listener {
 		

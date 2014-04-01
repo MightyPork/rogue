@@ -1,5 +1,6 @@
 package mightypork.utils.files.ion;
 
+
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -17,8 +18,7 @@ public interface Ionizable {
 	 * Load data from the input stream. Mark has already been read, begin
 	 * reading right after it.
 	 * 
-	 * @param in
-	 *            input stream
+	 * @param in input stream
 	 * @throws IonException
 	 */
 	public void ionRead(InputStream in) throws IonException;
@@ -28,8 +28,7 @@ public interface Ionizable {
 	 * Store data to output stream. mark has already been written, begin right
 	 * after it.
 	 * 
-	 * @param out
-	 *            Output stream
+	 * @param out Output stream
 	 * @throws IonException
 	 */
 	public void ionWrite(OutputStream out) throws IonException;

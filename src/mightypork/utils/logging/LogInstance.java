@@ -1,5 +1,6 @@
 package mightypork.utils.logging;
 
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.PrintWriter;
@@ -150,8 +151,7 @@ public class LogInstance {
 	/**
 	 * Add log monitor
 	 * 
-	 * @param mon
-	 *            monitor
+	 * @param mon monitor
 	 * @return assigned ID
 	 */
 	public synchronized int addMonitor(LogMonitor mon)
@@ -166,8 +166,7 @@ public class LogInstance {
 	/**
 	 * Remove a monitor by ID
 	 * 
-	 * @param id
-	 *            monitor ID
+	 * @param id monitor ID
 	 */
 	public synchronized void removeMonitor(int id)
 	{
@@ -178,8 +177,7 @@ public class LogInstance {
 	/**
 	 * Enable logging.
 	 * 
-	 * @param flag
-	 *            do enable logging
+	 * @param flag do enable logging
 	 */
 	public void enable(boolean flag)
 	{
@@ -190,8 +188,7 @@ public class LogInstance {
 	/**
 	 * Enable printing logs to sysout
 	 * 
-	 * @param flag
-	 *            do enable logging
+	 * @param flag do enable logging
 	 */
 	public void enableSysout(boolean flag)
 	{
@@ -203,8 +200,7 @@ public class LogInstance {
 	/**
 	 * Log FINE message
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public void f1(String msg)
 	{
@@ -215,8 +211,7 @@ public class LogInstance {
 	/**
 	 * Log FINER message
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public void f2(String msg)
 	{
@@ -227,8 +222,7 @@ public class LogInstance {
 	/**
 	 * Log FINEST message
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public void f3(String msg)
 	{
@@ -239,8 +233,7 @@ public class LogInstance {
 	/**
 	 * Log INFO message
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public void i(String msg)
 	{
@@ -251,8 +244,7 @@ public class LogInstance {
 	/**
 	 * Log WARNING message (less severe than ERROR)
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public void w(String msg)
 	{
@@ -263,8 +255,7 @@ public class LogInstance {
 	/**
 	 * Log ERROR message
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public void e(String msg)
 	{
@@ -275,10 +266,8 @@ public class LogInstance {
 	/**
 	 * Log THROWING message
 	 * 
-	 * @param msg
-	 *            message
-	 * @param thrown
-	 *            thrown exception
+	 * @param msg message
+	 * @param thrown thrown exception
 	 */
 	public void e(String msg, Throwable thrown)
 	{
@@ -289,8 +278,7 @@ public class LogInstance {
 	/**
 	 * Log exception thrown
 	 * 
-	 * @param thrown
-	 *            thrown exception
+	 * @param thrown thrown exception
 	 */
 	public void e(Throwable thrown)
 	{
@@ -313,7 +301,6 @@ public class LogInstance {
 		sw.flush();
 		return sw.toString();
 	}
-	
 	
 	/**
 	 * PowerCraft Log file formatter.

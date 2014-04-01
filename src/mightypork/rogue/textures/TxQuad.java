@@ -1,5 +1,6 @@
 package mightypork.rogue.textures;
 
+
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -24,16 +25,11 @@ public class TxQuad {
 	/**
 	 * Create TxQuad from left top coord and rect size
 	 * 
-	 * @param tx
-	 *            texture
-	 * @param x1
-	 *            left top X
-	 * @param y1
-	 *            left top Y
-	 * @param width
-	 *            area width
-	 * @param height
-	 *            area height
+	 * @param tx texture
+	 * @param x1 left top X
+	 * @param y1 left top Y
+	 * @param width area width
+	 * @param height area height
 	 * @return new TxQuad
 	 */
 	public static TxQuad fromSize(Texture tx, int x1, int y1, int width, int height)
@@ -43,10 +39,8 @@ public class TxQuad {
 	
 	
 	/**
-	 * @param tx
-	 *            Texture
-	 * @param uvs
-	 *            Rect of texturwe UVs (pixels - from left top)
+	 * @param tx Texture
+	 * @param uvs Rect of texturwe UVs (pixels - from left top)
 	 */
 	public TxQuad(Texture tx, Rect uvs) {
 		this.tx = tx;
@@ -58,16 +52,11 @@ public class TxQuad {
 	/**
 	 * Make of coords
 	 * 
-	 * @param tx
-	 *            texture
-	 * @param x1
-	 *            x1
-	 * @param y1
-	 *            y1
-	 * @param x2
-	 *            x2
-	 * @param y2
-	 *            y2
+	 * @param tx texture
+	 * @param x1 x1
+	 * @param y1 y1
+	 * @param x2 x2
+	 * @param y2 y2
 	 */
 	public TxQuad(Texture tx, int x1, int y1, int x2, int y2) {
 		this.tx = tx;

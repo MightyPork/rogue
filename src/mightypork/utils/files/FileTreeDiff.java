@@ -1,5 +1,6 @@
 package mightypork.utils.files;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -91,8 +92,7 @@ public class FileTreeDiff {
 					if (read1 == -1) break;
 				}
 				
-			} catch (IOException e) {
-			} finally {
+			} catch (IOException e) {} finally {
 				try {
 					if (cin1 != null) cin1.close();
 				} catch (IOException e) {
@@ -140,7 +140,6 @@ public class FileTreeDiff {
 		}
 	}
 	
-	
 	private class NotEqualException extends Exception {
 		
 		public NotEqualException(String msg) {
@@ -148,7 +147,6 @@ public class FileTreeDiff {
 		}
 		
 	}
-	
 	
 	private class Tuple<T> {
 		

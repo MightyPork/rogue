@@ -1,5 +1,6 @@
 package mightypork.utils.math.easing;
 
+
 /**
  * EasingFunction function.
  * 
@@ -10,8 +11,7 @@ public abstract class Easing {
 	/**
 	 * Get value at time t.
 	 * 
-	 * @param t
-	 *            time parameter (t = 1..1)
+	 * @param t time parameter (t = 1..1)
 	 * @return value at given t (0..1, can exceed if needed)
 	 */
 	public abstract double get(double t);
@@ -20,8 +20,7 @@ public abstract class Easing {
 	/**
 	 * Reverse an easing
 	 * 
-	 * @param original
-	 *            original easing
+	 * @param original original easing
 	 * @return reversed easing
 	 */
 	public static Easing reverse(Easing original)
@@ -33,10 +32,8 @@ public abstract class Easing {
 	/**
 	 * Combine two easings
 	 * 
-	 * @param in
-	 *            initial easing
-	 * @param out
-	 *            terminal easing
+	 * @param in initial easing
+	 * @param out terminal easing
 	 * @return product
 	 */
 	public static Easing combine(Easing in, Easing out)
@@ -48,15 +45,13 @@ public abstract class Easing {
 	/**
 	 * Create "bilinear" easing - compose of straight and reverse.
 	 * 
-	 * @param in
-	 *            initial easing
+	 * @param in initial easing
 	 * @return product
 	 */
 	public static Easing inOut(Easing in)
 	{
 		return combine(in, reverse(in));
 	}
-	
 	
 	/**
 	 * Reverse EasingFunction
@@ -69,8 +64,7 @@ public abstract class Easing {
 		
 		
 		/**
-		 * @param in
-		 *            Easing to reverse
+		 * @param in Easing to reverse
 		 */
 		public Reverse(Easing in) {
 			this.ea = in;
@@ -83,7 +77,6 @@ public abstract class Easing {
 			return 1 - ea.get(1 - t);
 		}
 	}
-	
 	
 	/**
 	 * Composite EasingFunction (0-0.5 EasingFunction A, 0.5-1 EasingFunction B)
@@ -99,10 +92,8 @@ public abstract class Easing {
 		/**
 		 * Create a composite EasingFunction
 		 * 
-		 * @param in
-		 *            initial EasingFunction
-		 * @param out
-		 *            terminal EasingFunction
+		 * @param in initial EasingFunction
+		 * @param out terminal EasingFunction
 		 */
 		public Composite(Easing in, Easing out) {
 			this.in = in;

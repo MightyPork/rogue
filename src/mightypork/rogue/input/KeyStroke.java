@@ -1,5 +1,6 @@
 package mightypork.rogue.input;
 
+
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -16,10 +17,8 @@ public class KeyStroke {
 	/**
 	 * KeyStroke
 	 * 
-	 * @param down
-	 *            true for falling edge, up for rising edge
-	 * @param keys
-	 *            keys that must be pressed
+	 * @param down true for falling edge, up for rising edge
+	 * @param keys keys that must be pressed
 	 */
 	public KeyStroke(boolean down, int... keys) {
 		this.down = down;

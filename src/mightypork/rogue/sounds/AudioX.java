@@ -1,5 +1,6 @@
 package mightypork.rogue.sounds;
 
+
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.coord.Coord;
@@ -16,7 +17,8 @@ import org.newdawn.slick.openal.SoundStore;
  */
 public class AudioX implements Destroyable {
 	
-	private enum PlayMode {
+	private enum PlayMode
+	{
 		EFFECT, MUSIC;
 	};
 	
@@ -35,8 +37,7 @@ public class AudioX implements Destroyable {
 	/**
 	 * Create deferred primitive audio player
 	 * 
-	 * @param resourceName
-	 *            resource to load when needed
+	 * @param resourceName resource to load when needed
 	 */
 	public AudioX(String resourceName) {
 		this.audio = null;
@@ -160,12 +161,9 @@ public class AudioX implements Destroyable {
 	/**
 	 * Play as sound effect at listener position
 	 * 
-	 * @param pitch
-	 *            pitch (1 = default)
-	 * @param gain
-	 *            gain (0-1)
-	 * @param loop
-	 *            looping
+	 * @param pitch pitch (1 = default)
+	 * @param gain gain (0-1)
+	 * @param loop looping
 	 * @return source id
 	 */
 	public int playAsEffect(double pitch, double gain, boolean loop)
@@ -177,12 +175,9 @@ public class AudioX implements Destroyable {
 	/**
 	 * Play as sound effect at given X-Y position
 	 * 
-	 * @param pitch
-	 *            pitch (1 = default)
-	 * @param gain
-	 *            gain (0-1)
-	 * @param loop
-	 *            looping
+	 * @param pitch pitch (1 = default)
+	 * @param gain gain (0-1)
+	 * @param loop looping
 	 * @param x
 	 * @param y
 	 * @return source id
@@ -196,12 +191,9 @@ public class AudioX implements Destroyable {
 	/**
 	 * Play as sound effect at given position
 	 * 
-	 * @param pitch
-	 *            pitch (1 = default)
-	 * @param gain
-	 *            gain (0-1)
-	 * @param loop
-	 *            looping
+	 * @param pitch pitch (1 = default)
+	 * @param gain gain (0-1)
+	 * @param loop looping
 	 * @param x
 	 * @param y
 	 * @param z
@@ -222,14 +214,10 @@ public class AudioX implements Destroyable {
 	/**
 	 * Play as sound effect at given position
 	 * 
-	 * @param pitch
-	 *            pitch (1 = default)
-	 * @param gain
-	 *            gain (0-1)
-	 * @param loop
-	 *            looping
-	 * @param pos
-	 *            coord
+	 * @param pitch pitch (1 = default)
+	 * @param gain gain (0-1)
+	 * @param loop looping
+	 * @param pos coord
 	 * @return source id
 	 */
 	public int playAsEffect(double pitch, double gain, boolean loop, Coord pos)
@@ -244,12 +232,9 @@ public class AudioX implements Destroyable {
 	 * Play as music using source 0.<br>
 	 * Discouraged, since this does not allow cross-fading.
 	 * 
-	 * @param pitch
-	 *            play pitch
-	 * @param gain
-	 *            play gain
-	 * @param loop
-	 *            looping
+	 * @param pitch play pitch
+	 * @param gain play gain
+	 * @param loop looping
 	 * @return source
 	 */
 	public int playAsMusic(double pitch, double gain, boolean loop)

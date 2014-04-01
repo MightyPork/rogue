@@ -1,5 +1,6 @@
 package mightypork.utils.logging;
 
+
 import java.io.File;
 import java.util.HashMap;
 
@@ -13,8 +14,7 @@ public class Log {
 	/**
 	 * Log FINE message in main logger
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public static void f1(String msg)
 	{
@@ -25,8 +25,7 @@ public class Log {
 	/**
 	 * Log FINER message in main logger
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public static void f2(String msg)
 	{
@@ -37,8 +36,7 @@ public class Log {
 	/**
 	 * Log FINEST message in main logger
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public static void f3(String msg)
 	{
@@ -49,8 +47,7 @@ public class Log {
 	/**
 	 * Log INFO message in main logger
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public static void i(String msg)
 	{
@@ -61,8 +58,7 @@ public class Log {
 	/**
 	 * Log WARNING message in main logger
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public static void w(String msg)
 	{
@@ -73,8 +69,7 @@ public class Log {
 	/**
 	 * Log ERROR message in main logger
 	 * 
-	 * @param msg
-	 *            message
+	 * @param msg message
 	 */
 	public static void e(String msg)
 	{
@@ -85,10 +80,8 @@ public class Log {
 	/**
 	 * Log EXCEPTION and ERROR message in main logger
 	 * 
-	 * @param msg
-	 *            message
-	 * @param thrown
-	 *            thrown exception
+	 * @param msg message
+	 * @param thrown thrown exception
 	 */
 	public static void e(String msg, Throwable thrown)
 	{
@@ -99,8 +92,7 @@ public class Log {
 	/**
 	 * Log EXCEPTION in main logger
 	 * 
-	 * @param thrown
-	 *            thrown exception
+	 * @param thrown thrown exception
 	 */
 	public static void e(Throwable thrown)
 	{
@@ -117,8 +109,7 @@ public class Log {
 	/**
 	 * Enable / disable static log delegate methods
 	 * 
-	 * @param flag
-	 *            enable
+	 * @param flag enable
 	 */
 	public static void enableStaticLogging(boolean flag)
 	{
@@ -133,12 +124,10 @@ public class Log {
 	 * Create a logger. If this is the first logger made, then it'll be made
 	 * available via the static methods.
 	 * 
-	 * @param logName
-	 *            log name (used for filename, must be application-unique)
-	 * @param logsDir
-	 *            directory to store logs in
-	 * @param oldLogsCount
-	 *            number of old logs to keep, -1 for infinite, 0 for none.
+	 * @param logName log name (used for filename, must be application-unique)
+	 * @param logsDir directory to store logs in
+	 * @param oldLogsCount number of old logs to keep, -1 for infinite, 0 for
+	 *            none.
 	 * @return the created Log instance
 	 */
 	public static synchronized LogInstance create(String logName, File logsDir, int oldLogsCount)
@@ -157,10 +146,8 @@ public class Log {
 	 * available via the static methods.<br>
 	 * Old logs will be kept.
 	 * 
-	 * @param logName
-	 *            log name (used for filename, must be application-unique)
-	 * @param logsDir
-	 *            directory to store logs in
+	 * @param logName log name (used for filename, must be application-unique)
+	 * @param logsDir directory to store logs in
 	 * @return the created Log instance
 	 */
 	public static synchronized LogInstance create(String logName, File logsDir)

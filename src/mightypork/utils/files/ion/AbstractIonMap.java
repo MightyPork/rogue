@@ -1,5 +1,6 @@
 package mightypork.utils.files.ion;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -74,8 +75,7 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 	/**
 	 * Read custom data of this AbstractIonMap implementation
 	 * 
-	 * @param in
-	 *            input stream
+	 * @param in input stream
 	 */
 	public void ionReadCustomData(InputStream in)
 	{
@@ -85,8 +85,7 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 	/**
 	 * Write custom data of this AbstractIonMap implementation
 	 * 
-	 * @param out
-	 *            output stream
+	 * @param out output stream
 	 */
 	public void ionWriteCustomData(OutputStream out)
 	{

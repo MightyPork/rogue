@@ -1,5 +1,6 @@
 package mightypork.utils.files;
 
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -27,12 +28,9 @@ public class ZipUtils {
 	/**
 	 * Extract zip file to target directory
 	 * 
-	 * @param file
-	 *            zip file
-	 * @param outputDir
-	 *            target directory
-	 * @param filter
-	 *            string filter (will be used to test entry names (paths))
+	 * @param file zip file
+	 * @param outputDir target directory
+	 * @param filter string filter (will be used to test entry names (paths))
 	 * @return list of entries extracted (paths)
 	 * @throws IOException
 	 */
@@ -57,12 +55,9 @@ public class ZipUtils {
 	/**
 	 * Extract zip file to target directory
 	 * 
-	 * @param zip
-	 *            open zip file
-	 * @param outputDir
-	 *            target directory
-	 * @param filter
-	 *            string filter (will be used to test entry names (paths))
+	 * @param zip open zip file
+	 * @param outputDir target directory
+	 * @param filter string filter (will be used to test entry names (paths))
 	 * @return list of entries extracted (paths)
 	 * @throws IOException
 	 */
@@ -101,11 +96,9 @@ public class ZipUtils {
 	/**
 	 * Read zip entries and add their paths to a list
 	 * 
-	 * @param zipFile
-	 *            open zip file
+	 * @param zipFile open zip file
 	 * @return list of entry names
-	 * @throws IOException
-	 *             on error
+	 * @throws IOException on error
 	 */
 	public static List<String> listZip(File zipFile) throws IOException
 	{
@@ -126,11 +119,9 @@ public class ZipUtils {
 	/**
 	 * Read zip entries and add their paths to a list
 	 * 
-	 * @param zip
-	 *            open zip file
+	 * @param zip open zip file
 	 * @return list of entry names
-	 * @throws IOException
-	 *             on error
+	 * @throws IOException on error
 	 */
 	public static List<String> listZip(ZipFile zip) throws IOException
 	{
@@ -154,14 +145,10 @@ public class ZipUtils {
 	/**
 	 * Extract one zip entry to target file
 	 * 
-	 * @param zip
-	 *            open zip file
-	 * @param entry
-	 *            entry from the zip file
-	 * @param destFile
-	 *            destination file ((NOT directory!)
-	 * @throws IOException
-	 *             on error
+	 * @param zip open zip file
+	 * @param entry entry from the zip file
+	 * @param destFile destination file ((NOT directory!)
+	 * @throws IOException on error
 	 */
 	public static void extractZipEntry(ZipFile zip, ZipEntry entry, File destFile) throws IOException
 	{
@@ -197,13 +184,10 @@ public class ZipUtils {
 	/**
 	 * Load zip entry to String
 	 * 
-	 * @param zip
-	 *            open zip file
-	 * @param entry
-	 *            entry from the zip file
+	 * @param zip open zip file
+	 * @param entry entry from the zip file
 	 * @return loaded string
-	 * @throws IOException
-	 *             on error
+	 * @throws IOException on error
 	 */
 	public static String zipEntryToString(ZipFile zip, ZipEntry entry) throws IOException
 	{
