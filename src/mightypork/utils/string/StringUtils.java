@@ -1,6 +1,5 @@
 package mightypork.utils.string;
 
-
 /**
  * General purpose string utilities
  * 

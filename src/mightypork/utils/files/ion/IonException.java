@@ -1,6 +1,5 @@
 package mightypork.utils.files.ion;
 
-
 public class IonException extends Exception {
 	
 	public IonException() {

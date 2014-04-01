@@ -1,6 +1,5 @@
 package mightypork.utils.files.ion;
 
-
 /**
  * Ionizable Arraylist
  * 

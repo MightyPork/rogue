@@ -1,6 +1,5 @@
 package mightypork.utils.objects;
 
-
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.Range;
 import mightypork.utils.math.coord.Coord;

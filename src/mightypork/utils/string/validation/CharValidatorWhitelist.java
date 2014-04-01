@@ -1,6 +1,5 @@
 package mightypork.utils.string.validation;
 
-
 public class CharValidatorWhitelist implements CharValidator {
 	
 	private String whitelist;

@@ -1,6 +1,5 @@
 package mightypork.rogue;
 
-
 import java.io.File;
 
 import mightypork.utils.files.OsUtils;

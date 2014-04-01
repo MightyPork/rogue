@@ -1,6 +1,5 @@
 package mightypork.rogue.input;
 
-
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.DelegatingBusClient;
 import mightypork.rogue.bus.events.KeyboardEvent;

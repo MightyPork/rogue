@@ -1,6 +1,5 @@
 package mightypork.utils.objects;
 
-
 /**
  * Mutable object
  * 

@@ -1,6 +1,5 @@
 package mightypork.rogue;
 
-
 /**
  * Application constants
  * 

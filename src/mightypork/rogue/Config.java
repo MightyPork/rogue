@@ -1,6 +1,5 @@
 package mightypork.rogue;
 
-
 import mightypork.utils.files.PropertyManager;
 import mightypork.utils.logging.Log;
 

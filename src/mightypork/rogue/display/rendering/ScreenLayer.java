@@ -1,6 +1,5 @@
 package mightypork.rogue.display.rendering;
 
-
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.DelegatingBusClient;
 

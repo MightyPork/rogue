@@ -1,6 +1,5 @@
 package mightypork.utils.math;
 
-
 import java.util.Random;
 
 

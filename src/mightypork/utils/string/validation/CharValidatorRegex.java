@@ -1,6 +1,5 @@
 package mightypork.utils.string.validation;
 
-
 public class CharValidatorRegex implements CharValidator {
 	
 	private String formula;

@@ -1,6 +1,5 @@
 package mightypork.rogue.bus;
 
-
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.events.UpdateEvent;
 import mightypork.utils.time.Updateable;

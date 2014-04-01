@@ -1,6 +1,5 @@
 package mightypork.rogue.util;
 
-
 import static org.lwjgl.opengl.GL11.*;
 import mightypork.rogue.textures.TextureManager;
 import mightypork.rogue.textures.TxQuad;

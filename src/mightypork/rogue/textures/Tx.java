@@ -1,6 +1,5 @@
 package mightypork.rogue.textures;
 
-
 // TODO rewrite
 
 /**

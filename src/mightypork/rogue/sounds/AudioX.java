@@ -1,6 +1,5 @@
 package mightypork.rogue.sounds;
 
-
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.coord.Coord;

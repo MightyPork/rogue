@@ -1,6 +1,5 @@
 package mightypork.utils.objects;
 
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,6 +10,9 @@ import java.util.Map;
  * example:
  * 
  * <pre>
+ * 
+ * 
+ * 
  * 
  * 
  * 

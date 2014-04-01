@@ -1,6 +1,5 @@
 package mightypork.utils.files.ion;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,7 +22,6 @@ public abstract class AbstractIonList<T> extends ArrayList<T> implements Ionizab
 				byte b = StreamUtils.readByte(in);
 				
 				if (b == IonMarks.ENTRY) {
-					@SuppressWarnings("unchecked")
 					T value = (T) Ion.readObject(in);
 					add(value);
 				} else if (b == IonMarks.END) {

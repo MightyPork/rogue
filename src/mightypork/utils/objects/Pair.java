@@ -1,6 +1,5 @@
 package mightypork.utils.objects;
 
-
 import mightypork.utils.math.Calc;
 
 

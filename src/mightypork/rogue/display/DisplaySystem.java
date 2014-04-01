@@ -1,6 +1,5 @@
 package mightypork.rogue.display;
 
-
 import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.image.BufferedImage;

@@ -1,6 +1,5 @@
 package mightypork.rogue.input;
 
-
 public interface KeyBinder {
 	
 	/**

@@ -1,6 +1,5 @@
 package mightypork.utils.files;
 
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;

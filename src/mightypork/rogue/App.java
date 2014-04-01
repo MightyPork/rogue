@@ -1,6 +1,5 @@
 package mightypork.rogue;
 
-
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;

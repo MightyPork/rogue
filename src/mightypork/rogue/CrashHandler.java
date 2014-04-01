@@ -1,6 +1,5 @@
 package mightypork.rogue;
 
-
 import java.lang.Thread.UncaughtExceptionHandler;
 
 

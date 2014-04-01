@@ -1,6 +1,5 @@
 package mightypork.utils.logging;
 
-
 import java.io.File;
 import java.util.HashMap;
 

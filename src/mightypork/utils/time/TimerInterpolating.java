@@ -1,6 +1,5 @@
 package mightypork.utils.time;
 
-
 /**
  * Timer for interpolated timing
  * 

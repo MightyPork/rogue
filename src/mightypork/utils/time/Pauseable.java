@@ -1,6 +1,5 @@
 package mightypork.utils.time;
 
-
 public interface Pauseable {
 	
 	/**

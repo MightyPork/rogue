@@ -1,6 +1,5 @@
 package mightypork.utils.logging;
 
-
 import java.util.logging.Level;
 
 

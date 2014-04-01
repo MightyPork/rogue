@@ -1,6 +1,5 @@
 package mightypork.rogue.testing;
 
-
 import mightypork.rogue.display.constraints.Bounding;
 import mightypork.rogue.display.constraints.Constraint;
 import mightypork.utils.math.coord.Coord;
