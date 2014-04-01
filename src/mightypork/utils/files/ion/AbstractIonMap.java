@@ -38,7 +38,6 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 				if (b == IonMarks.ENTRY) {
 					String key = StreamUtils.readStringBytes(in);
 					
-					@SuppressWarnings("unchecked")
 					V value = (V) Ion.readObject(in);
 					put(key, value);
 					

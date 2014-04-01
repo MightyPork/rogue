@@ -23,7 +23,6 @@ public abstract class AbstractIonList<T> extends ArrayList<T> implements Ionizab
 				byte b = StreamUtils.readByte(in);
 				
 				if (b == IonMarks.ENTRY) {
-					@SuppressWarnings("unchecked")
 					T value = (T) Ion.readObject(in);
 					add(value);
 				} else if (b == IonMarks.END) {
