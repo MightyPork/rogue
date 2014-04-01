@@ -7,20 +7,21 @@ import java.nio.channels.FileLock;
 
 import javax.swing.JOptionPane;
 
-import mightypork.rogue.bus.events.UpdateEvent;
 import mightypork.rogue.display.DisplaySystem;
 import mightypork.rogue.display.Screen;
-import mightypork.rogue.display.ScreenTestAnimations;
+import mightypork.rogue.display.screens.screenBouncy.TestLayeredScreen;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.sounds.SoundSystem;
 import mightypork.rogue.tasks.TaskTakeScreenshot;
 import mightypork.rogue.util.Utils;
+import mightypork.utils.control.Destroyable;
+import mightypork.utils.control.bus.MessageBus;
+import mightypork.utils.control.timing.TimerDelta;
+import mightypork.utils.control.timing.UpdateEvent;
+import mightypork.utils.control.timing.Updateable;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogInstance;
-import mightypork.utils.patterns.Destroyable;
-import mightypork.utils.patterns.subscription.MessageBus;
-import mightypork.utils.time.TimerDelta;
 
 import org.lwjgl.input.Keyboard;
 
@@ -46,12 +47,16 @@ public class App implements Destroyable, AppAccess {
 	/** Flag that screenshot is scheduled to be taken next loop */
 	private boolean scheduledScreenshot = false;
 	
+	/** Log instance; accessible as static via Log. */
+	private LogInstance log;
+	
 	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{
+		Config.init();
 		
 		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler());
 		
@@ -170,7 +175,7 @@ public class App implements Destroyable, AppAccess {
 		events = new MessageBus();
 		events.subscribe(this);
 		
-		events.createChannel(UpdateEvent.class, UpdateEvent.Listener.class);
+		events.createChannel(UpdateEvent.class, Updateable.class);
 	}
 	
 	
@@ -180,6 +185,7 @@ public class App implements Destroyable, AppAccess {
 	private void initSound()
 	{
 		sounds = new SoundSystem(this);
+		
 		sounds.setMasterVolume(1);
 	}
 	
@@ -229,6 +235,7 @@ public class App implements Destroyable, AppAccess {
 	private void initDisplay()
 	{
 		display = new DisplaySystem(this);
+		
 		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.START_IN_FS, Const.TITLEBAR);
 		display.setTargetFps(Const.FPS_RENDER);
 	}
@@ -239,16 +246,18 @@ public class App implements Destroyable, AppAccess {
 	 */
 	private void initLogger()
 	{
-		LogInstance li = Log.create("runtime", Paths.LOGS, 10);
-		li.enable(Config.LOGGING_ENABLED);
-		li.enableSysout(Config.LOG_TO_STDOUT);
+		log = Log.create("runtime", Paths.LOGS, 10);
+		log.enable(Config.LOGGING_ENABLED);
+		log.enableSysout(Config.LOG_TO_STDOUT);
 	}
 	
 	
 	private void start()
 	{
 		initialize();
+		
 		mainLoop();
+		
 		shutdown();
 	}
 	
@@ -256,9 +265,13 @@ public class App implements Destroyable, AppAccess {
 	private TimerDelta timerRender;
 	
 	
+	/**
+	 * App main loop
+	 */
 	private void mainLoop()
 	{
-		screen = new ScreenTestAnimations(this);
+		screen = new TestLayeredScreen(this);
+		
 		screen.setActive(true);
 		
 		timerRender = new TimerDelta();
@@ -281,16 +294,12 @@ public class App implements Destroyable, AppAccess {
 	/**
 	 * Do take a screenshot
 	 */
-	public void takeScreenshot()
+	private void takeScreenshot()
 	{
 		sounds.getEffect("gui.shutter").play(1);
 		Utils.runAsThread(new TaskTakeScreenshot(display));
 	}
 	
-	
-	//
-	// static accessors
-	//
 	
 	/**
 	 * @return sound system of the running instance

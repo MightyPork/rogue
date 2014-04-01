@@ -2,14 +2,14 @@ package mightypork.rogue.display;
 
 
 import static org.lwjgl.opengl.GL11.*;
-
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.bus.DelegatingBusClient;
+import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ScreenChangeEvent;
-import mightypork.rogue.display.constraints.Bounding;
+import mightypork.rogue.display.constraints.RenderContext;
 import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
+import mightypork.utils.control.timing.Updateable;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -21,18 +21,22 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class Screen extends DelegatingBusClient implements KeyBinder, Bounding, ScreenChangeEvent.Listener {
+public abstract class Screen extends Subsystem implements Updateable, KeyBinder, RenderContext, ScreenChangeEvent.Listener {
 	
-	private KeyBindingPool keybindings;
+	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
 	private boolean active;
 	
+	private boolean inited = false;
+	
 	
 	public Screen(AppAccess app) {
-		super(app, true);
+		super(app);
 		
 		// disable events initially
-		enableEvents(false);
+		setListening(false);
+		
+		addChildClient(keybindings);
 	}
 	
 	
@@ -50,6 +54,13 @@ public abstract class Screen extends DelegatingBusClient implements KeyBinder, B
 	}
 	
 	
+	@Override
+	protected final void deinit()
+	{
+		deinitScreen();
+	}
+	
+	
 	/**
 	 * Prepare for being shown
 	 * 
@@ -64,81 +75,18 @@ public abstract class Screen extends DelegatingBusClient implements KeyBinder, B
 			onSizeChanged(getRect().getSize());
 			onScreenEnter();
 			
-			// subscribe to event bus
-			enableEvents(true);
+			// enable events
+			setListening(true);
 			
 		} else {
 			onScreenLeave();
 			
 			active = false;
 			
-			// unsusbcribe from event bus
-			enableEvents(false);
+			// disable events
+			setListening(false);
 		}
 	}
-	
-	
-	private void setupGraphics()
-	{
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		
-		glDisable(GL_LIGHTING);
-		
-		glClearDepth(1f);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-		
-		glEnable(GL_NORMALIZE);
-		
-		glShadeModel(GL_SMOOTH);
-		
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		
-		glDisable(GL_TEXTURE_2D);
-		
-		setupViewport();
-	}
-	
-	
-	private void setupViewport()
-	{
-		// fix projection for changed size
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		Coord s = disp().getSize();
-		glViewport(0, 0, s.xi(), s.yi());
-		glOrtho(0, s.x, 0, s.y, -1000, 1000);
-		
-		// back to modelview
-		glMatrixMode(GL_MODELVIEW);
-	}
-	
-	
-	@Override
-	protected final void init()
-	{
-		keybindings = new KeyBindingPool();
-		
-		addChildSubscriber(keybindings);
-		
-		initScreen();
-	}
-	
-	
-	@Override
-	protected final void deinit()
-	{
-		deinitScreen();
-	}
-	
-	
-	/**
-	 * Initialize screen layout and key bindings.<br>
-	 * Called during screen construction.
-	 */
-	protected abstract void initScreen();
 	
 	
 	/**
@@ -177,11 +125,49 @@ public abstract class Screen extends DelegatingBusClient implements KeyBinder, B
 	
 	
 	/**
-	 * Update animations and timing
+	 * Update animations and timing.<br>
 	 * 
 	 * @param delta time elapsed
 	 */
 	protected abstract void updateScreen(double delta);
+	
+	
+	private void setupGraphics()
+	{
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		
+		glDisable(GL_LIGHTING);
+		
+		glClearDepth(1f);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+		
+		glEnable(GL_NORMALIZE);
+		
+		glShadeModel(GL_SMOOTH);
+		
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		glDisable(GL_TEXTURE_2D);
+		
+		setupViewport();
+	}
+	
+	
+	private void setupViewport()
+	{
+		// fix projection for changed size
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		Coord s = disp().getSize();
+		glViewport(0, 0, s.xi(), s.yi());
+		glOrtho(0, s.x, 0, s.y, -1000, 1000);
+		
+		// back to modelview
+		glMatrixMode(GL_MODELVIEW);
+	}
 	
 	
 	/**
@@ -234,9 +220,6 @@ public abstract class Screen extends DelegatingBusClient implements KeyBinder, B
 		
 		renderBegin();
 		renderScreen();
-		
-		// TODO render layers ?
-		
 		renderEnd();
 	}
 	

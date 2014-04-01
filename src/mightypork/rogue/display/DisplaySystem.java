@@ -7,9 +7,9 @@ import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.bus.DelegatingBusClient;
+import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ScreenChangeEvent;
-import mightypork.rogue.display.constraints.Bounding;
+import mightypork.rogue.display.constraints.RenderContext;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
@@ -20,27 +20,21 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 
-public class DisplaySystem extends DelegatingBusClient implements Bounding {
+public class DisplaySystem extends Subsystem implements RenderContext {
 	
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
 	
 	
 	public DisplaySystem(AppAccess app) {
-		super(app, true);
-		enableUpdates(false);
-	}
-	
-	
-	@Override
-	protected void init()
-	{
+		super(app);
+		
 		initChannels();
 	}
 	
 	
 	@Override
-	public void deinit()
+	protected void deinit()
 	{
 		Display.destroy();
 	}
@@ -178,6 +172,7 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 	 */
 	public void beginFrame()
 	{
+		// handle resize
 		if (Display.wasResized()) {
 			bus().broadcast(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
 		}

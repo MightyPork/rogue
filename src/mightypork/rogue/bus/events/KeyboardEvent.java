@@ -1,7 +1,7 @@
 package mightypork.rogue.bus.events;
 
 
-import mightypork.utils.patterns.subscription.Handleable;
+import mightypork.utils.control.bus.Handleable;
 
 import org.lwjgl.input.Keyboard;
 

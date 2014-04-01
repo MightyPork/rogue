@@ -223,7 +223,7 @@ public class Rect {
 	 */
 	public Rect getAxisV()
 	{
-		return new Rect(getCenterDown(), getCenterTop());
+		return new Rect(getCenterBottom(), getCenterTop());
 	}
 	
 	
@@ -243,7 +243,7 @@ public class Rect {
 	 * 
 	 * @return center
 	 */
-	public Coord getCenterDown()
+	public Coord getCenterBottom()
 	{
 		return new Coord((max.x + min.x) / 2, min.y);
 	}
@@ -353,7 +353,7 @@ public class Rect {
 	 */
 	public Coord getMax()
 	{
-		return max;
+		return getRightTop();
 	}
 	
 	
@@ -362,7 +362,7 @@ public class Rect {
 	 */
 	public Coord getOrigin()
 	{
-		return min;
+		return getLeftBottom();
 	}
 	
 	
@@ -400,6 +400,91 @@ public class Rect {
 	
 	
 	/**
+	 * Shrink to sides in copy
+	 * 
+	 * @param shrink shrink size (added to each side)
+	 * @return shrinkn copy
+	 */
+	public Rect shrink(Coord shrink)
+	{
+		return copy().shrink_ip(shrink);
+	}
+	
+	
+	/**
+	 * Shrink to sides in copy
+	 * 
+	 * @param x x to add
+	 * @param y y to add
+	 * @return changed copy
+	 */
+	public Rect shrink(double x, double y)
+	{
+		return copy().shrink_ip(x, y);
+	}
+	
+	
+	/**
+	 * Shrink to sides in place
+	 * 
+	 * @param shrink shrink size (added to each side)
+	 * @return this
+	 */
+	public Rect shrink_ip(Coord shrink)
+	{
+		shrink_ip(shrink.x, shrink.y);
+		return this;
+	}
+	
+	
+	/**
+	 * Shrink to sides in place
+	 * 
+	 * @param x x to add
+	 * @param y y to add
+	 * @return this
+	 */
+	public Rect shrink_ip(double x, double y)
+	{
+		min.sub_ip(x, y);
+		max.add_ip(-x, -y);
+		return this;
+	}
+	
+	
+	/**
+	 * Shrink the rect
+	 * 
+	 * @param left left shrink
+	 * @param top top shrink
+	 * @param right right shrink
+	 * @param bottom bottom shrink
+	 * @return changed copy
+	 */
+	public Rect shrink(double left, double top, double right, double bottom)
+	{
+		return copy().shrink_ip(left, top, right, bottom);
+	}
+	
+	
+	/**
+	 * Shrink the rect in place
+	 * 
+	 * @param left left shrink
+	 * @param top top shrink
+	 * @param right right shrink
+	 * @param bottom bottom shrink
+	 * @return this
+	 */
+	public Rect shrink_ip(double left, double top, double right, double bottom)
+	{
+		min.add_ip(left, bottom);
+		max.add_ip(-right, -top);
+		return this;
+	}
+	
+	
+	/**
 	 * Grow to sides in copy
 	 * 
 	 * @param grow grow size (added to each side)
@@ -416,7 +501,7 @@ public class Rect {
 	 * 
 	 * @param x x to add
 	 * @param y y to add
-	 * @return grown copy
+	 * @return changed copy
 	 */
 	public Rect grow(double x, double y)
 	{
@@ -432,8 +517,7 @@ public class Rect {
 	 */
 	public Rect grow_ip(Coord grow)
 	{
-		min.sub_ip(grow);
-		max.add_ip(grow);
+		grow_ip(grow.x, grow.y);
 		return this;
 	}
 	
@@ -454,101 +538,33 @@ public class Rect {
 	
 	
 	/**
-	 * Grow down in copy
+	 * Grow the rect
 	 * 
-	 * @param down added pixels
-	 * @return grown copy
+	 * @param left left growth
+	 * @param top top growth
+	 * @param right right growth
+	 * @param bottom bottom growth
+	 * @return changed copy
 	 */
-	public Rect growDown(double down)
+	public Rect grow(double left, double top, double right, double bottom)
 	{
-		return copy().growDown_ip(down);
+		return copy().grow_ip(left, top, right, bottom);
 	}
 	
 	
 	/**
-	 * Grow down in place
+	 * Grow the rect in place
 	 * 
-	 * @param down added pixels
+	 * @param left left growth
+	 * @param top top growth
+	 * @param right right growth
+	 * @param bottom bottom growth
 	 * @return this
 	 */
-	public Rect growDown_ip(double down)
+	public Rect grow_ip(double left, double top, double right, double bottom)
 	{
-		min.sub_ip(0, down);
-		return this;
-	}
-	
-	
-	/**
-	 * Grow to left in copy
-	 * 
-	 * @param left added pixels
-	 * @return grown copy
-	 */
-	public Rect growLeft(double left)
-	{
-		return copy().growLeft_ip(left);
-	}
-	
-	
-	/**
-	 * Grow to left in place
-	 * 
-	 * @param left added pixels
-	 * @return this
-	 */
-	public Rect growLeft_ip(double left)
-	{
-		min.sub_ip(left, 0);
-		return this;
-	}
-	
-	
-	/**
-	 * Grow to right in copy
-	 * 
-	 * @param right added pixels
-	 * @return grown copy
-	 */
-	public Rect growRight(double right)
-	{
-		return copy().growRight_ip(right);
-	}
-	
-	
-	/**
-	 * Grow to right in place
-	 * 
-	 * @param right added pixels
-	 * @return this
-	 */
-	public Rect growRight_ip(double right)
-	{
-		max.add_ip(right, 0);
-		return this;
-	}
-	
-	
-	/**
-	 * Grow up in copy
-	 * 
-	 * @param add added pixels
-	 * @return grown copy
-	 */
-	public Rect growUp(double add)
-	{
-		return copy().growUp_ip(add);
-	}
-	
-	
-	/**
-	 * Grow up in place
-	 * 
-	 * @param add added pixels
-	 * @return this
-	 */
-	public Rect growUp_ip(double add)
-	{
-		max.add_ip(0, add);
+		min.add_ip(-left, -bottom);
+		max.add_ip(right, top);
 		return this;
 	}
 	

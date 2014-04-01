@@ -143,7 +143,7 @@ public abstract class Easing {
 	public static final Easing QUADRATIC_OUT = reverse(QUADRATIC_IN);
 	
 	/** Quadratic (y=t^2) easing both */
-	public static final Easing QUADRATIC_IN_OUT = inOut(QUADRATIC_IN);
+	public static final Easing QUADRATIC_BOTH = inOut(QUADRATIC_IN);
 	
 	/** Cubic (y=t^3) easing in */
 	public static final Easing CUBIC_IN = new Easing() {
@@ -159,7 +159,7 @@ public abstract class Easing {
 	public static final Easing CUBIC_OUT = reverse(CUBIC_IN);
 	
 	/** Cubic (y=t^3) easing both */
-	public static final Easing CUBIC_IN_OUT = inOut(CUBIC_IN);
+	public static final Easing CUBIC_BOTH = inOut(CUBIC_IN);
 	
 	/** Quartic (y=t^4) easing in */
 	public static final Easing QUARTIC_IN = new Easing() {
@@ -175,7 +175,7 @@ public abstract class Easing {
 	public static final Easing QUARTIC_OUT = reverse(QUADRATIC_IN);
 	
 	/** Quartic (y=t^4) easing both */
-	public static final Easing QUARTIC_IN_OUT = inOut(QUADRATIC_IN);
+	public static final Easing QUARTIC_BOTH = inOut(QUADRATIC_IN);
 	
 	/** Quintic (y=t^5) easing in */
 	public static final Easing QUINTIC_IN = new Easing() {
@@ -191,7 +191,7 @@ public abstract class Easing {
 	public static final Easing QUINTIC_OUT = reverse(QUINTIC_IN);
 	
 	/** Quintic (y=t^5) easing both */
-	public static final Easing QUINTIC_IN_OUT = inOut(QUINTIC_IN);
+	public static final Easing QUINTIC_BOTH = inOut(QUINTIC_IN);
 	
 	/** Sine easing in */
 	public static final Easing SINE_IN = new Easing() {
@@ -207,7 +207,7 @@ public abstract class Easing {
 	public static final Easing SINE_OUT = reverse(SINE_IN);
 	
 	/** Sine easing both */
-	public static final Easing SINE_IN_OUT = inOut(SINE_IN);
+	public static final Easing SINE_BOTH = inOut(SINE_IN);
 	
 	/** Exponential easing in */
 	public static final Easing EXPO_IN = new Easing() {
@@ -223,7 +223,7 @@ public abstract class Easing {
 	public static final Easing EXPO_OUT = reverse(EXPO_IN);
 	
 	/** Exponential easing both */
-	public static final Easing EXPO_IN_OUT = inOut(EXPO_IN);
+	public static final Easing EXPO_BOTH = inOut(EXPO_IN);
 	
 	/** Circular easing in */
 	public static final Easing CIRC_IN = new Easing() {
@@ -239,7 +239,7 @@ public abstract class Easing {
 	public static final Easing CIRC_OUT = reverse(CIRC_IN);
 	
 	/** Circular easing both */
-	public static final Easing CIRC_IN_OUT = inOut(CIRC_IN);
+	public static final Easing CIRC_BOTH = inOut(CIRC_IN);
 	
 	/** Bounce easing in */
 	public static final Easing BOUNCE_OUT = new Easing() {
@@ -269,7 +269,7 @@ public abstract class Easing {
 	public static final Easing BOUNCE_IN = reverse(BOUNCE_OUT);
 	
 	/** Bounce easing both */
-	public static final Easing BOUNCE_IN_OUT = inOut(BOUNCE_IN);
+	public static final Easing BOUNCE_BOTH = inOut(BOUNCE_IN);
 	
 	/** Back easing in */
 	public static final Easing BACK_IN = new Easing() {
@@ -286,7 +286,7 @@ public abstract class Easing {
 	public static final Easing BACK_OUT = reverse(BACK_IN);
 	
 	/** Back easing both */
-	public static final Easing BACK_IN_OUT = inOut(BACK_IN);
+	public static final Easing BACK_BOTH = inOut(BACK_IN);
 	
 	/** Elastic easing in */
 	public static final Easing ELASTIC_IN = new Easing() {
@@ -307,5 +307,5 @@ public abstract class Easing {
 	public static final Easing ELASTIC_OUT = reverse(ELASTIC_IN);
 	
 	/** Elastic easing both */
-	public static final Easing ELASTIC_IN_OUT = inOut(ELASTIC_IN);
+	public static final Easing ELASTIC_BOTH = inOut(ELASTIC_IN);
 }

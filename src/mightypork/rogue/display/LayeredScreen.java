@@ -1,25 +1,20 @@
 package mightypork.rogue.display;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.display.rendering.ScreenLayer;
+import mightypork.utils.control.timing.Updateable;
 
 
 public abstract class LayeredScreen extends Screen {
 	
-	private List<ScreenLayer> layers = new ArrayList<ScreenLayer>();
+	private final LinkedList<ScreenLayer> layers = new LinkedList<ScreenLayer>();
 	
 	
 	public LayeredScreen(AppAccess app) {
 		super(app);
 	}
-	
-	
-	@Override
-	protected abstract void initScreen();
 	
 	
 	@Override
@@ -35,33 +30,43 @@ public abstract class LayeredScreen extends Screen {
 	
 	
 	@Override
-	protected void renderScreen()
+	protected final void renderScreen()
 	{
-		// in reverse order (topmost added last)
-		for (int i = layers.size() - 1; i >= 0; i--) {
-			layers.get(i).render();
+		for (ScreenLayer layer : layers) {
+			layer.render();
 		}
 	}
 	
 	
+	/**
+	 * Update screen. Layers should implement {@link Updateable} to receive
+	 * updates directly from bus.
+	 */
 	@Override
-	protected void updateScreen(double delta)
+	protected abstract void updateScreen(double delta);
+	
+	
+	/**
+	 * Add a layer to the screen.
+	 * 
+	 * @param layer
+	 */
+	protected final void addLayer(ScreenLayer layer)
 	{
-		// no impl
+		this.layers.add(layer); // will be rendered from last to first
+		addChildClient(layer); // connect to bus
 	}
 	
 	
-	protected void addLayer(ScreenLayer layer)
-	{
-		this.layers.add(layer);
-		addChildSubscriber(layer);
-	}
-	
-	
-	protected void removeLayer(ScreenLayer layer)
+	/**
+	 * Remove a layer
+	 * 
+	 * @param layer
+	 */
+	protected final void removeLayer(ScreenLayer layer)
 	{
 		this.layers.remove(layer);
-		addChildSubscriber(layer);
+		removeChildClient(layer);
 	}
 	
 }

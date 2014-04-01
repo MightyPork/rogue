@@ -1,0 +1,95 @@
+package mightypork.rogue.display.constraints;
+
+
+import java.util.LinkedList;
+
+import mightypork.rogue.AppAccess;
+import mightypork.rogue.bus.ChildClient;
+import mightypork.utils.math.coord.Rect;
+
+
+public class ElementHolder extends ChildClient implements RenderContext, Renderable {
+	
+	private LinkedList<Renderable> elements = new LinkedList<Renderable>();
+	private RenderContext context;
+	
+	
+	public ElementHolder(AppAccess app) {
+		super(app);
+	}
+	
+	
+	public ElementHolder(AppAccess app, RenderContext context) {
+		super(app);
+		this.context = context;
+	}
+	
+	
+	@Override
+	public void setContext(RenderContext context)
+	{
+		this.context = context;
+	}
+	
+	
+	/**
+	 * Add element to the holder.
+	 * 
+	 * @param elem
+	 */
+	public void add(Renderable elem)
+	{
+		if (elem == null) return;
+		elem.setContext(this);
+		elements.add(elem);
+		addChildClient(elem);
+	}
+	
+	
+	/**
+	 * Add element to the holder.
+	 * 
+	 * @param elem
+	 * @param constraint
+	 */
+	public void add(Renderable elem, RectConstraint constraint)
+	{
+		if (elem == null) return;
+		
+		constraint.setContext(this);
+		elem.setContext(constraint);
+		
+		elements.add(elem);
+		addChildClient(elem);
+	}
+	
+	
+	/**
+	 * Remove element from the holder
+	 * 
+	 * @param elem
+	 */
+	public void remove(Renderable elem)
+	{
+		if (elem == null) return;
+		elements.remove(elem);
+		removeChildClient(elem);
+	}
+	
+	
+	@Override
+	public void render()
+	{
+		for (Renderable element : elements) {
+			element.render();
+		}
+	}
+	
+	
+	@Override
+	public Rect getRect()
+	{
+		return context.getRect();
+	}
+	
+}

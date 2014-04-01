@@ -41,7 +41,7 @@ public class Config {
 		mgr.cfgSeparateSections(true);
 		
 		mgr.putInteger(PK_LAST_RUN_VERSION, def_LAST_RUN_VERSION);
-		mgr.putBoolean(PK_START_IN_FS, def_START_IN_FS);
+		mgr.putBoolean(PK_START_IN_FS, def_START_IN_FS, "Go to fullscreen on startup.");
 		
 		load(); // load what has been "put"
 	}

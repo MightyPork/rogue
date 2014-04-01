@@ -2,10 +2,11 @@ package mightypork.rogue.input;
 
 
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.bus.DelegatingBusClient;
+import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.KeyboardEvent;
 import mightypork.rogue.bus.events.MouseButtonEvent;
 import mightypork.rogue.bus.events.MouseMotionEvent;
+import mightypork.utils.control.timing.Updateable;
 import mightypork.utils.math.coord.Coord;
 
 import org.lwjgl.LWJGLException;
@@ -14,32 +15,27 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 
-public class InputSystem extends DelegatingBusClient implements KeyBinder {
+public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	
 	// listeners
 	private KeyBindingPool keybindings;
 	
 	
 	public InputSystem(AppAccess app) {
-		super(app, true);
-	}
-	
-	
-	@Override
-	protected void init()
-	{
+		super(app);
+		
 		initDevices();
 		
 		initChannels();
 		
 		// global keybindings
 		keybindings = new KeyBindingPool();
-		addChildSubscriber(keybindings);
+		addChildClient(keybindings);
 	}
 	
 	
 	@Override
-	public void deinit()
+	public final void deinit()
 	{
 		Mouse.destroy();
 		Keyboard.destroy();
@@ -67,7 +63,7 @@ public class InputSystem extends DelegatingBusClient implements KeyBinder {
 	
 	
 	@Override
-	public void bindKeyStroke(KeyStroke stroke, Runnable task)
+	public final void bindKeyStroke(KeyStroke stroke, Runnable task)
 	{
 		keybindings.bindKeyStroke(stroke, task);
 	}

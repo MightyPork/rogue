@@ -8,7 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.bus.DelegatingBusClient;
+import mightypork.rogue.bus.Subsystem;
+import mightypork.utils.control.timing.Updateable;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.coord.Coord;
@@ -25,7 +26,7 @@ import org.newdawn.slick.openal.SoundStore;
  * @author MightyPork
  */
 @SuppressWarnings("unchecked")
-public class SoundSystem extends DelegatingBusClient {
+public class SoundSystem extends Subsystem implements Updateable {
 	
 	private static final Coord INITIAL_LISTENER_POS = new Coord(0, 0, 0);
 	private static final int MAX_SOURCES = 256;
@@ -78,19 +79,12 @@ public class SoundSystem extends DelegatingBusClient {
 	
 	
 	public SoundSystem(AppAccess app) {
-		super(app, true);
+		super(app);
 	}
 	
 	
 	@Override
-	protected void init()
-	{
-		// empty
-	}
-	
-	
-	@Override
-	public void deinit()
+	public final void deinit()
 	{
 		for (AudioX r : resources) {
 			r.destroy();

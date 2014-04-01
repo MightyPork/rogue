@@ -4,7 +4,7 @@ package mightypork.rogue;
 import mightypork.rogue.display.DisplaySystem;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.sounds.SoundSystem;
-import mightypork.utils.patterns.subscription.MessageBus;
+import mightypork.utils.control.bus.MessageBus;
 
 
 /**
