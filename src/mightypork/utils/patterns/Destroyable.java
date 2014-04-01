@@ -1,5 +1,6 @@
 package mightypork.utils.patterns;
 
+
 /**
  * Object that can be destroyed (free resources etc)
  * 

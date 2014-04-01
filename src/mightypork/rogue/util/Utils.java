@@ -1,5 +1,6 @@
 package mightypork.rogue.util;
 
+
 /**
  * Utils class
  * 

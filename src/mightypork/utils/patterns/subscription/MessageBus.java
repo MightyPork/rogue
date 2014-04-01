@@ -1,5 +1,6 @@
 package mightypork.utils.patterns.subscription;
 
+
 import java.util.Collection;
 import java.util.LinkedHashSet;
 

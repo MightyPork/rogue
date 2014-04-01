@@ -1,5 +1,6 @@
 package mightypork.utils.math;
 
+
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;

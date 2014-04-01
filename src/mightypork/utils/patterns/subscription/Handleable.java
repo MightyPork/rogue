@@ -1,5 +1,6 @@
 package mightypork.utils.patterns.subscription;
 
+
 /**
  * Something that can be handled by HANDLER.
  * 

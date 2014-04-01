@@ -1,5 +1,6 @@
 package mightypork.utils.string.validation;
 
+
 import java.io.File;
 import java.io.FileFilter;
 

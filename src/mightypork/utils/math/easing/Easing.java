@@ -1,5 +1,6 @@
 package mightypork.utils.math.easing;
 
+
 /**
  * EasingFunction function.
  * 

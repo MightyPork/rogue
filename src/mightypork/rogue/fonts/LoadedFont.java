@@ -1,5 +1,6 @@
 package mightypork.rogue.fonts;
 
+
 import static mightypork.rogue.fonts.Align.*;
 import static org.lwjgl.opengl.GL11.*;
 

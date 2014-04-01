@@ -1,5 +1,6 @@
 package mightypork.rogue.bus.events;
 
+
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.patterns.subscription.Handleable;
 

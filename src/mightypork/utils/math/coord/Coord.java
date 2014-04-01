@@ -1,5 +1,6 @@
 package mightypork.utils.math.coord;
 
+
 import java.util.Random;
 
 import mightypork.utils.math.Calc;

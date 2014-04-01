@@ -1,5 +1,6 @@
 package mightypork.utils.objects;
 
+
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -63,6 +64,7 @@ public class ObjectUtils {
 		
 		Collections.sort(entries, new Comparator<Map.Entry<K, V>>() {
 			
+			@SuppressWarnings("unchecked")
 			@Override
 			public int compare(Entry<K, V> o1, Entry<K, V> o2)
 			{

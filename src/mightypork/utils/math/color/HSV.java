@@ -1,5 +1,6 @@
 package mightypork.utils.math.color;
 
+
 import java.awt.Color;
 
 import mightypork.utils.math.Calc;

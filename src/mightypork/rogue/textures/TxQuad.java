@@ -1,5 +1,6 @@
 package mightypork.rogue.textures;
 
+
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 

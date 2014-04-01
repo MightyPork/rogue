@@ -1,5 +1,6 @@
 package mightypork.rogue.sounds;
 
+
 import mightypork.utils.math.Calc;
 import mightypork.utils.objects.Mutable;
 

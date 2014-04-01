@@ -1,5 +1,6 @@
 package mightypork.utils.math;
 
+
 import mightypork.utils.math.Calc.Deg;
 import mightypork.utils.math.Calc.Rad;
 import mightypork.utils.math.coord.Coord;

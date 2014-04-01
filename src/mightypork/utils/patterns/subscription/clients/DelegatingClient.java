@@ -1,5 +1,6 @@
 package mightypork.utils.patterns.subscription.clients;
 
+
 import java.util.Collection;
 
 

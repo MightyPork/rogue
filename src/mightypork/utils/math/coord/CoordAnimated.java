@@ -1,5 +1,6 @@
 package mightypork.utils.math.coord;
 
+
 import mightypork.utils.math.Calc;
 import mightypork.utils.time.Updateable;
 

@@ -1,5 +1,6 @@
 package mightypork.rogue.display;
 
+
 import java.util.Random;
 
 import mightypork.rogue.AppAccess;

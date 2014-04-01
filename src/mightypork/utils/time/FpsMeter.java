@@ -1,5 +1,6 @@
 package mightypork.utils.time;
 
+
 /**
  * Class for counting FPS in games.<br>
  * This class can be used also as a simple frequency meter - output is in Hz.

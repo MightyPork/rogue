@@ -1,5 +1,6 @@
 package mightypork.utils.time;
 
+
 /**
  * object supporting delta timing
  * 

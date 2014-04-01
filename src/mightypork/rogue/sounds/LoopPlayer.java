@@ -1,5 +1,6 @@
 package mightypork.rogue.sounds;
 
+
 import mightypork.utils.objects.Mutable;
 import mightypork.utils.time.Pauseable;
 import mightypork.utils.time.Updateable;
