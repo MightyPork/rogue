@@ -1,6 +1,5 @@
 package mightypork.rogue.display.constraints;
 
-
 import mightypork.utils.math.coord.Rect;
 
 
@@ -10,7 +9,7 @@ import mightypork.utils.math.coord.Rect;
  * @author MightyPork
  */
 public interface Bounding {
-
+	
 	/**
 	 * @return bounding rectangle
 	 */

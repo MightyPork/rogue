@@ -1,6 +1,5 @@
 package mightypork.utils.objects;
 
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -26,28 +25,33 @@ import java.util.Map;
  * </pre>
  * 
  * @author MightyPork
- * @param <K> Type for Map keys
- * @param <V> Type for Map values
+ * @param <K>
+ *            Type for Map keys
+ * @param <V>
+ *            Type for Map values
  */
 public class VarargsParser<K, V> {
-
+	
 	/**
 	 * Parse array of vararg key, value pairs to a LinkedHashMap.
 	 * 
-	 * @param args varargs
+	 * @param args
+	 *            varargs
 	 * @return LinkedHashMap
-	 * @throws ClassCastException in case of incompatible type in the array
-	 * @throws IllegalArgumentException in case of invalid array length (odd)
+	 * @throws ClassCastException
+	 *             in case of incompatible type in the array
+	 * @throws IllegalArgumentException
+	 *             in case of invalid array length (odd)
 	 */
 	@SuppressWarnings("unchecked")
 	public Map<K, V> parse(Object... args) throws ClassCastException, IllegalArgumentException
 	{
 		LinkedHashMap<K, V> attrs = new LinkedHashMap<K, V>();
-
+		
 		if (args.length % 2 != 0) {
 			throw new IllegalArgumentException("Odd number of elements in varargs map!");
 		}
-
+		
 		K key = null;
 		for (Object o : args) {
 			if (key == null) {
@@ -58,7 +62,7 @@ public class VarargsParser<K, V> {
 				key = null;
 			}
 		}
-
+		
 		return attrs;
 	}
 }

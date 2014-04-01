@@ -1,6 +1,5 @@
 package mightypork.rogue.bus;
 
-
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.AppAdapter;
 
@@ -11,13 +10,14 @@ import mightypork.rogue.AppAdapter;
  * @author MightyPork
  */
 public class SimpleBusClient extends AppAdapter {
-
+	
 	/**
-	 * @param app app access
+	 * @param app
+	 *            app access
 	 */
 	public SimpleBusClient(AppAccess app) {
 		super(app);
-
+		
 		bus().subscribe(this);
 	}
 }

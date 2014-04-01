@@ -1,6 +1,5 @@
 package mightypork.utils.math.coord;
 
-
 import mightypork.utils.math.Calc;
 import mightypork.utils.time.Updateable;
 
@@ -11,17 +10,18 @@ import mightypork.utils.time.Updateable;
  * @author MightyPork
  */
 public class CoordAnimated extends Coord implements Updateable {
-
+	
 	private double animTime = 0;
 	private Coord offs;
 	private Coord start;
 	private double time = 0;
-
-
+	
+	
 	/**
 	 * Update delta timing
 	 * 
-	 * @param delta delta time to add
+	 * @param delta
+	 *            delta time to add
 	 */
 	@Override
 	public void update(double delta)
@@ -35,8 +35,8 @@ public class CoordAnimated extends Coord implements Updateable {
 			start.setTo(this);
 		}
 	}
-
-
+	
+	
 	/**
 	 * Remember position (other changes will be for animation)
 	 */
@@ -47,12 +47,13 @@ public class CoordAnimated extends Coord implements Updateable {
 		start.setTo(this);
 		offs = Coord.zero();
 	}
-
-
+	
+	
 	/**
 	 * Start animation
 	 * 
-	 * @param time anim length
+	 * @param time
+	 *            anim length
 	 */
 	public void animStart(double time)
 	{
@@ -62,8 +63,8 @@ public class CoordAnimated extends Coord implements Updateable {
 		animTime = 0;
 		offs = start.vecTo(this);
 	}
-
-
+	
+	
 	/**
 	 * Stop animation, assign to current value
 	 */
@@ -73,8 +74,8 @@ public class CoordAnimated extends Coord implements Updateable {
 		animRemember();
 		animTime = 0;
 	}
-
-
+	
+	
 	/**
 	 * Get if animation is finished
 	 * 
@@ -84,8 +85,8 @@ public class CoordAnimated extends Coord implements Updateable {
 	{
 		return animTime >= time;
 	}
-
-
+	
+	
 	/**
 	 * Get current value (animated)
 	 * 
@@ -94,13 +95,13 @@ public class CoordAnimated extends Coord implements Updateable {
 	public Coord animGetCurrent()
 	{
 		if (time == 0) return copy(); // avoid zero division
-
+			
 		if (start == null) start = new Coord();
 		if (offs == null) offs = new Coord();
-
+		
 		if (animIsFinished()) return this;
-
+		
 		return start.add(offs.mul(animTime / time));
 	}
-
+	
 }

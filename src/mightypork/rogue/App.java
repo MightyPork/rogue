@@ -1,6 +1,5 @@
 package mightypork.rogue;
 
-
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
@@ -31,40 +30,40 @@ import org.lwjgl.input.Keyboard;
  * @author MightyPork
  */
 public class App implements Destroyable, AppAccess {
-
+	
 	/** instance pointer */
 	private static App inst;
-
+	
 	private InputSystem input;
 	private SoundSystem sounds;
 	private DisplaySystem display;
 	private MessageBus events;
-
+	
 	/** current screen */
 	private Screen screen;
-
+	
 	/** Flag that screenshot is scheduled to be taken next loop */
 	private boolean scheduledScreenshot = false;
-
-
+	
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{
 		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler());
-
+		
 		inst = new App();
-
+		
 		try {
 			inst.start();
 		} catch (Throwable t) {
 			onCrash(t);
 		}
-
+		
 	}
-
-
+	
+	
 	/**
 	 * Handle a crash
 	 * 
@@ -73,19 +72,19 @@ public class App implements Destroyable, AppAccess {
 	public static void onCrash(Throwable error)
 	{
 		Log.e("The game has crashed.", error);
-
+		
 		if (inst != null) inst.shutdown();
 	}
-
-
+	
+	
 	@Override
 	public void shutdown()
 	{
 		destroy();
 		System.exit(0);
 	}
-
-
+	
+	
 	public void initialize()
 	{
 		Log.i("Initializing subsystems");
@@ -96,8 +95,8 @@ public class App implements Destroyable, AppAccess {
 		initSound();
 		initInput();
 	}
-
-
+	
+	
 	@Override
 	public void destroy()
 	{
@@ -105,15 +104,15 @@ public class App implements Destroyable, AppAccess {
 		if (input != null) input.destroy();
 		if (display != null) display.destroy();
 	}
-
-
+	
+	
 	private void initLock()
 	{
 		if (!Config.SINGLE_INSTANCE) return;
-
+		
 		if (!lockInstance()) {
 			System.out.println("Working directory is locked.\nOnly one instance can run at a time.");
-
+			
 			//@formatter:off
 			JOptionPane.showMessageDialog(
 					null,
@@ -122,13 +121,13 @@ public class App implements Destroyable, AppAccess {
 					JOptionPane.ERROR_MESSAGE
 			);
 			//@formatter:on
-
+			
 			shutdown();
 			return;
 		}
 	}
-
-
+	
+	
 	private boolean lockInstance()
 	{
 		final File lockFile = new File(Paths.WORKDIR, ".lock");
@@ -137,7 +136,7 @@ public class App implements Destroyable, AppAccess {
 			final FileLock fileLock = randomAccessFile.getChannel().tryLock();
 			if (fileLock != null) {
 				Runtime.getRuntime().addShutdownHook(new Thread() {
-
+					
 					@Override
 					public void run()
 					{
@@ -159,8 +158,8 @@ public class App implements Destroyable, AppAccess {
 		}
 		return false;
 	}
-
-
+	
+	
 	/**
 	 * initialize inputs
 	 */
@@ -168,11 +167,11 @@ public class App implements Destroyable, AppAccess {
 	{
 		events = new MessageBus();
 		events.subscribe(this);
-
+		
 		events.createChannel(UpdateEvent.class, UpdateEvent.Listener.class);
 	}
-
-
+	
+	
 	/**
 	 * initialize sound system
 	 */
@@ -181,17 +180,17 @@ public class App implements Destroyable, AppAccess {
 		sounds = new SoundSystem(this);
 		sounds.setMasterVolume(1);
 	}
-
-
+	
+	
 	/**
 	 * initialize inputs
 	 */
 	private void initInput()
 	{
 		input = new InputSystem(this);
-
+		
 		input.bindKeyStroke(new KeyStroke(Keyboard.KEY_F2), new Runnable() {
-
+			
 			@Override
 			public void run()
 			{
@@ -199,9 +198,9 @@ public class App implements Destroyable, AppAccess {
 				scheduledScreenshot = true;
 			}
 		});
-
+		
 		input.bindKeyStroke(new KeyStroke(false, Keyboard.KEY_F11), new Runnable() {
-
+			
 			@Override
 			public void run()
 			{
@@ -209,9 +208,9 @@ public class App implements Destroyable, AppAccess {
 				display.switchFullscreen();
 			}
 		});
-
+		
 		input.bindKeyStroke(new KeyStroke(Keyboard.KEY_LCONTROL, Keyboard.KEY_Q), new Runnable() {
-
+			
 			@Override
 			public void run()
 			{
@@ -220,8 +219,8 @@ public class App implements Destroyable, AppAccess {
 			}
 		});
 	}
-
-
+	
+	
 	/**
 	 * initialize display
 	 */
@@ -231,8 +230,8 @@ public class App implements Destroyable, AppAccess {
 		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.START_IN_FS, Const.TITLEBAR);
 		display.setTargetFps(Const.FPS_RENDER);
 	}
-
-
+	
+	
 	/**
 	 * initialize main logger
 	 */
@@ -242,41 +241,41 @@ public class App implements Destroyable, AppAccess {
 		li.enable(Config.LOGGING_ENABLED);
 		li.enableSysout(Config.LOG_TO_STDOUT);
 	}
-
-
+	
+	
 	private void start()
 	{
 		initialize();
 		mainLoop();
 		shutdown();
 	}
-
+	
 	/** timer */
 	private TimerDelta timerRender;
-
-
+	
+	
 	private void mainLoop()
 	{
 		screen = new ScreenTestAnimations(this);
 		screen.setActive(true);
-
+		
 		timerRender = new TimerDelta();
-
+		
 		while (!display.isCloseRequested()) {
 			display.beginFrame();
-
+			
 			events.broadcast(new UpdateEvent(timerRender.getDelta()));
-
+			
 			if (scheduledScreenshot) {
 				takeScreenshot();
 				scheduledScreenshot = false;
 			}
-
+			
 			display.endFrame();
 		}
 	}
-
-
+	
+	
 	/**
 	 * Do take a screenshot
 	 */
@@ -285,12 +284,12 @@ public class App implements Destroyable, AppAccess {
 		sounds.getEffect("gui.shutter").play(1);
 		Utils.runAsThread(new TaskTakeScreenshot(display));
 	}
-
-
+	
+	
 	//
-	//  static accessors
+	// static accessors
 	//
-
+	
 	/**
 	 * @return sound system of the running instance
 	 */
@@ -299,8 +298,8 @@ public class App implements Destroyable, AppAccess {
 	{
 		return sounds;
 	}
-
-
+	
+	
 	/**
 	 * @return input system of the running instance
 	 */
@@ -309,8 +308,8 @@ public class App implements Destroyable, AppAccess {
 	{
 		return input;
 	}
-
-
+	
+	
 	/**
 	 * @return display system of the running instance
 	 */
@@ -319,8 +318,8 @@ public class App implements Destroyable, AppAccess {
 	{
 		return display;
 	}
-
-
+	
+	
 	/**
 	 * @return event bus
 	 */
@@ -329,5 +328,5 @@ public class App implements Destroyable, AppAccess {
 	{
 		return events;
 	}
-
+	
 }

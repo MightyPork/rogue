@@ -1,6 +1,5 @@
 package mightypork.utils.math.color;
 
-
 import java.awt.Color;
 
 import mightypork.utils.math.Calc;
@@ -12,21 +11,22 @@ import mightypork.utils.math.Calc;
  * @author MightyPork
  */
 public class HSV {
-
+	
 	/** H */
 	public double h;
 	/** S */
 	public double s;
 	/** V */
 	public double v;
-
-
+	
+	
 	/**
 	 * Create black color 0,0,0
 	 */
-	public HSV() {}
-
-
+	public HSV() {
+	}
+	
+	
 	/**
 	 * Color from HSV 0-1
 	 * 
@@ -40,8 +40,8 @@ public class HSV {
 		this.v = v.doubleValue();
 		norm();
 	}
-
-
+	
+	
 	/**
 	 * @return hue 0-1
 	 */
@@ -49,8 +49,8 @@ public class HSV {
 	{
 		return h;
 	}
-
-
+	
+	
 	/**
 	 * @return saturation 0-1
 	 */
@@ -58,8 +58,8 @@ public class HSV {
 	{
 		return s;
 	}
-
-
+	
+	
 	/**
 	 * @return value/brightness 0-1
 	 */
@@ -67,12 +67,13 @@ public class HSV {
 	{
 		return v;
 	}
-
-
+	
+	
 	/**
 	 * Set color to other color
 	 * 
-	 * @param copied copied color
+	 * @param copied
+	 *            copied color
 	 * @return this
 	 */
 	public HSV setTo(HSV copied)
@@ -80,18 +81,21 @@ public class HSV {
 		h = copied.h;
 		s = copied.s;
 		v = copied.v;
-
+		
 		norm();
 		return this;
 	}
-
-
+	
+	
 	/**
 	 * Set to H,S,V 0-1
 	 * 
-	 * @param h hue
-	 * @param s saturation
-	 * @param v value
+	 * @param h
+	 *            hue
+	 * @param s
+	 *            saturation
+	 * @param v
+	 *            value
 	 * @return this
 	 */
 	public HSV setTo(Number h, Number s, Number v)
@@ -102,8 +106,8 @@ public class HSV {
 		norm();
 		return this;
 	}
-
-
+	
+	
 	/**
 	 * Fix numbers out of range 0-1
 	 */
@@ -113,8 +117,8 @@ public class HSV {
 		s = Calc.clampd(s, 0, 1);
 		v = Calc.clampd(v, 0, 1);
 	}
-
-
+	
+	
 	/**
 	 * Convert to RGB
 	 * 
@@ -123,32 +127,33 @@ public class HSV {
 	public RGB toRGB()
 	{
 		norm();
-
+		
 		int rgb = Color.HSBtoRGB((float) h, (float) s, (float) v);
-
+		
 		return RGB.fromHex(rgb);
 	}
-
-
+	
+	
 	/**
 	 * Make from RGB
 	 * 
-	 * @param color RGB
+	 * @param color
+	 *            RGB
 	 * @return HSV
 	 */
 	public static HSV fromRGB(RGB color)
 	{
 		return color.toHSV();
 	}
-
-
+	
+	
 	@Override
 	public String toString()
 	{
 		return "HSV[" + h + ";" + s + ";" + v + "]";
 	}
-
-
+	
+	
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -156,15 +161,15 @@ public class HSV {
 		if (!(obj instanceof HSV)) return false;
 		return ((HSV) obj).h == h && ((HSV) obj).s == s && ((HSV) obj).v == v;
 	}
-
-
+	
+	
 	@Override
 	public int hashCode()
 	{
 		return Double.valueOf(h).hashCode() ^ Double.valueOf(s).hashCode() ^ Double.valueOf(v).hashCode();
 	}
-
-
+	
+	
 	/**
 	 * Get a copy
 	 * 

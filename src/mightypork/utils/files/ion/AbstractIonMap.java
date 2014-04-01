@@ -1,6 +1,5 @@
 package mightypork.utils.files.ion;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,21 +13,21 @@ import java.util.LinkedHashMap;
  * @param <V>
  */
 public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> implements Ionizable {
-
+	
 	@Override
 	public V get(Object key)
 	{
 		return super.get(key);
 	}
-
-
+	
+	
 	@Override
 	public V put(String key, V value)
 	{
 		return super.put(key, value);
 	}
-
-
+	
+	
 	@Override
 	public void ionRead(InputStream in) throws IonException
 	{
@@ -37,13 +36,11 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 				byte b = StreamUtils.readByte(in);
 				if (b == IonMarks.ENTRY) {
 					String key = StreamUtils.readStringBytes(in);
-					V value;
-					try {
-						value = (V) Ion.readObject(in);
-						put(key, value);
-					} catch (IonException e) {
-						e.printStackTrace();
-					}
+					
+					@SuppressWarnings("unchecked")
+					V value = (V) Ion.readObject(in);
+					put(key, value);
+					
 				} else if (b == IonMarks.END) {
 					break;
 				} else {
@@ -55,8 +52,8 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 			throw new IonException("Error reading ion map", e);
 		}
 	}
-
-
+	
+	
 	@Override
 	public void ionWrite(OutputStream out) throws IonException
 	{
@@ -72,30 +69,34 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 			throw new IonException("Error reading ion map", e);
 		}
 	}
-
-
+	
+	
 	/**
 	 * Read custom data of this AbstractIonMap implementation
 	 * 
-	 * @param in input stream
+	 * @param in
+	 *            input stream
 	 */
 	public void ionReadCustomData(InputStream in)
-	{}
-
-
+	{
+	}
+	
+	
 	/**
 	 * Write custom data of this AbstractIonMap implementation
 	 * 
-	 * @param out output stream
+	 * @param out
+	 *            output stream
 	 */
 	public void ionWriteCustomData(OutputStream out)
-	{}
-
-
+	{
+	}
+	
+	
 	@Override
 	public byte ionMark()
 	{
 		return IonMarks.MAP;
 	}
-
+	
 }
