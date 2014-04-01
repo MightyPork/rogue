@@ -1,6 +1,5 @@
 package mightypork.utils.math.color;
 
-
 import java.awt.Color;
 
 import mightypork.utils.math.Calc;
@@ -12,7 +11,7 @@ import mightypork.utils.math.Calc;
  * @author MightyPork
  */
 public class RGB {
-
+	
 	/** White */
 	public static final RGB WHITE = new RGB(1, 1, 1);
 	/** Black */
@@ -33,7 +32,7 @@ public class RGB {
 	public static final RGB ORANGE = new RGB(1, 0.6, 0);
 	/** no color (alpha=0) */
 	public static final RGB TRANSPARENT = new RGB(0, 0, 0, 0);
-
+	
 	/** R */
 	public double r;
 	/** G */
@@ -42,30 +41,33 @@ public class RGB {
 	public double b;
 	/** ALPHA */
 	public double a = 1;
-
-
+	
+	
 	/**
 	 * Create black color 0,0,0
 	 */
-	public RGB() {}
-
-
+	public RGB() {
+	}
+	
+	
 	/**
 	 * Get copy with custom alpha
 	 * 
-	 * @param alpha alpha to set
+	 * @param alpha
+	 *            alpha to set
 	 * @return copy w/ alpha
 	 */
 	public RGB setAlpha(double alpha)
 	{
 		return copy().setAlpha_ip(alpha);
 	}
-
-
+	
+	
 	/**
 	 * set alpha IP
 	 * 
-	 * @param alpha alpha to set
+	 * @param alpha
+	 *            alpha to set
 	 * @return this
 	 */
 	public RGB setAlpha_ip(double alpha)
@@ -74,8 +76,8 @@ public class RGB {
 		norm();
 		return this;
 	}
-
-
+	
+	
 	/**
 	 * Get copy.
 	 * 
@@ -85,24 +87,26 @@ public class RGB {
 	{
 		return new RGB(r, g, b, a);
 	}
-
-
+	
+	
 	/**
 	 * Get copy with alpha multiplied by custom value
 	 * 
-	 * @param alpha alpha to set
+	 * @param alpha
+	 *            alpha to set
 	 * @return copy w/ alpha
 	 */
 	public RGB mulAlpha(double alpha)
 	{
 		return copy().mulAlpha_ip(alpha);
 	}
-
-
+	
+	
 	/**
 	 * Multiply alpha by given number
 	 * 
-	 * @param alpha alpha multiplier
+	 * @param alpha
+	 *            alpha multiplier
 	 * @return this
 	 */
 	public RGB mulAlpha_ip(double alpha)
@@ -111,14 +115,17 @@ public class RGB {
 		norm();
 		return this;
 	}
-
-
+	
+	
 	/**
 	 * Color from RGB 0-1
 	 * 
-	 * @param r red
-	 * @param g green
-	 * @param b blue
+	 * @param r
+	 *            red
+	 * @param g
+	 *            green
+	 * @param b
+	 *            blue
 	 */
 	public RGB(Number r, Number g, Number b) {
 		this.r = r.doubleValue();
@@ -126,15 +133,19 @@ public class RGB {
 		this.b = b.doubleValue();
 		norm();
 	}
-
-
+	
+	
 	/**
 	 * Color from RGB 0-1
 	 * 
-	 * @param r red
-	 * @param g green
-	 * @param b blue
-	 * @param a alpha
+	 * @param r
+	 *            red
+	 * @param g
+	 *            green
+	 * @param b
+	 *            blue
+	 * @param a
+	 *            alpha
 	 */
 	public RGB(Number r, Number g, Number b, Number a) {
 		this.r = r.doubleValue();
@@ -143,44 +154,49 @@ public class RGB {
 		this.a = a.doubleValue();
 		norm();
 	}
-
-
+	
+	
 	/**
 	 * Color from hex 0xRRGGBB
 	 * 
-	 * @param hex hex integer
+	 * @param hex
+	 *            hex integer
 	 */
 	public RGB(int hex) {
 		setTo(RGB.fromHex(hex));
 		norm();
 	}
-
-
+	
+	
 	/**
 	 * Color from hex 0xRRGGBB
 	 * 
-	 * @param hex hex integer
-	 * @param alpha alpha color
+	 * @param hex
+	 *            hex integer
+	 * @param alpha
+	 *            alpha color
 	 */
 	public RGB(int hex, double alpha) {
 		setTo(RGB.fromHex(hex));
 		a = alpha;
 		norm();
 	}
-
-
+	
+	
 	/**
 	 * Color from other RGB and alpha channel
 	 * 
-	 * @param color other RGB color
-	 * @param alpha new alpha channel
+	 * @param color
+	 *            other RGB color
+	 * @param alpha
+	 *            new alpha channel
 	 */
 	public RGB(RGB color, double alpha) {
 		setTo(color);
 		setAlpha_ip(alpha);
 	}
-
-
+	
+	
 	/**
 	 * @return red channel 0-1
 	 */
@@ -188,8 +204,8 @@ public class RGB {
 	{
 		return r;
 	}
-
-
+	
+	
 	/**
 	 * @return green channel 0-1
 	 */
@@ -197,8 +213,8 @@ public class RGB {
 	{
 		return g;
 	}
-
-
+	
+	
 	/**
 	 * @return blue channel 0-1
 	 */
@@ -206,8 +222,8 @@ public class RGB {
 	{
 		return b;
 	}
-
-
+	
+	
 	/**
 	 * @return alpha 0-1
 	 */
@@ -215,12 +231,13 @@ public class RGB {
 	{
 		return a;
 	}
-
-
+	
+	
 	/**
 	 * Set color to other color
 	 * 
-	 * @param copied copied color
+	 * @param copied
+	 *            copied color
 	 * @return this
 	 */
 	public RGB setTo(RGB copied)
@@ -229,16 +246,17 @@ public class RGB {
 		g = copied.g;
 		b = copied.b;
 		a = copied.a;
-
+		
 		norm();
 		return this;
 	}
-
-
+	
+	
 	/**
 	 * Set to represent hex color
 	 * 
-	 * @param hex hex integer RRGGBB
+	 * @param hex
+	 *            hex integer RRGGBB
 	 * @return this
 	 */
 	public RGB setTo(int hex)
@@ -247,15 +265,19 @@ public class RGB {
 		norm();
 		return this;
 	}
-
-
+	
+	
 	/**
 	 * Set to R,G,B 0-1
 	 * 
-	 * @param r red
-	 * @param g green
-	 * @param b blue
-	 * @param a alpha
+	 * @param r
+	 *            red
+	 * @param g
+	 *            green
+	 * @param b
+	 *            blue
+	 * @param a
+	 *            alpha
 	 * @return this
 	 */
 	public RGB setTo(Number r, Number g, Number b, Number a)
@@ -267,14 +289,17 @@ public class RGB {
 		norm();
 		return this;
 	}
-
-
+	
+	
 	/**
 	 * Set to R,G,B 0-1
 	 * 
-	 * @param r red
-	 * @param g green
-	 * @param b blue
+	 * @param r
+	 *            red
+	 * @param g
+	 *            green
+	 * @param b
+	 *            blue
 	 * @return this
 	 */
 	public RGB setTo(Number r, Number g, Number b)
@@ -286,8 +311,8 @@ public class RGB {
 		norm();
 		return this;
 	}
-
-
+	
+	
 	/**
 	 * Fix numbers out of range 0-1
 	 * 
@@ -301,8 +326,8 @@ public class RGB {
 		a = Calc.clampd(a, 0, 1);
 		return this;
 	}
-
-
+	
+	
 	/**
 	 * Get hex value 0xRRGGBB
 	 * 
@@ -315,8 +340,8 @@ public class RGB {
 		int bi = (int) Math.round(b * 255);
 		return (ri << 16) | (gi << 8) | bi;
 	}
-
-
+	
+	
 	/**
 	 * Convert to HSV
 	 * 
@@ -328,12 +353,13 @@ public class RGB {
 		Color.RGBtoHSB((int) (r * 255), (int) (g * 255), (int) (b * 255), hsv);
 		return new HSV(hsv[0], hsv[1], hsv[2]);
 	}
-
-
+	
+	
 	/**
 	 * Create color from hex 0xRRGGBB
 	 * 
-	 * @param hex hex RRGGBB
+	 * @param hex
+	 *            hex RRGGBB
 	 * @return the new color
 	 */
 	public static RGB fromHex(int hex)
@@ -343,27 +369,28 @@ public class RGB {
 		int ri = (hex >> 16) & 0xff;
 		return new RGB(ri / 255D, gi / 255D, bi / 255D);
 	}
-
-
+	
+	
 	/**
 	 * Make from HSV
 	 * 
-	 * @param color HSV color
+	 * @param color
+	 *            HSV color
 	 * @return RGB
 	 */
 	public static RGB fromHSV(HSV color)
 	{
 		return color.toRGB();
 	}
-
-
+	
+	
 	@Override
 	public String toString()
 	{
 		return "RGB[" + r + ";" + g + ";" + b + ";" + a + "]";
 	}
-
-
+	
+	
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -371,12 +398,12 @@ public class RGB {
 		if (!(obj instanceof RGB)) return false;
 		return ((RGB) obj).r == r && ((RGB) obj).g == g && ((RGB) obj).b == b && ((RGB) obj).a == a;
 	}
-
-
+	
+	
 	@Override
 	public int hashCode()
 	{
 		return Double.valueOf(r).hashCode() ^ Double.valueOf(g).hashCode() ^ Double.valueOf(b).hashCode() ^ Double.valueOf(a).hashCode();
 	}
-
+	
 }

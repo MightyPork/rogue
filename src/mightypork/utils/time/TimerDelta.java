@@ -1,26 +1,25 @@
 package mightypork.utils.time;
 
-
 /**
  * Timer for delta timing
  * 
  * @author MightyPork
  */
 public class TimerDelta {
-
+	
 	private long lastFrame;
-
+	
 	private static final long SECOND = 1000000000; // a million nanoseconds
-
-
+	
+	
 	/**
 	 * New delta timer
 	 */
 	public TimerDelta() {
 		lastFrame = System.nanoTime();
 	}
-
-
+	
+	
 	/**
 	 * Get current time in NS
 	 * 
@@ -30,8 +29,8 @@ public class TimerDelta {
 	{
 		return System.nanoTime();
 	}
-
-
+	
+	
 	/**
 	 * Get time since the last "getDelta()" call.
 	 * 

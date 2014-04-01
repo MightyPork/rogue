@@ -1,6 +1,5 @@
 package mightypork.rogue.bus.events;
 
-
 import mightypork.utils.patterns.subscription.Handleable;
 
 import org.lwjgl.input.Keyboard;
@@ -12,19 +11,19 @@ import org.lwjgl.input.Keyboard;
  * @author MightyPork
  */
 public class KeyboardEvent implements Handleable<KeyboardEvent.Listener> {
-
+	
 	private int key;
 	private boolean down;
 	private char c;
-
-
+	
+	
 	public KeyboardEvent(int key, char c, boolean down) {
 		this.key = key;
 		this.c = c;
 		this.down = down;
 	}
-
-
+	
+	
 	/**
 	 * @return key code (see {@link org.lwjgl.input.Keyboard})
 	 */
@@ -32,8 +31,8 @@ public class KeyboardEvent implements Handleable<KeyboardEvent.Listener> {
 	{
 		return key;
 	}
-
-
+	
+	
 	/**
 	 * @return true if key was just pressed
 	 */
@@ -41,8 +40,8 @@ public class KeyboardEvent implements Handleable<KeyboardEvent.Listener> {
 	{
 		return down;
 	}
-
-
+	
+	
 	/**
 	 * @return true if key was just released
 	 */
@@ -50,8 +49,8 @@ public class KeyboardEvent implements Handleable<KeyboardEvent.Listener> {
 	{
 		return !down;
 	}
-
-
+	
+	
 	/**
 	 * @return event character (if any)
 	 */
@@ -59,29 +58,31 @@ public class KeyboardEvent implements Handleable<KeyboardEvent.Listener> {
 	{
 		return c;
 	}
-
-
+	
+	
 	@Override
 	public void handleBy(Listener keh)
 	{
 		keh.receive(this);
 	}
-
+	
+	
 	public interface Listener {
-
+		
 		/**
 		 * Handle an event
 		 * 
-		 * @param event event
+		 * @param event
+		 *            event
 		 */
 		public void receive(KeyboardEvent event);
 	}
-
-
+	
+	
 	@Override
 	public String toString()
 	{
 		return Keyboard.getKeyName(key) + ":" + (down ? "DOWN" : "UP");
 	}
-
+	
 }

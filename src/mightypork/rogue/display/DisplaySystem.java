@@ -1,6 +1,5 @@
 package mightypork.rogue.display;
 
-
 import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.image.BufferedImage;
@@ -21,31 +20,31 @@ import org.lwjgl.opengl.DisplayMode;
 
 
 public class DisplaySystem extends DelegatingBusClient implements Bounding {
-
+	
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
-
-
+	
+	
 	public DisplaySystem(AppAccess app) {
 		super(app, true);
 		enableUpdates(false);
 	}
-
-
+	
+	
 	@Override
 	protected void init()
 	{
 		initChannels();
 	}
-
-
+	
+	
 	@Override
 	public void deinit()
 	{
 		Display.destroy();
 	}
-
-
+	
+	
 	/**
 	 * Initialize event channels
 	 */
@@ -53,14 +52,14 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 	{
 		bus().createChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
 	}
-
-
+	
+	
 	public void setTargetFps(int fps)
 	{
 		this.targetFps = fps;
 	}
-
-
+	
+	
 	public void createMainWindow(int width, int height, boolean resizable, boolean fullscreen, String title)
 	{
 		try {
@@ -69,7 +68,7 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 			Display.setVSyncEnabled(true);
 			Display.setTitle(title);
 			Display.create();
-
+			
 			if (fullscreen) {
 				switchFullscreen();
 				Display.update();
@@ -78,20 +77,20 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 			throw new RuntimeException("Could not initialize screen", e);
 		}
 	}
-
-
+	
+	
 	/**
 	 * Toggle FS if possible
 	 */
 	public void switchFullscreen()
 	{
 		try {
-
+			
 			if (!Display.isFullscreen()) {
 				Log.f3("Entering fullscreen.");
 				// save window resize
 				windowDisplayMode = new DisplayMode(Display.getWidth(), Display.getHeight());
-
+				
 				Display.setDisplayMode(Display.getDesktopDisplayMode());
 				Display.setFullscreen(true);
 				Display.update();
@@ -100,9 +99,9 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 				Display.setDisplayMode(windowDisplayMode);
 				Display.update();
 			}
-
+			
 			bus().broadcast(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
-
+			
 		} catch (Throwable t) {
 			Log.e("Failed to toggle fullscreen mode.", t);
 			try {
@@ -113,19 +112,20 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 			}
 		}
 	}
-
-
+	
+	
 	public BufferedImage takeScreenshot()
 	{
 		glReadBuffer(GL_FRONT);
 		int width = Display.getDisplayMode().getWidth();
 		int height = Display.getDisplayMode().getHeight();
-		int bpp = 4; // Assuming a 32-bit display with a byte each for red, green, blue, and alpha.
+		int bpp = 4; // Assuming a 32-bit display with a byte each for red,
+						// green, blue, and alpha.
 		ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
 		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-
+		
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
+		
 		// convert to a buffered image
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
@@ -136,11 +136,11 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 				image.setRGB(x, height - (y + 1), (0xFF << 24) | (r << 16) | (g << 8) | b);
 			}
 		}
-
+		
 		return image;
 	}
-
-
+	
+	
 	/**
 	 * @return true if close was requested (i.e. click on cross)
 	 */
@@ -148,8 +148,8 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 	{
 		return Display.isCloseRequested();
 	}
-
-
+	
+	
 	/**
 	 * Get fullscreen state
 	 * 
@@ -159,8 +159,8 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 	{
 		return Display.isFullscreen();
 	}
-
-
+	
+	
 	/**
 	 * Get screen size
 	 * 
@@ -170,8 +170,8 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 	{
 		return new Coord(Display.getWidth(), Display.getHeight());
 	}
-
-
+	
+	
 	/**
 	 * Start a OpenGL frame
 	 */
@@ -180,12 +180,12 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 		if (Display.wasResized()) {
 			bus().broadcast(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
 		}
-
+		
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
-
-
+	
+	
 	/**
 	 * End an OpenGL frame, flip buffers, sync to fps.
 	 */
@@ -194,8 +194,8 @@ public class DisplaySystem extends DelegatingBusClient implements Bounding {
 		Display.update(false); // don't poll input devices
 		Display.sync(targetFps);
 	}
-
-
+	
+	
 	@Override
 	public Rect getRect()
 	{

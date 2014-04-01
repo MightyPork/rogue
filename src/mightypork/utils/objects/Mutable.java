@@ -1,28 +1,29 @@
 package mightypork.utils.objects;
 
-
 /**
  * Mutable object
  * 
  * @author MightyPork
- * @param <T> type
+ * @param <T>
+ *            type
  */
 public class Mutable<T> {
-
+	
 	/** The wrapped value */
 	private T o = null;
-
-
+	
+	
 	/**
 	 * New mutable object
 	 * 
-	 * @param o value
+	 * @param o
+	 *            value
 	 */
 	public Mutable(T o) {
 		this.o = o;
 	}
-
-
+	
+	
 	/**
 	 * Get the wrapped value
 	 * 
@@ -32,19 +33,20 @@ public class Mutable<T> {
 	{
 		return o;
 	}
-
-
+	
+	
 	/**
 	 * Set value
 	 * 
-	 * @param o new value to set
+	 * @param o
+	 *            new value to set
 	 */
 	public void set(T o)
 	{
 		this.o = o;
 	}
-
-
+	
+	
 	@Override
 	public int hashCode()
 	{
@@ -53,15 +55,15 @@ public class Mutable<T> {
 		result = prime * result + ((o == null) ? 0 : o.hashCode());
 		return result;
 	}
-
-
+	
+	
 	@Override
 	public boolean equals(Object obj)
 	{
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof Mutable)) return false;
-
+		
 		Mutable<?> other = (Mutable<?>) obj;
 		if (o == null) {
 			if (other.o != null) return false;
@@ -70,8 +72,8 @@ public class Mutable<T> {
 		}
 		return true;
 	}
-
-
+	
+	
 	@Override
 	public String toString()
 	{

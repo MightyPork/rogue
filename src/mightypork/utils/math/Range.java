@@ -1,6 +1,5 @@
 package mightypork.utils.math;
 
-
 import java.util.Random;
 
 
@@ -10,24 +9,27 @@ import java.util.Random;
  * @author MightyPork
  */
 public class Range {
-
+	
 	private double min = 0;
 	private double max = 1;
-
+	
 	private static Random rand = new Random();
-
-
+	
+	
 	/**
 	 * Implicit range constructor 0-1
 	 */
-	public Range() {}
-
-
+	public Range() {
+	}
+	
+	
 	/**
 	 * Create new range
 	 * 
-	 * @param min min number
-	 * @param max max number
+	 * @param min
+	 *            min number
+	 * @param max
+	 *            max number
 	 */
 	public Range(double min, double max) {
 		if (min > max) {
@@ -38,19 +40,20 @@ public class Range {
 		this.min = min;
 		this.max = max;
 	}
-
-
+	
+	
 	/**
 	 * Create new range
 	 * 
-	 * @param minmax min = max number
+	 * @param minmax
+	 *            min = max number
 	 */
 	public Range(double minmax) {
 		this.min = minmax;
 		this.max = minmax;
 	}
-
-
+	
+	
 	/**
 	 * Get random integer from range
 	 * 
@@ -60,8 +63,8 @@ public class Range {
 	{
 		return (int) (Math.round(min) + rand.nextInt((int) (Math.round(max) - Math.round(min)) + 1));
 	}
-
-
+	
+	
 	/**
 	 * Get random double from this range
 	 * 
@@ -71,8 +74,8 @@ public class Range {
 	{
 		return min + rand.nextDouble() * (max - min);
 	}
-
-
+	
+	
 	/**
 	 * Get min
 	 * 
@@ -82,8 +85,8 @@ public class Range {
 	{
 		return min;
 	}
-
-
+	
+	
 	/**
 	 * Get max
 	 * 
@@ -93,8 +96,8 @@ public class Range {
 	{
 		return max;
 	}
-
-
+	
+	
 	/**
 	 * Get min
 	 * 
@@ -104,8 +107,8 @@ public class Range {
 	{
 		return (int) min;
 	}
-
-
+	
+	
 	/**
 	 * Get max
 	 * 
@@ -115,37 +118,39 @@ public class Range {
 	{
 		return (int) max;
 	}
-
-
+	
+	
 	/**
 	 * Set min
 	 * 
-	 * @param min min value
+	 * @param min
+	 *            min value
 	 */
 	public void setMin(double min)
 	{
 		this.min = min;
 	}
-
-
+	
+	
 	/**
 	 * Set max
 	 * 
-	 * @param max max value
+	 * @param max
+	 *            max value
 	 */
 	public void setMax(double max)
 	{
 		this.max = max;
 	}
-
-
+	
+	
 	@Override
 	public String toString()
 	{
 		return "Range(" + min + ";" + max + ")";
 	}
-
-
+	
+	
 	/**
 	 * Get identical copy
 	 * 
@@ -155,32 +160,35 @@ public class Range {
 	{
 		return new Range(min, max);
 	}
-
-
+	
+	
 	/**
 	 * Set to value of other range
 	 * 
-	 * @param other copied range
+	 * @param other
+	 *            copied range
 	 */
 	public void setTo(Range other)
 	{
 		if (other == null) return;
 		min = other.min;
 		max = other.max;
-
+		
 		if (min > max) {
 			double t = min;
 			min = max;
 			max = t;
 		}
 	}
-
-
+	
+	
 	/**
 	 * Set to min-max values
 	 * 
-	 * @param min min value
-	 * @param max max value
+	 * @param min
+	 *            min value
+	 * @param max
+	 *            max value
 	 */
 	public void setTo(double min, double max)
 	{
@@ -189,9 +197,9 @@ public class Range {
 			min = max;
 			max = t;
 		}
-
+		
 		this.min = min;
 		this.max = max;
 	}
-
+	
 }

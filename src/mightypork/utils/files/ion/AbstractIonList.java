@@ -1,6 +1,5 @@
 package mightypork.utils.files.ion;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,15 +13,16 @@ import java.util.ArrayList;
  * @param <T>
  */
 public abstract class AbstractIonList<T> extends ArrayList<T> implements Ionizable {
-
+	
 	@Override
 	public void ionRead(InputStream in) throws IonException
 	{
 		try {
 			while (true) {
 				byte b = StreamUtils.readByte(in);
-
+				
 				if (b == IonMarks.ENTRY) {
+					@SuppressWarnings("unchecked")
 					T value = (T) Ion.readObject(in);
 					add(value);
 				} else if (b == IonMarks.END) {
@@ -36,8 +36,8 @@ public abstract class AbstractIonList<T> extends ArrayList<T> implements Ionizab
 			throw new IonException("Error reading ion list", e);
 		}
 	}
-
-
+	
+	
 	@Override
 	public void ionWrite(OutputStream out) throws IonException
 	{
@@ -53,27 +53,31 @@ public abstract class AbstractIonList<T> extends ArrayList<T> implements Ionizab
 			throw new IonException("Error reading ion map", e);
 		}
 	}
-
-
+	
+	
 	/**
 	 * Read custom data of this AbstractIonList implementation
 	 * 
-	 * @param in input stream
+	 * @param in
+	 *            input stream
 	 */
 	public void ionReadCustomData(InputStream in)
-	{}
-
-
+	{
+	}
+	
+	
 	/**
 	 * Write custom data of this AbstractIonList implementation
 	 * 
-	 * @param out output stream
+	 * @param out
+	 *            output stream
 	 */
 	public void ionWriteCustomData(OutputStream out)
-	{}
-
-
+	{
+	}
+	
+	
 	@Override
 	public abstract byte ionMark();
-
+	
 }

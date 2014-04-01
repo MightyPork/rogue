@@ -1,6 +1,5 @@
 package mightypork.rogue.input;
 
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -15,15 +14,17 @@ import mightypork.utils.logging.Log;
  * @author MightyPork
  */
 public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
-
+	
 	private Set<KeyBinding> bindings = new HashSet<KeyBinding>();
-
-
+	
+	
 	/**
 	 * Bind handler to a keystroke, replace current handler if any
 	 * 
-	 * @param stroke trigger keystroke
-	 * @param task handler
+	 * @param stroke
+	 *            trigger keystroke
+	 * @param task
+	 *            handler
 	 */
 	@Override
 	public void bindKeyStroke(KeyStroke stroke, Runnable task)
@@ -35,21 +36,22 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 				return;
 			}
 		}
-
+		
 		bindings.add(new KeyBinding(stroke, task));
 	}
-
-
+	
+	
 	/**
 	 * Remove handler from keystroke (id any)
 	 * 
-	 * @param stroke stroke
+	 * @param stroke
+	 *            stroke
 	 */
 	@Override
 	public void unbindKeyStroke(KeyStroke stroke)
 	{
 		Iterator<KeyBinding> iter = bindings.iterator();
-
+		
 		while (iter.hasNext()) {
 			KeyBinding kb = iter.next();
 			if (kb.matches(stroke)) {
@@ -58,8 +60,8 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 			}
 		}
 	}
-
-
+	
+	
 	@Override
 	public void receive(KeyboardEvent event)
 	{

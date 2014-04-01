@@ -1,6 +1,5 @@
 package mightypork.utils.time;
 
-
 /**
  * Class for counting FPS in games.<br>
  * This class can be used also as a simple frequency meter - output is in Hz.
@@ -8,14 +7,14 @@ package mightypork.utils.time;
  * @author MightyPork
  */
 public class FpsMeter {
-
+	
 	private long frames = 0;
 	private long drops = 0;
 	private long lastTimeMillis = System.currentTimeMillis();
 	private long lastSecFPS = 0;
 	private long lastSecDrop = 0;
-
-
+	
+	
 	/**
 	 * @return current second's FPS
 	 */
@@ -23,8 +22,8 @@ public class FpsMeter {
 	{
 		return lastSecFPS;
 	}
-
-
+	
+	
 	/**
 	 * Notification that frame was rendered
 	 */
@@ -39,19 +38,20 @@ public class FpsMeter {
 		}
 		frames++;
 	}
-
-
+	
+	
 	/**
 	 * Notification that some frames have been dropped
 	 * 
-	 * @param dropped dropped frames
+	 * @param dropped
+	 *            dropped frames
 	 */
 	public void drop(int dropped)
 	{
 		drops += dropped;
 	}
-
-
+	
+	
 	/**
 	 * @return current second's dropped frames
 	 */

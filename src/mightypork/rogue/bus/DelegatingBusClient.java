@@ -1,6 +1,5 @@
 package mightypork.rogue.bus;
 
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,25 +22,25 @@ import mightypork.utils.time.Updateable;
  * @author MightyPork
  */
 public abstract class DelegatingBusClient extends AppAdapter implements DelegatingClient, ToggleableClient, Destroyable, Updateable, UpdateEvent.Listener {
-
+	
 	/** Subsystem children subscribing to MessageBus */
 	private Set<Object> childSubscribers = new HashSet<Object>();
-
+	
 	private boolean wantUpdates = true;
 	private boolean eventsEnabled = true;
-
-
+	
+	
 	public DelegatingBusClient(AppAccess app, boolean updates) {
 		super(app);
-
+		
 		bus().subscribe(this);
-
+		
 		enableUpdates(updates);
-
+		
 		init();
 	}
-
-
+	
+	
 	/**
 	 * Add a child subscriber to the {@link MessageBus}.<br>
 	 * 
@@ -51,40 +50,41 @@ public abstract class DelegatingBusClient extends AppAdapter implements Delegati
 	public final boolean addChildSubscriber(Object client)
 	{
 		if (client == null) return false;
-
+		
 		childSubscribers.add(client);
-
+		
 		return true;
 	}
-
-
+	
+	
 	/**
 	 * Remove a child subscriber
 	 * 
-	 * @param client subscriber to remove
+	 * @param client
+	 *            subscriber to remove
 	 */
 	public final void removeChildSubscriber(Object client)
 	{
 		if (client == null) return;
-
+		
 		childSubscribers.remove(client);
 	}
-
-
+	
+	
 	@Override
 	public final Collection<Object> getChildClients()
 	{
 		return childSubscribers;
 	}
-
-
+	
+	
 	@Override
 	public final boolean doesDelegate()
 	{
 		return doesSubscribe();
 	}
-
-
+	
+	
 	/**
 	 * Set whether to receive {@link UpdateEvent}s (delta timing, one each
 	 * frame).<br>
@@ -95,15 +95,15 @@ public abstract class DelegatingBusClient extends AppAdapter implements Delegati
 	{
 		wantUpdates = enable;
 	}
-
-
+	
+	
 	@Override
 	public final boolean doesSubscribe()
 	{
 		return eventsEnabled;
 	}
-
-
+	
+	
 	/**
 	 * Set whether events should be received.
 	 * 
@@ -113,33 +113,33 @@ public abstract class DelegatingBusClient extends AppAdapter implements Delegati
 	{
 		this.eventsEnabled = enable;
 	}
-
-
+	
+	
 	@Override
 	public final void receive(UpdateEvent event)
 	{
 		if (wantUpdates) update(event.getDeltaTime());
 	}
-
-
+	
+	
 	@Override
 	public final void destroy()
 	{
 		deinit();
-
+		
 		enableUpdates(false);
-
+		
 		bus().unsubscribe(this);
 	}
-
-
+	
+	
 	@Override
 	public void update(double delta)
 	{
 		Log.w("Client " + getClass().getSimpleName() + " receives updates, but does not override the update() method.");
 	}
-
-
+	
+	
 	/**
 	 * Initialize the subsystem<br>
 	 * (called during construction)
@@ -148,8 +148,8 @@ public abstract class DelegatingBusClient extends AppAdapter implements Delegati
 	{
 		// no impl
 	}
-
-
+	
+	
 	/**
 	 * Deinitialize the subsystem<br>
 	 * (called during destruction)
@@ -158,5 +158,5 @@ public abstract class DelegatingBusClient extends AppAdapter implements Delegati
 	{
 		// no impl
 	}
-
+	
 }
