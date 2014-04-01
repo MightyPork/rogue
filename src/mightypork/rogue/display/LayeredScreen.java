@@ -54,12 +54,14 @@ public abstract class LayeredScreen extends Screen {
 	protected void addLayer(ScreenLayer layer)
 	{
 		this.layers.add(layer);
+		addChildSubscriber(layer);
 	}
 	
 	
 	protected void removeLayer(ScreenLayer layer)
 	{
 		this.layers.remove(layer);
+		addChildSubscriber(layer);
 	}
 	
 }

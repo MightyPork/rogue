@@ -52,6 +52,7 @@ public class App implements Destroyable, AppAccess {
 	 */
 	public static void main(String[] args)
 	{
+		
 		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler());
 		
 		inst = new App();
