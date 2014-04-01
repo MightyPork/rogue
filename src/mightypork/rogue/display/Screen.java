@@ -2,6 +2,7 @@ package mightypork.rogue.display;
 
 
 import static org.lwjgl.opengl.GL11.*;
+
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.DelegatingBusClient;
 import mightypork.rogue.bus.events.ScreenChangeEvent;
@@ -233,6 +234,9 @@ public abstract class Screen extends DelegatingBusClient implements KeyBinder, B
 		
 		renderBegin();
 		renderScreen();
+		
+		// TODO render layers ?
+		
 		renderEnd();
 	}
 	

@@ -1,18 +1,29 @@
 package mightypork.rogue.display.rendering;
 
 
-import mightypork.rogue.AppAccess;
-import mightypork.rogue.bus.DelegatingBusClient;
+import mightypork.rogue.bus.UpdateReceiver;
+import mightypork.rogue.display.Screen;
 
 
-public abstract class ScreenLayer extends DelegatingBusClient implements Renderable {
+public abstract class ScreenLayer extends UpdateReceiver implements Renderable {
 	
-	public ScreenLayer(AppAccess app) {
-		super(app, true);
+	private Screen screen;
+
+	public ScreenLayer(Screen screen) {
+		super(screen);
+		this.screen = screen;
 	}
 	
 	
 	@Override
 	public abstract void render();
+	
+	
+	@Override
+	public abstract void update(double delta);
+	
+	protected Screen screen() {
+		return screen;
+	}
 	
 }
