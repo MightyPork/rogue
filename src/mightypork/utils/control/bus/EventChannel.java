@@ -20,6 +20,7 @@ final public class EventChannel<EVENT extends Handleable<CLIENT>, CLIENT> {
 	
 	private Class<CLIENT> clientClass;
 	private Class<EVENT> messageClass;
+	private boolean logging = false;
 	
 	
 	public EventChannel(Class<EVENT> messageClass, Class<CLIENT> clientClass) {
@@ -28,6 +29,12 @@ final public class EventChannel<EVENT extends Handleable<CLIENT>, CLIENT> {
 		
 		this.clientClass = clientClass;
 		this.messageClass = messageClass;
+	}
+	
+	
+	public void enableLogging(boolean enable)
+	{
+		logging = enable;
 	}
 	
 	
@@ -57,7 +64,7 @@ final public class EventChannel<EVENT extends Handleable<CLIENT>, CLIENT> {
 			
 			// circular reference check
 			if (processed.contains(client)) {
-				Log.w("Client already served (subscribing twice?)");
+				if (logging) Log.w("Client already served (subscribing twice?)");
 				continue;
 			}
 			processed.add(client);
@@ -91,6 +98,7 @@ final public class EventChannel<EVENT extends Handleable<CLIENT>, CLIENT> {
 	{
 		if (clientClass.isInstance(client)) {
 			((Handleable<CLIENT>) message).handleBy((CLIENT) client);
+			if (logging) Log.f3("<bus> Received by: " + client);
 		}
 	}
 	

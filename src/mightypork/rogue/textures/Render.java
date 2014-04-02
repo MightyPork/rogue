@@ -13,6 +13,7 @@ import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
 import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureImpl;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -28,7 +29,6 @@ public class Render {
 	private static final Coord AXIS_Y = new Coord(0, 1, 0);
 	private static final Coord AXIS_Z = new Coord(0, 0, 1);
 	
-	public static Texture lastBinded = null;
 	private static boolean inited = false;
 	
 	
@@ -998,7 +998,7 @@ public class Render {
 			
 		} catch (IOException e) {
 			Log.e("Loading of texture " + resourcePath + " failed.", e);
-			throw new RuntimeException(e);
+			throw new RuntimeException("Could not load texture " + resourcePath + ".", e);
 		}
 		
 	}
@@ -1012,11 +1012,12 @@ public class Render {
 	 */
 	public static void bindTexture(Texture texture) throws RuntimeException
 	{
-		if (texture != lastBinded) {
-			glBindTexture(GL_TEXTURE_2D, 0);
-			glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
-			lastBinded = texture;
-		}
+		texture.bind();
+//		if (texture != lastBinded) {
+//			glBindTexture(GL_TEXTURE_2D, 0);
+//			glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
+//			lastBinded = texture;
+//		}
 	}
 	
 	
@@ -1025,7 +1026,7 @@ public class Render {
 	 */
 	public static void unbindTexture()
 	{
-		glBindTexture(GL_TEXTURE_2D, 0);
-		lastBinded = null;
+		TextureImpl.bindNone();
+//		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }

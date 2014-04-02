@@ -1,4 +1,4 @@
-package mightypork.utils.control;
+package mightypork.utils.control.interf;
 
 
 /**

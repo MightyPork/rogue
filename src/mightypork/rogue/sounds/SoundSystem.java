@@ -9,7 +9,7 @@ import java.util.Set;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
-import mightypork.utils.control.timing.Updateable;
+import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.coord.Coord;

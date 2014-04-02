@@ -4,7 +4,7 @@ package mightypork.rogue.display;
 import java.util.LinkedList;
 
 import mightypork.rogue.AppAccess;
-import mightypork.utils.control.timing.Updateable;
+import mightypork.utils.control.interf.Updateable;
 
 
 public abstract class LayeredScreen extends Screen {

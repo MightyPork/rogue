@@ -1,4 +1,4 @@
-package mightypork.utils.control.timing;
+package mightypork.utils.control.interf;
 
 
 /**

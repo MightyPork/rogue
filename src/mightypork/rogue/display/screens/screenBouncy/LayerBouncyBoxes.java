@@ -9,6 +9,7 @@ import java.util.List;
 import mightypork.rogue.display.Screen;
 import mightypork.rogue.display.ScreenLayer;
 import mightypork.rogue.display.constraints.ElementHolder;
+import mightypork.utils.math.constraints.RectConstraint;
 
 
 public class LayerBouncyBoxes extends ScreenLayer {
@@ -20,7 +21,9 @@ public class LayerBouncyBoxes extends ScreenLayer {
 	public LayerBouncyBoxes(Screen screen) {
 		super(screen);
 		
-		layout = new ElementHolder(screen, c_shrink(this, c_percent(c_height(this), c_n(8))));
+		RectConstraint holder_rect = c_shrink(this, c_percent(c_height(this), c_n(8)));
+		
+		layout = new ElementHolder(screen, holder_rect);
 		addChildClient(layout);
 		
 		for (int i = 0; i < 32; i++) {

@@ -8,7 +8,7 @@ import mightypork.rogue.bus.events.ScreenChangeEvent;
 import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
-import mightypork.utils.control.timing.Updateable;
+import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;

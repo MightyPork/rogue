@@ -14,12 +14,12 @@ import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.sounds.SoundSystem;
 import mightypork.rogue.tasks.TaskTakeScreenshot;
+import mightypork.rogue.textures.TextureRegistry;
 import mightypork.rogue.util.Utils;
-import mightypork.utils.control.Destroyable;
 import mightypork.utils.control.bus.EventBus;
+import mightypork.utils.control.bus.events.DestroyEvent;
+import mightypork.utils.control.bus.events.UpdateEvent;
 import mightypork.utils.control.timing.TimerDelta;
-import mightypork.utils.control.timing.UpdateEvent;
-import mightypork.utils.control.timing.Updateable;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogInstance;
 
@@ -31,15 +31,17 @@ import org.lwjgl.input.Keyboard;
  * 
  * @author MightyPork
  */
-public class App implements Destroyable, AppAccess {
+public class App implements AppAccess {
 	
 	/** instance pointer */
 	private static App inst;
 	
-	private InputSystem input;
-	private SoundSystem sounds;
-	private DisplaySystem display;
-	private EventBus events;
+	// modules
+	private InputSystem inputSystem;
+	private SoundSystem soundSystem;
+	private DisplaySystem displaySystem;
+	private EventBus eventBus;
+	private TextureRegistry textureRegistry;
 	
 	/** current screen */
 	private Screen screen;
@@ -49,6 +51,9 @@ public class App implements Destroyable, AppAccess {
 	
 	/** Log instance; accessible as static via Log. */
 	private LogInstance log;
+	
+	/** timer */
+	private TimerDelta timerRender;
 	
 	
 	/**
@@ -72,6 +77,43 @@ public class App implements Destroyable, AppAccess {
 	
 	
 	/**
+	 * Start the application
+	 */
+	private void start()
+	{
+		initialize();
+		mainLoop();
+		shutdown();
+	}
+	
+	
+	/**
+	 * App main loop
+	 */
+	private void mainLoop()
+	{
+		screen = new TestLayeredScreen(this);
+		
+		screen.setActive(true);
+		
+		timerRender = new TimerDelta();
+		
+		while (!displaySystem.isCloseRequested()) {
+			displaySystem.beginFrame();
+			
+			eventBus.broadcast(new UpdateEvent(timerRender.getDelta()));
+			
+			if (scheduledScreenshot) {
+				takeScreenshot();
+				scheduledScreenshot = false;
+			}
+			
+			displaySystem.endFrame();
+		}
+	}
+	
+	
+	/**
 	 * Handle a crash
 	 * 
 	 * @param error
@@ -87,7 +129,8 @@ public class App implements Destroyable, AppAccess {
 	@Override
 	public void shutdown()
 	{
-		destroy();
+		bus().broadcast(new DestroyEvent());
+		
 		System.exit(0);
 	}
 	
@@ -95,21 +138,33 @@ public class App implements Destroyable, AppAccess {
 	public void initialize()
 	{
 		Log.i("Initializing subsystems");
+		
+		// lock working directory
 		initLock();
-		initBus();
-		initLogger();
-		initDisplay();
-		initSound();
-		initInput();
-	}
-	
-	
-	@Override
-	public void destroy()
-	{
-		if (sounds != null) sounds.destroy();
-		if (input != null) input.destroy();
-		if (display != null) display.destroy();
+		
+		// setup logging
+		log = Log.create("runtime", Paths.LOGS, 10);
+		log.enable(Config.LOGGING_ENABLED);
+		log.enableSysout(Config.LOG_TO_STDOUT);
+		
+		// event bus
+		eventBus = new EventBus();
+		
+		// Subsystems
+		textureRegistry = new TextureRegistry(this);
+		
+		displaySystem = new DisplaySystem(this);
+		displaySystem.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.START_IN_FS, Const.TITLEBAR);
+		displaySystem.setTargetFps(Const.FPS_RENDER);
+		
+		soundSystem = new SoundSystem(this);
+		soundSystem.setMasterVolume(1);
+		
+		inputSystem = new InputSystem(this);
+		setupGlobalKeystrokes();
+		
+		// load resources
+		Resources.load(this);
 	}
 	
 	
@@ -170,34 +225,9 @@ public class App implements Destroyable, AppAccess {
 	/**
 	 * initialize inputs
 	 */
-	private void initBus()
+	private void setupGlobalKeystrokes()
 	{
-		events = new EventBus();
-		events.subscribe(this);
-		
-		events.createChannel(UpdateEvent.class, Updateable.class);
-	}
-	
-	
-	/**
-	 * initialize sound system
-	 */
-	private void initSound()
-	{
-		sounds = new SoundSystem(this);
-		
-		sounds.setMasterVolume(1);
-	}
-	
-	
-	/**
-	 * initialize inputs
-	 */
-	private void initInput()
-	{
-		input = new InputSystem(this);
-		
-		input.bindKeyStroke(new KeyStroke(Keyboard.KEY_F2), new Runnable() {
+		inputSystem.bindKeyStroke(new KeyStroke(Keyboard.KEY_F2), new Runnable() {
 			
 			@Override
 			public void run()
@@ -207,17 +237,17 @@ public class App implements Destroyable, AppAccess {
 			}
 		});
 		
-		input.bindKeyStroke(new KeyStroke(false, Keyboard.KEY_F11), new Runnable() {
+		inputSystem.bindKeyStroke(new KeyStroke(false, Keyboard.KEY_F11), new Runnable() {
 			
 			@Override
 			public void run()
 			{
 				Log.f3("F11, toggling fullscreen.");
-				display.switchFullscreen();
+				displaySystem.switchFullscreen();
 			}
 		});
 		
-		input.bindKeyStroke(new KeyStroke(Keyboard.KEY_LCONTROL, Keyboard.KEY_Q), new Runnable() {
+		inputSystem.bindKeyStroke(new KeyStroke(Keyboard.KEY_LCONTROL, Keyboard.KEY_Q), new Runnable() {
 			
 			@Override
 			public void run()
@@ -230,74 +260,12 @@ public class App implements Destroyable, AppAccess {
 	
 	
 	/**
-	 * initialize display
-	 */
-	private void initDisplay()
-	{
-		display = new DisplaySystem(this);
-		
-		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.START_IN_FS, Const.TITLEBAR);
-		display.setTargetFps(Const.FPS_RENDER);
-	}
-	
-	
-	/**
-	 * initialize main logger
-	 */
-	private void initLogger()
-	{
-		log = Log.create("runtime", Paths.LOGS, 10);
-		log.enable(Config.LOGGING_ENABLED);
-		log.enableSysout(Config.LOG_TO_STDOUT);
-	}
-	
-	
-	private void start()
-	{
-		initialize();
-		
-		mainLoop();
-		
-		shutdown();
-	}
-	
-	/** timer */
-	private TimerDelta timerRender;
-	
-	
-	/**
-	 * App main loop
-	 */
-	private void mainLoop()
-	{
-		screen = new TestLayeredScreen(this);
-		
-		screen.setActive(true);
-		
-		timerRender = new TimerDelta();
-		
-		while (!display.isCloseRequested()) {
-			display.beginFrame();
-			
-			events.broadcast(new UpdateEvent(timerRender.getDelta()));
-			
-			if (scheduledScreenshot) {
-				takeScreenshot();
-				scheduledScreenshot = false;
-			}
-			
-			display.endFrame();
-		}
-	}
-	
-	
-	/**
 	 * Do take a screenshot
 	 */
 	private void takeScreenshot()
 	{
-		sounds.getEffect("gui.shutter").play(1);
-		Utils.runAsThread(new TaskTakeScreenshot(display));
+		soundSystem.getEffect("gui.shutter").play(1);
+		Utils.runAsThread(new TaskTakeScreenshot(displaySystem));
 	}
 	
 	
@@ -307,7 +275,7 @@ public class App implements Destroyable, AppAccess {
 	@Override
 	public SoundSystem snd()
 	{
-		return sounds;
+		return soundSystem;
 	}
 	
 	
@@ -317,7 +285,7 @@ public class App implements Destroyable, AppAccess {
 	@Override
 	public InputSystem input()
 	{
-		return input;
+		return inputSystem;
 	}
 	
 	
@@ -327,7 +295,7 @@ public class App implements Destroyable, AppAccess {
 	@Override
 	public DisplaySystem disp()
 	{
-		return display;
+		return displaySystem;
 	}
 	
 	
@@ -337,7 +305,14 @@ public class App implements Destroyable, AppAccess {
 	@Override
 	public EventBus bus()
 	{
-		return events;
+		return eventBus;
+	}
+	
+	
+	@Override
+	public TextureRegistry tx()
+	{
+		return textureRegistry;
 	}
 	
 }

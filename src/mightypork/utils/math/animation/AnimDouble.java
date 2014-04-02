@@ -1,10 +1,9 @@
-package mightypork.utils.control.timing.animation;
+package mightypork.utils.math.animation;
 
 
+import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.control.timing.Pauseable;
-import mightypork.utils.control.timing.Updateable;
 import mightypork.utils.math.Calc;
-import mightypork.utils.math.easing.Easing;
 
 
 /**

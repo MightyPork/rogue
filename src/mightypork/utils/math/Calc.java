@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.coord.Coord;
-import mightypork.utils.math.easing.Easing;
 
 import org.lwjgl.BufferUtils;
 

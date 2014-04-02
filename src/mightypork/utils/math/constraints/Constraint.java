@@ -9,12 +9,12 @@ import mightypork.utils.math.coord.Coord;
  * 
  * @author MightyPork
  */
-public abstract class BaseConstraint implements SettableContext {
+public abstract class Constraint implements SettableContext {
 	
 	private ConstraintContext context = null;
 	
 	
-	public BaseConstraint(ConstraintContext context) {
+	public Constraint(ConstraintContext context) {
 		this.context = context;
 	}
 	
@@ -26,6 +26,9 @@ public abstract class BaseConstraint implements SettableContext {
 	}
 	
 	
+	/**
+	 * @return the context
+	 */
 	public ConstraintContext getContext()
 	{
 		return context;

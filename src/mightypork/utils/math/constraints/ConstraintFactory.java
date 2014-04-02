@@ -1,7 +1,7 @@
 package mightypork.utils.math.constraints;
 
 
-import mightypork.utils.control.timing.animation.AnimDouble;
+import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -335,7 +335,35 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_sizedBox(ConstraintContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint width, final NumConstraint height)
+	/**
+	 * @param context
+	 * @param width
+	 * @param height
+	 * @return
+	 */
+	public static RectConstraint c_box_sized(ConstraintContext context, final NumConstraint width, final NumConstraint height)
+	{
+		return new RectConstraint(context) {
+			
+			@Override
+			public Rect getRect()
+			{
+				Coord origin = getOrigin();
+				
+				//@formatter:off
+				return Rect.fromSize(
+						origin.x,
+						origin.y,
+						width.getValue(),
+						height.getValue()
+				);
+				//@formatter:on
+			}
+		};
+	}
+	
+	
+	public static RectConstraint c_box_sized(ConstraintContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint width, final NumConstraint height)
 	{
 		return new RectConstraint(context) {
 			
@@ -357,7 +385,7 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_posBox(ConstraintContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint right, final NumConstraint top)
+	public static RectConstraint c_box_abs(ConstraintContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint right, final NumConstraint top)
 	{
 		return new RectConstraint(context) {
 			

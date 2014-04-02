@@ -7,14 +7,14 @@ import java.util.Random;
 
 import mightypork.rogue.display.constraints.RenderableWithContext;
 import mightypork.rogue.textures.Render;
-import mightypork.utils.control.timing.Updateable;
-import mightypork.utils.control.timing.animation.AnimDouble;
+import mightypork.utils.control.interf.Updateable;
+import mightypork.utils.math.animation.AnimDouble;
+import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.constraints.NumConstraint;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Rect;
-import mightypork.utils.math.easing.Easing;
 
 
 public class BouncyBox implements RenderableWithContext, Updateable, ConstraintContext {
@@ -29,13 +29,19 @@ public class BouncyBox implements RenderableWithContext, Updateable, ConstraintC
 	
 	
 	public BouncyBox() {
+		// create box
 		NumConstraint side = c_height(this);
+		RectConstraint abox = c_box_sized(this, side, side);
+		
+		// move
 		NumConstraint move_length = c_sub(c_width(this), side);
 		NumConstraint offset = c_mul(move_length, c_n(pos));
-		RectConstraint abox = c_sizedBox(this, offset, c_n(0), side, side);
-		NumConstraint margin = c_percent(side, c_n(10));
-		RectConstraint with_margin = c_shrink(abox, margin);
-		box = with_margin;
+		abox = c_move(abox, offset, c_n(0));
+		
+		// add padding
+		abox = c_shrink(abox, c_percent(side, c_n(10)));
+		
+		box = abox;
 	}
 	
 	

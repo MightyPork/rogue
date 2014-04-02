@@ -6,7 +6,7 @@ package mightypork.utils.math.constraints;
  * 
  * @author MightyPork
  */
-public abstract class NumConstraint extends BaseConstraint {
+public abstract class NumConstraint extends Constraint {
 	
 	public NumConstraint(ConstraintContext context) {
 		super(context);

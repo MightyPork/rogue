@@ -6,7 +6,7 @@ import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.KeyboardEvent;
 import mightypork.rogue.bus.events.MouseButtonEvent;
 import mightypork.rogue.bus.events.MouseMotionEvent;
-import mightypork.utils.control.timing.Updateable;
+import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.coord.Coord;
 
 import org.lwjgl.LWJGLException;

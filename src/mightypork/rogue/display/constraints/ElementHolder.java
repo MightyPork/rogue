@@ -5,11 +5,18 @@ import java.util.LinkedList;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.ChildClient;
+import mightypork.utils.control.bus.EventBus;
 import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Rect;
 
 
+/**
+ * Bag for {@link RenderableWithContext} elements with constraints.<br>
+ * Elements are exposed to {@link EventBus}.
+ * 
+ * @author MightyPork
+ */
 public class ElementHolder extends ChildClient implements ConstraintContext, RenderableWithContext {
 	
 	private LinkedList<RenderableWithContext> elements = new LinkedList<RenderableWithContext>();
@@ -67,8 +74,9 @@ public class ElementHolder extends ChildClient implements ConstraintContext, Ren
 	/**
 	 * Add element to the holder.
 	 * 
-	 * @param elem
-	 * @param constraint
+	 * @param elem element; it's context will be set to the constraint.
+	 * @param constraint Constraint to be used for the element. It's context
+	 *            will be set to this {@link ElementHolder}
 	 */
 	public void add(RenderableWithContext elem, RectConstraint constraint)
 	{

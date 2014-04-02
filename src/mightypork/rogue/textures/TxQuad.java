@@ -39,17 +39,6 @@ public class TxQuad {
 	
 	
 	/**
-	 * @param tx Texture
-	 * @param uvs Rect of texturwe UVs (pixels - from left top)
-	 */
-	public TxQuad(Texture tx, Rect uvs) {
-		this.tx = tx;
-		this.uvs = uvs.copy();
-		this.size = uvs.getSize();
-	}
-	
-	
-	/**
 	 * Make of coords
 	 * 
 	 * @param tx texture
@@ -59,8 +48,17 @@ public class TxQuad {
 	 * @param y2 y2
 	 */
 	public TxQuad(Texture tx, int x1, int y1, int x2, int y2) {
+		this(tx, new Rect(x1, y1, x2, y2));
+	}
+	
+	
+	/**
+	 * @param tx Texture
+	 * @param uvs Rect of texturwe UVs (pixels - from left top)
+	 */
+	public TxQuad(Texture tx, Rect uvs) {
 		this.tx = tx;
-		this.uvs = new Rect(x1, y1, x2, y2);
+		this.uvs = uvs.copy();
 		this.size = uvs.getSize();
 	}
 	

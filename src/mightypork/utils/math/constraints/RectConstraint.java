@@ -9,7 +9,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class RectConstraint extends BaseConstraint implements ConstraintContext {
+public abstract class RectConstraint extends Constraint implements ConstraintContext {
 	
 	public RectConstraint(ConstraintContext context) {
 		super(context);

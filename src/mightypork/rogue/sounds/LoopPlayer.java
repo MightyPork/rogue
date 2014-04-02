@@ -1,9 +1,9 @@
 package mightypork.rogue.sounds;
 
 
+import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.control.timing.Pauseable;
-import mightypork.utils.control.timing.Updateable;
-import mightypork.utils.control.timing.animation.AnimDouble;
+import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.objects.Mutable;
 
 import org.lwjgl.openal.AL10;

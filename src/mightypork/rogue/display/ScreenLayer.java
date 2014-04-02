@@ -3,7 +3,7 @@ package mightypork.rogue.display;
 
 import mightypork.rogue.bus.ChildClient;
 import mightypork.rogue.display.constraints.Renderable;
-import mightypork.utils.control.timing.Updateable;
+import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Rect;
 

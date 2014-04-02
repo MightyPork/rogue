@@ -4,6 +4,7 @@ package mightypork.rogue;
 import mightypork.rogue.display.DisplaySystem;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.sounds.SoundSystem;
+import mightypork.rogue.textures.TextureRegistry;
 import mightypork.utils.control.bus.EventBus;
 
 
@@ -56,6 +57,13 @@ public class AppAdapter implements AppAccess {
 	public void shutdown()
 	{
 		app.shutdown();
+	}
+	
+	
+	@Override
+	public TextureRegistry tx()
+	{
+		return app.tx();
 	}
 	
 }

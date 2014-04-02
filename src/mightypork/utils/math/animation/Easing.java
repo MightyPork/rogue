@@ -1,4 +1,4 @@
-package mightypork.utils.math.easing;
+package mightypork.utils.math.animation;
 
 
 /**

@@ -2,9 +2,9 @@ package mightypork.rogue.bus;
 
 
 import mightypork.rogue.AppAccess;
-import mightypork.utils.control.Destroyable;
 import mightypork.utils.control.bus.clients.DelegatingClient;
 import mightypork.utils.control.bus.clients.ToggleableClient;
+import mightypork.utils.control.interf.Destroyable;
 
 
 /**
@@ -26,8 +26,6 @@ public abstract class Subsystem extends ChildClient implements DelegatingClient,
 	public final void destroy()
 	{
 		deinit();
-		
-		setListening(false);
 		
 		bus().unsubscribe(this);
 	}

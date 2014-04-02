@@ -2,8 +2,12 @@ package mightypork.utils.control.bus;
 
 
 import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 
+import mightypork.utils.control.bus.events.DestroyEvent;
+import mightypork.utils.control.bus.events.UpdateEvent;
+import mightypork.utils.control.interf.Destroyable;
+import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.logging.Log;
 
 
@@ -14,11 +18,24 @@ import mightypork.utils.logging.Log;
  */
 final public class EventBus {
 	
-	private Collection<EventChannel<?, ?>> channels = new LinkedHashSet<EventChannel<?, ?>>();
+	private Collection<EventChannel<?, ?>> channels = new CopyOnWriteArraySet<EventChannel<?, ?>>();
 	
-	private Collection<Object> clients = new LinkedHashSet<Object>();
+	private Collection<Object> clients = new CopyOnWriteArraySet<Object>();
 	
-	private boolean warn_unsent = true;
+	private boolean logging = false;
+	
+	
+	public EventBus() {
+		// default channels
+		createChannel(DestroyEvent.class, Destroyable.class);
+		createChannel(UpdateEvent.class, Updateable.class);
+	}
+	
+	
+	public void enableLogging(boolean enable)
+	{
+		logging = enable;
+	}
 	
 	
 	/**
@@ -33,7 +50,7 @@ final public class EventBus {
 		// if the channel already exists, return this instance instead.
 		for (EventChannel<?, ?> ch : channels) {
 			if (ch.equals(channel)) {
-				Log.w("Channel of type " + channel + " already registered.");
+				if (logging) Log.w("Channel of type " + channel + " already registered.");
 				return ch;
 			}
 		}
@@ -63,13 +80,15 @@ final public class EventBus {
 	 */
 	public boolean broadcast(Object message)
 	{
+		if (logging) Log.f3("<bus> Broadcasting: " + message);
+		
 		boolean sent = false;
 		
 		for (EventChannel<?, ?> b : channels) {
 			sent |= b.broadcast(message, clients);
 		}
 		
-		if (!sent && warn_unsent) Log.w("Message not accepted by any channel: " + message);
+		if (!sent && logging) Log.w("Message not accepted by any channel: " + message);
 		
 		return sent;
 	}
@@ -104,17 +123,6 @@ final public class EventBus {
 	
 	
 	/**
-	 * Enable logging of unsent messages
-	 * 
-	 * @param enable
-	 */
-	public void enableLoggingUnsent(boolean enable)
-	{
-		this.warn_unsent = enable;
-	}
-	
-	
-	/**
 	 * Add a channel for given message and client type.
 	 * 
 	 * @param messageClass message type
@@ -123,8 +131,9 @@ final public class EventBus {
 	 */
 	public <F_EVENT extends Handleable<F_CLIENT>, F_CLIENT> EventChannel<?, ?> createChannel(Class<F_EVENT> messageClass, Class<F_CLIENT> clientClass)
 	{
-		EventChannel<F_EVENT, F_CLIENT> bc = new EventChannel<F_EVENT, F_CLIENT>(messageClass, clientClass);
-		return addChannel(bc);
+		EventChannel<F_EVENT, F_CLIENT> channel = EventChannel.create(messageClass, clientClass);
+		channel.enableLogging(logging);
+		return addChannel(channel);
 	}
 	
 }

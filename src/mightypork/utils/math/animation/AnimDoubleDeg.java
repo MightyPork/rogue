@@ -1,9 +1,8 @@
-package mightypork.utils.control.timing.animation;
+package mightypork.utils.math.animation;
 
 
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.Calc.Deg;
-import mightypork.utils.math.easing.Easing;
 
 
 /**
