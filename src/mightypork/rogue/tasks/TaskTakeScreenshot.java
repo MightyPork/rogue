@@ -12,22 +12,37 @@ import javax.imageio.ImageIO;
 
 import mightypork.rogue.Paths;
 import mightypork.rogue.display.DisplaySystem;
+import mightypork.rogue.display.DisplaySystem.Screenshot;
 import mightypork.utils.logging.Log;
 
 
 public class TaskTakeScreenshot implements Runnable {
 	
-	private BufferedImage image;
+	private Screenshot scr;
 	
 	
 	public TaskTakeScreenshot(DisplaySystem disp) {
-		this.image = disp.takeScreenshot();
+		scr = disp.takeScreenshot();
 	}
 	
 	
 	@Override
 	public void run()
 	{
+		
+		BufferedImage image = new BufferedImage(scr.width, scr.height, BufferedImage.TYPE_INT_RGB);
+		
+		// convert to a buffered image
+		for (int x = 0; x < scr.width; x++) {
+			for (int y = 0; y < scr.height; y++) {
+				int i = (x + (scr.width * y)) * scr.bpp;
+				int r = scr.bytes.get(i) & 0xFF;
+				int g = scr.bytes.get(i + 1) & 0xFF;
+				int b = scr.bytes.get(i + 2) & 0xFF;
+				image.setRGB(x, scr.height - (y + 1), (0xFF << 24) | (r << 16) | (g << 8) | b);
+			}
+		}
+		
 		String fname = getUniqueScreenshotName();
 		
 		// generate unique filename

@@ -5,11 +5,11 @@ import static org.lwjgl.opengl.GL11.*;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ScreenChangeEvent;
-import mightypork.rogue.display.constraints.RenderContext;
 import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.utils.control.timing.Updateable;
+import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -21,13 +21,11 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class Screen extends Subsystem implements Updateable, KeyBinder, RenderContext, ScreenChangeEvent.Listener {
+public abstract class Screen extends Subsystem implements Updateable, KeyBinder, ConstraintContext, ScreenChangeEvent.Listener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
 	private boolean active;
-	
-	private boolean inited = false;
 	
 	
 	public Screen(AppAccess app) {

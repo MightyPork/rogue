@@ -16,7 +16,7 @@ import mightypork.rogue.sounds.SoundSystem;
 import mightypork.rogue.tasks.TaskTakeScreenshot;
 import mightypork.rogue.util.Utils;
 import mightypork.utils.control.Destroyable;
-import mightypork.utils.control.bus.MessageBus;
+import mightypork.utils.control.bus.EventBus;
 import mightypork.utils.control.timing.TimerDelta;
 import mightypork.utils.control.timing.UpdateEvent;
 import mightypork.utils.control.timing.Updateable;
@@ -39,7 +39,7 @@ public class App implements Destroyable, AppAccess {
 	private InputSystem input;
 	private SoundSystem sounds;
 	private DisplaySystem display;
-	private MessageBus events;
+	private EventBus events;
 	
 	/** current screen */
 	private Screen screen;
@@ -172,7 +172,7 @@ public class App implements Destroyable, AppAccess {
 	 */
 	private void initBus()
 	{
-		events = new MessageBus();
+		events = new EventBus();
 		events.subscribe(this);
 		
 		events.createChannel(UpdateEvent.class, Updateable.class);
@@ -335,7 +335,7 @@ public class App implements Destroyable, AppAccess {
 	 * @return event bus
 	 */
 	@Override
-	public MessageBus bus()
+	public EventBus bus()
 	{
 		return events;
 	}

@@ -4,7 +4,7 @@ package mightypork.rogue;
 import mightypork.rogue.display.DisplaySystem;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.sounds.SoundSystem;
-import mightypork.utils.control.bus.MessageBus;
+import mightypork.utils.control.bus.EventBus;
 
 
 /**
@@ -35,7 +35,7 @@ public interface AppAccess {
 	/**
 	 * @return event bus
 	 */
-	abstract MessageBus bus();
+	abstract EventBus bus();
 	
 	
 	/**

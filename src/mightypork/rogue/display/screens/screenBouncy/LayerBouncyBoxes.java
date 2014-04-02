@@ -1,7 +1,7 @@
 package mightypork.rogue.display.screens.screenBouncy;
 
 
-import static mightypork.rogue.display.constraints.ConstraintFactory.*;
+import static mightypork.utils.math.constraints.ConstraintFactory.*;
 
 import java.util.ArrayList;
 import java.util.List;

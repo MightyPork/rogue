@@ -1,4 +1,4 @@
-package mightypork.rogue.display.constraints;
+package mightypork.utils.math.constraints;
 
 
 import mightypork.utils.control.timing.animation.AnimDouble;
@@ -66,14 +66,14 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_round(RenderContext context)
+	public static RectConstraint c_round(ConstraintContext context)
 	{
 		return new RectConstraint(context) {
 			
 			@Override
 			public Rect getRect()
 			{
-				return context.getRect().round();
+				return getContext().getRect().round();
 			}
 		};
 	}
@@ -209,7 +209,7 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_width(final RenderContext context)
+	public static NumConstraint c_width(final ConstraintContext context)
 	{
 		return new NumConstraint(context) {
 			
@@ -222,7 +222,7 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_height(final RenderContext context)
+	public static NumConstraint c_height(final ConstraintContext context)
 	{
 		return new NumConstraint(context) {
 			
@@ -235,14 +235,14 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_row(RenderContext context, final int rows, final int index)
+	public static RectConstraint c_row(ConstraintContext context, final int rows, final int index)
 	{
 		return new RectConstraint(context) {
 			
 			@Override
 			public Rect getRect()
 			{
-				double height = context.getRect().getSize().y;
+				double height = getContext().getRect().getSize().y;
 				double perRow = height / rows;
 				
 				return Rect.fromSize(getOrigin().add(0, perRow * (rows - index - 1)), getSize().setY(perRow));
@@ -251,14 +251,14 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_column(RenderContext context, final int columns, final int index)
+	public static RectConstraint c_column(ConstraintContext context, final int columns, final int index)
 	{
 		return new RectConstraint(context) {
 			
 			@Override
 			public Rect getRect()
 			{
-				double width = context.getRect().getSize().x;
+				double width = getContext().getRect().getSize().x;
 				double perCol = width / columns;
 				
 				return Rect.fromSize(getOrigin().add(perCol * index, 0), getSize().setX(perCol));
@@ -267,57 +267,57 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_shrink(RenderContext context, NumConstraint shrink)
+	public static RectConstraint c_shrink(ConstraintContext context, NumConstraint shrink)
 	{
 		return c_shrink(context, shrink, shrink, shrink, shrink);
 	}
 	
 	
-	public static RectConstraint c_shrink(RenderContext context, NumConstraint horiz, NumConstraint vert)
+	public static RectConstraint c_shrink(ConstraintContext context, NumConstraint horiz, NumConstraint vert)
 	{
 		return c_shrink(context, horiz, vert, horiz, vert);
 	}
 	
 	
-	public static RectConstraint c_shrink(RenderContext context, final NumConstraint left, final NumConstraint top, final NumConstraint right, final NumConstraint bottom)
+	public static RectConstraint c_shrink(ConstraintContext context, final NumConstraint left, final NumConstraint top, final NumConstraint right, final NumConstraint bottom)
 	{
 		return new RectConstraint(context) {
 			
 			@Override
 			public Rect getRect()
 			{
-				return context.getRect().shrink(left.getValue(), top.getValue(), right.getValue(), bottom.getValue());
+				return getContext().getRect().shrink(left.getValue(), top.getValue(), right.getValue(), bottom.getValue());
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_grow(RenderContext context, NumConstraint grow)
+	public static RectConstraint c_grow(ConstraintContext context, NumConstraint grow)
 	{
 		return c_grow(context, grow, grow, grow, grow);
 	}
 	
 	
-	public static RectConstraint c_grow(RenderContext context, NumConstraint horiz, NumConstraint vert)
+	public static RectConstraint c_grow(ConstraintContext context, NumConstraint horiz, NumConstraint vert)
 	{
 		return c_grow(context, horiz, vert, horiz, vert);
 	}
 	
 	
-	public static RectConstraint c_grow(RenderContext context, final NumConstraint left, final NumConstraint top, final NumConstraint right, final NumConstraint bottom)
+	public static RectConstraint c_grow(ConstraintContext context, final NumConstraint left, final NumConstraint top, final NumConstraint right, final NumConstraint bottom)
 	{
 		return new RectConstraint(context) {
 			
 			@Override
 			public Rect getRect()
 			{
-				return context.getRect().grow(left.getValue(), top.getValue(), right.getValue(), bottom.getValue());
+				return getContext().getRect().grow(left.getValue(), top.getValue(), right.getValue(), bottom.getValue());
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_tile(RenderContext context, final int rows, final int cols, final int left, final int top)
+	public static RectConstraint c_tile(ConstraintContext context, final int rows, final int cols, final int left, final int top)
 	{
 		return new RectConstraint(context) {
 			
@@ -335,7 +335,7 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_sizedBox(RenderContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint width, final NumConstraint height)
+	public static RectConstraint c_sizedBox(ConstraintContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint width, final NumConstraint height)
 	{
 		return new RectConstraint(context) {
 			
@@ -357,7 +357,7 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_posBox(RenderContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint right, final NumConstraint top)
+	public static RectConstraint c_posBox(ConstraintContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint right, final NumConstraint top)
 	{
 		return new RectConstraint(context) {
 			
@@ -379,14 +379,14 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_move(RenderContext context, final NumConstraint x, final NumConstraint y)
+	public static RectConstraint c_move(ConstraintContext context, final NumConstraint x, final NumConstraint y)
 	{
 		return new RectConstraint(context) {
 			
 			@Override
 			public Rect getRect()
 			{
-				return context.getRect().add(x.getValue(), y.getValue());
+				return getContext().getRect().add(x.getValue(), y.getValue());
 			}
 		};
 	}

@@ -1,4 +1,4 @@
-package mightypork.rogue.display.constraints;
+package mightypork.utils.math.constraints;
 
 
 /**
@@ -8,7 +8,7 @@ package mightypork.rogue.display.constraints;
  */
 public abstract class NumConstraint extends BaseConstraint {
 	
-	public NumConstraint(RenderContext context) {
+	public NumConstraint(ConstraintContext context) {
 		super(context);
 	}
 	

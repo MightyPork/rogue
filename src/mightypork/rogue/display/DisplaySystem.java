@@ -9,8 +9,8 @@ import java.nio.ByteBuffer;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ScreenChangeEvent;
-import mightypork.rogue.display.constraints.RenderContext;
 import mightypork.utils.logging.Log;
+import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -20,7 +20,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 
-public class DisplaySystem extends Subsystem implements RenderContext {
+public class DisplaySystem extends Subsystem implements ConstraintContext {
 	
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
@@ -109,7 +109,7 @@ public class DisplaySystem extends Subsystem implements RenderContext {
 	}
 	
 	
-	public BufferedImage takeScreenshot()
+	public Screenshot takeScreenshot()
 	{
 		glReadBuffer(GL_FRONT);
 		int width = Display.getDisplayMode().getWidth();
@@ -119,20 +119,9 @@ public class DisplaySystem extends Subsystem implements RenderContext {
 		ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
 		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 		
-		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Screenshot sc = new Screenshot(width, height, bpp, buffer);
 		
-		// convert to a buffered image
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				int i = (x + (width * y)) * bpp;
-				int r = buffer.get(i) & 0xFF;
-				int g = buffer.get(i + 1) & 0xFF;
-				int b = buffer.get(i + 2) & 0xFF;
-				image.setRGB(x, height - (y + 1), (0xFF << 24) | (r << 16) | (g << 8) | b);
-			}
-		}
-		
-		return image;
+		return sc;
 	}
 	
 	
@@ -196,5 +185,21 @@ public class DisplaySystem extends Subsystem implements RenderContext {
 	public Rect getRect()
 	{
 		return new Rect(getSize());
+	}
+	
+	public static class Screenshot {
+		
+		public int width;
+		public int height;
+		public int bpp;
+		public ByteBuffer bytes;
+		
+		
+		public Screenshot(int width, int height, int bpp, ByteBuffer buffer) {
+			this.width = width;
+			this.height = height;
+			this.bpp = bpp;
+			this.bytes = buffer;
+		}
 	}
 }

@@ -8,13 +8,13 @@ import mightypork.utils.logging.Log;
 
 
 /**
- * An event bus, accommodating multiple {@link MessageChannel}s.
+ * An event bus, accommodating multiple {@link EventChannel}s.
  * 
  * @author MightyPork
  */
-final public class MessageBus {
+final public class EventBus {
 	
-	private Collection<MessageChannel<?, ?>> channels = new LinkedHashSet<MessageChannel<?, ?>>();
+	private Collection<EventChannel<?, ?>> channels = new LinkedHashSet<EventChannel<?, ?>>();
 	
 	private Collection<Object> clients = new LinkedHashSet<Object>();
 	
@@ -22,16 +22,16 @@ final public class MessageBus {
 	
 	
 	/**
-	 * Add a {@link MessageChannel} to this bus.<br>
+	 * Add a {@link EventChannel} to this bus.<br>
 	 * If a channel of matching types is already added, it is returned instead.
 	 * 
 	 * @param channel channel to be added
 	 * @return the channel that's now in the bus
 	 */
-	public MessageChannel<?, ?> addChannel(MessageChannel<?, ?> channel)
+	public EventChannel<?, ?> addChannel(EventChannel<?, ?> channel)
 	{
 		// if the channel already exists, return this instance instead.
-		for (MessageChannel<?, ?> ch : channels) {
+		for (EventChannel<?, ?> ch : channels) {
 			if (ch.equals(channel)) {
 				Log.w("Channel of type " + channel + " already registered.");
 				return ch;
@@ -45,11 +45,11 @@ final public class MessageBus {
 	
 	
 	/**
-	 * Remove a {@link MessageChannel} from this bus
+	 * Remove a {@link EventChannel} from this bus
 	 * 
 	 * @param channel true if channel was removed
 	 */
-	public void removeChannel(MessageChannel<?, ?> channel)
+	public void removeChannel(EventChannel<?, ?> channel)
 	{
 		channels.remove(channel);
 	}
@@ -65,7 +65,7 @@ final public class MessageBus {
 	{
 		boolean sent = false;
 		
-		for (MessageChannel<?, ?> b : channels) {
+		for (EventChannel<?, ?> b : channels) {
 			sent |= b.broadcast(message, clients);
 		}
 		
@@ -121,9 +121,9 @@ final public class MessageBus {
 	 * @param clientClass client type
 	 * @return the created channel instance
 	 */
-	public <F_MESSAGE extends Handleable<F_CLIENT>, F_CLIENT> MessageChannel<?, ?> createChannel(Class<F_MESSAGE> messageClass, Class<F_CLIENT> clientClass)
+	public <F_EVENT extends Handleable<F_CLIENT>, F_CLIENT> EventChannel<?, ?> createChannel(Class<F_EVENT> messageClass, Class<F_CLIENT> clientClass)
 	{
-		MessageChannel<F_MESSAGE, F_CLIENT> bc = new MessageChannel<F_MESSAGE, F_CLIENT>(messageClass, clientClass);
+		EventChannel<F_EVENT, F_CLIENT> bc = new EventChannel<F_EVENT, F_CLIENT>(messageClass, clientClass);
 		return addChannel(bc);
 	}
 	

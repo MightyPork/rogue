@@ -2,9 +2,9 @@ package mightypork.rogue.display;
 
 
 import mightypork.rogue.bus.ChildClient;
-import mightypork.rogue.display.constraints.RenderContext;
 import mightypork.rogue.display.constraints.Renderable;
 import mightypork.utils.control.timing.Updateable;
+import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Rect;
 
 
@@ -13,7 +13,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class ScreenLayer extends ChildClient implements Renderable, Updateable, RenderContext {
+public abstract class ScreenLayer extends ChildClient implements Renderable, Updateable, ConstraintContext {
 	
 	private Screen screen;
 	
@@ -36,16 +36,6 @@ public abstract class ScreenLayer extends ChildClient implements Renderable, Upd
 	protected Screen screen()
 	{
 		return screen;
-	}
-	
-	
-	/**
-	 * UNSUPPORTED
-	 */
-	@Override
-	public final void setContext(RenderContext context)
-	{
-		throw new UnsupportedOperationException("ScreenLayer uses screen as it's context.");
 	}
 	
 	

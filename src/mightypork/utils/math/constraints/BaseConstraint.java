@@ -1,35 +1,32 @@
-package mightypork.rogue.display.constraints;
+package mightypork.utils.math.constraints;
 
 
 import mightypork.utils.math.coord.Coord;
 
 
 /**
- * A constraint based on a given {@link RenderContext}
+ * A constraint based on a given {@link ConstraintContext}
  * 
  * @author MightyPork
  */
-public abstract class BaseConstraint implements WithContext {
+public abstract class BaseConstraint implements SettableContext {
 	
-	protected RenderContext context = null;
+	private ConstraintContext context = null;
 	
 	
-	public BaseConstraint(RenderContext context) {
+	public BaseConstraint(ConstraintContext context) {
 		this.context = context;
 	}
 	
 	
 	@Override
-	public void setContext(RenderContext context)
+	public void setContext(ConstraintContext context)
 	{
 		this.context = context;
 	}
 	
 	
-	/**
-	 * @return context
-	 */
-	public RenderContext getContext()
+	public ConstraintContext getContext()
 	{
 		return context;
 	}

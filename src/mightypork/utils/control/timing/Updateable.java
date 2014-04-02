@@ -2,7 +2,7 @@ package mightypork.utils.control.timing;
 
 
 /**
- * object supporting delta timing
+ * Uses delta timing
  * 
  * @author MightyPork
  */

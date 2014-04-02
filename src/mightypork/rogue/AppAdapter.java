@@ -4,7 +4,7 @@ package mightypork.rogue;
 import mightypork.rogue.display.DisplaySystem;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.sounds.SoundSystem;
-import mightypork.utils.control.bus.MessageBus;
+import mightypork.utils.control.bus.EventBus;
 
 
 /**
@@ -46,7 +46,7 @@ public class AppAdapter implements AppAccess {
 	
 	
 	@Override
-	public final MessageBus bus()
+	public final EventBus bus()
 	{
 		return app.bus();
 	}

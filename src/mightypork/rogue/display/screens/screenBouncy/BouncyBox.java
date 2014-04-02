@@ -1,27 +1,27 @@
 package mightypork.rogue.display.screens.screenBouncy;
 
 
-import static mightypork.rogue.display.constraints.ConstraintFactory.*;
+import static mightypork.utils.math.constraints.ConstraintFactory.*;
 
 import java.util.Random;
 
-import mightypork.rogue.display.constraints.NumConstraint;
-import mightypork.rogue.display.constraints.RectConstraint;
-import mightypork.rogue.display.constraints.RenderContext;
-import mightypork.rogue.display.constraints.Renderable;
+import mightypork.rogue.display.constraints.RenderableWithContext;
 import mightypork.rogue.textures.Render;
 import mightypork.utils.control.timing.Updateable;
 import mightypork.utils.control.timing.animation.AnimDouble;
 import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.constraints.ConstraintContext;
+import mightypork.utils.math.constraints.NumConstraint;
+import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Rect;
 import mightypork.utils.math.easing.Easing;
 
 
-public class BouncyBox implements Renderable, Updateable, RenderContext {
+public class BouncyBox implements RenderableWithContext, Updateable, ConstraintContext {
 	
 	private Random rand = new Random();
 	
-	private RenderContext context;
+	private ConstraintContext context;
 	
 	private RectConstraint box;
 	
@@ -30,17 +30,11 @@ public class BouncyBox implements Renderable, Updateable, RenderContext {
 	
 	public BouncyBox() {
 		NumConstraint side = c_height(this);
-		
 		NumConstraint move_length = c_sub(c_width(this), side);
-		
 		NumConstraint offset = c_mul(move_length, c_n(pos));
-		
 		RectConstraint abox = c_sizedBox(this, offset, c_n(0), side, side);
-		
 		NumConstraint margin = c_percent(side, c_n(10));
-		
 		RectConstraint with_margin = c_shrink(abox, margin);
-		
 		box = with_margin;
 	}
 	
@@ -60,7 +54,7 @@ public class BouncyBox implements Renderable, Updateable, RenderContext {
 	
 	
 	@Override
-	public void setContext(RenderContext context)
+	public void setContext(ConstraintContext context)
 	{
 		this.context = context;
 	}

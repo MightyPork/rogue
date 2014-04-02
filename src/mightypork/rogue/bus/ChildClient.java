@@ -7,13 +7,13 @@ import java.util.Set;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.AppAdapter;
-import mightypork.utils.control.bus.MessageBus;
+import mightypork.utils.control.bus.EventBus;
 import mightypork.utils.control.bus.clients.DelegatingClient;
 import mightypork.utils.control.bus.clients.ToggleableClient;
 
 
 /**
- * Client that can be attached to the {@link MessageBus}, or added as a child
+ * Client that can be attached to the {@link EventBus}, or added as a child
  * client to another {@link DelegatingClient}
  * 
  * @author MightyPork
@@ -51,7 +51,7 @@ public class ChildClient extends AppAdapter implements DelegatingClient, Togglea
 	
 	
 	/**
-	 * Add a child subscriber to the {@link MessageBus}.<br>
+	 * Add a child subscriber to the {@link EventBus}.<br>
 	 * 
 	 * @param client
 	 */

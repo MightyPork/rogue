@@ -10,19 +10,19 @@ import mightypork.utils.logging.Log;
 
 
 /**
- * Message channel, module of {@link MessageBus}
+ * Message channel, module of {@link EventBus}
  * 
  * @author MightyPork
- * @param <MESSAGE> message type
+ * @param <EVENT> message type
  * @param <CLIENT> client (subscriber) type
  */
-final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
+final public class EventChannel<EVENT extends Handleable<CLIENT>, CLIENT> {
 	
 	private Class<CLIENT> clientClass;
-	private Class<MESSAGE> messageClass;
+	private Class<EVENT> messageClass;
 	
 	
-	public MessageChannel(Class<MESSAGE> messageClass, Class<CLIENT> clientClass) {
+	public EventChannel(Class<EVENT> messageClass, Class<CLIENT> clientClass) {
 		
 		if (messageClass == null || clientClass == null) throw new NullPointerException("Null Message or Client class.");
 		
@@ -43,7 +43,7 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	{
 		if (!canBroadcast(message)) return false;
 		
-		MESSAGE evt = messageClass.cast(message);
+		EVENT evt = messageClass.cast(message);
 		
 		doBroadcast(evt, clients, new HashSet<Object>());
 		
@@ -51,7 +51,7 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	}
 	
 	
-	private void doBroadcast(MESSAGE message, Collection<Object> clients, Collection<Object> processed)
+	private void doBroadcast(EVENT message, Collection<Object> clients, Collection<Object> processed)
 	{
 		for (Object client : clients) {
 			
@@ -87,7 +87,7 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	 * @param message message to send
 	 */
 	@SuppressWarnings("unchecked")
-	private void sendTo(Object client, MESSAGE message)
+	private void sendTo(Object client, EVENT message)
 	{
 		if (clientClass.isInstance(client)) {
 			((Handleable<CLIENT>) message).handleBy((CLIENT) client);
@@ -97,7 +97,7 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	
 	/**
 	 * Check if the given message can be broadcasted by this
-	 * {@link MessageChannel}
+	 * {@link EventChannel}
 	 * 
 	 * @param message event object
 	 * @return can be broadcasted
@@ -124,8 +124,8 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	{
 		if (this == obj) return true;
 		if (obj == null) return false;
-		if (!(obj instanceof MessageChannel)) return false;
-		MessageChannel<?, ?> other = (MessageChannel<?, ?>) obj;
+		if (!(obj instanceof EventChannel)) return false;
+		EventChannel<?, ?> other = (EventChannel<?, ?>) obj;
 		if (clientClass == null) {
 			if (other.clientClass != null) return false;
 		} else if (!clientClass.equals(other.clientClass)) return false;
@@ -150,9 +150,9 @@ final public class MessageChannel<MESSAGE extends Handleable<CLIENT>, CLIENT> {
 	 * @param clientClass client class
 	 * @return the broadcaster
 	 */
-	public static <F_MESSAGE extends Handleable<F_CLIENT>, F_CLIENT> MessageChannel<F_MESSAGE, F_CLIENT> create(Class<F_MESSAGE> messageClass, Class<F_CLIENT> clientClass)
+	public static <F_EVENT extends Handleable<F_CLIENT>, F_CLIENT> EventChannel<F_EVENT, F_CLIENT> create(Class<F_EVENT> messageClass, Class<F_CLIENT> clientClass)
 	{
-		return new MessageChannel<F_MESSAGE, F_CLIENT>(messageClass, clientClass);
+		return new EventChannel<F_EVENT, F_CLIENT>(messageClass, clientClass);
 	}
 	
 }
