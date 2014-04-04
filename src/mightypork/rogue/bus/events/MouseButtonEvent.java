@@ -1,7 +1,7 @@
 package mightypork.rogue.bus.events;
 
 
-import mightypork.utils.control.bus.Handleable;
+import mightypork.utils.control.bus.Event;
 import mightypork.utils.math.coord.Coord;
 
 
@@ -10,7 +10,7 @@ import mightypork.utils.math.coord.Coord;
  * 
  * @author MightyPork
  */
-public class MouseButtonEvent implements Handleable<MouseButtonEvent.Listener> {
+public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	
 	public static final int BUTTON_LEFT = 0;
 	public static final int BUTTON_MIDDLE = 1;

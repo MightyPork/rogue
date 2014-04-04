@@ -11,8 +11,8 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 
 import mightypork.rogue.Paths;
-import mightypork.rogue.display.DisplaySystem;
-import mightypork.rogue.display.DisplaySystem.Screenshot;
+import mightypork.rogue.render.DisplaySystem;
+import mightypork.rogue.render.DisplaySystem.Screenshot;
 import mightypork.utils.logging.Log;
 
 

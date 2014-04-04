@@ -1,11 +1,11 @@
 package mightypork.rogue.bus.events;
 
 
-import mightypork.utils.control.bus.Handleable;
+import mightypork.utils.control.bus.Event;
 import mightypork.utils.math.coord.Coord;
 
 
-public class ScreenChangeEvent implements Handleable<ScreenChangeEvent.Listener> {
+public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	
 	private boolean fullscreen;
 	private Coord screenSize;

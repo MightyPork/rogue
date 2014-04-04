@@ -38,7 +38,6 @@ public class TimerFps {
 		long time = getTime();
 		if (time >= nextFrame) {
 			long skippedNow = (long) Math.floor((time - nextFrame) / (double) FRAME) + 1;
-			// System.out.println("Skipping: "+skippedNow);
 			skipped += skippedNow;
 			lastFrame = nextFrame + (1 - skippedNow) * FRAME;
 			nextFrame += skippedNow * FRAME;

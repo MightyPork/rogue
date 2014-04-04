@@ -176,4 +176,35 @@ public class Log {
 		main.removeMonitor(id);
 	}
 	
+	
+	public static String str(Object o)
+	{
+		
+		boolean hasToString = false;
+		
+		try {
+			hasToString = (o.getClass().getMethod("toString").getDeclaringClass() != Object.class);
+		} catch (Exception e) {
+			// oh well..
+		}
+		
+		if (hasToString) {
+			return o.toString();
+		} else {
+			
+			Class<?> cls = o.getClass();
+			
+			Class<?> enclosing = cls.getEnclosingClass();
+			
+			return (enclosing == null ? "" : enclosing.getSimpleName() + ".") + cls.getSimpleName();
+		}
+	}
+	
+	
+	public static String str(Class<?> cls)
+	{
+		Class<?> enclosing = cls.getEnclosingClass();
+		
+		return (enclosing == null ? "" : enclosing.getSimpleName() + ".") + cls.getSimpleName();
+	}
 }

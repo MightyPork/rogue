@@ -109,7 +109,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	 * 
 	 * @return the value
 	 */
-	public double getCurrentValue()
+	public double now()
 	{
 		if (duration == 0) return to;
 		return Calc.interpolate(from, to, (elapsedTime / duration), easing);
@@ -191,7 +191,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void animate(double from, double to, double time)
 	{
-		double current = getCurrentValue();
+		double current = now();
 		
 		this.from = from;
 		this.to = to;
@@ -229,9 +229,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void fadeTo(double to, double time)
 	{
-		double current = getCurrentValue();
-		
-		this.from = current;
+		this.from = now();
 		this.to = to;
 		this.duration = time;
 		this.elapsedTime = 0;
@@ -295,7 +293,7 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void stop()
 	{
-		from = to = getCurrentValue();
+		from = to = now();
 		elapsedTime = 0;
 		duration = 0;
 	}

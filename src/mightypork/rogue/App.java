@@ -4,22 +4,21 @@ package mightypork.rogue;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import mightypork.rogue.display.DisplaySystem;
-import mightypork.rogue.display.Screen;
-import mightypork.rogue.display.screens.screenBouncy.TestLayeredScreen;
+import mightypork.rogue.audio.SoundSystem;
+import mightypork.rogue.bus.events.*;
+import mightypork.rogue.gui.screens.ScreenRegistry;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
-import mightypork.rogue.sounds.SoundSystem;
-import mightypork.rogue.tasks.TaskTakeScreenshot;
-import mightypork.rogue.textures.TextureRegistry;
-import mightypork.rogue.util.Utils;
+import mightypork.rogue.render.DisplaySystem;
 import mightypork.utils.control.bus.EventBus;
 import mightypork.utils.control.bus.events.DestroyEvent;
 import mightypork.utils.control.bus.events.UpdateEvent;
-import mightypork.utils.control.timing.TimerDelta;
+import mightypork.utils.control.interf.Destroyable;
+import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogInstance;
 
@@ -38,22 +37,12 @@ public class App implements AppAccess {
 	
 	// modules
 	private InputSystem inputSystem;
-	private SoundSystem soundSystem;
 	private DisplaySystem displaySystem;
+	private static SoundSystem soundSystem;
 	private EventBus eventBus;
-	private TextureRegistry textureRegistry;
+	private MainLoop mainLoop;
 	
-	/** current screen */
-	private Screen screen;
-	
-	/** Flag that screenshot is scheduled to be taken next loop */
-	private boolean scheduledScreenshot = false;
-	
-	/** Log instance; accessible as static via Log. */
-	private LogInstance log;
-	
-	/** timer */
-	private TimerDelta timerRender;
+	public ScreenRegistry screens;
 	
 	
 	/**
@@ -82,34 +71,9 @@ public class App implements AppAccess {
 	private void start()
 	{
 		initialize();
-		mainLoop();
-		shutdown();
-	}
-	
-	
-	/**
-	 * App main loop
-	 */
-	private void mainLoop()
-	{
-		screen = new TestLayeredScreen(this);
 		
-		screen.setActive(true);
-		
-		timerRender = new TimerDelta();
-		
-		while (!displaySystem.isCloseRequested()) {
-			displaySystem.beginFrame();
-			
-			eventBus.broadcast(new UpdateEvent(timerRender.getDelta()));
-			
-			if (scheduledScreenshot) {
-				takeScreenshot();
-				scheduledScreenshot = false;
-			}
-			
-			displaySystem.endFrame();
-		}
+		Log.i("Starting main loop...");
+		mainLoop.start();
 	}
 	
 	
@@ -120,7 +84,7 @@ public class App implements AppAccess {
 	 */
 	public static void onCrash(Throwable error)
 	{
-		Log.e("The game has crashed.", error);
+		Log.e("The game has crashed!", error);
 		
 		if (inst != null) inst.shutdown();
 	}
@@ -129,7 +93,11 @@ public class App implements AppAccess {
 	@Override
 	public void shutdown()
 	{
-		bus().broadcast(new DestroyEvent());
+		bus().send(new DestroyEvent());
+		
+		bus().destroy();
+		
+		Log.i("Shutting down...");
 		
 		System.exit(0);
 	}
@@ -137,34 +105,124 @@ public class App implements AppAccess {
 	
 	public void initialize()
 	{
-		Log.i("Initializing subsystems");
-		
-		// lock working directory
+		/*
+		 *  Lock working directory
+		 */
 		initLock();
 		
-		// setup logging
-		log = Log.create("runtime", Paths.LOGS, 10);
+		/*
+		 * Setup logging
+		 */
+		LogInstance log = Log.create("runtime", Paths.LOGS, 10);
 		log.enable(Config.LOGGING_ENABLED);
 		log.enableSysout(Config.LOG_TO_STDOUT);
 		
-		// event bus
+		Log.f1("Initializing subsystems...");
+		
+		/*
+		 * Event bus
+		 */
+		Log.f2("Initializing Event Bus...");
 		eventBus = new EventBus();
+		eventBus.enableLogging(Config.LOG_BUS);
+		initChannels();
 		
-		// Subsystems
-		textureRegistry = new TextureRegistry(this);
-		
+		/*
+		 * Display
+		 */
+		Log.f2("Initializing Display System...");
 		displaySystem = new DisplaySystem(this);
 		displaySystem.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.START_IN_FS, Const.TITLEBAR);
 		displaySystem.setTargetFps(Const.FPS_RENDER);
 		
+		/*
+		 * Audio
+		 */
+		Log.f2("Initializing Sound System...");
 		soundSystem = new SoundSystem(this);
 		soundSystem.setMasterVolume(1);
 		
+		/*
+		 * Input
+		 */
+		Log.f2("Initializing Input System...");
 		inputSystem = new InputSystem(this);
 		setupGlobalKeystrokes();
 		
-		// load resources
-		Resources.load(this);
+		/*
+		 * Screen registry
+		 */
+		Log.f2("Initializing screen registry...");
+		screens = new ScreenRegistry(this);
+		
+		/*
+		 * Load resources
+		 */
+		Log.f1("Registering resources...");
+		Res.load(this);
+		
+		/*
+		 * Prepare main loop
+		 */
+		Log.f1("Preparing main loop...");
+		ArrayList<Runnable> loopTasks = new ArrayList<Runnable>();
+		loopTasks.add(new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				screens.render();
+			}
+		});
+		
+		mainLoop = new MainLoop(this, loopTasks);
+	}
+	
+	
+	private void initChannels()
+	{
+		Log.f3("Registering channels...");
+		
+		bus().addChannel(DestroyEvent.class, Destroyable.class);
+		bus().addChannel(UpdateEvent.class, Updateable.class);
+		
+		bus().addChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
+		bus().addChannel(KeyboardEvent.class, KeyboardEvent.Listener.class);
+		bus().addChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
+		bus().addChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
+		bus().addChannel(ScreenRequestEvent.class, ScreenRequestEvent.Listener.class);
+		bus().addChannel(ActionRequest.class, ActionRequest.Listener.class);
+	}
+	
+	
+	private void setupGlobalKeystrokes()
+	{
+		input().bindKeyStroke(new KeyStroke(Keyboard.KEY_F11), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				bus().queue(new ActionRequest(RequestType.FULLSCREEN));
+			}
+		});
+		
+		input().bindKeyStroke(new KeyStroke(Keyboard.KEY_F2), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				bus().queue(new ActionRequest(RequestType.SCREENSHOT));
+			}
+		});
+		
+		input().bindKeyStroke(new KeyStroke(Keyboard.KEY_LCONTROL, Keyboard.KEY_Q), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				bus().queue(new ActionRequest(RequestType.SHUTDOWN));
+			}
+		});
 	}
 	
 	
@@ -173,7 +231,7 @@ public class App implements AppAccess {
 		if (!Config.SINGLE_INSTANCE) return;
 		
 		if (!lockInstance()) {
-			System.out.println("Working directory is locked.\nOnly one instance can run at a time.");
+			System.err.println("Working directory is locked.\nOnly one instance can run at a time.");
 			
 			//@formatter:off
 			JOptionPane.showMessageDialog(
@@ -223,53 +281,6 @@ public class App implements AppAccess {
 	
 	
 	/**
-	 * initialize inputs
-	 */
-	private void setupGlobalKeystrokes()
-	{
-		inputSystem.bindKeyStroke(new KeyStroke(Keyboard.KEY_F2), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				Log.f3("F2, taking screenshot.");
-				scheduledScreenshot = true;
-			}
-		});
-		
-		inputSystem.bindKeyStroke(new KeyStroke(false, Keyboard.KEY_F11), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				Log.f3("F11, toggling fullscreen.");
-				displaySystem.switchFullscreen();
-			}
-		});
-		
-		inputSystem.bindKeyStroke(new KeyStroke(Keyboard.KEY_LCONTROL, Keyboard.KEY_Q), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				Log.f3("CTRL+Q, shutting down.");
-				shutdown();
-			}
-		});
-	}
-	
-	
-	/**
-	 * Do take a screenshot
-	 */
-	private void takeScreenshot()
-	{
-		soundSystem.getEffect("gui.shutter").play(1);
-		Utils.runAsThread(new TaskTakeScreenshot(displaySystem));
-	}
-	
-	
-	/**
 	 * @return sound system of the running instance
 	 */
 	@Override
@@ -306,13 +317,6 @@ public class App implements AppAccess {
 	public EventBus bus()
 	{
 		return eventBus;
-	}
-	
-	
-	@Override
-	public TextureRegistry tx()
-	{
-		return textureRegistry;
 	}
 	
 }

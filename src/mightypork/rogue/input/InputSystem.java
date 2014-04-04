@@ -3,9 +3,11 @@ package mightypork.rogue.input;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
+import mightypork.rogue.bus.events.ActionRequest;
 import mightypork.rogue.bus.events.KeyboardEvent;
 import mightypork.rogue.bus.events.MouseButtonEvent;
 import mightypork.rogue.bus.events.MouseMotionEvent;
+import mightypork.rogue.bus.events.RequestType;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.coord.Coord;
 
@@ -19,14 +21,13 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	
 	// listeners
 	private KeyBindingPool keybindings;
+	private boolean yAxisDown = true;
 	
 	
 	public InputSystem(AppAccess app) {
 		super(app);
 		
 		initDevices();
-		
-		initChannels();
 		
 		// global keybindings
 		keybindings = new KeyBindingPool();
@@ -54,14 +55,6 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	}
 	
 	
-	private void initChannels()
-	{
-		bus().createChannel(KeyboardEvent.class, KeyboardEvent.Listener.class);
-		bus().createChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
-		bus().createChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
-	}
-	
-	
 	@Override
 	public final void bindKeyStroke(KeyStroke stroke, Runnable task)
 	{
@@ -79,19 +72,35 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	@Override
 	public void update(double delta)
 	{
+		// was destroyed
+		if (!Display.isCreated()) return;
+		if (!Mouse.isCreated()) return;
+		if (!Keyboard.isCreated()) return;
+		
 		Display.processMessages();
 		
+		Coord moveSum = Coord.zero();
+		Coord lastPos = Coord.zero();
+		boolean wasMouse = false;
+		
 		while (Mouse.next()) {
-			onMouseEvent();
+			onMouseEvent(moveSum, lastPos);
+			wasMouse = true;
 		}
+		
+		if (wasMouse && !moveSum.isZero()) bus().queue(new MouseMotionEvent(lastPos, moveSum));
 		
 		while (Keyboard.next()) {
 			onKeyEvent();
 		}
+		
+		if (Display.isCloseRequested()) {
+			bus().queue(new ActionRequest(RequestType.SHUTDOWN));
+		}
 	}
 	
 	
-	private void onMouseEvent()
+	private void onMouseEvent(Coord moveSum, Coord lastPos)
 	{
 		int button = Mouse.getEventButton();
 		boolean down = Mouse.getEventButtonState();
@@ -99,8 +108,17 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		Coord move = new Coord(Mouse.getEventDX(), Mouse.getEventDY());
 		int wheeld = Mouse.getEventDWheel();
 		
-		if (button != -1 || wheeld != 0) bus().broadcast(new MouseButtonEvent(pos, button, down, wheeld));
-		if (!move.isZero()) bus().broadcast(new MouseMotionEvent(pos, move));
+		if (yAxisDown) {
+			flipScrY(pos);
+			move.mul_ip(1, -1, 1);
+		}
+		
+		if (button != -1 || wheeld != 0) {
+			bus().queue(new MouseButtonEvent(pos, button, down, wheeld));
+		}
+		
+		moveSum.add_ip(move);
+		lastPos.setTo(pos);
 	}
 	
 	
@@ -109,6 +127,14 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		int key = Keyboard.getEventKey();
 		boolean down = Keyboard.getEventKeyState();
 		char c = Keyboard.getEventCharacter();
-		bus().broadcast(new KeyboardEvent(key, c, down));
+		bus().queue(new KeyboardEvent(key, c, down));
+	}
+	
+	
+	private void flipScrY(Coord c)
+	{
+		if (disp() != null) {
+			c.setY_ip(disp().getSize().y - c.y);
+		}
 	}
 }

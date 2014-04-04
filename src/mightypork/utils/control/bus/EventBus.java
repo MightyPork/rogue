@@ -1,13 +1,11 @@
 package mightypork.utils.control.bus;
 
 
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
-import mightypork.utils.control.bus.events.DestroyEvent;
-import mightypork.utils.control.bus.events.UpdateEvent;
 import mightypork.utils.control.interf.Destroyable;
-import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.logging.Log;
 
 
@@ -16,25 +14,37 @@ import mightypork.utils.logging.Log;
  * 
  * @author MightyPork
  */
-final public class EventBus {
+final public class EventBus implements Destroyable {
 	
-	private Collection<EventChannel<?, ?>> channels = new CopyOnWriteArraySet<EventChannel<?, ?>>();
-	
-	private Collection<Object> clients = new CopyOnWriteArraySet<Object>();
+	private BufferedHashSet<EventChannel<?, ?>> channels = new BufferedHashSet<EventChannel<?, ?>>();
+	private BufferedHashSet<Object> clients = new BufferedHashSet<Object>();
+	private DelayQueue<DelayedMessage> sendQueue = new DelayQueue<DelayedMessage>();
+	private BusThread busThread;
 	
 	private boolean logging = false;
+	private boolean dead = false;
 	
 	
 	public EventBus() {
-		// default channels
-		createChannel(DestroyEvent.class, Destroyable.class);
-		createChannel(UpdateEvent.class, Updateable.class);
+		busThread = new BusThread();
+		busThread.start();
 	}
 	
 	
-	public void enableLogging(boolean enable)
+	/**
+	 * Enable a level of logging.
+	 * 
+	 * @param level 0 none, 1 warning only, 2 all
+	 */
+	public void enableLogging(boolean level)
 	{
-		logging = enable;
+		assertLive();
+		
+		logging = level;
+		
+		for (EventChannel<?, ?> ch : channels) {
+			ch.enableLogging(logging);
+		}
 	}
 	
 	
@@ -47,78 +57,21 @@ final public class EventBus {
 	 */
 	public EventChannel<?, ?> addChannel(EventChannel<?, ?> channel)
 	{
+		assertLive();
+		
 		// if the channel already exists, return this instance instead.
 		for (EventChannel<?, ?> ch : channels) {
 			if (ch.equals(channel)) {
-				if (logging) Log.w("Channel of type " + channel + " already registered.");
+				Log.w("<bus> Channel of type " + Log.str(channel) + " already registered.");
 				return ch;
 			}
 		}
 		
 		channels.add(channel);
+		channel.enableLogging(logging);
+		if (logging) Log.f3("<bus> Added chanel: " + Log.str(channel));
 		
 		return channel;
-	}
-	
-	
-	/**
-	 * Remove a {@link EventChannel} from this bus
-	 * 
-	 * @param channel true if channel was removed
-	 */
-	public void removeChannel(EventChannel<?, ?> channel)
-	{
-		channels.remove(channel);
-	}
-	
-	
-	/**
-	 * Broadcast a message
-	 * 
-	 * @param message message
-	 * @return true if message was accepted by at least one channel
-	 */
-	public boolean broadcast(Object message)
-	{
-		if (logging) Log.f3("<bus> Broadcasting: " + message);
-		
-		boolean sent = false;
-		
-		for (EventChannel<?, ?> b : channels) {
-			sent |= b.broadcast(message, clients);
-		}
-		
-		if (!sent && logging) Log.w("Message not accepted by any channel: " + message);
-		
-		return sent;
-	}
-	
-	
-	/**
-	 * Connect a client to the bus. The client will be connected to all current
-	 * and future channels, until removed from the bus.
-	 * 
-	 * @param client the client
-	 * @return true on success
-	 */
-	public boolean subscribe(Object client)
-	{
-		if (client == null) return false;
-		
-		clients.add(client);
-		
-		return true;
-	}
-	
-	
-	/**
-	 * Disconnect a client from the bus.
-	 * 
-	 * @param client the client
-	 */
-	public void unsubscribe(Object client)
-	{
-		clients.remove(client);
 	}
 	
 	
@@ -129,11 +82,220 @@ final public class EventBus {
 	 * @param clientClass client type
 	 * @return the created channel instance
 	 */
-	public <F_EVENT extends Handleable<F_CLIENT>, F_CLIENT> EventChannel<?, ?> createChannel(Class<F_EVENT> messageClass, Class<F_CLIENT> clientClass)
+	public <F_EVENT extends Event<F_CLIENT>, F_CLIENT> EventChannel<?, ?> addChannel(Class<F_EVENT> messageClass, Class<F_CLIENT> clientClass)
 	{
+		assertLive();
+		
 		EventChannel<F_EVENT, F_CLIENT> channel = EventChannel.create(messageClass, clientClass);
-		channel.enableLogging(logging);
 		return addChannel(channel);
+	}
+	
+	
+	/**
+	 * Remove a {@link EventChannel} from this bus
+	 * 
+	 * @param channel true if channel was removed
+	 */
+	public void removeChannel(EventChannel<?, ?> channel)
+	{
+		assertLive();
+		
+		channels.remove(channel);
+	}
+	
+	
+	/**
+	 * Add message to a queue
+	 * 
+	 * @param message message
+	 */
+	public void queue(Event<?> message)
+	{
+		assertLive();
+		
+		schedule(message, 0);
+	}
+	
+	
+	/**
+	 * Add message to a queue, scheduled for given time.
+	 * 
+	 * @param message message
+	 * @param delay delay before message is dispatched
+	 */
+	public void schedule(Event<?> message, double delay)
+	{
+		assertLive();
+		
+		DelayedMessage dm = new DelayedMessage(delay, message);
+		
+		if (logging) Log.f3("<bus> + [ Queuing: " + Log.str(message) + " ]");
+		
+		sendQueue.add(dm);
+	}
+	
+	
+	/**
+	 * Send immediately.<br>
+	 * Should be used for real-time events that require immediate response, such
+	 * as timing events.
+	 * 
+	 * @param message message
+	 */
+	public void send(Event<?> message)
+	{
+		assertLive();
+		
+		synchronized (this) {
+			channels.setBuffering(true);
+			clients.setBuffering(true);
+			
+			if (logging) Log.f3("<bus> - [ Sending: " + Log.str(message) + " ]");
+			
+			boolean sent = false;
+			
+			for (EventChannel<?, ?> b : channels) {
+				sent |= b.broadcast(message, clients);
+			}
+			
+			if (!sent) Log.w("<bus> Not accepted by any channel: " + Log.str(message));
+			
+			channels.setBuffering(false);
+			clients.setBuffering(false);
+		}
+	}
+	
+	
+	/**
+	 * Connect a client to the bus. The client will be connected to all current
+	 * and future channels, until removed from the bus.
+	 * 
+	 * @param client the client
+	 */
+	public void subscribe(Object client)
+	{
+		assertLive();
+		
+		if (client == null) return;
+		
+		clients.add(client);
+		
+		if (logging) Log.f3("<bus> ADDING CLIENT " + client);
+	}
+	
+	
+	/**
+	 * Disconnect a client from the bus.
+	 * 
+	 * @param client the client
+	 */
+	public void unsubscribe(Object client)
+	{
+		assertLive();
+		
+		clients.remove(client);
+		if (logging) Log.f3("<bus> REMOVING CLIENT " + client);
+		
+	}
+	
+	
+	public boolean isClientValid(Object client)
+	{
+		assertLive();
+		
+		if (client == null) return false;
+		
+		for (EventChannel<?, ?> ch : channels) {
+			if (ch.isClientValid(client)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private class DelayedMessage implements Delayed {
+		
+		private long due;
+		private Event<?> theMessage = null;
+		
+		
+		public DelayedMessage(double seconds, Event<?> theMessage) {
+			super();
+			this.due = System.currentTimeMillis() + (long) (seconds * 1000);
+			this.theMessage = theMessage;
+		}
+		
+		
+		@Override
+		public int compareTo(Delayed o)
+		{
+			return -Long.valueOf(o.getDelay(TimeUnit.MILLISECONDS)).compareTo(getDelay(TimeUnit.MILLISECONDS));
+		}
+		
+		
+		@Override
+		public long getDelay(TimeUnit unit)
+		{
+			return unit.convert(due - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+		}
+		
+		
+		public Event<?> getMessage()
+		{
+			return theMessage;
+		}
+		
+	}
+	
+	private class BusThread extends Thread {
+		
+		public boolean stopped;
+		
+		
+		@Override
+		public void run()
+		{
+			while (!stopped) {
+				DelayedMessage dm = null;
+				
+				try {
+					dm = sendQueue.take();
+				} catch (InterruptedException ignored) {
+					//
+				}
+				
+				if (dm != null) {
+					send(dm.getMessage());
+				}
+			}
+		}
+		
+	}
+	
+	
+	/**
+	 * Halt bus thread and reject any future events.
+	 */
+	@Override
+	public void destroy()
+	{
+		assertLive();
+		
+		busThread.stopped = true;
+		
+		dead = true;
+	}
+	
+	
+	/**
+	 * Make sure the bus is not destroyed.
+	 * 
+	 * @throws IllegalStateException if the bus is dead.
+	 */
+	private void assertLive() throws IllegalStateException
+	{
+		if (dead) throw new IllegalStateException("EventBus is dead.");
 	}
 	
 }

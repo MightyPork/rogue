@@ -1,7 +1,7 @@
 package mightypork.utils.control.bus.events;
 
 
-import mightypork.utils.control.bus.Handleable;
+import mightypork.utils.control.bus.Event;
 import mightypork.utils.control.interf.Updateable;
 
 
@@ -10,7 +10,7 @@ import mightypork.utils.control.interf.Updateable;
  * 
  * @author MightyPork
  */
-public class UpdateEvent implements Handleable<Updateable> {
+public class UpdateEvent implements Event<Updateable> {
 	
 	private final double deltaTime;
 	

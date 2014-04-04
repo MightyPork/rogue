@@ -77,5 +77,6 @@ public class Config {
 	public static boolean SINGLE_INSTANCE = true;
 	
 	public static boolean LOG_FONTS = false;
+	public static boolean LOG_BUS = false;
 	
 }

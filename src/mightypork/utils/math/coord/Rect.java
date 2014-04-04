@@ -11,12 +11,6 @@ import mightypork.utils.math.Calc;
  */
 public class Rect {
 	
-	/** Rect [0, 0, 1, 1] */
-	public static final Rect ONE = new Rect(0, 0, 1, 1);
-	/** Rect all zeros */
-	public static final Rect ZERO = new Rect(0, 0, 0, 0);
-	
-	
 	/**
 	 * Rectangle from size
 	 * 
@@ -751,10 +745,28 @@ public class Rect {
 	}
 	
 	
+	/**
+	 * @return rect [0,0-1,1]
+	 */
+	public static Rect one()
+	{
+		return new Rect(0, 0, 1, 1);
+	}
+	
+	
+	/**
+	 * @return rect [0,0-0,0]
+	 */
+	public static Rect zero()
+	{
+		return new Rect(0, 0, 0, 0);
+	}
+	
+	
 	@Override
 	public String toString()
 	{
-		return String.format("[( %4d, %4d )-( %4d, %4d )]", (int) min.x, (int) min.y, (int) max.x, (int) max.y);
+		return String.format("[( %4.1f; %4.1f )-( %4.1f; %4.1f )]", min.x, min.y, max.x, max.y);
 	}
 	
 	

@@ -203,7 +203,7 @@ public class ConstraintFactory {
 			@Override
 			public double getValue()
 			{
-				return a.getCurrentValue();
+				return a.now();
 			}
 		};
 	}
@@ -292,6 +292,19 @@ public class ConstraintFactory {
 	}
 	
 	
+	public static RectConstraint c_center(ConstraintContext context)
+	{
+		return new RectConstraint(context) {
+			
+			@Override
+			public Rect getRect()
+			{
+				return Rect.fromSize(getContext().getRect().getCenter(), 0, 0);
+			}
+		};
+	}
+	
+	
 	public static RectConstraint c_grow(ConstraintContext context, NumConstraint grow)
 	{
 		return c_grow(context, grow, grow, grow, grow);
@@ -335,12 +348,6 @@ public class ConstraintFactory {
 	}
 	
 	
-	/**
-	 * @param context
-	 * @param width
-	 * @param height
-	 * @return
-	 */
 	public static RectConstraint c_box_sized(ConstraintContext context, final NumConstraint width, final NumConstraint height)
 	{
 		return new RectConstraint(context) {

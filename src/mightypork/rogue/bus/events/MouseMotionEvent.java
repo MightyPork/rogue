@@ -1,11 +1,11 @@
 package mightypork.rogue.bus.events;
 
 
-import mightypork.utils.control.bus.Handleable;
+import mightypork.utils.control.bus.Event;
 import mightypork.utils.math.coord.Coord;
 
 
-public class MouseMotionEvent implements Handleable<MouseMotionEvent.Listener> {
+public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	
 	private Coord move;
 	private Coord pos;
@@ -20,7 +20,7 @@ public class MouseMotionEvent implements Handleable<MouseMotionEvent.Listener> {
 	/**
 	 * @return movement since last {@link MouseMotionEvent}
 	 */
-	public Coord getPosDelta()
+	public Coord getMove()
 	{
 		return move;
 	}

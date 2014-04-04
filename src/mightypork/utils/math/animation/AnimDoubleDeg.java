@@ -28,7 +28,7 @@ public class AnimDoubleDeg extends AnimDouble {
 	
 	
 	@Override
-	public double getCurrentValue()
+	public double now()
 	{
 		if (duration == 0) return Deg.norm(to);
 		return Calc.interpolateDeg(from, to, (elapsedTime / duration), easing);

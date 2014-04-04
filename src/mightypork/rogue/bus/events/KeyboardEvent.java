@@ -1,7 +1,7 @@
 package mightypork.rogue.bus.events;
 
 
-import mightypork.utils.control.bus.Handleable;
+import mightypork.utils.control.bus.Event;
 
 import org.lwjgl.input.Keyboard;
 
@@ -11,7 +11,7 @@ import org.lwjgl.input.Keyboard;
  * 
  * @author MightyPork
  */
-public class KeyboardEvent implements Handleable<KeyboardEvent.Listener> {
+public class KeyboardEvent implements Event<KeyboardEvent.Listener> {
 	
 	private int key;
 	private boolean down;
