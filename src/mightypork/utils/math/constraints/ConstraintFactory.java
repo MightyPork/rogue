@@ -245,7 +245,7 @@ public class ConstraintFactory {
 				double height = getContext().getRect().getSize().y;
 				double perRow = height / rows;
 				
-				return Rect.fromSize(getOrigin().add(0, perRow * (rows - index - 1)), getSize().setY(perRow));
+				return Rect.fromSize(getOrigin().add(0, perRow * index), getSize().setY(perRow));
 			}
 		};
 	}

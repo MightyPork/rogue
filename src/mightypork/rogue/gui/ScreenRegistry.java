@@ -1,4 +1,4 @@
-package mightypork.rogue.gui.screens;
+package mightypork.rogue.gui;
 
 
 import java.util.HashMap;
@@ -6,11 +6,12 @@ import java.util.HashMap;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ScreenRequestEvent;
+import mightypork.utils.logging.Log;
 
 
 public class ScreenRegistry extends Subsystem implements ScreenRequestEvent.Listener {
 	
-	private HashMap<String, Screen> screens = new HashMap<String, Screen>();
+	private final HashMap<String, Screen> screens = new HashMap<String, Screen>();
 	private Screen active = null;
 	
 	
@@ -19,9 +20,9 @@ public class ScreenRegistry extends Subsystem implements ScreenRequestEvent.List
 	}
 	
 	
-	public void add(String key, Screen screen)
+	public void add(Screen screen)
 	{
-		screens.put(key, screen);
+		screens.put(screen.getId(), screen);
 		addChildClient(screen);
 	}
 	
@@ -29,6 +30,8 @@ public class ScreenRegistry extends Subsystem implements ScreenRequestEvent.List
 	@Override
 	public void showScreen(String key)
 	{
+		Log.f3("Request to show screen \"" + key + "\"");
+		
 		Screen toshow = screens.get(key);
 		if (toshow == null) throw new RuntimeException("Screen " + key + " not defined.");
 		

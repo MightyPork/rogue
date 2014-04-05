@@ -10,18 +10,18 @@ import org.lwjgl.input.Keyboard;
 
 public class KeyStroke {
 	
-	private Set<Integer> keys = new LinkedHashSet<Integer>();
-	private boolean down = true;
+	private final Set<Integer> keys = new LinkedHashSet<Integer>();
+	private final boolean fallingEdge;
 	
 	
 	/**
 	 * KeyStroke
 	 * 
-	 * @param down true for falling edge, up for rising edge
+	 * @param fallingEdge true for falling edge, up for rising edge
 	 * @param keys keys that must be pressed
 	 */
-	public KeyStroke(boolean down, int... keys) {
-		this.down = down;
+	public KeyStroke(boolean fallingEdge, int... keys) {
+		this.fallingEdge = fallingEdge;
 		for (int k : keys) {
 			this.keys.add(k);
 		}
@@ -29,11 +29,12 @@ public class KeyStroke {
 	
 	
 	/**
-	 * Falling edge keystroke
+	 * Rising edge keystroke
 	 * 
 	 * @param keys
 	 */
 	public KeyStroke(int... keys) {
+		fallingEdge = false;
 		for (int k : keys) {
 			this.keys.add(k);
 		}
@@ -47,13 +48,7 @@ public class KeyStroke {
 			st &= Keyboard.isKeyDown(k);
 		}
 		
-		return down ? st : !st;
-	}
-	
-	
-	public void setKeys(Set<Integer> keys)
-	{
-		this.keys = keys;
+		return fallingEdge ? st : !st;
 	}
 	
 	
@@ -81,7 +76,7 @@ public class KeyStroke {
 			return false;
 		}
 		
-		if (down != other.down) return false;
+		if (fallingEdge != other.fallingEdge) return false;
 		
 		return true;
 	}
@@ -99,7 +94,7 @@ public class KeyStroke {
 			s += Keyboard.getKeyName(i.next());
 		}
 		
-		s += down ? ",DOWN" : "UP";
+		s += fallingEdge ? ",DOWN" : ",UP";
 		
 		s += ")";
 		

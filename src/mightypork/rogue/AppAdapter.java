@@ -1,9 +1,9 @@
 package mightypork.rogue;
 
 
-import mightypork.rogue.audio.SoundSystem;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.render.DisplaySystem;
+import mightypork.rogue.sound.SoundSystem;
 import mightypork.utils.control.bus.EventBus;
 
 

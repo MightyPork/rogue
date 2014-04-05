@@ -239,7 +239,7 @@ public class Rect {
 	 */
 	public Coord getCenterBottom()
 	{
-		return new Coord((max.x + min.x) / 2, min.y);
+		return new Coord((max.x + min.x) / 2D, min.y);
 	}
 	
 	
@@ -250,7 +250,7 @@ public class Rect {
 	 */
 	public Coord getCenterLeft()
 	{
-		return new Coord(min.x, (max.y + min.y) / 2);
+		return new Coord(min.x, (max.y + min.y) / 2D);
 	}
 	
 	
@@ -261,7 +261,7 @@ public class Rect {
 	 */
 	public Coord getCenterRight()
 	{
-		return new Coord(max.x, (max.y + min.y) / 2);
+		return new Coord(max.x, (max.y + min.y) / 2D);
 	}
 	
 	
@@ -272,7 +272,7 @@ public class Rect {
 	 */
 	public Coord getCenterTop()
 	{
-		return new Coord((max.x + min.x) / 2, max.y);
+		return new Coord((max.x + min.x) / 2D, max.y);
 	}
 	
 	

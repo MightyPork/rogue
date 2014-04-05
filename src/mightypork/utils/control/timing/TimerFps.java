@@ -95,7 +95,6 @@ public class TimerFps {
 	 */
 	public void startNewFrame()
 	{
-		// System.out.println("! start new frame !");
 		long time = getTime();
 		lastFrame = time;
 		nextFrame = time + FRAME;

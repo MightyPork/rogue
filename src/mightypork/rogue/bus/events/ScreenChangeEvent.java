@@ -7,9 +7,9 @@ import mightypork.utils.math.coord.Coord;
 
 public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	
-	private boolean fullscreen;
-	private Coord screenSize;
-	private boolean fsChanged;
+	private final boolean fullscreen;
+	private final Coord screenSize;
+	private final boolean fsChanged;
 	
 	
 	public ScreenChangeEvent(boolean fsChanged, boolean fullscreen, Coord size) {

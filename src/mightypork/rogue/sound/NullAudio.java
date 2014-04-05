@@ -1,4 +1,4 @@
-package mightypork.rogue.audio;
+package mightypork.rogue.sound;
 
 
 public class NullAudio extends DeferredAudio {

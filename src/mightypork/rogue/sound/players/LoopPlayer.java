@@ -1,6 +1,7 @@
-package mightypork.rogue.audio;
+package mightypork.rogue.sound.players;
 
 
+import mightypork.rogue.sound.DeferredAudio;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.control.timing.Pauseable;
 import mightypork.utils.math.animation.AnimDouble;
@@ -14,7 +15,7 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	private int sourceID = -1;
 	
 	/** animator for fade in and fade out */
-	private AnimDouble fadeAnim = new AnimDouble(0);
+	private final AnimDouble fadeAnim = new AnimDouble(0);
 	
 	private double lastUpdateGain = 0;
 	

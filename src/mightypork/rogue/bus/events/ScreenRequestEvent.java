@@ -2,11 +2,12 @@ package mightypork.rogue.bus.events;
 
 
 import mightypork.utils.control.bus.Event;
+import mightypork.utils.control.bus.SingularEvent;
 
 
-public class ScreenRequestEvent implements Event<ScreenRequestEvent.Listener> {
+public class ScreenRequestEvent implements Event<ScreenRequestEvent.Listener>, SingularEvent {
 	
-	private String scrName;
+	private final String scrName;
 	
 	
 	public ScreenRequestEvent(String screenKey) {

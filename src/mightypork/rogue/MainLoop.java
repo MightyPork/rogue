@@ -8,15 +8,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ActionRequest;
-import mightypork.rogue.bus.events.RequestType;
-import mightypork.rogue.bus.events.ScreenRequestEvent;
+import mightypork.rogue.bus.events.ActionRequest.RequestType;
+import mightypork.rogue.bus.events.MainLoopTaskRequest;
 import mightypork.rogue.tasks.TaskTakeScreenshot;
 import mightypork.rogue.util.Utils;
 import mightypork.utils.control.bus.events.UpdateEvent;
 import mightypork.utils.control.timing.TimerDelta;
 
 
-public class MainLoop extends Subsystem implements ActionRequest.Listener {
+public class MainLoop extends Subsystem implements ActionRequest.Listener, MainLoopTaskRequest.Listener {
 	
 	private Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<Runnable>();
 	private List<Runnable> regularTasks;
@@ -35,8 +35,6 @@ public class MainLoop extends Subsystem implements ActionRequest.Listener {
 	
 	public void start()
 	{
-		bus().queue(new ScreenRequestEvent("test.texture"));
-		
 		timer = new TimerDelta();
 		
 		while (running) {
@@ -70,18 +68,19 @@ public class MainLoop extends Subsystem implements ActionRequest.Listener {
 	{
 		switch (request) {
 			case FULLSCREEN:
-				taskQueue.add(taskFullscreen);
+				queueTask(taskFullscreen);
 				break;
 			
 			case SCREENSHOT:
-				taskQueue.add(taskScreenshot);
+				queueTask(taskScreenshot);
 				break;
 			
 			case SHUTDOWN:
-				taskQueue.add(taskShutdown);
+				queueTask(taskShutdown);
 		}
 	}
 	
+	/** Take a screenshot */
 	private final Runnable taskScreenshot = new Runnable() {
 		
 		@Override
@@ -92,6 +91,7 @@ public class MainLoop extends Subsystem implements ActionRequest.Listener {
 		}
 	};
 	
+	/** Shutdown the application */
 	private final Runnable taskShutdown = new Runnable() {
 		
 		@Override
@@ -101,6 +101,7 @@ public class MainLoop extends Subsystem implements ActionRequest.Listener {
 		}
 	};
 	
+	/** Toggle fullscreen */
 	private final Runnable taskFullscreen = new Runnable() {
 		
 		@Override
@@ -109,4 +110,11 @@ public class MainLoop extends Subsystem implements ActionRequest.Listener {
 			disp().switchFullscreen();
 		}
 	};
+	
+	
+	@Override
+	public void queueTask(Runnable request)
+	{
+		taskQueue.add(request);
+	}
 }

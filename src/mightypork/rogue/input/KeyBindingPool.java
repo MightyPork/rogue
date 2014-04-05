@@ -16,7 +16,7 @@ import mightypork.utils.logging.Log;
  */
 public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 	
-	private Set<KeyBinding> bindings = new HashSet<KeyBinding>();
+	private final Set<KeyBinding> bindings = new HashSet<KeyBinding>();
 	
 	
 	/**

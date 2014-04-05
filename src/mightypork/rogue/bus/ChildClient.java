@@ -25,7 +25,7 @@ public class ChildClient extends AppAdapter implements DelegatingClient, Togglea
 		super(app);
 	}
 	
-	private Set<Object> clients = new LinkedHashSet<Object>();
+	private final Set<Object> clients = new LinkedHashSet<Object>();
 	private boolean listening = true;
 	private boolean delegating = true;
 	

@@ -1,27 +1,27 @@
-package mightypork.rogue.gui.screens.screenTextures;
+package mightypork.rogue.gui.screens.test_cat_sound;
 
 
 import static mightypork.utils.math.constraints.ConstraintFactory.*;
 
 import java.util.Random;
 
-import mightypork.rogue.AppAccess;
 import mightypork.rogue.Res;
-import mightypork.rogue.bus.events.ActionRequest;
 import mightypork.rogue.bus.events.MouseButtonEvent;
-import mightypork.rogue.bus.events.RequestType;
-import mightypork.rogue.gui.screens.Screen;
+import mightypork.rogue.gui.Screen;
+import mightypork.rogue.gui.ScreenLayer;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.render.Render;
+import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Coord;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.opengl.Texture;
 
 
-public class ScreenTextureTest extends Screen implements MouseButtonEvent.Listener {
+public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
 	
 	private RectConstraint kittenbox;
 	
@@ -31,53 +31,28 @@ public class ScreenTextureTest extends Screen implements MouseButtonEvent.Listen
 	
 	private Random rand = new Random();
 	
+	private Texture cat_tx = Res.getTexture("test.kitten");
 	
-	public ScreenTextureTest(AppAccess app) {
-		super(app);
+	
+	public LayerFlyingCat(Screen screen) {
+		super(screen);
 		
 		kittenbox = c_move(c_box_sized(this, c_n(s), c_n(s)), c_n(x), c_n(y));
 		
-		bindKeyStroke(new KeyStroke(Keyboard.KEY_ESCAPE), new Runnable() {
+		bindKeyStroke(new KeyStroke(Keyboard.KEY_RETURN), new Runnable() {
 			
 			@Override
 			public void run()
 			{
-				snd().fadeOutAllLoops();
-				bus().schedule(new ActionRequest(RequestType.SHUTDOWN), 3);
+				x.fadeTo(disp().getWidth() / 2 - s.getTo() / 2, 2);
+				y.fadeTo(disp().getHeight() / 2 - s.getTo() / 2, 2);
 			}
 		});
 	}
 	
 	
 	@Override
-	protected void deinitScreen()
-	{
-	}
-	
-	
-	@Override
-	protected void onScreenEnter()
-	{
-		System.out.println("YOLO");
-		Res.getLoop("test.wilderness").fadeIn();
-	}
-	
-	
-	@Override
-	protected void onScreenLeave()
-	{
-	}
-	
-	
-	@Override
-	protected void renderScreen()
-	{
-		Render.quadTextured(kittenbox.getRect(), Res.getTexture("test.kitten"));
-	}
-	
-	
-	@Override
-	protected void updateScreen(double delta)
+	public void update(double delta)
 	{
 		s.update(delta);
 		x.update(delta);
@@ -99,6 +74,13 @@ public class ScreenTextureTest extends Screen implements MouseButtonEvent.Listen
 		s.fadeTo(newSize, t / 2D);
 		x.fadeTo(pos.x - newSize / 2D, t);
 		y.fadeTo(pos.y - newSize / 2D, t);
+	}
+	
+	
+	@Override
+	public void render()
+	{
+		Render.quadTextured(kittenbox.getRect(), cat_tx);
 	}
 	
 }

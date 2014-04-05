@@ -18,7 +18,7 @@ public class Log {
 	 */
 	public static void f1(String msg)
 	{
-		if (esl && main != null) main.f1(msg);
+		if (esl && ready()) main.f1(msg);
 	}
 	
 	
@@ -29,7 +29,7 @@ public class Log {
 	 */
 	public static void f2(String msg)
 	{
-		if (esl && main != null) main.f2(msg);
+		if (esl && ready()) main.f2(msg);
 	}
 	
 	
@@ -40,7 +40,7 @@ public class Log {
 	 */
 	public static void f3(String msg)
 	{
-		if (esl && main != null) main.f3(msg);
+		if (esl && ready()) main.f3(msg);
 	}
 	
 	
@@ -51,7 +51,7 @@ public class Log {
 	 */
 	public static void i(String msg)
 	{
-		if (esl && main != null) main.i(msg);
+		if (esl && ready()) main.i(msg);
 	}
 	
 	
@@ -62,7 +62,7 @@ public class Log {
 	 */
 	public static void w(String msg)
 	{
-		if (esl && main != null) main.w(msg);
+		if (esl && ready()) main.w(msg);
 	}
 	
 	
@@ -73,7 +73,7 @@ public class Log {
 	 */
 	public static void e(String msg)
 	{
-		if (esl && main != null) main.e(msg);
+		if (esl && ready()) main.e(msg);
 	}
 	
 	
@@ -85,7 +85,7 @@ public class Log {
 	 */
 	public static void e(String msg, Throwable thrown)
 	{
-		if (esl && main != null) main.e(msg, thrown);
+		if (esl && ready()) main.e(msg, thrown);
 	}
 	
 	
@@ -96,13 +96,13 @@ public class Log {
 	 */
 	public static void e(Throwable thrown)
 	{
-		if (esl && main != null) main.e(thrown);
+		if (esl && ready()) main.e(thrown);
 	}
 	
 	
 	public static void enable(boolean flag)
 	{
-		if (esl && main != null) main.enable(flag);
+		if (esl && ready()) main.enable(flag);
 	}
 	
 	
@@ -163,7 +163,7 @@ public class Log {
 	
 	public int addMonitor(LogMonitor mon)
 	{
-		if (main == null) throw new IllegalStateException("Main logger not initialized.");
+		if (!ready()) throw new IllegalStateException("Main logger not initialized.");
 		
 		return main.addMonitor(mon);
 	}
@@ -171,7 +171,7 @@ public class Log {
 	
 	public void removeMonitor(int id)
 	{
-		if (main == null) throw new IllegalStateException("Main logger not initialized.");
+		if (!ready()) throw new IllegalStateException("Main logger not initialized.");
 		
 		main.removeMonitor(id);
 	}
@@ -206,5 +206,11 @@ public class Log {
 		Class<?> enclosing = cls.getEnclosingClass();
 		
 		return (enclosing == null ? "" : enclosing.getSimpleName() + ".") + cls.getSimpleName();
+	}
+	
+	
+	public static boolean ready()
+	{
+		return main != null;
 	}
 }

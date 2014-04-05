@@ -140,7 +140,19 @@ public class DisplaySystem extends Subsystem implements ConstraintContext {
 	 */
 	public Coord getSize()
 	{
-		return new Coord(Display.getWidth(), Display.getHeight());
+		return new Coord(getWidth(), getHeight());
+	}
+	
+	
+	public int getWidth()
+	{
+		return Display.getWidth();
+	}
+	
+	
+	public int getHeight()
+	{
+		return Display.getHeight();
 	}
 	
 	

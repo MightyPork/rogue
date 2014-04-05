@@ -1,0 +1,59 @@
+package mightypork.rogue.gui;
+
+
+import mightypork.rogue.bus.ChildClient;
+import mightypork.rogue.gui.constraints.Renderable;
+import mightypork.rogue.input.KeyBinder;
+import mightypork.rogue.input.KeyBindingPool;
+import mightypork.rogue.input.KeyStroke;
+import mightypork.utils.math.constraints.ConstraintContext;
+import mightypork.utils.math.coord.Rect;
+
+
+/**
+ * Screen display layer
+ * 
+ * @author MightyPork
+ */
+public abstract class ScreenLayer extends ChildClient implements Renderable, ConstraintContext, KeyBinder {
+	
+	private final Screen screen;
+	
+	private final KeyBindingPool keybindings = new KeyBindingPool();
+	
+	
+	public ScreenLayer(Screen screen) {
+		super(screen); // screen as AppAccess
+		
+		this.screen = screen;
+		addChildClient(keybindings);
+	}
+	
+	
+	@Override
+	public final void bindKeyStroke(KeyStroke stroke, Runnable task)
+	{
+		keybindings.bindKeyStroke(stroke, task);
+	}
+	
+	
+	@Override
+	public final void unbindKeyStroke(KeyStroke stroke)
+	{
+		keybindings.unbindKeyStroke(stroke);
+	}
+	
+	
+	protected Screen screen()
+	{
+		return screen;
+	}
+	
+	
+	@Override
+	public Rect getRect()
+	{
+		return screen.getRect();
+	}
+	
+}

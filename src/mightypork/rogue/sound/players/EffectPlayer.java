@@ -1,6 +1,7 @@
-package mightypork.rogue.audio;
+package mightypork.rogue.sound.players;
 
 
+import mightypork.rogue.sound.DeferredAudio;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.objects.Mutable;
 

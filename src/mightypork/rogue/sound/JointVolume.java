@@ -1,4 +1,4 @@
-package mightypork.rogue.audio;
+package mightypork.rogue.sound;
 
 
 import mightypork.utils.math.Calc;
@@ -12,7 +12,7 @@ import mightypork.utils.objects.Mutable;
  */
 public class JointVolume extends Mutable<Double> {
 	
-	private Mutable<Double>[] volumes;
+	private final Mutable<Double>[] volumes;
 	
 	
 	/**

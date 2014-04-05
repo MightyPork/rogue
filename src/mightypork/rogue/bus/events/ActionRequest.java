@@ -2,16 +2,17 @@ package mightypork.rogue.bus.events;
 
 
 import mightypork.utils.control.bus.Event;
+import mightypork.utils.control.bus.SingularEvent;
 
 
 /**
- * Request for action that should be performed in the main thread.
+ * Request for a global sction to be done in the main loop.
  * 
  * @author MightyPork
  */
-public class ActionRequest implements Event<ActionRequest.Listener> {
+public class ActionRequest implements Event<ActionRequest.Listener>, SingularEvent {
 	
-	private RequestType type;
+	private final RequestType type;
 	
 	
 	public ActionRequest(RequestType request) {
@@ -27,7 +28,16 @@ public class ActionRequest implements Event<ActionRequest.Listener> {
 	
 	public interface Listener {
 		
+		/**
+		 * Perform the requested action
+		 * 
+		 * @param request
+		 */
 		public void requestAction(RequestType request);
 	}
 	
+	public static enum RequestType
+	{
+		FULLSCREEN, SCREENSHOT, SHUTDOWN;
+	}
 }

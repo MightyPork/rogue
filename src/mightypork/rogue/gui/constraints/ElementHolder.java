@@ -19,7 +19,7 @@ import mightypork.utils.math.coord.Rect;
  */
 public class ElementHolder extends ChildClient implements ConstraintContext, RenderableWithContext {
 	
-	private LinkedList<RenderableWithContext> elements = new LinkedList<RenderableWithContext>();
+	private final LinkedList<RenderableWithContext> elements = new LinkedList<RenderableWithContext>();
 	private ConstraintContext context;
 	
 	
@@ -57,19 +57,18 @@ public class ElementHolder extends ChildClient implements ConstraintContext, Ren
 	}
 	
 	
-	/**
-	 * Add element to the holder.
-	 * 
-	 * @param elem
-	 */
-	public void add(RenderableWithContext elem)
-	{
-		if (elem == null) return;
-		elem.setContext(this);
-		elements.add(elem);
-		addChildClient(elem);
-	}
-	
+//	/**
+//	 * Add element to the holder.
+//	 * 
+//	 * @param elem
+//	 */
+//	public void add(RenderableWithContext elem)
+//	{
+//		if (elem == null) return;
+//		elem.setContext(this);
+//		elements.add(elem);
+//		addChildClient(elem);
+//	}
 	
 	/**
 	 * Add element to the holder.

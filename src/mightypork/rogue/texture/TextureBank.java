@@ -1,10 +1,11 @@
-package mightypork.rogue.render.textures;
+package mightypork.rogue.texture;
 
 
 import java.util.HashMap;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.AppAdapter;
+import mightypork.rogue.bus.events.ResourceLoadRequest;
 import mightypork.utils.math.coord.Rect;
 
 import org.newdawn.slick.opengl.Texture;
@@ -21,11 +22,11 @@ public class TextureBank extends AppAdapter {
 		super(app);
 	}
 	
-	private HashMap<String, MultiTexture> textures = new HashMap<String, MultiTexture>();
+	private final HashMap<String, DeferredTexture> textures = new HashMap<String, DeferredTexture>();
 	
-	private HashMap<String, TxQuad> quads = new HashMap<String, TxQuad>();
+	private final HashMap<String, TxQuad> quads = new HashMap<String, TxQuad>();
 	
-	private MultiTexture lastTx;
+	private DeferredTexture lastTx;
 	
 	
 	/**
@@ -36,7 +37,9 @@ public class TextureBank extends AppAdapter {
 	 */
 	public void loadTexture(String key, String resourcePath)
 	{
-		MultiTexture tx = new MultiTexture(resourcePath);
+		DeferredTexture tx = new DeferredTexture(resourcePath);
+		bus().queue(new ResourceLoadRequest(tx));
+		
 		textures.put(key, tx);
 		lastTx = tx;
 	}
@@ -51,7 +54,7 @@ public class TextureBank extends AppAdapter {
 	 */
 	public void makeQuad(String quadKey, String textureKey, Rect quad)
 	{
-		MultiTexture tx = textures.get(textureKey);
+		DeferredTexture tx = textures.get(textureKey);
 		if (tx == null) throw new RuntimeException("Texture with key " + textureKey + " not defined!");
 		
 		TxQuad txquad = tx.getQuad(quad);
@@ -68,7 +71,7 @@ public class TextureBank extends AppAdapter {
 	 */
 	public void makeQuad(String quadKey, Rect quad)
 	{
-		MultiTexture tx = lastTx;
+		DeferredTexture tx = lastTx;
 		if (tx == null) throw new RuntimeException("There's no texture loaded yet, can't define quads!");
 		
 		TxQuad txquad = tx.getQuad(quad);

@@ -16,10 +16,10 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	public static final int BUTTON_MIDDLE = 1;
 	public static final int BUTTON_RIGHT = 2;
 	
-	private int button;
-	private int wheeld;
-	private Coord pos;
-	private boolean down;
+	private final int button;
+	private final int wheeld;
+	private final Coord pos;
+	private final boolean down;
 	
 	
 	/**

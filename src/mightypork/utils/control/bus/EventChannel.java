@@ -55,7 +55,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 * 
 	 * @param message a message to be sent
 	 * @param clients collection of clients
-	 * @return true if message was accepted by this channel
+	 * @return true if message was sent
 	 */
 	public boolean broadcast(Event<?> message, Collection<Object> clients)
 	{
@@ -63,9 +63,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 		
 		EVENT evt = messageClass.cast(message);
 		
-		doBroadcast(evt, clients, new HashSet<Object>());
-		
-		return true;
+		return doBroadcast(evt, clients, new HashSet<Object>());
 	}
 	
 	
@@ -75,14 +73,20 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 * @param message sent message
 	 * @param clients subscribing clients
 	 * @param processed clients already processed
+	 * @return success
 	 */
-	private void doBroadcast(final EVENT message, final Collection<Object> clients, final Collection<Object> processed)
+	private boolean doBroadcast(final EVENT message, final Collection<Object> clients, final Collection<Object> processed)
 	{
+		boolean sent = false;
+		
 		for (Object client : clients) {
+			
+			// exclude obvious non-clients
 			if (!isClientValid(client)) {
 				continue;
 			}
 			
+			// avoid executing more times
 			if (processed.contains(client)) {
 				Log.w("<bus> Client already served: " + Log.str(client));
 				continue;
@@ -97,17 +101,28 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 				}
 			}
 			
-			sendTo(client, message);
+			sent |= sendTo(client, message);
 			
+			// singular event ain't no whore, handled once only.
+			if (sent && message instanceof SingularEvent) return true;
+			
+			// pass on to delegated clients
 			if (client instanceof DelegatingClient) {
 				if (((DelegatingClient) client).doesDelegate()) {
+					
 					Collection<Object> children = ((DelegatingClient) client).getChildClients();
-					if (children != null && children.size() > 0) doBroadcast(message, children, processed);
+					
+					if (children != null && children.size() > 0) {
+						sent |= doBroadcast(message, children, processed);
+					}
+					
 				} else {
 					if (logging) Log.f3("<bus> Client not delegating: " + Log.str(client));
 				}
 			}
 		}
+		
+		return sent;
 	}
 	
 	
@@ -116,14 +131,17 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 * 
 	 * @param client target client
 	 * @param message message to send
+	 * @return success
 	 */
 	@SuppressWarnings("unchecked")
-	private void sendTo(Object client, EVENT message)
+	private boolean sendTo(Object client, EVENT message)
 	{
 		if (isClientOfType(client)) {
 			if (logging) Log.f3("<bus> Delivered " + Log.str(message) + " to " + Log.str(client));
 			((Event<CLIENT>) message).handleBy((CLIENT) client);
+			return true;
 		}
+		return false;
 	}
 	
 	

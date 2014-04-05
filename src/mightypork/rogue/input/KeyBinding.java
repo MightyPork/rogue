@@ -6,7 +6,7 @@ import mightypork.rogue.bus.events.KeyboardEvent;
 
 public class KeyBinding implements KeyboardEvent.Listener {
 	
-	private KeyStroke keystroke;
+	private final KeyStroke keystroke;
 	private Runnable handler;
 	private boolean wasActive = false;
 	

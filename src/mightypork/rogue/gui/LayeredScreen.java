@@ -1,32 +1,20 @@
-package mightypork.rogue.gui.screens;
+package mightypork.rogue.gui;
 
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 import mightypork.rogue.AppAccess;
-import mightypork.utils.control.interf.Updateable;
 
 
 public abstract class LayeredScreen extends Screen {
 	
-	private final LinkedList<ScreenLayer> layers = new LinkedList<ScreenLayer>();
+	private final Collection<ScreenLayer> layers = new LinkedList<ScreenLayer>();
 	
 	
 	public LayeredScreen(AppAccess app) {
 		super(app);
 	}
-	
-	
-	@Override
-	protected abstract void deinitScreen();
-	
-	
-	@Override
-	protected abstract void onScreenEnter();
-	
-	
-	@Override
-	protected abstract void onScreenLeave();
 	
 	
 	@Override
@@ -36,14 +24,6 @@ public abstract class LayeredScreen extends Screen {
 			layer.render();
 		}
 	}
-	
-	
-	/**
-	 * Update screen. Layers should implement {@link Updateable} to receive
-	 * updates directly from bus.
-	 */
-	@Override
-	protected abstract void updateScreen(double delta);
 	
 	
 	/**

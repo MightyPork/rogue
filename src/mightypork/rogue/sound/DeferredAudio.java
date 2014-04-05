@@ -1,4 +1,4 @@
-package mightypork.rogue.audio;
+package mightypork.rogue.sound;
 
 
 import mightypork.rogue.Deferred;
@@ -90,14 +90,14 @@ public class DeferredAudio implements Destroyable, Deferred {
 	 * @return resource is loaded
 	 */
 	@Override
-	public boolean isLoaded()
+	public synchronized boolean isLoaded()
 	{
 		return audio != null;
 	}
 	
 	
 	@Override
-	public void load()
+	public synchronized void load()
 	{
 		ensureLoaded();
 	}
@@ -108,7 +108,7 @@ public class DeferredAudio implements Destroyable, Deferred {
 	 * 
 	 * @return is loaded
 	 */
-	protected boolean ensureLoaded()
+	protected synchronized boolean ensureLoaded()
 	{
 		if (isLoaded()) return true; // already loaded
 		if (loadFailed || resourcePath == null) return false;
@@ -293,6 +293,13 @@ public class DeferredAudio implements Destroyable, Deferred {
 			return false;
 		}
 		return true;
+	}
+	
+	
+	@Override
+	public String toString()
+	{
+		return "Audio(\"" + resourcePath + "\")";
 	}
 	
 }

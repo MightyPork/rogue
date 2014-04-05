@@ -1,4 +1,4 @@
-package mightypork.rogue.gui.screens.screenBouncy;
+package mightypork.rogue.gui.screens.test_bouncyboxes;
 
 
 import static mightypork.utils.math.constraints.ConstraintFactory.*;
@@ -6,29 +6,29 @@ import static mightypork.utils.math.constraints.ConstraintFactory.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import mightypork.rogue.gui.constraints.ElementHolder;
-import mightypork.rogue.gui.screens.Screen;
-import mightypork.rogue.gui.screens.ScreenLayer;
+import mightypork.rogue.gui.Screen;
+import mightypork.rogue.gui.ScreenLayer;
+import mightypork.rogue.gui.constraints.RowHolder;
 import mightypork.utils.math.constraints.RectConstraint;
 
 
 public class LayerBouncyBoxes extends ScreenLayer {
 	
 	List<BouncyBox> boxes = new ArrayList<BouncyBox>();
-	private ElementHolder layout;
+	private RowHolder layout;
 	
 	
 	public LayerBouncyBoxes(Screen screen) {
 		super(screen);
 		
+		// shrink screen rect by 8% on all sides
 		RectConstraint holder_rect = c_shrink(this, c_percent(c_height(this), c_n(8)));
 		
-		layout = new ElementHolder(screen, holder_rect);
-		addChildClient(layout);
+		addChildClient(layout = new RowHolder(screen, holder_rect, 16));
 		
-		for (int i = 0; i < 32; i++) {
+		for (int i = 0; i < 16; i++) {
 			BouncyBox bbr = new BouncyBox();
-			layout.add(bbr, c_row(null, 32, i));
+			layout.addRow(bbr);
 			boxes.add(bbr);
 		}
 		
@@ -39,13 +39,6 @@ public class LayerBouncyBoxes extends ScreenLayer {
 	public void render()
 	{
 		layout.render();
-	}
-	
-	
-	@Override
-	public void update(double delta)
-	{
-		// no impl
 	}
 	
 	

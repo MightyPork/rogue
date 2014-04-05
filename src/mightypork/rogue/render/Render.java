@@ -5,7 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
 
-import mightypork.rogue.render.textures.TxQuad;
+import mightypork.rogue.texture.TxQuad;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
@@ -110,14 +110,16 @@ public class Render {
 	 * @param resourcePath
 	 * @return the loaded texture
 	 */
-	public static Texture loadTexture(String resourcePath)
+	public synchronized static Texture loadTexture(String resourcePath)
 	{
+		
 		if (!inited) {
+			inited = true;
+			
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			inited = true;
 		}
 		
 		try {
@@ -187,7 +189,7 @@ public class Render {
 	{
 		double left = quad.xMin();
 		double bottom = quad.yMin();
-		double right = quad.yMax();
+		double right = quad.xMax();
 		double top = quad.yMax();
 		
 		// draw with color

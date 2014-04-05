@@ -4,10 +4,10 @@ package mightypork.rogue.input;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ActionRequest;
+import mightypork.rogue.bus.events.ActionRequest.RequestType;
 import mightypork.rogue.bus.events.KeyboardEvent;
 import mightypork.rogue.bus.events.MouseButtonEvent;
 import mightypork.rogue.bus.events.MouseMotionEvent;
-import mightypork.rogue.bus.events.RequestType;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.coord.Coord;
 
@@ -20,7 +20,7 @@ import org.lwjgl.opengl.Display;
 public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	
 	// listeners
-	private KeyBindingPool keybindings;
+	private final KeyBindingPool keybindings;
 	private boolean yAxisDown = true;
 	
 	
@@ -127,6 +127,7 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		int key = Keyboard.getEventKey();
 		boolean down = Keyboard.getEventKeyState();
 		char c = Keyboard.getEventCharacter();
+		
 		bus().queue(new KeyboardEvent(key, c, down));
 	}
 	
@@ -136,5 +137,17 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		if (disp() != null) {
 			c.setY_ip(disp().getSize().y - c.y);
 		}
+	}
+	
+	
+	/**
+	 * Set whether Y axis should go top-down instead of LWJGL default bottom-up.<br>
+	 * Default = true.
+	 * 
+	 * @param yAxisDown
+	 */
+	public void setYDown(boolean yAxisDown)
+	{
+		this.yAxisDown = yAxisDown;
 	}
 }

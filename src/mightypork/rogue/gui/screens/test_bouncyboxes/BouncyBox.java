@@ -1,4 +1,4 @@
-package mightypork.rogue.gui.screens.screenBouncy;
+package mightypork.rogue.gui.screens.test_bouncyboxes;
 
 
 import static mightypork.utils.math.constraints.ConstraintFactory.*;

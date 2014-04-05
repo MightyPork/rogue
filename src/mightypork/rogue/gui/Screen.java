@@ -1,4 +1,4 @@
-package mightypork.rogue.gui.screens;
+package mightypork.rogue.gui;
 
 
 import static org.lwjgl.opengl.GL11.*;
@@ -10,20 +10,17 @@ import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.render.Render;
 import mightypork.utils.control.interf.Destroyable;
-import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
 
 /**
- * Screen class.<br>
- * Screen animates 3D world, while contained panels render 2D overlays, process
- * inputs and run the game logic.
+ * Screen class.
  * 
  * @author MightyPork
  */
-public abstract class Screen extends ChildClient implements Destroyable, Updateable, KeyBinder, ConstraintContext, ScreenChangeEvent.Listener {
+public abstract class Screen extends ChildClient implements Destroyable, KeyBinder, ConstraintContext, ScreenChangeEvent.Listener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
@@ -128,14 +125,6 @@ public abstract class Screen extends ChildClient implements Destroyable, Updatea
 	
 	
 	/**
-	 * Update animations and timing.<br>
-	 * 
-	 * @param delta time elapsed
-	 */
-	protected abstract void updateScreen(double delta);
-	
-	
-	/**
 	 * Render screen
 	 */
 	private void renderBegin()
@@ -170,16 +159,6 @@ public abstract class Screen extends ChildClient implements Destroyable, Updatea
 		onSizeChanged(event.getScreenSize());
 		
 		needSetupViewport = true;
-	}
-	
-	
-	/**
-	 * Update and render the screen
-	 */
-	@Override
-	public final void update(double delta)
-	{
-		updateScreen(delta);
 	}
 	
 	
@@ -241,4 +220,6 @@ public abstract class Screen extends ChildClient implements Destroyable, Updatea
 		glMatrixMode(GL_MODELVIEW);
 	}
 	
+	
+	public abstract String getId();
 }

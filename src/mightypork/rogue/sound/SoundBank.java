@@ -1,4 +1,4 @@
-package mightypork.rogue.audio;
+package mightypork.rogue.sound;
 
 
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.Map;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.AppAdapter;
+import mightypork.rogue.sound.players.EffectPlayer;
+import mightypork.rogue.sound.players.LoopPlayer;
 import mightypork.utils.logging.Log;
 
 
@@ -15,8 +17,8 @@ public class SoundBank extends AppAdapter {
 	private static final LoopPlayer NULL_LOOP = new LoopPlayer(NO_SOUND, 0, 0, null);
 	private static final EffectPlayer NULL_EFFECT = new EffectPlayer(NO_SOUND, 0, 0, null);
 	
-	private Map<String, EffectPlayer> effects = new HashMap<String, EffectPlayer>();
-	private Map<String, LoopPlayer> loops = new HashMap<String, LoopPlayer>();
+	private final Map<String, EffectPlayer> effects = new HashMap<String, EffectPlayer>();
+	private final Map<String, LoopPlayer> loops = new HashMap<String, LoopPlayer>();
 	
 	
 	public SoundBank(AppAccess app) {

@@ -1,13 +1,11 @@
 package mightypork.rogue;
 
 
-import mightypork.rogue.audio.EffectPlayer;
-import mightypork.rogue.audio.LoopPlayer;
-import mightypork.rogue.audio.SoundBank;
-import mightypork.rogue.gui.screens.screenBouncy.ScreenTestAnim;
-import mightypork.rogue.gui.screens.screenTextures.ScreenTextureTest;
-import mightypork.rogue.render.textures.TextureBank;
-import mightypork.rogue.render.textures.TxQuad;
+import mightypork.rogue.sound.SoundBank;
+import mightypork.rogue.sound.players.EffectPlayer;
+import mightypork.rogue.sound.players.LoopPlayer;
+import mightypork.rogue.texture.TextureBank;
+import mightypork.rogue.texture.TxQuad;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -27,37 +25,29 @@ public class Res {
 		textures = new TextureBank(app);
 		sounds = new SoundBank(app);
 		
-		loadSounds(app);
-		loadTextures(app);
-		loadFonts(app);
-		loadScreens(app);
+		loadSounds();
+		loadTextures();
+		loadFonts();
 	}
 	
 	
-	private static void loadFonts(App app)
+	private static void loadFonts()
 	{
-		
+		//
 	}
 	
 	
-	private static void loadTextures(App app)
+	private static void loadTextures()
 	{
 		textures.loadTexture("test.kitten", "/res/img/kitten.png");
 	}
 	
 	
-	private static void loadSounds(App app)
+	private static void loadSounds()
 	{
 		sounds.addEffect("gui.shutter", "/res/audio/shutter.ogg", 1, 1);
 		
 		sounds.addLoop("test.wilderness", "/res/audio/wilderness.ogg", 1, 1, 3, 3);
-	}
-	
-	
-	private static void loadScreens(App app)
-	{
-		app.screens.add("test.anim", new ScreenTestAnim(app));
-		app.screens.add("test.texture", new ScreenTextureTest(app));
 	}
 	
 	

@@ -1,4 +1,4 @@
-package mightypork.rogue.audio;
+package mightypork.rogue.sound;
 
 
 import java.nio.FloatBuffer;
@@ -7,6 +7,9 @@ import java.util.Set;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
+import mightypork.rogue.bus.events.ResourceLoadRequest;
+import mightypork.rogue.sound.players.EffectPlayer;
+import mightypork.rogue.sound.players.LoopPlayer;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.coord.Coord;
@@ -69,12 +72,12 @@ public class SoundSystem extends Subsystem implements Updateable {
 	
 	// -- instance --
 	
-	public Mutable<Double> masterVolume = new Mutable<Double>(1D);
-	public Mutable<Double> effectsVolume = new JointVolume(masterVolume);
-	public Mutable<Double> loopsVolume = new JointVolume(masterVolume);
+	public final Mutable<Double> masterVolume = new Mutable<Double>(1D);
+	public final Mutable<Double> effectsVolume = new JointVolume(masterVolume);
+	public final Mutable<Double> loopsVolume = new JointVolume(masterVolume);
 	
-	private Set<LoopPlayer> loopPlayers = new HashSet<LoopPlayer>();
-	private Set<DeferredAudio> resources = new HashSet<DeferredAudio>();
+	private final Set<LoopPlayer> loopPlayers = new HashSet<LoopPlayer>();
+	private final Set<DeferredAudio> resources = new HashSet<DeferredAudio>();
 	
 	
 	public SoundSystem(AppAccess app) {
@@ -146,6 +149,8 @@ public class SoundSystem extends Subsystem implements Updateable {
 	private DeferredAudio getResource(String res)
 	{
 		DeferredAudio a = new DeferredAudio(res);
+		bus().queue(new ResourceLoadRequest(a));
+		
 		if (resources.contains(a)) throw new IllegalArgumentException("Sound resource " + res + " is already registered.");
 		resources.add(a);
 		return a;

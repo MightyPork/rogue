@@ -1,22 +1,24 @@
-package mightypork.rogue.audio;
+package mightypork.rogue.sound.players;
 
 
+import mightypork.rogue.sound.DeferredAudio;
+import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.objects.Mutable;
 
 
-public abstract class BaseAudioPlayer {
+public abstract class BaseAudioPlayer implements Destroyable {
 	
 	/** the track */
-	private DeferredAudio audio;
+	private final DeferredAudio audio;
 	
 	/** base gain for sfx */
-	private double baseGain = 1;
+	private final double baseGain;
 	
 	/** base pitch for sfx */
-	private double basePitch = 1;
+	private final double basePitch;
 	
 	/** dedicated volume control */
-	private Mutable<Double> gainMultiplier = null;
+	private final Mutable<Double> gainMultiplier;
 	
 	
 	public BaseAudioPlayer(DeferredAudio track, double baseGain, Mutable<Double> gainMultiplier) {
@@ -36,10 +38,10 @@ public abstract class BaseAudioPlayer {
 	}
 	
 	
+	@Override
 	public void destroy()
 	{
 		audio.destroy();
-		audio = null;
 	}
 	
 	

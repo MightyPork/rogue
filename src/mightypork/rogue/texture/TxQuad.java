@@ -1,4 +1,4 @@
-package mightypork.rogue.render.textures;
+package mightypork.rogue.texture;
 
 
 import mightypork.utils.math.coord.Rect;
@@ -14,9 +14,9 @@ import org.newdawn.slick.opengl.Texture;
 public class TxQuad {
 	
 	/** The texture */
-	public Texture tx;
+	public final Texture tx;
 	/** Coords in texture (0-1) */
-	public Rect uvs;
+	public final Rect uvs;
 	
 	
 	/**

@@ -16,17 +16,30 @@ import mightypork.utils.logging.Log;
  */
 final public class EventBus implements Destroyable {
 	
+	/** Message channels */
 	private BufferedHashSet<EventChannel<?, ?>> channels = new BufferedHashSet<EventChannel<?, ?>>();
-	private BufferedHashSet<Object> clients = new BufferedHashSet<Object>();
-	private DelayQueue<DelayedMessage> sendQueue = new DelayQueue<DelayedMessage>();
-	private BusThread busThread;
 	
+	/** Registered clients */
+	private BufferedHashSet<Object> clients = new BufferedHashSet<Object>();
+	
+	/** Messages queued for delivery */
+	private DelayQueue<DelayedMessage> sendQueue = new DelayQueue<DelayedMessage>();
+	
+	/** Queue polling thread */
+	private QueuePollingThread busThread;
+	
+	/** Log all */
 	private boolean logging = false;
+	
+	/** Whether the bus was destroyed */
 	private boolean dead = false;
 	
 	
+	/**
+	 * Make a new bus and start it's queue thread.
+	 */
 	public EventBus() {
-		busThread = new BusThread();
+		busThread = new QueuePollingThread();
 		busThread.start();
 	}
 	
@@ -153,12 +166,18 @@ final public class EventBus implements Destroyable {
 			if (logging) Log.f3("<bus> - [ Sending: " + Log.str(message) + " ]");
 			
 			boolean sent = false;
+			boolean channelAccepted = false;
 			
 			for (EventChannel<?, ?> b : channels) {
+				if (b.canBroadcast(message)) channelAccepted = true;
 				sent |= b.broadcast(message, clients);
 			}
 			
-			if (!sent) Log.w("<bus> Not accepted by any channel: " + Log.str(message));
+			// more severe
+			if (!channelAccepted) Log.w("<bus> Not accepted by any channel: " + Log.str(message));
+			
+			// less severe
+			if (logging && !sent) Log.w("<bus> Not delivered to any client: " + Log.str(message));
 			
 			channels.setBuffering(false);
 			clients.setBuffering(false);
@@ -248,16 +267,23 @@ final public class EventBus implements Destroyable {
 		
 	}
 	
-	private class BusThread extends Thread {
+	private class QueuePollingThread extends Thread {
 		
-		public boolean stopped;
+		public boolean stopped = false;
+		
+		
+		public QueuePollingThread() {
+			super("Queue Polling Thread");
+		}
 		
 		
 		@Override
 		public void run()
 		{
+			DelayedMessage dm;
+			
 			while (!stopped) {
-				DelayedMessage dm = null;
+				dm = null;
 				
 				try {
 					dm = sendQueue.take();

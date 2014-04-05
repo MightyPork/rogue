@@ -8,12 +8,16 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import mightypork.rogue.audio.SoundSystem;
 import mightypork.rogue.bus.events.*;
-import mightypork.rogue.gui.screens.ScreenRegistry;
+import mightypork.rogue.bus.events.ActionRequest.RequestType;
+import mightypork.rogue.gui.ScreenRegistry;
+import mightypork.rogue.gui.screens.test_bouncyboxes.ScreenTestBouncy;
+import mightypork.rogue.gui.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.render.DisplaySystem;
+import mightypork.rogue.sound.SoundSystem;
+import mightypork.rogue.texture.DeferredLoader;
 import mightypork.utils.control.bus.EventBus;
 import mightypork.utils.control.bus.events.DestroyEvent;
 import mightypork.utils.control.bus.events.UpdateEvent;
@@ -41,8 +45,7 @@ public class App implements AppAccess {
 	private static SoundSystem soundSystem;
 	private EventBus eventBus;
 	private MainLoop mainLoop;
-	
-	public ScreenRegistry screens;
+	private ScreenRegistry screens;
 	
 	
 	/**
@@ -73,6 +76,8 @@ public class App implements AppAccess {
 		initialize();
 		
 		Log.i("Starting main loop...");
+		
+		// open first screen		
 		mainLoop.start();
 	}
 	
@@ -84,7 +89,12 @@ public class App implements AppAccess {
 	 */
 	public static void onCrash(Throwable error)
 	{
-		Log.e("The game has crashed!", error);
+		if (Log.ready()) {
+			Log.e("The game has crashed!", error);
+		} else {
+			System.err.println("The game has crashed!");
+			error.printStackTrace();
+		}
 		
 		if (inst != null) inst.shutdown();
 	}
@@ -93,12 +103,12 @@ public class App implements AppAccess {
 	@Override
 	public void shutdown()
 	{
-		bus().send(new DestroyEvent());
+		Log.i("Shutting down subsystems...");
 		
+		bus().send(new DestroyEvent());
 		bus().destroy();
 		
-		Log.i("Shutting down...");
-		
+		Log.i("Terminating...");
 		System.exit(0);
 	}
 	
@@ -143,6 +153,14 @@ public class App implements AppAccess {
 		soundSystem.setMasterVolume(1);
 		
 		/*
+		 * Load resources
+		 */
+		Log.f1("Registering resources...");
+		bus().subscribe(new DeferredLoader(this));
+		
+		Res.load(this);
+		
+		/*
 		 * Input
 		 */
 		Log.f2("Initializing Input System...");
@@ -154,18 +172,14 @@ public class App implements AppAccess {
 		 */
 		Log.f2("Initializing screen registry...");
 		screens = new ScreenRegistry(this);
-		
-		/*
-		 * Load resources
-		 */
-		Log.f1("Registering resources...");
-		Res.load(this);
+		initScreens();
 		
 		/*
 		 * Prepare main loop
 		 */
 		Log.f1("Preparing main loop...");
 		ArrayList<Runnable> loopTasks = new ArrayList<Runnable>();
+		
 		loopTasks.add(new Runnable() {
 			
 			@Override
@@ -179,24 +193,44 @@ public class App implements AppAccess {
 	}
 	
 	
+	private void initScreens()
+	{
+		Log.f3("Registering game screens...");
+		
+		screens.add(new ScreenTestBouncy(this));
+		screens.add(new ScreenTestCat(this));
+		
+		screens.showScreen("test.cat");
+	}
+	
+	
 	private void initChannels()
 	{
 		Log.f3("Registering channels...");
 		
+		// framework events
 		bus().addChannel(DestroyEvent.class, Destroyable.class);
 		bus().addChannel(UpdateEvent.class, Updateable.class);
 		
+		// input events
 		bus().addChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
 		bus().addChannel(KeyboardEvent.class, KeyboardEvent.Listener.class);
 		bus().addChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
 		bus().addChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
+		
+		// control events
 		bus().addChannel(ScreenRequestEvent.class, ScreenRequestEvent.Listener.class);
+		bus().addChannel(ResourceLoadRequest.class, ResourceLoadRequest.Listener.class);
 		bus().addChannel(ActionRequest.class, ActionRequest.Listener.class);
+		bus().addChannel(MainLoopTaskRequest.class, MainLoopTaskRequest.Listener.class);
 	}
 	
 	
 	private void setupGlobalKeystrokes()
 	{
+		Log.f3("Setting up hot keys...");
+		
+		// Go fullscreen
 		input().bindKeyStroke(new KeyStroke(Keyboard.KEY_F11), new Runnable() {
 			
 			@Override
@@ -206,6 +240,7 @@ public class App implements AppAccess {
 			}
 		});
 		
+		// Take screenshot
 		input().bindKeyStroke(new KeyStroke(Keyboard.KEY_F2), new Runnable() {
 			
 			@Override
@@ -215,6 +250,7 @@ public class App implements AppAccess {
 			}
 		});
 		
+		// Exit
 		input().bindKeyStroke(new KeyStroke(Keyboard.KEY_LCONTROL, Keyboard.KEY_Q), new Runnable() {
 			
 			@Override

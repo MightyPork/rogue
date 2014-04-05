@@ -1,4 +1,4 @@
-package mightypork.rogue.render.textures;
+package mightypork.rogue.texture;
 
 
 import mightypork.rogue.Deferred;
@@ -8,13 +8,13 @@ import mightypork.utils.math.coord.Rect;
 import org.newdawn.slick.opengl.Texture;
 
 
-public class MultiTexture implements Texture, Deferred {
+public class DeferredTexture implements Texture, Deferred {
 	
 	private Texture backingTexture;
-	private String resourcePath;
+	private final String resourcePath;
 	
 	
-	public MultiTexture(String resourcePath) {
+	public DeferredTexture(String resourcePath) {
 		this.resourcePath = resourcePath;
 	}
 	
@@ -26,7 +26,7 @@ public class MultiTexture implements Texture, Deferred {
 	
 	
 	@Override
-	public void load()
+	public synchronized void load()
 	{
 		if (!isLoaded()) {
 			backingTexture = Render.loadTexture(resourcePath);
@@ -142,6 +142,13 @@ public class MultiTexture implements Texture, Deferred {
 	{
 		load();
 		backingTexture.setTextureFilter(textureFilter);
+	}
+	
+	
+	@Override
+	public String toString()
+	{
+		return "Texture(\"" + resourcePath + "\")";
 	}
 	
 }

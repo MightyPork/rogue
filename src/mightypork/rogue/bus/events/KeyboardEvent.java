@@ -13,9 +13,9 @@ import org.lwjgl.input.Keyboard;
  */
 public class KeyboardEvent implements Event<KeyboardEvent.Listener> {
 	
-	private int key;
-	private boolean down;
-	private char c;
+	private final int key;
+	private final boolean down;
+	private final char c;
 	
 	
 	public KeyboardEvent(int key, char c, boolean down) {

@@ -7,8 +7,8 @@ import mightypork.utils.math.coord.Coord;
 
 public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	
-	private Coord move;
-	private Coord pos;
+	private final Coord move;
+	private final Coord pos;
 	
 	
 	public MouseMotionEvent(Coord pos, Coord move) {
