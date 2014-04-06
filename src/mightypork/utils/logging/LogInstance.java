@@ -111,7 +111,7 @@ public class LogInstance {
 				String cntStr = "";
 				File f2;
 				
-				for (int cnt = 0; (f2 = new File(dir, fbase + cntStr + suff)).exists(); cntStr = "_" + (++cnt));
+				for (int cnt = 0; (f2 = new File(dir, fbase + cntStr + suff)).exists(); cntStr = "_" + (++cnt)) {}
 				
 				f.renameTo(f2);
 			}
@@ -292,7 +292,7 @@ public class LogInstance {
 	 * @param t
 	 * @return trace
 	 */
-	private String getStackTrace(Throwable t)
+	private static String getStackTrace(Throwable t)
 	{
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw, true);

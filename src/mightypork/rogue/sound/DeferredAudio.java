@@ -1,10 +1,10 @@
 package mightypork.rogue.sound;
 
 
-import mightypork.rogue.Deferred;
-import mightypork.utils.control.interf.Destroyable;
+import java.io.IOException;
+
+import mightypork.rogue.loading.DeferredResource;
 import mightypork.utils.files.FileUtils;
-import mightypork.utils.logging.Log;
 import mightypork.utils.math.coord.Coord;
 
 import org.newdawn.slick.openal.Audio;
@@ -16,23 +16,23 @@ import org.newdawn.slick.openal.SoundStore;
  * 
  * @author MightyPork
  */
-public class DeferredAudio implements Destroyable, Deferred {
+public class DeferredAudio extends DeferredResource {
 	
 	private enum PlayMode
 	{
 		EFFECT, MUSIC;
-	};
+	}
 	
-	private Audio audio = null;
+	/** Audio resource */
+	private Audio backingAudio = null;
+	
+	// last play options
+	private PlayMode mode = PlayMode.EFFECT;
 	private double pauseLoopPosition = 0;
 	private boolean looping = false;
 	private boolean paused = false;
-	private PlayMode mode = PlayMode.EFFECT;
 	private double lastPlayPitch = 1;
 	private double lastPlayGain = 1;
-	
-	private final String resourcePath;
-	private boolean loadFailed = false;
 	
 	
 	/**
@@ -41,8 +41,7 @@ public class DeferredAudio implements Destroyable, Deferred {
 	 * @param resourceName resource to load when needed
 	 */
 	public DeferredAudio(String resourceName) {
-		this.audio = null;
-		this.resourcePath = resourceName;
+		super(resourceName);
 	}
 	
 	
@@ -54,7 +53,7 @@ public class DeferredAudio implements Destroyable, Deferred {
 		if (!ensureLoaded()) return;
 		
 		if (isPlaying() && looping) {
-			pauseLoopPosition = audio.getPosition();
+			pauseLoopPosition = backingAudio.getPosition();
 			stop();
 			paused = true;
 		}
@@ -73,74 +72,37 @@ public class DeferredAudio implements Destroyable, Deferred {
 		int source = -1;
 		if (looping && paused) {
 			if (mode == PlayMode.MUSIC) {
-				source = audio.playAsMusic((float) lastPlayPitch, (float) lastPlayGain, true);
+				source = backingAudio.playAsMusic((float) lastPlayPitch, (float) lastPlayGain, true);
 			} else {
-				source = audio.playAsSoundEffect((float) lastPlayPitch, (float) lastPlayGain, true);
+				source = backingAudio.playAsSoundEffect((float) lastPlayPitch, (float) lastPlayGain, true);
 			}
-			audio.setPosition((float) pauseLoopPosition);
+			backingAudio.setPosition((float) pauseLoopPosition);
 			paused = false;
 		}
 		return source;
 	}
 	
 	
-	/**
-	 * Check if resource is loaded
-	 * 
-	 * @return resource is loaded
-	 */
 	@Override
-	public synchronized boolean isLoaded()
+	protected void loadResource(String resource) throws IOException
 	{
-		return audio != null;
-	}
-	
-	
-	@Override
-	public synchronized void load()
-	{
-		ensureLoaded();
-	}
-	
-	
-	/**
-	 * Try to load if not loaded already
-	 * 
-	 * @return is loaded
-	 */
-	protected synchronized boolean ensureLoaded()
-	{
-		if (isLoaded()) return true; // already loaded
-		if (loadFailed || resourcePath == null) return false;
+		String ext = FileUtils.getExtension(resource);
 		
-		Log.f3("Trying to load: " + resourcePath);
-		
-		loadFailed = false;
-		try {
-			String ext = FileUtils.getExtension(resourcePath);
+		if (ext.equalsIgnoreCase("ogg")) {
+			backingAudio = SoundStore.get().getOgg(resource);
 			
-			// java 6 can't use String switch :(
-			if (ext.equalsIgnoreCase("ogg")) {
-				audio = SoundStore.get().getOgg(resourcePath);
-			} else if (ext.equalsIgnoreCase("wav")) {
-				audio = SoundStore.get().getWAV(resourcePath);
-			} else if (ext.equalsIgnoreCase("aif")) {
-				audio = SoundStore.get().getAIF(resourcePath);
-			} else if (ext.equalsIgnoreCase("mod")) {
-				audio = SoundStore.get().getMOD(resourcePath);
-			} else {
-				Log.e("Invalid audio file extension: " + resourcePath);
-				loadFailed = true; // don't try next time
-			}
+		} else if (ext.equalsIgnoreCase("wav")) {
+			backingAudio = SoundStore.get().getWAV(resource);
 			
-			if (!loadFailed) Log.f3("Audio loaded: " + resourcePath);
+		} else if (ext.equalsIgnoreCase("aif")) {
+			backingAudio = SoundStore.get().getAIF(resource);
 			
-		} catch (Exception e) {
-			Log.e("Could not load " + resourcePath, e);
-			loadFailed = true; // don't try next time
+		} else if (ext.equalsIgnoreCase("mod")) {
+			backingAudio = SoundStore.get().getMOD(resource);
+			
+		} else {
+			throw new RuntimeException("Invalid audio file extension.");
 		}
-		
-		return isLoaded();
 	}
 	
 	
@@ -148,7 +110,7 @@ public class DeferredAudio implements Destroyable, Deferred {
 	{
 		if (!isLoaded()) return;
 		
-		audio.stop();
+		backingAudio.stop();
 		paused = false;
 	}
 	
@@ -157,7 +119,7 @@ public class DeferredAudio implements Destroyable, Deferred {
 	{
 		if (!isLoaded()) return false;
 		
-		return audio.isPlaying();
+		return backingAudio.isPlaying();
 	}
 	
 	
@@ -165,7 +127,7 @@ public class DeferredAudio implements Destroyable, Deferred {
 	{
 		if (!isLoaded()) return false;
 		
-		return audio.isPaused();
+		return backingAudio.isPaused();
 	}
 	
 	
@@ -218,7 +180,7 @@ public class DeferredAudio implements Destroyable, Deferred {
 		this.lastPlayGain = gain;
 		looping = loop;
 		mode = PlayMode.EFFECT;
-		return audio.playAsSoundEffect((float) pitch, (float) gain, loop, (float) x, (float) y, (float) z);
+		return backingAudio.playAsSoundEffect((float) pitch, (float) gain, loop, (float) x, (float) y, (float) z);
 	}
 	
 	
@@ -256,7 +218,7 @@ public class DeferredAudio implements Destroyable, Deferred {
 		this.lastPlayGain = (float) gain;
 		looping = loop;
 		mode = PlayMode.MUSIC;
-		return audio.playAsMusic((float) pitch, (float) gain, loop);
+		return backingAudio.playAsMusic((float) pitch, (float) gain, loop);
 	}
 	
 	
@@ -265,41 +227,8 @@ public class DeferredAudio implements Destroyable, Deferred {
 	{
 		if (!isLoaded()) return;
 		
-		audio.release();
-		audio = null;
-	}
-	
-	
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((resourcePath == null) ? 0 : resourcePath.hashCode());
-		return result;
-	}
-	
-	
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (!(obj instanceof DeferredAudio)) return false;
-		DeferredAudio other = (DeferredAudio) obj;
-		if (resourcePath == null) {
-			if (other.resourcePath != null) return false;
-		} else if (!resourcePath.equals(other.resourcePath)) {
-			return false;
-		}
-		return true;
-	}
-	
-	
-	@Override
-	public String toString()
-	{
-		return "Audio(\"" + resourcePath + "\")";
+		backingAudio.release();
+		backingAudio = null;
 	}
 	
 }

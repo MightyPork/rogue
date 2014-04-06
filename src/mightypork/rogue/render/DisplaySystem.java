@@ -56,6 +56,9 @@ public class DisplaySystem extends Subsystem implements ConstraintContext {
 				switchFullscreen();
 				Display.update();
 			}
+			
+			Render.init();
+			
 		} catch (LWJGLException e) {
 			throw new RuntimeException("Could not initialize screen", e);
 		}

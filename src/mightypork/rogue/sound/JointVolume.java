@@ -6,7 +6,7 @@ import mightypork.utils.objects.Mutable;
 
 
 /**
- * Volume multiplex
+ * Volume combined of multiple volumes, combining them (multiplication).
  * 
  * @author MightyPork
  */

@@ -56,6 +56,16 @@ public class Coord {
 	
 	
 	/**
+	 * Create a coord with all three coordinates the same
+	 * 
+	 * @param d coord value
+	 */
+	public Coord(Number d) {
+		setTo(d, d, d);
+	}
+	
+	
+	/**
 	 * Create 2D coord
 	 * 
 	 * @param x x coordinate
@@ -667,6 +677,15 @@ public class Coord {
 	
 	
 	/**
+	 * @return X as float
+	 */
+	public float xf()
+	{
+		return (float) x;
+	}
+	
+	
+	/**
 	 * @return X as int
 	 */
 	public int xi()
@@ -685,6 +704,15 @@ public class Coord {
 	
 	
 	/**
+	 * @return Y as float
+	 */
+	public float yf()
+	{
+		return (float) y;
+	}
+	
+	
+	/**
 	 * @return Y as int
 	 */
 	public int yi()
@@ -699,6 +727,15 @@ public class Coord {
 	public double z()
 	{
 		return z;
+	}
+	
+	
+	/**
+	 * @return Z as float
+	 */
+	public float zf()
+	{
+		return (float) z;
 	}
 	
 	
@@ -897,7 +934,7 @@ public class Coord {
 	 */
 	public static Coord zero()
 	{
-		return new Coord(0, 0, 0);
+		return new Coord(0);
 	}
 	
 	
@@ -908,7 +945,7 @@ public class Coord {
 	 */
 	public static Coord one()
 	{
-		return new Coord(1, 1, 1);
+		return new Coord(1);
 	}
 	
 	

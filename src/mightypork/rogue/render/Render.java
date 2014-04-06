@@ -30,7 +30,25 @@ public class Render {
 	private static final Coord AXIS_Y = new Coord(0, 1, 0);
 	private static final Coord AXIS_Z = new Coord(0, 0, 1);
 	
-	private static boolean inited = false;
+	
+	public static void init()
+	{
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		
+		glDisable(GL_LIGHTING);
+		
+		glClearDepth(1f);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+		
+		glEnable(GL_NORMALIZE);
+		
+		glShadeModel(GL_SMOOTH);
+		
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
 	
 	
 	/**
@@ -67,24 +85,89 @@ public class Render {
 	}
 	
 	
+	/**
+	 * Scale
+	 * 
+	 * @param factor vector of scaling factors
+	 */
+	public static void scale(Coord factor)
+	{
+		glScaled(factor.x, factor.y, factor.z);
+	}
+	
+	
+	/**
+	 * Scale by X factor
+	 * 
+	 * @param factor scaling factor
+	 */
+	public static void scaleX(double factor)
+	{
+		glScaled(factor, 1, 1);
+	}
+	
+	
+	/**
+	 * Scale by Y factor
+	 * 
+	 * @param factor scaling factor
+	 */
+	public static void scaleY(double factor)
+	{
+		glScaled(1, factor, 1);
+	}
+	
+	
+	/**
+	 * Scale by Z factor
+	 * 
+	 * @param factor scaling factor
+	 */
+	public static void scaleZ(double factor)
+	{
+		glScaled(1, 1, factor);
+	}
+	
+	
+	/**
+	 * Rotate around X axis
+	 * 
+	 * @param angle deg
+	 */
 	public static void rotateX(double angle)
 	{
 		rotate(angle, AXIS_X);
 	}
 	
 	
+	/**
+	 * Rotate around Y axis
+	 * 
+	 * @param angle deg
+	 */
 	public static void rotateY(double angle)
 	{
 		rotate(angle, AXIS_Y);
 	}
 	
 	
+	/**
+	 * Rotate around Z axis
+	 * 
+	 * @param angle deg
+	 */
 	public static void rotateZ(double angle)
 	{
 		rotate(angle, AXIS_Z);
 	}
 	
 	
+	/**
+	 * Rotate
+	 * 
+	 * @param angle rotate angle
+	 * @param axis rotation axis
+	 */
 	public static void rotate(double angle, Coord axis)
 	{
 		Coord vec = axis.norm(1);
@@ -92,12 +175,18 @@ public class Render {
 	}
 	
 	
+	/**
+	 * Store GL state
+	 */
 	public static void pushState()
 	{
 		SlickCallable.enterSafeBlock();
 	}
 	
 	
+	/**
+	 * Restore Gl state
+	 */
 	public static void popState()
 	{
 		SlickCallable.leaveSafeBlock();
@@ -112,15 +201,6 @@ public class Render {
 	 */
 	public synchronized static Texture loadTexture(String resourcePath)
 	{
-		
-		if (!inited) {
-			inited = true;
-			
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		}
 		
 		try {
 			
@@ -148,11 +228,24 @@ public class Render {
 	 * Bind texture
 	 * 
 	 * @param texture the texture
+	 * @param linear use linear interpolation for scaling
+	 * @throws RuntimeException if not loaded yet
+	 */
+	private static void bindTexture(Texture texture, boolean linear) throws RuntimeException
+	{
+		texture.bind();
+	}
+	
+	
+	/**
+	 * Bind texture with linear interpolation
+	 * 
+	 * @param texture the texture
 	 * @throws RuntimeException if not loaded yet
 	 */
 	private static void bindTexture(Texture texture) throws RuntimeException
 	{
-		texture.bind();
+		bindTexture(texture, false);
 	}
 	
 	
@@ -211,7 +304,21 @@ public class Render {
 	 * @param quad rectangle (px)
 	 * @param uvs texture coords (0-1)
 	 */
-	private static void quadUV(Rect quad, Rect uvs)
+	public static void quadUV(Rect quad, Rect uvs)
+	{
+		glBegin(GL_QUADS);
+		quadUV_nobound(quad, uvs);
+		glEnd();
+	}
+	
+	
+	/**
+	 * Draw quad without glBegin and glEnd.
+	 * 
+	 * @param quad rectangle (px)
+	 * @param uvs texture coords (0-1)
+	 */
+	public static void quadUV_nobound(Rect quad, Rect uvs)
 	{
 		double left = quad.xMin();
 		double bottom = quad.yMin();
@@ -224,7 +331,6 @@ public class Render {
 		double ttop = uvs.yMax();
 		
 		// quad with texture
-		glBegin(GL_QUADS);
 		glTexCoord2d(tleft, ttop);
 		glVertex2d(left, top);
 		glTexCoord2d(tright, ttop);
@@ -233,7 +339,6 @@ public class Render {
 		glVertex2d(right, bottom);
 		glTexCoord2d(tleft, tbottom);
 		glVertex2d(left, bottom);
-		glEnd();
 	}
 	
 	

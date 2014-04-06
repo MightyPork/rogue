@@ -1,4 +1,4 @@
-package mightypork.rogue.texture;
+package mightypork.rogue.loading;
 
 
 import java.util.concurrent.ExecutorService;
@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import mightypork.rogue.AppAccess;
-import mightypork.rogue.Deferred;
 import mightypork.rogue.bus.events.MainLoopTaskRequest;
 import mightypork.rogue.bus.events.ResourceLoadRequest;
 import mightypork.utils.control.interf.Destroyable;
@@ -56,15 +55,19 @@ public class DeferredLoader extends Thread implements ResourceLoadRequest.Listen
 				
 				if (!def.isLoaded()) {
 					
+					// skip nulls
+					if (def instanceof NullResource) continue;
+					
 					// texture needs to be loaded in main thread, unfortunately.
 					// -> delegate to MainLoop
-					if (def instanceof DeferredTexture) {
+					if (def instanceof MustLoadInMainThread) {
+						Log.f3("<DEFERRED> Loading \"" + Log.str(def) + "\" in main thread (texture based).");
+						
 						app.bus().queue(new MainLoopTaskRequest(new Runnable() {
 							
 							@Override
 							public void run()
 							{
-								Log.f3("<DEFERRED> Loading \"" + Log.str(def) + "\"");
 								def.load();
 							}
 						}));
@@ -72,7 +75,7 @@ public class DeferredLoader extends Thread implements ResourceLoadRequest.Listen
 						continue;
 					}
 					
-					Log.f3("<DEFERRED> Loading \"" + Log.str(def) + "\"");
+					Log.f3("<DEFERRED> Loading \"" + Log.str(def) + "\" asynchronously.");
 					
 					exs.submit(new Runnable() {
 						

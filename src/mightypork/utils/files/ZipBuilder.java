@@ -101,7 +101,7 @@ public class ZipBuilder {
 	 * @param path original path
 	 * @return normalized path
 	 */
-	private String preparePath(String path)
+	private static String preparePath(String path)
 	{
 		path = path.replace("\\", "/");
 		

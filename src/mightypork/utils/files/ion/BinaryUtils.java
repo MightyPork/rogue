@@ -12,7 +12,7 @@ import java.nio.ByteBuffer;
  * 
  * @author MightyPork
  */
-public class StreamUtils {
+public class BinaryUtils {
 	
 	private static ByteBuffer bi = ByteBuffer.allocate(Integer.SIZE / 8);
 	private static ByteBuffer bd = ByteBuffer.allocate(Double.SIZE / 8);
@@ -31,19 +31,19 @@ public class StreamUtils {
 	
 	// CONVERSIONS
 	
-	private static byte[] convBool(boolean bool)
+	public static byte[] getBytesBool(boolean bool)
 	{
 		return new byte[] { (byte) (bool ? 1 : 0) };
 	}
 	
 	
-	private static byte[] convByte(byte num)
+	public static byte[] getBytesByte(byte num)
 	{
 		return new byte[] { num };
 	}
 	
 	
-	private static byte[] convChar(char num)
+	public static byte[] getBytesChar(char num)
 	{
 		bc.clear();
 		bc.putChar(num);
@@ -51,7 +51,7 @@ public class StreamUtils {
 	}
 	
 	
-	private static byte[] convShort(short num)
+	public static byte[] getBytesShort(short num)
 	{
 		bs.clear();
 		bs.putShort(num);
@@ -59,7 +59,7 @@ public class StreamUtils {
 	}
 	
 	
-	private static byte[] convInt(int num)
+	public static byte[] getBytesInt(int num)
 	{
 		bi.clear();
 		bi.putInt(num);
@@ -67,7 +67,7 @@ public class StreamUtils {
 	}
 	
 	
-	private static byte[] convLong(long num)
+	public static byte[] getBytesLong(long num)
 	{
 		bl.clear();
 		bl.putLong(num);
@@ -75,7 +75,7 @@ public class StreamUtils {
 	}
 	
 	
-	private static byte[] convFloat(float num)
+	public static byte[] getBytesFloat(float num)
 	{
 		bf.clear();
 		bf.putFloat(num);
@@ -83,7 +83,7 @@ public class StreamUtils {
 	}
 	
 	
-	private static byte[] convDouble(double num)
+	public static byte[] getBytesDouble(double num)
 	{
 		bd.clear();
 		bd.putDouble(num);
@@ -91,7 +91,7 @@ public class StreamUtils {
 	}
 	
 	
-	private static byte[] convString(String str)
+	public static byte[] getBytesString(String str)
 	{
 		char[] chars = str.toCharArray();
 		
@@ -106,76 +106,57 @@ public class StreamUtils {
 	}
 	
 	
-	private static byte[] convString_b(String str)
-	{
-		char[] chars = str.toCharArray();
-		ByteBuffer bstr = ByteBuffer.allocate((Byte.SIZE / 8) * chars.length + 1);
-		for (char c : chars) {
-			bstr.put((byte) c);
-		}
-		bstr.put((byte) 0);
-		
-		return bstr.array();
-	}
-	
-	
 	public static void writeBoolean(OutputStream out, boolean num) throws IOException
 	{
-		out.write(convBool(num));
+		out.write(getBytesBool(num));
 	}
 	
 	
 	public static void writeByte(OutputStream out, byte num) throws IOException
 	{
-		out.write(convByte(num));
+		out.write(getBytesByte(num));
 	}
 	
 	
 	public static void writeChar(OutputStream out, char num) throws IOException
 	{
-		out.write(convChar(num));
+		out.write(getBytesChar(num));
 	}
 	
 	
 	public static void writeShort(OutputStream out, short num) throws IOException
 	{
-		out.write(convShort(num));
+		out.write(getBytesShort(num));
 	}
 	
 	
 	public static void writeInt(OutputStream out, int num) throws IOException
 	{
-		out.write(convInt(num));
+		out.write(getBytesInt(num));
 	}
 	
 	
 	public static void writeLong(OutputStream out, long num) throws IOException
 	{
-		out.write(convLong(num));
+		out.write(getBytesLong(num));
 	}
 	
 	
 	public static void writeFloat(OutputStream out, float num) throws IOException
 	{
-		out.write(convFloat(num));
+		out.write(getBytesFloat(num));
 	}
 	
 	
 	public static void writeDouble(OutputStream out, double num) throws IOException
 	{
-		out.write(convDouble(num));
+		out.write(getBytesDouble(num));
 	}
 	
 	
 	public static void writeString(OutputStream out, String str) throws IOException
 	{
-		out.write(convString(str));
-	}
-	
-	
-	public static void writeStringBytes(OutputStream out, String str) throws IOException
-	{
-		out.write(convString_b(str));
+		out.write(getBytesString(str));
 	}
 	
 	
@@ -250,16 +231,4 @@ public class StreamUtils {
 		}
 		return s;
 	}
-	
-	
-	public static String readStringBytes(InputStream in) throws IOException
-	{
-		String s = "";
-		byte b;
-		while ((b = readByte(in)) > 0) {
-			s += (char) b;
-		}
-		return s;
-	}
-	
 }

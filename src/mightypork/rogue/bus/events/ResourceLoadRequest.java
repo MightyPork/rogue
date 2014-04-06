@@ -1,7 +1,7 @@
 package mightypork.rogue.bus.events;
 
 
-import mightypork.rogue.Deferred;
+import mightypork.rogue.loading.Deferred;
 import mightypork.utils.control.bus.Event;
 import mightypork.utils.control.bus.SingularEvent;
 

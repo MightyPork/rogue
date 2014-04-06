@@ -53,6 +53,6 @@ public abstract class Constraint implements SettableContext {
 	{
 		if (context == null) return Coord.zero();
 		
-		return context.getRect().getSize();
+		return context.getRect().size();
 	}
 }

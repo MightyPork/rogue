@@ -34,9 +34,9 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 	{
 		try {
 			while (true) {
-				byte b = StreamUtils.readByte(in);
+				byte b = BinaryUtils.readByte(in);
 				if (b == IonMarks.ENTRY) {
-					String key = StreamUtils.readStringBytes(in);
+					String key = BinaryUtils.readString(in);
 					
 					V value = (V) Ion.readObject(in);
 					put(key, value);
@@ -59,11 +59,11 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 	{
 		try {
 			for (java.util.Map.Entry<String, V> entry : entrySet()) {
-				StreamUtils.writeByte(out, IonMarks.ENTRY);
-				StreamUtils.writeStringBytes(out, entry.getKey());
+				BinaryUtils.writeByte(out, IonMarks.ENTRY);
+				BinaryUtils.writeString(out, entry.getKey());
 				Ion.writeObject(out, entry.getValue());
 			}
-			StreamUtils.writeByte(out, IonMarks.END);
+			BinaryUtils.writeByte(out, IonMarks.END);
 			ionWriteCustomData(out);
 		} catch (IOException e) {
 			throw new IonException("Error reading ion map", e);

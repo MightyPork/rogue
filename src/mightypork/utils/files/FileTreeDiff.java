@@ -67,7 +67,7 @@ public class FileTreeDiff {
 	
 	private void calcChecksum() throws NotEqualException
 	{
-		FileInputStream in1, in2;
+		FileInputStream in1 = null, in2 = null;
 		CheckedInputStream cin1 = null, cin2 = null;
 		
 		for (Tuple<File> pair : compared) {
@@ -92,18 +92,34 @@ public class FileTreeDiff {
 					if (read1 == -1) break;
 				}
 				
-			} catch (IOException e) {} finally {
+			} catch (IOException e) {
+				// ignore
+			} finally {
+				
 				try {
 					if (cin1 != null) cin1.close();
-				} catch (IOException e) {
+				} catch (Exception e) {
 					// ignore
 				}
 				
 				try {
-					if (cin1 != null) cin1.close();
-				} catch (IOException e) {
+					if (cin2 != null) cin2.close();
+				} catch (Exception e) {
 					// ignore
 				}
+				
+				try {
+					if (in1 != null) in1.close();
+				} catch (Exception e) {
+					// ignore
+				}
+				
+				try {
+					if (in2 != null) in2.close();
+				} catch (Exception e) {
+					// ignore
+				}
+				
 			}
 		}
 	}

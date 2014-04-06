@@ -6,7 +6,7 @@ package mightypork.utils.files.ion;
  * 
  * @author MightyPork
  */
-public class IonMap extends AbstractIonMap<Object> implements Ionizable {
+public class IonMap extends AbstractIonMap<Object> {
 	
 	public boolean getBoolean(String key)
 	{

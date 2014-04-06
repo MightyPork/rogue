@@ -344,7 +344,18 @@ public class FileUtils {
 	
 	public static InputStream getResource(String path)
 	{
-		return FileUtils.class.getResourceAsStream(path);
+		InputStream in = FileUtils.class.getResourceAsStream(path);
+		
+		if (in != null) return in;
+		
+		try {
+			return new FileInputStream(new File(".", path));
+		} catch (FileNotFoundException e) {
+			// error			
+			Log.w("Could not open resource stream: " + path);
+			return null;
+		}
+		
 	}
 	
 	

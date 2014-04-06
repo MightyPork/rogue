@@ -22,6 +22,7 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	// listeners
 	private final KeyBindingPool keybindings;
 	private boolean yAxisDown = true;
+	private static boolean inited = false;
 	
 	
 	public InputSystem(AppAccess app) {
@@ -43,8 +44,11 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	}
 	
 	
-	private void initDevices()
+	private static void initDevices()
 	{
+		if (inited) return;
+		inited = true;
+		
 		try {
 			Mouse.create();
 			Keyboard.create();

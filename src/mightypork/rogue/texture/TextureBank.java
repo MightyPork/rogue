@@ -6,6 +6,8 @@ import java.util.HashMap;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.AppAdapter;
 import mightypork.rogue.bus.events.ResourceLoadRequest;
+import mightypork.rogue.texture.FilteredTexture.Filter;
+import mightypork.rogue.texture.FilteredTexture.Wrap;
 import mightypork.utils.math.coord.Rect;
 
 import org.newdawn.slick.opengl.Texture;
@@ -30,14 +32,32 @@ public class TextureBank extends AppAdapter {
 	
 	
 	/**
-	 * Load a {@link Texture} from resource
+	 * Load a {@link Texture} from resource, with filters LINEAR and wrap CLAMP
 	 * 
 	 * @param key texture key
 	 * @param resourcePath texture resource path
 	 */
 	public void loadTexture(String key, String resourcePath)
 	{
+		loadTexture(key, resourcePath, Filter.LINEAR, Filter.NEAREST, Wrap.CLAMP);
+	}
+	
+	
+	/**
+	 * Load a {@link Texture} from resource
+	 * 
+	 * @param key texture key
+	 * @param resourcePath texture resource path
+	 * @param filter_min min filter (when rendered smaller)
+	 * @param filter_mag mag filter (when rendered larger)
+	 * @param wrap texture wrapping
+	 */
+	public void loadTexture(String key, String resourcePath, Filter filter_min, Filter filter_mag, Wrap wrap)
+	{
 		DeferredTexture tx = new DeferredTexture(resourcePath);
+		tx.setFilter(filter_min, filter_mag);
+		tx.setWrap(wrap);
+		
 		bus().queue(new ResourceLoadRequest(tx));
 		
 		textures.put(key, tx);

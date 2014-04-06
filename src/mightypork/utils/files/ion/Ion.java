@@ -191,23 +191,23 @@ public class Ion {
 			
 			switch (b) {
 				case IonMarks.BOOLEAN:
-					return StreamUtils.readBoolean(in);
+					return BinaryUtils.readBoolean(in);
 				case IonMarks.BYTE:
-					return StreamUtils.readByte(in);
+					return BinaryUtils.readByte(in);
 				case IonMarks.CHAR:
-					return StreamUtils.readChar(in);
+					return BinaryUtils.readChar(in);
 				case IonMarks.SHORT:
-					return StreamUtils.readShort(in);
+					return BinaryUtils.readShort(in);
 				case IonMarks.INT:
-					return StreamUtils.readInt(in);
+					return BinaryUtils.readInt(in);
 				case IonMarks.LONG:
-					return StreamUtils.readLong(in);
+					return BinaryUtils.readLong(in);
 				case IonMarks.FLOAT:
-					return StreamUtils.readFloat(in);
+					return BinaryUtils.readFloat(in);
 				case IonMarks.DOUBLE:
-					return StreamUtils.readDouble(in);
+					return BinaryUtils.readDouble(in);
 				case IonMarks.STRING:
-					String s = StreamUtils.readString(in);
+					String s = BinaryUtils.readString(in);
 					return s;
 				default:
 					throw new IonException("Invalid Ion mark " + Integer.toHexString(bi));
@@ -236,55 +236,55 @@ public class Ion {
 			
 			if (obj instanceof Boolean) {
 				out.write(IonMarks.BOOLEAN);
-				StreamUtils.writeBoolean(out, (Boolean) obj);
+				BinaryUtils.writeBoolean(out, (Boolean) obj);
 				return;
 			}
 			
 			if (obj instanceof Byte) {
 				out.write(IonMarks.BYTE);
-				StreamUtils.writeByte(out, (Byte) obj);
+				BinaryUtils.writeByte(out, (Byte) obj);
 				return;
 			}
 			
 			if (obj instanceof Character) {
 				out.write(IonMarks.CHAR);
-				StreamUtils.writeChar(out, (Character) obj);
+				BinaryUtils.writeChar(out, (Character) obj);
 				return;
 			}
 			
 			if (obj instanceof Short) {
 				out.write(IonMarks.SHORT);
-				StreamUtils.writeShort(out, (Short) obj);
+				BinaryUtils.writeShort(out, (Short) obj);
 				return;
 			}
 			
 			if (obj instanceof Integer) {
 				out.write(IonMarks.INT);
-				StreamUtils.writeInt(out, (Integer) obj);
+				BinaryUtils.writeInt(out, (Integer) obj);
 				return;
 			}
 			
 			if (obj instanceof Long) {
 				out.write(IonMarks.LONG);
-				StreamUtils.writeLong(out, (Long) obj);
+				BinaryUtils.writeLong(out, (Long) obj);
 				return;
 			}
 			
 			if (obj instanceof Float) {
 				out.write(IonMarks.FLOAT);
-				StreamUtils.writeFloat(out, (Float) obj);
+				BinaryUtils.writeFloat(out, (Float) obj);
 				return;
 			}
 			
 			if (obj instanceof Double) {
 				out.write(IonMarks.DOUBLE);
-				StreamUtils.writeDouble(out, (Double) obj);
+				BinaryUtils.writeDouble(out, (Double) obj);
 				return;
 			}
 			
 			if (obj instanceof String) {
 				out.write(IonMarks.STRING);
-				StreamUtils.writeString(out, (String) obj);
+				BinaryUtils.writeString(out, (String) obj);
 				return;
 			}
 			

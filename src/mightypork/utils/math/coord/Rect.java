@@ -46,7 +46,7 @@ public class Rect {
 	 * @param size rect size
 	 * @return the rect
 	 */
-	public static Rect fromSize(int x, int y, Coord size)
+	public static Rect fromSize(double x, double y, Coord size)
 	{
 		return fromSize(x, y, size.x, size.y);
 	}
@@ -387,9 +387,9 @@ public class Rect {
 	 * 
 	 * @return coord of width,height
 	 */
-	public Coord getSize()
+	public Coord size()
 	{
-		return new Coord(Math.abs(min.x - max.x), Math.abs(min.y - max.y));
+		return new Coord(max.x - min.x, max.y - min.y);
 	}
 	
 	
@@ -803,5 +803,17 @@ public class Rect {
 	public double yMax()
 	{
 		return max.y;
+	}
+	
+	
+	public double height()
+	{
+		return max.y - min.y;
+	}
+	
+	
+	public double width()
+	{
+		return max.x - min.x;
 	}
 }

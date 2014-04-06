@@ -8,7 +8,6 @@ import mightypork.rogue.bus.events.ScreenChangeEvent;
 import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
-import mightypork.rogue.render.Render;
 import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Coord;
@@ -25,7 +24,6 @@ public abstract class Screen extends ChildClient implements Destroyable, KeyBind
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
 	private boolean active;
-	private boolean needSetupGraphics = false;
 	private boolean needSetupViewport = false;
 	
 	
@@ -69,10 +67,9 @@ public abstract class Screen extends ChildClient implements Destroyable, KeyBind
 	{
 		if (shown) {
 			active = true;
-			needSetupGraphics = true;
 			needSetupViewport = true;
 			
-			onSizeChanged(getRect().getSize());
+			onSizeChanged(getRect().size());
 			onScreenEnter();
 			
 			// enable events
@@ -125,24 +122,6 @@ public abstract class Screen extends ChildClient implements Destroyable, KeyBind
 	
 	
 	/**
-	 * Render screen
-	 */
-	private void renderBegin()
-	{
-		Render.pushState();
-	}
-	
-	
-	/**
-	 * Render screen
-	 */
-	private void renderEnd()
-	{
-		Render.popState();
-	}
-	
-	
-	/**
 	 * @return true if screen is the curretn screen
 	 */
 	public final boolean isActive()
@@ -173,41 +152,15 @@ public abstract class Screen extends ChildClient implements Destroyable, KeyBind
 	{
 		if (!isActive()) return;
 		
-		if (needSetupGraphics) {
-			setupGraphics();
-		}
-		
 		if (needSetupViewport) {
 			setupViewport();
 		}
 		
-		renderBegin();
 		renderScreen();
-		renderEnd();
 	}
 	
 	
-	private void setupGraphics()
-	{
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		
-		glDisable(GL_LIGHTING);
-		
-		glClearDepth(1f);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-		
-		glEnable(GL_NORMALIZE);
-		
-		glShadeModel(GL_SMOOTH);
-		
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
-	
-	
-	private void setupViewport()
+	protected void setupViewport()
 	{
 		// fix projection for changed size
 		glMatrixMode(GL_PROJECTION);

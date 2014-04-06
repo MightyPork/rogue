@@ -1,21 +1,30 @@
 package mightypork.rogue.texture;
 
 
-import mightypork.rogue.Deferred;
+import mightypork.rogue.loading.DeferredResource;
+import mightypork.rogue.loading.MustLoadInMainThread;
 import mightypork.rogue.render.Render;
 import mightypork.utils.math.coord.Rect;
 
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
 
-public class DeferredTexture implements Texture, Deferred {
+/**
+ * Deferred texture
+ * 
+ * @author MightyPork
+ */
+public class DeferredTexture extends DeferredResource implements FilteredTexture, MustLoadInMainThread {
 	
 	private Texture backingTexture;
-	private final String resourcePath;
+	private Filter filter_min = Filter.LINEAR;
+	private Filter filter_mag = Filter.LINEAR;
+	private Wrap wrap = Wrap.CLAMP;
 	
 	
 	public DeferredTexture(String resourcePath) {
-		this.resourcePath = resourcePath;
+		super(resourcePath);
 	}
 	
 	
@@ -26,49 +35,52 @@ public class DeferredTexture implements Texture, Deferred {
 	
 	
 	@Override
-	public synchronized void load()
+	protected void loadResource(String path)
 	{
-		if (!isLoaded()) {
-			backingTexture = Render.loadTexture(resourcePath);
-		}
-	}
-	
-	
-	@Override
-	public boolean isLoaded()
-	{
-		return backingTexture != null;
+		backingTexture = Render.loadTexture(path);
 	}
 	
 	
 	@Override
 	public boolean hasAlpha()
 	{
-		load();
+		if (!ensureLoaded()) return false;
+		
 		return backingTexture.hasAlpha();
 	}
 	
 	
-	@Override
-	public String getTextureRef()
+	public void bindRaw()
 	{
-		load();
-		return backingTexture.getTextureRef();
+		if (!ensureLoaded()) return;
+		
+		backingTexture.bind();
 	}
 	
 	
 	@Override
 	public void bind()
 	{
-		load();
+		if (!ensureLoaded()) return;
+		
 		backingTexture.bind();
+		
+		GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
+		
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, wrap.num);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, wrap.num);
+		
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filter_min.num);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filter_mag.num);
+		
 	}
 	
 	
 	@Override
 	public int getImageHeight()
 	{
-		load();
+		if (!ensureLoaded()) return 0;
+		
 		return backingTexture.getImageHeight();
 	}
 	
@@ -76,15 +88,26 @@ public class DeferredTexture implements Texture, Deferred {
 	@Override
 	public int getImageWidth()
 	{
-		load();
+		if (!ensureLoaded()) return 0;
+		
 		return backingTexture.getImageWidth();
+	}
+	
+	
+	@Override
+	public String getTextureRef()
+	{
+		if (!ensureLoaded()) return null;
+		
+		return backingTexture.getTextureRef();
 	}
 	
 	
 	@Override
 	public float getHeight()
 	{
-		load();
+		if (!ensureLoaded()) return 0;
+		
 		return backingTexture.getHeight();
 	}
 	
@@ -92,7 +115,8 @@ public class DeferredTexture implements Texture, Deferred {
 	@Override
 	public float getWidth()
 	{
-		load();
+		if (!ensureLoaded()) return 0;
+		
 		return backingTexture.getWidth();
 	}
 	
@@ -100,7 +124,8 @@ public class DeferredTexture implements Texture, Deferred {
 	@Override
 	public int getTextureHeight()
 	{
-		load();
+		if (!ensureLoaded()) return 0;
+		
 		return backingTexture.getTextureHeight();
 	}
 	
@@ -108,7 +133,8 @@ public class DeferredTexture implements Texture, Deferred {
 	@Override
 	public int getTextureWidth()
 	{
-		load();
+		if (!ensureLoaded()) return 0;
+		
 		return backingTexture.getTextureWidth();
 	}
 	
@@ -116,7 +142,8 @@ public class DeferredTexture implements Texture, Deferred {
 	@Override
 	public void release()
 	{
-		if (backingTexture == null) return;
+		if (!isLoaded()) return;
+		
 		backingTexture.release();
 	}
 	
@@ -124,7 +151,8 @@ public class DeferredTexture implements Texture, Deferred {
 	@Override
 	public int getTextureID()
 	{
-		load();
+		if (!ensureLoaded()) return -1;
+		
 		return backingTexture.getTextureID();
 	}
 	
@@ -132,7 +160,8 @@ public class DeferredTexture implements Texture, Deferred {
 	@Override
 	public byte[] getTextureData()
 	{
-		load();
+		if (!ensureLoaded()) return null;
+		
 		return backingTexture.getTextureData();
 	}
 	
@@ -140,15 +169,38 @@ public class DeferredTexture implements Texture, Deferred {
 	@Override
 	public void setTextureFilter(int textureFilter)
 	{
-		load();
+		if (!ensureLoaded()) return;
+		
 		backingTexture.setTextureFilter(textureFilter);
 	}
 	
 	
 	@Override
-	public String toString()
+	public void destroy()
 	{
-		return "Texture(\"" + resourcePath + "\")";
+		release();
+	}
+	
+	
+	@Override
+	public void setFilter(Filter filterMin, Filter filterMag)
+	{
+		this.filter_min = filterMin;
+		this.filter_mag = filterMag;
+	}
+	
+	
+	@Override
+	public void setWrap(Wrap wrapping)
+	{
+		this.wrap = wrapping;
+	}
+	
+	
+	@Override
+	public void setFilter(Filter filter)
+	{
+		setFilter(filter, filter);
 	}
 	
 }

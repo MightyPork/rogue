@@ -6,7 +6,7 @@ package mightypork.utils.files.ion;
  * 
  * @author MightyPork
  */
-public class IonList extends AbstractIonList<Object> implements Ionizable {
+public class IonList extends AbstractIonList<Object> {
 	
 	public Ionizable getIonizable(int index) throws IonException
 	{
@@ -70,61 +70,61 @@ public class IonList extends AbstractIonList<Object> implements Ionizable {
 	
 	public void addIonizable(Ionizable o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
 	public void addBoolean(boolean o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
 	public void addByte(byte o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
 	public void addChar(char o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
 	public void addShort(short o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
 	public void addInt(int o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
 	public void addLong(long o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
 	public void addFloat(float o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
 	public void addDouble(double o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
 	public void addString(String o) throws IonException
 	{
-		addCheckNull(o);
+		assertNotNull(o);
 	}
 	
 	
@@ -142,7 +142,7 @@ public class IonList extends AbstractIonList<Object> implements Ionizable {
 	}
 	
 	
-	private void addCheckNull(Object o) throws IonException
+	private static void assertNotNull(Object o) throws IonException
 	{
 		if (o == null) throw new IonException("Cannot store null");
 	}

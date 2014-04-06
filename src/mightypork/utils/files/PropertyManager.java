@@ -115,7 +115,7 @@ public class PropertyManager {
 		}
 		
 		
-		private String saveConvert(String theString, boolean escapeSpace, boolean escapeUnicode)
+		private static String saveConvert(String theString, boolean escapeSpace, boolean escapeUnicode)
 		{
 			int len = theString.length();
 			int bufLen = len * 2;

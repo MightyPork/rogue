@@ -67,7 +67,7 @@ public class TaskTakeScreenshot implements Runnable {
 	}
 	
 	
-	private String getUniqueScreenshotName()
+	private static String getUniqueScreenshotName()
 	{
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		return df.format(new Date());

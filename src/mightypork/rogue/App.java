@@ -13,11 +13,12 @@ import mightypork.rogue.bus.events.ActionRequest.RequestType;
 import mightypork.rogue.gui.ScreenRegistry;
 import mightypork.rogue.gui.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.gui.screens.test_cat_sound.ScreenTestCat;
+import mightypork.rogue.gui.screens.test_font.ScreenTestFont;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
+import mightypork.rogue.loading.DeferredLoader;
 import mightypork.rogue.render.DisplaySystem;
 import mightypork.rogue.sound.SoundSystem;
-import mightypork.rogue.texture.DeferredLoader;
 import mightypork.utils.control.bus.EventBus;
 import mightypork.utils.control.bus.events.DestroyEvent;
 import mightypork.utils.control.bus.events.UpdateEvent;
@@ -199,8 +200,9 @@ public class App implements AppAccess {
 		
 		screens.add(new ScreenTestBouncy(this));
 		screens.add(new ScreenTestCat(this));
+		screens.add(new ScreenTestFont(this));
 		
-		screens.showScreen("test.cat");
+		screens.showScreen("test.font");
 	}
 	
 	
@@ -284,11 +286,13 @@ public class App implements AppAccess {
 	}
 	
 	
-	private boolean lockInstance()
+	private static boolean lockInstance()
 	{
 		final File lockFile = new File(Paths.WORKDIR, ".lock");
 		try {
+			
 			final RandomAccessFile randomAccessFile = new RandomAccessFile(lockFile, "rw");
+			
 			final FileLock fileLock = randomAccessFile.getChannel().tryLock();
 			if (fileLock != null) {
 				Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -308,6 +312,7 @@ public class App implements AppAccess {
 				});
 				return true;
 			}
+			
 		} catch (Exception e) {
 			System.err.println("Unable to create and/or lock file.");
 			e.printStackTrace();
