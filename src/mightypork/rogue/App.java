@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
@@ -18,9 +19,8 @@ import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.render.DisplaySystem;
 import mightypork.rogue.sound.SoundSystem;
+import mightypork.rogue.util.SlickLogRedirector;
 import mightypork.utils.control.bus.EventBus;
-import mightypork.utils.control.bus.events.DestroyEvent;
-import mightypork.utils.control.bus.events.UpdateEvent;
 import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.logging.Log;
@@ -105,8 +105,10 @@ public class App implements AppAccess {
 	{
 		Log.i("Shutting down subsystems...");
 		
-		bus().send(new DestroyEvent());
-		bus().destroy();
+		if(bus() != null) {
+			bus().send(new DestroyEvent());
+			bus().destroy();
+		}
 		
 		Log.i("Terminating...");
 		System.exit(0);
@@ -124,8 +126,11 @@ public class App implements AppAccess {
 		 * Setup logging
 		 */
 		final LogInstance log = Log.create("runtime", Paths.LOGS, 10);
+		log.setFileLevel(Level.WARNING);
+		log.setSysoutLevel(Level.ALL);
 		log.enable(Config.LOGGING_ENABLED);
 		log.enableSysout(Config.LOG_TO_STDOUT);
+		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
 		
 		Log.f1("Initializing subsystems...");
 		
@@ -134,7 +139,6 @@ public class App implements AppAccess {
 		 */
 		Log.f2("Initializing Event Bus...");
 		eventBus = new EventBus();
-		eventBus.enableLogging(Config.LOG_BUS);
 		initChannels();
 		
 		/*
@@ -236,7 +240,7 @@ public class App implements AppAccess {
 			@Override
 			public void run()
 			{
-				bus().queue(new ActionRequest(RequestType.FULLSCREEN));
+				bus().send(new ActionRequest(RequestType.FULLSCREEN));
 			}
 		});
 		
@@ -246,7 +250,7 @@ public class App implements AppAccess {
 			@Override
 			public void run()
 			{
-				bus().queue(new ActionRequest(RequestType.SCREENSHOT));
+				bus().send(new ActionRequest(RequestType.SCREENSHOT));
 			}
 		});
 		
@@ -256,7 +260,7 @@ public class App implements AppAccess {
 			@Override
 			public void run()
 			{
-				bus().queue(new ActionRequest(RequestType.SHUTDOWN));
+				bus().send(new ActionRequest(RequestType.SHUTDOWN));
 			}
 		});
 	}

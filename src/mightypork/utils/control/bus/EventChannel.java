@@ -6,79 +6,69 @@ import java.util.HashSet;
 
 import mightypork.utils.control.bus.clients.DelegatingClient;
 import mightypork.utils.control.bus.clients.ToggleableClient;
+import mightypork.utils.control.bus.events.Event;
+import mightypork.utils.control.bus.events.types.SingularEvent;
 import mightypork.utils.logging.Log;
 
 
 /**
- * Message channel, module of {@link EventBus}
+ * Event delivery channel, module of {@link EventBus}
  * 
  * @author MightyPork
- * @param <EVENT> message type
+ * @param <EVENT> event type
  * @param <CLIENT> client (subscriber) type
  */
 final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	
 	private final Class<CLIENT> clientClass;
-	private final Class<EVENT> messageClass;
-	private boolean logging = false;
+	private final Class<EVENT> eventClass;
 	
 	
 	/**
 	 * Create a channel
 	 * 
-	 * @param messageClass event class
+	 * @param eventClass event class
 	 * @param clientClass client class
 	 */
-	public EventChannel(Class<EVENT> messageClass, Class<CLIENT> clientClass) {
+	public EventChannel(Class<EVENT> eventClass, Class<CLIENT> clientClass) {
 		
-		if (messageClass == null || clientClass == null) throw new NullPointerException("Null Message or Client class.");
+		if (eventClass == null || clientClass == null) {
+			throw new NullPointerException("Null Event or Client class.");
+		}
 		
 		this.clientClass = clientClass;
-		this.messageClass = messageClass;
+		this.eventClass = eventClass;
 	}
 	
 	
 	/**
-	 * Enable logging of non-warning debug messages.
+	 * Try to broadcast a event.<br>
+	 * If event is of wrong type, <code>false</code> is returned.
 	 * 
-	 * @param logging enable logging
-	 */
-	public void enableLogging(boolean logging)
-	{
-		this.logging = logging;
-	}
-	
-	
-	/**
-	 * Try to broadcast a message.<br>
-	 * If message is of wrong type, <code>false</code> is returned.
-	 * 
-	 * @param message a message to be sent
+	 * @param event a event to be sent
 	 * @param clients collection of clients
-	 * @return true if message was sent
+	 * @return true if event was sent
 	 */
-	public boolean broadcast(Event<?> message, Collection<Object> clients)
+	public boolean broadcast(Event<?> event, Collection<Object> clients)
 	{
-		if (!canBroadcast(message)) return false;
-		
-		final EVENT evt = messageClass.cast(message);
-		
-		return doBroadcast(evt, clients, new HashSet<Object>());
+		if (!canBroadcast(event)) return false;
+				
+		return doBroadcast(eventClass.cast(event), clients, new HashSet<Object>());
 	}
 	
 	
 	/**
-	 * Send the message
+	 * Send the event
 	 * 
-	 * @param message sent message
+	 * @param event sent event
 	 * @param clients subscribing clients
 	 * @param processed clients already processed
 	 * @return success
 	 */
-	private boolean doBroadcast(final EVENT message, final Collection<Object> clients, final Collection<Object> processed)
+	private boolean doBroadcast(final EVENT event, final Collection<Object> clients, final Collection<Object> processed)
 	{
 		boolean sent = false;
-		final boolean singular = message.getClass().isAnnotationPresent(SingularEvent.class);
+		final boolean singular = event.getClass().isAnnotationPresent(SingularEvent.class);
 		
 		for (final Object client : clients) {
 			
@@ -96,13 +86,10 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 			
 			// opt-out
 			if (client instanceof ToggleableClient) {
-				if (!((ToggleableClient) client).isListening()) {
-					if (logging) Log.f3("<bus> Client disabled: " + Log.str(client));
-					continue;
-				}
+				if (!((ToggleableClient) client).isListening()) continue;
 			}
 			
-			sent |= sendTo(client, message);
+			sent |= sendTo(client, event);
 			
 			// singular event ain't no whore, handled once only.
 			if (sent && singular) return true;
@@ -114,11 +101,9 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 					final Collection<Object> children = ((DelegatingClient) client).getChildClients();
 					
 					if (children != null && children.size() > 0) {
-						sent |= doBroadcast(message, children, processed);
+						sent |= doBroadcast(event, children, processed);
 					}
 					
-				} else {
-					if (logging) Log.f3("<bus> Client not delegating: " + Log.str(client));
 				}
 			}
 		}
@@ -128,18 +113,17 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	
 	
 	/**
-	 * Send a message to a client.
+	 * Send an event to a client.
 	 * 
 	 * @param client target client
-	 * @param message message to send
+	 * @param event event to send
 	 * @return success
 	 */
 	@SuppressWarnings("unchecked")
-	private boolean sendTo(Object client, EVENT message)
+	private boolean sendTo(Object client, EVENT event)
 	{
 		if (isClientOfType(client)) {
-			if (logging) Log.f3("<bus> Delivered " + Log.str(message) + " to " + Log.str(client));
-			((Event<CLIENT>) message).handleBy((CLIENT) client);
+			((Event<CLIENT>) event).handleBy((CLIENT) client);
 			return true;
 		}
 		return false;
@@ -147,28 +131,28 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	
 	
 	/**
-	 * Check if the given message can be broadcasted by this
+	 * Check if the given event can be broadcasted by this
 	 * {@link EventChannel}
 	 * 
-	 * @param message event object
+	 * @param event event object
 	 * @return can be broadcasted
 	 */
-	public boolean canBroadcast(Event<?> message)
+	public boolean canBroadcast(Event<?> event)
 	{
-		return message != null && messageClass.isInstance(message);
+		return event != null && eventClass.isInstance(event);
 	}
 	
 	
 	/**
 	 * Create an instance for given types
 	 * 
-	 * @param messageClass event class
+	 * @param eventClass event class
 	 * @param clientClass client class
 	 * @return the broadcaster
 	 */
-	public static <F_EVENT extends Event<F_CLIENT>, F_CLIENT> EventChannel<F_EVENT, F_CLIENT> create(Class<F_EVENT> messageClass, Class<F_CLIENT> clientClass)
+	public static <F_EVENT extends Event<F_CLIENT>, F_CLIENT> EventChannel<F_EVENT, F_CLIENT> create(Class<F_EVENT> eventClass, Class<F_CLIENT> clientClass)
 	{
-		return new EventChannel<F_EVENT, F_CLIENT>(messageClass, clientClass);
+		return new EventChannel<F_EVENT, F_CLIENT>(eventClass, clientClass);
 	}
 	
 	
@@ -202,7 +186,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 		final int prime = 13;
 		int result = 1;
 		result = prime * result + ((clientClass == null) ? 0 : clientClass.hashCode());
-		result = prime * result + ((messageClass == null) ? 0 : messageClass.hashCode());
+		result = prime * result + ((eventClass == null) ? 0 : eventClass.hashCode());
 		return result;
 	}
 	
@@ -217,9 +201,9 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 		if (clientClass == null) {
 			if (other.clientClass != null) return false;
 		} else if (!clientClass.equals(other.clientClass)) return false;
-		if (messageClass == null) {
-			if (other.messageClass != null) return false;
-		} else if (!messageClass.equals(other.messageClass)) return false;
+		if (eventClass == null) {
+			if (other.eventClass != null) return false;
+		} else if (!eventClass.equals(other.eventClass)) return false;
 		return true;
 	}
 	
@@ -227,6 +211,6 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	@Override
 	public String toString()
 	{
-		return "{ " + Log.str(messageClass) + " => " + Log.str(clientClass) + " }";
+		return "{ " + Log.str(eventClass) + " => " + Log.str(clientClass) + " }";
 	}
 }

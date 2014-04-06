@@ -92,14 +92,14 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 			wasMouse = true;
 		}
 		
-		if (wasMouse && !moveSum.isZero()) bus().queue(new MouseMotionEvent(lastPos, moveSum));
+		if (wasMouse && !moveSum.isZero()) bus().send(new MouseMotionEvent(lastPos, moveSum));
 		
 		while (Keyboard.next()) {
 			onKeyEvent();
 		}
 		
 		if (Display.isCloseRequested()) {
-			bus().queue(new ActionRequest(RequestType.SHUTDOWN));
+			bus().send(new ActionRequest(RequestType.SHUTDOWN));
 		}
 	}
 	
@@ -118,7 +118,7 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		}
 		
 		if (button != -1 || wheeld != 0) {
-			bus().queue(new MouseButtonEvent(pos, button, down, wheeld));
+			bus().send(new MouseButtonEvent(pos, button, down, wheeld));
 		}
 		
 		moveSum.add_ip(move);
@@ -132,7 +132,7 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		final boolean down = Keyboard.getEventKeyState();
 		final char c = Keyboard.getEventCharacter();
 		
-		bus().queue(new KeyboardEvent(key, c, down));
+		bus().send(new KeyboardEvent(key, c, down));
 	}
 	
 	

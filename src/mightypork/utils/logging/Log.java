@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Log {
 	
 	/** enable static logging */
-	private static boolean esl = true;
+	private static boolean staticLogging = true;
 	
 	
 	/**
@@ -18,7 +18,7 @@ public class Log {
 	 */
 	public static void f1(String msg)
 	{
-		if (esl && ready()) main.f1(msg);
+		if (staticLogging && ready()) main.f1(msg);
 	}
 	
 	
@@ -29,7 +29,7 @@ public class Log {
 	 */
 	public static void f2(String msg)
 	{
-		if (esl && ready()) main.f2(msg);
+		if (staticLogging && ready()) main.f2(msg);
 	}
 	
 	
@@ -40,7 +40,7 @@ public class Log {
 	 */
 	public static void f3(String msg)
 	{
-		if (esl && ready()) main.f3(msg);
+		if (staticLogging && ready()) main.f3(msg);
 	}
 	
 	
@@ -51,7 +51,7 @@ public class Log {
 	 */
 	public static void i(String msg)
 	{
-		if (esl && ready()) main.i(msg);
+		if (staticLogging && ready()) main.i(msg);
 	}
 	
 	
@@ -62,7 +62,7 @@ public class Log {
 	 */
 	public static void w(String msg)
 	{
-		if (esl && ready()) main.w(msg);
+		if (staticLogging && ready()) main.w(msg);
 	}
 	
 	
@@ -73,7 +73,7 @@ public class Log {
 	 */
 	public static void e(String msg)
 	{
-		if (esl && ready()) main.e(msg);
+		if (staticLogging && ready()) main.e(msg);
 	}
 	
 	
@@ -85,7 +85,7 @@ public class Log {
 	 */
 	public static void e(String msg, Throwable thrown)
 	{
-		if (esl && ready()) main.e(msg, thrown);
+		if (staticLogging && ready()) main.e(msg, thrown);
 	}
 	
 	
@@ -96,13 +96,13 @@ public class Log {
 	 */
 	public static void e(Throwable thrown)
 	{
-		if (esl && ready()) main.e(thrown);
+		if (staticLogging && ready()) main.e(thrown);
 	}
 	
 	
 	public static void enable(boolean flag)
 	{
-		if (esl && ready()) main.enable(flag);
+		if (staticLogging && ready()) main.enable(flag);
 	}
 	
 	
@@ -113,7 +113,7 @@ public class Log {
 	 */
 	public static void enableStaticLogging(boolean flag)
 	{
-		esl = flag;
+		staticLogging = flag;
 	}
 	
 	private static HashMap<String, LogInstance> logs = new HashMap<String, LogInstance>();

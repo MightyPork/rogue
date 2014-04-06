@@ -2,8 +2,9 @@ package mightypork.rogue.bus.events;
 
 
 import mightypork.rogue.loading.DeferredResource;
-import mightypork.utils.control.bus.Event;
-import mightypork.utils.control.bus.SingularEvent;
+import mightypork.utils.control.bus.events.Event;
+import mightypork.utils.control.bus.events.types.QueuedEvent;
+import mightypork.utils.control.bus.events.types.SingularEvent;
 
 
 /**
@@ -12,6 +13,7 @@ import mightypork.utils.control.bus.SingularEvent;
  * @author MightyPork
  */
 @SingularEvent
+@QueuedEvent
 public class ResourceLoadRequest implements Event<ResourceLoadRequest.Listener> {
 	
 	private final DeferredResource resource;

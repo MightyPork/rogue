@@ -44,7 +44,7 @@ public class ScreenTestBouncy extends LayeredScreen {
 			@Override
 			public void run()
 			{
-				bus().queue(new ScreenRequestEvent("test.cat"));
+				bus().send(new ScreenRequestEvent("test.cat"));
 			}
 		});
 	}

@@ -1,4 +1,4 @@
-package mightypork.utils.control.bus;
+package mightypork.utils.control.bus.events.types;
 
 
 import java.lang.annotation.*;

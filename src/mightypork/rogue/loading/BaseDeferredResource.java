@@ -27,28 +27,28 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 	@Override
 	public synchronized final void load()
 	{
-		
 		if (loadAttempted) return;
 		
-		loadAttempted = true;
 		loadFailed = false;
 		
 		if (isNull()) return;
 		try {
 			if (resource == null) throw new NullPointerException("Resource string cannot be null for non-null resource.");
 			
-			Log.f3("<res> Loading: " + this);
+			Log.f3("<RES> Loading: " + this);
 			loadResource(resource);
-			Log.f3("<res> Loaded: " + this + " loaded.");
+			Log.f3("<RES> Loaded: " + this + " loaded.");
 		} catch (final Exception e) {
 			loadFailed = true;
-			Log.e("Failed to load resource \"" + resource + "\"", e);
+			Log.e("<RES> Failed to load  \"" + resource + "\"", e);
 		}
+
+		loadAttempted = true;
 	}
 	
 	
 	@Override
-	public synchronized final boolean isLoaded()
+	public final boolean isLoaded()
 	{
 		if (isNull()) return false;
 		
@@ -68,6 +68,7 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 		if (isLoaded()) {
 			return true;
 		} else {
+			Log.w("<RES> First use, not loaded yet - loading directly\n"+this);
 			load();
 		}
 		

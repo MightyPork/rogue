@@ -225,7 +225,7 @@ public class DeferredAudio extends BaseDeferredResource {
 	@Override
 	public void destroy()
 	{
-		if (!isLoaded()) return;
+		if (!isLoaded() || backingAudio == null) return;
 		
 		backingAudio.release();
 		backingAudio = null;

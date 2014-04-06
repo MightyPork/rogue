@@ -149,7 +149,7 @@ public class SoundSystem extends Subsystem implements Updateable {
 	private DeferredAudio getResource(String res)
 	{
 		final DeferredAudio a = new DeferredAudio(res);
-		bus().queue(new ResourceLoadRequest(a));
+		bus().send(new ResourceLoadRequest(a));
 		
 		if (resources.contains(a)) throw new IllegalArgumentException("Sound resource " + res + " is already registered.");
 		resources.add(a);

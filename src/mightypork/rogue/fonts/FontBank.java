@@ -36,7 +36,7 @@ public class FontBank extends AppAdapter {
 	 */
 	public void loadFont(String key, DeferredFont font)
 	{
-		bus().queue(new ResourceLoadRequest(font));
+		bus().send(new ResourceLoadRequest(font));
 		
 		fonts.put(key, font);
 	}

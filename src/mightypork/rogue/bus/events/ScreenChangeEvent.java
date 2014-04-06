@@ -1,10 +1,17 @@
 package mightypork.rogue.bus.events;
 
 
-import mightypork.utils.control.bus.Event;
+import mightypork.utils.control.bus.events.Event;
+import mightypork.utils.control.bus.events.types.QueuedEvent;
 import mightypork.utils.math.coord.Coord;
 
 
+/**
+ * Screen resolution or mode was changed
+ * 
+ * @author MightyPork
+ */
+@QueuedEvent
 public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	
 	private final boolean fullscreen;

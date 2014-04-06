@@ -1,7 +1,8 @@
-package mightypork.utils.control.bus.events;
+package mightypork.rogue.bus.events;
 
 
-import mightypork.utils.control.bus.Event;
+import mightypork.utils.control.bus.events.Event;
+import mightypork.utils.control.bus.events.types.ImmediateEvent;
 import mightypork.utils.control.interf.Destroyable;
 
 
@@ -10,6 +11,7 @@ import mightypork.utils.control.interf.Destroyable;
  * 
  * @author MightyPork
  */
+@ImmediateEvent
 public class DestroyEvent implements Event<Destroyable> {
 	
 	@Override

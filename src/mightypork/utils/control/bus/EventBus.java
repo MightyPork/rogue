@@ -5,6 +5,10 @@ import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
+import mightypork.utils.control.bus.events.Event;
+import mightypork.utils.control.bus.events.types.ImmediateEvent;
+import mightypork.utils.control.bus.events.types.QueuedEvent;
+import mightypork.utils.control.bus.events.types.SingularEvent;
 import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.logging.Log;
 
@@ -23,16 +27,15 @@ final public class EventBus implements Destroyable {
 	private final BufferedHashSet<Object> clients = new BufferedHashSet<Object>();
 	
 	/** Messages queued for delivery */
-	private final DelayQueue<DelayedMessage> sendQueue = new DelayQueue<DelayedMessage>();
+	private final DelayQueue<DelayedEvent> sendQueue = new DelayQueue<DelayedEvent>();
 	
 	/** Queue polling thread */
 	private final QueuePollingThread busThread;
-	
-	/** Log all */
-	private boolean logging = false;
-	
+		
 	/** Whether the bus was destroyed */
 	private boolean dead = false;
+	
+	public boolean logSending = false;
 	
 	
 	/**
@@ -41,23 +44,6 @@ final public class EventBus implements Destroyable {
 	public EventBus() {
 		busThread = new QueuePollingThread();
 		busThread.start();
-	}
-	
-	
-	/**
-	 * Enable a level of logging.
-	 * 
-	 * @param level 0 none, 1 warning only, 2 all
-	 */
-	public void enableLogging(boolean level)
-	{
-		assertLive();
-		
-		logging = level;
-		
-		for (final EventChannel<?, ?> ch : channels) {
-			ch.enableLogging(logging);
-		}
 	}
 	
 	
@@ -81,25 +67,23 @@ final public class EventBus implements Destroyable {
 		}
 		
 		channels.add(channel);
-		channel.enableLogging(logging);
-		if (logging) Log.f3("<bus> Added chanel: " + Log.str(channel));
 		
 		return channel;
 	}
 	
 	
 	/**
-	 * Add a channel for given message and client type.
+	 * Add a channel for given event and client type.
 	 * 
-	 * @param messageClass message type
+	 * @param eventClass event type
 	 * @param clientClass client type
 	 * @return the created channel instance
 	 */
-	public <F_EVENT extends Event<F_CLIENT>, F_CLIENT> EventChannel<?, ?> addChannel(Class<F_EVENT> messageClass, Class<F_CLIENT> clientClass)
+	public <F_EVENT extends Event<F_CLIENT>, F_CLIENT> EventChannel<?, ?> addChannel(Class<F_EVENT> eventClass, Class<F_CLIENT> clientClass)
 	{
 		assertLive();
 		
-		final EventChannel<F_EVENT, F_CLIENT> channel = EventChannel.create(messageClass, clientClass);
+		final EventChannel<F_EVENT, F_CLIENT> channel = EventChannel.create(eventClass, clientClass);
 		return addChannel(channel);
 	}
 	
@@ -118,31 +102,54 @@ final public class EventBus implements Destroyable {
 	
 	
 	/**
-	 * Add message to a queue
+	 * Send based on annotation.
 	 * 
-	 * @param message message
+	 * @param event event
 	 */
-	public void queue(Event<?> message)
+	public void send(Event<?> event)
 	{
 		assertLive();
 		
-		schedule(message, 0);
+		if(event.getClass().isAnnotationPresent(QueuedEvent.class)) {
+			sendQueued(event);
+			return;
+		}
+		
+		if(event.getClass().isAnnotationPresent(ImmediateEvent.class)) {
+			sendDirect(event);
+			return;
+		}
+		
+		dispatch(event);
 	}
 	
 	
 	/**
-	 * Add message to a queue, scheduled for given time.
+	 * Add event to a queue
 	 * 
-	 * @param message message
-	 * @param delay delay before message is dispatched
+	 * @param event event
 	 */
-	public void schedule(Event<?> message, double delay)
+	public void sendQueued(Event<?> event)
 	{
 		assertLive();
 		
-		final DelayedMessage dm = new DelayedMessage(delay, message);
+		sendDelayed(event, 0);
+	}
+	
+	
+	/**
+	 * Add event to a queue, scheduled for given time.
+	 * 
+	 * @param event event
+	 * @param delay delay before event is dispatched
+	 */
+	public void sendDelayed(Event<?> event, double delay)
+	{
+		assertLive();
 		
-		if (logging) Log.f3("<bus> + [ Queuing: " + Log.str(message) + " ]");
+		final DelayedEvent dm = new DelayedEvent(delay, event);
+		
+		if(logSending) Log.f3("<bus> Q "+Log.str(event)+", t = +"+delay+"s");
 		
 		sendQueue.add(dm);
 	}
@@ -153,9 +160,26 @@ final public class EventBus implements Destroyable {
 	 * Should be used for real-time events that require immediate response, such
 	 * as timing events.
 	 * 
-	 * @param message message
+	 * @param event event
 	 */
-	public void send(Event<?> message)
+	public void sendDirect(Event<?> event)
+	{
+		assertLive();
+		
+		if(logSending) Log.f3("<bus> D "+Log.str(event));
+		
+		dispatch(event);
+	}
+	
+	
+	/**
+	 * Send immediately.<br>
+	 * Should be used for real-time events that require immediate response, such
+	 * as timing events.
+	 * 
+	 * @param event event
+	 */
+	private void dispatch(Event<?> event)
 	{
 		assertLive();
 		
@@ -163,29 +187,21 @@ final public class EventBus implements Destroyable {
 			channels.setBuffering(true);
 			clients.setBuffering(true);
 			
-			if (logging) Log.f3("<bus> - [ Sending: " + Log.str(message) + " ]");
-			
 			boolean sent = false;
-			boolean channelAccepted = false;
+			boolean accepted = false;
 			
-			final boolean singular = message.getClass().isAnnotationPresent(SingularEvent.class);
+			final boolean singular = event.getClass().isAnnotationPresent(SingularEvent.class);
 			
 			for (final EventChannel<?, ?> b : channels) {
-				if (b.canBroadcast(message)) {
-					channelAccepted = true;
-					sent |= b.broadcast(message, clients);
+				if (b.canBroadcast(event)) {
+					accepted = true;
+					sent |= b.broadcast(event, clients);
 				}
 				
-				if (sent && singular) {
-					break;
-				}
+				if (sent && singular) break;
 			}
 			
-			// more severe
-			if (!channelAccepted) Log.w("<bus> Not accepted by any channel: " + Log.str(message));
-			
-			// less severe
-			if (logging && !sent) Log.w("<bus> Not delivered to any client: " + Log.str(message));
+			if(!accepted) Log.e("<bus> Not accepted by any channel: " + Log.str(event));
 			
 			channels.setBuffering(false);
 			clients.setBuffering(false);
@@ -206,8 +222,6 @@ final public class EventBus implements Destroyable {
 		if (client == null) return;
 		
 		clients.add(client);
-		
-		if (logging) Log.f3("<bus> ADDING CLIENT " + client);
 	}
 	
 	
@@ -220,9 +234,7 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		clients.remove(client);
-		if (logging) Log.f3("<bus> REMOVING CLIENT " + client);
-		
+		clients.remove(client);		
 	}
 	
 	
@@ -241,16 +253,16 @@ final public class EventBus implements Destroyable {
 		return false;
 	}
 	
-	private class DelayedMessage implements Delayed {
+	private class DelayedEvent implements Delayed {
 		
 		private final long due;
-		private Event<?> theMessage = null;
+		private Event<?> evt = null;
 		
 		
-		public DelayedMessage(double seconds, Event<?> theMessage) {
+		public DelayedEvent(double seconds, Event<?> event) {
 			super();
 			this.due = System.currentTimeMillis() + (long) (seconds * 1000);
-			this.theMessage = theMessage;
+			this.evt = event;
 		}
 		
 		
@@ -268,9 +280,9 @@ final public class EventBus implements Destroyable {
 		}
 		
 		
-		public Event<?> getMessage()
+		public Event<?> getEvent()
 		{
-			return theMessage;
+			return evt;
 		}
 		
 	}
@@ -288,19 +300,19 @@ final public class EventBus implements Destroyable {
 		@Override
 		public void run()
 		{
-			DelayedMessage dm;
+			DelayedEvent evt;
 			
 			while (!stopped) {
-				dm = null;
+				evt = null;
 				
 				try {
-					dm = sendQueue.take();
+					evt = sendQueue.take();
 				} catch (final InterruptedException ignored) {
 					//
 				}
 				
-				if (dm != null) {
-					send(dm.getMessage());
+				if (evt != null) {
+					dispatch(evt.getEvent());
 				}
 			}
 		}

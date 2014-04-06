@@ -1,7 +1,8 @@
 package mightypork.rogue.bus.events;
 
 
-import mightypork.utils.control.bus.Event;
+import mightypork.utils.control.bus.events.Event;
+import mightypork.utils.control.bus.events.types.QueuedEvent;
 
 import org.lwjgl.input.Keyboard;
 
@@ -11,6 +12,7 @@ import org.lwjgl.input.Keyboard;
  * 
  * @author MightyPork
  */
+@QueuedEvent
 public class KeyboardEvent implements Event<KeyboardEvent.Listener> {
 	
 	private final int key;

@@ -76,6 +76,4 @@ public class Config {
 	public static boolean LOG_TO_STDOUT = true;
 	public static boolean SINGLE_INSTANCE = true;
 	
-	public static boolean LOG_BUS = false;
-	
 }

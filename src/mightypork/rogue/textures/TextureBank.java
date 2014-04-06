@@ -58,7 +58,7 @@ public class TextureBank extends AppAdapter {
 		tx.setFilter(filter_min, filter_mag);
 		tx.setWrap(wrap);
 		
-		bus().queue(new ResourceLoadRequest(tx));
+		bus().send(new ResourceLoadRequest(tx));
 		
 		textures.put(key, tx);
 		lastTx = tx;

@@ -8,11 +8,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ActionRequest;
+import mightypork.rogue.bus.events.UpdateEvent;
 import mightypork.rogue.bus.events.ActionRequest.RequestType;
 import mightypork.rogue.bus.events.MainLoopTaskRequest;
 import mightypork.rogue.tasks.TaskTakeScreenshot;
 import mightypork.rogue.util.Utils;
-import mightypork.utils.control.bus.events.UpdateEvent;
 import mightypork.utils.control.timing.TimerDelta;
 
 
@@ -37,18 +37,18 @@ public class MainLoop extends Subsystem implements ActionRequest.Listener, MainL
 	{
 		timer = new TimerDelta();
 		
-		while (running) {
+		while (running) {			
+			Runnable r;
+			while ((r = taskQueue.poll()) != null) {				
+				r.run();
+			}
+			
 			disp().beginFrame();
 			
 			bus().send(new UpdateEvent(timer.getDelta()));
 			
-			for (final Runnable r : regularTasks) {
-				r.run();
-			}
-			
-			Runnable r;
-			while ((r = taskQueue.poll()) != null) {
-				r.run();
+			for (final Runnable r2 : regularTasks) {
+				r2.run();
 			}
 			
 			disp().endFrame();

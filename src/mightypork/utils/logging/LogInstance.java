@@ -38,7 +38,7 @@ public class LogInstance {
 	private final int logs_to_keep;
 	
 	/** Logs dir */
-	private final File dir;
+	private final File log_dir;
 	
 	/** Logger instance. */
 	private Logger logger;
@@ -54,10 +54,17 @@ public class LogInstance {
 	private LogToSysoutMonitor sysoutMonitor;
 	
 	
+	/**
+	 * Log
+	 * 
+	 * @param name log name
+	 * @param dir log directory
+	 * @param oldLogCount number of old log files to keep: -1 all, 0 none.
+	 */
 	public LogInstance(String name, File dir, int oldLogCount) {
 		this.name = name;
 		this.file = new File(dir, name + getSuffix());
-		this.dir = dir;
+		this.log_dir = dir;
 		this.logs_to_keep = oldLogCount;
 		
 		init();
@@ -71,7 +78,7 @@ public class LogInstance {
 	{
 		logger = Logger.getLogger(name);
 		
-		cleanup();
+		cleanLoggingDirectory();
 		
 		FileHandler handler = null;
 		
@@ -92,26 +99,27 @@ public class LogInstance {
 		
 		logger.setUseParentHandlers(false);
 		logger.setLevel(Level.ALL);
-		logger.info("Main logger initialized.");
+		logger.info("Logger \""+name+"\" initialized.");
 		logger.info((new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date()));
 	}
 	
 	
-	private void cleanup()
+	private void cleanLoggingDirectory()
 	{
 		if (logs_to_keep == 0) return; // overwrite
 			
+		// move old file
 		for (final File f : FileUtils.listDirectory(file.getParentFile())) {
 			if (!f.isFile()) continue;
 			if (f.equals(file)) {
-				final Date d = new Date(f.lastModified());
 				
+				final Date d = new Date(f.lastModified());
 				final String fbase = name + '_' + (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(d);
 				final String suff = getSuffix();
 				String cntStr = "";
 				File f2;
 				
-				for (int cnt = 0; (f2 = new File(dir, fbase + cntStr + suff)).exists(); cntStr = "_" + (++cnt)) {}
+				for (int cnt = 0; (f2 = new File(log_dir, fbase + cntStr + suff)).exists(); cntStr = "_" + (++cnt)) {}
 				
 				f.renameTo(f2);
 			}
@@ -119,7 +127,7 @@ public class LogInstance {
 		
 		if (logs_to_keep == -1) return; // keep all
 			
-		final List<File> oldLogs = FileUtils.listDirectory(dir, new FileFilter() {
+		final List<File> oldLogs = FileUtils.listDirectory(log_dir, new FileFilter() {
 			
 			@Override
 			public boolean accept(File f)
@@ -174,6 +182,18 @@ public class LogInstance {
 	}
 	
 	
+	public void setSysoutLevel(Level level)
+	{
+		sysoutMonitor.setLevel(level);
+	}
+	
+	
+	public void setFileLevel(Level level)
+	{
+		logger.setLevel(level);
+	}
+	
+	
 	/**
 	 * Enable logging.
 	 * 
@@ -197,6 +217,34 @@ public class LogInstance {
 	}
 	
 	
+	public void log(Level level, String msg)
+	{
+		if (enabled) {
+			logger.log(level, msg);
+			
+			String fmt = formatMessage(level, msg, null);
+			
+			for (final LogMonitor mon : monitors.values()) {
+				mon.onMessageLogged(level, fmt);
+			}
+		}
+	}
+	
+	
+	public void log(Level level, String msg, Throwable t)
+	{
+		if (enabled) {
+			logger.log(level, msg, t);
+			
+			String fmt = formatMessage(level, msg, null);
+			
+			for (final LogMonitor mon : monitors.values()) {
+				mon.onMessageLogged(level, fmt);
+			}
+		}
+	}
+	
+	
 	/**
 	 * Log FINE message
 	 * 
@@ -204,7 +252,7 @@ public class LogInstance {
 	 */
 	public void f1(String msg)
 	{
-		if (enabled) logger.log(Level.FINE, msg);
+		log(Level.FINE, msg);
 	}
 	
 	
@@ -215,7 +263,7 @@ public class LogInstance {
 	 */
 	public void f2(String msg)
 	{
-		if (enabled) logger.log(Level.FINER, msg);
+		log(Level.FINER, msg);
 	}
 	
 	
@@ -226,7 +274,7 @@ public class LogInstance {
 	 */
 	public void f3(String msg)
 	{
-		if (enabled) logger.log(Level.FINEST, msg);
+		log(Level.FINEST, msg);
 	}
 	
 	
@@ -237,7 +285,7 @@ public class LogInstance {
 	 */
 	public void i(String msg)
 	{
-		if (enabled) logger.log(Level.INFO, msg);
+		log(Level.INFO, msg);
 	}
 	
 	
@@ -248,7 +296,7 @@ public class LogInstance {
 	 */
 	public void w(String msg)
 	{
-		if (enabled) logger.log(Level.WARNING, msg);
+		log(Level.WARNING, msg);
 	}
 	
 	
@@ -259,7 +307,7 @@ public class LogInstance {
 	 */
 	public void e(String msg)
 	{
-		if (enabled) logger.log(Level.SEVERE, msg);
+		log(Level.SEVERE, msg);
 	}
 	
 	
@@ -271,7 +319,7 @@ public class LogInstance {
 	 */
 	public void e(String msg, Throwable thrown)
 	{
-		if (enabled) logger.log(Level.SEVERE, msg + "\n" + getStackTrace(thrown));
+		log(Level.SEVERE, msg);
 	}
 	
 	
@@ -282,7 +330,70 @@ public class LogInstance {
 	 */
 	public void e(Throwable thrown)
 	{
-		if (enabled) logger.log(Level.SEVERE, getStackTrace(thrown));
+		log(Level.SEVERE, null, thrown);
+	}
+	
+	/**
+	 * PowerCraft Log file formatter.
+	 * 
+	 * @author MightyPork
+	 * @copy (c) 2012
+	 */
+	private class LogFormatter extends Formatter {
+		
+		@Override
+		public String format(LogRecord record)
+		{
+			return LogInstance.formatMessage(record.getLevel(), record.getMessage(), record.getThrown());
+		}
+	}
+	
+	
+	/**
+	 * @return log filename suffix (incl. dot)
+	 */
+	protected String getSuffix()
+	{
+		return ".log";
+	}
+	
+	
+	private static String formatMessage(Level level, String message, Throwable throwable)
+	{
+		
+		final String nl = System.getProperty("line.separator");
+		
+		if (message.equals("\n")) {
+			return nl;
+		}
+		
+		if (message.charAt(0) == '\n') {
+			message = nl + message.substring(1);
+		}
+		
+		String prefix = "[ ? ]";
+		
+		if (level == Level.FINE) {
+			prefix = "[ # ] ";
+		} else if (level == Level.FINER) {
+			prefix = "[ - ] ";
+		} else if (level == Level.FINEST) {
+			prefix = "[   ] ";
+		} else if (level == Level.INFO) {
+			prefix = "[ i ] ";
+		} else if (level == Level.SEVERE) {
+			prefix = "[!E!] ";
+		} else if (level == Level.WARNING) {
+			prefix = "[!W!] ";
+		}
+		
+		message = prefix + message.replaceAll("\n", nl + prefix) + nl;
+		
+		if (throwable != null) {
+			message += getStackTrace(throwable);
+		}
+		
+		return message;
 	}
 	
 	
@@ -300,93 +411,5 @@ public class LogInstance {
 		pw.flush();
 		sw.flush();
 		return sw.toString();
-	}
-	
-	/**
-	 * PowerCraft Log file formatter.
-	 * 
-	 * @author MightyPork
-	 * @copy (c) 2012
-	 */
-	private class LogFormatter extends Formatter {
-		
-		/** Newline string constant */
-		private final String nl = System.getProperty("line.separator");
-		
-		
-		@Override
-		public String format(LogRecord record)
-		{
-			final StringBuffer buf = new StringBuffer(180);
-			
-			if (record.getMessage().equals("\n")) {
-				return nl;
-			}
-			
-			if (record.getMessage().charAt(0) == '\n') {
-				buf.append(nl);
-				record.setMessage(record.getMessage().substring(1));
-			}
-			
-			final Level level = record.getLevel();
-			String trail = "[ ? ]";
-			if (level == Level.FINE) {
-				trail = "[ # ] ";
-			}
-			if (level == Level.FINER) {
-				trail = "[ - ] ";
-			}
-			if (level == Level.FINEST) {
-				trail = "[   ] ";
-			}
-			if (level == Level.INFO) {
-				trail = "[ i ] ";
-			}
-			if (level == Level.SEVERE) {
-				trail = "[!E!] ";
-			}
-			if (level == Level.WARNING) {
-				trail = "[!W!] ";
-			}
-			
-			record.setMessage(record.getMessage().replaceAll("\n", nl + trail));
-			
-			buf.append(trail);
-			buf.append(formatMessage(record));
-			
-			buf.append(nl);
-			
-			final Throwable throwable = record.getThrown();
-			if (throwable != null) {
-				buf.append("at ");
-				buf.append(record.getSourceClassName());
-				buf.append('.');
-				buf.append(record.getSourceMethodName());
-				buf.append(nl);
-				
-				final StringWriter sink = new StringWriter();
-				throwable.printStackTrace(new PrintWriter(sink, true));
-				buf.append(sink.toString());
-				
-				buf.append(nl);
-			}
-			
-			final String str = buf.toString();
-			
-			for (final LogMonitor mon : monitors.values()) {
-				mon.log(level, str);
-			}
-			
-			return str;
-		}
-	}
-	
-	
-	/**
-	 * @return log filename suffix (incl. dot)
-	 */
-	protected String getSuffix()
-	{
-		return ".log";
 	}
 }

@@ -63,7 +63,10 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 					
 					// textures & fonts needs to be loaded in main thread
 					if (def.getClass().isAnnotationPresent(MustLoadInMainThread.class)) {
-						app.bus().queue(new MainLoopTaskRequest(new Runnable() {
+						
+						Log.f3("<LOADER> Loading in main thread:\n    "+Log.str(def));
+						
+						app.bus().send(new MainLoopTaskRequest(new Runnable() {
 							
 							@Override
 							public void run()
@@ -74,6 +77,8 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 						
 						continue;
 					}
+					
+					Log.f3("<LOADER> Loading async:\n    "+Log.str(def));
 					
 					exs.submit(new Runnable() {
 						

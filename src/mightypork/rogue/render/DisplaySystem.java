@@ -86,7 +86,7 @@ public class DisplaySystem extends Subsystem implements ConstraintContext {
 				Display.update();
 			}
 			
-			bus().queue(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
+			bus().send(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
 			
 		} catch (final Throwable t) {
 			Log.e("Failed to toggle fullscreen mode.", t);
@@ -166,7 +166,7 @@ public class DisplaySystem extends Subsystem implements ConstraintContext {
 	{
 		// handle resize
 		if (Display.wasResized()) {
-			bus().queue(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
+			bus().send(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
 		}
 		
 		glLoadIdentity();

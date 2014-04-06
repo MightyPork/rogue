@@ -1,7 +1,8 @@
-package mightypork.utils.control.bus.events;
+package mightypork.rogue.bus.events;
 
 
-import mightypork.utils.control.bus.Event;
+import mightypork.utils.control.bus.events.Event;
+import mightypork.utils.control.bus.events.types.ImmediateEvent;
 import mightypork.utils.control.interf.Updateable;
 
 
@@ -10,6 +11,8 @@ import mightypork.utils.control.interf.Updateable;
  * 
  * @author MightyPork
  */
+// sending via queue would hog the bus
+@ImmediateEvent
 public class UpdateEvent implements Event<Updateable> {
 	
 	private final double deltaTime;
