@@ -1,11 +1,17 @@
 package mightypork.utils.control.bus;
 
 
+import java.lang.annotation.*;
+
+
 /**
- * Event handled by only single client.
+ * Event that is handled by only single client, and then discarded (ie. only one
+ * client receives it when it's broadcasted).
  * 
  * @author MightyPork
  */
-public interface SingularEvent {
-	
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Inherited
+@Documented
+public @interface SingularEvent {}

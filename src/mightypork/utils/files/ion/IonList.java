@@ -131,12 +131,12 @@ public class IonList extends AbstractIonList<Object> {
 	public Object getCheckType(int index, Class<?> type) throws IonException
 	{
 		try {
-			Object o = super.get(index);
+			final Object o = super.get(index);
 			if (o == null || !o.getClass().isAssignableFrom(type)) {
 				throw new IonException("Incorrect object type");
 			}
 			return o;
-		} catch (IndexOutOfBoundsException e) {
+		} catch (final IndexOutOfBoundsException e) {
 			throw new IonException("Out of bounds");
 		}
 	}

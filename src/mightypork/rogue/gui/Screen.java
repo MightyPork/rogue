@@ -8,6 +8,7 @@ import mightypork.rogue.bus.events.ScreenChangeEvent;
 import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
+import mightypork.rogue.render.Renderable;
 import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Coord;
@@ -19,7 +20,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class Screen extends ChildClient implements Destroyable, KeyBinder, ConstraintContext, ScreenChangeEvent.Listener {
+public abstract class Screen extends ChildClient implements Renderable, Destroyable, KeyBinder, ConstraintContext, ScreenChangeEvent.Listener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
@@ -148,6 +149,7 @@ public abstract class Screen extends ChildClient implements Destroyable, KeyBind
 	}
 	
 	
+	@Override
 	public final void render()
 	{
 		if (!isActive()) return;
@@ -165,7 +167,7 @@ public abstract class Screen extends ChildClient implements Destroyable, KeyBind
 		// fix projection for changed size
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		Coord s = disp().getSize();
+		final Coord s = disp().getSize();
 		glViewport(0, 0, s.xi(), s.yi());
 		glOrtho(0, s.x, s.y, 0, -1000, 1000);
 		

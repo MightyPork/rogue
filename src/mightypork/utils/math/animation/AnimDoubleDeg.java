@@ -38,9 +38,9 @@ public class AnimDoubleDeg extends AnimDouble {
 	@Override
 	protected double getProgressFromValue(double value)
 	{
-		double whole = Deg.diff(from, to);
+		final double whole = Deg.diff(from, to);
 		if (Deg.diff(value, from) < whole && Deg.diff(value, to) < whole) {
-			double partial = Deg.diff(from, value);
+			final double partial = Deg.diff(from, value);
 			return partial / whole;
 		}
 		

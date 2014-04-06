@@ -18,8 +18,8 @@ import mightypork.utils.control.timing.TimerDelta;
 
 public class MainLoop extends Subsystem implements ActionRequest.Listener, MainLoopTaskRequest.Listener {
 	
-	private Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<Runnable>();
-	private List<Runnable> regularTasks;
+	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<Runnable>();
+	private final List<Runnable> regularTasks;
 	
 	
 	public MainLoop(App app, ArrayList<Runnable> loopTasks) {
@@ -42,7 +42,7 @@ public class MainLoop extends Subsystem implements ActionRequest.Listener, MainL
 			
 			bus().send(new UpdateEvent(timer.getDelta()));
 			
-			for (Runnable r : regularTasks) {
+			for (final Runnable r : regularTasks) {
 				r.run();
 			}
 			
@@ -113,7 +113,7 @@ public class MainLoop extends Subsystem implements ActionRequest.Listener, MainL
 	
 	
 	@Override
-	public void queueTask(Runnable request)
+	public synchronized void queueTask(Runnable request)
 	{
 		taskQueue.add(request);
 	}

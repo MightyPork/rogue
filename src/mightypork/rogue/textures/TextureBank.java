@@ -1,4 +1,4 @@
-package mightypork.rogue.texture;
+package mightypork.rogue.textures;
 
 
 import java.util.HashMap;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.AppAdapter;
 import mightypork.rogue.bus.events.ResourceLoadRequest;
-import mightypork.rogue.texture.FilteredTexture.Filter;
-import mightypork.rogue.texture.FilteredTexture.Wrap;
+import mightypork.rogue.textures.FilteredTexture.Filter;
+import mightypork.rogue.textures.FilteredTexture.Wrap;
 import mightypork.utils.math.coord.Rect;
 
 import org.newdawn.slick.opengl.Texture;
@@ -54,7 +54,7 @@ public class TextureBank extends AppAdapter {
 	 */
 	public void loadTexture(String key, String resourcePath, Filter filter_min, Filter filter_mag, Wrap wrap)
 	{
-		DeferredTexture tx = new DeferredTexture(resourcePath);
+		final DeferredTexture tx = new DeferredTexture(resourcePath);
 		tx.setFilter(filter_min, filter_mag);
 		tx.setWrap(wrap);
 		
@@ -74,10 +74,10 @@ public class TextureBank extends AppAdapter {
 	 */
 	public void makeQuad(String quadKey, String textureKey, Rect quad)
 	{
-		DeferredTexture tx = textures.get(textureKey);
+		final DeferredTexture tx = textures.get(textureKey);
 		if (tx == null) throw new RuntimeException("Texture with key " + textureKey + " not defined!");
 		
-		TxQuad txquad = tx.getQuad(quad);
+		final TxQuad txquad = tx.getQuad(quad);
 		
 		quads.put(quadKey, txquad);
 	}
@@ -91,10 +91,10 @@ public class TextureBank extends AppAdapter {
 	 */
 	public void makeQuad(String quadKey, Rect quad)
 	{
-		DeferredTexture tx = lastTx;
+		final DeferredTexture tx = lastTx;
 		if (tx == null) throw new RuntimeException("There's no texture loaded yet, can't define quads!");
 		
-		TxQuad txquad = tx.getQuad(quad);
+		final TxQuad txquad = tx.getQuad(quad);
 		
 		quads.put(quadKey, txquad);
 	}
@@ -108,7 +108,7 @@ public class TextureBank extends AppAdapter {
 	 */
 	public TxQuad getTxQuad(String key)
 	{
-		TxQuad q = quads.get(key);
+		final TxQuad q = quads.get(key);
 		
 		if (q == null) throw new RuntimeException("There's no quad called " + key + "!");
 		
@@ -124,7 +124,7 @@ public class TextureBank extends AppAdapter {
 	 */
 	public Texture getTexture(String key)
 	{
-		Texture t = textures.get(key);
+		final Texture t = textures.get(key);
 		
 		if (t == null) throw new RuntimeException("There's no texture called " + key + "!");
 		

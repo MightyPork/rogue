@@ -161,7 +161,7 @@ public class Polar {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof Polar)) return false;
-		Polar other = (Polar) obj;
+		final Polar other = (Polar) obj;
 		if (Double.doubleToLongBits(angle) != Double.doubleToLongBits(other.angle)) return false;
 		if (Double.doubleToLongBits(radius) != Double.doubleToLongBits(other.radius)) return false;
 		return true;

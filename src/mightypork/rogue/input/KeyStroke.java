@@ -8,6 +8,11 @@ import java.util.Set;
 import org.lwjgl.input.Keyboard;
 
 
+/**
+ * Key stroke trigger
+ * 
+ * @author MightyPork
+ */
 public class KeyStroke {
 	
 	private final Set<Integer> keys = new LinkedHashSet<Integer>();
@@ -22,7 +27,7 @@ public class KeyStroke {
 	 */
 	public KeyStroke(boolean fallingEdge, int... keys) {
 		this.fallingEdge = fallingEdge;
-		for (int k : keys) {
+		for (final int k : keys) {
 			this.keys.add(k);
 		}
 	}
@@ -35,16 +40,19 @@ public class KeyStroke {
 	 */
 	public KeyStroke(int... keys) {
 		fallingEdge = false;
-		for (int k : keys) {
+		for (final int k : keys) {
 			this.keys.add(k);
 		}
 	}
 	
 	
+	/**
+	 * @return true if the keystroke is currently satisfied (keys pressed)
+	 */
 	public boolean isActive()
 	{
 		boolean st = true;
-		for (int k : keys) {
+		for (final int k : keys) {
 			st &= Keyboard.isKeyDown(k);
 		}
 		
@@ -68,7 +76,7 @@ public class KeyStroke {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof KeyStroke)) return false;
-		KeyStroke other = (KeyStroke) obj;
+		final KeyStroke other = (KeyStroke) obj;
 		
 		if (keys == null) {
 			if (other.keys != null) return false;
@@ -88,7 +96,7 @@ public class KeyStroke {
 		String s = "(";
 		
 		int cnt = 0;
-		Iterator<Integer> i = keys.iterator();
+		final Iterator<Integer> i = keys.iterator();
 		for (; i.hasNext(); cnt++) {
 			if (cnt > 0) s += "+";
 			s += Keyboard.getKeyName(i.next());
@@ -102,6 +110,9 @@ public class KeyStroke {
 	}
 	
 	
+	/**
+	 * @return the key set
+	 */
 	public Set<Integer> getKeys()
 	{
 		return keys;

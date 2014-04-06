@@ -9,7 +9,7 @@ public interface KeyBinder {
 	 * @param stroke trigger keystroke
 	 * @param task handler
 	 */
-	abstract void bindKeyStroke(KeyStroke stroke, Runnable task);
+	void bindKeyStroke(KeyStroke stroke, Runnable task);
 	
 	
 	/**
@@ -17,6 +17,6 @@ public interface KeyBinder {
 	 * 
 	 * @param stroke stroke
 	 */
-	abstract void unbindKeyStroke(KeyStroke stroke);
+	void unbindKeyStroke(KeyStroke stroke);
 	
 }

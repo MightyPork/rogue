@@ -45,7 +45,7 @@ public class ZipUtils {
 		} finally {
 			try {
 				if (zip != null) zip.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			}
 		}
@@ -63,20 +63,20 @@ public class ZipUtils {
 	 */
 	public static List<String> extractZip(ZipFile zip, File outputDir, StringFilter filter) throws IOException
 	{
-		ArrayList<String> files = new ArrayList<String>();
+		final ArrayList<String> files = new ArrayList<String>();
 		
 		outputDir.mkdirs();
 		
-		Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
+		final Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
 		
 		// process each entry
 		while (zipFileEntries.hasMoreElements()) {
-			ZipEntry entry = zipFileEntries.nextElement();
+			final ZipEntry entry = zipFileEntries.nextElement();
 			
 			// parse filename and path
-			String entryPath = entry.getName();
-			File destFile = new File(outputDir, entryPath);
-			File destinationParent = destFile.getParentFile();
+			final String entryPath = entry.getName();
+			final File destFile = new File(outputDir, entryPath);
+			final File destinationParent = destFile.getParentFile();
 			
 			if (entry.isDirectory() || (filter != null && !filter.accept(entryPath))) continue;
 			
@@ -109,7 +109,7 @@ public class ZipUtils {
 		} finally {
 			try {
 				if (zip != null) zip.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			}
 		}
@@ -125,13 +125,13 @@ public class ZipUtils {
 	 */
 	public static List<String> listZip(ZipFile zip) throws IOException
 	{
-		ArrayList<String> files = new ArrayList<String>();
+		final ArrayList<String> files = new ArrayList<String>();
 		
-		Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
+		final Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
 		
 		// process each entry
 		while (zipFileEntries.hasMoreElements()) {
-			ZipEntry entry = zipFileEntries.nextElement();
+			final ZipEntry entry = zipFileEntries.nextElement();
 			
 			if (!entry.isDirectory()) {
 				files.add(entry.getName());
@@ -167,13 +167,13 @@ public class ZipUtils {
 		} finally {
 			try {
 				if (is != null) is.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			}
 			
 			try {
 				if (dest != null) dest.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			}
 			
@@ -194,12 +194,12 @@ public class ZipUtils {
 		BufferedInputStream is = null;
 		try {
 			is = new BufferedInputStream(zip.getInputStream(entry));
-			String s = FileUtils.streamToString(is);
+			final String s = FileUtils.streamToString(is);
 			return s;
 		} finally {
 			try {
 				if (is != null) is.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			}
 		}
@@ -213,12 +213,12 @@ public class ZipUtils {
 		try {
 			zf = new ZipFile(selectedFile);
 			return zf.getEntry(string) != null;
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return false;
 		} finally {
 			try {
 				if (zf != null) zf.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			}
 		}

@@ -39,8 +39,8 @@ public class SlickFont implements GLFont {
 	{
 		if (chars == null) return null;
 		
-		StringBuilder sb = new StringBuilder();
-		for (char c : chars.toCharArray()) {
+		final StringBuilder sb = new StringBuilder();
+		for (final char c : chars.toCharArray()) {
 			if (c <= 255) continue; // already included in default set
 			sb.append(c);
 		}

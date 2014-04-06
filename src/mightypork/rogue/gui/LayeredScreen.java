@@ -20,7 +20,7 @@ public abstract class LayeredScreen extends Screen {
 	@Override
 	protected final void renderScreen()
 	{
-		for (ScreenLayer layer : layers) {
+		for (final ScreenLayer layer : layers) {
 			layer.render();
 		}
 	}

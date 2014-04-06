@@ -45,16 +45,16 @@ public class PropertyManager {
 		
 		private static void writeComments(BufferedWriter bw, String comm) throws IOException
 		{
-			String comments = comm.replace("\n\n", "\n \n");
+			final String comments = comm.replace("\n\n", "\n \n");
 			
-			int len = comments.length();
+			final int len = comments.length();
 			int current = 0;
 			int last = 0;
-			char[] uu = new char[6];
+			final char[] uu = new char[6];
 			uu[0] = '\\';
 			uu[1] = 'u';
 			while (current < len) {
-				char c = comments.charAt(current);
+				final char c = comments.charAt(current);
 				if (c > '\u00ff' || c == '\n' || c == '\r') {
 					if (last != current) {
 						bw.write("# " + comments.substring(last, current));
@@ -96,7 +96,7 @@ public class PropertyManager {
 		private boolean firstEntry = true;
 		
 		/** Comments for individual keys */
-		private Hashtable<String, String> keyComments = new Hashtable<String, String>();
+		private final Hashtable<String, String> keyComments = new Hashtable<String, String>();
 		
 		private String lastSectionBeginning = "";
 		
@@ -105,8 +105,8 @@ public class PropertyManager {
 		@Override
 		public synchronized Enumeration keys()
 		{
-			Enumeration keysEnum = super.keys();
-			Vector keyList = new Vector();
+			final Enumeration keysEnum = super.keys();
+			final Vector keyList = new Vector();
 			while (keysEnum.hasMoreElements()) {
 				keyList.add(keysEnum.nextElement());
 			}
@@ -117,15 +117,15 @@ public class PropertyManager {
 		
 		private static String saveConvert(String theString, boolean escapeSpace, boolean escapeUnicode)
 		{
-			int len = theString.length();
+			final int len = theString.length();
 			int bufLen = len * 2;
 			if (bufLen < 0) {
 				bufLen = Integer.MAX_VALUE;
 			}
-			StringBuffer outBuffer = new StringBuffer(bufLen);
+			final StringBuffer outBuffer = new StringBuffer(bufLen);
 			
 			for (int x = 0; x < len; x++) {
-				char aChar = theString.charAt(x);
+				final char aChar = theString.charAt(x);
 				
 				// Handle common case first, selecting largest block that
 				// avoids the specials below
@@ -209,16 +209,16 @@ public class PropertyManager {
 		@Override
 		public void store(OutputStream out, String comments) throws IOException
 		{
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+			final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
 			
-			boolean escUnicode = false;
+			final boolean escUnicode = false;
 			
 			if (comments != null) {
 				writeComments(bw, comments);
 			}
 			
 			synchronized (this) {
-				for (Enumeration e = keys(); e.hasMoreElements();) {
+				for (final Enumeration e = keys(); e.hasMoreElements();) {
 					boolean wasNewLine = false;
 					
 					String key = (String) e.nextElement();
@@ -242,12 +242,12 @@ public class PropertyManager {
 						cm = cm.replace("\r\n", "\n");
 						cm = cm.replace("\n\n", "\n \n");
 						
-						String[] cmlines = cm.split("\n");
+						final String[] cmlines = cm.split("\n");
 						
 						if (!wasNewLine && !firstEntry && cfgEmptyLineBeforeComment) {
 							bw.newLine();
 						}
-						for (String cmline : cmlines) {
+						for (final String cmline : cmlines) {
 							bw.write("# " + cmline);
 							bw.newLine();
 						}
@@ -273,11 +273,11 @@ public class PropertyManager {
 		
 		private static String escapifyStr(String str)
 		{
-			StringBuilder result = new StringBuilder();
+			final StringBuilder result = new StringBuilder();
 			
-			int len = str.length();
+			final int len = str.length();
 			for (int x = 0; x < len; x++) {
-				char ch = str.charAt(x);
+				final char ch = str.charAt(x);
 				if (ch <= 0x007e) {
 					result.append(ch);
 					continue;
@@ -296,7 +296,7 @@ public class PropertyManager {
 		
 		private static char hexDigit(char ch, int offset)
 		{
-			int val = (ch >> offset) & 0xF;
+			final int val = (ch >> offset) & 0xF;
 			if (val <= 9) {
 				return (char) ('0' + val);
 			}
@@ -313,25 +313,25 @@ public class PropertyManager {
 		
 		public static SortedProperties loadProperties(SortedProperties props, InputStream is, String encoding) throws IOException
 		{
-			StringBuilder sb = new StringBuilder();
-			InputStreamReader isr = new InputStreamReader(is, encoding);
+			final StringBuilder sb = new StringBuilder();
+			final InputStreamReader isr = new InputStreamReader(is, encoding);
 			while (true) {
-				int temp = isr.read();
+				final int temp = isr.read();
 				if (temp < 0) {
 					break;
 				}
 				
-				char c = (char) temp;
+				final char c = (char) temp;
 				sb.append(c);
 			}
 			
-			String read = sb.toString();
+			final String read = sb.toString();
 			
-			String inputString = escapifyStr(read);
-			byte[] bs = inputString.getBytes("ISO-8859-1");
-			ByteArrayInputStream bais = new ByteArrayInputStream(bs);
+			final String inputString = escapifyStr(read);
+			final byte[] bs = inputString.getBytes("ISO-8859-1");
+			final ByteArrayInputStream bais = new ByteArrayInputStream(bs);
 			
-			SortedProperties ps = props;
+			final SortedProperties ps = props;
 			ps.load(bais);
 			return ps;
 		}
@@ -491,7 +491,7 @@ public class PropertyManager {
 					
 					try {
 						num = Integer.parseInt(string.trim());
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						num = defnum;
 					}
 					
@@ -506,7 +506,7 @@ public class PropertyManager {
 					
 					try {
 						num = Double.parseDouble(string.trim());
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						num = defnum;
 					}
 					
@@ -529,7 +529,7 @@ public class PropertyManager {
 						return false;
 					}
 					
-					String string2 = string.toLowerCase();
+					final String string2 = string.toLowerCase();
 					bool = string2.equals("yes") || string2.equals("true") || string2.equals("on") || string2.equals("enabled") || string2.equals("enable");
 			}
 			
@@ -598,12 +598,12 @@ public class PropertyManager {
 	/** Force save, even if nothing changed (used to save changed comments) */
 	private boolean cfgForceSave;
 	
-	private File file;
+	private final File file;
 	private String fileComment = "";
 	
-	private TreeMap<String, Property> entries;
-	private TreeMap<String, String> keyRename;
-	private TreeMap<String, String> setValues;
+	private final TreeMap<String, Property> entries;
+	private final TreeMap<String, String> keyRename;
+	private final TreeMap<String, String> setValues;
 	private SortedProperties pr = new SortedProperties();
 	
 	
@@ -634,13 +634,13 @@ public class PropertyManager {
 			fis = new FileInputStream(file);
 			pr = PropertiesLoader.loadProperties(pr, fis);
 			
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			needsSave = true;
 			pr = new SortedProperties();
 		} finally {
 			try {
 				if (fis != null) fis.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -648,10 +648,10 @@ public class PropertyManager {
 		pr.cfgSeparateSectionsByEmptyLine = cfgSeparateSections;
 		pr.cfgEmptyLineBeforeComment = cfgNewlineBeforeComments;
 		
-		ArrayList<String> keyList = new ArrayList<String>();
+		final ArrayList<String> keyList = new ArrayList<String>();
 		
 		// rename keys
-		for (Entry<String, String> entry : keyRename.entrySet()) {
+		for (final Entry<String, String> entry : keyRename.entrySet()) {
 			if (pr.getProperty(entry.getKey()) == null) {
 				continue;
 			}
@@ -661,16 +661,16 @@ public class PropertyManager {
 		}
 		
 		// set the override values into the freshly loaded properties file
-		for (Entry<String, String> entry : setValues.entrySet()) {
+		for (final Entry<String, String> entry : setValues.entrySet()) {
 			pr.setProperty(entry.getKey(), entry.getValue());
 			needsSave = true;
 		}
 		
 		// validate entries one by one, replace with default when needed
-		for (Property entry : entries.values()) {
+		for (final Property entry : entries.values()) {
 			keyList.add(entry.name);
 			
-			String propOrig = pr.getProperty(entry.name);
+			final String propOrig = pr.getProperty(entry.name);
 			if (!entry.parse(propOrig)) needsSave = true;
 			if (!cfgNoValidate) {
 				entry.validate();
@@ -688,7 +688,7 @@ public class PropertyManager {
 		}
 		
 		// removed unused props
-		for (String propname : pr.keySet().toArray(new String[pr.size()])) {
+		for (final String propname : pr.keySet().toArray(new String[pr.size()])) {
 			if (!keyList.contains(propname)) {
 				pr.remove(propname);
 				needsSave = true;
@@ -700,7 +700,7 @@ public class PropertyManager {
 		if (needsSave || cfgForceSave) {
 			try {
 				pr.store(new FileOutputStream(file), fileComment);
-			} catch (IOException ioe) {
+			} catch (final IOException ioe) {
 				ioe.printStackTrace();
 			}
 		}
@@ -756,7 +756,7 @@ public class PropertyManager {
 	{
 		try {
 			return entries.get(n);
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			return null;
 		}
 	}
@@ -772,7 +772,7 @@ public class PropertyManager {
 	{
 		try {
 			return entries.get(n).getBoolean();
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			return false;
 		}
 	}
@@ -788,7 +788,7 @@ public class PropertyManager {
 	{
 		try {
 			return get(n).getInteger();
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			return -1;
 		}
 	}
@@ -804,7 +804,7 @@ public class PropertyManager {
 	{
 		try {
 			return get(n).getDouble();
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			return -1D;
 		}
 	}
@@ -820,7 +820,7 @@ public class PropertyManager {
 	{
 		try {
 			return get(n).getString();
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			return null;
 		}
 	}

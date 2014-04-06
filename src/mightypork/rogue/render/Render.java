@@ -5,7 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
 
-import mightypork.rogue.texture.TxQuad;
+import mightypork.rogue.textures.TxQuad;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
@@ -170,7 +170,7 @@ public class Render {
 	 */
 	public static void rotate(double angle, Coord axis)
 	{
-		Coord vec = axis.norm(1);
+		final Coord vec = axis.norm(1);
 		glRotated(angle, vec.x, vec.y, vec.z);
 	}
 	
@@ -204,11 +204,9 @@ public class Render {
 		
 		try {
 			
-			String ext = FileUtils.getExtension(resourcePath).toUpperCase();
+			final String ext = FileUtils.getExtension(resourcePath).toUpperCase();
 			
-			Log.f3("Loading texture " + ext + " at " + resourcePath);
-			
-			Texture texture = TextureLoader.getTexture(ext, ResourceLoader.getResourceAsStream(resourcePath));
+			final Texture texture = TextureLoader.getTexture(ext, ResourceLoader.getResourceAsStream(resourcePath));
 			
 			if (texture == null) {
 				Log.w("Texture " + resourcePath + " could not be loaded.");
@@ -216,7 +214,7 @@ public class Render {
 			
 			return texture;
 			
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Log.e("Loading of texture " + resourcePath + " failed.", e);
 			throw new RuntimeException("Could not load texture " + resourcePath + ".", e);
 		}
@@ -280,10 +278,10 @@ public class Render {
 	 */
 	public static void quad(Rect quad)
 	{
-		double left = quad.xMin();
-		double bottom = quad.yMin();
-		double right = quad.xMax();
-		double top = quad.yMax();
+		final double left = quad.xMin();
+		final double bottom = quad.yMin();
+		final double right = quad.xMax();
+		final double top = quad.yMax();
 		
 		// draw with color
 		unbindTexture();
@@ -320,15 +318,15 @@ public class Render {
 	 */
 	public static void quadUV_nobound(Rect quad, Rect uvs)
 	{
-		double left = quad.xMin();
-		double bottom = quad.yMin();
-		double right = quad.xMax();
-		double top = quad.yMax();
+		final double left = quad.xMin();
+		final double bottom = quad.yMin();
+		final double right = quad.xMax();
+		final double top = quad.yMax();
 		
-		double tleft = uvs.xMin();
-		double tbottom = uvs.yMin();
-		double tright = uvs.xMax();
-		double ttop = uvs.yMax();
+		final double tleft = uvs.xMin();
+		final double tbottom = uvs.yMin();
+		final double tright = uvs.xMax();
+		final double ttop = uvs.yMax();
 		
 		// quad with texture
 		glTexCoord2d(tleft, ttop);
@@ -344,10 +342,10 @@ public class Render {
 	
 	public static void quadGradH(Rect quad, RGB colorLeft, RGB colorRight)
 	{
-		double left = quad.xMin();
-		double bottom = quad.yMin();
-		double right = quad.yMax();
-		double top = quad.yMax();
+		final double left = quad.xMin();
+		final double bottom = quad.yMin();
+		final double right = quad.yMax();
+		final double top = quad.yMax();
 		
 		// draw with color
 		unbindTexture();
@@ -368,10 +366,10 @@ public class Render {
 	
 	public static void quadGradV(Rect quad, RGB colorTop, RGB colorBottom)
 	{
-		double left = quad.xMin();
-		double bottom = quad.yMin();
-		double right = quad.yMax();
-		double top = quad.yMax();
+		final double left = quad.xMin();
+		final double bottom = quad.yMin();
+		final double right = quad.yMax();
+		final double top = quad.yMax();
 		
 		// draw with color
 		unbindTexture();

@@ -18,8 +18,8 @@ import mightypork.utils.logging.Log;
  */
 final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	
-	private Class<CLIENT> clientClass;
-	private Class<EVENT> messageClass;
+	private final Class<CLIENT> clientClass;
+	private final Class<EVENT> messageClass;
 	private boolean logging = false;
 	
 	
@@ -61,7 +61,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	{
 		if (!canBroadcast(message)) return false;
 		
-		EVENT evt = messageClass.cast(message);
+		final EVENT evt = messageClass.cast(message);
 		
 		return doBroadcast(evt, clients, new HashSet<Object>());
 	}
@@ -78,8 +78,9 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	private boolean doBroadcast(final EVENT message, final Collection<Object> clients, final Collection<Object> processed)
 	{
 		boolean sent = false;
+		final boolean singular = message.getClass().isAnnotationPresent(SingularEvent.class);
 		
-		for (Object client : clients) {
+		for (final Object client : clients) {
 			
 			// exclude obvious non-clients
 			if (!isClientValid(client)) {
@@ -104,13 +105,13 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 			sent |= sendTo(client, message);
 			
 			// singular event ain't no whore, handled once only.
-			if (sent && message instanceof SingularEvent) return true;
+			if (sent && singular) return true;
 			
 			// pass on to delegated clients
 			if (client instanceof DelegatingClient) {
 				if (((DelegatingClient) client).doesDelegate()) {
 					
-					Collection<Object> children = ((DelegatingClient) client).getChildClients();
+					final Collection<Object> children = ((DelegatingClient) client).getChildClients();
 					
 					if (children != null && children.size() > 0) {
 						sent |= doBroadcast(message, children, processed);
@@ -212,7 +213,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof EventChannel)) return false;
-		EventChannel<?, ?> other = (EventChannel<?, ?>) obj;
+		final EventChannel<?, ?> other = (EventChannel<?, ?>) obj;
 		if (clientClass == null) {
 			if (other.clientClass != null) return false;
 		} else if (!clientClass.equals(other.clientClass)) return false;

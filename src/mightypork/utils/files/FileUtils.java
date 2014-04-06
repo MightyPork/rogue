@@ -43,7 +43,7 @@ public class FileUtils {
 				target.mkdir();
 			}
 			
-			String[] children = source.list();
+			final String[] children = source.list();
 			for (int i = 0; i < children.length; i++) {
 				copyDirectory(new File(source, children[i]), new File(target, children[i]), filter, filesCopied);
 			}
@@ -70,7 +70,7 @@ public class FileUtils {
 	public static void listDirectoryRecursive(File source, StringFilter filter, List<File> files) throws IOException
 	{
 		if (source.isDirectory()) {
-			String[] children = source.list();
+			final String[] children = source.list();
 			for (int i = 0; i < children.length; i++) {
 				listDirectoryRecursive(new File(source, children[i]), filter, files);
 			}
@@ -105,12 +105,12 @@ public class FileUtils {
 		} finally {
 			try {
 				if (in != null) in.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 			try {
 				if (out != null) out.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -134,7 +134,7 @@ public class FileUtils {
 			throw new NullPointerException("Output stream is null");
 		}
 		
-		byte[] buf = new byte[2048];
+		final byte[] buf = new byte[2048];
 		int len;
 		while ((len = in.read(buf)) > 0) {
 			out.write(buf, 0, len);
@@ -157,7 +157,7 @@ public class FileUtils {
 		
 		if (!recursive || !path.isDirectory()) return path.delete();
 		
-		String[] list = path.list();
+		final String[] list = path.list();
 		for (int i = 0; i < list.length; i++) {
 			if (!delete(new File(path, list[i]), true)) return false;
 		}
@@ -175,7 +175,7 @@ public class FileUtils {
 	 */
 	public static String fileToString(File file) throws IOException
 	{
-		FileInputStream fin = new FileInputStream(file);
+		final FileInputStream fin = new FileInputStream(file);
 		
 		return streamToString(fin);
 	}
@@ -204,17 +204,17 @@ public class FileUtils {
 	{
 		try {
 			dir.mkdir();
-		} catch (RuntimeException e) {
+		} catch (final RuntimeException e) {
 			Log.e("Error creating folder " + dir, e);
 		}
 		
-		List<File> list = new ArrayList<File>();
+		final List<File> list = new ArrayList<File>();
 		
 		try {
-			for (File f : dir.listFiles(filter)) {
+			for (final File f : dir.listFiles(filter)) {
 				list.add(f);
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			Log.e("Error listing folder " + dir, e);
 		}
 		
@@ -258,13 +258,13 @@ public class FileUtils {
 		
 		try {
 			ext = StringUtils.fromLastDot(filename);
-		} catch (StringIndexOutOfBoundsException e) {
+		} catch (final StringIndexOutOfBoundsException e) {
 			ext = "";
 		}
 		
 		try {
 			name = StringUtils.toLastDot(filename);
-		} catch (StringIndexOutOfBoundsException e) {
+		} catch (final StringIndexOutOfBoundsException e) {
 			name = "";
 			Log.w("Error extracting extension from file " + filename);
 		}
@@ -300,7 +300,7 @@ public class FileUtils {
 		}
 		
 		BufferedReader br = null;
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		
 		String line;
 		try {
@@ -315,12 +315,12 @@ public class FileUtils {
 				sb.append("--- end of preview ---\n");
 			}
 			
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Log.e(e);
 		} finally {
 			try {
 				if (br != null) br.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			}
 		}
@@ -335,7 +335,7 @@ public class FileUtils {
 		
 		try {
 			return new ByteArrayInputStream(text.getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) {
+		} catch (final UnsupportedEncodingException e) {
 			Log.e(e);
 			return null;
 		}
@@ -344,13 +344,13 @@ public class FileUtils {
 	
 	public static InputStream getResource(String path)
 	{
-		InputStream in = FileUtils.class.getResourceAsStream(path);
+		final InputStream in = FileUtils.class.getResourceAsStream(path);
 		
 		if (in != null) return in;
 		
 		try {
 			return new FileInputStream(new File(".", path));
-		} catch (FileNotFoundException e) {
+		} catch (final FileNotFoundException e) {
 			// error			
 			Log.w("Could not open resource stream: " + path);
 			return null;
@@ -390,12 +390,12 @@ public class FileUtils {
 	
 	public static void deleteEmptyDirs(File base)
 	{
-		for (File f : listDirectory(base)) {
+		for (final File f : listDirectory(base)) {
 			if (!f.isDirectory()) continue;
 			
 			deleteEmptyDirs(f);
 			
-			List<File> children = listDirectory(f);
+			final List<File> children = listDirectory(f);
 			if (children.size() == 0) {
 				f.delete();
 				continue;
@@ -413,9 +413,9 @@ public class FileUtils {
 	 */
 	public static String escapeFileString(String filestring)
 	{
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		
-		for (char c : filestring.toCharArray()) {
+		for (final char c : filestring.toCharArray()) {
 			switch (c) {
 				case '%':
 					sb.append("%%");
@@ -458,7 +458,7 @@ public class FileUtils {
 	 */
 	public static String escapeFilename(String filename)
 	{
-		String[] parts = getFilenameParts(filename);
+		final String[] parts = getFilenameParts(filename);
 		
 		return escapeFileString(parts[0]) + "." + parts[1];
 	}
@@ -472,7 +472,7 @@ public class FileUtils {
 	 */
 	public static String unescapeFilename(String filename)
 	{
-		String[] parts = getFilenameParts(filename);
+		final String[] parts = getFilenameParts(filename);
 		
 		return unescapeFileString(parts[0]) + "." + parts[1];
 	}
@@ -510,13 +510,13 @@ public class FileUtils {
 		} finally {
 			try {
 				if (in != null) in.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			}
 			
 			try {
 				if (out != null) out.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			}
 		}
@@ -532,7 +532,7 @@ public class FileUtils {
 	 */
 	public static String resourceToString(String resname)
 	{
-		InputStream in = FileUtils.getResource(resname);
+		final InputStream in = FileUtils.getResource(resname);
 		return streamToString(in);
 	}
 }

@@ -32,7 +32,7 @@ public class SimpleConfig {
 	 */
 	public static List<String> listFromFile(File file) throws IOException
 	{
-		String fileText = FileUtils.fileToString(file);
+		final String fileText = FileUtils.fileToString(file);
 		
 		return listFromString(fileText);
 	}
@@ -47,7 +47,7 @@ public class SimpleConfig {
 	 */
 	public static Map<String, String> mapFromFile(File file) throws IOException
 	{
-		String fileText = FileUtils.fileToString(file);
+		final String fileText = FileUtils.fileToString(file);
 		
 		return mapFromString(fileText);
 	}
@@ -61,9 +61,9 @@ public class SimpleConfig {
 	 */
 	public static List<String> listFromString(String text)
 	{
-		List<String> list = new ArrayList<String>();
+		final List<String> list = new ArrayList<String>();
 		
-		String[] groupsLines = text.split("\n");
+		final String[] groupsLines = text.split("\n");
 		
 		for (String s : groupsLines) {
 			// ignore invalid lines
@@ -91,11 +91,11 @@ public class SimpleConfig {
 	 */
 	public static Map<String, String> mapFromString(String text)
 	{
-		LinkedHashMap<String, String> pairs = new LinkedHashMap<String, String>();
+		final LinkedHashMap<String, String> pairs = new LinkedHashMap<String, String>();
 		
-		String[] groupsLines = text.split("\n");
+		final String[] groupsLines = text.split("\n");
 		
-		for (String s : groupsLines) {
+		for (final String s : groupsLines) {
 			// ignore invalid lines
 			if (s.length() == 0) continue;
 			if (s.startsWith("#") || s.startsWith("//")) continue;
@@ -147,9 +147,9 @@ public class SimpleConfig {
 	 */
 	public static void mapToFile(File target, Map<String, String> data, boolean allowNulls) throws IOException
 	{
-		List<String> lines = new ArrayList<String>();
+		final List<String> lines = new ArrayList<String>();
 		
-		for (Entry<String, String> e : data.entrySet()) {
+		for (final Entry<String, String> e : data.entrySet()) {
 			String key = e.getKey();
 			String value = e.getValue();
 			
@@ -166,7 +166,7 @@ public class SimpleConfig {
 		
 		String text = ""; // # File written by SimpleConfig
 		
-		for (String s : lines) {
+		for (final String s : lines) {
 			if (text.length() > 0) text += "\n";
 			
 			text += s;

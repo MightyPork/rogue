@@ -88,7 +88,7 @@ public class SoundSystem extends Subsystem implements Updateable {
 	@Override
 	public final void deinit()
 	{
-		for (DeferredAudio r : resources) {
+		for (final DeferredAudio r : resources) {
 			r.destroy();
 		}
 		
@@ -100,7 +100,7 @@ public class SoundSystem extends Subsystem implements Updateable {
 	@Override
 	public void update(double delta)
 	{
-		for (Updateable lp : loopPlayers) {
+		for (final Updateable lp : loopPlayers) {
 			lp.update(delta);
 		}
 	}
@@ -132,7 +132,7 @@ public class SoundSystem extends Subsystem implements Updateable {
 	 */
 	public LoopPlayer createLoop(String resource, double pitch, double gain, double fadeIn, double fadeOut)
 	{
-		LoopPlayer p = new LoopPlayer(getResource(resource), pitch, gain, loopsVolume);
+		final LoopPlayer p = new LoopPlayer(getResource(resource), pitch, gain, loopsVolume);
 		p.setFadeTimes(fadeIn, fadeOut);
 		loopPlayers.add(p);
 		return p;
@@ -148,7 +148,7 @@ public class SoundSystem extends Subsystem implements Updateable {
 	 */
 	private DeferredAudio getResource(String res)
 	{
-		DeferredAudio a = new DeferredAudio(res);
+		final DeferredAudio a = new DeferredAudio(res);
 		bus().queue(new ResourceLoadRequest(a));
 		
 		if (resources.contains(a)) throw new IllegalArgumentException("Sound resource " + res + " is already registered.");
@@ -162,7 +162,7 @@ public class SoundSystem extends Subsystem implements Updateable {
 	 */
 	public void fadeOutAllLoops()
 	{
-		for (LoopPlayer p : loopPlayers) {
+		for (final LoopPlayer p : loopPlayers) {
 			p.fadeOut();
 		}
 	}
@@ -173,7 +173,7 @@ public class SoundSystem extends Subsystem implements Updateable {
 	 */
 	public void pauseAllLoops()
 	{
-		for (LoopPlayer p : loopPlayers) {
+		for (final LoopPlayer p : loopPlayers) {
 			p.pause();
 		}
 	}

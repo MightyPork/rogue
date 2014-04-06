@@ -1,4 +1,4 @@
-package mightypork.rogue.texture;
+package mightypork.rogue.textures;
 
 
 import org.lwjgl.opengl.GL11;
@@ -38,7 +38,7 @@ public interface FilteredTexture extends Texture {
 	 * @param filterMin downscale filter
 	 * @param filterMag upscale filter
 	 */
-	public void setFilter(Filter filterMin, Filter filterMag);
+	void setFilter(Filter filterMin, Filter filterMag);
 	
 	
 	/**
@@ -46,11 +46,11 @@ public interface FilteredTexture extends Texture {
 	 * 
 	 * @param filter filter
 	 */
-	public void setFilter(Filter filter);
+	void setFilter(Filter filter);
 	
 	
 	/**
 	 * @param wrapping wrap mode
 	 */
-	public void setWrap(Wrap wrapping);
+	void setWrap(Wrap wrapping);
 }

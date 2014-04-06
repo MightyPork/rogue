@@ -2,10 +2,10 @@ package mightypork.rogue.gui;
 
 
 import mightypork.rogue.bus.ChildClient;
-import mightypork.rogue.gui.constraints.Renderable;
 import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
+import mightypork.rogue.render.Renderable;
 import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.coord.Rect;
 

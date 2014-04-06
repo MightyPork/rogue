@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.ChildClient;
+import mightypork.rogue.render.Renderable;
 import mightypork.utils.control.bus.EventBus;
 import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.constraints.RectConstraint;
@@ -44,7 +45,7 @@ public class ElementHolder extends ChildClient implements ConstraintContext, Ren
 	@Override
 	public void render()
 	{
-		for (Renderable element : elements) {
+		for (final Renderable element : elements) {
 			element.render();
 		}
 	}
@@ -56,19 +57,6 @@ public class ElementHolder extends ChildClient implements ConstraintContext, Ren
 		return context.getRect();
 	}
 	
-	
-//	/**
-//	 * Add element to the holder.
-//	 * 
-//	 * @param elem
-//	 */
-//	public void add(RenderableWithContext elem)
-//	{
-//		if (elem == null) return;
-//		elem.setContext(this);
-//		elements.add(elem);
-//		addChildClient(elem);
-//	}
 	
 	/**
 	 * Add element to the holder.

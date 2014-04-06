@@ -5,6 +5,11 @@ import mightypork.utils.control.bus.Event;
 import mightypork.utils.math.coord.Coord;
 
 
+/**
+ * Mouse moved
+ * 
+ * @author MightyPork
+ */
 public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	
 	private final Coord move;
@@ -48,7 +53,7 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 		 * 
 		 * @param event event
 		 */
-		public void receive(MouseMotionEvent event);
+		void receive(MouseMotionEvent event);
 	}
 	
 }

@@ -59,7 +59,7 @@ public class DisplaySystem extends Subsystem implements ConstraintContext {
 			
 			Render.init();
 			
-		} catch (LWJGLException e) {
+		} catch (final LWJGLException e) {
 			throw new RuntimeException("Could not initialize screen", e);
 		}
 	}
@@ -88,12 +88,12 @@ public class DisplaySystem extends Subsystem implements ConstraintContext {
 			
 			bus().queue(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
 			
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			Log.e("Failed to toggle fullscreen mode.", t);
 			try {
 				Display.setDisplayMode(windowDisplayMode);
 				Display.update();
-			} catch (Throwable t1) {
+			} catch (final Throwable t1) {
 				throw new RuntimeException("Failed to revert failed fullscreen toggle.", t1);
 			}
 		}
@@ -103,14 +103,14 @@ public class DisplaySystem extends Subsystem implements ConstraintContext {
 	public Screenshot takeScreenshot()
 	{
 		glReadBuffer(GL_FRONT);
-		int width = Display.getDisplayMode().getWidth();
-		int height = Display.getDisplayMode().getHeight();
-		int bpp = 4; // Assuming a 32-bit display with a byte each for red,
-						// green, blue, and alpha.
-		ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
+		final int width = Display.getDisplayMode().getWidth();
+		final int height = Display.getDisplayMode().getHeight();
+		final int bpp = 4; // Assuming a 32-bit display with a byte each for red,
+							// green, blue, and alpha.
+		final ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
 		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 		
-		Screenshot sc = new Screenshot(width, height, bpp, buffer);
+		final Screenshot sc = new Screenshot(width, height, bpp, buffer);
 		
 		return sc;
 	}

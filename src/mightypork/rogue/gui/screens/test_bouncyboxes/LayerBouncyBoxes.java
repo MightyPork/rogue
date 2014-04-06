@@ -22,12 +22,12 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		super(screen);
 		
 		// shrink screen rect by 8% on all sides
-		RectConstraint holder_rect = c_shrink(this, c_percent(c_height(this), c_n(8)));
+		final RectConstraint holder_rect = c_shrink(this, c_percent(c_height(this), c_n(8)));
 		
 		addChildClient(layout = new RowHolder(screen, holder_rect, 16));
 		
 		for (int i = 0; i < 16; i++) {
-			BouncyBox bbr = new BouncyBox();
+			final BouncyBox bbr = new BouncyBox();
 			layout.addRow(bbr);
 			boxes.add(bbr);
 		}
@@ -44,7 +44,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 	
 	public void goLeft()
 	{
-		for (BouncyBox bbr : boxes) {
+		for (final BouncyBox bbr : boxes) {
 			bbr.goLeft();
 		}
 	}
@@ -52,7 +52,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 	
 	public void goRight()
 	{
-		for (BouncyBox bbr : boxes) {
+		for (final BouncyBox bbr : boxes) {
 			bbr.goRight();
 		}
 	}

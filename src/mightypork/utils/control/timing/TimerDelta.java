@@ -39,8 +39,8 @@ public class TimerDelta {
 	 */
 	public double getDelta()
 	{
-		long time = getTime();
-		double delta = (time - lastFrame) / (double) SECOND;
+		final long time = getTime();
+		final double delta = (time - lastFrame) / (double) SECOND;
 		lastFrame = time;
 		return delta;
 	}

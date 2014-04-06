@@ -5,7 +5,13 @@ import mightypork.utils.control.bus.Event;
 import mightypork.utils.control.bus.SingularEvent;
 
 
-public class ScreenRequestEvent implements Event<ScreenRequestEvent.Listener>, SingularEvent {
+/**
+ * Request to change screen
+ * 
+ * @author MightyPork
+ */
+@SingularEvent
+public class ScreenRequestEvent implements Event<ScreenRequestEvent.Listener> {
 	
 	private final String scrName;
 	
@@ -23,7 +29,7 @@ public class ScreenRequestEvent implements Event<ScreenRequestEvent.Listener>, S
 	
 	public interface Listener {
 		
-		public void showScreen(String key);
+		void showScreen(String key);
 	}
 	
 }

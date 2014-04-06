@@ -1,4 +1,4 @@
-package mightypork.rogue.gui.constraints;
+package mightypork.rogue.render;
 
 
 /**
@@ -11,6 +11,6 @@ public interface Renderable {
 	/**
 	 * Render on screen
 	 */
-	public void render();
+	void render();
 	
 }

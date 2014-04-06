@@ -33,7 +33,7 @@ public class JointVolume extends Mutable<Double> {
 	public Double get()
 	{
 		double d = super.get();
-		for (Mutable<Double> v : volumes)
+		for (final Mutable<Double> v : volumes)
 			d *= v.get();
 		
 		return Calc.clampd(d, 0, 1);

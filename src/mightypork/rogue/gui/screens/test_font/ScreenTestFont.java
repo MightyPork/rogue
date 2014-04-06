@@ -40,10 +40,10 @@ public class ScreenTestFont extends Screen {
 	@Override
 	protected void renderScreen()
 	{
-		GLFont font = Res.getFont("PolygonPixel_16");
+		final GLFont font = Res.getFont("PolygonPixel_16");
 		
-		String s = "It works!";
-		double scale = getRect().height() / 50D;
+		final String s = "It works!";
+		final double scale = getRect().height() / 50D;
 		Render.pushState();
 		Render.translate(getRect().getCenter().sub(font.getNeededSpace(s).mul(scale).half()));
 		Render.scale(new Coord(scale));

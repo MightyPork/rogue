@@ -133,7 +133,7 @@ public class Log {
 	public static synchronized LogInstance create(String logName, File logsDir, int oldLogsCount)
 	{
 		if (logs.containsKey(logName)) return logs.get(logName);
-		LogInstance log = new LogInstance(logName, logsDir, oldLogsCount);
+		final LogInstance log = new LogInstance(logName, logsDir, oldLogsCount);
 		if (main == null) main = log;
 		logs.put(logName, log);
 		
@@ -153,7 +153,7 @@ public class Log {
 	public static synchronized LogInstance create(String logName, File logsDir)
 	{
 		if (logs.containsKey(logName)) return logs.get(logName);
-		LogInstance log = new LogInstance(logName, logsDir, -1);
+		final LogInstance log = new LogInstance(logName, logsDir, -1);
 		if (main == null) main = log;
 		logs.put(logName, log);
 		
@@ -184,7 +184,7 @@ public class Log {
 		
 		try {
 			hasToString = (o.getClass().getMethod("toString").getDeclaringClass() != Object.class);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			// oh well..
 		}
 		
@@ -192,9 +192,9 @@ public class Log {
 			return o.toString();
 		} else {
 			
-			Class<?> cls = o.getClass();
+			final Class<?> cls = o.getClass();
 			
-			Class<?> enclosing = cls.getEnclosingClass();
+			final Class<?> enclosing = cls.getEnclosingClass();
 			
 			return (enclosing == null ? "" : enclosing.getSimpleName() + ".") + cls.getSimpleName();
 		}
@@ -203,7 +203,7 @@ public class Log {
 	
 	public static String str(Class<?> cls)
 	{
-		Class<?> enclosing = cls.getEnclosingClass();
+		final Class<?> enclosing = cls.getEnclosingClass();
 		
 		return (enclosing == null ? "" : enclosing.getSimpleName() + ".") + cls.getSimpleName();
 	}

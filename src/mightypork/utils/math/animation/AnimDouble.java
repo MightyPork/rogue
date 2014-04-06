@@ -191,12 +191,12 @@ public class AnimDouble implements Updateable, Pauseable {
 	 */
 	public void animate(double from, double to, double time)
 	{
-		double current = now();
+		final double current = now();
 		
 		this.from = from;
 		this.to = to;
 		
-		double progress = getProgressFromValue(current);
+		final double progress = getProgressFromValue(current);
 		
 		this.from = (progress > 0 ? current : from);
 		

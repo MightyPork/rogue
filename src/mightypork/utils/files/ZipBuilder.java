@@ -16,8 +16,8 @@ import mightypork.utils.logging.Log;
  */
 public class ZipBuilder {
 	
-	private ZipOutputStream out;
-	private HashSet<String> included = new HashSet<String>();
+	private final ZipOutputStream out;
+	private final HashSet<String> included = new HashSet<String>();
 	
 	
 	/**
@@ -28,7 +28,7 @@ public class ZipBuilder {
 	public ZipBuilder(File target) throws FileNotFoundException {
 		target.getParentFile().mkdirs();
 		
-		FileOutputStream dest = new FileOutputStream(target);
+		final FileOutputStream dest = new FileOutputStream(target);
 		out = new ZipOutputStream(new BufferedOutputStream(dest));
 	}
 	
@@ -70,7 +70,7 @@ public class ZipBuilder {
 		
 		out.putNextEntry(new ZipEntry(path));
 		
-		InputStream in = FileUtils.stringToStream(text);
+		final InputStream in = FileUtils.stringToStream(text);
 		FileUtils.copyStream(in, out);
 	}
 	
@@ -90,7 +90,7 @@ public class ZipBuilder {
 		
 		out.putNextEntry(new ZipEntry(path));
 		
-		InputStream in = FileUtils.getResource(resPath);
+		final InputStream in = FileUtils.getResource(resPath);
 		FileUtils.copyStream(in, out);
 	}
 	

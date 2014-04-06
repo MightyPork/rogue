@@ -242,8 +242,8 @@ public class ConstraintFactory {
 			@Override
 			public Rect getRect()
 			{
-				double height = getContext().getRect().size().y;
-				double perRow = height / rows;
+				final double height = getContext().getRect().size().y;
+				final double perRow = height / rows;
 				
 				return Rect.fromSize(getOrigin().add(0, perRow * index), getSize().setY(perRow));
 			}
@@ -258,8 +258,8 @@ public class ConstraintFactory {
 			@Override
 			public Rect getRect()
 			{
-				double width = getContext().getRect().size().x;
-				double perCol = width / columns;
+				final double width = getContext().getRect().size().x;
+				final double perCol = width / columns;
 				
 				return Rect.fromSize(getOrigin().add(perCol * index, 0), getSize().setX(perCol));
 			}
@@ -337,10 +337,10 @@ public class ConstraintFactory {
 			@Override
 			public Rect getRect()
 			{
-				double height = getSize().y;
-				double width = getSize().y;
-				double perRow = height / rows;
-				double perCol = width / cols;
+				final double height = getSize().y;
+				final double width = getSize().y;
+				final double perRow = height / rows;
+				final double perCol = width / cols;
 				
 				return Rect.fromSize(getOrigin().add(perCol * left, perRow * (rows - top - 1)), perCol, perRow);
 			}
@@ -355,7 +355,7 @@ public class ConstraintFactory {
 			@Override
 			public Rect getRect()
 			{
-				Coord origin = getOrigin();
+				final Coord origin = getOrigin();
 				
 				//@formatter:off
 				return Rect.fromSize(
@@ -377,7 +377,7 @@ public class ConstraintFactory {
 			@Override
 			public Rect getRect()
 			{
-				Coord origin = getOrigin();
+				final Coord origin = getOrigin();
 				
 				//@formatter:off
 				return Rect.fromSize(
@@ -399,7 +399,7 @@ public class ConstraintFactory {
 			@Override
 			public Rect getRect()
 			{
-				Coord origin = getOrigin();
+				final Coord origin = getOrigin();
 				
 				//@formatter:off
 				return new Rect(

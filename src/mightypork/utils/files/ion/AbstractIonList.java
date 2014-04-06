@@ -20,10 +20,10 @@ public abstract class AbstractIonList<T> extends ArrayList<T> implements Ionizab
 	{
 		try {
 			while (true) {
-				byte b = BinaryUtils.readByte(in);
+				final byte b = BinaryUtils.readByte(in);
 				
 				if (b == IonMarks.ENTRY) {
-					T value = (T) Ion.readObject(in);
+					final T value = (T) Ion.readObject(in);
 					add(value);
 				} else if (b == IonMarks.END) {
 					break;
@@ -32,7 +32,7 @@ public abstract class AbstractIonList<T> extends ArrayList<T> implements Ionizab
 				}
 			}
 			ionReadCustomData(in);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IonException("Error reading ion list", e);
 		}
 	}
@@ -42,14 +42,14 @@ public abstract class AbstractIonList<T> extends ArrayList<T> implements Ionizab
 	public void ionWrite(OutputStream out) throws IonException
 	{
 		try {
-			for (T entry : this) {
+			for (final T entry : this) {
 				if (entry instanceof IonizableOptional && !((IonizableOptional) entry).ionShouldSave()) continue;
 				BinaryUtils.writeByte(out, IonMarks.ENTRY);
 				Ion.writeObject(out, entry);
 			}
 			BinaryUtils.writeByte(out, IonMarks.END);
 			ionWriteCustomData(out);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IonException("Error reading ion map", e);
 		}
 	}

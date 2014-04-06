@@ -11,7 +11,7 @@ import org.lwjgl.input.Keyboard;
 
 public class ScreenTestBouncy extends LayeredScreen {
 	
-	private LayerBouncyBoxes layer;
+	private final LayerBouncyBoxes layer;
 	
 	
 	public ScreenTestBouncy(AppAccess app) {

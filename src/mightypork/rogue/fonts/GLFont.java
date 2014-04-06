@@ -13,7 +13,7 @@ public interface GLFont {
 	 * @param text string to draw
 	 * @param color draw color
 	 */
-	abstract void draw(String text, RGB color);
+	void draw(String text, RGB color);
 	
 	
 	/**
@@ -24,7 +24,7 @@ public interface GLFont {
 	 * @param startIndex first drawn character index
 	 * @param endIndex last drawn character index
 	 */
-	abstract void draw(String text, RGB color, int startIndex, int endIndex);
+	void draw(String text, RGB color, int startIndex, int endIndex);
 	
 	
 	/**
@@ -32,7 +32,7 @@ public interface GLFont {
 	 * 
 	 * @param str string to draw
 	 */
-	abstract void draw(String str);
+	void draw(String str);
 	
 	
 	/**
@@ -41,19 +41,19 @@ public interface GLFont {
 	 * @param text string to check
 	 * @return coord (width, height)
 	 */
-	abstract Coord getNeededSpace(String text);
+	Coord getNeededSpace(String text);
 	
 	
 	/**
 	 * @return font height
 	 */
-	abstract int getHeight();
+	int getHeight();
 	
 	
 	/**
 	 * @param text texted text
 	 * @return space needed
 	 */
-	abstract int getWidth(String text);
+	int getWidth(String text);
 	
 }

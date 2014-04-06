@@ -1,4 +1,4 @@
-package mightypork.rogue.texture;
+package mightypork.rogue.textures;
 
 
 import mightypork.utils.math.coord.Rect;
@@ -31,8 +31,8 @@ public class TxQuad {
 	 */
 	public static TxQuad fromSizePx(Texture tx, double xPx, double yPx, double widthPx, double heightPx)
 	{
-		double w = tx.getImageWidth();
-		double h = tx.getImageHeight();
+		final double w = tx.getImageWidth();
+		final double h = tx.getImageHeight();
 		
 		return fromSize(tx, xPx / w, yPx / h, widthPx / w, heightPx / h);
 	}

@@ -5,13 +5,14 @@ import mightypork.rogue.fonts.DeferredFont;
 import mightypork.rogue.fonts.DeferredFont.FontStyle;
 import mightypork.rogue.fonts.FontBank;
 import mightypork.rogue.fonts.GLFont;
+import mightypork.rogue.loading.AsyncResourceLoader;
 import mightypork.rogue.sound.SoundBank;
 import mightypork.rogue.sound.players.EffectPlayer;
 import mightypork.rogue.sound.players.LoopPlayer;
-import mightypork.rogue.texture.FilteredTexture.Filter;
-import mightypork.rogue.texture.FilteredTexture.Wrap;
-import mightypork.rogue.texture.TextureBank;
-import mightypork.rogue.texture.TxQuad;
+import mightypork.rogue.textures.TextureBank;
+import mightypork.rogue.textures.TxQuad;
+import mightypork.rogue.textures.FilteredTexture.Filter;
+import mightypork.rogue.textures.FilteredTexture.Wrap;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -39,6 +40,8 @@ public class Res {
 	{
 		if (initialized) return;
 		initialized = true;
+		
+		AsyncResourceLoader.launch(app);
 		
 		textures = new TextureBank(app);
 		sounds = new SoundBank(app);

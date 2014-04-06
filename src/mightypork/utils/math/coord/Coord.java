@@ -863,7 +863,7 @@ public class Coord {
 	{
 		if (isZero()) return this;
 		
-		double k = size / size();
+		final double k = size / size();
 		return mul_ip(k);
 	}
 	
@@ -919,7 +919,7 @@ public class Coord {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof Coord)) return false;
-		Coord other = (Coord) obj;
+		final Coord other = (Coord) obj;
 		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) return false;
 		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) return false;
 		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) return false;

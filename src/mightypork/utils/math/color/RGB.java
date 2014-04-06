@@ -311,9 +311,9 @@ public class RGB {
 	 */
 	public int getHex()
 	{
-		int ri = (int) Math.round(r * 255);
-		int gi = (int) Math.round(g * 255);
-		int bi = (int) Math.round(b * 255);
+		final int ri = (int) Math.round(r * 255);
+		final int gi = (int) Math.round(g * 255);
+		final int bi = (int) Math.round(b * 255);
 		return (ri << 16) | (gi << 8) | bi;
 	}
 	
@@ -325,7 +325,7 @@ public class RGB {
 	 */
 	public HSV toHSV()
 	{
-		float[] hsv = { 0, 0, 0 };
+		final float[] hsv = { 0, 0, 0 };
 		Color.RGBtoHSB((int) (r * 255), (int) (g * 255), (int) (b * 255), hsv);
 		return new HSV(hsv[0], hsv[1], hsv[2]);
 	}
@@ -339,9 +339,9 @@ public class RGB {
 	 */
 	public static RGB fromHex(int hex)
 	{
-		int bi = hex & 0xff;
-		int gi = (hex >> 8) & 0xff;
-		int ri = (hex >> 16) & 0xff;
+		final int bi = hex & 0xff;
+		final int gi = (hex >> 8) & 0xff;
+		final int ri = (hex >> 16) & 0xff;
 		return new RGB(ri / 255D, gi / 255D, bi / 255D);
 	}
 	

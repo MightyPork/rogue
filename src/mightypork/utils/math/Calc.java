@@ -34,17 +34,17 @@ public class Calc {
 	public static double linePointDist(Coord lineDirVec, Coord linePoint, Coord point)
 	{
 		// line point L[lx,ly]
-		double lx = linePoint.x;
-		double ly = linePoint.y;
+		final double lx = linePoint.x;
+		final double ly = linePoint.y;
 		
 		// line equation ax+by+c=0
-		double a = -lineDirVec.y;
-		double b = lineDirVec.x;
-		double c = -a * lx - b * ly;
+		final double a = -lineDirVec.y;
+		final double b = lineDirVec.x;
+		final double c = -a * lx - b * ly;
 		
 		// checked point P[x,y]
-		double x = point.x;
-		double y = point.y;
+		final double x = point.x;
+		final double y = point.y;
 		
 		// distance
 		return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
@@ -285,10 +285,10 @@ public class Calc {
 		 */
 		public static int roundX(double deg, double x)
 		{
-			double half = x / 2d;
+			final double half = x / 2d;
 			deg += half;
 			deg = norm(deg);
-			int times = (int) Math.floor(deg / x);
+			final int times = (int) Math.floor(deg / x);
 			double a = times * x;
 			if (a == 360) a = 0;
 			return (int) Math.round(a);
@@ -511,8 +511,8 @@ public class Calc {
 	private static double clamp_double(Number number, Number min, Number max)
 	{
 		double n = number.doubleValue();
-		double mind = min.doubleValue();
-		double maxd = max.doubleValue();
+		final double mind = min.doubleValue();
+		final double maxd = max.doubleValue();
 		if (n > maxd) n = maxd;
 		if (n < mind) n = mind;
 		if (Double.isNaN(n)) return mind;
@@ -530,7 +530,7 @@ public class Calc {
 	private static double clamp_double(Number number, Number min)
 	{
 		double n = number.doubleValue();
-		double mind = min.doubleValue();
+		final double mind = min.doubleValue();
 		if (n < mind) n = mind;
 		return n;
 	}
@@ -790,7 +790,7 @@ public class Calc {
 	public static double max(double... numbers)
 	{
 		double highest = numbers[0];
-		for (double num : numbers) {
+		for (final double num : numbers) {
 			if (num > highest) highest = num;
 		}
 		return highest;
@@ -806,7 +806,7 @@ public class Calc {
 	public static float max(float... numbers)
 	{
 		float highest = numbers[0];
-		for (float num : numbers) {
+		for (final float num : numbers) {
 			if (num > highest) highest = num;
 		}
 		return highest;
@@ -822,7 +822,7 @@ public class Calc {
 	public static int max(int... numbers)
 	{
 		int highest = numbers[0];
-		for (int num : numbers) {
+		for (final int num : numbers) {
 			if (num > highest) highest = num;
 		}
 		return highest;
@@ -838,7 +838,7 @@ public class Calc {
 	public static double min(double... numbers)
 	{
 		double lowest = numbers[0];
-		for (double num : numbers) {
+		for (final double num : numbers) {
 			if (num < lowest) lowest = num;
 		}
 		return lowest;
@@ -854,7 +854,7 @@ public class Calc {
 	public static float min(float... numbers)
 	{
 		float lowest = numbers[0];
-		for (float num : numbers) {
+		for (final float num : numbers) {
 			if (num < lowest) lowest = num;
 		}
 		return lowest;
@@ -870,7 +870,7 @@ public class Calc {
 	public static int min(int... numbers)
 	{
 		int lowest = numbers[0];
-		for (int num : numbers) {
+		for (final int num : numbers) {
 			if (num < lowest) lowest = num;
 		}
 		return lowest;
@@ -888,14 +888,14 @@ public class Calc {
 		if (list == null) {
 			return null;
 		}
-		String[] parts = list.split(",");
+		final String[] parts = list.split(",");
 		
-		ArrayList<Integer> intList = new ArrayList<Integer>();
+		final ArrayList<Integer> intList = new ArrayList<Integer>();
 		
-		for (String part : parts) {
+		for (final String part : parts) {
 			try {
 				intList.add(Integer.parseInt(part));
-			} catch (NumberFormatException e) {}
+			} catch (final NumberFormatException e) {}
 		}
 		
 		return intList;

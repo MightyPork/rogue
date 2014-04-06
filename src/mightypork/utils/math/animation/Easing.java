@@ -60,7 +60,7 @@ public abstract class Easing {
 	 */
 	private static class Reverse extends Easing {
 		
-		private Easing ea;
+		private final Easing ea;
 		
 		
 		/**
@@ -85,8 +85,8 @@ public abstract class Easing {
 	 */
 	private static class Composite extends Easing {
 		
-		private Easing in;
-		private Easing out;
+		private final Easing in;
+		private final Easing out;
 		
 		
 		/**
@@ -277,7 +277,7 @@ public abstract class Easing {
 		@Override
 		public double get(double t)
 		{
-			float s = 1.70158f;
+			final float s = 1.70158f;
 			return t * t * ((s + 1) * t - s);
 		}
 	};
@@ -297,8 +297,8 @@ public abstract class Easing {
 			if (t == 0) return 0;
 			if (t == 1) return 1;
 			
-			double p = .3f;
-			double s = p / 4;
+			final double p = .3f;
+			final double s = p / 4;
 			return -(Math.pow(2, 10 * (t -= 1)) * Math.sin((t - s) * (2 * Math.PI) / p));
 		}
 	};

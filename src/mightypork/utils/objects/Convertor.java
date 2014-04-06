@@ -29,7 +29,7 @@ public class Convertor {
 			if (o instanceof Number) return ((Number) o).intValue();
 			if (o instanceof Range) return ((Range) o).randInt();
 			if (o instanceof Boolean) return ((Boolean) o) ? 1 : 0;
-		} catch (NumberFormatException e) {}
+		} catch (final NumberFormatException e) {}
 		Log.w("Cannot convert " + o + " to Integer.");
 		return def;
 	}
@@ -50,7 +50,7 @@ public class Convertor {
 			if (o instanceof Number) return ((Number) o).doubleValue();
 			if (o instanceof Range) return ((Range) o).randDouble();
 			if (o instanceof Boolean) return ((Boolean) o) ? 1 : 0;
-		} catch (NumberFormatException e) {}
+		} catch (final NumberFormatException e) {}
 		Log.w("Cannot convert " + o + " to Double.");
 		return def;
 	}
@@ -68,7 +68,7 @@ public class Convertor {
 		try {
 			if (o == null) return def;
 			if (o instanceof Number) return ((Number) o).floatValue();
-		} catch (NumberFormatException e) {}
+		} catch (final NumberFormatException e) {}
 		Log.w("Cannot convert " + o + " to Float.");
 		return def;
 	}
@@ -86,13 +86,13 @@ public class Convertor {
 		if (o == null) return def;
 		
 		if (o instanceof String) {
-			String s = ((String) o).trim().toLowerCase();
+			final String s = ((String) o).trim().toLowerCase();
 			if (s.equals("0")) return false;
 			if (s.equals("1")) return true;
 			try {
-				double n = Double.parseDouble(s);
+				final double n = Double.parseDouble(s);
 				return n != 0;
-			} catch (NumberFormatException e) {}
+			} catch (final NumberFormatException e) {}
 			
 			if (s.equals("true")) return true;
 			if (s.equals("yes")) return true;
@@ -149,11 +149,11 @@ public class Convertor {
 				s = s.replace(',', ';');
 				// remove brackets if any
 				s = s.replaceAll("[\\(\\[\\{\\)\\]\\}]", "");
-				String[] parts = s.split("[;]");
+				final String[] parts = s.split("[;]");
 				return new Coord(Double.parseDouble(parts[0].trim()), Double.parseDouble(parts[1].trim()));
 			}
 			if (o instanceof Coord) return new Coord((Coord) o);
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			// ignore
 		}
 		Log.w("Cannot convert " + o + " to Coord.");
@@ -184,13 +184,13 @@ public class Convertor {
 				s = s.replaceAll("([0-9])\\s?[\\-]", "$1:");
 				// remove brackets if any
 				s = s.replaceAll("[\\(\\[\\{\\)\\]\\}]", "");
-				String[] parts = s.split("[:]");
+				final String[] parts = s.split("[:]");
 				if (parts.length == 2) return new Range(Double.parseDouble(parts[0].trim()), Double.parseDouble(parts[1].trim()));
 				return new Range(Double.parseDouble(parts[0].trim()), Double.parseDouble(parts[0].trim()));
 				
 			}
 			if (o instanceof Range) return (Range) o;
-		} catch (NumberFormatException e) {}
+		} catch (final NumberFormatException e) {}
 		Log.w("Cannot convert " + o + " to Range.");
 		return def;
 	}

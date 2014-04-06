@@ -34,11 +34,11 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 	{
 		try {
 			while (true) {
-				byte b = BinaryUtils.readByte(in);
+				final byte b = BinaryUtils.readByte(in);
 				if (b == IonMarks.ENTRY) {
-					String key = BinaryUtils.readString(in);
+					final String key = BinaryUtils.readString(in);
 					
-					V value = (V) Ion.readObject(in);
+					final V value = (V) Ion.readObject(in);
 					put(key, value);
 					
 				} else if (b == IonMarks.END) {
@@ -48,7 +48,7 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 				}
 			}
 			ionReadCustomData(in);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IonException("Error reading ion map", e);
 		}
 	}
@@ -58,14 +58,14 @@ public abstract class AbstractIonMap<V> extends LinkedHashMap<String, V> impleme
 	public void ionWrite(OutputStream out) throws IonException
 	{
 		try {
-			for (java.util.Map.Entry<String, V> entry : entrySet()) {
+			for (final java.util.Map.Entry<String, V> entry : entrySet()) {
 				BinaryUtils.writeByte(out, IonMarks.ENTRY);
 				BinaryUtils.writeString(out, entry.getKey());
 				Ion.writeObject(out, entry.getValue());
 			}
 			BinaryUtils.writeByte(out, IonMarks.END);
 			ionWriteCustomData(out);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IonException("Error reading ion map", e);
 		}
 	}

@@ -92,7 +92,7 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 		
 		fadeAnim.update(delta);
 		
-		double gain = getGain(fadeAnim.now());
+		final double gain = getGain(fadeAnim.now());
 		if (!paused && gain != lastUpdateGain) {
 			AL10.alSourcef(sourceID, AL10.AL_GAIN, (float) gain);
 			lastUpdateGain = gain;

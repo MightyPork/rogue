@@ -28,7 +28,7 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 	@Override
 	public void bindKeyStroke(KeyStroke stroke, Runnable task)
 	{
-		for (KeyBinding kb : bindings) {
+		for (final KeyBinding kb : bindings) {
 			if (kb.matches(stroke)) {
 				Log.w("Duplicate KeyBinding (" + stroke + "), using newest handler.");
 				kb.setHandler(task);
@@ -48,10 +48,10 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 	@Override
 	public void unbindKeyStroke(KeyStroke stroke)
 	{
-		Iterator<KeyBinding> iter = bindings.iterator();
+		final Iterator<KeyBinding> iter = bindings.iterator();
 		
 		while (iter.hasNext()) {
-			KeyBinding kb = iter.next();
+			final KeyBinding kb = iter.next();
 			if (kb.matches(stroke)) {
 				iter.remove();
 				return;
@@ -63,7 +63,7 @@ public class KeyBindingPool implements KeyBinder, KeyboardEvent.Listener {
 	@Override
 	public void receive(KeyboardEvent event)
 	{
-		for (KeyBinding kb : bindings) {
+		for (final KeyBinding kb : bindings) {
 			kb.receive(event);
 		}
 	}

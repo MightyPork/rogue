@@ -65,7 +65,7 @@ public class SoundBank extends AppAdapter {
 	 */
 	public LoopPlayer getLoop(String key)
 	{
-		LoopPlayer p = loops.get(key);
+		final LoopPlayer p = loops.get(key);
 		if (p == null) {
 			Log.w("Requesting unknown sound loop \"" + key + "\".");
 			return NULL_LOOP;
@@ -82,7 +82,7 @@ public class SoundBank extends AppAdapter {
 	 */
 	public EffectPlayer getEffect(String key)
 	{
-		EffectPlayer p = effects.get(key);
+		final EffectPlayer p = effects.get(key);
 		if (p == null) {
 			Log.w("Requesting unknown sound effect \"" + key + "\".");
 			return NULL_EFFECT;

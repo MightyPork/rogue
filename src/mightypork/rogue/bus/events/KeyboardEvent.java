@@ -74,7 +74,7 @@ public class KeyboardEvent implements Event<KeyboardEvent.Listener> {
 		 * 
 		 * @param event event
 		 */
-		public void receive(KeyboardEvent event);
+		void receive(KeyboardEvent event);
 	}
 	
 	

@@ -93,10 +93,10 @@ public class BinaryUtils {
 	
 	public static byte[] getBytesString(String str)
 	{
-		char[] chars = str.toCharArray();
+		final char[] chars = str.toCharArray();
 		
-		ByteBuffer bstr = ByteBuffer.allocate((Character.SIZE / 8) * chars.length + (Character.SIZE / 8));
-		for (char c : chars) {
+		final ByteBuffer bstr = ByteBuffer.allocate((Character.SIZE / 8) * chars.length + (Character.SIZE / 8));
+		for (final char c : chars) {
 			bstr.putChar(c);
 		}
 		
@@ -177,7 +177,7 @@ public class BinaryUtils {
 	public static char readChar(InputStream in) throws IOException
 	{
 		in.read(ac, 0, ac.length);
-		ByteBuffer buf = ByteBuffer.wrap(ac);
+		final ByteBuffer buf = ByteBuffer.wrap(ac);
 		return buf.getChar();
 	}
 	
@@ -185,7 +185,7 @@ public class BinaryUtils {
 	public static short readShort(InputStream in) throws IOException
 	{
 		in.read(as, 0, as.length);
-		ByteBuffer buf = ByteBuffer.wrap(as);
+		final ByteBuffer buf = ByteBuffer.wrap(as);
 		return buf.getShort();
 	}
 	
@@ -193,7 +193,7 @@ public class BinaryUtils {
 	public static long readLong(InputStream in) throws IOException
 	{
 		in.read(al, 0, al.length);
-		ByteBuffer buf = ByteBuffer.wrap(al);
+		final ByteBuffer buf = ByteBuffer.wrap(al);
 		return buf.getLong();
 	}
 	
@@ -201,7 +201,7 @@ public class BinaryUtils {
 	public static int readInt(InputStream in) throws IOException
 	{
 		in.read(ai, 0, ai.length);
-		ByteBuffer buf = ByteBuffer.wrap(ai);
+		final ByteBuffer buf = ByteBuffer.wrap(ai);
 		return buf.getInt();
 	}
 	
@@ -209,7 +209,7 @@ public class BinaryUtils {
 	public static float readFloat(InputStream in) throws IOException
 	{
 		in.read(af, 0, af.length);
-		ByteBuffer buf = ByteBuffer.wrap(af);
+		final ByteBuffer buf = ByteBuffer.wrap(af);
 		return buf.getFloat();
 	}
 	
@@ -217,7 +217,7 @@ public class BinaryUtils {
 	public static double readDouble(InputStream in) throws IOException
 	{
 		in.read(ad, 0, ad.length);
-		ByteBuffer buf = ByteBuffer.wrap(ad);
+		final ByteBuffer buf = ByteBuffer.wrap(ad);
 		return buf.getDouble();
 	}
 	

@@ -125,7 +125,7 @@ public class HSV {
 	{
 		norm();
 		
-		int rgb = Color.HSBtoRGB((float) h, (float) s, (float) v);
+		final int rgb = Color.HSBtoRGB((float) h, (float) s, (float) v);
 		
 		return RGB.fromHex(rgb);
 	}

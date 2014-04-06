@@ -32,7 +32,7 @@ public class Range {
 	 */
 	public Range(double min, double max) {
 		if (min > max) {
-			double t = min;
+			final double t = min;
 			min = max;
 			max = t;
 		}
@@ -170,7 +170,7 @@ public class Range {
 		max = other.max;
 		
 		if (min > max) {
-			double t = min;
+			final double t = min;
 			min = max;
 			max = t;
 		}
@@ -186,7 +186,7 @@ public class Range {
 	public void setTo(double min, double max)
 	{
 		if (min > max) {
-			double t = min;
+			final double t = min;
 			min = max;
 			max = t;
 		}

@@ -29,16 +29,16 @@ import mightypork.utils.files.FileUtils;
 public class LogInstance {
 	
 	/** log file */
-	private File file;
+	private final File file;
 	
 	/** Log name */
-	private String name;
+	private final String name;
 	
 	/** Number of old logs to keep */
-	private int logs_to_keep;
+	private final int logs_to_keep;
 	
 	/** Logs dir */
-	private File dir;
+	private final File dir;
 	
 	/** Logger instance. */
 	private Logger logger;
@@ -49,7 +49,7 @@ public class LogInstance {
 	private boolean sysout = true;
 	
 	private int monitorId = 0;
-	private HashMap<Integer, LogMonitor> monitors = new HashMap<Integer, LogMonitor>();
+	private final HashMap<Integer, LogMonitor> monitors = new HashMap<Integer, LogMonitor>();
 	
 	private LogToSysoutMonitor sysoutMonitor;
 	
@@ -77,7 +77,7 @@ public class LogInstance {
 		
 		try {
 			handler = new FileHandler(file.getPath());
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException("Failed to init log", e);
 		}
 		
@@ -101,13 +101,13 @@ public class LogInstance {
 	{
 		if (logs_to_keep == 0) return; // overwrite
 			
-		for (File f : FileUtils.listDirectory(file.getParentFile())) {
+		for (final File f : FileUtils.listDirectory(file.getParentFile())) {
 			if (!f.isFile()) continue;
 			if (f.equals(file)) {
-				Date d = new Date(f.lastModified());
+				final Date d = new Date(f.lastModified());
 				
-				String fbase = name + '_' + (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(d);
-				String suff = getSuffix();
+				final String fbase = name + '_' + (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")).format(d);
+				final String suff = getSuffix();
 				String cntStr = "";
 				File f2;
 				
@@ -119,7 +119,7 @@ public class LogInstance {
 		
 		if (logs_to_keep == -1) return; // keep all
 			
-		List<File> oldLogs = FileUtils.listDirectory(dir, new FileFilter() {
+		final List<File> oldLogs = FileUtils.listDirectory(dir, new FileFilter() {
 			
 			@Override
 			public boolean accept(File f)
@@ -156,7 +156,7 @@ public class LogInstance {
 	 */
 	public synchronized int addMonitor(LogMonitor mon)
 	{
-		int id = monitorId;
+		final int id = monitorId;
 		monitorId++;
 		monitors.put(id, mon);
 		return id;
@@ -294,8 +294,8 @@ public class LogInstance {
 	 */
 	private static String getStackTrace(Throwable t)
 	{
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw, true);
+		final StringWriter sw = new StringWriter();
+		final PrintWriter pw = new PrintWriter(sw, true);
 		t.printStackTrace(pw);
 		pw.flush();
 		sw.flush();
@@ -317,7 +317,7 @@ public class LogInstance {
 		@Override
 		public String format(LogRecord record)
 		{
-			StringBuffer buf = new StringBuffer(180);
+			final StringBuffer buf = new StringBuffer(180);
 			
 			if (record.getMessage().equals("\n")) {
 				return nl;
@@ -328,7 +328,7 @@ public class LogInstance {
 				record.setMessage(record.getMessage().substring(1));
 			}
 			
-			Level level = record.getLevel();
+			final Level level = record.getLevel();
 			String trail = "[ ? ]";
 			if (level == Level.FINE) {
 				trail = "[ # ] ";
@@ -356,7 +356,7 @@ public class LogInstance {
 			
 			buf.append(nl);
 			
-			Throwable throwable = record.getThrown();
+			final Throwable throwable = record.getThrown();
 			if (throwable != null) {
 				buf.append("at ");
 				buf.append(record.getSourceClassName());
@@ -364,16 +364,16 @@ public class LogInstance {
 				buf.append(record.getSourceMethodName());
 				buf.append(nl);
 				
-				StringWriter sink = new StringWriter();
+				final StringWriter sink = new StringWriter();
 				throwable.printStackTrace(new PrintWriter(sink, true));
 				buf.append(sink.toString());
 				
 				buf.append(nl);
 			}
 			
-			String str = buf.toString();
+			final String str = buf.toString();
 			
-			for (LogMonitor mon : monitors.values()) {
+			for (final LogMonitor mon : monitors.values()) {
 				mon.log(level, str);
 			}
 			

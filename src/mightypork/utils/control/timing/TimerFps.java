@@ -14,7 +14,7 @@ public class TimerFps {
 	private long lastSkipped = 0;
 	
 	private static final long SECOND = 1000000000; // a million nanoseconds
-	private long FRAME; // a time of one frame in nanoseconds
+	private final long FRAME; // a time of one frame in nanoseconds
 	
 	
 	/**
@@ -35,9 +35,9 @@ public class TimerFps {
 	 */
 	public void sync()
 	{
-		long time = getTime();
+		final long time = getTime();
 		if (time >= nextFrame) {
-			long skippedNow = (long) Math.floor((time - nextFrame) / (double) FRAME) + 1;
+			final long skippedNow = (long) Math.floor((time - nextFrame) / (double) FRAME) + 1;
 			skipped += skippedNow;
 			lastFrame = nextFrame + (1 - skippedNow) * FRAME;
 			nextFrame += skippedNow * FRAME;
@@ -67,7 +67,7 @@ public class TimerFps {
 			return 1;
 		}
 		
-		long time = getTime();
+		final long time = getTime();
 		
 		if (time <= nextFrame) {
 			return (double) (time - lastFrame) / (double) FRAME;
@@ -84,7 +84,7 @@ public class TimerFps {
 	 */
 	public int getSkipped()
 	{
-		long change = skipped - lastSkipped;
+		final long change = skipped - lastSkipped;
 		lastSkipped = skipped;
 		return (int) change;
 	}
@@ -95,7 +95,7 @@ public class TimerFps {
 	 */
 	public void startNewFrame()
 	{
-		long time = getTime();
+		final long time = getTime();
 		lastFrame = time;
 		nextFrame = time + FRAME;
 		lastSkipped = skipped;

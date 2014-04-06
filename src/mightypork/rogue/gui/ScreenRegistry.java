@@ -32,7 +32,7 @@ public class ScreenRegistry extends Subsystem implements ScreenRequestEvent.List
 	{
 		Log.f3("Request to show screen \"" + key + "\"");
 		
-		Screen toshow = screens.get(key);
+		final Screen toshow = screens.get(key);
 		if (toshow == null) throw new RuntimeException("Screen " + key + " not defined.");
 		
 		if (active != null) active.setActive(false);

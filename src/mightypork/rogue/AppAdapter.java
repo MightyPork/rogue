@@ -14,7 +14,7 @@ import mightypork.utils.control.bus.EventBus;
  */
 public class AppAdapter implements AppAccess {
 	
-	private AppAccess app;
+	private final AppAccess app;
 	
 	
 	public AppAdapter(AppAccess app) {

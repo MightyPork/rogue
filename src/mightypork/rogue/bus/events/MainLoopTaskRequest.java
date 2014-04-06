@@ -10,7 +10,8 @@ import mightypork.utils.control.bus.SingularEvent;
  * 
  * @author MightyPork
  */
-public class MainLoopTaskRequest implements Event<MainLoopTaskRequest.Listener>, SingularEvent {
+@SingularEvent
+public class MainLoopTaskRequest implements Event<MainLoopTaskRequest.Listener> {
 	
 	private final Runnable task;
 	
@@ -33,6 +34,6 @@ public class MainLoopTaskRequest implements Event<MainLoopTaskRequest.Listener>,
 		 * 
 		 * @param request
 		 */
-		public void queueTask(Runnable request);
+		void queueTask(Runnable request);
 	}
 }

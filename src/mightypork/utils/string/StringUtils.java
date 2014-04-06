@@ -19,12 +19,12 @@ public class StringUtils {
 	public static boolean isInArray(String needle, boolean case_sensitive, String... haystack)
 	{
 		if (case_sensitive) {
-			for (String s : haystack) {
+			for (final String s : haystack) {
 				if (needle.equals(s)) return true;
 			}
 			return false;
 		} else {
-			for (String s : haystack) {
+			for (final String s : haystack) {
 				if (needle.equalsIgnoreCase(s)) return true;
 			}
 			return false;
@@ -124,9 +124,9 @@ public class StringUtils {
 	 */
 	public static String formatInt(long number)
 	{
-		String num = number + "";
+		final String num = number + "";
 		String out = "";
-		String dot = ".";
+		final String dot = ".";
 		int cnt = 1;
 		for (int i = num.length() - 1; i >= 0; i--) {
 			out = num.charAt(i) + out;

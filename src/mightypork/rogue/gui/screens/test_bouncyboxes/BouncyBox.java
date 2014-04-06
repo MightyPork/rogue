@@ -19,23 +19,23 @@ import mightypork.utils.math.coord.Rect;
 
 public class BouncyBox implements RenderableWithContext, Updateable, ConstraintContext {
 	
-	private Random rand = new Random();
+	private final Random rand = new Random();
 	
 	private ConstraintContext context;
 	
-	private RectConstraint box;
+	private final RectConstraint box;
 	
-	private AnimDouble pos = new AnimDouble(0, Easing.BOUNCE_OUT);
+	private final AnimDouble pos = new AnimDouble(0, Easing.BOUNCE_OUT);
 	
 	
 	public BouncyBox() {
 		// create box
-		NumConstraint side = c_height(this);
+		final NumConstraint side = c_height(this);
 		RectConstraint abox = c_box_sized(this, side, side);
 		
 		// move
-		NumConstraint move_length = c_sub(c_width(this), side);
-		NumConstraint offset = c_mul(move_length, c_n(pos));
+		final NumConstraint move_length = c_sub(c_width(this), side);
+		final NumConstraint offset = c_mul(move_length, c_n(pos));
 		abox = c_move(abox, offset, c_n(0));
 		
 		// add padding

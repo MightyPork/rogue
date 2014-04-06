@@ -62,7 +62,7 @@ public class FontBank extends AppAdapter {
 	 */
 	public GLFont getFont(String key)
 	{
-		GLFont f = fonts.get(key);
+		final GLFont f = fonts.get(key);
 		
 		if (f == null) {
 			Log.w("There's no font called " + key + "!");

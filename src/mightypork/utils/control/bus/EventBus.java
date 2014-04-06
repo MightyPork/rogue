@@ -17,16 +17,16 @@ import mightypork.utils.logging.Log;
 final public class EventBus implements Destroyable {
 	
 	/** Message channels */
-	private BufferedHashSet<EventChannel<?, ?>> channels = new BufferedHashSet<EventChannel<?, ?>>();
+	private final BufferedHashSet<EventChannel<?, ?>> channels = new BufferedHashSet<EventChannel<?, ?>>();
 	
 	/** Registered clients */
-	private BufferedHashSet<Object> clients = new BufferedHashSet<Object>();
+	private final BufferedHashSet<Object> clients = new BufferedHashSet<Object>();
 	
 	/** Messages queued for delivery */
-	private DelayQueue<DelayedMessage> sendQueue = new DelayQueue<DelayedMessage>();
+	private final DelayQueue<DelayedMessage> sendQueue = new DelayQueue<DelayedMessage>();
 	
 	/** Queue polling thread */
-	private QueuePollingThread busThread;
+	private final QueuePollingThread busThread;
 	
 	/** Log all */
 	private boolean logging = false;
@@ -55,7 +55,7 @@ final public class EventBus implements Destroyable {
 		
 		logging = level;
 		
-		for (EventChannel<?, ?> ch : channels) {
+		for (final EventChannel<?, ?> ch : channels) {
 			ch.enableLogging(logging);
 		}
 	}
@@ -73,7 +73,7 @@ final public class EventBus implements Destroyable {
 		assertLive();
 		
 		// if the channel already exists, return this instance instead.
-		for (EventChannel<?, ?> ch : channels) {
+		for (final EventChannel<?, ?> ch : channels) {
 			if (ch.equals(channel)) {
 				Log.w("<bus> Channel of type " + Log.str(channel) + " already registered.");
 				return ch;
@@ -99,7 +99,7 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		EventChannel<F_EVENT, F_CLIENT> channel = EventChannel.create(messageClass, clientClass);
+		final EventChannel<F_EVENT, F_CLIENT> channel = EventChannel.create(messageClass, clientClass);
 		return addChannel(channel);
 	}
 	
@@ -140,7 +140,7 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		DelayedMessage dm = new DelayedMessage(delay, message);
+		final DelayedMessage dm = new DelayedMessage(delay, message);
 		
 		if (logging) Log.f3("<bus> + [ Queuing: " + Log.str(message) + " ]");
 		
@@ -168,9 +168,17 @@ final public class EventBus implements Destroyable {
 			boolean sent = false;
 			boolean channelAccepted = false;
 			
-			for (EventChannel<?, ?> b : channels) {
-				if (b.canBroadcast(message)) channelAccepted = true;
-				sent |= b.broadcast(message, clients);
+			final boolean singular = message.getClass().isAnnotationPresent(SingularEvent.class);
+			
+			for (final EventChannel<?, ?> b : channels) {
+				if (b.canBroadcast(message)) {
+					channelAccepted = true;
+					sent |= b.broadcast(message, clients);
+				}
+				
+				if (sent && singular) {
+					break;
+				}
 			}
 			
 			// more severe
@@ -224,7 +232,7 @@ final public class EventBus implements Destroyable {
 		
 		if (client == null) return false;
 		
-		for (EventChannel<?, ?> ch : channels) {
+		for (final EventChannel<?, ?> ch : channels) {
 			if (ch.isClientValid(client)) {
 				return true;
 			}
@@ -235,7 +243,7 @@ final public class EventBus implements Destroyable {
 	
 	private class DelayedMessage implements Delayed {
 		
-		private long due;
+		private final long due;
 		private Event<?> theMessage = null;
 		
 		
@@ -287,7 +295,7 @@ final public class EventBus implements Destroyable {
 				
 				try {
 					dm = sendQueue.take();
-				} catch (InterruptedException ignored) {
+				} catch (final InterruptedException ignored) {
 					//
 				}
 				

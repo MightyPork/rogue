@@ -16,7 +16,6 @@ import mightypork.rogue.gui.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.gui.screens.test_font.ScreenTestFont;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
-import mightypork.rogue.loading.DeferredLoader;
 import mightypork.rogue.render.DisplaySystem;
 import mightypork.rogue.sound.SoundSystem;
 import mightypork.utils.control.bus.EventBus;
@@ -62,7 +61,7 @@ public class App implements AppAccess {
 		
 		try {
 			inst.start();
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			onCrash(t);
 		}
 		
@@ -124,7 +123,7 @@ public class App implements AppAccess {
 		/*
 		 * Setup logging
 		 */
-		LogInstance log = Log.create("runtime", Paths.LOGS, 10);
+		final LogInstance log = Log.create("runtime", Paths.LOGS, 10);
 		log.enable(Config.LOGGING_ENABLED);
 		log.enableSysout(Config.LOG_TO_STDOUT);
 		
@@ -154,19 +153,18 @@ public class App implements AppAccess {
 		soundSystem.setMasterVolume(1);
 		
 		/*
-		 * Load resources
-		 */
-		Log.f1("Registering resources...");
-		bus().subscribe(new DeferredLoader(this));
-		
-		Res.load(this);
-		
-		/*
 		 * Input
 		 */
 		Log.f2("Initializing Input System...");
 		inputSystem = new InputSystem(this);
 		setupGlobalKeystrokes();
+		
+		/*
+		 * Load resources
+		 */
+		Log.f1("Loading resources...");
+		
+		Res.load(this);
 		
 		/*
 		 * Screen registry
@@ -179,7 +177,7 @@ public class App implements AppAccess {
 		 * Prepare main loop
 		 */
 		Log.f1("Preparing main loop...");
-		ArrayList<Runnable> loopTasks = new ArrayList<Runnable>();
+		final ArrayList<Runnable> loopTasks = new ArrayList<Runnable>();
 		
 		loopTasks.add(new Runnable() {
 			
@@ -304,7 +302,7 @@ public class App implements AppAccess {
 							fileLock.release();
 							randomAccessFile.close();
 							lockFile.delete();
-						} catch (Exception e) {
+						} catch (final Exception e) {
 							System.err.println("Unable to remove lock file.");
 							e.printStackTrace();
 						}
@@ -313,7 +311,7 @@ public class App implements AppAccess {
 				return true;
 			}
 			
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.err.println("Unable to create and/or lock file.");
 			e.printStackTrace();
 		}

@@ -17,28 +17,29 @@ import mightypork.utils.logging.Log;
  * 
  * @author MightyPork
  */
-public class DeferredLoader extends Thread implements ResourceLoadRequest.Listener, Destroyable {
+public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.Listener, Destroyable {
 	
 	public static void launch(AppAccess app)
 	{
-		(new DeferredLoader(app)).start();
+		(new AsyncResourceLoader(app)).start();
 	}
 	
-	private ExecutorService exs = Executors.newCachedThreadPool();
+	private final ExecutorService exs = Executors.newCachedThreadPool();
 	
-	private LinkedBlockingQueue<Deferred> toLoad = new LinkedBlockingQueue<Deferred>();
+	private final LinkedBlockingQueue<DeferredResource> toLoad = new LinkedBlockingQueue<DeferredResource>();
 	private boolean stopped;
-	private AppAccess app;
+	private final AppAccess app;
 	
 	
-	public DeferredLoader(AppAccess app) {
+	public AsyncResourceLoader(AppAccess app) {
 		super("Deferred loader");
 		this.app = app;
+		app.bus().subscribe(this);
 	}
 	
 	
 	@Override
-	public void loadResource(Deferred resource)
+	public void loadResource(DeferredResource resource)
 	{
 		toLoad.add(resource);
 	}
@@ -47,10 +48,12 @@ public class DeferredLoader extends Thread implements ResourceLoadRequest.Listen
 	@Override
 	public void run()
 	{
+		Log.f3("Asynchronous resource loader started.");
+		
 		while (!stopped) {
 			
 			try {
-				final Deferred def = toLoad.take();
+				final DeferredResource def = toLoad.take();
 				if (def == null) continue;
 				
 				if (!def.isLoaded()) {
@@ -58,11 +61,8 @@ public class DeferredLoader extends Thread implements ResourceLoadRequest.Listen
 					// skip nulls
 					if (def instanceof NullResource) continue;
 					
-					// texture needs to be loaded in main thread, unfortunately.
-					// -> delegate to MainLoop
-					if (def instanceof MustLoadInMainThread) {
-						Log.f3("<DEFERRED> Loading \"" + Log.str(def) + "\" in main thread (texture based).");
-						
+					// textures & fonts needs to be loaded in main thread
+					if (def.getClass().isAnnotationPresent(MustLoadInMainThread.class)) {
 						app.bus().queue(new MainLoopTaskRequest(new Runnable() {
 							
 							@Override
@@ -75,8 +75,6 @@ public class DeferredLoader extends Thread implements ResourceLoadRequest.Listen
 						continue;
 					}
 					
-					Log.f3("<DEFERRED> Loading \"" + Log.str(def) + "\" asynchronously.");
-					
 					exs.submit(new Runnable() {
 						
 						@Override
@@ -87,7 +85,7 @@ public class DeferredLoader extends Thread implements ResourceLoadRequest.Listen
 					});
 				}
 				
-			} catch (InterruptedException ignored) {
+			} catch (final InterruptedException ignored) {
 				//
 			}
 			

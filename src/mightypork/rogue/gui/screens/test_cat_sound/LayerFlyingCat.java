@@ -23,15 +23,15 @@ import org.newdawn.slick.opengl.Texture;
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
 	
-	private RectConstraint kittenbox;
+	private final RectConstraint kittenbox;
 	
-	private AnimDouble s = new AnimDouble(400, Easing.SINE_BOTH);
-	private AnimDouble x = new AnimDouble(200, Easing.ELASTIC_OUT);
-	private AnimDouble y = new AnimDouble(200, Easing.ELASTIC_OUT);
+	private final AnimDouble s = new AnimDouble(400, Easing.SINE_BOTH);
+	private final AnimDouble x = new AnimDouble(200, Easing.ELASTIC_OUT);
+	private final AnimDouble y = new AnimDouble(200, Easing.ELASTIC_OUT);
 	
-	private Random rand = new Random();
+	private final Random rand = new Random();
 	
-	private Texture cat_tx = Res.getTexture("test.kitten");
+	private final Texture cat_tx = Res.getTexture("test.kitten");
 	
 	
 	public LayerFlyingCat(Screen screen) {
@@ -65,11 +65,11 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	{
 		if (!event.isDown()) return;
 		
-		Coord pos = event.getPos();
+		final Coord pos = event.getPos();
 		
-		double newSize = 200 + rand.nextInt(600);
+		final double newSize = 200 + rand.nextInt(600);
 		
-		double t = 2;
+		final double t = 2;
 		
 		s.fadeTo(newSize, t / 2D);
 		x.fadeTo(pos.x - newSize / 2D, t);

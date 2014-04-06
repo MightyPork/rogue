@@ -62,7 +62,7 @@ public class Mutable<T> {
 		if (obj == null) return false;
 		if (!(obj instanceof Mutable)) return false;
 		
-		Mutable<?> other = (Mutable<?>) obj;
+		final Mutable<?> other = (Mutable<?>) obj;
 		if (o == null) {
 			if (other.o != null) return false;
 		} else if (!o.equals(other.o)) {

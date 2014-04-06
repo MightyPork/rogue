@@ -53,7 +53,7 @@ public class OsUtils {
 	 */
 	public static File getWorkDir(String dirname, String subfolderName, boolean create)
 	{
-		File f = new File(getWorkDir(dirname), subfolderName);
+		final File f = new File(getWorkDir(dirname), subfolderName);
 		
 		if (!f.exists() && create) {
 			if (!f.mkdirs()) {
@@ -82,7 +82,7 @@ public class OsUtils {
 	{
 		if (cachedOs != null) return cachedOs;
 		
-		String s = System.getProperty("os.name").toLowerCase();
+		final String s = System.getProperty("os.name").toLowerCase();
 		
 		if (s.contains("win")) {
 			cachedOs = EnumOS.windows;
@@ -106,7 +106,7 @@ public class OsUtils {
 	
 	private static File getWorkDir(String dirname, boolean create)
 	{
-		String userhome = System.getProperty("user.home", ".");
+		final String userhome = System.getProperty("user.home", ".");
 		File file;
 		
 		switch (getOs()) {
@@ -116,7 +116,7 @@ public class OsUtils {
 				break;
 			
 			case windows:
-				String appdata = System.getenv("APPDATA");
+				final String appdata = System.getenv("APPDATA");
 				
 				if (appdata != null) {
 					file = new File(appdata, "." + dirname + '/');

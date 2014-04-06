@@ -10,7 +10,8 @@ import mightypork.utils.control.bus.SingularEvent;
  * 
  * @author MightyPork
  */
-public class ActionRequest implements Event<ActionRequest.Listener>, SingularEvent {
+@SingularEvent
+public class ActionRequest implements Event<ActionRequest.Listener> {
 	
 	private final RequestType type;
 	
@@ -33,7 +34,7 @@ public class ActionRequest implements Event<ActionRequest.Listener>, SingularEve
 		 * 
 		 * @param request
 		 */
-		public void requestAction(RequestType request);
+		void requestAction(RequestType request);
 	}
 	
 	public static enum RequestType

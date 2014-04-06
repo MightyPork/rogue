@@ -18,13 +18,13 @@ import mightypork.utils.logging.Log;
 public class FileTreeDiff {
 	
 	private static final byte[] BUFFER = new byte[2048];
-	private Checksum ck1 = new Adler32();
-	private Checksum ck2 = new Adler32();
+	private final Checksum ck1 = new Adler32();
+	private final Checksum ck2 = new Adler32();
 	
 	private boolean logging = true;
 	
-	private List<Tuple<File>> compared = new ArrayList<Tuple<File>>();
-	private Comparator<File> fileFirstSorter = new Comparator<File>() {
+	private final List<Tuple<File>> compared = new ArrayList<Tuple<File>>();
+	private final Comparator<File> fileFirstSorter = new Comparator<File>() {
 		
 		@Override
 		public int compare(File o1, File o2)
@@ -57,7 +57,7 @@ public class FileTreeDiff {
 			
 			return true;
 			
-		} catch (NotEqualException e) {
+		} catch (final NotEqualException e) {
 			if (logging) Log.f3("Difference found:\n" + e.getMessage());
 			
 			return false;
@@ -70,7 +70,7 @@ public class FileTreeDiff {
 		FileInputStream in1 = null, in2 = null;
 		CheckedInputStream cin1 = null, cin2 = null;
 		
-		for (Tuple<File> pair : compared) {
+		for (final Tuple<File> pair : compared) {
 			try {
 				ck1.reset();
 				ck2.reset();
@@ -82,8 +82,8 @@ public class FileTreeDiff {
 				cin2 = new CheckedInputStream(in2, ck2);
 				
 				while (true) {
-					int read1 = cin1.read(BUFFER);
-					int read2 = cin2.read(BUFFER);
+					final int read1 = cin1.read(BUFFER);
+					final int read2 = cin2.read(BUFFER);
 					
 					if (read1 != read2 || ck1.getValue() != ck2.getValue()) {
 						throw new NotEqualException("Bytes differ:\n" + pair.a + "\n" + pair.b);
@@ -92,31 +92,31 @@ public class FileTreeDiff {
 					if (read1 == -1) break;
 				}
 				
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// ignore
 			} finally {
 				
 				try {
 					if (cin1 != null) cin1.close();
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					// ignore
 				}
 				
 				try {
 					if (cin2 != null) cin2.close();
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					// ignore
 				}
 				
 				try {
 					if (in1 != null) in1.close();
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					// ignore
 				}
 				
 				try {
 					if (in2 != null) in2.close();
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					// ignore
 				}
 				
@@ -134,8 +134,8 @@ public class FileTreeDiff {
 		}
 		
 		if (f1.isDirectory()) {
-			File[] children1 = f1.listFiles();
-			File[] children2 = f2.listFiles();
+			final File[] children1 = f1.listFiles();
+			final File[] children2 = f2.listFiles();
 			
 			Arrays.sort(children1, fileFirstSorter);
 			Arrays.sort(children2, fileFirstSorter);
@@ -143,8 +143,8 @@ public class FileTreeDiff {
 			if (children1.length != children2.length) throw new NotEqualException("Child counts differ:\n" + f1 + "\n" + f2);
 			
 			for (int i = 0; i < children1.length; i++) {
-				File ch1 = children1[i];
-				File ch2 = children2[i];
+				final File ch1 = children1[i];
+				final File ch2 = children2[i];
 				
 				if (!ch1.getName().equals(ch2.getName())) throw new NotEqualException("Filenames differ:\n" + ch1 + "\n" + ch2);
 				

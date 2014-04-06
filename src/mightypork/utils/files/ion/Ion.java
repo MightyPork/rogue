@@ -23,7 +23,7 @@ public class Ion {
 		try {
 			registerIonizable(IonMarks.MAP, IonMap.class);
 			registerIonizable(IonMarks.LIST, IonList.class);
-		} catch (IonException e) {
+		} catch (final IonException e) {
 			e.printStackTrace();
 		}
 	}
@@ -70,16 +70,16 @@ public class Ion {
 		InputStream in = null;
 		try {
 			in = new FileInputStream(file);
-			Object obj = fromStream(in);
+			final Object obj = fromStream(in);
 			return obj;
 			
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IonException("Error loading ION file.", e);
 		} finally {
 			if (in != null) {
 				try {
 					in.close();
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -124,8 +124,8 @@ public class Ion {
 	{
 		OutputStream out = null;
 		try {
-			String f = path.toString();
-			File dir = new File(f.substring(0, f.lastIndexOf(File.separator)));
+			final String f = path.toString();
+			final File dir = new File(f.substring(0, f.lastIndexOf(File.separator)));
 			
 			dir.mkdirs();
 			
@@ -135,13 +135,13 @@ public class Ion {
 			
 			out.flush();
 			out.close();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new IonException("Error writing to ION file.", e);
 		} finally {
 			if (out != null) {
 				try {
 					out.close();
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -173,16 +173,16 @@ public class Ion {
 	public static Object readObject(InputStream in) throws IonException
 	{
 		try {
-			int bi = in.read();
+			final int bi = in.read();
 			if (bi == -1) throw new IonException("Unexpected end of stream.");
-			byte b = (byte) bi;
+			final byte b = (byte) bi;
 			if (customIonizables.containsKey(b)) {
 				Ionizable ion;
 				try {
 					ion = ((Ionizable) customIonizables.get(b).newInstance());
-				} catch (InstantiationException e) {
+				} catch (final InstantiationException e) {
 					throw new IonException("Cound not instantiate " + customIonizables.get(b).getSimpleName(), e);
-				} catch (IllegalAccessException e) {
+				} catch (final IllegalAccessException e) {
 					throw new IonException("Cound not instantiate " + customIonizables.get(b).getSimpleName(), e);
 				}
 				ion.ionRead(in);
@@ -207,12 +207,12 @@ public class Ion {
 				case IonMarks.DOUBLE:
 					return BinaryUtils.readDouble(in);
 				case IonMarks.STRING:
-					String s = BinaryUtils.readString(in);
+					final String s = BinaryUtils.readString(in);
 					return s;
 				default:
 					throw new IonException("Invalid Ion mark " + Integer.toHexString(bi));
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IonException("Error loading ION file: ", e);
 		}
 	}
@@ -290,7 +290,7 @@ public class Ion {
 			
 			throw new IonException(Calc.cname(obj) + " can't be stored in Ion storage.");
 			
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IonException("Could not store " + obj, e);
 		}
 	}

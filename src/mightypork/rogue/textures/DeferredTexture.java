@@ -1,7 +1,7 @@
-package mightypork.rogue.texture;
+package mightypork.rogue.textures;
 
 
-import mightypork.rogue.loading.DeferredResource;
+import mightypork.rogue.loading.BaseDeferredResource;
 import mightypork.rogue.loading.MustLoadInMainThread;
 import mightypork.rogue.render.Render;
 import mightypork.utils.math.coord.Rect;
@@ -15,7 +15,8 @@ import org.newdawn.slick.opengl.Texture;
  * 
  * @author MightyPork
  */
-public class DeferredTexture extends DeferredResource implements FilteredTexture, MustLoadInMainThread {
+@MustLoadInMainThread
+public class DeferredTexture extends BaseDeferredResource implements FilteredTexture {
 	
 	private Texture backingTexture;
 	private Filter filter_min = Filter.LINEAR;

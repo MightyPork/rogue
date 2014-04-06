@@ -33,7 +33,7 @@ public class Config {
 	{
 		Log.f2("Initializing configuration manager.");
 		
-		String comment = Const.APP_NAME + " config file";
+		final String comment = Const.APP_NAME + " config file";
 		
 		mgr = new PropertyManager(Paths.CONFIG, comment);
 		
@@ -76,7 +76,6 @@ public class Config {
 	public static boolean LOG_TO_STDOUT = true;
 	public static boolean SINGLE_INSTANCE = true;
 	
-	public static boolean LOG_FONTS = false;
 	public static boolean LOG_BUS = false;
 	
 }

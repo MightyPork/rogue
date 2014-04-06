@@ -3,7 +3,7 @@ package mightypork.rogue.sound;
 
 import java.io.IOException;
 
-import mightypork.rogue.loading.DeferredResource;
+import mightypork.rogue.loading.BaseDeferredResource;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.math.coord.Coord;
 
@@ -16,7 +16,7 @@ import org.newdawn.slick.openal.SoundStore;
  * 
  * @author MightyPork
  */
-public class DeferredAudio extends DeferredResource {
+public class DeferredAudio extends BaseDeferredResource {
 	
 	private enum PlayMode
 	{
@@ -86,7 +86,7 @@ public class DeferredAudio extends DeferredResource {
 	@Override
 	protected void loadResource(String resource) throws IOException
 	{
-		String ext = FileUtils.getExtension(resource);
+		final String ext = FileUtils.getExtension(resource);
 		
 		if (ext.equalsIgnoreCase("ogg")) {
 			backingAudio = SoundStore.get().getOgg(resource);

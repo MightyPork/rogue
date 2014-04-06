@@ -53,7 +53,7 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 			Mouse.create();
 			Keyboard.create();
 			Keyboard.enableRepeatEvents(false);
-		} catch (LWJGLException e) {
+		} catch (final LWJGLException e) {
 			throw new RuntimeException("Failed to initialize input devices.", e);
 		}
 	}
@@ -83,8 +83,8 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		
 		Display.processMessages();
 		
-		Coord moveSum = Coord.zero();
-		Coord lastPos = Coord.zero();
+		final Coord moveSum = Coord.zero();
+		final Coord lastPos = Coord.zero();
 		boolean wasMouse = false;
 		
 		while (Mouse.next()) {
@@ -106,11 +106,11 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	
 	private void onMouseEvent(Coord moveSum, Coord lastPos)
 	{
-		int button = Mouse.getEventButton();
-		boolean down = Mouse.getEventButtonState();
-		Coord pos = new Coord(Mouse.getEventX(), Mouse.getEventY());
-		Coord move = new Coord(Mouse.getEventDX(), Mouse.getEventDY());
-		int wheeld = Mouse.getEventDWheel();
+		final int button = Mouse.getEventButton();
+		final boolean down = Mouse.getEventButtonState();
+		final Coord pos = new Coord(Mouse.getEventX(), Mouse.getEventY());
+		final Coord move = new Coord(Mouse.getEventDX(), Mouse.getEventDY());
+		final int wheeld = Mouse.getEventDWheel();
 		
 		if (yAxisDown) {
 			flipScrY(pos);
@@ -128,9 +128,9 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	
 	private void onKeyEvent()
 	{
-		int key = Keyboard.getEventKey();
-		boolean down = Keyboard.getEventKeyState();
-		char c = Keyboard.getEventCharacter();
+		final int key = Keyboard.getEventKey();
+		final boolean down = Keyboard.getEventKeyState();
+		final char c = Keyboard.getEventCharacter();
 		
 		bus().queue(new KeyboardEvent(key, c, down));
 	}

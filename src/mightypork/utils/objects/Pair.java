@@ -66,7 +66,7 @@ public class Pair<T1, T2> {
 			return false;
 		}
 		
-		Pair<?, ?> t = (Pair<?, ?>) obj;
+		final Pair<?, ?> t = (Pair<?, ?>) obj;
 		
 		return Calc.areObjectsEqual(first, t.first) && Calc.areObjectsEqual(second, t.second);
 		

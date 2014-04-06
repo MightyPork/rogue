@@ -6,7 +6,7 @@ import mightypork.utils.math.coord.Coord;
 
 
 /**
- * Mouse button / wheel event
+ * Mouse button / wheel event triggered
  * 
  * @author MightyPork
  */
@@ -114,6 +114,6 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 		 * 
 		 * @param event event
 		 */
-		public void receive(MouseButtonEvent event);
+		void receive(MouseButtonEvent event);
 	}
 }

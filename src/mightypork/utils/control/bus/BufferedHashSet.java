@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class BufferedHashSet<E> extends HashSet<E> {
 	
-	private List<E> toAdd = new LinkedList<E>();
-	private List<Object> toRemove = new LinkedList<Object>();
+	private final List<E> toAdd = new LinkedList<E>();
+	private final List<Object> toRemove = new LinkedList<Object>();
 	private boolean buffering = false;
 	
 	
@@ -72,11 +72,11 @@ public class BufferedHashSet<E> extends HashSet<E> {
 	 */
 	private void flush()
 	{
-		for (E e : toAdd) {
+		for (final E e : toAdd) {
 			super.add(e);
 		}
 		
-		for (Object e : toRemove) {
+		for (final Object e : toRemove) {
 			super.remove(e);
 		}
 		

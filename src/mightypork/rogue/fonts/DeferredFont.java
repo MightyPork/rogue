@@ -6,7 +6,7 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import mightypork.rogue.loading.DeferredResource;
+import mightypork.rogue.loading.BaseDeferredResource;
 import mightypork.rogue.loading.MustLoadInMainThread;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.math.color.RGB;
@@ -18,7 +18,8 @@ import mightypork.utils.math.coord.Coord;
  * 
  * @author MightyPork
  */
-public class DeferredFont extends DeferredResource implements MustLoadInMainThread, GLFont {
+@MustLoadInMainThread
+public class DeferredFont extends BaseDeferredResource implements GLFont {
 	
 	public static enum FontStyle
 	{
@@ -44,7 +45,7 @@ public class DeferredFont extends DeferredResource implements MustLoadInMainThre
 	 * 
 	 * @param resourcePath resource to load
 	 * @param extraChars extra chars (0-255 loaded by default)
-	 * @param size size (pt)
+	 * @param size size (px)
 	 */
 	public DeferredFont(String resourcePath, String extraChars, double size) {
 		this(resourcePath, extraChars, size, FontStyle.PLAIN, true);
@@ -85,7 +86,7 @@ public class DeferredFont extends DeferredResource implements MustLoadInMainThre
 	@Override
 	protected final void loadResource(String path) throws FontFormatException, IOException
 	{
-		Font awtFont = getAwtFont(path, (float) size, style.numeric);
+		final Font awtFont = getAwtFont(path, (float) size, style.numeric);
 		
 		font = new SlickFont(awtFont, antiAlias, extraChars);
 	}
@@ -119,7 +120,7 @@ public class DeferredFont extends DeferredResource implements MustLoadInMainThre
 		} finally {
 			try {
 				if (in != null) in.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				//pass
 			}
 		}

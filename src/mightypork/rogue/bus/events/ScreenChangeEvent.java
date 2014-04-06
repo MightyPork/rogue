@@ -45,6 +45,6 @@ public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	
 	public interface Listener {
 		
-		public void receive(ScreenChangeEvent event);
+		void receive(ScreenChangeEvent event);
 	}
 }

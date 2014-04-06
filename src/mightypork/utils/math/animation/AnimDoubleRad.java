@@ -38,9 +38,9 @@ public class AnimDoubleRad extends AnimDouble {
 	@Override
 	protected double getProgressFromValue(double value)
 	{
-		double whole = Rad.diff(from, to);
+		final double whole = Rad.diff(from, to);
 		if (Rad.diff(value, from) < whole && Rad.diff(value, to) < whole) {
-			double partial = Rad.diff(from, value);
+			final double partial = Rad.diff(from, value);
 			return partial / whole;
 		}
 		
