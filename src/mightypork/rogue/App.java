@@ -4,14 +4,13 @@ package mightypork.rogue;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
-import java.util.ArrayList;
 import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
 import mightypork.rogue.bus.events.*;
 import mightypork.rogue.bus.events.ActionRequest.RequestType;
-import mightypork.rogue.gui.ScreenRegistry;
+import mightypork.rogue.gui.screens.ScreenRegistry;
 import mightypork.rogue.gui.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.gui.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.gui.screens.test_font.ScreenTestFont;
@@ -105,7 +104,7 @@ public class App implements AppAccess {
 	{
 		Log.i("Shutting down subsystems...");
 		
-		if(bus() != null) {
+		if (bus() != null) {
 			bus().send(new DestroyEvent());
 			bus().destroy();
 		}
@@ -181,18 +180,7 @@ public class App implements AppAccess {
 		 * Prepare main loop
 		 */
 		Log.f1("Preparing main loop...");
-		final ArrayList<Runnable> loopTasks = new ArrayList<Runnable>();
-		
-		loopTasks.add(new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				screens.render();
-			}
-		});
-		
-		mainLoop = new MainLoop(this, loopTasks);
+		mainLoop = new MainLoop(this, screens);
 	}
 	
 	

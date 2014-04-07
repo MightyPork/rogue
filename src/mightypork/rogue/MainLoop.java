@@ -1,16 +1,15 @@
 package mightypork.rogue;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ActionRequest;
-import mightypork.rogue.bus.events.UpdateEvent;
 import mightypork.rogue.bus.events.ActionRequest.RequestType;
 import mightypork.rogue.bus.events.MainLoopTaskRequest;
+import mightypork.rogue.bus.events.UpdateEvent;
+import mightypork.rogue.render.Renderable;
 import mightypork.rogue.tasks.TaskTakeScreenshot;
 import mightypork.rogue.util.Utils;
 import mightypork.utils.control.timing.TimerDelta;
@@ -19,13 +18,17 @@ import mightypork.utils.control.timing.TimerDelta;
 public class MainLoop extends Subsystem implements ActionRequest.Listener, MainLoopTaskRequest.Listener {
 	
 	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<Runnable>();
-	private final List<Runnable> regularTasks;
+	private final Renderable renderable;
 	
 	
-	public MainLoop(App app, ArrayList<Runnable> loopTasks) {
+	public MainLoop(App app, Renderable masterRenderable) {
 		super(app);
 		
-		this.regularTasks = loopTasks;
+		if (masterRenderable == null) {
+			throw new NullPointerException("Master renderable must not be null.");
+		}
+		
+		this.renderable = masterRenderable;
 	}
 	
 	/** timer */
@@ -37,19 +40,17 @@ public class MainLoop extends Subsystem implements ActionRequest.Listener, MainL
 	{
 		timer = new TimerDelta();
 		
-		while (running) {			
-			Runnable r;
-			while ((r = taskQueue.poll()) != null) {				
-				r.run();
-			}
-			
+		while (running) {
 			disp().beginFrame();
 			
 			bus().send(new UpdateEvent(timer.getDelta()));
 			
-			for (final Runnable r2 : regularTasks) {
-				r2.run();
+			Runnable r;
+			while ((r = taskQueue.poll()) != null) {
+				r.run();
 			}
+			
+			renderable.render();
 			
 			disp().endFrame();
 		}

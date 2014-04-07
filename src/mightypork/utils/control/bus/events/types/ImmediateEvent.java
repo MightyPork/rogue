@@ -5,8 +5,7 @@ import java.lang.annotation.*;
 
 
 /**
- * Event that is handled by only single client, and then discarded (ie. only one
- * client receives it when it's broadcasted).
+ * Event that should not be queued.
  * 
  * @author MightyPork
  */
@@ -14,4 +13,4 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Inherited
 @Documented
-public @interface SingularEvent {}
+public @interface ImmediateEvent {}

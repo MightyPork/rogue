@@ -4,7 +4,7 @@ package mightypork.rogue.gui.screens.test_font;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.Res;
 import mightypork.rogue.fonts.GLFont;
-import mightypork.rogue.gui.Screen;
+import mightypork.rogue.gui.screens.Screen;
 import mightypork.rogue.render.Render;
 import mightypork.utils.math.coord.Coord;
 

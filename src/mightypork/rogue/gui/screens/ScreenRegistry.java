@@ -1,4 +1,4 @@
-package mightypork.rogue.gui;
+package mightypork.rogue.gui.screens;
 
 
 import java.util.HashMap;
@@ -6,10 +6,11 @@ import java.util.HashMap;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ScreenRequestEvent;
+import mightypork.rogue.render.Renderable;
 import mightypork.utils.logging.Log;
 
 
-public class ScreenRegistry extends Subsystem implements ScreenRequestEvent.Listener {
+public class ScreenRegistry extends Subsystem implements ScreenRequestEvent.Listener, Renderable {
 	
 	private final HashMap<String, Screen> screens = new HashMap<String, Screen>();
 	private Screen active = null;
@@ -43,6 +44,7 @@ public class ScreenRegistry extends Subsystem implements ScreenRequestEvent.List
 	}
 	
 	
+	@Override
 	public void render()
 	{
 		if (active != null) active.render();

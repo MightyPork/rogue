@@ -2,7 +2,6 @@ package mightypork.rogue.gui.constraints;
 
 
 import mightypork.rogue.render.Renderable;
-import mightypork.utils.math.constraints.ConstraintContext;
 import mightypork.utils.math.constraints.SettableContext;
 
 
@@ -11,8 +10,6 @@ import mightypork.utils.math.constraints.SettableContext;
  * 
  * @author MightyPork
  */
-public interface RenderableWithContext extends Renderable, SettableContext {
-	
-	@Override
-	void setContext(ConstraintContext context);
+public interface PluggableRenderable extends Renderable, SettableContext {
+	// methods from both interfaces
 }

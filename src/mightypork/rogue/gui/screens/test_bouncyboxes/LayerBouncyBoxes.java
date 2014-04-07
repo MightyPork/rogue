@@ -6,9 +6,9 @@ import static mightypork.utils.math.constraints.ConstraintFactory.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import mightypork.rogue.gui.Screen;
-import mightypork.rogue.gui.ScreenLayer;
 import mightypork.rogue.gui.constraints.RowHolder;
+import mightypork.rogue.gui.screens.Screen;
+import mightypork.rogue.gui.screens.ScreenLayer;
 import mightypork.utils.math.constraints.RectConstraint;
 
 

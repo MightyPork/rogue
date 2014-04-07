@@ -2,7 +2,6 @@ package mightypork.rogue.bus.events;
 
 
 import mightypork.utils.control.bus.events.Event;
-import mightypork.utils.control.bus.events.types.QueuedEvent;
 import mightypork.utils.math.coord.Coord;
 
 
@@ -11,7 +10,6 @@ import mightypork.utils.math.coord.Coord;
  * 
  * @author MightyPork
  */
-@QueuedEvent
 public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	
 	private final boolean fullscreen;

@@ -7,8 +7,8 @@ import java.util.Random;
 
 import mightypork.rogue.Res;
 import mightypork.rogue.bus.events.MouseButtonEvent;
-import mightypork.rogue.gui.Screen;
-import mightypork.rogue.gui.ScreenLayer;
+import mightypork.rogue.gui.screens.Screen;
+import mightypork.rogue.gui.screens.ScreenLayer;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.render.Render;
 import mightypork.utils.control.interf.Updateable;

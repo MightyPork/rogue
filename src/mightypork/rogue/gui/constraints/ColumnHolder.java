@@ -29,7 +29,7 @@ public class ColumnHolder extends ElementHolder {
 	 * 
 	 * @param elem
 	 */
-	public void addRow(RenderableWithContext elem)
+	public void addRow(PluggableRenderable elem)
 	{
 		if (elem == null) return;
 		add(elem, c_column(null, cols, col++));
@@ -37,7 +37,7 @@ public class ColumnHolder extends ElementHolder {
 	
 	
 	@Override
-	public void remove(RenderableWithContext elem)
+	public void remove(PluggableRenderable elem)
 	{
 		throw new UnsupportedOperationException("Can't remove from ColumnHolder.");
 	}

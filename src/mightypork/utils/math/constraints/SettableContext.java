@@ -13,5 +13,5 @@ public interface SettableContext {
 	 * 
 	 * @param context context
 	 */
-	public void setContext(ConstraintContext context);
+	void setContext(ConstraintContext context);
 }

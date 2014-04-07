@@ -5,7 +5,7 @@ import static mightypork.utils.math.constraints.ConstraintFactory.*;
 
 import java.util.Random;
 
-import mightypork.rogue.gui.constraints.RenderableWithContext;
+import mightypork.rogue.gui.constraints.PluggableRenderable;
 import mightypork.rogue.render.Render;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.animation.AnimDouble;
@@ -17,7 +17,7 @@ import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Rect;
 
 
-public class BouncyBox implements RenderableWithContext, Updateable, ConstraintContext {
+public class BouncyBox implements PluggableRenderable, Updateable, ConstraintContext {
 	
 	private final Random rand = new Random();
 	

@@ -6,7 +6,7 @@ import mightypork.rogue.Res;
 import mightypork.rogue.bus.events.ActionRequest;
 import mightypork.rogue.bus.events.ActionRequest.RequestType;
 import mightypork.rogue.bus.events.ScreenRequestEvent;
-import mightypork.rogue.gui.LayeredScreen;
+import mightypork.rogue.gui.screens.LayeredScreen;
 import mightypork.rogue.input.KeyStroke;
 
 import org.lwjgl.input.Keyboard;

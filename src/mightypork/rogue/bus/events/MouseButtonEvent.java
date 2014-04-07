@@ -2,7 +2,6 @@ package mightypork.rogue.bus.events;
 
 
 import mightypork.utils.control.bus.events.Event;
-import mightypork.utils.control.bus.events.types.QueuedEvent;
 import mightypork.utils.math.coord.Coord;
 
 
@@ -11,7 +10,6 @@ import mightypork.utils.math.coord.Coord;
  * 
  * @author MightyPork
  */
-@QueuedEvent
 public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	
 	public static final int BUTTON_LEFT = 0;

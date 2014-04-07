@@ -6,9 +6,9 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 import mightypork.utils.control.bus.events.Event;
+import mightypork.utils.control.bus.events.types.DelayedEvent;
 import mightypork.utils.control.bus.events.types.ImmediateEvent;
-import mightypork.utils.control.bus.events.types.QueuedEvent;
-import mightypork.utils.control.bus.events.types.SingularEvent;
+import mightypork.utils.control.bus.events.types.SingleReceiverEvent;
 import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.logging.Log;
 
@@ -27,11 +27,11 @@ final public class EventBus implements Destroyable {
 	private final BufferedHashSet<Object> clients = new BufferedHashSet<Object>();
 	
 	/** Messages queued for delivery */
-	private final DelayQueue<DelayedEvent> sendQueue = new DelayQueue<DelayedEvent>();
+	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<DelayQueueEntry>();
 	
 	/** Queue polling thread */
 	private final QueuePollingThread busThread;
-		
+	
 	/** Whether the bus was destroyed */
 	private boolean dead = false;
 	
@@ -110,17 +110,18 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		if(event.getClass().isAnnotationPresent(QueuedEvent.class)) {
-			sendQueued(event);
+		DelayedEvent adelay = event.getClass().getAnnotation(DelayedEvent.class);
+		if (adelay != null) {
+			sendDelayed(event, adelay.delay());
 			return;
 		}
 		
-		if(event.getClass().isAnnotationPresent(ImmediateEvent.class)) {
+		if (event.getClass().isAnnotationPresent(ImmediateEvent.class)) {
 			sendDirect(event);
 			return;
 		}
 		
-		dispatch(event);
+		sendQueued(event);
 	}
 	
 	
@@ -147,9 +148,9 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		final DelayedEvent dm = new DelayedEvent(delay, event);
+		final DelayQueueEntry dm = new DelayQueueEntry(delay, event);
 		
-		if(logSending) Log.f3("<bus> Q "+Log.str(event)+", t = +"+delay+"s");
+		if (logSending) Log.f3("<bus> Q " + Log.str(event) + ", t = +" + delay + "s");
 		
 		sendQueue.add(dm);
 	}
@@ -166,7 +167,7 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		if(logSending) Log.f3("<bus> D "+Log.str(event));
+		if (logSending) Log.f3("<bus> D " + Log.str(event));
 		
 		dispatch(event);
 	}
@@ -190,7 +191,7 @@ final public class EventBus implements Destroyable {
 			boolean sent = false;
 			boolean accepted = false;
 			
-			final boolean singular = event.getClass().isAnnotationPresent(SingularEvent.class);
+			final boolean singular = event.getClass().isAnnotationPresent(SingleReceiverEvent.class);
 			
 			for (final EventChannel<?, ?> b : channels) {
 				if (b.canBroadcast(event)) {
@@ -201,7 +202,7 @@ final public class EventBus implements Destroyable {
 				if (sent && singular) break;
 			}
 			
-			if(!accepted) Log.e("<bus> Not accepted by any channel: " + Log.str(event));
+			if (!accepted) Log.e("<bus> Not accepted by any channel: " + Log.str(event));
 			
 			channels.setBuffering(false);
 			clients.setBuffering(false);
@@ -234,7 +235,7 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		clients.remove(client);		
+		clients.remove(client);
 	}
 	
 	
@@ -253,13 +254,13 @@ final public class EventBus implements Destroyable {
 		return false;
 	}
 	
-	private class DelayedEvent implements Delayed {
+	private class DelayQueueEntry implements Delayed {
 		
 		private final long due;
 		private Event<?> evt = null;
 		
 		
-		public DelayedEvent(double seconds, Event<?> event) {
+		public DelayQueueEntry(double seconds, Event<?> event) {
 			super();
 			this.due = System.currentTimeMillis() + (long) (seconds * 1000);
 			this.evt = event;
@@ -300,7 +301,7 @@ final public class EventBus implements Destroyable {
 		@Override
 		public void run()
 		{
-			DelayedEvent evt;
+			DelayQueueEntry evt;
 			
 			while (!stopped) {
 				evt = null;

@@ -9,10 +9,10 @@ import mightypork.rogue.loading.AsyncResourceLoader;
 import mightypork.rogue.sound.SoundBank;
 import mightypork.rogue.sound.players.EffectPlayer;
 import mightypork.rogue.sound.players.LoopPlayer;
-import mightypork.rogue.textures.TextureBank;
-import mightypork.rogue.textures.TxQuad;
 import mightypork.rogue.textures.FilteredTexture.Filter;
 import mightypork.rogue.textures.FilteredTexture.Wrap;
+import mightypork.rogue.textures.TextureBank;
+import mightypork.rogue.textures.TxQuad;
 
 import org.newdawn.slick.opengl.Texture;
 

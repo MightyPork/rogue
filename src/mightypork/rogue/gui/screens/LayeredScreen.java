@@ -1,4 +1,4 @@
-package mightypork.rogue.gui;
+package mightypork.rogue.gui.screens;
 
 
 import java.util.Collection;

@@ -3,7 +3,7 @@ package mightypork.rogue.gui.screens.test_bouncyboxes;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.events.ScreenRequestEvent;
-import mightypork.rogue.gui.LayeredScreen;
+import mightypork.rogue.gui.screens.LayeredScreen;
 import mightypork.rogue.input.KeyStroke;
 
 import org.lwjgl.input.Keyboard;

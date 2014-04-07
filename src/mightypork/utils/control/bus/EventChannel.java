@@ -7,7 +7,7 @@ import java.util.HashSet;
 import mightypork.utils.control.bus.clients.DelegatingClient;
 import mightypork.utils.control.bus.clients.ToggleableClient;
 import mightypork.utils.control.bus.events.Event;
-import mightypork.utils.control.bus.events.types.SingularEvent;
+import mightypork.utils.control.bus.events.types.SingleReceiverEvent;
 import mightypork.utils.logging.Log;
 
 
@@ -68,7 +68,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	private boolean doBroadcast(final EVENT event, final Collection<Object> clients, final Collection<Object> processed)
 	{
 		boolean sent = false;
-		final boolean singular = event.getClass().isAnnotationPresent(SingularEvent.class);
+		final boolean singular = event.getClass().isAnnotationPresent(SingleReceiverEvent.class);
 		
 		for (final Object client : clients) {
 			

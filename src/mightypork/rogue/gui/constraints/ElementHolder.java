@@ -13,14 +13,14 @@ import mightypork.utils.math.coord.Rect;
 
 
 /**
- * Bag for {@link RenderableWithContext} elements with constraints.<br>
+ * Bag for {@link PluggableRenderable} elements with constraints.<br>
  * Elements are exposed to {@link EventBus}.
  * 
  * @author MightyPork
  */
-public class ElementHolder extends ChildClient implements ConstraintContext, RenderableWithContext {
+public class ElementHolder extends ChildClient implements ConstraintContext, PluggableRenderable {
 	
-	private final LinkedList<RenderableWithContext> elements = new LinkedList<RenderableWithContext>();
+	private final LinkedList<PluggableRenderable> elements = new LinkedList<PluggableRenderable>();
 	private ConstraintContext context;
 	
 	
@@ -65,7 +65,7 @@ public class ElementHolder extends ChildClient implements ConstraintContext, Ren
 	 * @param constraint Constraint to be used for the element. It's context
 	 *            will be set to this {@link ElementHolder}
 	 */
-	public void add(RenderableWithContext elem, RectConstraint constraint)
+	public void add(PluggableRenderable elem, RectConstraint constraint)
 	{
 		if (elem == null) return;
 		
@@ -82,7 +82,7 @@ public class ElementHolder extends ChildClient implements ConstraintContext, Ren
 	 * 
 	 * @param elem
 	 */
-	public void remove(RenderableWithContext elem)
+	public void remove(PluggableRenderable elem)
 	{
 		if (elem == null) return;
 		elements.remove(elem);
