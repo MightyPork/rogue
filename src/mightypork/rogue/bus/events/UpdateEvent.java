@@ -3,6 +3,7 @@ package mightypork.rogue.bus.events;
 
 import mightypork.utils.control.bus.events.Event;
 import mightypork.utils.control.bus.events.types.ImmediateEvent;
+import mightypork.utils.control.bus.events.types.UnloggedEvent;
 import mightypork.utils.control.interf.Updateable;
 
 
@@ -13,6 +14,7 @@ import mightypork.utils.control.interf.Updateable;
  */
 // sending via queue would hog the bus
 @ImmediateEvent
+@UnloggedEvent
 public class UpdateEvent implements Event<Updateable> {
 	
 	private final double deltaTime;

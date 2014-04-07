@@ -103,8 +103,8 @@ public class LogInstance {
 		
 		logger.setUseParentHandlers(false);
 		logger.setLevel(Level.ALL);
-		logger.info("Logger \""+name+"\" initialized.");
-		logger.info((new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date()));
+		String stamp = (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date());
+		i("= Logger \""+name+"\" initialized =\n"+stamp);
 	}
 	
 	
@@ -240,7 +240,7 @@ public class LogInstance {
 		if (enabled) {
 			logger.log(level, msg, t);
 			
-			String fmt = formatMessage(level, msg, null);
+			String fmt = formatMessage(level, msg, t);
 			
 			for (final LogMonitor mon : monitors.values()) {
 				mon.onMessageLogged(level, fmt);
@@ -323,7 +323,7 @@ public class LogInstance {
 	 */
 	public void e(String msg, Throwable thrown)
 	{
-		log(Level.SEVERE, msg);
+		log(Level.SEVERE, msg, thrown);
 	}
 	
 	

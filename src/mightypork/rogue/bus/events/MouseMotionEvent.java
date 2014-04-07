@@ -2,6 +2,7 @@ package mightypork.rogue.bus.events;
 
 
 import mightypork.utils.control.bus.events.Event;
+import mightypork.utils.control.bus.events.types.UnloggedEvent;
 import mightypork.utils.math.coord.Coord;
 
 
@@ -10,6 +11,7 @@ import mightypork.utils.math.coord.Coord;
  * 
  * @author MightyPork
  */
+@UnloggedEvent
 public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	
 	private final Coord move;

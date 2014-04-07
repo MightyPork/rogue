@@ -168,6 +168,13 @@ public class App implements AppAccess {
 		setupGlobalKeystrokes();
 		
 		/*
+		 * Prepare main loop
+		 */
+		Log.f1("Preparing game systems...");
+		screens = new ScreenRegistry(this);
+		mainLoop = new MainLoop(this, screens);
+		
+		/*
 		 * Load resources
 		 */
 		Log.f1("Loading resources...");
@@ -177,15 +184,8 @@ public class App implements AppAccess {
 		/*
 		 * Screen registry
 		 */
-		Log.f2("Initializing screen registry...");
-		screens = new ScreenRegistry(this);
+		Log.f2("Initializing screens...");
 		initScreens();
-		
-		/*
-		 * Prepare main loop
-		 */
-		Log.f1("Preparing main loop...");
-		mainLoop = new MainLoop(this, screens);
 	}
 	
 	

@@ -9,6 +9,7 @@ import mightypork.utils.control.bus.events.Event;
 import mightypork.utils.control.bus.events.types.DelayedEvent;
 import mightypork.utils.control.bus.events.types.ImmediateEvent;
 import mightypork.utils.control.bus.events.types.SingleReceiverEvent;
+import mightypork.utils.control.bus.events.types.UnloggedEvent;
 import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.logging.Log;
 
@@ -44,6 +45,13 @@ final public class EventBus implements Destroyable {
 	public EventBus() {
 		busThread = new QueuePollingThread();
 		busThread.start();
+	}
+	
+	private boolean shallLog(Event<?> event) {
+		if(!logSending) return false;
+		if(event.getClass().isAnnotationPresent(UnloggedEvent.class)) return false;
+		
+		return true;
 	}
 	
 	
@@ -150,7 +158,7 @@ final public class EventBus implements Destroyable {
 		
 		final DelayQueueEntry dm = new DelayQueueEntry(delay, event);
 		
-		if (logSending) Log.f3("<bus> Q " + Log.str(event) + ", t = +" + delay + "s");
+		if (shallLog(event)) Log.f3("<bus> Q " + Log.str(event) + ", t = +" + delay + "s");
 		
 		sendQueue.add(dm);
 	}
@@ -167,7 +175,7 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		if (logSending) Log.f3("<bus> D " + Log.str(event));
+		if (shallLog(event)) Log.f3("<bus> D " + Log.str(event));
 		
 		dispatch(event);
 	}
@@ -203,7 +211,7 @@ final public class EventBus implements Destroyable {
 			}
 			
 			if (!accepted) Log.e("<bus> Not accepted by any channel: " + Log.str(event));
-			if (logSending && !sent) Log.w("<bus> Not delivered: " + Log.str(event));
+			if (!sent && shallLog(event)) Log.w("<bus> Not delivered: " + Log.str(event));
 			
 			channels.setBuffering(false);
 			clients.setBuffering(false);

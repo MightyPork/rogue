@@ -71,7 +71,6 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 							@Override
 							public void run()
 							{
-								System.out.println("~~");
 								def.load();
 							}
 						}));
