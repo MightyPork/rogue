@@ -4,6 +4,7 @@ package mightypork.rogue.textures;
 import mightypork.rogue.loading.BaseDeferredResource;
 import mightypork.rogue.loading.MustLoadInMainThread;
 import mightypork.rogue.render.Render;
+import mightypork.utils.logging.LoggedName;
 import mightypork.utils.math.coord.Rect;
 
 import org.lwjgl.opengl.GL11;
@@ -16,6 +17,7 @@ import org.newdawn.slick.opengl.Texture;
  * @author MightyPork
  */
 @MustLoadInMainThread
+@LoggedName(name="Texture")
 public class DeferredTexture extends BaseDeferredResource implements FilteredTexture {
 	
 	private Texture backingTexture;

@@ -3,6 +3,7 @@ package mightypork.rogue.loading;
 
 import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.logging.Log;
+import mightypork.utils.logging.LoggedName;
 
 
 /**
@@ -12,6 +13,7 @@ import mightypork.utils.logging.Log;
  * 
  * @author MightyPork
  */
+@LoggedName(name = "Resource")
 public abstract class BaseDeferredResource implements DeferredResource, Destroyable {
 	
 	private final String resource;
@@ -27,23 +29,28 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 	@Override
 	public synchronized final void load()
 	{
-		if (loadAttempted) return;
+		if (loadAttempted) {
+			Log.w("<RES> Already loaded @ load():\n    " + this);
+			return;
+		}
+		
+		loadAttempted = true;
 		
 		loadFailed = false;
 		
 		if (isNull()) return;
 		try {
-			if (resource == null) throw new NullPointerException("Resource string cannot be null for non-null resource.");
+			if (resource == null) {
+				throw new NullPointerException("Resource string cannot be null for non-null resource.");
+			}
 			
-			Log.f3("<RES> Loading: " + this);
+			Log.f3("<RES> Loading:\n    " + this);
 			loadResource(resource);
-			Log.f3("<RES> Loaded: " + this + " loaded.");
+			Log.f3("<RES> Loaded:\n    " + this);
 		} catch (final Exception e) {
 			loadFailed = true;
-			Log.e("<RES> Failed to load  \"" + resource + "\"", e);
+			Log.e("<RES> Failed to load:\n    " + this, e);
 		}
-
-		loadAttempted = true;
 	}
 	
 	
@@ -68,7 +75,7 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 		if (isLoaded()) {
 			return true;
 		} else {
-			Log.w("<RES> First use, not loaded yet - loading directly\n"+this);
+			Log.w("<RES> First use, not loaded yet - loading directly\n    " + this);
 			load();
 		}
 		

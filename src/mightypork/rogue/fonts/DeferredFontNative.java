@@ -5,12 +5,15 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
 
+import mightypork.utils.logging.LoggedName;
+
 
 /**
  * Font obtained from the OS
  * 
  * @author MightyPork
  */
+@LoggedName(name="FontNative")
 public class DeferredFontNative extends DeferredFont {
 	
 	/**

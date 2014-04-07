@@ -192,20 +192,21 @@ public class Log {
 			return o.toString();
 		} else {
 			
-			final Class<?> cls = o.getClass();
-			
-			final Class<?> enclosing = cls.getEnclosingClass();
-			
-			return (enclosing == null ? "" : enclosing.getSimpleName() + ".") + cls.getSimpleName();
+			return str(o.getClass());
 		}
 	}
 	
 	
 	public static String str(Class<?> cls)
 	{
+		LoggedName ln = cls.getAnnotation(LoggedName.class);
+		if (ln != null) {
+			return ln.name();
+		}
+		
 		final Class<?> enclosing = cls.getEnclosingClass();
 		
-		return (enclosing == null ? "" : enclosing.getSimpleName() + ".") + cls.getSimpleName();
+		return (enclosing == null ? "" : str(enclosing) + ".") + cls.getSimpleName();
 	}
 	
 	

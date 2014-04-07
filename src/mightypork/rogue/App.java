@@ -4,6 +4,7 @@ package mightypork.rogue;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
+import java.util.Locale;
 import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
@@ -116,6 +117,9 @@ public class App implements AppAccess {
 	
 	public void initialize()
 	{
+		// to get dot instead of comma in floats
+		Locale.setDefault(Locale.ENGLISH);
+		
 		/*
 		 *  Lock working directory
 		 */
@@ -138,6 +142,7 @@ public class App implements AppAccess {
 		 */
 		Log.f2("Initializing Event Bus...");
 		eventBus = new EventBus();
+		eventBus.logSending = true;
 		initChannels();
 		
 		/*

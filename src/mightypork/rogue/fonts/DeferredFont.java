@@ -9,6 +9,7 @@ import java.io.InputStream;
 import mightypork.rogue.loading.BaseDeferredResource;
 import mightypork.rogue.loading.MustLoadInMainThread;
 import mightypork.utils.files.FileUtils;
+import mightypork.utils.logging.LoggedName;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 
@@ -19,6 +20,7 @@ import mightypork.utils.math.coord.Coord;
  * @author MightyPork
  */
 @MustLoadInMainThread
+@LoggedName(name="Font")
 public class DeferredFont extends BaseDeferredResource implements GLFont {
 	
 	public static enum FontStyle

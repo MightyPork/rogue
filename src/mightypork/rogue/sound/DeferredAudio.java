@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import mightypork.rogue.loading.BaseDeferredResource;
 import mightypork.utils.files.FileUtils;
+import mightypork.utils.logging.LoggedName;
 import mightypork.utils.math.coord.Coord;
 
 import org.newdawn.slick.openal.Audio;
@@ -16,6 +17,7 @@ import org.newdawn.slick.openal.SoundStore;
  * 
  * @author MightyPork
  */
+@LoggedName(name="Audio")
 public class DeferredAudio extends BaseDeferredResource {
 	
 	private enum PlayMode

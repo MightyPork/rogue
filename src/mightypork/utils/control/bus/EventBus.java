@@ -203,6 +203,7 @@ final public class EventBus implements Destroyable {
 			}
 			
 			if (!accepted) Log.e("<bus> Not accepted by any channel: " + Log.str(event));
+			if (logSending && !sent) Log.w("<bus> Not delivered: " + Log.str(event));
 			
 			channels.setBuffering(false);
 			clients.setBuffering(false);

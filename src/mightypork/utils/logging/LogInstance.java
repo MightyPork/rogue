@@ -18,6 +18,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import mightypork.utils.files.FileUtils;
+import mightypork.utils.string.StringUtils;
 
 
 /**
@@ -53,6 +54,8 @@ public class LogInstance {
 	
 	private LogToSysoutMonitor sysoutMonitor;
 	
+	private long started_ms;
+	
 	
 	/**
 	 * Log
@@ -66,6 +69,7 @@ public class LogInstance {
 		this.file = new File(dir, name + getSuffix());
 		this.log_dir = dir;
 		this.logs_to_keep = oldLogCount;
+		this.started_ms = System.currentTimeMillis();
 		
 		init();
 	}
@@ -344,7 +348,7 @@ public class LogInstance {
 		@Override
 		public String format(LogRecord record)
 		{
-			return LogInstance.formatMessage(record.getLevel(), record.getMessage(), record.getThrown());
+			return LogInstance.this.formatMessage(record.getLevel(), record.getMessage(), record.getThrown());
 		}
 	}
 	
@@ -358,7 +362,7 @@ public class LogInstance {
 	}
 	
 	
-	private static String formatMessage(Level level, String message, Throwable throwable)
+	private String formatMessage(Level level, String message, Throwable throwable)
 	{
 		
 		final String nl = System.getProperty("line.separator");
@@ -370,6 +374,11 @@ public class LogInstance {
 		if (message.charAt(0) == '\n') {
 			message = nl + message.substring(1);
 		}
+		
+		long time_ms = (System.currentTimeMillis()-started_ms);
+		double time_s = time_ms / 1000D;
+		String time = String.format("%6.2f ", time_s);
+		String time_blank = StringUtils.repeat(" ", time.length());
 		
 		String prefix = "[ ? ]";
 		
@@ -387,7 +396,7 @@ public class LogInstance {
 			prefix = "[!W!] ";
 		}
 		
-		message = prefix + message.replaceAll("\n", nl + prefix) + nl;
+		message = time + prefix + message.replaceAll("\n", nl + time_blank + prefix) + nl;
 		
 		if (throwable != null) {
 			message += getStackTrace(throwable);

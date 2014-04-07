@@ -2,6 +2,7 @@ package mightypork.rogue.sound;
 
 
 import mightypork.rogue.loading.NullResource;
+import mightypork.utils.logging.LoggedName;
 
 
 /**
@@ -10,6 +11,7 @@ import mightypork.rogue.loading.NullResource;
  * 
  * @author MightyPork
  */
+@LoggedName(name="NullAudio")
 public class NullAudio extends DeferredAudio implements NullResource {
 	
 	public NullAudio() {
