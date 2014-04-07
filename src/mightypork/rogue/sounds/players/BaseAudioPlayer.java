@@ -1,7 +1,7 @@
-package mightypork.rogue.sound.players;
+package mightypork.rogue.sounds.players;
 
 
-import mightypork.rogue.sound.DeferredAudio;
+import mightypork.rogue.sounds.DeferredAudio;
 import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.objects.Mutable;
 

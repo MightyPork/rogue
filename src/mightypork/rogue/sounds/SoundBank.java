@@ -1,4 +1,4 @@
-package mightypork.rogue.sound;
+package mightypork.rogue.sounds;
 
 
 import java.util.HashMap;
@@ -6,8 +6,8 @@ import java.util.Map;
 
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.AppAdapter;
-import mightypork.rogue.sound.players.EffectPlayer;
-import mightypork.rogue.sound.players.LoopPlayer;
+import mightypork.rogue.sounds.players.EffectPlayer;
+import mightypork.rogue.sounds.players.LoopPlayer;
 import mightypork.utils.logging.Log;
 
 

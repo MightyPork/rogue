@@ -18,7 +18,7 @@ import mightypork.rogue.gui.screens.test_font.ScreenTestFont;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.render.DisplaySystem;
-import mightypork.rogue.sound.SoundSystem;
+import mightypork.rogue.sounds.SoundSystem;
 import mightypork.rogue.util.SlickLogRedirector;
 import mightypork.utils.control.bus.EventBus;
 import mightypork.utils.control.interf.Destroyable;

@@ -1,4 +1,4 @@
-package mightypork.rogue.sound;
+package mightypork.rogue.sounds;
 
 
 import java.nio.FloatBuffer;
@@ -8,8 +8,8 @@ import java.util.Set;
 import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ResourceLoadRequest;
-import mightypork.rogue.sound.players.EffectPlayer;
-import mightypork.rogue.sound.players.LoopPlayer;
+import mightypork.rogue.sounds.players.EffectPlayer;
+import mightypork.rogue.sounds.players.LoopPlayer;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.coord.Coord;

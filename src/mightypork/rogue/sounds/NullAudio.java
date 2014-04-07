@@ -1,4 +1,4 @@
-package mightypork.rogue.sound;
+package mightypork.rogue.sounds;
 
 
 import mightypork.rogue.loading.NullResource;
