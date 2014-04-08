@@ -14,9 +14,9 @@ import mightypork.utils.math.coord.Rect;
  */
 public class ConstraintFactory {
 	
-	public static NumEvaluable c_min(final NumEvaluable a, final NumEvaluable b)
+	public static NumberConstraint c_min(final NumberConstraint a, final NumberConstraint b)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -27,9 +27,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_max(final NumEvaluable a, final NumEvaluable b)
+	public static NumberConstraint c_max(final NumberConstraint a, final NumberConstraint b)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -40,9 +40,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_abs(final NumEvaluable a)
+	public static NumberConstraint c_abs(final NumberConstraint a)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -53,9 +53,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_round(final NumEvaluable a)
+	public static NumberConstraint c_round(final NumberConstraint a)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -66,9 +66,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_round(final RectEvaluable r)
+	public static RectConstraint c_round(final RectConstraint r)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -79,9 +79,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_ceil(final NumEvaluable a)
+	public static NumberConstraint c_ceil(final NumberConstraint a)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -92,9 +92,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_floor(final NumEvaluable a)
+	public static NumberConstraint c_floor(final NumberConstraint a)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -105,9 +105,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_neg(final NumEvaluable a)
+	public static NumberConstraint c_neg(final NumberConstraint a)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -118,9 +118,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_add(final NumEvaluable a, final NumEvaluable b)
+	public static NumberConstraint c_add(final NumberConstraint a, final NumberConstraint b)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -131,9 +131,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_sub(final NumEvaluable a, final NumEvaluable b)
+	public static NumberConstraint c_sub(final NumberConstraint a, final NumberConstraint b)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -144,9 +144,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_mul(final NumEvaluable a, final NumEvaluable b)
+	public static NumberConstraint c_mul(final NumberConstraint a, final NumberConstraint b)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -157,9 +157,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_div(final NumEvaluable a, final NumEvaluable b)
+	public static NumberConstraint c_div(final NumberConstraint a, final NumberConstraint b)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -170,9 +170,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_percent(final NumEvaluable whole, final NumEvaluable percent)
+	public static NumberConstraint c_percent(final NumberConstraint whole, final NumberConstraint percent)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -183,9 +183,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_n(final double a)
+	public static NumberConstraint c_n(final double a)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -196,9 +196,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_n(final AnimDouble a)
+	public static NumberConstraint c_n(final AnimDouble a)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -209,9 +209,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_width(final RectEvaluable r)
+	public static NumberConstraint c_width(final RectConstraint r)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -222,9 +222,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumEvaluable c_height(final RectEvaluable r)
+	public static NumberConstraint c_height(final RectConstraint r)
 	{
-		return new NumEvaluable() {
+		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
@@ -235,9 +235,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_row(final RectEvaluable r, final int rows, final int index)
+	public static RectConstraint c_row(final RectConstraint r, final int rows, final int index)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -254,9 +254,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_column(final RectEvaluable r, final int columns, final int index)
+	public static RectConstraint c_column(final RectConstraint r, final int columns, final int index)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -273,21 +273,21 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_shrink(RectEvaluable r, NumEvaluable shrink)
+	public static RectConstraint c_shrink(RectConstraint r, NumberConstraint shrink)
 	{
 		return c_shrink(r, shrink, shrink, shrink, shrink);
 	}
 	
 	
-	public static RectEvaluable c_shrink(RectEvaluable context, NumEvaluable horiz, NumEvaluable vert)
+	public static RectConstraint c_shrink(RectConstraint context, NumberConstraint horiz, NumberConstraint vert)
 	{
 		return c_shrink(context, horiz, vert, horiz, vert);
 	}
 	
 	
-	public static RectEvaluable c_shrink(final RectEvaluable r, final NumEvaluable x1, final NumEvaluable y1, final NumEvaluable x2, final NumEvaluable y2)
+	public static RectConstraint c_shrink(final RectConstraint r, final NumberConstraint x1, final NumberConstraint y1, final NumberConstraint x2, final NumberConstraint y2)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -298,9 +298,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_center(final RectEvaluable r)
+	public static RectConstraint c_center(final RectConstraint r)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -311,21 +311,21 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_grow(RectEvaluable r, NumEvaluable grow)
+	public static RectConstraint c_grow(RectConstraint r, NumberConstraint grow)
 	{
 		return c_grow(r, grow, grow, grow, grow);
 	}
 	
 	
-	public static RectEvaluable c_grow(RectEvaluable r, NumEvaluable horiz, NumEvaluable vert)
+	public static RectConstraint c_grow(RectConstraint r, NumberConstraint horiz, NumberConstraint vert)
 	{
 		return c_grow(r, horiz, vert, horiz, vert);
 	}
 	
 	
-	public static RectEvaluable c_grow(final RectEvaluable r, final NumEvaluable x1, final NumEvaluable y1, final NumEvaluable x2, final NumEvaluable y2)
+	public static RectConstraint c_grow(final RectConstraint r, final NumberConstraint x1, final NumberConstraint y1, final NumberConstraint x2, final NumberConstraint y2)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -336,9 +336,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_tile(final RectEvaluable r, final int rows, final int cols, final int left, final int top)
+	public static RectConstraint c_tile(final RectConstraint r, final int rows, final int cols, final int left, final int top)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -356,9 +356,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_box(final RectEvaluable r, final NumEvaluable width, final NumEvaluable height)
+	public static RectConstraint c_box(final RectConstraint r, final NumberConstraint width, final NumberConstraint height)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -378,9 +378,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_box(final RectEvaluable r, final NumEvaluable x, final NumEvaluable y, final NumEvaluable width, final NumEvaluable height)
+	public static RectConstraint c_box(final RectConstraint r, final NumberConstraint x, final NumberConstraint y, final NumberConstraint width, final NumberConstraint height)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -400,9 +400,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_centered(final RectEvaluable r, final NumEvaluable x, final NumEvaluable y)
+	public static RectConstraint c_centered(final RectConstraint r, final NumberConstraint x, final NumberConstraint y)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -415,9 +415,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_box_abs(final RectEvaluable r, final NumEvaluable x1, final NumEvaluable y1, final NumEvaluable x2, final NumEvaluable y2)
+	public static RectConstraint c_box_abs(final RectConstraint r, final NumberConstraint x1, final NumberConstraint y1, final NumberConstraint x2, final NumberConstraint y2)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
@@ -432,9 +432,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectEvaluable c_move(final RectEvaluable r, final NumEvaluable x, final NumEvaluable y)
+	public static RectConstraint c_move(final RectConstraint r, final NumberConstraint x, final NumberConstraint y)
 	{
-		return new RectEvaluable() {
+		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()

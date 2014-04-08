@@ -1,8 +1,8 @@
 package mightypork.utils.math.animation;
 
 
-import mightypork.utils.control.interf.Updateable;
-import mightypork.utils.control.timing.Pauseable;
+import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.utils.math.Calc;
 
 

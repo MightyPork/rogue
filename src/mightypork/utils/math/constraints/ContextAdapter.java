@@ -6,11 +6,11 @@ import mightypork.utils.math.coord.Rect;
 
 public class ContextAdapter implements PluggableContext {
 	
-	private RectEvaluable backing = null;
+	private RectConstraint backing = null;
 	
 	
 	@Override
-	public void setContext(RectEvaluable rect)
+	public void setContext(RectConstraint rect)
 	{
 		this.backing = rect;
 	}

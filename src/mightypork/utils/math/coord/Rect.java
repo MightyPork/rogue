@@ -2,6 +2,7 @@ package mightypork.utils.math.coord;
 
 
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.constraints.RectConstraint;
 
 
 /**
@@ -9,7 +10,7 @@ import mightypork.utils.math.Calc;
  * 
  * @author MightyPork
  */
-public class Rect {
+public class Rect implements RectConstraint {
 	
 	/**
 	 * Rectangle from size
@@ -775,5 +776,12 @@ public class Rect {
 	public Coord getSize()
 	{
 		return new Coord(max.x - min.x, max.y - min.y);
+	}
+	
+	
+	@Override
+	public Rect getRect()
+	{
+		return this;
 	}
 }

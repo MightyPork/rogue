@@ -4,6 +4,7 @@ package mightypork.utils.math.coord;
 import java.util.Random;
 
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.constraints.RectConstraint;
 
 
 /**
@@ -200,9 +201,10 @@ public class Coord {
 	 * @param rect checked rect.
 	 * @return is inside
 	 */
-	public boolean isInRect(Rect rect)
+	public boolean isInRect(RectConstraint rect)
 	{
-		return isInRect(rect.getMin(), rect.getMax());
+		Rect r = rect.getRect();
+		return isInRect(r.getMin(), r.getMax());
 	}
 	
 	

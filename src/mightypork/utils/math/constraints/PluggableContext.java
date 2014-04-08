@@ -4,9 +4,9 @@ package mightypork.utils.math.constraints;
 import mightypork.utils.math.coord.Rect;
 
 
-public interface PluggableContext extends RectEvaluable {
+public interface PluggableContext extends RectConstraint {
 	
-	abstract void setContext(RectEvaluable rect);
+	abstract void setContext(RectConstraint rect);
 	
 	
 	@Override

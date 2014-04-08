@@ -9,21 +9,24 @@ import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
-import mightypork.rogue.bus.events.*;
-import mightypork.rogue.bus.events.ActionRequest.RequestType;
-import mightypork.rogue.gui.screens.ScreenRegistry;
-import mightypork.rogue.gui.screens.test_bouncyboxes.ScreenTestBouncy;
-import mightypork.rogue.gui.screens.test_cat_sound.ScreenTestCat;
-import mightypork.rogue.gui.screens.test_font.ScreenTestFont;
-import mightypork.rogue.input.InputSystem;
-import mightypork.rogue.input.KeyStroke;
-import mightypork.rogue.input.Keys;
-import mightypork.rogue.render.DisplaySystem;
-import mightypork.rogue.sounds.SoundSystem;
-import mightypork.rogue.util.SlickLogRedirector;
-import mightypork.utils.control.bus.EventBus;
-import mightypork.utils.control.interf.Destroyable;
-import mightypork.utils.control.interf.Updateable;
+import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.GameLoop;
+import mightypork.gamecore.SlickLogRedirector;
+import mightypork.gamecore.control.bus.EventBus;
+import mightypork.gamecore.control.bus.events.*;
+import mightypork.gamecore.control.interf.Destroyable;
+import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.gui.screens.ScreenRegistry;
+import mightypork.gamecore.input.InputSystem;
+import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.render.DisplaySystem;
+import mightypork.gamecore.resources.sounds.SoundSystem;
+import mightypork.rogue.events.ActionRequest;
+import mightypork.rogue.events.ActionRequest.RequestType;
+import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
+import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
+import mightypork.rogue.screens.test_font.ScreenTestFont;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogInstance;
 
@@ -43,7 +46,7 @@ public class App implements AppAccess {
 	private DisplaySystem displaySystem;
 	private static SoundSystem soundSystem;
 	private EventBus eventBus;
-	private MainLoop mainLoop;
+	private GameLoop mainLoop;
 	private ScreenRegistry screens;
 	
 	
