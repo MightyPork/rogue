@@ -54,7 +54,7 @@ public class LogInstance {
 	
 	private LogToSysoutMonitor sysoutMonitor;
 	
-	private long started_ms;
+	private final long started_ms;
 	
 	
 	/**
@@ -103,8 +103,8 @@ public class LogInstance {
 		
 		logger.setUseParentHandlers(false);
 		logger.setLevel(Level.ALL);
-		String stamp = (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date());
-		i("= Logger \""+name+"\" initialized =\n"+stamp);
+		final String stamp = (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date());
+		i("= Logger \"" + name + "\" initialized =\n" + stamp);
 	}
 	
 	
@@ -226,7 +226,7 @@ public class LogInstance {
 		if (enabled) {
 			logger.log(level, msg);
 			
-			String fmt = formatMessage(level, msg, null);
+			final String fmt = formatMessage(level, msg, null);
 			
 			for (final LogMonitor mon : monitors.values()) {
 				mon.onMessageLogged(level, fmt);
@@ -240,7 +240,7 @@ public class LogInstance {
 		if (enabled) {
 			logger.log(level, msg, t);
 			
-			String fmt = formatMessage(level, msg, t);
+			final String fmt = formatMessage(level, msg, t);
 			
 			for (final LogMonitor mon : monitors.values()) {
 				mon.onMessageLogged(level, fmt);
@@ -375,10 +375,10 @@ public class LogInstance {
 			message = nl + message.substring(1);
 		}
 		
-		long time_ms = (System.currentTimeMillis()-started_ms);
-		double time_s = time_ms / 1000D;
-		String time = String.format("%6.2f ", time_s);
-		String time_blank = StringUtils.repeat(" ", time.length());
+		final long time_ms = (System.currentTimeMillis() - started_ms);
+		final double time_s = time_ms / 1000D;
+		final String time = String.format("%6.2f ", time_s);
+		final String time_blank = StringUtils.repeat(" ", time.length());
 		
 		String prefix = "[ ? ]";
 		

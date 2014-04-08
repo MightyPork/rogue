@@ -20,7 +20,7 @@ import mightypork.utils.math.coord.Coord;
  * @author MightyPork
  */
 @MustLoadInMainThread
-@LoggedName(name="Font")
+@LoggedName(name = "Font")
 public class DeferredFont extends BaseDeferredResource implements GLFont {
 	
 	public static enum FontStyle
@@ -141,37 +141,6 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 		if (!ensureLoaded()) return;
 		
 		font.draw(str, color);
-	}
-	
-	
-	/**
-	 * Draw string at 0,0
-	 * 
-	 * @param str string to draw
-	 * @param color draw color
-	 * @param startIndex first drawn character index
-	 * @param endIndex last drawn character index
-	 */
-	@Override
-	public void draw(String str, RGB color, int startIndex, int endIndex)
-	{
-		if (!ensureLoaded()) return;
-		
-		font.draw(str, color, startIndex, endIndex);
-	}
-	
-	
-	/**
-	 * Draw string 0,0
-	 * 
-	 * @param str string to draw
-	 */
-	@Override
-	public void draw(String str)
-	{
-		if (!ensureLoaded()) return;
-		
-		font.draw(str);
 	}
 	
 	

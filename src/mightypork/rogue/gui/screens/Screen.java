@@ -10,7 +10,7 @@ import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.render.Renderable;
 import mightypork.utils.control.interf.Destroyable;
-import mightypork.utils.math.constraints.ConstraintContext;
+import mightypork.utils.math.constraints.RectEvaluable;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -20,7 +20,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class Screen extends ChildClient implements Renderable, Destroyable, KeyBinder, ConstraintContext, ScreenChangeEvent.Listener {
+public abstract class Screen extends ChildClient implements Renderable, Destroyable, KeyBinder, RectEvaluable, ScreenChangeEvent.Listener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
@@ -70,7 +70,7 @@ public abstract class Screen extends ChildClient implements Renderable, Destroya
 			active = true;
 			needSetupViewport = true;
 			
-			onSizeChanged(getRect().size());
+			onSizeChanged(getRect().getSize());
 			onScreenEnter();
 			
 			// enable events

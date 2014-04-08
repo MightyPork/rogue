@@ -17,7 +17,7 @@ import org.newdawn.slick.opengl.Texture;
  * @author MightyPork
  */
 @MustLoadInMainThread
-@LoggedName(name="Texture")
+@LoggedName(name = "Texture")
 public class DeferredTexture extends BaseDeferredResource implements FilteredTexture {
 	
 	private Texture backingTexture;

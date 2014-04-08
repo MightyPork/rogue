@@ -52,7 +52,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	public boolean broadcast(Event<?> event, Collection<Object> clients)
 	{
 		if (!canBroadcast(event)) return false;
-				
+		
 		return doBroadcast(eventClass.cast(event), clients, new HashSet<Object>());
 	}
 	
@@ -131,8 +131,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	
 	
 	/**
-	 * Check if the given event can be broadcasted by this
-	 * {@link EventChannel}
+	 * Check if the given event can be broadcasted by this {@link EventChannel}
 	 * 
 	 * @param event event object
 	 * @return can be broadcasted

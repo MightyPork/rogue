@@ -17,6 +17,7 @@ import mightypork.rogue.gui.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.gui.screens.test_font.ScreenTestFont;
 import mightypork.rogue.input.InputSystem;
 import mightypork.rogue.input.KeyStroke;
+import mightypork.rogue.input.Keys;
 import mightypork.rogue.render.DisplaySystem;
 import mightypork.rogue.sounds.SoundSystem;
 import mightypork.rogue.util.SlickLogRedirector;
@@ -25,8 +26,6 @@ import mightypork.utils.control.interf.Destroyable;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogInstance;
-
-import org.lwjgl.input.Keyboard;
 
 
 /**
@@ -197,7 +196,7 @@ public class App implements AppAccess {
 		screens.add(new ScreenTestCat(this));
 		screens.add(new ScreenTestFont(this));
 		
-		screens.showScreen("test.font");
+		screens.showScreen("test.bouncy");
 	}
 	
 	
@@ -228,7 +227,7 @@ public class App implements AppAccess {
 		Log.f3("Setting up hot keys...");
 		
 		// Go fullscreen
-		input().bindKeyStroke(new KeyStroke(Keyboard.KEY_F11), new Runnable() {
+		input().bindKeyStroke(new KeyStroke(Keys.KEY_F11), new Runnable() {
 			
 			@Override
 			public void run()
@@ -238,7 +237,7 @@ public class App implements AppAccess {
 		});
 		
 		// Take screenshot
-		input().bindKeyStroke(new KeyStroke(Keyboard.KEY_F2), new Runnable() {
+		input().bindKeyStroke(new KeyStroke(Keys.KEY_F2), new Runnable() {
 			
 			@Override
 			public void run()
@@ -248,7 +247,7 @@ public class App implements AppAccess {
 		});
 		
 		// Exit
-		input().bindKeyStroke(new KeyStroke(Keyboard.KEY_LCONTROL, Keyboard.KEY_Q), new Runnable() {
+		input().bindKeyStroke(new KeyStroke(Keys.KEY_LCONTROL, Keys.KEY_Q), new Runnable() {
 			
 			@Override
 			public void run()

@@ -6,7 +6,7 @@ import mightypork.rogue.input.KeyBinder;
 import mightypork.rogue.input.KeyBindingPool;
 import mightypork.rogue.input.KeyStroke;
 import mightypork.rogue.render.Renderable;
-import mightypork.utils.math.constraints.ConstraintContext;
+import mightypork.utils.math.constraints.RectEvaluable;
 import mightypork.utils.math.coord.Rect;
 
 
@@ -15,7 +15,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class ScreenLayer extends ChildClient implements Renderable, ConstraintContext, KeyBinder {
+public abstract class ScreenLayer extends ChildClient implements Renderable, RectEvaluable, KeyBinder {
 	
 	private final Screen screen;
 	

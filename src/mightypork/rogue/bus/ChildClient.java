@@ -10,7 +10,6 @@ import mightypork.rogue.AppAdapter;
 import mightypork.utils.control.bus.EventBus;
 import mightypork.utils.control.bus.clients.DelegatingClient;
 import mightypork.utils.control.bus.clients.ToggleableClient;
-import mightypork.utils.logging.Log;
 
 
 /**
@@ -60,8 +59,6 @@ public class ChildClient extends AppAdapter implements DelegatingClient, Togglea
 	{
 		if (bus().isClientValid(client)) {
 			clients.add(client);
-		} else {
-			Log.w("Client rejected by bus: " + client.getClass().getSimpleName());
 		}
 	}
 	

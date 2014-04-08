@@ -41,14 +41,25 @@ public class Rect {
 	/**
 	 * Rectangle from size
 	 * 
-	 * @param x min X
-	 * @param y min Y
-	 * @param size rect size
-	 * @return the rect
+	 * @param sizeX size x
+	 * @param sizeY size y
+	 * @return rect
 	 */
-	public static Rect fromSize(double x, double y, Coord size)
+	public static Rect fromSize(double sizeX, double sizeY)
 	{
-		return fromSize(x, y, size.x, size.y);
+		return fromSize(0, 0, sizeX, sizeY);
+	}
+	
+	
+	/**
+	 * Get rect from size
+	 * 
+	 * @param size size
+	 * @return rect
+	 */
+	public static Rect fromSize(Coord size)
+	{
+		return fromSize(0, 0, size.x, size.y);
 	}
 	
 	
@@ -67,10 +78,10 @@ public class Rect {
 	}
 	
 	/** Lowest coordinates xy */
-	protected Coord min = new Coord();
+	private final Coord min = new Coord();
 	
 	/** Highest coordinates xy */
-	protected Coord max = new Coord();
+	private final Coord max = new Coord();
 	
 	
 	/**
@@ -200,28 +211,6 @@ public class Rect {
 	
 	
 	/**
-	 * Get copy with the same center and height=0
-	 * 
-	 * @return line
-	 */
-	public Rect getAxisH()
-	{
-		return new Rect(getCenterLeft(), getCenterRight());
-	}
-	
-	
-	/**
-	 * Get copy with the same center and width=0
-	 * 
-	 * @return line
-	 */
-	public Rect getAxisV()
-	{
-		return new Rect(getCenterBottom(), getCenterTop());
-	}
-	
-	
-	/**
 	 * Get rect center
 	 * 
 	 * @return center
@@ -237,7 +226,7 @@ public class Rect {
 	 * 
 	 * @return center
 	 */
-	public Coord getCenterBottom()
+	public Coord getCenterV1()
 	{
 		return new Coord((max.x + min.x) / 2D, min.y);
 	}
@@ -248,7 +237,7 @@ public class Rect {
 	 * 
 	 * @return center
 	 */
-	public Coord getCenterLeft()
+	public Coord getCenterH1()
 	{
 		return new Coord(min.x, (max.y + min.y) / 2D);
 	}
@@ -259,7 +248,7 @@ public class Rect {
 	 * 
 	 * @return center
 	 */
-	public Coord getCenterRight()
+	public Coord getCenterH2()
 	{
 		return new Coord(max.x, (max.y + min.y) / 2D);
 	}
@@ -270,53 +259,9 @@ public class Rect {
 	 * 
 	 * @return center
 	 */
-	public Coord getCenterTop()
+	public Coord getCenterV2()
 	{
 		return new Coord((max.x + min.x) / 2D, max.y);
-	}
-	
-	
-	/**
-	 * Get bottom edge rect
-	 * 
-	 * @return line
-	 */
-	public Rect getEdgeBottom()
-	{
-		return new Rect(getLeftBottom(), getRightBottom());
-	}
-	
-	
-	/**
-	 * Get left edge rect
-	 * 
-	 * @return line
-	 */
-	public Rect getEdgeLeft()
-	{
-		return new Rect(getLeftBottom(), getLeftTop());
-	}
-	
-	
-	/**
-	 * Get right edge rect
-	 * 
-	 * @return line
-	 */
-	public Rect getEdgeRight()
-	{
-		return new Rect(getRightBottom(), getRightTop());
-	}
-	
-	
-	/**
-	 * Get top edge rect
-	 * 
-	 * @return line
-	 */
-	public Rect getEdgeTop()
-	{
-		return new Rect(getLeftTop(), getRightTop());
 	}
 	
 	
@@ -325,7 +270,7 @@ public class Rect {
 	 * 
 	 * @return center
 	 */
-	public Coord getLeftBottom()
+	public Coord getX1Y1()
 	{
 		return new Coord(min.x, min.y);
 	}
@@ -336,27 +281,42 @@ public class Rect {
 	 * 
 	 * @return center
 	 */
-	public Coord getLeftTop()
+	public Coord getX1Y2()
 	{
 		return new Coord(min.x, max.y);
 	}
 	
 	
 	/**
+	 * Alias for getX2Y2
+	 * 
 	 * @return highest coordinates xy
 	 */
 	public Coord getMax()
 	{
-		return getRightTop();
+		return getX2Y2();
 	}
 	
 	
 	/**
+	 * Alias for getX1Y1
+	 * 
+	 * @return lowest coordinates xy
+	 */
+	public Coord getMin()
+	{
+		return getX1Y1();
+	}
+	
+	
+	/**
+	 * Alias for getX1Y1
+	 * 
 	 * @return lowest coordinates xy
 	 */
 	public Coord getOrigin()
 	{
-		return getLeftBottom();
+		return getMin();
 	}
 	
 	
@@ -365,7 +325,7 @@ public class Rect {
 	 * 
 	 * @return center
 	 */
-	public Coord getRightBottom()
+	public Coord getX2Y1()
 	{
 		return new Coord(max.x, min.y);
 	}
@@ -376,20 +336,9 @@ public class Rect {
 	 * 
 	 * @return center
 	 */
-	public Coord getRightTop()
+	public Coord getX2Y2()
 	{
 		return new Coord(max.x, max.y);
-	}
-	
-	
-	/**
-	 * Get size (width, height) as (x,y)
-	 * 
-	 * @return coord of width,height
-	 */
-	public Coord size()
-	{
-		return new Coord(max.x - min.x, max.y - min.y);
 	}
 	
 	
@@ -434,8 +383,8 @@ public class Rect {
 	/**
 	 * Shrink to sides in place
 	 * 
-	 * @param x x to add
-	 * @param y y to add
+	 * @param x horizontal shrink
+	 * @param y vertical shrink
 	 * @return this
 	 */
 	public Rect shrink_ip(double x, double y)
@@ -449,31 +398,31 @@ public class Rect {
 	/**
 	 * Shrink the rect
 	 * 
-	 * @param left left shrink
-	 * @param top top shrink
-	 * @param right right shrink
-	 * @param bottom bottom shrink
+	 * @param x1 shrink
+	 * @param y1 shrink
+	 * @param x2 shrink
+	 * @param y2 shrink
 	 * @return changed copy
 	 */
-	public Rect shrink(double left, double top, double right, double bottom)
+	public Rect shrink(double x1, double y1, double x2, double y2)
 	{
-		return copy().shrink_ip(left, top, right, bottom);
+		return copy().shrink_ip(x1, y1, x2, y2);
 	}
 	
 	
 	/**
 	 * Shrink the rect in place
 	 * 
-	 * @param left left shrink
-	 * @param top top shrink
-	 * @param right right shrink
-	 * @param bottom bottom shrink
+	 * @param x1 shrink
+	 * @param y1 shrink
+	 * @param x2 shrink
+	 * @param y2 shrink
 	 * @return this
 	 */
-	public Rect shrink_ip(double left, double top, double right, double bottom)
+	public Rect shrink_ip(double x1, double y1, double x2, double y2)
 	{
-		min.add_ip(left, bottom);
-		max.add_ip(-right, -top);
+		min.add_ip(x1, y2);
+		max.add_ip(-x2, -y1);
 		return this;
 	}
 	
@@ -493,8 +442,8 @@ public class Rect {
 	/**
 	 * Grow to sides in copy
 	 * 
-	 * @param x x to add
-	 * @param y y to add
+	 * @param x horizontal grow
+	 * @param y vertical grow
 	 * @return changed copy
 	 */
 	public Rect grow(double x, double y)
@@ -519,8 +468,8 @@ public class Rect {
 	/**
 	 * Grow to sides in place
 	 * 
-	 * @param x x to add
-	 * @param y y to add
+	 * @param x horizontal grow
+	 * @param y vertical grow
 	 * @return this
 	 */
 	public Rect grow_ip(double x, double y)
@@ -534,31 +483,31 @@ public class Rect {
 	/**
 	 * Grow the rect
 	 * 
-	 * @param left left growth
-	 * @param top top growth
-	 * @param right right growth
-	 * @param bottom bottom growth
+	 * @param x1 growth
+	 * @param y1 growth
+	 * @param x2 growth
+	 * @param y2 growth
 	 * @return changed copy
 	 */
-	public Rect grow(double left, double top, double right, double bottom)
+	public Rect grow(double x1, double y1, double x2, double y2)
 	{
-		return copy().grow_ip(left, top, right, bottom);
+		return copy().grow_ip(x1, y1, x2, y2);
 	}
 	
 	
 	/**
 	 * Grow the rect in place
 	 * 
-	 * @param left left growth
-	 * @param top top growth
-	 * @param right right growth
-	 * @param bottom bottom growth
+	 * @param x1 growth
+	 * @param y1 growth
+	 * @param x2 growth
+	 * @param y2 growth
 	 * @return this
 	 */
-	public Rect grow_ip(double left, double top, double right, double bottom)
+	public Rect grow_ip(double x1, double y1, double x2, double y2)
 	{
-		min.add_ip(-left, -bottom);
-		max.add_ip(right, top);
+		min.add_ip(-x1, -y2);
+		max.add_ip(x2, y1);
 		return this;
 	}
 	
@@ -773,7 +722,7 @@ public class Rect {
 	/**
 	 * @return lower x
 	 */
-	public double xMin()
+	public double x1()
 	{
 		return min.x;
 	}
@@ -782,7 +731,7 @@ public class Rect {
 	/**
 	 * @return upper x
 	 */
-	public double xMax()
+	public double x2()
 	{
 		return max.x;
 	}
@@ -791,7 +740,7 @@ public class Rect {
 	/**
 	 * @return lower y
 	 */
-	public double yMin()
+	public double y1()
 	{
 		return min.y;
 	}
@@ -800,20 +749,31 @@ public class Rect {
 	/**
 	 * @return upper y
 	 */
-	public double yMax()
+	public double y2()
 	{
 		return max.y;
 	}
 	
 	
-	public double height()
+	public double getHeight()
 	{
 		return max.y - min.y;
 	}
 	
 	
-	public double width()
+	public double getWidth()
 	{
 		return max.x - min.x;
+	}
+	
+	
+	/**
+	 * Get size (width, height) as (x,y)
+	 * 
+	 * @return coord of width,height
+	 */
+	public Coord getSize()
+	{
+		return new Coord(max.x - min.x, max.y - min.y);
 	}
 }

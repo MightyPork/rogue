@@ -17,7 +17,7 @@ import org.newdawn.slick.openal.SoundStore;
  * 
  * @author MightyPork
  */
-@LoggedName(name="Audio")
+@LoggedName(name = "Audio")
 public class DeferredAudio extends BaseDeferredResource {
 	
 	private enum PlayMode

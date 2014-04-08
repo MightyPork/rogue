@@ -47,9 +47,11 @@ final public class EventBus implements Destroyable {
 		busThread.start();
 	}
 	
-	private boolean shallLog(Event<?> event) {
-		if(!logSending) return false;
-		if(event.getClass().isAnnotationPresent(UnloggedEvent.class)) return false;
+	
+	private boolean shallLog(Event<?> event)
+	{
+		if (!logSending) return false;
+		if (event.getClass().isAnnotationPresent(UnloggedEvent.class)) return false;
 		
 		return true;
 	}
@@ -118,7 +120,7 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		DelayedEvent adelay = event.getClass().getAnnotation(DelayedEvent.class);
+		final DelayedEvent adelay = event.getClass().getAnnotation(DelayedEvent.class);
 		if (adelay != null) {
 			sendDelayed(event, adelay.delay());
 			return;
@@ -158,7 +160,7 @@ final public class EventBus implements Destroyable {
 		
 		final DelayQueueEntry dm = new DelayQueueEntry(delay, event);
 		
-		if (shallLog(event)) Log.f3("<bus> Q " + Log.str(event) + ", t = +" + delay + "s");
+		if (shallLog(event)) Log.f3("<bus> Qu " + Log.str(event) + ", t = +" + delay + "s");
 		
 		sendQueue.add(dm);
 	}
@@ -175,7 +177,7 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		if (shallLog(event)) Log.f3("<bus> D " + Log.str(event));
+		if (shallLog(event)) Log.f3("<bus> Di " + Log.str(event));
 		
 		dispatch(event);
 	}

@@ -14,9 +14,9 @@ import mightypork.utils.math.coord.Rect;
  */
 public class ConstraintFactory {
 	
-	public static NumConstraint c_min(final NumConstraint a, final NumConstraint b)
+	public static NumEvaluable c_min(final NumEvaluable a, final NumEvaluable b)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -27,9 +27,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_max(final NumConstraint a, final NumConstraint b)
+	public static NumEvaluable c_max(final NumEvaluable a, final NumEvaluable b)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -40,9 +40,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_abs(final NumConstraint a)
+	public static NumEvaluable c_abs(final NumEvaluable a)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -53,9 +53,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_round(final NumConstraint a)
+	public static NumEvaluable c_round(final NumEvaluable a)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -66,22 +66,22 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_round(ConstraintContext context)
+	public static RectEvaluable c_round(final RectEvaluable r)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				return getContext().getRect().round();
+				return r.getRect().round();
 			}
 		};
 	}
 	
 	
-	public static NumConstraint c_ceil(final NumConstraint a)
+	public static NumEvaluable c_ceil(final NumEvaluable a)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -92,9 +92,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_floor(final NumConstraint a)
+	public static NumEvaluable c_floor(final NumEvaluable a)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -105,9 +105,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_neg(final NumConstraint a)
+	public static NumEvaluable c_neg(final NumEvaluable a)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -118,9 +118,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_add(final NumConstraint a, final NumConstraint b)
+	public static NumEvaluable c_add(final NumEvaluable a, final NumEvaluable b)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -131,9 +131,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_sub(final NumConstraint a, final NumConstraint b)
+	public static NumEvaluable c_sub(final NumEvaluable a, final NumEvaluable b)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -144,9 +144,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_mul(final NumConstraint a, final NumConstraint b)
+	public static NumEvaluable c_mul(final NumEvaluable a, final NumEvaluable b)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -157,9 +157,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_div(final NumConstraint a, final NumConstraint b)
+	public static NumEvaluable c_div(final NumEvaluable a, final NumEvaluable b)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -170,9 +170,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_percent(final NumConstraint whole, final NumConstraint percent)
+	public static NumEvaluable c_percent(final NumEvaluable whole, final NumEvaluable percent)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -183,9 +183,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_n(final double a)
+	public static NumEvaluable c_n(final double a)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -196,9 +196,9 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_n(final AnimDouble a)
+	public static NumEvaluable c_n(final AnimDouble a)
 	{
-		return new NumConstraint(null) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
@@ -209,153 +209,161 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static NumConstraint c_width(final ConstraintContext context)
+	public static NumEvaluable c_width(final RectEvaluable r)
 	{
-		return new NumConstraint(context) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
 			{
-				return getSize().x;
+				return r.getRect().getSize().x;
 			}
 		};
 	}
 	
 	
-	public static NumConstraint c_height(final ConstraintContext context)
+	public static NumEvaluable c_height(final RectEvaluable r)
 	{
-		return new NumConstraint(context) {
+		return new NumEvaluable() {
 			
 			@Override
 			public double getValue()
 			{
-				return getSize().y;
+				return r.getRect().getSize().y;
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_row(ConstraintContext context, final int rows, final int index)
+	public static RectEvaluable c_row(final RectEvaluable r, final int rows, final int index)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				final double height = getContext().getRect().size().y;
+				final double height = r.getRect().getSize().y;
 				final double perRow = height / rows;
 				
-				return Rect.fromSize(getOrigin().add(0, perRow * index), getSize().setY(perRow));
+				final Coord origin = r.getRect().getOrigin().add(0, perRow * index);
+				final Coord size = r.getRect().getSize().setY(perRow);
+				
+				return Rect.fromSize(origin, size);
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_column(ConstraintContext context, final int columns, final int index)
+	public static RectEvaluable c_column(final RectEvaluable r, final int columns, final int index)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				final double width = getContext().getRect().size().x;
+				final double width = r.getRect().getSize().x;
 				final double perCol = width / columns;
 				
-				return Rect.fromSize(getOrigin().add(perCol * index, 0), getSize().setX(perCol));
+				final Coord origin = r.getRect().getOrigin().add(perCol * index, 0);
+				final Coord size = r.getRect().getSize().setX(perCol);
+				
+				return Rect.fromSize(origin, size);
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_shrink(ConstraintContext context, NumConstraint shrink)
+	public static RectEvaluable c_shrink(RectEvaluable r, NumEvaluable shrink)
 	{
-		return c_shrink(context, shrink, shrink, shrink, shrink);
+		return c_shrink(r, shrink, shrink, shrink, shrink);
 	}
 	
 	
-	public static RectConstraint c_shrink(ConstraintContext context, NumConstraint horiz, NumConstraint vert)
+	public static RectEvaluable c_shrink(RectEvaluable context, NumEvaluable horiz, NumEvaluable vert)
 	{
 		return c_shrink(context, horiz, vert, horiz, vert);
 	}
 	
 	
-	public static RectConstraint c_shrink(ConstraintContext context, final NumConstraint left, final NumConstraint top, final NumConstraint right, final NumConstraint bottom)
+	public static RectEvaluable c_shrink(final RectEvaluable r, final NumEvaluable x1, final NumEvaluable y1, final NumEvaluable x2, final NumEvaluable y2)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				return getContext().getRect().shrink(left.getValue(), top.getValue(), right.getValue(), bottom.getValue());
+				return r.getRect().shrink(x1.getValue(), y1.getValue(), x2.getValue(), y2.getValue());
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_center(ConstraintContext context)
+	public static RectEvaluable c_center(final RectEvaluable r)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				return Rect.fromSize(getContext().getRect().getCenter(), 0, 0);
+				return Rect.fromSize(r.getRect().getCenter(), 0, 0);
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_grow(ConstraintContext context, NumConstraint grow)
+	public static RectEvaluable c_grow(RectEvaluable r, NumEvaluable grow)
 	{
-		return c_grow(context, grow, grow, grow, grow);
+		return c_grow(r, grow, grow, grow, grow);
 	}
 	
 	
-	public static RectConstraint c_grow(ConstraintContext context, NumConstraint horiz, NumConstraint vert)
+	public static RectEvaluable c_grow(RectEvaluable r, NumEvaluable horiz, NumEvaluable vert)
 	{
-		return c_grow(context, horiz, vert, horiz, vert);
+		return c_grow(r, horiz, vert, horiz, vert);
 	}
 	
 	
-	public static RectConstraint c_grow(ConstraintContext context, final NumConstraint left, final NumConstraint top, final NumConstraint right, final NumConstraint bottom)
+	public static RectEvaluable c_grow(final RectEvaluable r, final NumEvaluable x1, final NumEvaluable y1, final NumEvaluable x2, final NumEvaluable y2)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				return getContext().getRect().grow(left.getValue(), top.getValue(), right.getValue(), bottom.getValue());
+				return r.getRect().grow(x1.getValue(), y1.getValue(), x2.getValue(), y2.getValue());
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_tile(ConstraintContext context, final int rows, final int cols, final int left, final int top)
+	public static RectEvaluable c_tile(final RectEvaluable r, final int rows, final int cols, final int left, final int top)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				final double height = getSize().y;
-				final double width = getSize().y;
+				final double height = r.getRect().getSize().y;
+				final double width = r.getRect().getSize().y;
 				final double perRow = height / rows;
 				final double perCol = width / cols;
 				
-				return Rect.fromSize(getOrigin().add(perCol * left, perRow * (rows - top - 1)), perCol, perRow);
+				final Coord origin = r.getRect().getOrigin().add(perCol * left, perRow * (rows - top - 1));
+				
+				return Rect.fromSize(origin, perCol, perRow);
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_box_sized(ConstraintContext context, final NumConstraint width, final NumConstraint height)
+	public static RectEvaluable c_box(final RectEvaluable r, final NumEvaluable width, final NumEvaluable height)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				final Coord origin = getOrigin();
+				final Coord origin = r.getRect().getOrigin();
 				
 				//@formatter:off
 				return Rect.fromSize(
@@ -370,19 +378,19 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_box_sized(ConstraintContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint width, final NumConstraint height)
+	public static RectEvaluable c_box(final RectEvaluable r, final NumEvaluable x, final NumEvaluable y, final NumEvaluable width, final NumEvaluable height)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				final Coord origin = getOrigin();
+				final Coord origin = r.getRect().getOrigin();
 				
 				//@formatter:off
 				return Rect.fromSize(
-						origin.x + left.getValue(),
-						origin.y + bottom.getValue(),
+						origin.x + x.getValue(),
+						origin.y + y.getValue(),						
 						width.getValue(),
 						height.getValue()
 				);
@@ -392,36 +400,46 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_box_abs(ConstraintContext context, final NumConstraint left, final NumConstraint bottom, final NumConstraint right, final NumConstraint top)
+	public static RectEvaluable c_centered(final RectEvaluable r, final NumEvaluable x, final NumEvaluable y)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				final Coord origin = getOrigin();
+				final Coord size = r.getRect().getSize();
+				
+				return Rect.fromSize(x.getValue() - size.x / 2D, y.getValue() - size.y / 2D, size.x, size.y);
+			}
+		};
+	}
+	
+	
+	public static RectEvaluable c_box_abs(final RectEvaluable r, final NumEvaluable x1, final NumEvaluable y1, final NumEvaluable x2, final NumEvaluable y2)
+	{
+		return new RectEvaluable() {
+			
+			@Override
+			public Rect getRect()
+			{
+				final Coord origin = r.getRect().getOrigin();
 				
 				//@formatter:off
-				return new Rect(
-						origin.x + left.getValue(),
-						origin.y + bottom.getValue(),
-						origin.x + right.getValue(),
-						origin.y + top.getValue()
-				);
+				return new Rect(origin.add(x1.getValue(), y1.getValue()), origin.add(x2.getValue(), y2.getValue()));
 				//@formatter:on
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_move(ConstraintContext context, final NumConstraint x, final NumConstraint y)
+	public static RectEvaluable c_move(final RectEvaluable r, final NumEvaluable x, final NumEvaluable y)
 	{
-		return new RectConstraint(context) {
+		return new RectEvaluable() {
 			
 			@Override
 			public Rect getRect()
 			{
-				return getContext().getRect().add(x.getValue(), y.getValue());
+				return r.getRect().add(x.getValue(), y.getValue());
 			}
 		};
 	}

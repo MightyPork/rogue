@@ -62,6 +62,8 @@ public class TextureBank extends AppAdapter {
 		
 		textures.put(key, tx);
 		lastTx = tx;
+		
+		makeQuad(key, Rect.one());
 	}
 	
 	

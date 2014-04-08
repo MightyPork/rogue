@@ -1,9 +1,9 @@
-package mightypork.rogue.gui.constraints;
+package mightypork.rogue.gui.renderers;
 
 
 import static mightypork.utils.math.constraints.ConstraintFactory.*;
 import mightypork.rogue.AppAccess;
-import mightypork.utils.math.constraints.ConstraintContext;
+import mightypork.utils.math.constraints.RectEvaluable;
 
 
 public class ColumnHolder extends ElementHolder {
@@ -12,7 +12,7 @@ public class ColumnHolder extends ElementHolder {
 	private int col = 0;
 	
 	
-	public ColumnHolder(AppAccess app, ConstraintContext context, int rows) {
+	public ColumnHolder(AppAccess app, RectEvaluable context, int rows) {
 		super(app, context);
 		this.cols = rows;
 	}
@@ -29,17 +29,14 @@ public class ColumnHolder extends ElementHolder {
 	 * 
 	 * @param elem
 	 */
-	public void addRow(PluggableRenderable elem)
+	@Override
+	public void add(final PluggableRenderable elem)
 	{
 		if (elem == null) return;
-		add(elem, c_column(null, cols, col++));
-	}
-	
-	
-	@Override
-	public void remove(PluggableRenderable elem)
-	{
-		throw new UnsupportedOperationException("Can't remove from ColumnHolder.");
+		
+		elem.setContext(c_column(this, cols, col++));
+		
+		attach(elem);
 	}
 	
 }

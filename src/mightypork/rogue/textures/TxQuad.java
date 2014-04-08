@@ -70,7 +70,7 @@ public class TxQuad {
 	
 	/**
 	 * @param tx Texture
-	 * @param uvs Rect of texturwe UVs (pixels - from left top)
+	 * @param uvs Rect of texture UVs (0-1)
 	 */
 	public TxQuad(Texture tx, Rect uvs) {
 		this.tx = tx;

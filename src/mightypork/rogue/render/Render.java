@@ -12,7 +12,7 @@ import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
-import org.newdawn.slick.opengl.SlickCallable;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureImpl;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -48,6 +48,11 @@ public class Render {
 		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
 	
 	
@@ -93,6 +98,17 @@ public class Render {
 	public static void scale(Coord factor)
 	{
 		glScaled(factor.x, factor.y, factor.z);
+	}
+	
+	
+	/**
+	 * Scale by X factor
+	 * 
+	 * @param factor scaling factor
+	 */
+	public static void scaleXY(double factor)
+	{
+		glScaled(factor, factor, 1);
 	}
 	
 	
@@ -174,13 +190,25 @@ public class Render {
 		glRotated(angle, vec.x, vec.y, vec.z);
 	}
 	
+	private static int pushed = 0;
+	
 	
 	/**
 	 * Store GL state
 	 */
 	public static void pushState()
 	{
-		SlickCallable.enterSafeBlock();
+		pushed++;
+		
+		if (pushed >= 3) {
+			Log.w("Suspicious amount of state pushes: " + pushed);
+		}
+		
+//		Log.f3("push : "+pushed);
+		
+		GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
+		GL11.glPushClientAttrib(GL11.GL_ALL_CLIENT_ATTRIB_BITS);
+		GL11.glPushMatrix();
 	}
 	
 	
@@ -189,7 +217,17 @@ public class Render {
 	 */
 	public static void popState()
 	{
-		SlickCallable.leaveSafeBlock();
+		if (pushed == 0) {
+			Log.w("Pop without push.");
+		}
+		
+		pushed--;
+		
+//		Log.f3("pop  : "+pushed);
+		
+		GL11.glPopMatrix();
+		GL11.glPopClientAttrib();
+		GL11.glPopAttrib();
 	}
 	
 	
@@ -278,10 +316,10 @@ public class Render {
 	 */
 	public static void quad(Rect quad)
 	{
-		final double left = quad.xMin();
-		final double bottom = quad.yMin();
-		final double right = quad.xMax();
-		final double top = quad.yMax();
+		final double left = quad.x1();
+		final double bottom = quad.y1();
+		final double right = quad.x2();
+		final double top = quad.y2();
 		
 		// draw with color
 		unbindTexture();
@@ -318,15 +356,15 @@ public class Render {
 	 */
 	public static void quadUV_nobound(Rect quad, Rect uvs)
 	{
-		final double left = quad.xMin();
-		final double bottom = quad.yMin();
-		final double right = quad.xMax();
-		final double top = quad.yMax();
+		final double left = quad.x1();
+		final double bottom = quad.y1();
+		final double right = quad.x2();
+		final double top = quad.y2();
 		
-		final double tleft = uvs.xMin();
-		final double tbottom = uvs.yMin();
-		final double tright = uvs.xMax();
-		final double ttop = uvs.yMax();
+		final double tleft = uvs.x1();
+		final double tbottom = uvs.y1();
+		final double tright = uvs.x2();
+		final double ttop = uvs.y2();
 		
 		// quad with texture
 		glTexCoord2d(tleft, ttop);
@@ -342,10 +380,10 @@ public class Render {
 	
 	public static void quadGradH(Rect quad, RGB colorLeft, RGB colorRight)
 	{
-		final double left = quad.xMin();
-		final double bottom = quad.yMin();
-		final double right = quad.yMax();
-		final double top = quad.yMax();
+		final double left = quad.x1();
+		final double bottom = quad.y1();
+		final double right = quad.y2();
+		final double top = quad.y2();
 		
 		// draw with color
 		unbindTexture();
@@ -366,10 +404,10 @@ public class Render {
 	
 	public static void quadGradV(Rect quad, RGB colorTop, RGB colorBottom)
 	{
-		final double left = quad.xMin();
-		final double bottom = quad.yMin();
-		final double right = quad.yMax();
-		final double top = quad.yMax();
+		final double left = quad.x1();
+		final double bottom = quad.y1();
+		final double right = quad.y2();
+		final double top = quad.y2();
 		
 		// draw with color
 		unbindTexture();
@@ -396,9 +434,11 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, Rect uvs, Texture texture, RGB tint)
 	{
+		pushState();
 		bindTexture(texture);
 		setColor(tint);
 		quadUV(quad, uvs);
+		popState();
 	}
 	
 	

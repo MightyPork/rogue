@@ -55,7 +55,7 @@ public class Res {
 	
 	private static void loadFonts()
 	{
-		fonts.loadFont("PolygonPixel_16", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", null, 32, FontStyle.PLAIN, true));
+		fonts.loadFont("default", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", null, 32, FontStyle.PLAIN, true));
 	}
 	
 	

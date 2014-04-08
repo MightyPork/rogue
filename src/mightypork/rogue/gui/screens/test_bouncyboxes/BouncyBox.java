@@ -5,37 +5,33 @@ import static mightypork.utils.math.constraints.ConstraintFactory.*;
 
 import java.util.Random;
 
-import mightypork.rogue.gui.constraints.PluggableRenderable;
+import mightypork.rogue.gui.renderers.PluggableRenderer;
 import mightypork.rogue.render.Render;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.ConstraintContext;
-import mightypork.utils.math.constraints.NumConstraint;
-import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.constraints.NumEvaluable;
+import mightypork.utils.math.constraints.RectEvaluable;
 
 
-public class BouncyBox implements PluggableRenderable, Updateable, ConstraintContext {
+public class BouncyBox extends PluggableRenderer implements Updateable {
 	
 	private final Random rand = new Random();
 	
-	private ConstraintContext context;
-	
-	private final RectConstraint box;
+	private final RectEvaluable box;
 	
 	private final AnimDouble pos = new AnimDouble(0, Easing.BOUNCE_OUT);
 	
 	
 	public BouncyBox() {
 		// create box
-		final NumConstraint side = c_height(this);
-		RectConstraint abox = c_box_sized(this, side, side);
+		final NumEvaluable side = c_height(this);
+		RectEvaluable abox = c_box(this, side, side);
 		
 		// move
-		final NumConstraint move_length = c_sub(c_width(this), side);
-		final NumConstraint offset = c_mul(move_length, c_n(pos));
+		final NumEvaluable move_length = c_sub(c_width(this), side);
+		final NumEvaluable offset = c_mul(move_length, c_n(pos));
 		abox = c_move(abox, offset, c_n(0));
 		
 		// add padding
@@ -46,35 +42,21 @@ public class BouncyBox implements PluggableRenderable, Updateable, ConstraintCon
 	
 	
 	@Override
-	public Rect getRect()
-	{
-		return context.getRect();
-	}
-	
-	
-	@Override
 	public void render()
 	{
 		Render.quad(box.getRect(), RGB.GREEN);
 	}
 	
 	
-	@Override
-	public void setContext(ConstraintContext context)
-	{
-		this.context = context;
-	}
-	
-	
 	public void goLeft()
 	{
-		pos.animate(1, 0, 2 + rand.nextDouble() * 1);
+		pos.animate(1, 0, 1 + rand.nextDouble() * 1);
 	}
 	
 	
 	public void goRight()
 	{
-		pos.animate(0, 1, 2 + rand.nextDouble() * 1);
+		pos.animate(0, 1, 1 + rand.nextDouble() * 1);
 	}
 	
 	

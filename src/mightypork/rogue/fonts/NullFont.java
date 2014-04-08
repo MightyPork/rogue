@@ -20,20 +20,6 @@ public class NullFont implements GLFont {
 	
 	
 	@Override
-	public void draw(String str, RGB color, int startIndex, int endIndex)
-	{
-		// nope
-	}
-	
-	
-	@Override
-	public void draw(String str)
-	{
-		// nope
-	}
-	
-	
-	@Override
 	public Coord getNeededSpace(String str)
 	{
 		return Coord.zero();

@@ -9,6 +9,7 @@ import mightypork.rogue.bus.events.KeyboardEvent;
 import mightypork.rogue.bus.events.MouseButtonEvent;
 import mightypork.rogue.bus.events.MouseMotionEvent;
 import mightypork.utils.control.interf.Updateable;
+import mightypork.utils.math.constraints.NumEvaluable;
 import mightypork.utils.math.coord.Coord;
 
 import org.lwjgl.LWJGLException;
@@ -153,5 +154,54 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	public void setYDown(boolean yAxisDown)
 	{
 		this.yAxisDown = yAxisDown;
+	}
+	
+	
+	/**
+	 * Get absolute mouse position
+	 * 
+	 * @return mouse position
+	 */
+	public Coord getMousePos()
+	{
+		final Coord pos = new Coord(Mouse.getX(), Mouse.getY());
+		flipScrY(pos);
+		return pos;
+	}
+	
+	
+	public void grabMouse(boolean grab)
+	{
+		Mouse.setGrabbed(grab);
+	}
+	
+	private final NumEvaluable cmousex = new NumEvaluable() {
+		
+		@Override
+		public double getValue()
+		{
+			return getMousePos().x;
+		}
+	};
+	
+	private final NumEvaluable cmousey = new NumEvaluable() {
+		
+		@Override
+		public double getValue()
+		{
+			return getMousePos().y;
+		}
+	};
+	
+	
+	public NumEvaluable c_mouse_x()
+	{
+		return cmousex;
+	}
+	
+	
+	public NumEvaluable c_mouse_y()
+	{
+		return cmousey;
 	}
 }

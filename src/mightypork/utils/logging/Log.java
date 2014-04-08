@@ -199,14 +199,26 @@ public class Log {
 	
 	public static String str(Class<?> cls)
 	{
-		LoggedName ln = cls.getAnnotation(LoggedName.class);
+		final LoggedName ln = cls.getAnnotation(LoggedName.class);
 		if (ln != null) {
 			return ln.name();
 		}
 		
+		String name = cls.getName();
+		
+		String sep = "";
+		
+		if (name.contains("$")) {
+			name = name.substring(name.lastIndexOf("$") + 1);
+			sep = "$";
+		} else {
+			name = name.substring(name.lastIndexOf(".") + 1);
+			sep = ".";
+		}
+		
 		final Class<?> enclosing = cls.getEnclosingClass();
 		
-		return (enclosing == null ? "" : str(enclosing) + ".") + cls.getSimpleName();
+		return (enclosing == null ? "" : str(enclosing) + sep) + name;
 	}
 	
 	

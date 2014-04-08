@@ -37,6 +37,13 @@ public class ActionRequest implements Event<ActionRequest.Listener> {
 		void requestAction(RequestType request);
 	}
 	
+	
+	@Override
+	public String toString()
+	{
+		return "ActionRequest(" + type + ")";
+	}
+	
 	public static enum RequestType
 	{
 		FULLSCREEN, SCREENSHOT, SHUTDOWN;

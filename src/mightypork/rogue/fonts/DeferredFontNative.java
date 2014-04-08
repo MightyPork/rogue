@@ -13,7 +13,7 @@ import mightypork.utils.logging.LoggedName;
  * 
  * @author MightyPork
  */
-@LoggedName(name="FontNative")
+@LoggedName(name = "FontNative")
 public class DeferredFontNative extends DeferredFont {
 	
 	/**

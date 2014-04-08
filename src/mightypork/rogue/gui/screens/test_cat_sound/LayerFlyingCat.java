@@ -7,45 +7,60 @@ import java.util.Random;
 
 import mightypork.rogue.Res;
 import mightypork.rogue.bus.events.MouseButtonEvent;
+import mightypork.rogue.gui.renderers.ImageRenderer;
+import mightypork.rogue.gui.renderers.TextRenderer;
+import mightypork.rogue.gui.renderers.TextRenderer.Align;
 import mightypork.rogue.gui.screens.Screen;
 import mightypork.rogue.gui.screens.ScreenLayer;
 import mightypork.rogue.input.KeyStroke;
-import mightypork.rogue.render.Render;
+import mightypork.rogue.input.Keys;
 import mightypork.utils.control.interf.Updateable;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.constraints.RectEvaluable;
 import mightypork.utils.math.coord.Coord;
-
-import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.opengl.Texture;
 
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
 	
-	private final RectConstraint kittenbox;
-	
-	private final AnimDouble s = new AnimDouble(400, Easing.SINE_BOTH);
-	private final AnimDouble x = new AnimDouble(200, Easing.ELASTIC_OUT);
-	private final AnimDouble y = new AnimDouble(200, Easing.ELASTIC_OUT);
+	private final AnimDouble size = new AnimDouble(400, Easing.SINE_BOTH);
+	private final AnimDouble xPos = new AnimDouble(200, Easing.ELASTIC_OUT);
+	private final AnimDouble yPos = new AnimDouble(200, Easing.ELASTIC_OUT);
 	
 	private final Random rand = new Random();
 	
-	private final Texture cat_tx = Res.getTexture("test.kitten");
+	private final ImageRenderer cat;
+	private final TextRenderer text;
 	
 	
 	public LayerFlyingCat(Screen screen) {
 		super(screen);
 		
-		kittenbox = c_move(c_box_sized(this, c_n(s), c_n(s)), c_n(x), c_n(y));
+		xPos.setTo(disp().getWidth() / 2);
+		yPos.setTo(disp().getHeight() / 2);
 		
-		bindKeyStroke(new KeyStroke(Keyboard.KEY_RETURN), new Runnable() {
+		cat = new ImageRenderer(Res.getTxQuad("test.kitten"));
+		cat.setContext(c_centered(c_box(this, c_n(size), c_n(size)), c_n(xPos), c_n(yPos)));
+		
+		//@formatter:off
+		final RectEvaluable flyingFontBox = c_centered(
+				c_box(this, c_n(0), c_n(64)),
+				input().c_mouse_x(),
+				input().c_mouse_y()
+		);
+		//@formatter:on
+		
+		text = new TextRenderer(Res.getFont("default"), "YO", RGB.YELLOW, Align.CENTER);
+		text.setContext(flyingFontBox);
+		
+		bindKeyStroke(new KeyStroke(Keys.KEY_RETURN), new Runnable() {
 			
 			@Override
 			public void run()
 			{
-				x.fadeTo(disp().getWidth() / 2 - s.getTo() / 2, 2);
-				y.fadeTo(disp().getHeight() / 2 - s.getTo() / 2, 2);
+				xPos.fadeTo(disp().getWidth() / 2, 2);
+				yPos.fadeTo(disp().getHeight() / 2, 2);
 			}
 		});
 	}
@@ -54,9 +69,9 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	@Override
 	public void update(double delta)
 	{
-		s.update(delta);
-		x.update(delta);
-		y.update(delta);
+		size.update(delta);
+		xPos.update(delta);
+		yPos.update(delta);
 	}
 	
 	
@@ -67,20 +82,19 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		
 		final Coord pos = event.getPos();
 		
-		final double newSize = 200 + rand.nextInt(600);
-		
 		final double t = 2;
 		
-		s.fadeTo(newSize, t / 2D);
-		x.fadeTo(pos.x - newSize / 2D, t);
-		y.fadeTo(pos.y - newSize / 2D, t);
+		size.fadeTo(100 + rand.nextInt(700), t / 2D);
+		xPos.fadeTo(pos.x, t);
+		yPos.fadeTo(pos.y, t);
 	}
 	
 	
 	@Override
 	public void render()
 	{
-		Render.quadTextured(kittenbox.getRect(), cat_tx);
+		cat.render();
+		text.render();
 	}
 	
 }

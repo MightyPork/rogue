@@ -202,7 +202,7 @@ public class Coord {
 	 */
 	public boolean isInRect(Rect rect)
 	{
-		return isInRect(rect.min, rect.max);
+		return isInRect(rect.getMin(), rect.getMax());
 	}
 	
 	

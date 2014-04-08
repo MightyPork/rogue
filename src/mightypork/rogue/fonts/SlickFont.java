@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
 
+import mightypork.rogue.render.Render;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 
@@ -53,7 +54,7 @@ public class SlickFont implements GLFont {
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
 	
@@ -67,37 +68,12 @@ public class SlickFont implements GLFont {
 	@Override
 	public void draw(String str, RGB color)
 	{
+		Render.pushState();
+		
 		prepareForRender();
 		ttf.drawString(0, 0, str, rgbToSlickColor(color));
-	}
-	
-	
-	/**
-	 * Draw substring in color
-	 * 
-	 * @param str string to draw
-	 * @param color text color
-	 * @param startIndex first char to draw
-	 * @param endIndex last char to draw (INCLUDING!)
-	 */
-	@Override
-	public void draw(String str, RGB color, int startIndex, int endIndex)
-	{
-		prepareForRender();
-		ttf.drawString(0, 0, str, rgbToSlickColor(color), startIndex, endIndex);
-	}
-	
-	
-	/**
-	 * Draw in white
-	 * 
-	 * @param str chars to draw
-	 */
-	@Override
-	public void draw(String str)
-	{
-		prepareForRender();
-		ttf.drawString(0, 0, str);
+		
+		Render.popState();
 	}
 	
 	

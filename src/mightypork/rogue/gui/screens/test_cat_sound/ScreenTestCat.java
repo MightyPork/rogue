@@ -8,8 +8,7 @@ import mightypork.rogue.bus.events.ActionRequest.RequestType;
 import mightypork.rogue.bus.events.ScreenRequestEvent;
 import mightypork.rogue.gui.screens.LayeredScreen;
 import mightypork.rogue.input.KeyStroke;
-
-import org.lwjgl.input.Keyboard;
+import mightypork.rogue.input.Keys;
 
 
 public class ScreenTestCat extends LayeredScreen {
@@ -22,7 +21,7 @@ public class ScreenTestCat extends LayeredScreen {
 		
 		addLayer(layer = new LayerFlyingCat(this));
 		
-		bindKeyStroke(new KeyStroke(Keyboard.KEY_ESCAPE), new Runnable() {
+		bindKeyStroke(new KeyStroke(Keys.KEY_ESCAPE), new Runnable() {
 			
 			@Override
 			public void run()
@@ -32,7 +31,7 @@ public class ScreenTestCat extends LayeredScreen {
 			}
 		});
 		
-		bindKeyStroke(new KeyStroke(Keyboard.KEY_B), new Runnable() {
+		bindKeyStroke(new KeyStroke(Keys.KEY_B), new Runnable() {
 			
 			@Override
 			public void run()

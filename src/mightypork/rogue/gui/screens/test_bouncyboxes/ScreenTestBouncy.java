@@ -5,8 +5,7 @@ import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.events.ScreenRequestEvent;
 import mightypork.rogue.gui.screens.LayeredScreen;
 import mightypork.rogue.input.KeyStroke;
-
-import org.lwjgl.input.Keyboard;
+import mightypork.rogue.input.Keys;
 
 
 public class ScreenTestBouncy extends LayeredScreen {
@@ -21,25 +20,7 @@ public class ScreenTestBouncy extends LayeredScreen {
 		
 		addLayer(layer);
 		
-		bindKeyStroke(new KeyStroke(true, Keyboard.KEY_RIGHT), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				layer.goRight();
-			}
-		});
-		
-		bindKeyStroke(new KeyStroke(true, Keyboard.KEY_LEFT), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				layer.goLeft();
-			}
-		});
-		
-		bindKeyStroke(new KeyStroke(Keyboard.KEY_C), new Runnable() {
+		bindKeyStroke(new KeyStroke(Keys.KEY_C), new Runnable() {
 			
 			@Override
 			public void run()

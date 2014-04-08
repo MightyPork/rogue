@@ -17,25 +17,6 @@ public interface GLFont {
 	
 	
 	/**
-	 * Draw string at position
-	 * 
-	 * @param text string to draw
-	 * @param color draw color
-	 * @param startIndex first drawn character index
-	 * @param endIndex last drawn character index
-	 */
-	void draw(String text, RGB color, int startIndex, int endIndex);
-	
-	
-	/**
-	 * Draw string at position
-	 * 
-	 * @param str string to draw
-	 */
-	void draw(String str);
-	
-	
-	/**
 	 * Get suize needed to render give string
 	 * 
 	 * @param text string to check

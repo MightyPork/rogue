@@ -9,7 +9,7 @@ import mightypork.rogue.AppAccess;
 import mightypork.rogue.bus.Subsystem;
 import mightypork.rogue.bus.events.ScreenChangeEvent;
 import mightypork.utils.logging.Log;
-import mightypork.utils.math.constraints.ConstraintContext;
+import mightypork.utils.math.constraints.RectEvaluable;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -19,7 +19,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 
-public class DisplaySystem extends Subsystem implements ConstraintContext {
+public class DisplaySystem extends Subsystem implements RectEvaluable {
 	
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
