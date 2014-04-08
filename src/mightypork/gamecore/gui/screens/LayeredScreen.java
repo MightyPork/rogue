@@ -4,7 +4,7 @@ package mightypork.gamecore.gui.screens;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.control.AppAccess;
 
 
 public abstract class LayeredScreen extends Screen {

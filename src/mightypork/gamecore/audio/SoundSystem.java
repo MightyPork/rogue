@@ -1,16 +1,16 @@
-package mightypork.gamecore.resources.sounds;
+package mightypork.gamecore.audio;
 
 
 import java.nio.FloatBuffer;
 import java.util.HashSet;
 import java.util.Set;
 
-import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.audio.players.EffectPlayer;
+import mightypork.gamecore.audio.players.LoopPlayer;
+import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.Subsystem;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.interf.Updateable;
-import mightypork.gamecore.resources.sounds.players.EffectPlayer;
-import mightypork.gamecore.resources.sounds.players.LoopPlayer;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.objects.Mutable;

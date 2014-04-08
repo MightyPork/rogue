@@ -1,7 +1,7 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.Subsystem;
 import mightypork.gamecore.control.bus.events.KeyboardEvent;
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;

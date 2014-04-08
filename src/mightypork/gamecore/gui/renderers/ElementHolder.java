@@ -3,7 +3,7 @@ package mightypork.gamecore.gui.renderers;
 
 import java.util.LinkedList;
 
-import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.ChildClient;
 import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.render.Renderable;

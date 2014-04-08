@@ -1,4 +1,4 @@
-package mightypork.gamecore.resources.textures;
+package mightypork.gamecore.render.textures;
 
 
 import org.lwjgl.opengl.GL11;

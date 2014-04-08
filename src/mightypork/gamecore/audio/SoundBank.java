@@ -1,13 +1,13 @@
-package mightypork.gamecore.resources.sounds;
+package mightypork.gamecore.audio;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.AppAccess;
-import mightypork.gamecore.AppAdapter;
-import mightypork.gamecore.resources.sounds.players.EffectPlayer;
-import mightypork.gamecore.resources.sounds.players.LoopPlayer;
+import mightypork.gamecore.audio.players.EffectPlayer;
+import mightypork.gamecore.audio.players.LoopPlayer;
+import mightypork.gamecore.control.AppAccess;
+import mightypork.gamecore.control.AppAdapter;
 import mightypork.utils.logging.Log;
 
 

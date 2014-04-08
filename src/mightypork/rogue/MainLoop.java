@@ -1,7 +1,7 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.GameLoop;
+import mightypork.gamecore.control.GameLoop;
 import mightypork.gamecore.input.Action;
 import mightypork.gamecore.render.Renderable;
 import mightypork.rogue.events.ActionRequest;

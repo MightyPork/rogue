@@ -1,4 +1,4 @@
-package mightypork.gamecore.resources.sounds;
+package mightypork.gamecore.audio;
 
 
 import mightypork.gamecore.loading.NullResource;

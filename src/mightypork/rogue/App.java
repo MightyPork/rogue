@@ -9,9 +9,10 @@ import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
-import mightypork.gamecore.AppAccess;
-import mightypork.gamecore.GameLoop;
 import mightypork.gamecore.SlickLogRedirector;
+import mightypork.gamecore.audio.SoundSystem;
+import mightypork.gamecore.control.AppAccess;
+import mightypork.gamecore.control.GameLoop;
 import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.control.bus.events.*;
 import mightypork.gamecore.control.interf.Destroyable;
@@ -21,7 +22,6 @@ import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.gamecore.resources.sounds.SoundSystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;

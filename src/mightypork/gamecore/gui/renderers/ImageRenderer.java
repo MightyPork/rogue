@@ -2,7 +2,7 @@ package mightypork.gamecore.gui.renderers;
 
 
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.render.textures.TxQuad;
 
 
 public class ImageRenderer extends PluggableRenderer {

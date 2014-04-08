@@ -5,7 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
 
-import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;

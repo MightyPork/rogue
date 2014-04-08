@@ -2,7 +2,7 @@ package mightypork.gamecore.gui.screens;
 
 
 import static org.lwjgl.opengl.GL11.*;
-import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.Subsystem;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.interf.Destroyable;

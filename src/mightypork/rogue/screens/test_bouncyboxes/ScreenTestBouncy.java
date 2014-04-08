@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.test_bouncyboxes;
 
 
-import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.bus.events.ScreenRequestEvent;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;

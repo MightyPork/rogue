@@ -1,10 +1,10 @@
-package mightypork.gamecore.resources.fonts;
+package mightypork.gamecore.render.fonts;
 
 
 import java.util.HashMap;
 
-import mightypork.gamecore.AppAccess;
-import mightypork.gamecore.AppAdapter;
+import mightypork.gamecore.control.AppAccess;
+import mightypork.gamecore.control.AppAdapter;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.utils.logging.Log;
 

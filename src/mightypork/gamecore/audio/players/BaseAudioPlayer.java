@@ -1,8 +1,8 @@
-package mightypork.gamecore.resources.sounds.players;
+package mightypork.gamecore.audio.players;
 
 
+import mightypork.gamecore.audio.DeferredAudio;
 import mightypork.gamecore.control.interf.Destroyable;
-import mightypork.gamecore.resources.sounds.DeferredAudio;
 import mightypork.utils.objects.Mutable;
 
 

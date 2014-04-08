@@ -1,8 +1,8 @@
 package mightypork.gamecore.gui.renderers;
 
 
-import mightypork.gamecore.resources.fonts.FontRenderer;
-import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.render.fonts.FontRenderer;
+import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 

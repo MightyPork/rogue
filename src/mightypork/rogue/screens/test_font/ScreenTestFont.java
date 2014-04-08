@@ -1,9 +1,9 @@
 package mightypork.rogue.screens.test_font;
 
 
-import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.screens.Screen;
-import mightypork.gamecore.resources.fonts.FontRenderer;
+import mightypork.gamecore.render.fonts.FontRenderer;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;

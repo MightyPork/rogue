@@ -1,4 +1,4 @@
-package mightypork.gamecore.resources.fonts;
+package mightypork.gamecore.render.fonts;
 
 
 import java.awt.Font;

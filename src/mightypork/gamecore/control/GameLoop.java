@@ -1,10 +1,9 @@
-package mightypork.gamecore;
+package mightypork.gamecore.control;
 
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import mightypork.gamecore.control.Subsystem;
 import mightypork.gamecore.control.bus.events.MainLoopTaskRequest;
 import mightypork.gamecore.control.bus.events.UpdateEvent;
 import mightypork.gamecore.control.timing.TimerDelta;

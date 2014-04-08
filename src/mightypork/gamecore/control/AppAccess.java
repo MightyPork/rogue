@@ -1,9 +1,9 @@
-package mightypork.gamecore;
+package mightypork.gamecore.control;
 
 
+import mightypork.gamecore.audio.SoundSystem;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.gamecore.resources.sounds.SoundSystem;
 
 
 /**

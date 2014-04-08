@@ -1,7 +1,7 @@
-package mightypork.gamecore.resources.sounds.players;
+package mightypork.gamecore.audio.players;
 
 
-import mightypork.gamecore.resources.sounds.DeferredAudio;
+import mightypork.gamecore.audio.DeferredAudio;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.objects.Mutable;
 

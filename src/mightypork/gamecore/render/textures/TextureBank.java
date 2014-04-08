@@ -1,13 +1,13 @@
-package mightypork.gamecore.resources.textures;
+package mightypork.gamecore.render.textures;
 
 
 import java.util.HashMap;
 
-import mightypork.gamecore.AppAccess;
-import mightypork.gamecore.AppAdapter;
+import mightypork.gamecore.control.AppAccess;
+import mightypork.gamecore.control.AppAdapter;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
-import mightypork.gamecore.resources.textures.FilteredTexture.Filter;
-import mightypork.gamecore.resources.textures.FilteredTexture.Wrap;
+import mightypork.gamecore.render.textures.FilteredTexture.Filter;
+import mightypork.gamecore.render.textures.FilteredTexture.Wrap;
 import mightypork.utils.math.coord.Rect;
 
 import org.newdawn.slick.opengl.Texture;

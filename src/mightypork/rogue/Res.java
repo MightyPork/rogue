@@ -1,19 +1,19 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.audio.SoundBank;
+import mightypork.gamecore.audio.players.EffectPlayer;
+import mightypork.gamecore.audio.players.LoopPlayer;
+import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.loading.AsyncResourceLoader;
-import mightypork.gamecore.resources.fonts.DeferredFont;
-import mightypork.gamecore.resources.fonts.DeferredFont.FontStyle;
-import mightypork.gamecore.resources.fonts.FontBank;
-import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.resources.sounds.SoundBank;
-import mightypork.gamecore.resources.sounds.players.EffectPlayer;
-import mightypork.gamecore.resources.sounds.players.LoopPlayer;
-import mightypork.gamecore.resources.textures.FilteredTexture.Filter;
-import mightypork.gamecore.resources.textures.FilteredTexture.Wrap;
-import mightypork.gamecore.resources.textures.TextureBank;
-import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.render.fonts.DeferredFont;
+import mightypork.gamecore.render.fonts.FontBank;
+import mightypork.gamecore.render.fonts.GLFont;
+import mightypork.gamecore.render.fonts.DeferredFont.FontStyle;
+import mightypork.gamecore.render.textures.TextureBank;
+import mightypork.gamecore.render.textures.TxQuad;
+import mightypork.gamecore.render.textures.FilteredTexture.Filter;
+import mightypork.gamecore.render.textures.FilteredTexture.Wrap;
 
 import org.newdawn.slick.opengl.Texture;
 

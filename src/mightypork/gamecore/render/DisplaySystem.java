@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
 
-import mightypork.gamecore.AppAccess;
+import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.Subsystem;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.utils.logging.Log;

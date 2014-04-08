@@ -1,9 +1,9 @@
-package mightypork.gamecore.resources.sounds.players;
+package mightypork.gamecore.audio.players;
 
 
+import mightypork.gamecore.audio.DeferredAudio;
 import mightypork.gamecore.control.interf.Updateable;
 import mightypork.gamecore.control.timing.Pauseable;
-import mightypork.gamecore.resources.sounds.DeferredAudio;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.objects.Mutable;
 
