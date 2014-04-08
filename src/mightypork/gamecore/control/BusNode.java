@@ -18,7 +18,7 @@ import mightypork.gamecore.control.bus.clients.ToggleableClient;
  */
 public abstract class BusNode implements BusAccess, DelegatingClient, ToggleableClient {
 	
-	private BusAccess busAccess;
+	private final BusAccess busAccess;
 	
 	private final Set<Object> clients = new LinkedHashSet<Object>();
 	private boolean listening = true;
@@ -45,7 +45,7 @@ public abstract class BusNode implements BusAccess, DelegatingClient, Toggleable
 	
 	
 	@Override
-	public boolean isListening()
+	public final boolean isListening()
 	{
 		return listening;
 	}
@@ -104,7 +104,7 @@ public abstract class BusNode implements BusAccess, DelegatingClient, Toggleable
 	
 	
 	@Override
-	public EventBus bus()
+	public final EventBus bus()
 	{
 		return busAccess.bus();
 	}

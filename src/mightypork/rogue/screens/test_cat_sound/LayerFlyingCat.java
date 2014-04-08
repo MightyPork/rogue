@@ -53,7 +53,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		);
 		//@formatter:on
 		
-		text = new TextRenderer(Res.getFont("default"), "YO", RGB.YELLOW, Align.CENTER);
+		text = new TextRenderer(Res.getFont("default"), RGB.YELLOW, Align.CENTER);
 		text.setContext(flyingFontBox);
 		
 		bindKeyStroke(new KeyStroke(Keys.KEY_RETURN), new Runnable() {
@@ -87,6 +87,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		final double t = 2;
 		
 		size.fadeTo(100 + rand.nextInt(700), t / 2D);
+		
 		xPos.fadeTo(pos.x, t);
 		yPos.fadeTo(pos.y, t);
 	}
@@ -96,7 +97,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	public void render()
 	{
 		cat.render();
-		text.render();
+		text.render(disp().getFps()+" fps");
 	}
 	
 }

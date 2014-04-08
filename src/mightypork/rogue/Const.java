@@ -15,7 +15,7 @@ public class Const {
 	public static final String TITLEBAR = APP_NAME + " v." + VERSION;
 	
 	// AUDIO
-	public static final int FPS_RENDER = 80; // max
+	public static final int FPS_RENDER = 100; // max
 	
 	// INITIAL WINDOW SIZE
 	public static final int WINDOW_W = 1024;

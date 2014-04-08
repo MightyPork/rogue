@@ -30,32 +30,6 @@ public class Render {
 	private static final Coord AXIS_Y = new Coord(0, 1, 0);
 	private static final Coord AXIS_Z = new Coord(0, 0, 1);
 	
-	
-	public static void init()
-	{
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		
-		glDisable(GL_LIGHTING);
-		
-		glClearDepth(1f);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-		
-		glEnable(GL_NORMALIZE);
-		
-		glShadeModel(GL_SMOOTH);
-		
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	}
-	
-	
 	/**
 	 * Bind GL color
 	 * 
@@ -489,6 +463,39 @@ public class Render {
 	public static void quadTextured(Rect quad, TxQuad txquad, RGB tint)
 	{
 		quadTextured(quad, txquad.uvs, txquad.tx, tint);
+	}
+
+
+	/**
+	 * Setup Ortho projection for 2D graphics
+	 */
+	public static void setupOrtho()
+	{
+		// fix projection for changed size
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		final Coord s = DisplaySystem.getSize();
+		glViewport(0, 0, s.xi(), s.yi());
+		glOrtho(0, s.x, (DisplaySystem.yAxisDown ? 1 : -1) * s.y, 0, -1000, 1000);
+		
+		// back to modelview
+		glMatrixMode(GL_MODELVIEW);
+
+		glLoadIdentity();
+		
+		glDisable(GL_LIGHTING);
+		
+		glClearDepth(1f);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+		
+		glEnable(GL_NORMALIZE);
+		
+		glShadeModel(GL_SMOOTH);
+		
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
 	}
 	
 }

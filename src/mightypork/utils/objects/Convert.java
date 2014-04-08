@@ -12,7 +12,7 @@ import mightypork.utils.math.coord.Coord;
  * 
  * @author MightyPork
  */
-public class Convertor {
+public class Convert {
 	
 	/**
 	 * Get INTEGER
@@ -21,7 +21,7 @@ public class Convertor {
 	 * @param def default value
 	 * @return integer
 	 */
-	public static int getInteger(Object o, Integer def)
+	public static int toInteger(Object o, Integer def)
 	{
 		try {
 			if (o == null) return def;
@@ -30,7 +30,6 @@ public class Convertor {
 			if (o instanceof Range) return ((Range) o).randInt();
 			if (o instanceof Boolean) return ((Boolean) o) ? 1 : 0;
 		} catch (final NumberFormatException e) {}
-		Log.w("Cannot convert " + o + " to Integer.");
 		return def;
 	}
 	
@@ -42,7 +41,7 @@ public class Convertor {
 	 * @param def default value
 	 * @return double
 	 */
-	public static double getDouble(Object o, Double def)
+	public static double toDouble(Object o, Double def)
 	{
 		try {
 			if (o == null) return def;
@@ -51,7 +50,6 @@ public class Convertor {
 			if (o instanceof Range) return ((Range) o).randDouble();
 			if (o instanceof Boolean) return ((Boolean) o) ? 1 : 0;
 		} catch (final NumberFormatException e) {}
-		Log.w("Cannot convert " + o + " to Double.");
 		return def;
 	}
 	
@@ -63,13 +61,12 @@ public class Convertor {
 	 * @param def default value
 	 * @return float
 	 */
-	public static double getFloat(Object o, Float def)
+	public static double toFloat(Object o, Float def)
 	{
 		try {
 			if (o == null) return def;
 			if (o instanceof Number) return ((Number) o).floatValue();
 		} catch (final NumberFormatException e) {}
-		Log.w("Cannot convert " + o + " to Float.");
 		return def;
 	}
 	
@@ -81,7 +78,7 @@ public class Convertor {
 	 * @param def default value
 	 * @return boolean
 	 */
-	public static boolean getBoolean(Object o, Boolean def)
+	public static boolean toBoolean(Object o, Boolean def)
 	{
 		if (o == null) return def;
 		
@@ -107,7 +104,6 @@ public class Convertor {
 		
 		if (o instanceof Boolean) return ((Boolean) o).booleanValue();
 		if (o instanceof Number) return ((Number) o).intValue() != 0;
-		Log.w("Cannot convert " + o + " to Boolean.");
 		return def;
 	}
 	
@@ -119,11 +115,29 @@ public class Convertor {
 	 * @param def default value
 	 * @return String
 	 */
-	public static String getString(Object o, String def)
+	public static String toString(Object o, String def)
 	{
 		if (o == null) return def;
 		if (o instanceof String) return ((String) o);
-		Log.w("Cannot convert " + o + " to String.");
+		
+		if(o instanceof Boolean) {
+			return (Boolean) o ? "True" : "False";
+		}
+
+		if(o instanceof Coord) {
+			Coord c = (Coord) o;
+			return String.format("[%f:%f:%f]", c.x, c.y, c.z);
+		}
+
+		if(o instanceof Range) {
+			Range c = (Range) o;
+			return String.format("%f:%f", c.getMin(), c.getMax());
+		}
+		
+		if(o instanceof Class<?>) {
+			return Log.str(o);
+		}
+		
 		return o.toString();
 	}
 	
@@ -136,7 +150,7 @@ public class Convertor {
 	 * @param def default value
 	 * @return AiCoord
 	 */
-	public static Coord getCoord(Object o, Coord def)
+	public static Coord toCoord(Object o, Coord def)
 	{
 		try {
 			if (o == null) return def;
@@ -145,8 +159,6 @@ public class Convertor {
 				
 				// colon to semicolon
 				s = s.replace(':', ';');
-				// comma to semicolon
-				s = s.replace(',', ';');
 				// remove brackets if any
 				s = s.replaceAll("[\\(\\[\\{\\)\\]\\}]", "");
 				final String[] parts = s.split("[;]");
@@ -156,7 +168,6 @@ public class Convertor {
 		} catch (final NumberFormatException e) {
 			// ignore
 		}
-		Log.w("Cannot convert " + o + " to Coord.");
 		return def;
 	}
 	
@@ -168,7 +179,7 @@ public class Convertor {
 	 * @param def default value
 	 * @return AiCoord
 	 */
-	public static Range getRange(Object o, Range def)
+	public static Range toRange(Object o, Range def)
 	{
 		try {
 			if (o == null) return def;
@@ -190,8 +201,9 @@ public class Convertor {
 				
 			}
 			if (o instanceof Range) return (Range) o;
-		} catch (final NumberFormatException e) {}
-		Log.w("Cannot convert " + o + " to Range.");
+		} catch (final NumberFormatException e) {
+			// ignore
+		}
 		return def;
 	}
 	
@@ -202,9 +214,9 @@ public class Convertor {
 	 * @param o object
 	 * @return integer
 	 */
-	public static int getInteger(Object o)
+	public static int toInteger(Object o)
 	{
-		return getInteger(o, 0);
+		return toInteger(o, 0);
 	}
 	
 	
@@ -214,9 +226,9 @@ public class Convertor {
 	 * @param o object
 	 * @return double
 	 */
-	public static double getDouble(Object o)
+	public static double toDouble(Object o)
 	{
-		return getDouble(o, 0d);
+		return toDouble(o, 0d);
 	}
 	
 	
@@ -226,9 +238,9 @@ public class Convertor {
 	 * @param o object
 	 * @return float
 	 */
-	public static double getFloat(Object o)
+	public static double toFloat(Object o)
 	{
-		return getFloat(o, 0f);
+		return toFloat(o, 0f);
 	}
 	
 	
@@ -238,9 +250,9 @@ public class Convertor {
 	 * @param o object
 	 * @return boolean
 	 */
-	public static boolean getBoolean(Object o)
+	public static boolean toBoolean(Object o)
 	{
-		return getBoolean(o, false);
+		return toBoolean(o, false);
 	}
 	
 	
@@ -250,22 +262,21 @@ public class Convertor {
 	 * @param o object
 	 * @return String
 	 */
-	public static String getString(Object o)
+	public static String toString(Object o)
 	{
-		return getString(o, "");
+		return toString(o, "");
 	}
 	
 	
 	/**
-	 * Get AI_COORD (if special string constant is present instead, build coord
-	 * of it)
+	 * Get Coord
 	 * 
 	 * @param o object
-	 * @return AiCoord
+	 * @return Coord
 	 */
-	public static Coord getCoord(Object o)
+	public static Coord toCoord(Object o)
 	{
-		return getCoord(o, Coord.zero());
+		return toCoord(o, Coord.zero());
 	}
 	
 	
@@ -275,9 +286,9 @@ public class Convertor {
 	 * @param o object
 	 * @return AiCoord
 	 */
-	public static Range getRange(Object o)
+	public static Range toRange(Object o)
 	{
-		return getRange(o, new Range());
+		return toRange(o, new Range());
 	}
 	
 }

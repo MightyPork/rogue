@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.gamecore.render.DisplaySystem.Screenshot;
+import mightypork.gamecore.render.Screenshot;
 import mightypork.utils.logging.Log;
 
 

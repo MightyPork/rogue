@@ -9,6 +9,6 @@ public interface BusAccess {
 	/**
 	 * @return event bus
 	 */
-	public abstract EventBus bus();
+	EventBus bus();
 	
 }

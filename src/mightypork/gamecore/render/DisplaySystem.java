@@ -3,16 +3,12 @@ package mightypork.gamecore.render;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.nio.ByteBuffer;
-
-import javax.imageio.ImageIO;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.RootBusNode;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
+import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Coord;
@@ -29,6 +25,7 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
 	public static boolean yAxisDown = true;
+	private FpsMeter fpsMeter;
 	
 	
 	public DisplaySystem(AppAccess app) {
@@ -58,12 +55,12 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 			Display.setTitle(title);
 			Display.create();
 			
+			fpsMeter = new FpsMeter();
+			
 			if (fullscreen) {
 				switchFullscreen();
 				Display.update();
 			}
-			
-			Render.init();
 			
 		} catch (final LWJGLException e) {
 			throw new RuntimeException("Could not initialize screen", e);
@@ -106,13 +103,18 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 	}
 	
 	
+	/**
+	 * Take screenshot (expensive processing is done on-demand when screenshot
+	 * is processed).
+	 * 
+	 * @return screenshot object
+	 */
 	public static Screenshot takeScreenshot()
 	{
 		glReadBuffer(GL_FRONT);
 		final int width = Display.getDisplayMode().getWidth();
 		final int height = Display.getDisplayMode().getHeight();
-		final int bpp = 4; // Assuming a 32-bit display with a byte each for red,
-							// green, blue, and alpha.
+		final int bpp = 4;
 		final ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
 		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 		
@@ -177,6 +179,7 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 		
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		fpsMeter.frame();
 	}
 	
 	
@@ -196,62 +199,11 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 		return new Rect(getSize());
 	}
 	
-	public static class Screenshot {
-		
-		private int width;
-		private int height;
-		private int bpp;
-		private ByteBuffer bytes;
-		private BufferedImage image;
-		
-		
-		public Screenshot(int width, int height, int bpp, ByteBuffer buffer) {
-			this.width = width;
-			this.height = height;
-			this.bpp = bpp;
-			this.bytes = buffer;
-		}
-		
-		
-		public BufferedImage getImage()
-		{
-			if (image != null) return image;
-			
-			image = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
-			
-			// convert to a buffered image
-			for (int x = 0; x < this.width; x++) {
-				for (int y = 0; y < this.height; y++) {
-					final int i = (x + (this.width * y)) * this.bpp;
-					final int r = this.bytes.get(i) & 0xFF;
-					final int g = this.bytes.get(i + 1) & 0xFF;
-					final int b = this.bytes.get(i + 2) & 0xFF;
-					image.setRGB(x, this.height - (y + 1), (0xFF << 24) | (r << 16) | (g << 8) | b);
-				}
-			}
-			
-			return image;
-		}
-		
-		
-		public void save(File file) throws IOException
-		{
-			ImageIO.write(getImage(), "PNG", file);
-		}
-	}
-	
-	
-	public static void setupOrtho()
+	/**
+	 * @return current FPS
+	 */
+	public final long getFps()
 	{
-		// fix projection for changed size
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		final Coord s = getSize();
-		glViewport(0, 0, s.xi(), s.yi());
-		glOrtho(0, s.x, (yAxisDown ? 1 : -1) * s.y, 0, -1000, 1000);
-		
-		// back to modelview
-		glMatrixMode(GL_MODELVIEW);
-		
+		return fpsMeter.getFPS();
 	}
 }

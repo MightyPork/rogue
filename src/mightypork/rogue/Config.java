@@ -1,7 +1,7 @@
 package mightypork.rogue;
 
 
-import mightypork.utils.files.PropertyManager;
+import mightypork.utils.config.PropertyManager;
 import mightypork.utils.logging.Log;
 
 
@@ -40,7 +40,7 @@ public class Config {
 		mgr.cfgNewlineBeforeComments(true);
 		mgr.cfgSeparateSections(true);
 		
-		mgr.putInteger(PK_LAST_RUN_VERSION, def_LAST_RUN_VERSION);
+		mgr.putInteger(PK_LAST_RUN_VERSION, def_LAST_RUN_VERSION, null);
 		mgr.putBoolean(PK_START_IN_FS, def_START_IN_FS, "Go to fullscreen on startup.");
 		
 		load(); // load what has been "put"

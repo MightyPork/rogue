@@ -56,6 +56,7 @@ public class App implements AppAccess {
 	public static void main(String[] args)
 	{
 		Config.init();
+		Config.save();
 		
 		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler());
 		

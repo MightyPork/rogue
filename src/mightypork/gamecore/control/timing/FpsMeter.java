@@ -10,10 +10,8 @@ package mightypork.gamecore.control.timing;
 public class FpsMeter {
 	
 	private long frames = 0;
-	private long drops = 0;
 	private long lastTimeMillis = System.currentTimeMillis();
 	private long lastSecFPS = 0;
-	private long lastSecDrop = 0;
 	
 	
 	/**
@@ -32,31 +30,10 @@ public class FpsMeter {
 	{
 		if (System.currentTimeMillis() - lastTimeMillis > 1000) {
 			lastSecFPS = frames;
-			lastSecDrop = drops;
 			frames = 0;
-			drops = 0;
-			lastTimeMillis = System.currentTimeMillis();
+			long over = System.currentTimeMillis() - lastTimeMillis - 1000;
+			lastTimeMillis = System.currentTimeMillis() - over;
 		}
 		frames++;
-	}
-	
-	
-	/**
-	 * Notification that some frames have been dropped
-	 * 
-	 * @param dropped dropped frames
-	 */
-	public void drop(int dropped)
-	{
-		drops += dropped;
-	}
-	
-	
-	/**
-	 * @return current second's dropped frames
-	 */
-	public long getDropped()
-	{
-		return lastSecDrop;
 	}
 }

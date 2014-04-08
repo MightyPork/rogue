@@ -46,7 +46,7 @@ public abstract class AppSubModule extends BusNode implements AppAccess {
 	
 	
 	@Override
-	public void shutdown()
+	public final void shutdown()
 	{
 		app.shutdown();
 	}

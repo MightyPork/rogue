@@ -56,7 +56,13 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			boxes.add(bbr);
 		}
 		
-		layout.add(new TextRenderer(Res.getFont("default"), "This is a text,  yo!", RGB.WHITE, Align.LEFT));
+		layout.add(new TextRenderer(Res.getFont("default"), RGB.WHITE, Align.LEFT) {
+			@Override
+			public String getText()
+			{
+				return "Running at " + disp().getFps() + " fps!";
+			}
+		});
 		
 	}
 	

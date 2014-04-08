@@ -20,6 +20,11 @@ public class TextRenderer extends PluggableRenderer {
 	private Align align;
 	
 	
+	public TextRenderer(GLFont font, RGB color, Align align) {
+		this(font, "MISSINGNO", color, align);
+	}
+	
+	
 	public TextRenderer(GLFont font, String text, RGB color, Align align) {
 		this.font = new FontRenderer(font);
 		this.text = text;
@@ -52,8 +57,19 @@ public class TextRenderer extends PluggableRenderer {
 	}
 	
 	
+	public String getText()
+	{
+		return text;
+	}
+	
 	@Override
 	public void render()
+	{
+		render(getText());
+	}
+	
+	
+	public void render(String text)
 	{
 		final double h = getRect().getHeight();
 		

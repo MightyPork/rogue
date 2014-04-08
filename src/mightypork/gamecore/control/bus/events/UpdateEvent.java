@@ -12,8 +12,9 @@ import mightypork.gamecore.control.interf.Updateable;
  * @author MightyPork
  */
 // sending via queue would hog the bus
-@ImmediateEvent
+
 @UnloggedEvent
+@ImmediateEvent
 public class UpdateEvent implements Event<Updateable> {
 	
 	private final double deltaTime;

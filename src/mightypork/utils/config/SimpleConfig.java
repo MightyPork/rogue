@@ -1,4 +1,4 @@
-package mightypork.utils.files;
+package mightypork.utils.config;
 
 
 import java.io.File;
@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 
 

@@ -11,24 +11,8 @@ import mightypork.rogue.util.Utils;
 
 public class MainLoop extends GameLoop implements ActionRequest.Listener {
 	
-	final Renderable renderable;
-	
-	
 	public MainLoop(App app, Renderable masterRenderable) {
-		super(app);
-		
-		if (masterRenderable == null) {
-			throw new NullPointerException("Master renderable must not be null.");
-		}
-		
-		this.renderable = masterRenderable;
-	}
-	
-	
-	@Override
-	protected void tick()
-	{
-		renderable.render();
+		super(app, masterRenderable);
 	}
 	
 	
