@@ -86,7 +86,7 @@ public class DeferredAudio extends BaseDeferredResource {
 	
 	
 	@Override
-	protected void loadResource(String resource) throws IOException
+	protected synchronized final void loadResource(String resource) throws IOException
 	{
 		final String ext = FileUtils.getExtension(resource);
 		

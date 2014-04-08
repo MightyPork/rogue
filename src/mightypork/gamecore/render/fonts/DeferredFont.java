@@ -87,7 +87,7 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	
 	
 	@Override
-	protected final void loadResource(String path) throws FontFormatException, IOException
+	protected synchronized final void loadResource(String path) throws FontFormatException, IOException
 	{
 		final Font awtFont = getAwtFont(path, (float) size, style.numval);
 		

@@ -43,7 +43,6 @@ public abstract class BaseApp implements AppAccess {
 	 */
 	public void start()
 	{
-		Log.i("Commencing initialization sequence...");
 		
 		initialize();
 		
@@ -70,7 +69,7 @@ public abstract class BaseApp implements AppAccess {
 		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
 		
 		// only here it makes sense to log.
-		Log.f1("Initializing subsystems...");
+		Log.i("=== Commencing initialization sequence ===");
 		
 		/*
 		 * Event bus
@@ -128,7 +127,7 @@ public abstract class BaseApp implements AppAccess {
 		initScreens(screenRegistry);
 		
 		postInit();
-		Log.i("Initialized sequence completed.");
+		Log.i("=== Initialized sequence completed ===");
 	}
 	
 	

@@ -38,7 +38,7 @@ public class DeferredTexture extends BaseDeferredResource implements FilteredTex
 	
 	
 	@Override
-	protected void loadResource(String path)
+	protected synchronized void loadResource(String path)
 	{
 		backingTexture = Render.loadTexture(path);
 	}

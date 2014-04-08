@@ -31,7 +31,8 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 	{
 		if (loadAttempted) {
 			Log.w("<RES> Already loaded @ load():\n    " + this);
-			return;
+			(new IllegalStateException()).printStackTrace();
+			//return;
 		}
 		
 		loadAttempted = true;
@@ -55,7 +56,7 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 	
 	
 	@Override
-	public final boolean isLoaded()
+	public synchronized final boolean isLoaded()
 	{
 		if (isNull()) return false;
 		
@@ -76,6 +77,7 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 			return true;
 		} else {
 			Log.w("<RES> First use, not loaded yet - loading directly\n    " + this);
+			(new IllegalStateException()).printStackTrace();
 			load();
 		}
 		

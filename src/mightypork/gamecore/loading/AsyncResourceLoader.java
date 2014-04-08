@@ -39,8 +39,28 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	
 	
 	@Override
-	public void loadResource(DeferredResource resource)
+	public void loadResource(final DeferredResource resource)
 	{
+		if (resource.isLoaded()) return;
+		if (resource instanceof NullResource) return;
+		
+		// textures & fonts needs to be loaded in main thread
+		if (resource.getClass().isAnnotationPresent(MustLoadInMainThread.class)) {
+			
+			Log.f3("<LOADER> Delegating to main thread:\n    " + Log.str(resource));
+			
+			app.getEventBus().send(new MainLoopTaskRequest(new Runnable() {
+				
+				@Override
+				public void run()
+				{
+					resource.load();
+				}
+			}));
+			
+			return;
+		}
+		
 		toLoad.add(resource);
 	}
 	
@@ -57,26 +77,6 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 				if (def == null) continue;
 				
 				if (!def.isLoaded()) {
-					
-					// skip nulls
-					if (def instanceof NullResource) continue;
-					
-					// textures & fonts needs to be loaded in main thread
-					if (def.getClass().isAnnotationPresent(MustLoadInMainThread.class)) {
-						
-						Log.f3("<LOADER> Delegating to main thread:\n    " + Log.str(def));
-						
-						app.getEventBus().send(new MainLoopTaskRequest(new Runnable() {
-							
-							@Override
-							public void run()
-							{
-								def.load();
-							}
-						}));
-						
-						continue;
-					}
 					
 					Log.f3("<LOADER> Loading async:\n    " + Log.str(def));
 					

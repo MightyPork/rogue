@@ -104,7 +104,7 @@ public class LogInstance {
 		logger.setUseParentHandlers(false);
 		logger.setLevel(Level.ALL);
 		final String stamp = (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date());
-		i("= Logger \"" + name + "\" initialized =\n" + stamp);
+		i("Logger \"" + name + "\" initialized.\n" + stamp);
 	}
 	
 	
