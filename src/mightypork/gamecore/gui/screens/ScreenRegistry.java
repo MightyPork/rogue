@@ -4,13 +4,13 @@ package mightypork.gamecore.gui.screens;
 import java.util.HashMap;
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.Subsystem;
+import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.bus.events.ScreenRequestEvent;
-import mightypork.gamecore.render.Renderable;
+import mightypork.gamecore.gui.renderers.Renderable;
 import mightypork.utils.logging.Log;
 
 
-public class ScreenRegistry extends Subsystem implements ScreenRequestEvent.Listener, Renderable {
+public class ScreenRegistry extends AppModule implements ScreenRequestEvent.Listener, Renderable {
 	
 	private final HashMap<String, Screen> screens = new HashMap<String, Screen>();
 	private Screen active = null;

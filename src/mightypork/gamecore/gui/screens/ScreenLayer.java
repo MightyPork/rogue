@@ -1,11 +1,11 @@
 package mightypork.gamecore.gui.screens;
 
 
-import mightypork.gamecore.control.Subsystem;
+import mightypork.gamecore.control.AppSubModule;
+import mightypork.gamecore.gui.renderers.Renderable;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.render.Renderable;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Rect;
 
@@ -15,7 +15,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class ScreenLayer extends Subsystem implements Renderable, RectConstraint, KeyBinder {
+public abstract class ScreenLayer extends AppSubModule implements Renderable, RectConstraint, KeyBinder {
 	
 	private final Screen screen;
 	
@@ -54,13 +54,6 @@ public abstract class ScreenLayer extends Subsystem implements Renderable, RectC
 	public Rect getRect()
 	{
 		return screen.getRect();
-	}
-	
-	
-	@Override
-	protected void deinit()
-	{
-		// noimpl
 	}
 	
 }

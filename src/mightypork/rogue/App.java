@@ -144,7 +144,7 @@ public class App implements AppAccess {
 		 */
 		Log.f2("Initializing Event Bus...");
 		eventBus = new EventBus();
-		eventBus.logSending = true;
+		eventBus.detailedLogging = true;
 		initChannels();
 		
 		/*

@@ -8,7 +8,7 @@ import java.util.Set;
 import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.Subsystem;
+import mightypork.gamecore.control.RootBusNode;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.interf.Updateable;
 import mightypork.utils.math.Calc.Buffers;
@@ -26,7 +26,7 @@ import org.newdawn.slick.openal.SoundStore;
  * @author MightyPork
  */
 @SuppressWarnings("unchecked")
-public class SoundSystem extends Subsystem implements Updateable {
+public class SoundSystem extends RootBusNode implements Updateable {
 	
 	private static final Coord INITIAL_LISTENER_POS = new Coord(0, 0, 0);
 	private static final int MAX_SOURCES = 256;

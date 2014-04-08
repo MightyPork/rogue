@@ -12,8 +12,10 @@ import mightypork.gamecore.gui.renderers.TextRenderer;
 import mightypork.gamecore.gui.renderers.TextRenderer.Align;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.Res;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
@@ -37,8 +39,8 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	public LayerFlyingCat(Screen screen) {
 		super(screen);
 		
-		xPos.setTo(disp().getWidth() / 2);
-		yPos.setTo(disp().getHeight() / 2);
+		xPos.setTo(DisplaySystem.getWidth() / 2);
+		yPos.setTo(DisplaySystem.getHeight() / 2);
 		
 		cat = new ImageRenderer(Res.getTxQuad("test.kitten"));
 		cat.setContext(c_centered(c_box(this, c_n(size), c_n(size)), c_n(xPos), c_n(yPos)));
@@ -46,8 +48,8 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		//@formatter:off
 		final RectConstraint flyingFontBox = c_centered(
 				c_box(this, c_n(0), c_n(64)),
-				input().c_mouse_x(),
-				input().c_mouse_y()
+				InputSystem.mouseX,
+				InputSystem.mouseY
 		);
 		//@formatter:on
 		
@@ -59,8 +61,8 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 			@Override
 			public void run()
 			{
-				xPos.fadeTo(disp().getWidth() / 2, 2);
-				yPos.fadeTo(disp().getHeight() / 2, 2);
+				xPos.fadeTo(DisplaySystem.getWidth() / 2, 2);
+				yPos.fadeTo(DisplaySystem.getHeight() / 2, 2);
 			}
 		});
 	}

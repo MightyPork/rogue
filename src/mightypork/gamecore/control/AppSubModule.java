@@ -12,12 +12,12 @@ import mightypork.gamecore.render.DisplaySystem;
  * 
  * @author MightyPork
  */
-public abstract class Subsystem extends ChildClient implements AppAccess {
+public abstract class AppSubModule extends BusNode implements AppAccess {
 	
 	private final AppAccess app;
 	
 	
-	public Subsystem(AppAccess app) {
+	public AppSubModule(AppAccess app) {
 		super(app);
 		
 		this.app = app;

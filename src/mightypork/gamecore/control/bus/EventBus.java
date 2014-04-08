@@ -36,7 +36,7 @@ final public class EventBus implements Destroyable {
 	/** Whether the bus was destroyed */
 	private boolean dead = false;
 	
-	public boolean logSending = false;
+	public boolean detailedLogging = false;
 	
 	
 	/**
@@ -50,7 +50,7 @@ final public class EventBus implements Destroyable {
 	
 	private boolean shallLog(Event<?> event)
 	{
-		if (!logSending) return false;
+		if (!detailedLogging) return false;
 		if (event.getClass().isAnnotationPresent(UnloggedEvent.class)) return false;
 		
 		return true;
@@ -234,6 +234,8 @@ final public class EventBus implements Destroyable {
 		if (client == null) return;
 		
 		clients.add(client);
+		
+		if(detailedLogging) Log.f3("<bus> Client joined: "+Log.str(client));
 	}
 	
 	
@@ -247,6 +249,8 @@ final public class EventBus implements Destroyable {
 		assertLive();
 		
 		clients.remove(client);
+		
+		if(detailedLogging) Log.f3("<bus> Client left: "+Log.str(client));
 	}
 	
 	

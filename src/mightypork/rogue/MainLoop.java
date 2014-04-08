@@ -2,8 +2,8 @@ package mightypork.rogue;
 
 
 import mightypork.gamecore.control.GameLoop;
+import mightypork.gamecore.gui.renderers.Renderable;
 import mightypork.gamecore.input.Action;
-import mightypork.gamecore.render.Renderable;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.rogue.util.Utils;
@@ -56,7 +56,7 @@ public class MainLoop extends GameLoop implements ActionRequest.Listener {
 		public void execute()
 		{
 			Res.getEffect("gui.shutter").play(1);
-			Utils.runAsThread(new TaskTakeScreenshot(disp()));
+			Utils.runAsThread(new TaskTakeScreenshot());
 		}
 	};
 	

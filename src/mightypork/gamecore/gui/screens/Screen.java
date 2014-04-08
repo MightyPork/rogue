@@ -3,13 +3,13 @@ package mightypork.gamecore.gui.screens;
 
 import static org.lwjgl.opengl.GL11.*;
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.Subsystem;
+import mightypork.gamecore.control.AppSubModule;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
-import mightypork.gamecore.control.interf.Destroyable;
+import mightypork.gamecore.gui.renderers.Renderable;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.render.Renderable;
+import mightypork.gamecore.render.DisplaySystem;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
@@ -20,7 +20,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class Screen extends Subsystem implements Renderable, Destroyable, KeyBinder, RectConstraint, ScreenChangeEvent.Listener {
+public abstract class Screen extends AppSubModule implements Renderable, KeyBinder, RectConstraint, ScreenChangeEvent.Listener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
@@ -49,13 +49,6 @@ public abstract class Screen extends Subsystem implements Renderable, Destroyabl
 	public final void unbindKeyStroke(KeyStroke stroke)
 	{
 		keybindings.unbindKeyStroke(stroke);
-	}
-	
-	
-	@Override
-	public final void deinit()
-	{
-		deinitScreen();
 	}
 	
 	
@@ -155,24 +148,10 @@ public abstract class Screen extends Subsystem implements Renderable, Destroyabl
 		if (!isActive()) return;
 		
 		if (needSetupViewport) {
-			setupViewport();
+			DisplaySystem.setupOrtho();
 		}
 		
 		renderScreen();
-	}
-	
-	
-	protected void setupViewport()
-	{
-		// fix projection for changed size
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		final Coord s = disp().getSize();
-		glViewport(0, 0, s.xi(), s.yi());
-		glOrtho(0, s.x, s.y, 0, -1000, 1000);
-		
-		// back to modelview
-		glMatrixMode(GL_MODELVIEW);
 	}
 	
 	

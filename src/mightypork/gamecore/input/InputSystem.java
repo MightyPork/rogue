@@ -2,11 +2,12 @@ package mightypork.gamecore.input;
 
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.Subsystem;
+import mightypork.gamecore.control.RootBusNode;
 import mightypork.gamecore.control.bus.events.KeyboardEvent;
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;
 import mightypork.gamecore.control.bus.events.MouseMotionEvent;
 import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.utils.math.constraints.NumberConstraint;
@@ -18,14 +19,12 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 
-public class InputSystem extends Subsystem implements Updateable, KeyBinder {
+public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	
 	// listeners
 	private final KeyBindingPool keybindings;
-	private boolean yAxisDown = true;
+	
 	private static boolean inited = false;
-	
-	
 	public InputSystem(AppAccess app) {
 		super(app);
 		
@@ -113,7 +112,7 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		final Coord move = new Coord(Mouse.getEventDX(), Mouse.getEventDY());
 		final int wheeld = Mouse.getEventDWheel();
 		
-		if (yAxisDown) {
+		if (DisplaySystem.yAxisDown) {
 			flipScrY(pos);
 			move.mul_ip(1, -1, 1);
 		}
@@ -137,23 +136,9 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	}
 	
 	
-	private void flipScrY(Coord c)
+	private static void flipScrY(Coord c)
 	{
-		if (disp() != null) {
-			c.setY_ip(disp().getSize().y - c.y);
-		}
-	}
-	
-	
-	/**
-	 * Set whether Y axis should go top-down instead of LWJGL default bottom-up.<br>
-	 * Default = true.
-	 * 
-	 * @param yAxisDown
-	 */
-	public void setYDown(boolean yAxisDown)
-	{
-		this.yAxisDown = yAxisDown;
+		if (DisplaySystem.yAxisDown) c.setY_ip(DisplaySystem.getSize().y - c.y);
 	}
 	
 	
@@ -162,7 +147,7 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 	 * 
 	 * @return mouse position
 	 */
-	public Coord getMousePos()
+	public static Coord getMousePos()
 	{
 		final Coord pos = new Coord(Mouse.getX(), Mouse.getY());
 		flipScrY(pos);
@@ -175,7 +160,7 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		Mouse.setGrabbed(grab);
 	}
 	
-	private final NumberConstraint cmousex = new NumberConstraint() {
+	public static final NumberConstraint mouseX = new NumberConstraint() {
 		
 		@Override
 		public double getValue()
@@ -184,7 +169,7 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 		}
 	};
 	
-	private final NumberConstraint cmousey = new NumberConstraint() {
+	public static final NumberConstraint mouseY = new NumberConstraint() {
 		
 		@Override
 		public double getValue()
@@ -192,16 +177,4 @@ public class InputSystem extends Subsystem implements Updateable, KeyBinder {
 			return getMousePos().y;
 		}
 	};
-	
-	
-	public NumberConstraint c_mouse_x()
-	{
-		return cmousex;
-	}
-	
-	
-	public NumberConstraint c_mouse_y()
-	{
-		return cmousey;
-	}
 }

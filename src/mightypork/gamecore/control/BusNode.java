@@ -8,7 +8,6 @@ import java.util.Set;
 import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.control.bus.clients.DelegatingClient;
 import mightypork.gamecore.control.bus.clients.ToggleableClient;
-import mightypork.gamecore.control.interf.Destroyable;
 
 
 /**
@@ -17,7 +16,7 @@ import mightypork.gamecore.control.interf.Destroyable;
  * 
  * @author MightyPork
  */
-public abstract class ChildClient implements BusAccess, DelegatingClient, ToggleableClient, Destroyable {
+public abstract class BusNode implements BusAccess, DelegatingClient, ToggleableClient {
 	
 	private BusAccess busAccess;
 	
@@ -26,27 +25,9 @@ public abstract class ChildClient implements BusAccess, DelegatingClient, Toggle
 	private boolean delegating = true;
 	
 	
-	public ChildClient(BusAccess busAccess) {
+	public BusNode(BusAccess busAccess) {
 		this.busAccess = busAccess;
-		
-		bus().subscribe(this);
 	}
-	
-	
-	@Override
-	public final void destroy()
-	{
-		deinit();
-		
-		bus().unsubscribe(this);
-	}
-	
-	
-	/**
-	 * Deinitialize the subsystem<br>
-	 * (called during destruction)
-	 */
-	protected abstract void deinit();
 	
 	
 	@Override
@@ -77,6 +58,10 @@ public abstract class ChildClient implements BusAccess, DelegatingClient, Toggle
 	 */
 	public final void addChildClient(Object client)
 	{
+		if(client instanceof RootBusNode) {
+			throw new IllegalArgumentException("Cannot nest RootBusNode.");
+		}
+		
 		if (bus().isClientValid(client)) {
 			clients.add(client);
 		}

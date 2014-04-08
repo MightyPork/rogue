@@ -4,9 +4,8 @@ package mightypork.gamecore.gui.renderers;
 import java.util.LinkedList;
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.ChildClient;
+import mightypork.gamecore.control.BusNode;
 import mightypork.gamecore.control.bus.EventBus;
-import mightypork.gamecore.render.Renderable;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Rect;
 
@@ -17,7 +16,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class ElementHolder extends ChildClient implements PluggableRenderable {
+public abstract class ElementHolder extends BusNode implements PluggableRenderable {
 	
 	private final LinkedList<PluggableRenderable> elements = new LinkedList<PluggableRenderable>();
 	private RectConstraint context;
@@ -77,13 +76,6 @@ public abstract class ElementHolder extends ChildClient implements PluggableRend
 		
 		elements.add(elem);
 		addChildClient(elem);
-	}
-	
-	
-	@Override
-	protected void deinit()
-	{
-		// no impl
 	}
 	
 }

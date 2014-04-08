@@ -9,7 +9,7 @@ import mightypork.gamecore.control.bus.events.UpdateEvent;
 import mightypork.gamecore.control.timing.TimerDelta;
 
 
-public abstract class GameLoop extends Subsystem implements MainLoopTaskRequest.Listener {
+public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.Listener {
 	
 	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<Runnable>();
 	/** timer */

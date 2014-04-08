@@ -7,13 +7,13 @@ import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.loading.AsyncResourceLoader;
 import mightypork.gamecore.render.fonts.DeferredFont;
+import mightypork.gamecore.render.fonts.DeferredFont.FontStyle;
 import mightypork.gamecore.render.fonts.FontBank;
 import mightypork.gamecore.render.fonts.GLFont;
-import mightypork.gamecore.render.fonts.DeferredFont.FontStyle;
-import mightypork.gamecore.render.textures.TextureBank;
-import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.gamecore.render.textures.FilteredTexture.Filter;
 import mightypork.gamecore.render.textures.FilteredTexture.Wrap;
+import mightypork.gamecore.render.textures.TextureBank;
+import mightypork.gamecore.render.textures.TxQuad;
 
 import org.newdawn.slick.opengl.Texture;
 

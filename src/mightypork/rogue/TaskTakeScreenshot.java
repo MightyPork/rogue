@@ -17,8 +17,8 @@ public class TaskTakeScreenshot implements Runnable {
 	private final Screenshot scr;
 	
 	
-	public TaskTakeScreenshot(DisplaySystem disp) {
-		scr = disp.takeScreenshot();
+	public TaskTakeScreenshot() {
+		scr = DisplaySystem.takeScreenshot();
 	}
 	
 	

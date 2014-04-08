@@ -11,7 +11,7 @@ import java.nio.ByteBuffer;
 import javax.imageio.ImageIO;
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.Subsystem;
+import mightypork.gamecore.control.RootBusNode;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.RectConstraint;
@@ -24,10 +24,11 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 
-public class DisplaySystem extends Subsystem implements RectConstraint {
+public class DisplaySystem extends RootBusNode implements RectConstraint {
 	
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
+	public static boolean yAxisDown = true;
 	
 	
 	public DisplaySystem(AppAccess app) {
@@ -105,7 +106,7 @@ public class DisplaySystem extends Subsystem implements RectConstraint {
 	}
 	
 	
-	public Screenshot takeScreenshot()
+	public static Screenshot takeScreenshot()
 	{
 		glReadBuffer(GL_FRONT);
 		final int width = Display.getDisplayMode().getWidth();
@@ -135,7 +136,7 @@ public class DisplaySystem extends Subsystem implements RectConstraint {
 	 * 
 	 * @return is fullscreen
 	 */
-	public boolean isFullscreen()
+	public static boolean isFullscreen()
 	{
 		return Display.isFullscreen();
 	}
@@ -146,19 +147,19 @@ public class DisplaySystem extends Subsystem implements RectConstraint {
 	 * 
 	 * @return size
 	 */
-	public Coord getSize()
+	public static Coord getSize()
 	{
 		return new Coord(getWidth(), getHeight());
 	}
 	
 	
-	public int getWidth()
+	public static int getWidth()
 	{
 		return Display.getWidth();
 	}
 	
 	
-	public int getHeight()
+	public static int getHeight()
 	{
 		return Display.getHeight();
 	}
@@ -237,5 +238,20 @@ public class DisplaySystem extends Subsystem implements RectConstraint {
 		{
 			ImageIO.write(getImage(), "PNG", file);
 		}
+	}
+	
+	
+	public static void setupOrtho()
+	{
+		// fix projection for changed size
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		final Coord s = getSize();
+		glViewport(0, 0, s.xi(), s.yi());
+		glOrtho(0, s.x, (yAxisDown ? 1 : -1) * s.y, 0, -1000, 1000);
+		
+		// back to modelview
+		glMatrixMode(GL_MODELVIEW);
+		
 	}
 }
