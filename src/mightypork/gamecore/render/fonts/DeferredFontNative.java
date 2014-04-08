@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
 
+import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.logging.LoggedName;
 
 
@@ -48,10 +49,10 @@ public class DeferredFontNative extends DeferredFont {
 	 * @param extraChars extra chars (0-255 loaded by default)
 	 * @param size size (pt)
 	 * @param style font style
-	 * @param antialias use antialiasing
+	 * @param filter GL filtering mode
 	 */
-	public DeferredFontNative(String fontName, String extraChars, double size, FontStyle style, boolean antialias) {
-		super(fontName, extraChars, size, style, antialias);
+	public DeferredFontNative(String fontName, String extraChars, double size, FontStyle style, FilterMode filter) {
+		super(fontName, extraChars, size, style, filter);
 	}
 	
 	

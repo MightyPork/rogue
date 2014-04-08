@@ -21,9 +21,9 @@ import org.newdawn.slick.opengl.Texture;
 public class DeferredTexture extends BaseDeferredResource implements FilteredTexture {
 	
 	private Texture backingTexture;
-	private Filter filter_min = Filter.LINEAR;
-	private Filter filter_mag = Filter.LINEAR;
-	private Wrap wrap = Wrap.CLAMP;
+	private FilterMode filter_min = FilterMode.LINEAR;
+	private FilterMode filter_mag = FilterMode.LINEAR;
+	private WrapMode wrap = WrapMode.CLAMP;
 	
 	
 	public DeferredTexture(String resourcePath) {
@@ -186,7 +186,7 @@ public class DeferredTexture extends BaseDeferredResource implements FilteredTex
 	
 	
 	@Override
-	public void setFilter(Filter filterMin, Filter filterMag)
+	public void setFilter(FilterMode filterMin, FilterMode filterMag)
 	{
 		this.filter_min = filterMin;
 		this.filter_mag = filterMag;
@@ -194,14 +194,14 @@ public class DeferredTexture extends BaseDeferredResource implements FilteredTex
 	
 	
 	@Override
-	public void setWrap(Wrap wrapping)
+	public void setWrap(WrapMode wrapping)
 	{
 		this.wrap = wrapping;
 	}
 	
 	
 	@Override
-	public void setFilter(Filter filter)
+	public void setFilter(FilterMode filter)
 	{
 		setFilter(filter, filter);
 	}

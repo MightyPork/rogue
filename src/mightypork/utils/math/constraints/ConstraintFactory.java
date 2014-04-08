@@ -1,7 +1,6 @@
 package mightypork.utils.math.constraints;
 
 
-import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -14,27 +13,26 @@ import mightypork.utils.math.coord.Rect;
  */
 public class ConstraintFactory {
 	
-	public static NumberConstraint c_min(final NumberConstraint a, final NumberConstraint b)
+	public static NumberConstraint c_min(final Object a, final Object b)
 	{
 		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
 			{
-				return Math.min(a.getValue(), b.getValue());
+				return Math.min(n(a).getValue(), n(b).getValue());
 			}
 		};
 	}
 	
-	
-	public static NumberConstraint c_max(final NumberConstraint a, final NumberConstraint b)
+	public static NumberConstraint c_max(final Object a, final Object b)
 	{
 		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
 			{
-				return Math.max(a.getValue(), b.getValue());
+				return Math.max(n(a).getValue(), n(b).getValue());
 			}
 		};
 	}
@@ -48,6 +46,19 @@ public class ConstraintFactory {
 			public double getValue()
 			{
 				return Math.abs(a.getValue());
+			}
+		};
+	}
+	
+	
+	public static NumberConstraint c_half(final NumberConstraint a)
+	{
+		return new NumberConstraint() {
+			
+			@Override
+			public double getValue()
+			{
+				return a.getValue()/2;
 			}
 		};
 	}
@@ -117,93 +128,64 @@ public class ConstraintFactory {
 		};
 	}
 	
-	
-	public static NumberConstraint c_add(final NumberConstraint a, final NumberConstraint b)
+	public static NumberConstraint c_add(final Object a, final Object b)
 	{
 		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
 			{
-				return a.getValue() + b.getValue();
+				return n(a).getValue() + n(b).getValue();
 			}
 		};
 	}
 	
-	
-	public static NumberConstraint c_sub(final NumberConstraint a, final NumberConstraint b)
+	public static NumberConstraint c_sub(final Object a, final Object b)
 	{
 		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
 			{
-				return a.getValue() - b.getValue();
+				return n(a).getValue() - n(b).getValue();
+			}
+		};
+	}
+
+	
+	public static NumberConstraint c_mul(final Object a, final Object b)
+	{
+		return new NumberConstraint() {
+			
+			@Override
+			public double getValue()
+			{
+				return n(a).getValue() * n(b).getValue();
+			}
+		};
+	}
+
+	
+	public static NumberConstraint c_div(final Object a, final Object b)
+	{
+		return new NumberConstraint() {
+			
+			@Override
+			public double getValue()
+			{
+				return n(a).getValue() / n(b).getValue();
 			}
 		};
 	}
 	
-	
-	public static NumberConstraint c_mul(final NumberConstraint a, final NumberConstraint b)
+	public static NumberConstraint c_percent(final Object whole, final Object percent)
 	{
 		return new NumberConstraint() {
 			
 			@Override
 			public double getValue()
 			{
-				return a.getValue() * b.getValue();
-			}
-		};
-	}
-	
-	
-	public static NumberConstraint c_div(final NumberConstraint a, final NumberConstraint b)
-	{
-		return new NumberConstraint() {
-			
-			@Override
-			public double getValue()
-			{
-				return a.getValue() / b.getValue();
-			}
-		};
-	}
-	
-	
-	public static NumberConstraint c_percent(final NumberConstraint whole, final NumberConstraint percent)
-	{
-		return new NumberConstraint() {
-			
-			@Override
-			public double getValue()
-			{
-				return whole.getValue() * (percent.getValue() / 100);
-			}
-		};
-	}
-	
-	
-	public static NumberConstraint c_n(final double a)
-	{
-		return new NumberConstraint() {
-			
-			@Override
-			public double getValue()
-			{
-				return a;
-			}
-		};
-	}
-	
-	
-	public static NumberConstraint c_n(final AnimDouble a)
-	{
-		return new NumberConstraint() {
-			
-			@Override
-			public double getValue()
-			{
-				return a.now();
+				return n(whole).getValue() * (n(percent).getValue() / 100);
 			}
 		};
 	}
@@ -273,26 +255,27 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_shrink(RectConstraint r, NumberConstraint shrink)
+	public static RectConstraint c_shrink(RectConstraint r, Object shrink)
 	{
-		return c_shrink(r, shrink, shrink, shrink, shrink);
+		NumberConstraint n = n(shrink);
+		return c_shrink(r, n, n, n, n);
 	}
 	
 	
-	public static RectConstraint c_shrink(RectConstraint context, NumberConstraint horiz, NumberConstraint vert)
+	public static RectConstraint c_shrink(RectConstraint context, Object horiz, Object vert)
 	{
 		return c_shrink(context, horiz, vert, horiz, vert);
 	}
 	
 	
-	public static RectConstraint c_shrink(final RectConstraint r, final NumberConstraint x1, final NumberConstraint y1, final NumberConstraint x2, final NumberConstraint y2)
+	public static RectConstraint c_shrink(final RectConstraint r, final Object x1, final Object y1, final Object x2, final Object y2)
 	{
 		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
 			{
-				return r.getRect().shrink(x1.getValue(), y1.getValue(), x2.getValue(), y2.getValue());
+				return r.getRect().shrink(n(x1).getValue(), n(y1).getValue(), n(x2).getValue(), n(y2).getValue());
 			}
 		};
 	}
@@ -310,27 +293,27 @@ public class ConstraintFactory {
 		};
 	}
 	
-	
-	public static RectConstraint c_grow(RectConstraint r, NumberConstraint grow)
+	public static RectConstraint c_grow(RectConstraint r, Object grow)
 	{
-		return c_grow(r, grow, grow, grow, grow);
+		NumberConstraint n = n(grow);
+		return c_grow(r, n, n, n, n);
 	}
 	
 	
-	public static RectConstraint c_grow(RectConstraint r, NumberConstraint horiz, NumberConstraint vert)
+	public static RectConstraint c_grow(RectConstraint r, Object horiz, Object vert)
 	{
 		return c_grow(r, horiz, vert, horiz, vert);
 	}
 	
 	
-	public static RectConstraint c_grow(final RectConstraint r, final NumberConstraint x1, final NumberConstraint y1, final NumberConstraint x2, final NumberConstraint y2)
+	public static RectConstraint c_grow(final RectConstraint r, final Object x1, final Object y1, final Object x2, final Object y2)
 	{
 		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
 			{
-				return r.getRect().grow(x1.getValue(), y1.getValue(), x2.getValue(), y2.getValue());
+				return r.getRect().grow(n(x1).getValue(), n(y1).getValue(), n(x2).getValue(), n(y2).getValue());
 			}
 		};
 	}
@@ -355,8 +338,7 @@ public class ConstraintFactory {
 		};
 	}
 	
-	
-	public static RectConstraint c_box(final RectConstraint r, final NumberConstraint width, final NumberConstraint height)
+	public static RectConstraint c_box(final RectConstraint r, final Object width, final Object height)
 	{
 		return new RectConstraint() {
 			
@@ -369,8 +351,8 @@ public class ConstraintFactory {
 				return Rect.fromSize(
 						origin.x,
 						origin.y,
-						width.getValue(),
-						height.getValue()
+						n(width).getValue(),
+						n(height).getValue()
 				);
 				//@formatter:on
 			}
@@ -378,7 +360,7 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_box(final RectConstraint r, final NumberConstraint x, final NumberConstraint y, final NumberConstraint width, final NumberConstraint height)
+	public static RectConstraint c_box(final RectConstraint r, final Object x, final Object y, final Object width, final Object height)
 	{
 		return new RectConstraint() {
 			
@@ -389,10 +371,10 @@ public class ConstraintFactory {
 				
 				//@formatter:off
 				return Rect.fromSize(
-						origin.x + x.getValue(),
-						origin.y + y.getValue(),						
-						width.getValue(),
-						height.getValue()
+						origin.x + n(x).getValue(),
+						origin.y + n(y).getValue(),						
+						n(width).getValue(),
+						n(height).getValue()
 				);
 				//@formatter:on
 			}
@@ -400,7 +382,14 @@ public class ConstraintFactory {
 	}
 	
 	
-	public static RectConstraint c_centered(final RectConstraint r, final NumberConstraint x, final NumberConstraint y)
+	/**
+	 * Center rect around given coords
+	 * @param r rect
+	 * @param x
+	 * @param y
+	 * @return centered
+	 */
+	public static RectConstraint c_centered(final RectConstraint r, final Object x, final Object y)
 	{
 		return new RectConstraint() {
 			
@@ -409,13 +398,13 @@ public class ConstraintFactory {
 			{
 				final Coord size = r.getRect().getSize();
 				
-				return Rect.fromSize(x.getValue() - size.x / 2D, y.getValue() - size.y / 2D, size.x, size.y);
+				return Rect.fromSize(n(x).getValue() - size.x / 2D, n(y).getValue() - size.y / 2D, size.x, size.y);
 			}
 		};
 	}
 	
 	
-	public static RectConstraint c_box_abs(final RectConstraint r, final NumberConstraint x1, final NumberConstraint y1, final NumberConstraint x2, final NumberConstraint y2)
+	public static RectConstraint c_box_abs(final RectConstraint r, final Object x1, final Object y1, final Object x2, final Object y2)
 	{
 		return new RectConstraint() {
 			
@@ -425,23 +414,43 @@ public class ConstraintFactory {
 				final Coord origin = r.getRect().getOrigin();
 				
 				//@formatter:off
-				return new Rect(origin.add(x1.getValue(), y1.getValue()), origin.add(x2.getValue(), y2.getValue()));
+				return new Rect(origin.add(n(x1).getValue(), n(y1).getValue()), origin.add(n(x2).getValue(), n(y2).getValue()));
 				//@formatter:on
 			}
 		};
 	}
-	
-	
-	public static RectConstraint c_move(final RectConstraint r, final NumberConstraint x, final NumberConstraint y)
+
+	public static RectConstraint c_move(final RectConstraint r, final Object x, final Object y)
 	{
 		return new RectConstraint() {
 			
 			@Override
 			public Rect getRect()
 			{
-				return r.getRect().add(x.getValue(), y.getValue());
+				return r.getRect().add(n(x).getValue(), n(y).getValue());
 			}
 		};
+	}
+	
+	/**
+	 * Convert {@link Double} to {@link NumberConstraint} if needed
+	 * @param o unknown numeric value
+	 * @return converted
+	 */
+	public static NumberConstraint n(final Object o) {
+		
+		if(o instanceof NumberConstraint) return (NumberConstraint) o;
+		
+		if(o instanceof Number) return new NumberConstraint() {
+			
+			@Override
+			public double getValue()
+			{
+				return ((Number) o).doubleValue();
+			}
+		};
+		
+		throw new IllegalArgumentException("Invalid numeric type.");
 	}
 	
 }

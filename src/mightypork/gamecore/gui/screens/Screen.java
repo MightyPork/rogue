@@ -146,7 +146,7 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	
 	
 	@Override
-	public final void render()
+	public void render()
 	{
 		if (!isActive()) return;
 		
@@ -154,7 +154,9 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 			Render.setupOrtho();
 		}
 		
+		Render.pushState();
 		renderScreen();
+		Render.popState();
 	}
 	
 	

@@ -10,10 +10,10 @@ import mightypork.gamecore.render.fonts.DeferredFont;
 import mightypork.gamecore.render.fonts.DeferredFont.FontStyle;
 import mightypork.gamecore.render.fonts.FontBank;
 import mightypork.gamecore.render.fonts.GLFont;
-import mightypork.gamecore.render.textures.FilteredTexture.Filter;
-import mightypork.gamecore.render.textures.FilteredTexture.Wrap;
+import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.gamecore.render.textures.TextureBank;
 import mightypork.gamecore.render.textures.TxQuad;
+import mightypork.gamecore.render.textures.WrapMode;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -56,13 +56,23 @@ public class Res {
 	
 	private static void loadFonts()
 	{
-		fonts.loadFont("default", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", null, 32, FontStyle.PLAIN, true));
+		//@formatter:off
+		fonts.loadFont(
+				"default",
+				new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf",
+					null,
+					16,
+					FontStyle.PLAIN,
+					FilterMode.NEAREST
+				)
+		);
+		//@formatter:on
 	}
 	
 	
 	private static void loadTextures()
 	{
-		textures.loadTexture("test.kitten", "/res/img/kitten.png", Filter.LINEAR, Filter.NEAREST, Wrap.CLAMP);
+		textures.loadTexture("test.kitten", "/res/img/kitten.png", FilterMode.LINEAR, FilterMode.NEAREST, WrapMode.CLAMP);
 	}
 	
 	

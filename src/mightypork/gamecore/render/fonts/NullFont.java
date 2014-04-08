@@ -27,7 +27,7 @@ public class NullFont implements GLFont {
 	
 	
 	@Override
-	public int getHeight()
+	public int getGlyphHeight()
 	{
 		return 0;
 	}
@@ -36,6 +36,14 @@ public class NullFont implements GLFont {
 	@Override
 	public int getWidth(String text)
 	{
+		return 0;
+	}
+
+
+	@Override
+	public int getSize()
+	{
+		// TODO Auto-generated method stub
 		return 0;
 	}
 	

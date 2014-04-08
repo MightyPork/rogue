@@ -7,15 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mightypork.gamecore.gui.renderers.RowHolder;
-import mightypork.gamecore.gui.renderers.TextRenderer;
-import mightypork.gamecore.gui.renderers.TextRenderer.Align;
+import mightypork.gamecore.gui.renderers.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.string.StringProvider;
 
 
 public class LayerBouncyBoxes extends ScreenLayer {
@@ -46,24 +47,26 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		});
 		
 		// shrink screen rect by 8% on all sides
-		final RectConstraint holder_rect = c_shrink(this, c_percent(c_height(this), c_n(8)));
+		final RectConstraint holder_rect = c_shrink(this, c_percent(c_height(this), 4));
 		
-		addChildClient(layout = new RowHolder(screen, holder_rect, 8));
+		addChildClient(layout = new RowHolder(screen, holder_rect, 11));
 		
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i <= 9; i++) {
 			final BouncyBox bbr = new BouncyBox();
 			layout.add(bbr);
 			boxes.add(bbr);
 		}
 		
-		layout.add(new TextRenderer(Res.getFont("default"), RGB.WHITE, Align.LEFT) {
+		StringProvider sp = new StringProvider() {
+			
 			@Override
-			public String getText()
+			public String getString()
 			{
 				return "Running at " + getDisplay().getFps() + " fps!";
 			}
-		});
+		};
 		
+		layout.add(new TextPainter(Res.getFont("default"), Align.LEFT, RGB.WHITE, sp));
 	}
 	
 	
@@ -88,5 +91,11 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			bbr.goRight();
 		}
 	}
+
 	
+	@Override
+	public int getPriority()
+	{
+		return 0;
+	}
 }

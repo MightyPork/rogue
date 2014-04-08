@@ -18,6 +18,6 @@ public class Const {
 	public static final int FPS_RENDER = 100; // max
 	
 	// INITIAL WINDOW SIZE
-	public static final int WINDOW_W = 1024;
-	public static final int WINDOW_H = 768;
+	public static final int WINDOW_W = 800;
+	public static final int WINDOW_H = 600;
 }

@@ -5,12 +5,12 @@ import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
 
 
-public class ImageRenderer extends PluggableRenderer {
+public class ImagePainter extends PluggableRenderer {
 	
 	private TxQuad texture;
 	
 	
-	public ImageRenderer(TxQuad texture) {
+	public ImagePainter(TxQuad texture) {
 		this.texture = texture;
 	}
 	

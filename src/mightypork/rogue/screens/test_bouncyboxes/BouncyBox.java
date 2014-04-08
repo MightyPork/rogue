@@ -31,11 +31,11 @@ public class BouncyBox extends PluggableRenderer implements Updateable {
 		
 		// move
 		final NumberConstraint move_length = c_sub(c_width(this), side);
-		final NumberConstraint offset = c_mul(move_length, c_n(pos));
-		abox = c_move(abox, offset, c_n(0));
+		final NumberConstraint offset = c_mul(move_length, pos);
+		abox = c_move(abox, offset, 0);
 		
 		// add padding
-		abox = c_shrink(abox, c_percent(side, c_n(10)));
+		abox = c_shrink(abox, c_percent(side, 10));
 		
 		box = abox;
 	}

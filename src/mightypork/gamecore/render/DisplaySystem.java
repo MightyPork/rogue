@@ -10,6 +10,7 @@ import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
+import mightypork.utils.math.constraints.NumberConstraint;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
@@ -206,4 +207,24 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 	{
 		return fpsMeter.getFPS();
 	}
+	
+
+	public static final NumberConstraint width = new NumberConstraint() {
+		
+		@Override
+		public double getValue()
+		{
+			return getWidth();
+		}
+	};
+	
+
+	public static final NumberConstraint height = new NumberConstraint() {
+		
+		@Override
+		public double getValue()
+		{
+			return getHeight();
+		}
+	};
 }

@@ -174,8 +174,8 @@ public class Render {
 	{
 		pushed++;
 		
-		if (pushed >= 3) {
-			Log.w("Suspicious amount of state pushes: " + pushed);
+		if (pushed >= 20) {
+			Log.w("Suspicious number of state pushes: " + pushed);
 		}
 		
 //		Log.f3("push : "+pushed);

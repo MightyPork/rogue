@@ -2,14 +2,15 @@ package mightypork.gamecore.gui.screens;
 
 
 import java.util.Collection;
-import java.util.LinkedList;
+import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
+import mightypork.gamecore.render.Render;
 
 
 public abstract class LayeredScreen extends Screen {
 	
-	private final Collection<ScreenLayer> layers = new LinkedList<ScreenLayer>();
+	private final Collection<ScreenLayer> layers = new TreeSet<ScreenLayer>();
 	
 	
 	public LayeredScreen(AppAccess app) {
@@ -18,10 +19,12 @@ public abstract class LayeredScreen extends Screen {
 	
 	
 	@Override
-	protected final void renderScreen()
+	protected void renderScreen()
 	{
 		for (final ScreenLayer layer : layers) {
+			Render.pushState();
 			layer.render();
+			Render.popState();
 		}
 	}
 	
@@ -31,7 +34,7 @@ public abstract class LayeredScreen extends Screen {
 	 * 
 	 * @param layer
 	 */
-	protected final void addLayer(ScreenLayer layer)
+	protected void addLayer(ScreenLayer layer)
 	{
 		this.layers.add(layer);
 		addChildClient(layer);
@@ -43,7 +46,7 @@ public abstract class LayeredScreen extends Screen {
 	 * 
 	 * @param layer
 	 */
-	protected final void removeLayer(ScreenLayer layer)
+	protected void removeLayer(ScreenLayer layer)
 	{
 		this.layers.remove(layer);
 		removeChildClient(layer);

@@ -28,7 +28,7 @@ public interface GLFont {
 	/**
 	 * @return font height
 	 */
-	int getHeight();
+	int getGlyphHeight();
 	
 	
 	/**
@@ -36,5 +36,11 @@ public interface GLFont {
 	 * @return space needed
 	 */
 	int getWidth(String text);
+
+
+	/**
+	 * @return specified font size
+	 */
+	int getSize();
 	
 }

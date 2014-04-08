@@ -6,8 +6,6 @@ import java.util.HashMap;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
-import mightypork.gamecore.render.textures.FilteredTexture.Filter;
-import mightypork.gamecore.render.textures.FilteredTexture.Wrap;
 import mightypork.utils.math.coord.Rect;
 
 import org.newdawn.slick.opengl.Texture;
@@ -39,7 +37,7 @@ public class TextureBank extends AppAdapter {
 	 */
 	public void loadTexture(String key, String resourcePath)
 	{
-		loadTexture(key, resourcePath, Filter.LINEAR, Filter.NEAREST, Wrap.CLAMP);
+		loadTexture(key, resourcePath, FilterMode.LINEAR, FilterMode.NEAREST, WrapMode.CLAMP);
 	}
 	
 	
@@ -52,7 +50,7 @@ public class TextureBank extends AppAdapter {
 	 * @param filter_mag mag filter (when rendered larger)
 	 * @param wrap texture wrapping
 	 */
-	public void loadTexture(String key, String resourcePath, Filter filter_min, Filter filter_mag, Wrap wrap)
+	public void loadTexture(String key, String resourcePath, FilterMode filter_min, FilterMode filter_mag, WrapMode wrap)
 	{
 		final DeferredTexture tx = new DeferredTexture(resourcePath);
 		tx.setFilter(filter_min, filter_mag);

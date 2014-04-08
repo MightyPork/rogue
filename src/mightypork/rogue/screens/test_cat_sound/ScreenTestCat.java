@@ -9,17 +9,18 @@ import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Res;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
+import mightypork.rogue.screens.LayerFps;
 
 
 public class ScreenTestCat extends LayeredScreen {
 	
-	LayerFlyingCat layer;
 	
 	
 	public ScreenTestCat(AppAccess app) {
 		super(app);
 		
-		addLayer(layer = new LayerFlyingCat(this));
+		addLayer(new LayerFps(this));		
+		addLayer(new LayerFlyingCat(this));
 		
 		bindKeyStroke(new KeyStroke(Keys.KEY_ESCAPE), new Runnable() {
 			

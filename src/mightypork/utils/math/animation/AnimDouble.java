@@ -4,6 +4,7 @@ package mightypork.utils.math.animation;
 import mightypork.gamecore.control.interf.Updateable;
 import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.constraints.NumberConstraint;
 
 
 /**
@@ -11,7 +12,7 @@ import mightypork.utils.math.Calc;
  * 
  * @author MightyPork
  */
-public class AnimDouble implements Updateable, Pauseable {
+public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	
 	/** target double */
 	protected double to = 0;
@@ -317,5 +318,12 @@ public class AnimDouble implements Updateable, Pauseable {
 	public boolean isPaused()
 	{
 		return paused;
+	}
+
+
+	@Override
+	public double getValue()
+	{
+		return now();
 	}
 }

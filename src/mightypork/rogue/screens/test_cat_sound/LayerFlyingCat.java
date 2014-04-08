@@ -7,21 +7,23 @@ import java.util.Random;
 
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;
 import mightypork.gamecore.control.interf.Updateable;
-import mightypork.gamecore.gui.renderers.ImageRenderer;
-import mightypork.gamecore.gui.renderers.TextRenderer;
-import mightypork.gamecore.gui.renderers.TextRenderer.Align;
+import mightypork.gamecore.gui.renderers.ImagePainter;
+import mightypork.gamecore.gui.renderers.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.DisplaySystem;
+import mightypork.gamecore.render.fonts.FontRenderer;
+import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Coord;
+import mightypork.utils.string.StringProvider;
 
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
@@ -32,8 +34,8 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	
 	private final Random rand = new Random();
 	
-	private final ImageRenderer cat;
-	private final TextRenderer text;
+	private final ImagePainter cat;
+	private final TextPainter text;
 	
 	
 	public LayerFlyingCat(Screen screen) {
@@ -42,19 +44,23 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		xPos.setTo(DisplaySystem.getWidth() / 2);
 		yPos.setTo(DisplaySystem.getHeight() / 2);
 		
-		cat = new ImageRenderer(Res.getTxQuad("test.kitten"));
-		cat.setContext(c_centered(c_box(this, c_n(size), c_n(size)), c_n(xPos), c_n(yPos)));
+		cat = new ImagePainter(Res.getTxQuad("test.kitten"));
+		cat.setContext(c_centered(c_box(this, size, size), xPos, yPos));
 		
-		//@formatter:off
-		final RectConstraint flyingFontBox = c_centered(
-				c_box(this, c_n(0), c_n(64)),
-				InputSystem.mouseX,
-				InputSystem.mouseY
-		);
-		//@formatter:on
+		final RectConstraint fpsbox = c_centered(c_box(this, 0, 64), InputSystem.mouseX, InputSystem.mouseY);
 		
-		text = new TextRenderer(Res.getFont("default"), RGB.YELLOW, Align.CENTER);
-		text.setContext(flyingFontBox);
+		final StringProvider sp = new StringProvider() {
+			
+			@Override
+			public String getString()
+			{
+				return getDisplay().getFps() + " fps";
+			}
+		};
+		
+		text = new TextPainter(Res.getFont("default"), Align.CENTER, RGB.YELLOW, sp);
+		
+		text.setContext(fpsbox);
 		
 		bindKeyStroke(new KeyStroke(Keys.KEY_RETURN), new Runnable() {
 			
@@ -97,7 +103,13 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	public void render()
 	{
 		cat.render();
-		text.render(getDisplay().getFps()+" fps");
+		text.render();
+	}
+	
+	@Override
+	public int getPriority()
+	{
+		return 0;
 	}
 	
 }

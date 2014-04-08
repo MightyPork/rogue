@@ -4,8 +4,10 @@ package mightypork.gamecore.render.fonts;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
+import java.lang.reflect.Field;
 
 import mightypork.gamecore.render.Render;
+import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 
@@ -21,18 +23,28 @@ import org.newdawn.slick.TrueTypeFont;
 public class SlickFont implements GLFont {
 	
 	private final TrueTypeFont ttf;
+	private FilterMode filter;
+	private int fsize;
 	
 	
 	/**
 	 * A font with ASCII and extra chars
 	 * 
 	 * @param font font to load
-	 * @param antiAlias antialiasing
+	 * @param filtering filtering mode
 	 * @param extraChars extra chars to load
 	 */
-	public SlickFont(Font font, boolean antiAlias, String extraChars) {
+	public SlickFont(Font font, FilterMode filtering, String extraChars) {
 		
-		ttf = new TrueTypeFont(font, antiAlias, stripASCII(extraChars));
+		this.filter = filtering;
+		this.fsize = font.getSize();
+		ttf = new TrueTypeFont(font, true, stripASCII(extraChars));
+	}
+	
+	
+	public void setFiltering(FilterMode filter)
+	{
+		this.filter = filter;
 	}
 	
 	
@@ -50,12 +62,12 @@ public class SlickFont implements GLFont {
 	}
 	
 	
-	private static void prepareForRender()
-	{
+	private void prepareForRender()
+	{		
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter.num);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter.num);
 	}
 	
 	
@@ -86,12 +98,12 @@ public class SlickFont implements GLFont {
 	@Override
 	public Coord getNeededSpace(String text)
 	{
-		return new Coord(getWidth(text), getHeight());
+		return new Coord(getWidth(text), getGlyphHeight());
 	}
 	
 	
 	@Override
-	public int getHeight()
+	public int getGlyphHeight()
 	{
 		return ttf.getHeight();
 	}
@@ -101,6 +113,13 @@ public class SlickFont implements GLFont {
 	public int getWidth(String text)
 	{
 		return ttf.getWidth(text);
+	}
+
+
+	@Override
+	public int getSize()
+	{
+		return fsize;
 	}
 	
 }

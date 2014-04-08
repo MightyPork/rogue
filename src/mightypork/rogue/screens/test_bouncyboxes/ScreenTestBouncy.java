@@ -6,6 +6,7 @@ import mightypork.gamecore.control.bus.events.ScreenRequestEvent;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.rogue.screens.LayerFps;
 
 
 public class ScreenTestBouncy extends LayeredScreen {
@@ -17,8 +18,10 @@ public class ScreenTestBouncy extends LayeredScreen {
 		super(app);
 		
 		layer = new LayerBouncyBoxes(this);
-		
-		addLayer(layer);
+
+		addLayer(new LayerFps(this));
+
+		addLayer(layer);	
 		
 		bindKeyStroke(new KeyStroke(Keys.KEY_C), new Runnable() {
 			

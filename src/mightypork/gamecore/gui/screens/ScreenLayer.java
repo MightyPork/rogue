@@ -15,7 +15,7 @@ import mightypork.utils.math.coord.Rect;
  * 
  * @author MightyPork
  */
-public abstract class ScreenLayer extends AppSubModule implements Renderable, RectConstraint, KeyBinder {
+public abstract class ScreenLayer extends AppSubModule implements Comparable<ScreenLayer>, Renderable, RectConstraint, KeyBinder {
 	
 	private final Screen screen;
 	
@@ -54,6 +54,17 @@ public abstract class ScreenLayer extends AppSubModule implements Renderable, Re
 	public final Rect getRect()
 	{
 		return screen.getRect();
+	}
+	
+	/**
+	 * @return higher = on top.
+	 */
+	public abstract int getPriority();
+	
+	@Override
+	public final int compareTo(ScreenLayer o)
+	{
+		return Integer.compare(getPriority(), o.getPriority());
 	}
 	
 }

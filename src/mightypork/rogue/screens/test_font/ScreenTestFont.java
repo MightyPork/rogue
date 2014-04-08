@@ -2,36 +2,36 @@ package mightypork.rogue.screens.test_font;
 
 
 import mightypork.gamecore.control.AppAccess;
+import static mightypork.utils.math.constraints.ConstraintFactory.*;
+import mightypork.gamecore.gui.renderers.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
-import mightypork.gamecore.render.fonts.FontRenderer;
+import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.constraints.RectConstraint;
 
 
 public class ScreenTestFont extends Screen {
 	
-	private final FontRenderer fr;
+	private final TextPainter tp;
 	
 	
 	public ScreenTestFont(AppAccess app) {
 		super(app);
 		
-		fr = new FontRenderer(Res.getFont("default"));
+		tp = new TextPainter(Res.getFont("default"), Align.CENTER, RGB.GREEN);
+		tp.setText("Hello World!");
+		
+		RectConstraint strbox = c_grow(c_center(this), 0, c_div(c_height(this), 10));
+		
+		tp.setContext(strbox);
 	}
 	
 	
 	@Override
 	protected void renderScreen()
 	{
-		final String str = "O hai";
-		
-		final double height = getRect().getHeight() / 5D;
-		final Coord space = fr.getNeededSpace(str, height);
-		
-		final Coord origin = getRect().getCenter().sub(space.half());
-		
-		fr.draw(str, origin, height, RGB.GREEN);
+		tp.render();
 	}
 	
 	
