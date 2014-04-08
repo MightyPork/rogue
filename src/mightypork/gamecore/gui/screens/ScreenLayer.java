@@ -56,15 +56,17 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 		return screen.getRect();
 	}
 	
-	/**
-	 * @return higher = on top.
-	 */
-	public abstract int getPriority();
 	
 	@Override
 	public final int compareTo(ScreenLayer o)
 	{
-		return Integer.compare(getPriority(), o.getPriority());
+		return getPriority() - o.getPriority();
 	}
+	
+	
+	/**
+	 * @return higher = on top.
+	 */
+	public abstract int getPriority();
 	
 }

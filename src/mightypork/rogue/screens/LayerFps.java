@@ -15,7 +15,7 @@ import mightypork.utils.math.coord.Coord;
 public class LayerFps extends ScreenLayer {
 	
 	TextPainter tp;
-	private FontRenderer fr;
+	private final FontRenderer fr;
 	
 	
 	public LayerFps(Screen screen) {
@@ -28,7 +28,7 @@ public class LayerFps extends ScreenLayer {
 	@Override
 	public void render()
 	{
-		Coord pos = new Coord(DisplaySystem.getWidth() - 8, 8);
+		final Coord pos = new Coord(DisplaySystem.getWidth() - 8, 8);
 		fr.draw(getDisplay().getFps() + " fps", pos, 32, Align.RIGHT);
 	}
 	

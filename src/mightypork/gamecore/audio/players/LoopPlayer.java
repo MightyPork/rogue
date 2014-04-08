@@ -2,10 +2,10 @@ package mightypork.gamecore.audio.players;
 
 
 import mightypork.gamecore.audio.DeferredAudio;
+import mightypork.gamecore.audio.Volume;
 import mightypork.gamecore.control.interf.Updateable;
 import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.utils.math.animation.AnimDouble;
-import mightypork.utils.objects.Mutable;
 
 import org.lwjgl.openal.AL10;
 
@@ -29,7 +29,7 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	private double outTime = 1;
 	
 	
-	public LoopPlayer(DeferredAudio track, double pitch, double baseGain, Mutable<Double> gainMultiplier) {
+	public LoopPlayer(DeferredAudio track, double pitch, double baseGain, Volume gainMultiplier) {
 		super(track, (float) pitch, (float) baseGain, gainMultiplier);
 		
 		paused = true;

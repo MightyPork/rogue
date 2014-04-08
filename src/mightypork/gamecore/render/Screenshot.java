@@ -17,10 +17,10 @@ import javax.imageio.ImageIO;
  */
 public class Screenshot {
 	
-	private int width;
-	private int height;
-	private int bpp;
-	private ByteBuffer bytes;
+	private final int width;
+	private final int height;
+	private final int bpp;
+	private final ByteBuffer bytes;
 	private BufferedImage image;
 	
 	

@@ -53,7 +53,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	{
 		if (!canBroadcast(event)) return false;
 		
-		return doBroadcast(eventClass.cast(event), clients, new HashSet<Object>());
+		return doBroadcast(eventClass.cast(event), clients, new HashSet<>());
 	}
 	
 	
@@ -151,7 +151,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 */
 	public static <F_EVENT extends Event<F_CLIENT>, F_CLIENT> EventChannel<F_EVENT, F_CLIENT> create(Class<F_EVENT> eventClass, Class<F_CLIENT> clientClass)
 	{
-		return new EventChannel<F_EVENT, F_CLIENT>(eventClass, clientClass);
+		return new EventChannel<>(eventClass, clientClass);
 	}
 	
 	

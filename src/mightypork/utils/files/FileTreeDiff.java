@@ -23,7 +23,7 @@ public class FileTreeDiff {
 	
 	private boolean logging = true;
 	
-	private final List<Tuple<File>> compared = new ArrayList<Tuple<File>>();
+	private final List<Tuple<File>> compared = new ArrayList<>();
 	private final Comparator<File> fileFirstSorter = new Comparator<File>() {
 		
 		@Override
@@ -67,59 +67,31 @@ public class FileTreeDiff {
 	
 	private void calcChecksum() throws NotEqualException
 	{
-		FileInputStream in1 = null, in2 = null;
-		CheckedInputStream cin1 = null, cin2 = null;
 		
 		for (final Tuple<File> pair : compared) {
-			try {
-				ck1.reset();
-				ck2.reset();
+			ck1.reset();
+			ck2.reset();
+			
+			try (	FileInputStream in1 = new FileInputStream(pair.a);
+					FileInputStream in2 = new FileInputStream(pair.b)) {
 				
-				in1 = new FileInputStream(pair.a);
-				in2 = new FileInputStream(pair.b);
-				
-				cin1 = new CheckedInputStream(in1, ck1);
-				cin2 = new CheckedInputStream(in2, ck2);
-				
-				while (true) {
-					final int read1 = cin1.read(BUFFER);
-					final int read2 = cin2.read(BUFFER);
+				try (	CheckedInputStream cin1 = new CheckedInputStream(in1, ck1);
+						CheckedInputStream cin2 = new CheckedInputStream(in2, ck2)) {
 					
-					if (read1 != read2 || ck1.getValue() != ck2.getValue()) {
-						throw new NotEqualException("Bytes differ:\n" + pair.a + "\n" + pair.b);
+					while (true) {
+						final int read1 = cin1.read(BUFFER);
+						final int read2 = cin2.read(BUFFER);
+						
+						if (read1 != read2 || ck1.getValue() != ck2.getValue()) {
+							throw new NotEqualException("Bytes differ:\n" + pair.a + "\n" + pair.b);
+						}
+						
+						if (read1 == -1) break;
 					}
-					
-					if (read1 == -1) break;
 				}
 				
 			} catch (final IOException e) {
 				// ignore
-			} finally {
-				
-				try {
-					if (cin1 != null) cin1.close();
-				} catch (final Exception e) {
-					// ignore
-				}
-				
-				try {
-					if (cin2 != null) cin2.close();
-				} catch (final Exception e) {
-					// ignore
-				}
-				
-				try {
-					if (in1 != null) in1.close();
-				} catch (final Exception e) {
-					// ignore
-				}
-				
-				try {
-					if (in2 != null) in2.close();
-				} catch (final Exception e) {
-					// ignore
-				}
-				
 			}
 		}
 	}
@@ -152,7 +124,7 @@ public class FileTreeDiff {
 			}
 			
 		} else {
-			compared.add(new Tuple<File>(f1, f2));
+			compared.add(new Tuple<>(f1, f2));
 		}
 	}
 	

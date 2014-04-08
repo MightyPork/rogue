@@ -26,7 +26,7 @@ public class SortedProperties extends java.util.Properties {
 	public boolean cfgBlankRowBetweenSections = true;
 	
 	/** Comments for individual keys */
-	private final Hashtable<String, String> keyComments = new Hashtable<String, String>();
+	private final Hashtable<String, String> keyComments = new Hashtable<>();
 	
 	
 	private static void writeComments(BufferedWriter bw, String comm) throws IOException
@@ -272,7 +272,7 @@ public class SortedProperties extends java.util.Properties {
 	
 	
 	@Override
-	public void load(InputStream is) throws IOException
+	public synchronized void load(InputStream is) throws IOException
 	{
 		load(is, "utf-8");
 	}

@@ -22,7 +22,7 @@ public class MapSort {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static <K extends Comparable, V extends Comparable> Map<K, V> sortByKeys(Map<K, V> map, final Comparator<K> comparator)
 	{
-		final List<K> keys = new LinkedList<K>(map.keySet());
+		final List<K> keys = new LinkedList<>(map.keySet());
 		
 		if (comparator == null) {
 			Collections.sort(keys);
@@ -32,7 +32,7 @@ public class MapSort {
 		
 		// LinkedHashMap will keep the keys in the order they are inserted
 		// which is currently sorted on natural ordering
-		final Map<K, V> sortedMap = new LinkedHashMap<K, V>();
+		final Map<K, V> sortedMap = new LinkedHashMap<>();
 		for (final K key : keys) {
 			sortedMap.put(key, map.get(key));
 		}
@@ -51,7 +51,7 @@ public class MapSort {
 	@SuppressWarnings("rawtypes")
 	public static <K extends Comparable, V extends Comparable> Map<K, V> sortByValues(Map<K, V> map, final Comparator<V> comparator)
 	{
-		final List<Map.Entry<K, V>> entries = new LinkedList<Map.Entry<K, V>>(map.entrySet());
+		final List<Map.Entry<K, V>> entries = new LinkedList<>(map.entrySet());
 		
 		Collections.sort(entries, new Comparator<Map.Entry<K, V>>() {
 			
@@ -65,7 +65,7 @@ public class MapSort {
 		
 		// LinkedHashMap will keep the keys in the order they are inserted
 		// which is currently sorted on natural ordering
-		final Map<K, V> sortedMap = new LinkedHashMap<K, V>();
+		final Map<K, V> sortedMap = new LinkedHashMap<>();
 		
 		for (final Map.Entry<K, V> entry : entries) {
 			sortedMap.put(entry.getKey(), entry.getValue());

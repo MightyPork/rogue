@@ -17,7 +17,7 @@ import mightypork.utils.logging.Log;
 public class ZipBuilder {
 	
 	private final ZipOutputStream out;
-	private final HashSet<String> included = new HashSet<String>();
+	private final HashSet<String> included = new HashSet<>();
 	
 	
 	/**
@@ -70,8 +70,9 @@ public class ZipBuilder {
 		
 		out.putNextEntry(new ZipEntry(path));
 		
-		final InputStream in = FileUtils.stringToStream(text);
-		FileUtils.copyStream(in, out);
+		try (InputStream in = FileUtils.stringToStream(text)) {
+			FileUtils.copyStream(in, out);
+		}
 	}
 	
 	
@@ -90,8 +91,9 @@ public class ZipBuilder {
 		
 		out.putNextEntry(new ZipEntry(path));
 		
-		final InputStream in = FileUtils.getResource(resPath);
-		FileUtils.copyStream(in, out);
+		try (InputStream in = FileUtils.getResource(resPath)) {
+			FileUtils.copyStream(in, out);
+		}
 	}
 	
 	

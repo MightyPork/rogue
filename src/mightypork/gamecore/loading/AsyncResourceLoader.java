@@ -26,7 +26,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	
 	private final ExecutorService exs = Executors.newCachedThreadPool();
 	
-	private final LinkedBlockingQueue<DeferredResource> toLoad = new LinkedBlockingQueue<DeferredResource>();
+	private final LinkedBlockingQueue<DeferredResource> toLoad = new LinkedBlockingQueue<>();
 	private boolean stopped;
 	private final BusAccess app;
 	

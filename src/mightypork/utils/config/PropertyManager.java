@@ -1,9 +1,13 @@
 package mightypork.utils.config;
 
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import mightypork.utils.math.Range;
 import mightypork.utils.math.coord.Coord;
@@ -155,9 +159,9 @@ public class PropertyManager {
 	 */
 	public PropertyManager(File file, String comment) {
 		this.file = file;
-		this.entries = new TreeMap<String, Property<?>>();
-		this.overrideValues = new TreeMap<String, String>();
-		this.renameTable = new TreeMap<String, String>();
+		this.entries = new TreeMap<>();
+		this.overrideValues = new TreeMap<>();
+		this.renameTable = new TreeMap<>();
 		this.fileComment = comment;
 	}
 	
@@ -168,27 +172,19 @@ public class PropertyManager {
 	public void apply()
 	{
 		boolean needsSave = false;
-		FileInputStream fis = null;
-		try {
-			new File(file.getParent()).mkdirs();
-			fis = new FileInputStream(file);
+		new File(file.getParent()).mkdirs();
+		
+		try (FileInputStream fis = new FileInputStream(file)) {
 			props.load(fis);
-			
 		} catch (final IOException e) {
 			needsSave = true;
 			props = new SortedProperties();
-		} finally {
-			try {
-				if (fis != null) fis.close();
-			} catch (final IOException e) {
-				e.printStackTrace();
-			}
 		}
 		
 		props.cfgBlankRowBetweenSections = cfgSeparateSections;
 		props.cfgBlankRowBeforeComment = cfgNewlineBeforeComments;
 		
-		final ArrayList<String> keyList = new ArrayList<String>();
+		final ArrayList<String> keyList = new ArrayList<>();
 		
 		// rename keys
 		for (final Entry<String, String> entry : renameTable.entrySet()) {

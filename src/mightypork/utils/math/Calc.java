@@ -890,7 +890,7 @@ public class Calc {
 		}
 		final String[] parts = list.split(",");
 		
-		final ArrayList<Integer> intList = new ArrayList<Integer>();
+		final ArrayList<Integer> intList = new ArrayList<>();
 		
 		for (final String part : parts) {
 			try {

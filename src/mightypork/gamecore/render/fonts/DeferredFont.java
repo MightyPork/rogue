@@ -40,7 +40,7 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	private final double size;
 	private final FontStyle style;
 	private final String extraChars;
-	private FilterMode filter;
+	private final FilterMode filter;
 	
 	
 	/**
@@ -107,11 +107,8 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	 */
 	protected Font getAwtFont(String resource, float size, int style) throws FontFormatException, IOException
 	{
-		InputStream in = null;
 		
-		try {
-			
-			in = FileUtils.getResource(resource);
+		try (InputStream in = FileUtils.getResource(resource)) {
 			
 			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, in);
 			
@@ -119,14 +116,8 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 			awtFont = awtFont.deriveFont(style);
 			
 			return awtFont;
-			
-		} finally {
-			try {
-				if (in != null) in.close();
-			} catch (final IOException e) {
-				//pass
-			}
 		}
+		
 	}
 	
 	
@@ -170,6 +161,7 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 		
 		return font.getGlyphHeight();
 	}
+	
 	
 	@Override
 	public int getSize()

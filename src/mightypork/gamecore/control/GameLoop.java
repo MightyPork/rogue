@@ -19,9 +19,9 @@ import mightypork.gamecore.gui.screens.ScreenRegistry;
  */
 public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.Listener {
 	
-	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<Runnable>();
+	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<>();
 	private TimerDelta timer;
-	private Renderable mainRenderable;
+	private final Renderable mainRenderable;
 	private boolean running = true;
 	
 	

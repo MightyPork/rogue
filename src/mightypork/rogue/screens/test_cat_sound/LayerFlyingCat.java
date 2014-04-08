@@ -15,7 +15,6 @@ import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.gamecore.render.fonts.FontRenderer;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.animation.AnimDouble;
@@ -105,6 +104,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		cat.render();
 		text.render();
 	}
+	
 	
 	@Override
 	public int getPriority()

@@ -2,8 +2,8 @@ package mightypork.gamecore.audio.players;
 
 
 import mightypork.gamecore.audio.DeferredAudio;
+import mightypork.gamecore.audio.Volume;
 import mightypork.gamecore.control.interf.Destroyable;
-import mightypork.utils.objects.Mutable;
 
 
 public abstract class BaseAudioPlayer implements Destroyable {
@@ -18,21 +18,21 @@ public abstract class BaseAudioPlayer implements Destroyable {
 	private final double basePitch;
 	
 	/** dedicated volume control */
-	private final Mutable<Double> gainMultiplier;
+	private final Volume gainMultiplier;
 	
 	
-	public BaseAudioPlayer(DeferredAudio track, double baseGain, Mutable<Double> gainMultiplier) {
+	public BaseAudioPlayer(DeferredAudio track, double baseGain, Volume gainMultiplier) {
 		this(track, 1, baseGain, gainMultiplier);
 	}
 	
 	
-	public BaseAudioPlayer(DeferredAudio track, double basePitch, double baseGain, Mutable<Double> gainMultiplier) {
+	public BaseAudioPlayer(DeferredAudio track, double basePitch, double baseGain, Volume gainMultiplier) {
 		this.audio = track;
 		
 		this.baseGain = baseGain;
 		this.basePitch = basePitch;
 		
-		if (gainMultiplier == null) gainMultiplier = new Mutable<Double>(1D);
+		if (gainMultiplier == null) gainMultiplier = new Volume(1D);
 		
 		this.gainMultiplier = gainMultiplier;
 	}

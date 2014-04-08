@@ -32,7 +32,7 @@ public class VarargsParser<K, V> {
 	@SuppressWarnings("unchecked")
 	public Map<K, V> parse(Object... args) throws ClassCastException, IllegalArgumentException
 	{
-		final LinkedHashMap<K, V> attrs = new LinkedHashMap<K, V>();
+		final LinkedHashMap<K, V> attrs = new LinkedHashMap<>();
 		
 		if (args.length % 2 != 0) {
 			throw new IllegalArgumentException("Odd number of elements in varargs map!");

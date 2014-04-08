@@ -2,13 +2,11 @@ package mightypork.gamecore.gui.renderers;
 
 
 import mightypork.gamecore.render.fonts.FontRenderer;
-import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
+import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.string.StringProvider;
 import mightypork.utils.string.StringProvider.StringWrapper;
-
-
 
 
 public class TextPainter extends PluggableRenderer {
@@ -41,6 +39,7 @@ public class TextPainter extends PluggableRenderer {
 		this(font, align, color, (StringProvider) null);
 	}
 	
+	
 	/**
 	 * Use size specified during font init instead of size provided by
 	 * {@link GLFont} instance (measured from tile heights.<br>
@@ -49,7 +48,8 @@ public class TextPainter extends PluggableRenderer {
 	 * 
 	 * @param enable use it
 	 */
-	public void usePtSize(boolean enable) {
+	public void usePtSize(boolean enable)
+	{
 		font.usePtSize(enable);
 	}
 	

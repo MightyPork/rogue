@@ -44,8 +44,8 @@ public class FileUtils {
 			}
 			
 			final String[] children = source.list();
-			for (int i = 0; i < children.length; i++) {
-				copyDirectory(new File(source, children[i]), new File(target, children[i]), filter, filesCopied);
+			for (final String element : children) {
+				copyDirectory(new File(source, element), new File(target, element), filter, filesCopied);
 			}
 			
 		} else {
@@ -71,8 +71,8 @@ public class FileUtils {
 	{
 		if (source.isDirectory()) {
 			final String[] children = source.list();
-			for (int i = 0; i < children.length; i++) {
-				listDirectoryRecursive(new File(source, children[i]), filter, files);
+			for (final String element : children) {
+				listDirectoryRecursive(new File(source, element), filter, files);
 			}
 			
 		} else {
@@ -94,25 +94,11 @@ public class FileUtils {
 	 */
 	public static void copyFile(File source, File target) throws IOException
 	{
-		InputStream in = null;
-		OutputStream out = null;
 		
-		try {
-			in = new FileInputStream(source);
-			out = new FileOutputStream(target);
+		try (	InputStream in = new FileInputStream(source);
+				OutputStream out = new FileOutputStream(target)) {
 			
 			copyStream(in, out);
-		} finally {
-			try {
-				if (in != null) in.close();
-			} catch (final IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (out != null) out.close();
-			} catch (final IOException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 	
@@ -175,9 +161,10 @@ public class FileUtils {
 	 */
 	public static String fileToString(File file) throws IOException
 	{
-		final FileInputStream fin = new FileInputStream(file);
-		
-		return streamToString(fin);
+		try (FileInputStream fin = new FileInputStream(file)) {
+			
+			return streamToString(fin);
+		}
 	}
 	
 	
@@ -208,7 +195,7 @@ public class FileUtils {
 			Log.e("Error creating folder " + dir, e);
 		}
 		
-		final List<File> list = new ArrayList<File>();
+		final List<File> list = new ArrayList<>();
 		
 		try {
 			for (final File f : dir.listFiles(filter)) {
@@ -374,16 +361,12 @@ public class FileUtils {
 	 */
 	public static void stringToFile(File file, String text) throws IOException
 	{
-		PrintStream out = null;
-		try {
-			out = new PrintStream(new FileOutputStream(file), false, "UTF-8");
+		try (PrintStream out = new PrintStream(new FileOutputStream(file), false, "UTF-8")) {
 			
 			out.print(text);
 			
 			out.flush();
 			
-		} finally {
-			if (out != null) out.close();
 		}
 	}
 	
@@ -499,26 +482,10 @@ public class FileUtils {
 	 */
 	public static void resourceToFile(String resname, File file) throws IOException
 	{
-		InputStream in = null;
-		OutputStream out = null;
-		
-		try {
-			in = FileUtils.getResource(resname);
-			out = new FileOutputStream(file);
+		try (	InputStream in = FileUtils.getResource(resname);
+				OutputStream out = new FileOutputStream(file)) {
 			
 			FileUtils.copyStream(in, out);
-		} finally {
-			try {
-				if (in != null) in.close();
-			} catch (final IOException e) {
-				// ignore
-			}
-			
-			try {
-				if (out != null) out.close();
-			} catch (final IOException e) {
-				// ignore
-			}
 		}
 		
 	}
@@ -529,10 +496,12 @@ public class FileUtils {
 	 * 
 	 * @param resname resource name
 	 * @return resource as string, empty string on failure
+	 * @throws IOException on fail
 	 */
-	public static String resourceToString(String resname)
+	public static String resourceToString(String resname) throws IOException
 	{
-		final InputStream in = FileUtils.getResource(resname);
-		return streamToString(in);
+		try (InputStream in = FileUtils.getResource(resname)) {
+			return streamToString(in);
+		}
 	}
 }

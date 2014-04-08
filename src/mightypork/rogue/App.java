@@ -1,9 +1,6 @@
 package mightypork.rogue;
 
 
-import java.io.File;
-import java.io.RandomAccessFile;
-import java.nio.channels.FileLock;
 import java.util.Locale;
 import java.util.logging.Level;
 
@@ -27,6 +24,7 @@ import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_font.ScreenTestFont;
+import mightypork.utils.files.InstanceLock;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogInstance;
 
@@ -266,13 +264,13 @@ public class App implements AppAccess {
 	{
 		if (!Config.SINGLE_INSTANCE) return;
 		
-		if (!lockInstance()) {
-			System.err.println("Working directory is locked.\nOnly one instance can run at a time.");
+		if (!InstanceLock.onFile(Paths.LOCK)) {
+			System.err.println("Could not obtain lock.\nOnly one instance can run at a time.");
 			
 			//@formatter:off
 			JOptionPane.showMessageDialog(
 					null,
-					"The game is already running.",
+					"Another instance is already running.",
 					"Instance error",
 					JOptionPane.ERROR_MESSAGE
 			);
@@ -281,41 +279,6 @@ public class App implements AppAccess {
 			shutdown();
 			return;
 		}
-	}
-	
-	
-	private static boolean lockInstance()
-	{
-		final File lockFile = new File(Paths.WORKDIR, ".lock");
-		try {
-			
-			final RandomAccessFile randomAccessFile = new RandomAccessFile(lockFile, "rw");
-			
-			final FileLock fileLock = randomAccessFile.getChannel().tryLock();
-			if (fileLock != null) {
-				Runtime.getRuntime().addShutdownHook(new Thread() {
-					
-					@Override
-					public void run()
-					{
-						try {
-							fileLock.release();
-							randomAccessFile.close();
-							lockFile.delete();
-						} catch (final Exception e) {
-							System.err.println("Unable to remove lock file.");
-							e.printStackTrace();
-						}
-					}
-				});
-				return true;
-			}
-			
-		} catch (final Exception e) {
-			System.err.println("Unable to create and/or lock file.");
-			e.printStackTrace();
-		}
-		return false;
 	}
 	
 	

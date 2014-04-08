@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class BufferedHashSet<E> extends HashSet<E> {
 	
-	private final List<E> toAdd = new LinkedList<E>();
-	private final List<Object> toRemove = new LinkedList<Object>();
+	private final List<E> toAdd = new LinkedList<>();
+	private final List<Object> toRemove = new LinkedList<>();
 	private boolean buffering = false;
 	
 	

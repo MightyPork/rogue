@@ -50,7 +50,7 @@ public class LogInstance {
 	private boolean sysout = true;
 	
 	private int monitorId = 0;
-	private final HashMap<Integer, LogMonitor> monitors = new HashMap<Integer, LogMonitor>();
+	private final HashMap<Integer, LogMonitor> monitors = new HashMap<>();
 	
 	private LogToSysoutMonitor sysoutMonitor;
 	

@@ -116,7 +116,7 @@ public class Log {
 		staticLogging = flag;
 	}
 	
-	private static HashMap<String, LogInstance> logs = new HashMap<String, LogInstance>();
+	private static HashMap<String, LogInstance> logs = new HashMap<>();
 	private static LogInstance main = null;
 	
 	

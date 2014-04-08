@@ -22,13 +22,13 @@ import mightypork.utils.logging.Log;
 final public class EventBus implements Destroyable {
 	
 	/** Message channels */
-	private final BufferedHashSet<EventChannel<?, ?>> channels = new BufferedHashSet<EventChannel<?, ?>>();
+	private final BufferedHashSet<EventChannel<?, ?>> channels = new BufferedHashSet<>();
 	
 	/** Registered clients */
-	private final BufferedHashSet<Object> clients = new BufferedHashSet<Object>();
+	private final BufferedHashSet<Object> clients = new BufferedHashSet<>();
 	
 	/** Messages queued for delivery */
-	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<DelayQueueEntry>();
+	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<>();
 	
 	/** Queue polling thread */
 	private final QueuePollingThread busThread;
@@ -235,7 +235,7 @@ final public class EventBus implements Destroyable {
 		
 		clients.add(client);
 		
-		if(detailedLogging) Log.f3("<bus> Client joined: "+Log.str(client));
+		if (detailedLogging) Log.f3("<bus> Client joined: " + Log.str(client));
 	}
 	
 	
@@ -250,7 +250,7 @@ final public class EventBus implements Destroyable {
 		
 		clients.remove(client);
 		
-		if(detailedLogging) Log.f3("<bus> Client left: "+Log.str(client));
+		if (detailedLogging) Log.f3("<bus> Client left: " + Log.str(client));
 	}
 	
 	

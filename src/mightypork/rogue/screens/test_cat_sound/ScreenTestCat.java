@@ -14,12 +14,10 @@ import mightypork.rogue.screens.LayerFps;
 
 public class ScreenTestCat extends LayeredScreen {
 	
-	
-	
 	public ScreenTestCat(AppAccess app) {
 		super(app);
 		
-		addLayer(new LayerFps(this));		
+		addLayer(new LayerFps(this));
 		addLayer(new LayerFlyingCat(this));
 		
 		bindKeyStroke(new KeyStroke(Keys.KEY_ESCAPE), new Runnable() {

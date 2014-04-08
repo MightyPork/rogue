@@ -19,7 +19,7 @@ public abstract class BusNode implements BusAccess, DelegatingClient, Toggleable
 	
 	private final BusAccess busAccess;
 	
-	private final Set<Object> clients = new LinkedHashSet<Object>();
+	private final Set<Object> clients = new LinkedHashSet<>();
 	private boolean listening = true;
 	private boolean delegating = true;
 	
@@ -57,7 +57,7 @@ public abstract class BusNode implements BusAccess, DelegatingClient, Toggleable
 	 */
 	public final void addChildClient(Object client)
 	{
-		if(client instanceof RootBusNode) {
+		if (client instanceof RootBusNode) {
 			throw new IllegalArgumentException("Cannot nest RootBusNode.");
 		}
 		

@@ -4,7 +4,6 @@ package mightypork.gamecore.render.fonts;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
-import java.lang.reflect.Field;
 
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.FilterMode;
@@ -24,7 +23,7 @@ public class SlickFont implements GLFont {
 	
 	private final TrueTypeFont ttf;
 	private FilterMode filter;
-	private int fsize;
+	private final int fsize;
 	
 	
 	/**
@@ -63,7 +62,7 @@ public class SlickFont implements GLFont {
 	
 	
 	private void prepareForRender()
-	{		
+	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter.num);
@@ -114,8 +113,8 @@ public class SlickFont implements GLFont {
 	{
 		return ttf.getWidth(text);
 	}
-
-
+	
+	
 	@Override
 	public int getSize()
 	{

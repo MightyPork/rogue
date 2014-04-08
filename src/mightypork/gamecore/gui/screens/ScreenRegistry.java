@@ -13,7 +13,7 @@ import mightypork.utils.logging.Log;
 
 public class ScreenRegistry extends AppModule implements ScreenRequestEvent.Listener, Renderable {
 	
-	private final HashMap<String, Screen> screens = new HashMap<String, Screen>();
+	private final HashMap<String, Screen> screens = new HashMap<>();
 	private Screen active = null;
 	
 	

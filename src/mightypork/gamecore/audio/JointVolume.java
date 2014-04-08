@@ -10,7 +10,7 @@ import mightypork.utils.objects.Mutable;
  * 
  * @author MightyPork
  */
-public class JointVolume extends Mutable<Double> {
+public class JointVolume extends Volume {
 	
 	private final Mutable<Double>[] volumes;
 	
@@ -20,7 +20,8 @@ public class JointVolume extends Mutable<Double> {
 	 * 
 	 * @param volumes individual volumes to join
 	 */
-	public JointVolume(Mutable<Double>... volumes) {
+	@SafeVarargs
+	public JointVolume(Volume... volumes) {
 		super(1D);
 		this.volumes = volumes;
 	}

@@ -13,7 +13,6 @@ import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.interf.Updateable;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.coord.Coord;
-import mightypork.utils.objects.Mutable;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
@@ -25,7 +24,6 @@ import org.newdawn.slick.openal.SoundStore;
  * 
  * @author MightyPork
  */
-@SuppressWarnings("unchecked")
 public class SoundSystem extends RootBusNode implements Updateable {
 	
 	private static final Coord INITIAL_LISTENER_POS = new Coord(0, 0, 0);
@@ -72,12 +70,12 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	
 	// -- instance --
 	
-	public final Mutable<Double> masterVolume = new Mutable<Double>(1D);
-	public final Mutable<Double> effectsVolume = new JointVolume(masterVolume);
-	public final Mutable<Double> loopsVolume = new JointVolume(masterVolume);
+	public final Volume masterVolume = new Volume(1D);
+	public final Volume effectsVolume = new JointVolume(masterVolume);
+	public final Volume loopsVolume = new JointVolume(masterVolume);
 	
-	private final Set<LoopPlayer> loopPlayers = new HashSet<LoopPlayer>();
-	private final Set<DeferredAudio> resources = new HashSet<DeferredAudio>();
+	private final Set<LoopPlayer> loopPlayers = new HashSet<>();
+	private final Set<DeferredAudio> resources = new HashSet<>();
 	
 	
 	public SoundSystem(AppAccess app) {

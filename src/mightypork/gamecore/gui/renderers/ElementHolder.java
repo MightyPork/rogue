@@ -18,7 +18,7 @@ import mightypork.utils.math.coord.Rect;
  */
 public abstract class ElementHolder extends BusNode implements PluggableRenderable {
 	
-	private final LinkedList<PluggableRenderable> elements = new LinkedList<PluggableRenderable>();
+	private final LinkedList<PluggableRenderable> elements = new LinkedList<>();
 	private RectConstraint context;
 	
 	

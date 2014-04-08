@@ -25,6 +25,7 @@ public class ConstraintFactory {
 		};
 	}
 	
+	
 	public static NumberConstraint c_max(final Object a, final Object b)
 	{
 		return new NumberConstraint() {
@@ -58,7 +59,7 @@ public class ConstraintFactory {
 			@Override
 			public double getValue()
 			{
-				return a.getValue()/2;
+				return a.getValue() / 2;
 			}
 		};
 	}
@@ -128,6 +129,7 @@ public class ConstraintFactory {
 		};
 	}
 	
+	
 	public static NumberConstraint c_add(final Object a, final Object b)
 	{
 		return new NumberConstraint() {
@@ -140,6 +142,7 @@ public class ConstraintFactory {
 		};
 	}
 	
+	
 	public static NumberConstraint c_sub(final Object a, final Object b)
 	{
 		return new NumberConstraint() {
@@ -151,7 +154,7 @@ public class ConstraintFactory {
 			}
 		};
 	}
-
+	
 	
 	public static NumberConstraint c_mul(final Object a, final Object b)
 	{
@@ -164,7 +167,7 @@ public class ConstraintFactory {
 			}
 		};
 	}
-
+	
 	
 	public static NumberConstraint c_div(final Object a, final Object b)
 	{
@@ -177,6 +180,7 @@ public class ConstraintFactory {
 			}
 		};
 	}
+	
 	
 	public static NumberConstraint c_percent(final Object whole, final Object percent)
 	{
@@ -257,7 +261,7 @@ public class ConstraintFactory {
 	
 	public static RectConstraint c_shrink(RectConstraint r, Object shrink)
 	{
-		NumberConstraint n = n(shrink);
+		final NumberConstraint n = n(shrink);
 		return c_shrink(r, n, n, n, n);
 	}
 	
@@ -293,9 +297,10 @@ public class ConstraintFactory {
 		};
 	}
 	
+	
 	public static RectConstraint c_grow(RectConstraint r, Object grow)
 	{
-		NumberConstraint n = n(grow);
+		final NumberConstraint n = n(grow);
 		return c_grow(r, n, n, n, n);
 	}
 	
@@ -337,6 +342,7 @@ public class ConstraintFactory {
 			}
 		};
 	}
+	
 	
 	public static RectConstraint c_box(final RectConstraint r, final Object width, final Object height)
 	{
@@ -384,6 +390,7 @@ public class ConstraintFactory {
 	
 	/**
 	 * Center rect around given coords
+	 * 
 	 * @param r rect
 	 * @param x
 	 * @param y
@@ -419,7 +426,8 @@ public class ConstraintFactory {
 			}
 		};
 	}
-
+	
+	
 	public static RectConstraint c_move(final RectConstraint r, final Object x, final Object y)
 	{
 		return new RectConstraint() {
@@ -432,16 +440,19 @@ public class ConstraintFactory {
 		};
 	}
 	
+	
 	/**
 	 * Convert {@link Double} to {@link NumberConstraint} if needed
+	 * 
 	 * @param o unknown numeric value
 	 * @return converted
 	 */
-	public static NumberConstraint n(final Object o) {
+	public static NumberConstraint n(final Object o)
+	{
 		
-		if(o instanceof NumberConstraint) return (NumberConstraint) o;
+		if (o instanceof NumberConstraint) return (NumberConstraint) o;
 		
-		if(o instanceof Number) return new NumberConstraint() {
+		if (o instanceof Number) return new NumberConstraint() {
 			
 			@Override
 			public double getValue()

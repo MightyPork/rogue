@@ -39,7 +39,7 @@ public class ObjectUtils {
 	
 	public static <T extends Object> List<T> arrayToList(T[] objs)
 	{
-		final ArrayList<T> list = new ArrayList<T>();
+		final ArrayList<T> list = new ArrayList<>();
 		for (final T o : objs) {
 			list.add(o);
 		}

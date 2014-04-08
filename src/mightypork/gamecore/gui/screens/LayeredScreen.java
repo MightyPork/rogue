@@ -10,7 +10,7 @@ import mightypork.gamecore.render.Render;
 
 public abstract class LayeredScreen extends Screen {
 	
-	private final Collection<ScreenLayer> layers = new TreeSet<ScreenLayer>();
+	private final Collection<ScreenLayer> layers = new TreeSet<>();
 	
 	
 	public LayeredScreen(AppAccess app) {

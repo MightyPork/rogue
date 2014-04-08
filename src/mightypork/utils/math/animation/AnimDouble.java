@@ -319,8 +319,8 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	{
 		return paused;
 	}
-
-
+	
+	
 	@Override
 	public double getValue()
 	{

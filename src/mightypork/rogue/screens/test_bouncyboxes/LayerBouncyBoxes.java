@@ -21,7 +21,7 @@ import mightypork.utils.string.StringProvider;
 
 public class LayerBouncyBoxes extends ScreenLayer {
 	
-	List<BouncyBox> boxes = new ArrayList<BouncyBox>();
+	List<BouncyBox> boxes = new ArrayList<>();
 	private RowHolder layout;
 	
 	
@@ -57,7 +57,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			boxes.add(bbr);
 		}
 		
-		StringProvider sp = new StringProvider() {
+		final StringProvider sp = new StringProvider() {
 			
 			@Override
 			public String getString()
@@ -91,7 +91,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			bbr.goRight();
 		}
 	}
-
+	
 	
 	@Override
 	public int getPriority()

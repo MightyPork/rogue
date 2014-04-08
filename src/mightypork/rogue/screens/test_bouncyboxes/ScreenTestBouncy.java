@@ -18,10 +18,10 @@ public class ScreenTestBouncy extends LayeredScreen {
 		super(app);
 		
 		layer = new LayerBouncyBoxes(this);
-
+		
 		addLayer(new LayerFps(this));
-
-		addLayer(layer);	
+		
+		addLayer(layer);
 		
 		bindKeyStroke(new KeyStroke(Keys.KEY_C), new Runnable() {
 			
@@ -32,6 +32,7 @@ public class ScreenTestBouncy extends LayeredScreen {
 			}
 		});
 	}
+	
 	
 	@Override
 	public String getId()

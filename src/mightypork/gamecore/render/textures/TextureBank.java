@@ -22,9 +22,9 @@ public class TextureBank extends AppAdapter {
 		super(app);
 	}
 	
-	private final HashMap<String, DeferredTexture> textures = new HashMap<String, DeferredTexture>();
+	private final HashMap<String, DeferredTexture> textures = new HashMap<>();
 	
-	private final HashMap<String, TxQuad> quads = new HashMap<String, TxQuad>();
+	private final HashMap<String, TxQuad> quads = new HashMap<>();
 	
 	private DeferredTexture lastTx;
 	

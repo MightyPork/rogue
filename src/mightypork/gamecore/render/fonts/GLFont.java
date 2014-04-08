@@ -36,8 +36,8 @@ public interface GLFont {
 	 * @return space needed
 	 */
 	int getWidth(String text);
-
-
+	
+	
 	/**
 	 * @return specified font size
 	 */

@@ -120,21 +120,21 @@ public class Convert {
 		if (o == null) return def;
 		if (o instanceof String) return ((String) o);
 		
-		if(o instanceof Boolean) {
+		if (o instanceof Boolean) {
 			return (Boolean) o ? "True" : "False";
 		}
-
-		if(o instanceof Coord) {
-			Coord c = (Coord) o;
+		
+		if (o instanceof Coord) {
+			final Coord c = (Coord) o;
 			return String.format("[%f:%f:%f]", c.x, c.y, c.z);
 		}
-
-		if(o instanceof Range) {
-			Range c = (Range) o;
+		
+		if (o instanceof Range) {
+			final Range c = (Range) o;
 			return String.format("%f:%f", c.getMin(), c.getMax());
 		}
 		
-		if(o instanceof Class<?>) {
+		if (o instanceof Class<?>) {
 			return Log.str(o);
 		}
 		

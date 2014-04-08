@@ -15,7 +15,7 @@ import org.lwjgl.input.Keyboard;
  */
 public class KeyStroke {
 	
-	private final Set<Integer> keys = new LinkedHashSet<Integer>();
+	private final Set<Integer> keys = new LinkedHashSet<>();
 	private final boolean fallingEdge;
 	
 	

@@ -16,7 +16,7 @@ import mightypork.utils.math.Calc;
 public class Ion {
 	
 	/** Ionizables<Mark, Class> */
-	private static Map<Byte, Class<?>> customIonizables = new HashMap<Byte, Class<?>>();
+	private static Map<Byte, Class<?>> customIonizables = new HashMap<>();
 	
 	// register default ionizables
 	static {
@@ -67,22 +67,13 @@ public class Ion {
 	 */
 	public static Object fromFile(File file) throws IonException
 	{
-		InputStream in = null;
-		try {
-			in = new FileInputStream(file);
+		try (InputStream in = new FileInputStream(file)) {
+			
 			final Object obj = fromStream(in);
 			return obj;
 			
 		} catch (final IOException e) {
 			throw new IonException("Error loading ION file.", e);
-		} finally {
-			if (in != null) {
-				try {
-					in.close();
-				} catch (final IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 	}
 	
@@ -122,14 +113,11 @@ public class Ion {
 	 */
 	public static void toFile(File path, Object obj) throws IonException
 	{
-		OutputStream out = null;
-		try {
+		try (OutputStream out = new FileOutputStream(path)) {
 			final String f = path.toString();
 			final File dir = new File(f.substring(0, f.lastIndexOf(File.separator)));
 			
 			dir.mkdirs();
-			
-			out = new FileOutputStream(path);
 			
 			toStream(out, obj);
 			
@@ -137,15 +125,6 @@ public class Ion {
 			out.close();
 		} catch (final Exception e) {
 			throw new IonException("Error writing to ION file.", e);
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (final IOException e) {
-					e.printStackTrace();
-				}
-			}
-			
 		}
 	}
 	

@@ -25,6 +25,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	private final KeyBindingPool keybindings;
 	
 	private static boolean inited = false;
+	
+	
 	public InputSystem(AppAccess app) {
 		super(app);
 		

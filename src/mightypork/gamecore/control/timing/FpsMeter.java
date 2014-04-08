@@ -31,7 +31,7 @@ public class FpsMeter {
 		if (System.currentTimeMillis() - lastTimeMillis > 1000) {
 			lastSecFPS = frames;
 			frames = 0;
-			long over = System.currentTimeMillis() - lastTimeMillis - 1000;
+			final long over = System.currentTimeMillis() - lastTimeMillis - 1000;
 			lastTimeMillis = System.currentTimeMillis() - over;
 		}
 		frames++;

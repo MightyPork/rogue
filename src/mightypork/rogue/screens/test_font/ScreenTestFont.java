@@ -1,8 +1,8 @@
 package mightypork.rogue.screens.test_font;
 
 
-import mightypork.gamecore.control.AppAccess;
 import static mightypork.utils.math.constraints.ConstraintFactory.*;
+import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.renderers.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
@@ -22,7 +22,7 @@ public class ScreenTestFont extends Screen {
 		tp = new TextPainter(Res.getFont("default"), Align.CENTER, RGB.GREEN);
 		tp.setText("Hello World!");
 		
-		RectConstraint strbox = c_grow(c_center(this), 0, c_div(c_height(this), 10));
+		final RectConstraint strbox = c_grow(c_center(this), 0, c_div(c_height(this), 10));
 		
 		tp.setContext(strbox);
 	}

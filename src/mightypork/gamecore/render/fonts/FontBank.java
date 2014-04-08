@@ -6,8 +6,6 @@ import java.util.HashMap;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
-import mightypork.gamecore.render.fonts.DeferredFont.FontStyle;
-import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.logging.Log;
 
 import org.newdawn.slick.opengl.Texture;
@@ -21,12 +19,13 @@ import org.newdawn.slick.opengl.Texture;
 public class FontBank extends AppAdapter {
 	
 	private static final GLFont NULL_FONT = new NullFont();
-
+	
+	
 	public FontBank(AppAccess app) {
 		super(app);
 	}
 	
-	private final HashMap<String, GLFont> fonts = new HashMap<String, GLFont>();
+	private final HashMap<String, GLFont> fonts = new HashMap<>();
 	
 	
 	/**

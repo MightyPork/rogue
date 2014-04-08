@@ -37,7 +37,7 @@ public class FontRenderer {
 	 * @param font used font
 	 * @param color drawing color
 	 */
-	public FontRenderer(GLFont font, RGB color) {		
+	public FontRenderer(GLFont font, RGB color) {
 		this.font = font;
 		this.color = color;
 	}
@@ -131,12 +131,13 @@ public class FontRenderer {
 		Render.popState();
 	}
 	
-
+	
 	/**
 	 * Draw on screen
 	 * 
 	 * @param text text to draw
-	 * @param bounds drawing bounds (height for font height, horizontal bounds for align)
+	 * @param bounds drawing bounds (height for font height, horizontal bounds
+	 *            for align)
 	 * @param align horizontal alignment (with respect to bounds)
 	 */
 	public void draw(String text, Rect bounds, Align align)
@@ -144,13 +145,13 @@ public class FontRenderer {
 		this.draw(text, bounds, align, this.color);
 	}
 	
-
-
+	
 	/**
 	 * Draw on screen
 	 * 
 	 * @param text text to draw
-	 * @param bounds drawing bounds (height for font height, horizontal bounds for align)
+	 * @param bounds drawing bounds (height for font height, horizontal bounds
+	 *            for align)
 	 * @param align horizontal alignment (with respect to bounds)
 	 * @param color drawing color
 	 */
@@ -190,7 +191,7 @@ public class FontRenderer {
 		draw(text, pos, height, align, this.color);
 	}
 	
-
+	
 	/**
 	 * Draw on screen
 	 * 

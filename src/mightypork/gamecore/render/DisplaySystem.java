@@ -200,6 +200,7 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 		return new Rect(getSize());
 	}
 	
+	
 	/**
 	 * @return current FPS
 	 */
@@ -208,7 +209,6 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 		return fpsMeter.getFPS();
 	}
 	
-
 	public static final NumberConstraint width = new NumberConstraint() {
 		
 		@Override
@@ -218,7 +218,6 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 		}
 	};
 	
-
 	public static final NumberConstraint height = new NumberConstraint() {
 		
 		@Override

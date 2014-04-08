@@ -62,7 +62,7 @@ public class SimpleConfig {
 	 */
 	public static List<String> listFromString(String text)
 	{
-		final List<String> list = new ArrayList<String>();
+		final List<String> list = new ArrayList<>();
 		
 		final String[] groupsLines = text.split("\n");
 		
@@ -92,7 +92,7 @@ public class SimpleConfig {
 	 */
 	public static Map<String, String> mapFromString(String text)
 	{
-		final LinkedHashMap<String, String> pairs = new LinkedHashMap<String, String>();
+		final LinkedHashMap<String, String> pairs = new LinkedHashMap<>();
 		
 		final String[] groupsLines = text.split("\n");
 		
@@ -148,7 +148,7 @@ public class SimpleConfig {
 	 */
 	public static void mapToFile(File target, Map<String, String> data, boolean allowNulls) throws IOException
 	{
-		final List<String> lines = new ArrayList<String>();
+		final List<String> lines = new ArrayList<>();
 		
 		for (final Entry<String, String> e : data.entrySet()) {
 			String key = e.getKey();

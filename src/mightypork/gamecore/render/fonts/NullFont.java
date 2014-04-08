@@ -38,8 +38,8 @@ public class NullFont implements GLFont {
 	{
 		return 0;
 	}
-
-
+	
+	
 	@Override
 	public int getSize()
 	{

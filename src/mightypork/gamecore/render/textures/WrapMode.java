@@ -1,6 +1,8 @@
 package mightypork.gamecore.render.textures;
 
+
 import org.lwjgl.opengl.GL11;
+
 
 public enum WrapMode
 {

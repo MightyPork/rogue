@@ -30,6 +30,7 @@ public class Render {
 	private static final Coord AXIS_Y = new Coord(0, 1, 0);
 	private static final Coord AXIS_Z = new Coord(0, 0, 1);
 	
+	
 	/**
 	 * Bind GL color
 	 * 
@@ -464,8 +465,8 @@ public class Render {
 	{
 		quadTextured(quad, txquad.uvs, txquad.tx, tint);
 	}
-
-
+	
+	
 	/**
 	 * Setup Ortho projection for 2D graphics
 	 */
@@ -480,7 +481,7 @@ public class Render {
 		
 		// back to modelview
 		glMatrixMode(GL_MODELVIEW);
-
+		
 		glLoadIdentity();
 		
 		glDisable(GL_LIGHTING);
