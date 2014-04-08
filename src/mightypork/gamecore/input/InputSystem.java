@@ -2,8 +2,8 @@ package mightypork.gamecore.input;
 
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.RootBusNode;
-import mightypork.gamecore.control.bus.events.KeyboardEvent;
+import mightypork.gamecore.control.bus.clients.RootBusNode;
+import mightypork.gamecore.control.bus.events.KeyEvent;
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;
 import mightypork.gamecore.control.bus.events.MouseMotionEvent;
 import mightypork.gamecore.control.interf.Updateable;
@@ -92,14 +92,16 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 			wasMouse = true;
 		}
 		
-		if (wasMouse && !moveSum.isZero()) bus().send(new MouseMotionEvent(lastPos, moveSum));
+		if (wasMouse && !moveSum.isZero()) {
+			getEventBus().send(new MouseMotionEvent(lastPos, moveSum));
+		}
 		
 		while (Keyboard.next()) {
 			onKeyEvent();
 		}
 		
 		if (Display.isCloseRequested()) {
-			bus().send(new ActionRequest(RequestType.SHUTDOWN));
+			getEventBus().send(new ActionRequest(RequestType.SHUTDOWN));
 		}
 	}
 	
@@ -118,7 +120,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		}
 		
 		if (button != -1 || wheeld != 0) {
-			bus().send(new MouseButtonEvent(pos, button, down, wheeld));
+			getEventBus().send(new MouseButtonEvent(pos, button, down, wheeld));
 		}
 		
 		moveSum.add_ip(move);
@@ -132,7 +134,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		final boolean down = Keyboard.getEventKeyState();
 		final char c = Keyboard.getEventCharacter();
 		
-		bus().send(new KeyboardEvent(key, c, down));
+		getEventBus().send(new KeyEvent(key, c, down));
 	}
 	
 	
@@ -155,11 +157,17 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
+	/**
+	 * Trap mouse cursor in the window
+	 * 
+	 * @param grab true to grab
+	 */
 	public void grabMouse(boolean grab)
 	{
 		Mouse.setGrabbed(grab);
 	}
 	
+	/** Horizontal mouse position */
 	public static final NumberConstraint mouseX = new NumberConstraint() {
 		
 		@Override
@@ -169,6 +177,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		}
 	};
 	
+	/** Vertical mouse position */
 	public static final NumberConstraint mouseY = new NumberConstraint() {
 		
 		@Override

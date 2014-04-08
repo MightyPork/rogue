@@ -44,14 +44,14 @@ public abstract class ScreenLayer extends AppSubModule implements Renderable, Re
 	}
 	
 	
-	protected Screen screen()
+	protected final Screen getScreen()
 	{
 		return screen;
 	}
 	
 	
 	@Override
-	public Rect getRect()
+	public final Rect getRect()
 	{
 		return screen.getRect();
 	}

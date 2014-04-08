@@ -60,7 +60,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			@Override
 			public String getText()
 			{
-				return "Running at " + disp().getFps() + " fps!";
+				return "Running at " + getDisplay().getFps() + " fps!";
 			}
 		});
 		

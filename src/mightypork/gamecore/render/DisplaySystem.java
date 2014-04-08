@@ -6,7 +6,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.nio.ByteBuffer;
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.RootBusNode;
+import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
@@ -89,7 +89,7 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 				Display.update();
 			}
 			
-			bus().send(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
+			getEventBus().send(new ScreenChangeEvent(true, Display.isFullscreen(), getSize()));
 			
 		} catch (final Throwable t) {
 			Log.e("Failed to toggle fullscreen mode.", t);
@@ -174,7 +174,7 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 	{
 		// handle resize
 		if (Display.wasResized()) {
-			bus().send(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
+			getEventBus().send(new ScreenChangeEvent(false, Display.isFullscreen(), getSize()));
 		}
 		
 		glLoadIdentity();

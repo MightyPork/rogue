@@ -9,14 +9,14 @@ import org.lwjgl.input.Keyboard;
  * 
  * @author MightyPork
  */
-public class KeyboardEvent implements Event<KeyboardEvent.Listener> {
+public class KeyEvent implements Event<KeyEvent.Listener> {
 	
 	private final int key;
 	private final boolean down;
 	private final char c;
 	
 	
-	public KeyboardEvent(int key, char c, boolean down) {
+	public KeyEvent(int key, char c, boolean down) {
 		this.key = key;
 		this.c = c;
 		this.down = down;
@@ -72,7 +72,7 @@ public class KeyboardEvent implements Event<KeyboardEvent.Listener> {
 		 * 
 		 * @param event event
 		 */
-		void receive(KeyboardEvent event);
+		void receive(KeyEvent event);
 	}
 	
 	

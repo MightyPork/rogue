@@ -4,6 +4,7 @@ package mightypork.gamecore.gui.screens;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
+import mightypork.gamecore.control.interf.NoImpl;
 import mightypork.gamecore.gui.renderers.Renderable;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
@@ -80,21 +81,23 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	
 	
 	/**
-	 * Clean up before screen is destroyed.
-	 */
-	protected abstract void deinitScreen();
-	
-	
-	/**
 	 * Called when the screen becomes active
 	 */
-	protected abstract void onScreenEnter();
+	@NoImpl
+	protected void onScreenEnter()
+	{
+		//
+	}
 	
 	
 	/**
 	 * Called when the screen is no longer active
 	 */
-	protected abstract void onScreenLeave();
+	@NoImpl
+	protected void onScreenLeave()
+	{
+		//
+	}
 	
 	
 	/**
@@ -102,9 +105,10 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	 * 
 	 * @param size screen size
 	 */
+	@NoImpl
 	protected void onSizeChanged(Coord size)
 	{
-		// no impl
+		//
 	}
 	
 	
@@ -137,7 +141,7 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	@Override
 	public final Rect getRect()
 	{
-		return disp().getRect();
+		return getDisplay().getRect();
 	}
 	
 	
@@ -154,5 +158,8 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	}
 	
 	
+	/**
+	 * @return screen identifier to be used for requests.
+	 */
 	public abstract String getId();
 }

@@ -25,32 +25,10 @@ public class ScreenTestBouncy extends LayeredScreen {
 			@Override
 			public void run()
 			{
-				bus().send(new ScreenRequestEvent("test.cat"));
+				getEventBus().send(new ScreenRequestEvent("test.cat"));
 			}
 		});
 	}
-	
-	
-	@Override
-	protected void deinitScreen()
-	{
-		// no impl
-	}
-	
-	
-	@Override
-	protected void onScreenEnter()
-	{
-		// no impl
-	}
-	
-	
-	@Override
-	protected void onScreenLeave()
-	{
-		// no impl
-	}
-	
 	
 	@Override
 	public String getId()

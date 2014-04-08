@@ -33,8 +33,8 @@ public abstract class LayeredScreen extends Screen {
 	 */
 	protected final void addLayer(ScreenLayer layer)
 	{
-		this.layers.add(layer); // will be rendered from last to first
-		addChildClient(layer); // connect to bus
+		this.layers.add(layer);
+		addChildClient(layer);
 	}
 	
 	

@@ -44,7 +44,7 @@ public class App implements AppAccess {
 	// modules
 	private InputSystem inputSystem;
 	private DisplaySystem displaySystem;
-	private static SoundSystem soundSystem;
+	private SoundSystem soundSystem;
 	private EventBus eventBus;
 	private GameLoop mainLoop;
 	private ScreenRegistry screens;
@@ -108,9 +108,9 @@ public class App implements AppAccess {
 	{
 		Log.i("Shutting down subsystems...");
 		
-		if (bus() != null) {
-			bus().send(new DestroyEvent());
-			bus().destroy();
+		if (getEventBus() != null) {
+			getEventBus().send(new DestroyEvent());
+			getEventBus().destroy();
 		}
 		
 		Log.i("Terminating...");
@@ -209,20 +209,20 @@ public class App implements AppAccess {
 		Log.f3("Registering channels...");
 		
 		// framework events
-		bus().addChannel(DestroyEvent.class, Destroyable.class);
-		bus().addChannel(UpdateEvent.class, Updateable.class);
+		getEventBus().addChannel(DestroyEvent.class, Destroyable.class);
+		getEventBus().addChannel(UpdateEvent.class, Updateable.class);
 		
 		// input events
-		bus().addChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
-		bus().addChannel(KeyboardEvent.class, KeyboardEvent.Listener.class);
-		bus().addChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
-		bus().addChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
+		getEventBus().addChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
+		getEventBus().addChannel(KeyEvent.class, KeyEvent.Listener.class);
+		getEventBus().addChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
+		getEventBus().addChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
 		
 		// control events
-		bus().addChannel(ScreenRequestEvent.class, ScreenRequestEvent.Listener.class);
-		bus().addChannel(ResourceLoadRequest.class, ResourceLoadRequest.Listener.class);
-		bus().addChannel(ActionRequest.class, ActionRequest.Listener.class);
-		bus().addChannel(MainLoopTaskRequest.class, MainLoopTaskRequest.Listener.class);
+		getEventBus().addChannel(ScreenRequestEvent.class, ScreenRequestEvent.Listener.class);
+		getEventBus().addChannel(ResourceLoadRequest.class, ResourceLoadRequest.Listener.class);
+		getEventBus().addChannel(ActionRequest.class, ActionRequest.Listener.class);
+		getEventBus().addChannel(MainLoopTaskRequest.class, MainLoopTaskRequest.Listener.class);
 	}
 	
 	
@@ -231,32 +231,32 @@ public class App implements AppAccess {
 		Log.f3("Setting up hot keys...");
 		
 		// Go fullscreen
-		input().bindKeyStroke(new KeyStroke(Keys.KEY_F11), new Runnable() {
+		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_F11), new Runnable() {
 			
 			@Override
 			public void run()
 			{
-				bus().send(new ActionRequest(RequestType.FULLSCREEN));
+				getEventBus().send(new ActionRequest(RequestType.FULLSCREEN));
 			}
 		});
 		
 		// Take screenshot
-		input().bindKeyStroke(new KeyStroke(Keys.KEY_F2), new Runnable() {
+		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_F2), new Runnable() {
 			
 			@Override
 			public void run()
 			{
-				bus().send(new ActionRequest(RequestType.SCREENSHOT));
+				getEventBus().send(new ActionRequest(RequestType.SCREENSHOT));
 			}
 		});
 		
 		// Exit
-		input().bindKeyStroke(new KeyStroke(Keys.KEY_LCONTROL, Keys.KEY_Q), new Runnable() {
+		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_LCONTROL, Keys.KEY_Q), new Runnable() {
 			
 			@Override
 			public void run()
 			{
-				bus().send(new ActionRequest(RequestType.SHUTDOWN));
+				getEventBus().send(new ActionRequest(RequestType.SHUTDOWN));
 			}
 		});
 	}
@@ -323,7 +323,7 @@ public class App implements AppAccess {
 	 * @return sound system of the running instance
 	 */
 	@Override
-	public SoundSystem snd()
+	public SoundSystem getSoundSystem()
 	{
 		return soundSystem;
 	}
@@ -333,7 +333,7 @@ public class App implements AppAccess {
 	 * @return input system of the running instance
 	 */
 	@Override
-	public InputSystem input()
+	public InputSystem getInput()
 	{
 		return inputSystem;
 	}
@@ -343,7 +343,7 @@ public class App implements AppAccess {
 	 * @return display system of the running instance
 	 */
 	@Override
-	public DisplaySystem disp()
+	public DisplaySystem getDisplay()
 	{
 		return displaySystem;
 	}
@@ -353,7 +353,7 @@ public class App implements AppAccess {
 	 * @return event bus
 	 */
 	@Override
-	public EventBus bus()
+	public EventBus getEventBus()
 	{
 		return eventBus;
 	}

@@ -23,7 +23,7 @@ public class SoundBank extends AppAdapter {
 	
 	public SoundBank(AppAccess app) {
 		super(app);
-		if (snd() == null) throw new NullPointerException("SoundSystem cannot be null.");
+		if (getSoundSystem() == null) throw new NullPointerException("SoundSystem cannot be null.");
 	}
 	
 	
@@ -37,7 +37,7 @@ public class SoundBank extends AppAdapter {
 	 */
 	public void addEffect(String key, String resource, double pitch, double gain)
 	{
-		effects.put(key, snd().createEffect(resource, pitch, gain));
+		effects.put(key, getSoundSystem().createEffect(resource, pitch, gain));
 	}
 	
 	
@@ -53,7 +53,7 @@ public class SoundBank extends AppAdapter {
 	 */
 	public void addLoop(String key, String resource, double pitch, double gain, double fadeIn, double fadeOut)
 	{
-		loops.put(key, snd().createLoop(resource, pitch, gain, fadeIn, fadeOut));
+		loops.put(key, getSoundSystem().createLoop(resource, pitch, gain, fadeIn, fadeOut));
 	}
 	
 	

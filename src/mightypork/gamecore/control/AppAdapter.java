@@ -25,30 +25,30 @@ public class AppAdapter implements AppAccess {
 	
 	
 	@Override
-	public final SoundSystem snd()
+	public final SoundSystem getSoundSystem()
 	{
-		return app.snd();
+		return app.getSoundSystem();
 	}
 	
 	
 	@Override
-	public final InputSystem input()
+	public final InputSystem getInput()
 	{
-		return app.input();
+		return app.getInput();
 	}
 	
 	
 	@Override
-	public final DisplaySystem disp()
+	public final DisplaySystem getDisplay()
 	{
-		return app.disp();
+		return app.getDisplay();
 	}
 	
 	
 	@Override
-	public final EventBus bus()
+	public final EventBus getEventBus()
 	{
-		return app.bus();
+		return app.getEventBus();
 	}
 	
 	

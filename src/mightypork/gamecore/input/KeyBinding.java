@@ -1,7 +1,7 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.control.bus.events.KeyboardEvent;
+import mightypork.gamecore.control.bus.events.KeyEvent;
 
 
 /**
@@ -9,7 +9,7 @@ import mightypork.gamecore.control.bus.events.KeyboardEvent;
  * 
  * @author MightyPork
  */
-public class KeyBinding implements KeyboardEvent.Listener {
+public class KeyBinding implements KeyEvent.Listener {
 	
 	private final KeyStroke keystroke;
 	private Runnable handler;
@@ -50,7 +50,7 @@ public class KeyBinding implements KeyboardEvent.Listener {
 	
 	
 	@Override
-	public void receive(KeyboardEvent event)
+	public void receive(KeyEvent event)
 	{
 		// ignore unrelated events
 		if (!keystroke.getKeys().contains(event.getKey())) return;

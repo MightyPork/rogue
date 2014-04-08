@@ -97,7 +97,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	public void render()
 	{
 		cat.render();
-		text.render(disp().getFps()+" fps");
+		text.render(getDisplay().getFps()+" fps");
 	}
 	
 }

@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import mightypork.gamecore.control.BusAccess;
+import mightypork.gamecore.control.bus.BusAccess;
 import mightypork.gamecore.control.bus.events.MainLoopTaskRequest;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.interf.Destroyable;
@@ -34,7 +34,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	public AsyncResourceLoader(BusAccess app) {
 		super("Deferred loader");
 		this.app = app;
-		app.bus().subscribe(this);
+		app.getEventBus().subscribe(this);
 	}
 	
 	
@@ -66,7 +66,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 						
 						Log.f3("<LOADER> Delegating to main thread:\n    " + Log.str(def));
 						
-						app.bus().send(new MainLoopTaskRequest(new Runnable() {
+						app.getEventBus().send(new MainLoopTaskRequest(new Runnable() {
 							
 							@Override
 							public void run()

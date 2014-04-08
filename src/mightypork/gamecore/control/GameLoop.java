@@ -46,9 +46,9 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 		timer = new TimerDelta();
 		
 		while (running) {
-			disp().beginFrame();
+			getDisplay().beginFrame();
 			
-			bus().send(new UpdateEvent(timer.getDelta()));
+			getEventBus().send(new UpdateEvent(timer.getDelta()));
 			
 			Runnable r;
 			while ((r = taskQueue.poll()) != null) {
@@ -61,7 +61,7 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 			
 			afterRender();
 			
-			disp().endFrame();
+			getDisplay().endFrame();
 		}
 	}
 	

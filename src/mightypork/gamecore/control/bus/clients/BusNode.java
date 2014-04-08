@@ -1,13 +1,12 @@
-package mightypork.gamecore.control;
+package mightypork.gamecore.control.bus.clients;
 
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import mightypork.gamecore.control.bus.BusAccess;
 import mightypork.gamecore.control.bus.EventBus;
-import mightypork.gamecore.control.bus.clients.DelegatingClient;
-import mightypork.gamecore.control.bus.clients.ToggleableClient;
 
 
 /**
@@ -62,7 +61,7 @@ public abstract class BusNode implements BusAccess, DelegatingClient, Toggleable
 			throw new IllegalArgumentException("Cannot nest RootBusNode.");
 		}
 		
-		if (bus().isClientValid(client)) {
+		if (getEventBus().isClientValid(client)) {
 			clients.add(client);
 		}
 	}
@@ -104,9 +103,9 @@ public abstract class BusNode implements BusAccess, DelegatingClient, Toggleable
 	
 	
 	@Override
-	public final EventBus bus()
+	public final EventBus getEventBus()
 	{
-		return busAccess.bus();
+		return busAccess.getEventBus();
 	}
 	
 }

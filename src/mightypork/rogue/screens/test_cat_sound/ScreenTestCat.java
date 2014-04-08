@@ -26,8 +26,8 @@ public class ScreenTestCat extends LayeredScreen {
 			@Override
 			public void run()
 			{
-				snd().fadeOutAllLoops();
-				bus().sendDelayed(new ActionRequest(RequestType.SHUTDOWN), 3);
+				getSoundSystem().fadeOutAllLoops();
+				getEventBus().sendDelayed(new ActionRequest(RequestType.SHUTDOWN), 3);
 			}
 		});
 		
@@ -36,22 +36,16 @@ public class ScreenTestCat extends LayeredScreen {
 			@Override
 			public void run()
 			{
-				bus().send(new ScreenRequestEvent("test.bouncy"));
+				getEventBus().send(new ScreenRequestEvent("test.bouncy"));
 			}
 		});
 	}
 	
 	
 	@Override
-	protected void deinitScreen()
-	{
-	}
-	
-	
-	@Override
 	protected void onScreenEnter()
 	{
-		snd().fadeOutAllLoops();
+		getSoundSystem().fadeOutAllLoops();
 		Res.getLoop("test.wilderness").fadeIn();
 	}
 	

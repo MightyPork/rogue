@@ -22,27 +22,6 @@ public class ScreenTestFont extends Screen {
 	
 	
 	@Override
-	protected void deinitScreen()
-	{
-		//
-	}
-	
-	
-	@Override
-	protected void onScreenEnter()
-	{
-		//
-	}
-	
-	
-	@Override
-	protected void onScreenLeave()
-	{
-		//
-	}
-	
-	
-	@Override
 	protected void renderScreen()
 	{
 		final String str = "O hai";
@@ -53,16 +32,6 @@ public class ScreenTestFont extends Screen {
 		final Coord origin = getRect().getCenter().sub(space.half());
 		
 		fr.draw(str, origin, height, RGB.GREEN);
-		
-//		final GLFont font = Res.getFont("");
-//		
-//		final String s = "It works!";
-//		final double scale = getRect().height() / 50D;
-//		Render.pushState();
-//		Render.translate(getRect().getCenter().sub(font.getNeededSpace(s).mul(scale).half()));
-//		Render.scale(new Coord(scale));
-//		font.draw("It works!");
-//		Render.popState();
 	}
 	
 	

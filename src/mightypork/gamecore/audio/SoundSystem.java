@@ -8,7 +8,7 @@ import java.util.Set;
 import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.RootBusNode;
+import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.interf.Updateable;
 import mightypork.utils.math.Calc.Buffers;
@@ -149,7 +149,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	private DeferredAudio getResource(String res)
 	{
 		final DeferredAudio a = new DeferredAudio(res);
-		bus().send(new ResourceLoadRequest(a));
+		getEventBus().send(new ResourceLoadRequest(a));
 		
 		if (resources.contains(a)) throw new IllegalArgumentException("Sound resource " + res + " is already registered.");
 		resources.add(a);

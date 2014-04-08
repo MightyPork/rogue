@@ -60,7 +60,7 @@ public class MainLoop extends GameLoop implements ActionRequest.Listener {
 		@Override
 		public void execute()
 		{
-			disp().switchFullscreen();
+			getDisplay().switchFullscreen();
 		}
 	};
 }

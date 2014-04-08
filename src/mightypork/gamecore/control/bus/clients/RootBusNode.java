@@ -1,5 +1,6 @@
-package mightypork.gamecore.control;
+package mightypork.gamecore.control.bus.clients;
 
+import mightypork.gamecore.control.bus.BusAccess;
 import mightypork.gamecore.control.interf.Destroyable;
 
 
@@ -13,7 +14,7 @@ public abstract class RootBusNode extends BusNode implements Destroyable {
 	public RootBusNode(BusAccess busAccess) {
 		super(busAccess);
 
-		bus().subscribe(this);
+		getEventBus().subscribe(this);
 	}
 	
 	
@@ -22,7 +23,7 @@ public abstract class RootBusNode extends BusNode implements Destroyable {
 	{
 		deinit();
 		
-		bus().unsubscribe(this);
+		getEventBus().unsubscribe(this);
 	}
 	
 	

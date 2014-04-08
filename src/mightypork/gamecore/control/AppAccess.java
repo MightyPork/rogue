@@ -2,6 +2,7 @@ package mightypork.gamecore.control;
 
 
 import mightypork.gamecore.audio.SoundSystem;
+import mightypork.gamecore.control.bus.BusAccess;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
 
@@ -16,19 +17,19 @@ public interface AppAccess extends BusAccess {
 	/**
 	 * @return sound system
 	 */
-	abstract SoundSystem snd();
+	abstract SoundSystem getSoundSystem();
 	
 	
 	/**
 	 * @return input system
 	 */
-	abstract InputSystem input();
+	abstract InputSystem getInput();
 	
 	
 	/**
 	 * @return display system
 	 */
-	abstract DisplaySystem disp();
+	abstract DisplaySystem getDisplay();
 	
 	
 	/**

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.bus.events.ScreenRequestEvent;
+import mightypork.gamecore.control.interf.NoImpl;
 import mightypork.gamecore.gui.renderers.Renderable;
 import mightypork.utils.logging.Log;
 
@@ -52,9 +53,10 @@ public class ScreenRegistry extends AppModule implements ScreenRequestEvent.List
 	
 	
 	@Override
+	@NoImpl
 	protected void deinit()
 	{
-		// no impl
+		//
 	}
 	
 }
