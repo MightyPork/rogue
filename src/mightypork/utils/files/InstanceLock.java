@@ -43,7 +43,7 @@ public class InstanceLock {
 			}
 			
 			return false;
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			return false;
 		}
 	}

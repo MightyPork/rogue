@@ -21,23 +21,27 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 	
 	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<>();
 	private TimerDelta timer;
-	private final Renderable mainRenderable;
+	private Renderable rootRenderable;
 	private boolean running = true;
 	
 	
 	/**
 	 * @param app {@link AppAccess} instance
+	 */
+	public GameLoop(AppAccess app) {
+		super(app);
+	}
+	
+	
+	/**
+	 * Set primary renderable
+	 * 
 	 * @param rootRenderable main {@link Renderable}, typically a
 	 *            {@link ScreenRegistry}
 	 */
-	public GameLoop(AppAccess app, Renderable rootRenderable) {
-		super(app);
-		
-		if (rootRenderable == null) {
-			throw new NullPointerException("Master renderable must not be null.");
-		}
-		
-		mainRenderable = rootRenderable;
+	public void setRootRenderable(Renderable rootRenderable)
+	{
+		this.rootRenderable = rootRenderable;
 	}
 	
 	
@@ -57,7 +61,7 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 			
 			beforeRender();
 			
-			mainRenderable.render();
+			if (rootRenderable != null) rootRenderable.render();
 			
 			afterRender();
 			

@@ -1,8 +1,8 @@
 package mightypork.rogue;
 
 
+import mightypork.gamecore.control.BaseApp;
 import mightypork.gamecore.control.GameLoop;
-import mightypork.gamecore.gui.renderers.Renderable;
 import mightypork.gamecore.input.Action;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
@@ -11,8 +11,8 @@ import mightypork.rogue.util.Utils;
 
 public class MainLoop extends GameLoop implements ActionRequest.Listener {
 	
-	public MainLoop(App app, Renderable masterRenderable) {
-		super(app, masterRenderable);
+	public MainLoop(BaseApp app) {
+		super(app);
 	}
 	
 	

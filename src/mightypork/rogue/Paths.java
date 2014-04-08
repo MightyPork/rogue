@@ -9,7 +9,7 @@ import mightypork.utils.files.OsUtils;
 public class Paths {
 	
 	private static final String APPDIR_NAME = "rogue";
-
+	
 	public static final File WORKDIR = OsUtils.getWorkDir(APPDIR_NAME);
 	public static final File LOGS = OsUtils.getWorkDir(APPDIR_NAME, "logs");
 	public static final File SCREENSHOTS = OsUtils.getWorkDir(APPDIR_NAME, "screenshots");

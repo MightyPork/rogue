@@ -1,4 +1,4 @@
-package mightypork.gamecore;
+package mightypork.rogue.util;
 
 
 import mightypork.utils.logging.LogInstance;

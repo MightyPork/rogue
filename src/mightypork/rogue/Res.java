@@ -5,7 +5,7 @@ import mightypork.gamecore.audio.SoundBank;
 import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.loading.AsyncResourceLoader;
+import mightypork.gamecore.control.BaseApp;
 import mightypork.gamecore.render.fonts.DeferredFont;
 import mightypork.gamecore.render.fonts.DeferredFont.FontStyle;
 import mightypork.gamecore.render.fonts.FontBank;
@@ -37,12 +37,10 @@ public class Res {
 	 * 
 	 * @param app app access
 	 */
-	public static void load(App app)
+	public static void load(BaseApp app)
 	{
 		if (initialized) return;
 		initialized = true;
-		
-		AsyncResourceLoader.launch(app);
 		
 		textures = new TextureBank(app);
 		sounds = new SoundBank(app);
