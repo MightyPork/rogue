@@ -10,7 +10,6 @@ import mightypork.gamecore.control.interf.Updateable;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.utils.math.constraints.NumberConstraint;
 import mightypork.utils.math.coord.Coord;
 
 import org.lwjgl.LWJGLException;
@@ -54,7 +53,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
-	private static void initDevices()
+	private void initDevices()
 	{
 		if (inited) return;
 		inited = true;
@@ -176,24 +175,4 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	{
 		Mouse.setGrabbed(grab);
 	}
-	
-	/** Horizontal mouse position */
-	public static final NumberConstraint mouseX = new NumberConstraint() {
-		
-		@Override
-		public double getValue()
-		{
-			return getMousePos().x;
-		}
-	};
-	
-	/** Vertical mouse position */
-	public static final NumberConstraint mouseY = new NumberConstraint() {
-		
-		@Override
-		public double getValue()
-		{
-			return getMousePos().y;
-		}
-	};
 }

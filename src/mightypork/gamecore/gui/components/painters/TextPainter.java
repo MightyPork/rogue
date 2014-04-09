@@ -1,6 +1,7 @@
-package mightypork.gamecore.gui.renderers;
+package mightypork.gamecore.gui.components.painters;
 
 
+import mightypork.gamecore.gui.components.PluggableRenderer;
 import mightypork.gamecore.render.fonts.FontRenderer;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.gamecore.render.fonts.GLFont;

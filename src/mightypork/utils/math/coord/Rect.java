@@ -1,8 +1,8 @@
 package mightypork.utils.math.coord;
 
 
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.utils.math.Calc;
-import mightypork.utils.math.constraints.RectConstraint;
 
 
 /**
@@ -67,15 +67,15 @@ public class Rect implements RectConstraint {
 	/**
 	 * Make rect from min coord and size
 	 * 
-	 * @param xMin min x
-	 * @param yMin min y
+	 * @param xmin min x
+	 * @param ymin min y
 	 * @param width size x
 	 * @param height size y
 	 * @return the new rect
 	 */
-	public static Rect fromSize(double xMin, double yMin, double width, double height)
+	public static Rect fromSize(double xmin, double ymin, double width, double height)
 	{
-		return new Rect(xMin, yMin, xMin + width, yMin + height);
+		return new Rect(xmin, ymin, xmin + width, ymin + height);
 	}
 	
 	/** Lowest coordinates xy */
@@ -117,13 +117,13 @@ public class Rect implements RectConstraint {
 	/**
 	 * New Rect
 	 * 
-	 * @param x1 lower x
-	 * @param y1 lower y
-	 * @param x2 upper x
-	 * @param y2 upper y
+	 * @param xmin lower x
+	 * @param ymin lower y
+	 * @param xmax upper x
+	 * @param ymax upper y
 	 */
-	public Rect(double x1, double y1, double x2, double y2) {
-		setTo(x1, y1, x2, y2);
+	public Rect(double xmin, double ymin, double xmax, double ymax) {
+		setTo(xmin, ymin, xmax, ymax);
 	}
 	
 	
@@ -227,7 +227,7 @@ public class Rect implements RectConstraint {
 	 * 
 	 * @return center
 	 */
-	public Coord getCenterV1()
+	public Coord getCenterVMin()
 	{
 		return new Coord((max.x + min.x) / 2D, min.y);
 	}
@@ -238,7 +238,7 @@ public class Rect implements RectConstraint {
 	 * 
 	 * @return center
 	 */
-	public Coord getCenterH1()
+	public Coord getCenterHMin()
 	{
 		return new Coord(min.x, (max.y + min.y) / 2D);
 	}
@@ -249,7 +249,7 @@ public class Rect implements RectConstraint {
 	 * 
 	 * @return center
 	 */
-	public Coord getCenterH2()
+	public Coord getCenterHMax()
 	{
 		return new Coord(max.x, (max.y + min.y) / 2D);
 	}
@@ -260,7 +260,7 @@ public class Rect implements RectConstraint {
 	 * 
 	 * @return center
 	 */
-	public Coord getCenterV2()
+	public Coord getCenterVMax()
 	{
 		return new Coord((max.x + min.x) / 2D, max.y);
 	}
@@ -271,7 +271,7 @@ public class Rect implements RectConstraint {
 	 * 
 	 * @return center
 	 */
-	public Coord getX1Y1()
+	public Coord getHMinVMin()
 	{
 		return new Coord(min.x, min.y);
 	}
@@ -282,7 +282,7 @@ public class Rect implements RectConstraint {
 	 * 
 	 * @return center
 	 */
-	public Coord getX1Y2()
+	public Coord getHMinVMax()
 	{
 		return new Coord(min.x, max.y);
 	}
@@ -295,7 +295,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getMax()
 	{
-		return getX2Y2();
+		return getHMaxVMax();
 	}
 	
 	
@@ -306,7 +306,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getMin()
 	{
-		return getX1Y1();
+		return getHMinVMin();
 	}
 	
 	
@@ -326,7 +326,7 @@ public class Rect implements RectConstraint {
 	 * 
 	 * @return center
 	 */
-	public Coord getX2Y1()
+	public Coord getHMaxVMin()
 	{
 		return new Coord(max.x, min.y);
 	}
@@ -337,7 +337,7 @@ public class Rect implements RectConstraint {
 	 * 
 	 * @return center
 	 */
-	public Coord getX2Y2()
+	public Coord getHMaxVMax()
 	{
 		return new Coord(max.x, max.y);
 	}
@@ -399,31 +399,31 @@ public class Rect implements RectConstraint {
 	/**
 	 * Shrink the rect
 	 * 
-	 * @param x1 shrink
-	 * @param y1 shrink
-	 * @param x2 shrink
-	 * @param y2 shrink
+	 * @param xmin shrink
+	 * @param ymin shrink
+	 * @param xmax shrink
+	 * @param ymax shrink
 	 * @return changed copy
 	 */
-	public Rect shrink(double x1, double y1, double x2, double y2)
+	public Rect shrink(double xmin, double ymin, double xmax, double ymax)
 	{
-		return copy().shrink_ip(x1, y1, x2, y2);
+		return copy().shrink_ip(xmin, ymin, xmax, ymax);
 	}
 	
 	
 	/**
 	 * Shrink the rect in place
 	 * 
-	 * @param x1 shrink
-	 * @param y1 shrink
-	 * @param x2 shrink
-	 * @param y2 shrink
+	 * @param xmin shrink
+	 * @param ymin shrink
+	 * @param xmax shrink
+	 * @param ymax shrink
 	 * @return this
 	 */
-	public Rect shrink_ip(double x1, double y1, double x2, double y2)
+	public Rect shrink_ip(double xmin, double ymin, double xmax, double ymax)
 	{
-		min.add_ip(x1, y2);
-		max.add_ip(-x2, -y1);
+		min.add_ip(xmin, ymin);
+		max.add_ip(-xmax, -ymax);
 		return this;
 	}
 	
@@ -484,31 +484,31 @@ public class Rect implements RectConstraint {
 	/**
 	 * Grow the rect
 	 * 
-	 * @param x1 growth
-	 * @param y1 growth
-	 * @param x2 growth
-	 * @param y2 growth
+	 * @param xmin growth
+	 * @param ymin growth
+	 * @param xmax growth
+	 * @param ymax growth
 	 * @return changed copy
 	 */
-	public Rect grow(double x1, double y1, double x2, double y2)
+	public Rect grow(double xmin, double ymin, double xmax, double ymax)
 	{
-		return copy().grow_ip(x1, y1, x2, y2);
+		return copy().grow_ip(xmin, ymin, xmax, ymax);
 	}
 	
 	
 	/**
 	 * Grow the rect in place
 	 * 
-	 * @param x1 growth
-	 * @param y1 growth
-	 * @param x2 growth
-	 * @param y2 growth
+	 * @param xmin growth
+	 * @param ymin growth
+	 * @param xmax growth
+	 * @param ymax growth
 	 * @return this
 	 */
-	public Rect grow_ip(double x1, double y1, double x2, double y2)
+	public Rect grow_ip(double xmin, double ymin, double xmax, double ymax)
 	{
-		min.add_ip(-x1, -y2);
-		max.add_ip(x2, y1);
+		min.add_ip(-xmin, -ymin);
+		max.add_ip(xmax, ymax);
 		return this;
 	}
 	
@@ -617,17 +617,17 @@ public class Rect implements RectConstraint {
 	/**
 	 * Set to coordinates
 	 * 
-	 * @param x1 lower x
-	 * @param y1 lower y
-	 * @param x2 upper x
-	 * @param y2 upper y
+	 * @param xmin lower x
+	 * @param ymin lower y
+	 * @param xmax upper x
+	 * @param ymax upper y
 	 */
-	public void setTo(double x1, double y1, double x2, double y2)
+	public void setTo(double xmin, double ymin, double xmax, double ymax)
 	{
-		min.x = Calc.min(x1, x2);
-		min.y = Calc.min(y1, y2);
-		max.x = Calc.max(x1, x2);
-		max.y = Calc.max(y1, y2);
+		min.x = Calc.min(xmin, xmax);
+		min.y = Calc.min(ymin, ymax);
+		max.x = Calc.max(xmin, xmax);
+		max.y = Calc.max(ymin, ymax);
 	}
 	
 	
@@ -723,7 +723,7 @@ public class Rect implements RectConstraint {
 	/**
 	 * @return lower x
 	 */
-	public double x1()
+	public double xMin()
 	{
 		return min.x;
 	}
@@ -732,7 +732,7 @@ public class Rect implements RectConstraint {
 	/**
 	 * @return upper x
 	 */
-	public double x2()
+	public double xMax()
 	{
 		return max.x;
 	}
@@ -741,7 +741,7 @@ public class Rect implements RectConstraint {
 	/**
 	 * @return lower y
 	 */
-	public double y1()
+	public double yMin()
 	{
 		return min.y;
 	}
@@ -750,7 +750,7 @@ public class Rect implements RectConstraint {
 	/**
 	 * @return upper y
 	 */
-	public double y2()
+	public double yMax()
 	{
 		return max.y;
 	}

@@ -1,18 +1,18 @@
 package mightypork.rogue.screens.test_bouncyboxes;
 
 
-import static mightypork.utils.math.constraints.ConstraintFactory.*;
+import static mightypork.gamecore.gui.constraints.Constraints.*;
 
 import java.util.Random;
 
 import mightypork.gamecore.control.interf.Updateable;
-import mightypork.gamecore.gui.renderers.PluggableRenderer;
+import mightypork.gamecore.gui.components.PluggableRenderer;
+import mightypork.gamecore.gui.constraints.NumberConstraint;
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.NumberConstraint;
-import mightypork.utils.math.constraints.RectConstraint;
 
 
 public class BouncyBox extends PluggableRenderer implements Updateable {
@@ -26,16 +26,16 @@ public class BouncyBox extends PluggableRenderer implements Updateable {
 	
 	public BouncyBox() {
 		// create box
-		final NumberConstraint side = c_height(this);
-		RectConstraint abox = c_box(this, side, side);
+		final NumberConstraint side = _height(this);
+		RectConstraint abox = _box(this, side, side);
 		
 		// move
-		final NumberConstraint move_length = c_sub(c_width(this), side);
-		final NumberConstraint offset = c_mul(move_length, pos);
-		abox = c_move(abox, offset, 0);
+		final NumberConstraint move_length = _sub(_width(this), side);
+		final NumberConstraint offset = _mul(move_length, pos);
+		abox = _move(abox, offset, 0);
 		
 		// add padding
-		abox = c_shrink(abox, c_percent(side, 10));
+		abox = _shrink(abox, _percent(side, 10));
 		
 		box = abox;
 	}

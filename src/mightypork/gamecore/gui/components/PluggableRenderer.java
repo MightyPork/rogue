@@ -1,8 +1,8 @@
-package mightypork.gamecore.gui.renderers;
+package mightypork.gamecore.gui.components;
 
 
-import mightypork.utils.math.constraints.ContextAdapter;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.gamecore.gui.constraints.ContextAdapter;
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.utils.math.coord.Rect;
 
 

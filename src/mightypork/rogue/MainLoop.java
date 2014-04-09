@@ -10,7 +10,6 @@ import java.util.Date;
 import mightypork.gamecore.control.BaseApp;
 import mightypork.gamecore.control.GameLoop;
 import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.Screenshot;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
@@ -42,7 +41,9 @@ public class MainLoop extends GameLoop implements ActionRequest.Listener {
 		}
 	}
 	
-	/* Take a screenshot */
+	/*
+	 * Take a screenshot
+	 */
 	private final Action taskScreenshot = new Action() {
 		
 		@Override
@@ -53,7 +54,9 @@ public class MainLoop extends GameLoop implements ActionRequest.Listener {
 		}
 	};
 	
-	/* Shutdown the application */
+	/*
+	 * Shutdown the application
+	 */
 	private final Action taskShutdown = new Action() {
 		
 		@Override
@@ -63,7 +66,9 @@ public class MainLoop extends GameLoop implements ActionRequest.Listener {
 		}
 	};
 	
-	/* Toggle fullscreen */
+	/*
+	 * Toggle fullscreen
+	 */
 	private final Action taskFullscreen = new Action() {
 		
 		@Override
@@ -79,7 +84,7 @@ public class MainLoop extends GameLoop implements ActionRequest.Listener {
 		
 		
 		public TaskTakeScreenshot() {
-			scr = DisplaySystem.takeScreenshot();
+			scr = getDisplay().takeScreenshot();
 		}
 		
 		

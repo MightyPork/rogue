@@ -291,20 +291,20 @@ public class Render {
 	 */
 	public static void quad(Rect quad)
 	{
-		final double left = quad.x1();
-		final double bottom = quad.y1();
-		final double right = quad.x2();
-		final double top = quad.y2();
+		final double x1 = quad.xMin();
+		final double y1 = quad.yMin();
+		final double x2 = quad.xMax();
+		final double y2 = quad.yMax();
 		
 		// draw with color
 		unbindTexture();
 		
 		// quad
 		glBegin(GL_QUADS);
-		glVertex2d(left, top);
-		glVertex2d(right, top);
-		glVertex2d(right, bottom);
-		glVertex2d(left, bottom);
+		glVertex2d(x1, y2);
+		glVertex2d(x2, y2);
+		glVertex2d(x2, y1);
+		glVertex2d(x1, y1);
 		glEnd();
 	}
 	
@@ -331,25 +331,25 @@ public class Render {
 	 */
 	public static void quadUV_nobound(Rect quad, Rect uvs)
 	{
-		final double left = quad.x1();
-		final double bottom = quad.y1();
-		final double right = quad.x2();
-		final double top = quad.y2();
+		final double x1 = quad.xMin();
+		final double y1 = quad.yMin();
+		final double x2 = quad.xMax();
+		final double y2 = quad.yMax();
 		
-		final double tleft = uvs.x1();
-		final double tbottom = uvs.y1();
-		final double tright = uvs.x2();
-		final double ttop = uvs.y2();
+		final double tx1 = uvs.xMin();
+		final double ty1 = uvs.yMin();
+		final double tx2 = uvs.xMax();
+		final double ty2 = uvs.yMax();
 		
 		// quad with texture
-		glTexCoord2d(tleft, ttop);
-		glVertex2d(left, top);
-		glTexCoord2d(tright, ttop);
-		glVertex2d(right, top);
-		glTexCoord2d(tright, tbottom);
-		glVertex2d(right, bottom);
-		glTexCoord2d(tleft, tbottom);
-		glVertex2d(left, bottom);
+		glTexCoord2d(tx1, ty2);
+		glVertex2d(x1, y2);
+		glTexCoord2d(tx2, ty2);
+		glVertex2d(x2, y2);
+		glTexCoord2d(tx2, ty1);
+		glVertex2d(x2, y1);
+		glTexCoord2d(tx1, ty1);
+		glVertex2d(x1, y1);
 	}
 	
 	
@@ -362,24 +362,24 @@ public class Render {
 	 */
 	public static void quadGradH(Rect quad, RGB colorLeft, RGB colorRight)
 	{
-		final double left = quad.x1();
-		final double bottom = quad.y1();
-		final double right = quad.y2();
-		final double top = quad.y2();
+		final double x1 = quad.xMin();
+		final double y1 = quad.yMin();
+		final double x2 = quad.xMax();
+		final double y2 = quad.yMax();
 		
 		// draw with color
 		unbindTexture();
 		
 		glBegin(GL_QUADS);
 		setColor(colorLeft);
-		glVertex2d(left, top);
+		glVertex2d(x1, y2);
 		setColor(colorRight);
-		glVertex2d(right, top);
+		glVertex2d(x2, y2);
 		
 		setColor(colorRight);
-		glVertex2d(right, bottom);
+		glVertex2d(x2, y1);
 		setColor(colorLeft);
-		glVertex2d(left, bottom);
+		glVertex2d(x1, y1);
 		glEnd();
 	}
 	
@@ -388,27 +388,27 @@ public class Render {
 	 * Draw quad with vertical gradient
 	 * 
 	 * @param quad drawn quad bounds
-	 * @param colorTop top color
-	 * @param colorBottom bottom color
+	 * @param color1 top color
+	 * @param color2 bottom color
 	 */
-	public static void quadGradV(Rect quad, RGB colorTop, RGB colorBottom)
+	public static void quadGradV(Rect quad, RGB color1, RGB color2)
 	{
-		final double left = quad.x1();
-		final double bottom = quad.y1();
-		final double right = quad.y2();
-		final double top = quad.y2();
+		final double x1 = quad.xMin();
+		final double y1 = quad.yMin();
+		final double x2 = quad.xMax();
+		final double y2 = quad.yMax();
 		
 		// draw with color
 		unbindTexture();
 		
 		glBegin(GL_QUADS);
-		setColor(colorTop);
-		glVertex2d(left, top);
-		glVertex2d(right, top);
+		setColor(color1);
+		glVertex2d(x1, y1);
+		glVertex2d(x2, y1);
 		
-		setColor(colorBottom);
-		glVertex2d(right, bottom);
-		glVertex2d(left, bottom);
+		setColor(color2);
+		glVertex2d(x2, y2);
+		glVertex2d(x1, y2);
 		glEnd();
 	}
 	

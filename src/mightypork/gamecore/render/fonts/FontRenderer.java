@@ -6,6 +6,8 @@ import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
+import org.lwjgl.opengl.GL11;
+
 
 /**
  * Font renderer
@@ -123,6 +125,7 @@ public class FontRenderer {
 	{
 		Render.pushState();
 		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		Render.translate(pos.round());
 		Render.scaleXY(getScale(height));
 		
@@ -161,16 +164,16 @@ public class FontRenderer {
 		
 		switch (align) {
 			case LEFT:
-				start = bounds.getX1Y1();
+				start = bounds.getHMinVMin();
 				break;
 			
 			case CENTER:
-				start = bounds.getCenterV1();
+				start = bounds.getCenterVMin();
 				break;
 			
 			case RIGHT:
 			default:
-				start = bounds.getX2Y1();
+				start = bounds.getHMaxVMin();
 				break;
 		}
 		

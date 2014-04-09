@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.render.Render;
+import mightypork.utils.math.coord.Coord;
 
 
 /**
@@ -58,6 +59,34 @@ public abstract class LayeredScreen extends Screen {
 	{
 		this.layers.remove(layer);
 		removeChildClient(layer);
+	}
+	
+	
+	@Override
+	protected void onScreenEnter()
+	{
+		for (final ScreenLayer layer : layers) {
+			layer.onScreenEnter();
+		}
+	}
+	
+	
+	@Override
+	protected void onScreenLeave()
+	{
+		
+		for (final ScreenLayer layer : layers) {
+			layer.onScreenLeave();
+		}
+	}
+	
+	
+	@Override
+	protected void onSizeChanged(Coord size)
+	{
+		for (final ScreenLayer layer : layers) {
+			layer.onSizeChanged(size);
+		}
 	}
 	
 }

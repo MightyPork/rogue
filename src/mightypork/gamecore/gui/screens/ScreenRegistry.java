@@ -7,7 +7,7 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.bus.events.ScreenRequestEvent;
 import mightypork.gamecore.control.interf.NoImpl;
-import mightypork.gamecore.gui.renderers.Renderable;
+import mightypork.gamecore.gui.components.Renderable;
 import mightypork.utils.logging.Log;
 
 

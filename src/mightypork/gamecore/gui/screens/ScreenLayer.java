@@ -2,11 +2,13 @@ package mightypork.gamecore.gui.screens;
 
 
 import mightypork.gamecore.control.AppSubModule;
-import mightypork.gamecore.gui.renderers.Renderable;
+import mightypork.gamecore.control.interf.NoImpl;
+import mightypork.gamecore.gui.components.Renderable;
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
 
@@ -67,6 +69,38 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	public final int compareTo(ScreenLayer o)
 	{
 		return getPriority() - o.getPriority();
+	}
+	
+	
+	/**
+	 * Called when the screen becomes active
+	 */
+	@NoImpl
+	protected void onScreenEnter()
+	{
+		//
+	}
+	
+	
+	/**
+	 * Called when the screen is no longer active
+	 */
+	@NoImpl
+	protected void onScreenLeave()
+	{
+		//
+	}
+	
+	
+	/**
+	 * Update GUI for new screen size
+	 * 
+	 * @param size screen size
+	 */
+	@NoImpl
+	protected void onSizeChanged(Coord size)
+	{
+		//
 	}
 	
 	

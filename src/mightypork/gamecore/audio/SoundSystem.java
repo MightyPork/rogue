@@ -31,13 +31,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	
 	private static Coord listener = new Coord();
 	
-	static {
-		// initialize sound system
-		SoundStore.get().setMaxSources(MAX_SOURCES);
-		SoundStore.get().init();
-		
-		setListener(INITIAL_LISTENER_POS);
-	}
+	private static boolean inited;
 	
 	
 	/**
@@ -86,6 +80,15 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	 */
 	public SoundSystem(AppAccess app) {
 		super(app);
+		
+		if (!inited) {
+			SoundStore.get().setMaxSources(MAX_SOURCES);
+			SoundStore.get().init();
+			
+			setListener(INITIAL_LISTENER_POS);
+			
+			inited = true;
+		}
 	}
 	
 	

@@ -1,4 +1,4 @@
-package mightypork.utils.math.constraints;
+package mightypork.gamecore.gui.constraints;
 
 
 import mightypork.utils.math.coord.Rect;

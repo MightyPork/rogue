@@ -9,9 +9,9 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
+import mightypork.gamecore.gui.constraints.NumberConstraint;
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.utils.logging.Log;
-import mightypork.utils.math.constraints.NumberConstraint;
-import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -134,7 +134,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	 * 
 	 * @return screenshot object
 	 */
-	public static Screenshot takeScreenshot()
+	public Screenshot takeScreenshot()
 	{
 		glReadBuffer(GL_FRONT);
 		final int width = Display.getDisplayMode().getWidth();
@@ -163,7 +163,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	 * 
 	 * @return is fullscreen
 	 */
-	public static boolean isFullscreen()
+	public boolean isFullscreen()
 	{
 		return Display.isFullscreen();
 	}
@@ -240,7 +240,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	}
 	
 	/** Screen width constraint */
-	public static final NumberConstraint width = new NumberConstraint() {
+	public final NumberConstraint width = new NumberConstraint() {
 		
 		@Override
 		public double getValue()
@@ -250,7 +250,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	};
 	
 	/** Screen height constaint */
-	public static final NumberConstraint height = new NumberConstraint() {
+	public final NumberConstraint height = new NumberConstraint() {
 		
 		@Override
 		public double getValue()

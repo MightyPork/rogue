@@ -5,12 +5,12 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.interf.NoImpl;
-import mightypork.gamecore.gui.renderers.Renderable;
+import mightypork.gamecore.gui.components.Renderable;
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.render.Render;
-import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 

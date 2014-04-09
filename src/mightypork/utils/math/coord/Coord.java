@@ -3,8 +3,8 @@ package mightypork.utils.math.coord;
 
 import java.util.Random;
 
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.utils.math.Calc;
-import mightypork.utils.math.constraints.RectConstraint;
 
 
 /**

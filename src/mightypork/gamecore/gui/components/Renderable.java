@@ -1,4 +1,4 @@
-package mightypork.gamecore.gui.renderers;
+package mightypork.gamecore.gui.components;
 
 
 /**

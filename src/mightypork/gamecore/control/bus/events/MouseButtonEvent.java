@@ -1,7 +1,7 @@
 package mightypork.gamecore.control.bus.events;
 
 
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.utils.math.coord.Coord;
 
 

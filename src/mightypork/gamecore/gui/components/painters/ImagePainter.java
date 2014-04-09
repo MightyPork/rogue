@@ -1,6 +1,7 @@
-package mightypork.gamecore.gui.renderers;
+package mightypork.gamecore.gui.components.painters;
 
 
+import mightypork.gamecore.gui.components.PluggableRenderer;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
 

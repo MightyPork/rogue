@@ -1,4 +1,4 @@
-package mightypork.gamecore.gui.renderers;
+package mightypork.gamecore.gui.components.layout;
 
 
 import java.util.LinkedList;
@@ -6,7 +6,10 @@ import java.util.LinkedList;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.control.bus.clients.BusNode;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.gamecore.gui.components.PluggableRenderable;
+import mightypork.gamecore.gui.components.PluggableRenderer;
+import mightypork.gamecore.gui.components.Renderable;
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.utils.math.coord.Rect;
 
 

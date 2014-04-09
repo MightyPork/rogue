@@ -1,35 +1,47 @@
 package mightypork.rogue.screens;
 
 
-import mightypork.gamecore.gui.renderers.TextPainter;
+import static mightypork.gamecore.gui.constraints.Constraints.*;
+import mightypork.gamecore.gui.components.painters.TextPainter;
+import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.render.DisplaySystem;
-import mightypork.gamecore.render.fonts.FontRenderer;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
+import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.string.StringProvider;
 
 
 public class LayerFps extends ScreenLayer {
 	
 	TextPainter tp;
-	private final FontRenderer fr;
 	
 	
 	public LayerFps(Screen screen) {
 		super(screen);
 		
-		fr = new FontRenderer(Res.getFont("default"), RGB.WHITE);
+		final StringProvider text = new StringProvider() {
+			
+			@Override
+			public String getString()
+			{
+				return getDisplay().getFps() + " fps";
+			}
+		};
+		
+		final GLFont font = Res.getFont("default");
+		final RectConstraint constraint = _round(_move(_grow_down(_right_top(this), 32), -8, 8));
+		
+		tp = new TextPainter(font, Align.RIGHT, RGB.WHITE, text);
+		tp.setContext(constraint);
 	}
 	
 	
 	@Override
 	public void render()
 	{
-		final Coord pos = new Coord(DisplaySystem.getWidth() - 8, 8);
-		fr.draw(getDisplay().getFps() + " fps", pos, 32, Align.RIGHT);
+		tp.render();
 	}
 	
 	

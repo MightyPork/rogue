@@ -8,7 +8,7 @@ import mightypork.gamecore.control.bus.events.MainLoopTaskRequest;
 import mightypork.gamecore.control.bus.events.UpdateEvent;
 import mightypork.gamecore.control.interf.NoImpl;
 import mightypork.gamecore.control.timing.TimerDelta;
-import mightypork.gamecore.gui.renderers.Renderable;
+import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 
 
