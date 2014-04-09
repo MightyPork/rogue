@@ -6,6 +6,11 @@ import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Rect;
 
 
+/**
+ * Renderable that can be assigned different context
+ * 
+ * @author MightyPork
+ */
 public interface PluggableRenderable extends Renderable, PluggableContext {
 	
 	@Override

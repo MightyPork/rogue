@@ -10,6 +10,11 @@ import mightypork.utils.math.animation.AnimDouble;
 import org.lwjgl.openal.AL10;
 
 
+/**
+ * Audio loop player (with fading, good for music)
+ * 
+ * @author MightyPork
+ */
 public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable {
 	
 	private int sourceID = -1;
@@ -29,13 +34,25 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	private double outTime = 1;
 	
 	
-	public LoopPlayer(DeferredAudio track, double pitch, double baseGain, Volume gainMultiplier) {
-		super(track, (float) pitch, (float) baseGain, gainMultiplier);
+	/**
+	 * @param track audio resource
+	 * @param basePitch base pitch (pitch multiplier)
+	 * @param baseGain base gain (volume multiplier)
+	 * @param volume volume control
+	 */
+	public LoopPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume) {
+		super(track, (float) basePitch, (float) baseGain, volume);
 		
 		paused = true;
 	}
 	
 	
+	/**
+	 * Set fading duration (seconds)
+	 * 
+	 * @param in duration of fade-in
+	 * @param out duration of fade-out
+	 */
 	public void setFadeTimes(double in, double out)
 	{
 		inTime = in;
@@ -102,6 +119,11 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	}
 	
 	
+	/**
+	 * Resume if paused, and fade in (pick up from current volume).
+	 * 
+	 * @param secs
+	 */
 	public void fadeIn(double secs)
 	{
 		if (!hasAudio()) return;
@@ -111,6 +133,11 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	}
 	
 	
+	/**
+	 * Fade out and pause when reached zero volume
+	 * 
+	 * @param secs fade duration
+	 */
 	public void fadeOut(double secs)
 	{
 		if (!hasAudio()) return;
@@ -119,12 +146,18 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	}
 	
 	
+	/**
+	 * Fade in with default duration
+	 */
 	public void fadeIn()
 	{
 		fadeIn(inTime);
 	}
 	
 	
+	/**
+	 * Fade out with default duration
+	 */
 	public void fadeOut()
 	{
 		fadeOut(outTime);

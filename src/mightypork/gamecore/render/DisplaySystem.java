@@ -7,8 +7,6 @@ import java.nio.ByteBuffer;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppModule;
-import mightypork.gamecore.control.bus.clients.RootBusNode;
-import mightypork.gamecore.control.bus.events.DestroyEvent;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
@@ -23,14 +21,23 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 
+/**
+ * Display system
+ * 
+ * @author MightyPork
+ */
 public class DisplaySystem extends AppModule implements RectConstraint {
 	
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
+	/** Y axis goes down (not up); Used also to adjust inputs. */
 	public static boolean yAxisDown = true;
 	private FpsMeter fpsMeter;
 	
 	
+	/**
+	 * @param app app access
+	 */
 	public DisplaySystem(AppAccess app) {
 		super(app);
 	}
@@ -43,12 +50,27 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	}
 	
 	
+	/**
+	 * Set target fps (for syncing in endFrame() call).<br>
+	 * With vsync enabled, the target fps may not be met.
+	 * 
+	 * @param fps requested fps
+	 */
 	public void setTargetFps(int fps)
 	{
 		this.targetFps = fps;
 	}
 	
 	
+	/**
+	 * Create a main window
+	 * 
+	 * @param width requested width
+	 * @param height requested height
+	 * @param resizable is resizable by the user
+	 * @param fullscreen is in fullscreen
+	 * @param title window title
+	 */
 	public void createMainWindow(int width, int height, boolean resizable, boolean fullscreen, String title)
 	{
 		try {
@@ -158,12 +180,18 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	}
 	
 	
+	/**
+	 * @return screen width
+	 */
 	public static int getWidth()
 	{
 		return Display.getWidth();
 	}
 	
 	
+	/**
+	 * @return screen height
+	 */
 	public static int getHeight()
 	{
 		return Display.getHeight();
@@ -211,6 +239,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 		return fpsMeter.getFPS();
 	}
 	
+	/** Screen width constraint */
 	public static final NumberConstraint width = new NumberConstraint() {
 		
 		@Override
@@ -220,6 +249,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 		}
 	};
 	
+	/** Screen height constaint */
 	public static final NumberConstraint height = new NumberConstraint() {
 		
 		@Override

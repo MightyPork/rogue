@@ -52,14 +52,19 @@ public abstract class BaseApp implements AppAccess {
 	}
 	
 	
+	/**
+	 * Init the app
+	 */
 	protected void initialize()
 	{
-		preInit();
 		
 		/*
 		 *  Lock working directory
 		 */
 		initLock();
+		
+		// hook
+		preInit();
 		
 		/*
 		 * Setup logging
@@ -77,7 +82,7 @@ public abstract class BaseApp implements AppAccess {
 		eventBus = new EventBus();
 		
 		Log.f3("Registering channels...");
-		initChannels(eventBus);
+		initBus(eventBus);
 		
 		/*
 		 * Display
@@ -98,7 +103,7 @@ public abstract class BaseApp implements AppAccess {
 		 */
 		Log.f2("Initializing Input System...");
 		inputSystem = new InputSystem(this);
-		initKeystrokes(inputSystem);
+		initInputSystem(inputSystem);
 		
 		/*
 		 * Prepare main loop
@@ -130,40 +135,87 @@ public abstract class BaseApp implements AppAccess {
 	}
 	
 	
+	/**
+	 * Called at the beginning of the initialization sequence, right after lock
+	 * was obtained.
+	 */
 	@NoImpl
 	protected void preInit()
 	{
 	}
 	
 	
+	/**
+	 * 
+	 */
 	@NoImpl
 	protected void postInit()
 	{
 	}
 	
 	
+	/**
+	 * Create and configure a log (using {@link Log})
+	 * 
+	 * @return new log instance
+	 */
 	protected abstract LogInstance createLog();
 	
 	
+	/**
+	 * Create window and configure display system
+	 * 
+	 * @param display
+	 */
 	protected abstract void initDisplay(DisplaySystem display);
 	
 	
+	/**
+	 * Configure sound system (ie. adjust volume)
+	 * 
+	 * @param audio
+	 */
 	protected abstract void initSoundSystem(SoundSystem audio);
 	
 	
-	protected abstract void initKeystrokes(InputSystem input);
+	/**
+	 * Configure input system (ie. define global keystrokes)
+	 * 
+	 * @param input
+	 */
+	protected abstract void initInputSystem(InputSystem input);
 	
 	
+	/**
+	 * Initialize resource banks; {@link AsyncResourceLoader} is already
+	 * started.
+	 */
 	protected abstract void initResources();
 	
 	
+	/**
+	 * Register game screens to the registry.
+	 * 
+	 * @param screens
+	 */
 	protected abstract void initScreens(ScreenRegistry screens);
 	
 	
+	/**
+	 * Create game loop instance
+	 * 
+	 * @return the game loop.
+	 */
 	protected abstract GameLoop createLoop();
 	
 	
-	protected void initChannels(EventBus bus)
+	/**
+	 * Initialize event bus (ie. add custom channels)<br>
+	 * When overriding, must call super!
+	 * 
+	 * @param bus
+	 */
+	protected void initBus(EventBus bus)
 	{
 		// framework events
 		bus.addChannel(DestroyEvent.class, Destroyable.class);
@@ -182,7 +234,7 @@ public abstract class BaseApp implements AppAccess {
 	}
 	
 	
-	/**
+	/*
 	 * Try to obtain lock.
 	 */
 	private void initLock()

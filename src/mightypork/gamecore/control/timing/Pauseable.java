@@ -1,6 +1,11 @@
 package mightypork.gamecore.control.timing;
 
 
+/**
+ * Can be paused & resumed
+ * 
+ * @author MightyPork
+ */
 public interface Pauseable {
 	
 	/**

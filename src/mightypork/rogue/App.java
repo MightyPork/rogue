@@ -110,7 +110,7 @@ public class App extends BaseApp {
 	
 	
 	@Override
-	protected void initKeystrokes(InputSystem input)
+	protected void initInputSystem(InputSystem input)
 	{
 		// Go fullscreen
 		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_F11), new Runnable() {
@@ -177,9 +177,9 @@ public class App extends BaseApp {
 	
 	
 	@Override
-	protected void initChannels(EventBus bus)
+	protected void initBus(EventBus bus)
 	{
-		super.initChannels(bus);
+		super.initBus(bus);
 		
 		// custom channels
 		bus.addChannel(ActionRequest.class, ActionRequest.Listener.class);

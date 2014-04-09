@@ -6,18 +6,35 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.utils.math.constraints.RectConstraint;
 
 
+/**
+ * Holder with evenly spaced rows
+ * 
+ * @author MightyPork
+ */
 public class RowHolder extends ElementHolder {
 	
 	private final int rows;
 	private int row = 0;
 	
 	
+	/**
+	 * @param app app access
+	 * @param context bounding context
+	 * @param rows number of rows
+	 */
 	public RowHolder(AppAccess app, RectConstraint context, int rows) {
 		super(app, context);
 		this.rows = rows;
 	}
 	
 	
+	/**
+	 * Make a row holder.<br>
+	 * Context must be assigned before rendering.
+	 * 
+	 * @param app app access
+	 * @param rows number of rows
+	 */
 	public RowHolder(AppAccess app, int rows) {
 		super(app);
 		this.rows = rows;

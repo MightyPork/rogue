@@ -17,6 +17,10 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	private final Coord pos;
 	
 	
+	/**
+	 * @param pos end pos
+	 * @param move move vector
+	 */
 	public MouseMotionEvent(Coord pos, Coord move) {
 		this.move = move;
 		this.pos = pos;
@@ -47,6 +51,11 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 		keh.receive(this);
 	}
 	
+	/**
+	 * {@link MouseMotionEvent} listener
+	 * 
+	 * @author MightyPork
+	 */
 	public interface Listener {
 		
 		/**

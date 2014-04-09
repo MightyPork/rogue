@@ -22,11 +22,18 @@ public abstract class ElementHolder extends BusNode implements PluggableRenderab
 	private RectConstraint context;
 	
 	
+	/**
+	 * @param app app access
+	 */
 	public ElementHolder(AppAccess app) {
 		super(app);
 	}
 	
 	
+	/**
+	 * @param app app access
+	 * @param context boudning context
+	 */
 	public ElementHolder(AppAccess app, RectConstraint context) {
 		super(app);
 		setContext(context);

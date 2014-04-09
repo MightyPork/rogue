@@ -4,7 +4,12 @@ package mightypork.utils.math.constraints;
 import mightypork.utils.math.coord.Rect;
 
 
-public class ContextAdapter implements PluggableContext {
+/**
+ * Basic pluggable context implementation
+ * 
+ * @author MightyPork
+ */
+public abstract class ContextAdapter implements PluggableContext {
 	
 	private RectConstraint backing = null;
 	

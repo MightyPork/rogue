@@ -22,6 +22,9 @@ public class ScreenRegistry extends AppModule implements ScreenRequestEvent.List
 	private volatile Screen active = null;
 	
 	
+	/**
+	 * @param app app access
+	 */
 	public ScreenRegistry(AppAccess app) {
 		super(app);
 	}

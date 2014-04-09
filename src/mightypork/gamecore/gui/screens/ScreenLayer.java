@@ -22,6 +22,9 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
 	
+	/**
+	 * @param screen parent screen
+	 */
 	public ScreenLayer(Screen screen) {
 		super(screen); // screen as AppAccess
 		
@@ -44,6 +47,9 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	}
 	
 	
+	/**
+	 * @return parent screen instance
+	 */
 	protected final Screen getScreen()
 	{
 		return screen;

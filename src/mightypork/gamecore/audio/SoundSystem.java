@@ -63,6 +63,9 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	}
 	
 	
+	/**
+	 * @return listener coordinate
+	 */
 	public static Coord getListener()
 	{
 		return listener;
@@ -70,14 +73,17 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	
 	// -- instance --
 	
-	public final Volume masterVolume = new Volume(1D);
-	public final Volume effectsVolume = new JointVolume(masterVolume);
-	public final Volume loopsVolume = new JointVolume(masterVolume);
+	private final Volume masterVolume = new Volume(1D);
+	private final Volume effectsVolume = new JointVolume(masterVolume);
+	private final Volume loopsVolume = new JointVolume(masterVolume);
 	
 	private final Set<LoopPlayer> loopPlayers = new HashSet<>();
 	private final Set<DeferredAudio> resources = new HashSet<>();
 	
 	
+	/**
+	 * @param app app access
+	 */
 	public SoundSystem(AppAccess app) {
 		super(app);
 	}
@@ -207,5 +213,38 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	public void setMusicVolume(double d)
 	{
 		loopsVolume.set(d);
+	}
+	
+	
+	/**
+	 * Get level of master volume
+	 * 
+	 * @return level
+	 */
+	public double getMasterVolume()
+	{
+		return masterVolume.get();
+	}
+	
+	
+	/**
+	 * Get level of effects volume
+	 * 
+	 * @return level
+	 */
+	public double getEffectsVolume()
+	{
+		return effectsVolume.get();
+	}
+	
+	
+	/**
+	 * Get level of music volume
+	 * 
+	 * @return level
+	 */
+	public double getMusicVolume()
+	{
+		return loopsVolume.get();
 	}
 }

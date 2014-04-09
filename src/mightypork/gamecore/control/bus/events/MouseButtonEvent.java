@@ -119,6 +119,11 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 		handler.receive(this);
 	}
 	
+	/**
+	 * {@link MouseButtonEvent} listener
+	 * 
+	 * @author MightyPork
+	 */
 	public interface Listener {
 		
 		/**

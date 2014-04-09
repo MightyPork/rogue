@@ -18,6 +18,9 @@ import org.newdawn.slick.opengl.Texture;
  */
 public class TextureBank extends AppAdapter {
 	
+	/**
+	 * @param app app access
+	 */
 	public TextureBank(AppAccess app) {
 		super(app);
 	}

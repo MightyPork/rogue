@@ -353,6 +353,13 @@ public class Render {
 	}
 	
 	
+	/**
+	 * Draw quad with horizontal gradient
+	 * 
+	 * @param quad drawn quad bounds
+	 * @param colorLeft left color
+	 * @param colorRight right color
+	 */
 	public static void quadGradH(Rect quad, RGB colorLeft, RGB colorRight)
 	{
 		final double left = quad.x1();
@@ -377,6 +384,13 @@ public class Render {
 	}
 	
 	
+	/**
+	 * Draw quad with vertical gradient
+	 * 
+	 * @param quad drawn quad bounds
+	 * @param colorTop top color
+	 * @param colorBottom bottom color
+	 */
 	public static void quadGradV(Rect quad, RGB colorTop, RGB colorBottom)
 	{
 		final double left = quad.x1();

@@ -6,6 +6,11 @@ import mightypork.gamecore.audio.Volume;
 import mightypork.gamecore.control.interf.Destroyable;
 
 
+/**
+ * Basic abstract player
+ * 
+ * @author MightyPork
+ */
 public abstract class BaseAudioPlayer implements Destroyable {
 	
 	/** the track */
@@ -21,20 +26,21 @@ public abstract class BaseAudioPlayer implements Destroyable {
 	private final Volume gainMultiplier;
 	
 	
-	public BaseAudioPlayer(DeferredAudio track, double baseGain, Volume gainMultiplier) {
-		this(track, 1, baseGain, gainMultiplier);
-	}
-	
-	
-	public BaseAudioPlayer(DeferredAudio track, double basePitch, double baseGain, Volume gainMultiplier) {
+	/**
+	 * @param track audio resource
+	 * @param basePitch base pitch (pitch multiplier)
+	 * @param baseGain base gain (volume multiplier)
+	 * @param volume colume control
+	 */
+	public BaseAudioPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume) {
 		this.audio = track;
 		
 		this.baseGain = baseGain;
 		this.basePitch = basePitch;
 		
-		if (gainMultiplier == null) gainMultiplier = new Volume(1D);
+		if (volume == null) volume = new Volume(1D);
 		
-		this.gainMultiplier = gainMultiplier;
+		this.gainMultiplier = volume;
 	}
 	
 	
@@ -45,18 +51,33 @@ public abstract class BaseAudioPlayer implements Destroyable {
 	}
 	
 	
+	/**
+	 * @return audio resource
+	 */
 	protected DeferredAudio getAudio()
 	{
 		return audio;
 	}
 	
 	
+	/**
+	 * Get play gain, computed based on volume and given multiplier
+	 * 
+	 * @param multiplier extra volume adjustment
+	 * @return computed gain
+	 */
 	protected double getGain(double multiplier)
 	{
 		return baseGain * gainMultiplier.get() * multiplier;
 	}
 	
 	
+	/**
+	 * Get pitch
+	 * 
+	 * @param multiplier pitch adjustment
+	 * @return computed pitch
+	 */
 	protected double getPitch(double multiplier)
 	{
 		return basePitch * multiplier;
@@ -74,6 +95,9 @@ public abstract class BaseAudioPlayer implements Destroyable {
 	}
 	
 	
+	/**
+	 * force load the resource
+	 */
 	public void load()
 	{
 		if (hasAudio()) audio.load();

@@ -26,11 +26,20 @@ public class DeferredTexture extends BaseDeferredResource implements FilteredTex
 	private WrapMode wrap = WrapMode.CLAMP;
 	
 	
+	/**
+	 * @param resourcePath resource path
+	 */
 	public DeferredTexture(String resourcePath) {
 		super(resourcePath);
 	}
 	
 	
+	/**
+	 * Get a quad from this texture of given position/size
+	 * 
+	 * @param rect quad rect
+	 * @return the quad
+	 */
 	public TxQuad getQuad(Rect rect)
 	{
 		return new TxQuad(this, rect);
@@ -53,6 +62,9 @@ public class DeferredTexture extends BaseDeferredResource implements FilteredTex
 	}
 	
 	
+	/**
+	 * Bind without adjusting parameters
+	 */
 	public void bindRaw()
 	{
 		if (!ensureLoaded()) return;
@@ -61,12 +73,15 @@ public class DeferredTexture extends BaseDeferredResource implements FilteredTex
 	}
 	
 	
+	/**
+	 * Bind and adjust parameters (filter, wrap)
+	 */
 	@Override
 	public void bind()
 	{
 		if (!ensureLoaded()) return;
 		
-		backingTexture.bind();
+		bindRaw();
 		
 		GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 		

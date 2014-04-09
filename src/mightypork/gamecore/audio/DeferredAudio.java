@@ -108,6 +108,9 @@ public class DeferredAudio extends BaseDeferredResource {
 	}
 	
 	
+	/**
+	 * Stop playing
+	 */
 	public void stop()
 	{
 		if (!isLoaded()) return;
@@ -117,6 +120,9 @@ public class DeferredAudio extends BaseDeferredResource {
 	}
 	
 	
+	/**
+	 * @return true if the audio is playing
+	 */
 	public boolean isPlaying()
 	{
 		if (!isLoaded()) return false;
@@ -125,6 +131,9 @@ public class DeferredAudio extends BaseDeferredResource {
 	}
 	
 	
+	/**
+	 * @return trie if the audio is paused
+	 */
 	public boolean isPaused()
 	{
 		if (!isLoaded()) return false;

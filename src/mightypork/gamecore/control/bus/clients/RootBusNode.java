@@ -12,6 +12,9 @@ import mightypork.gamecore.control.interf.Destroyable;
  */
 public abstract class RootBusNode extends BusNode implements Destroyable {
 	
+	/**
+	 * @param busAccess access to bus
+	 */
 	public RootBusNode(BusAccess busAccess) {
 		super(busAccess);
 		

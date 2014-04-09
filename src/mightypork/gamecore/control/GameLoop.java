@@ -45,6 +45,9 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 	}
 	
 	
+	/**
+	 * Start the loop
+	 */
 	public void start()
 	{
 		timer = new TimerDelta();
@@ -70,6 +73,9 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 	}
 	
 	
+	/**
+	 * Called before render
+	 */
 	@NoImpl
 	protected void beforeRender()
 	{
@@ -77,6 +83,9 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 	}
 	
 	
+	/**
+	 * Called after render
+	 */
 	@NoImpl
 	protected void afterRender()
 	{

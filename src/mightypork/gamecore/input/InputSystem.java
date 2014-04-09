@@ -19,6 +19,11 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 
+/**
+ * Input system
+ * 
+ * @author MightyPork
+ */
 public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	
 	// listeners
@@ -27,6 +32,9 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	private static boolean inited = false;
 	
 	
+	/**
+	 * @param app app access
+	 */
 	public InputSystem(AppAccess app) {
 		super(app);
 		

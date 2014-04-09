@@ -4,6 +4,11 @@ package mightypork.gamecore.render.textures;
 import org.newdawn.slick.opengl.Texture;
 
 
+/**
+ * Texture with filter and wrap mode
+ * 
+ * @author MightyPork
+ */
 public interface FilteredTexture extends Texture {
 	
 	/**

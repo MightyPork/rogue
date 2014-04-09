@@ -5,8 +5,16 @@ import mightypork.utils.math.Calc;
 import mightypork.utils.objects.Mutable;
 
 
+/**
+ * Mutable volume 0-1
+ * 
+ * @author MightyPork
+ */
 public class Volume extends Mutable<Double> {
 	
+	/**
+	 * @param d initial value
+	 */
 	public Volume(Double d) {
 		super(d);
 	}

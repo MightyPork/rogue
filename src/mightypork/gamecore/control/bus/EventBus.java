@@ -36,6 +36,7 @@ final public class EventBus implements Destroyable {
 	/** Whether the bus was destroyed */
 	private boolean dead = false;
 	
+	/** Log detailed messages (debug) */
 	public boolean detailedLogging = false;
 	
 	
@@ -255,6 +256,12 @@ final public class EventBus implements Destroyable {
 	}
 	
 	
+	/**
+	 * Check if client can be accepted by any channel
+	 * 
+	 * @param client tested client
+	 * @return would be accepted
+	 */
 	public boolean isClientValid(Object client)
 	{
 		assertLive();

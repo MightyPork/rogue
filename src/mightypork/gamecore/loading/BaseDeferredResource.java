@@ -21,6 +21,10 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 	private volatile boolean loadAttempted = false;
 	
 	
+	/**
+	 * @param resource resource path / name; this string is later used in
+	 *            loadResource()
+	 */
 	public BaseDeferredResource(String resource) {
 		this.resource = resource;
 	}

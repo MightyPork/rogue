@@ -28,6 +28,9 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	private volatile boolean needSetupViewport = false;
 	
 	
+	/**
+	 * @param app app access
+	 */
 	public Screen(AppAccess app) {
 		super(app);
 		

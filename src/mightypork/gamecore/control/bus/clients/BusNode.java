@@ -24,6 +24,9 @@ public abstract class BusNode implements BusAccess, DelegatingClient, Toggleable
 	private boolean delegating = true;
 	
 	
+	/**
+	 * @param busAccess access to bus
+	 */
 	public BusNode(BusAccess busAccess) {
 		this.busAccess = busAccess;
 	}

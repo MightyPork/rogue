@@ -16,6 +16,11 @@ public class KeyEvent implements Event<KeyEvent.Listener> {
 	private final char c;
 	
 	
+	/**
+	 * @param key key that triggered the event. Can be KEY_NONE.
+	 * @param c typed char (can be zero char)
+	 * @param down true = pressed, false = released.
+	 */
 	public KeyEvent(int key, char c, boolean down) {
 		this.key = key;
 		this.c = c;
@@ -65,6 +70,11 @@ public class KeyEvent implements Event<KeyEvent.Listener> {
 		keh.receive(this);
 	}
 	
+	/**
+	 * {@link KeyEvent} listener
+	 * 
+	 * @author MightyPork
+	 */
 	public interface Listener {
 		
 		/**

@@ -21,6 +21,9 @@ public class FontBank extends AppAdapter {
 	private static final GLFont NULL_FONT = new NullFont();
 	
 	
+	/**
+	 * @param app app access
+	 */
 	public FontBank(AppAccess app) {
 		super(app);
 	}

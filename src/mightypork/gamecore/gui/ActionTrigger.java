@@ -8,5 +8,10 @@ package mightypork.gamecore.gui;
  */
 public interface ActionTrigger {
 	
+	/**
+	 * Assign an action
+	 * 
+	 * @param action action
+	 */
 	void setAction(Action action);
 }

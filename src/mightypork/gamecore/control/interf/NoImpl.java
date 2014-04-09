@@ -8,6 +8,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 
+/**
+ * Indicates that the marked method is not implemented and can be safely
+ * overriden.
+ * 
+ * @author MightyPork
+ */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target(value = { ElementType.METHOD })

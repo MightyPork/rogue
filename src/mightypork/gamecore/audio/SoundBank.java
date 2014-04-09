@@ -11,6 +11,11 @@ import mightypork.gamecore.control.AppAdapter;
 import mightypork.utils.logging.Log;
 
 
+/**
+ * Audio resource storage
+ * 
+ * @author MightyPork
+ */
 public class SoundBank extends AppAdapter {
 	
 	private static final DeferredAudio NO_SOUND = new NullAudio();
@@ -21,6 +26,9 @@ public class SoundBank extends AppAdapter {
 	private final Map<String, LoopPlayer> loops = new HashMap<>();
 	
 	
+	/**
+	 * @param app app access
+	 */
 	public SoundBank(AppAccess app) {
 		super(app);
 		if (getSoundSystem() == null) throw new NullPointerException("SoundSystem cannot be null.");

@@ -78,12 +78,22 @@ public class TxQuad {
 	}
 	
 	
+	/**
+	 * Clone another
+	 * 
+	 * @param txQuad a copied quad
+	 */
 	public TxQuad(TxQuad txQuad) {
 		this.tx = txQuad.tx;
 		this.uvs = txQuad.uvs.copy();
 	}
 	
 	
+	/**
+	 * Get copy
+	 * 
+	 * @return copy of this
+	 */
 	public TxQuad copy()
 	{
 		return new TxQuad(this);

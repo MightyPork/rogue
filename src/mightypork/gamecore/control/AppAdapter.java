@@ -8,7 +8,7 @@ import mightypork.gamecore.render.DisplaySystem;
 
 
 /**
- * App access adapter
+ * App access adapter (defualt {@link AppAccess} implementation)
  * 
  * @author MightyPork
  */
@@ -17,6 +17,9 @@ public class AppAdapter implements AppAccess {
 	private final AppAccess app;
 	
 	
+	/**
+	 * @param app app access
+	 */
 	public AppAdapter(AppAccess app) {
 		if (app == null) throw new NullPointerException("AppAccess instance cannot be null.");
 		

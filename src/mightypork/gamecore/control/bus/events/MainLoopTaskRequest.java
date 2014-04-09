@@ -15,6 +15,9 @@ public class MainLoopTaskRequest implements Event<MainLoopTaskRequest.Listener> 
 	private final Runnable task;
 	
 	
+	/**
+	 * @param task task to run on main thread in rendering context
+	 */
 	public MainLoopTaskRequest(Runnable task) {
 		this.task = task;
 	}
@@ -26,6 +29,11 @@ public class MainLoopTaskRequest implements Event<MainLoopTaskRequest.Listener> 
 		handler.queueTask(task);
 	}
 	
+	/**
+	 * {@link MainLoopTaskRequest} listener
+	 * 
+	 * @author MightyPork
+	 */
 	public interface Listener {
 		
 		/**

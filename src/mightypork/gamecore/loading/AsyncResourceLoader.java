@@ -19,9 +19,14 @@ import mightypork.utils.logging.Log;
  */
 public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.Listener, Destroyable {
 	
+	/**
+	 * Start a new loader thread.
+	 * 
+	 * @param app app access
+	 */
 	public static void launch(BusAccess app)
 	{
-		Thread loader = new AsyncResourceLoader(app);
+		final Thread loader = new AsyncResourceLoader(app);
 		loader.setDaemon(true);
 		loader.start();
 	}
@@ -33,6 +38,9 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	private final BusAccess app;
 	
 	
+	/**
+	 * @param app app acceess
+	 */
 	public AsyncResourceLoader(BusAccess app) {
 		super("Deferred loader");
 		this.app = app;

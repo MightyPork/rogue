@@ -21,21 +21,40 @@ public class BufferedHashSet<E> extends HashSet<E> {
 	private boolean buffering = false;
 	
 	
+	/**
+	 * make empty
+	 */
 	public BufferedHashSet() {
 		super();
 	}
 	
 	
+	/**
+	 * make from elements of a collection
+	 * 
+	 * @param c
+	 */
 	public BufferedHashSet(Collection<? extends E> c) {
 		super(c);
 	}
 	
 	
+	/**
+	 * make new
+	 * 
+	 * @param initialCapacity
+	 * @param loadFactor
+	 */
 	public BufferedHashSet(int initialCapacity, float loadFactor) {
 		super(initialCapacity, loadFactor);
 	}
 	
 	
+	/**
+	 * make new
+	 * 
+	 * @param initialCapacity
+	 */
 	public BufferedHashSet(int initialCapacity) {
 		super(initialCapacity);
 	}

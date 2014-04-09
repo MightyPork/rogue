@@ -5,6 +5,11 @@ import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 
 
+/**
+ * Interface bor drawable font.
+ * 
+ * @author MightyPork
+ */
 public interface GLFont {
 	
 	/**

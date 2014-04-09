@@ -41,6 +41,11 @@ public class SlickFont implements GLFont {
 	}
 	
 	
+	/**
+	 * Set used filtering
+	 * 
+	 * @param filter font filtering mode
+	 */
 	public void setFiltering(FilterMode filter)
 	{
 		this.filter = filter;

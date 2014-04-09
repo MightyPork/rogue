@@ -206,6 +206,13 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	}
 	
 	
+	/**
+	 * Get progress already elapsed based on current value.<br>
+	 * Used to resume animation from current point in fading etc.
+	 * 
+	 * @param value current value
+	 * @return progress ratio 0-1
+	 */
 	protected double getProgressFromValue(double value)
 	{
 		double p = 0;

@@ -9,6 +9,11 @@ import mightypork.utils.string.StringProvider;
 import mightypork.utils.string.StringProvider.StringWrapper;
 
 
+/**
+ * Text painting component
+ * 
+ * @author MightyPork
+ */
 public class TextPainter extends PluggableRenderer {
 	
 	private final FontRenderer font;
@@ -17,16 +22,35 @@ public class TextPainter extends PluggableRenderer {
 	private StringProvider text;
 	
 	
+	/**
+	 * @param font font to use
+	 */
 	public TextPainter(GLFont font) {
 		this(font, Align.LEFT, RGB.WHITE);
 	}
 	
 	
+	/**
+	 * Constructor for fixed text
+	 * 
+	 * @param font font to use
+	 * @param align text align
+	 * @param color default color
+	 * @param text drawn text
+	 */
 	public TextPainter(GLFont font, Align align, RGB color, String text) {
 		this(font, align, color, new StringWrapper(text));
 	}
 	
 	
+	/**
+	 * COnstructor for changeable text.
+	 * 
+	 * @param font font to use
+	 * @param align text align
+	 * @param color default color
+	 * @param text text provider
+	 */
 	public TextPainter(GLFont font, Align align, RGB color, StringProvider text) {
 		this.font = new FontRenderer(font);
 		this.color = color;
@@ -35,6 +59,11 @@ public class TextPainter extends PluggableRenderer {
 	}
 	
 	
+	/**
+	 * @param font font to use
+	 * @param align text align
+	 * @param color default color
+	 */
 	public TextPainter(GLFont font, Align align, RGB color) {
 		this(font, align, color, (StringProvider) null);
 	}
@@ -63,43 +92,85 @@ public class TextPainter extends PluggableRenderer {
 	}
 	
 	
+	/**
+	 * Assign paint color
+	 * 
+	 * @param color paint color
+	 */
 	public void setColor(RGB color)
 	{
 		this.color = color;
 	}
 	
 	
+	/**
+	 * Set text align
+	 * 
+	 * @param align text align
+	 */
 	public void setAlign(Align align)
 	{
 		this.align = align;
 	}
 	
 	
+	/**
+	 * Set drawn text
+	 * 
+	 * @param text text
+	 */
 	public void setText(String text)
 	{
 		this.text = new StringWrapper(text);
 	}
 	
 	
+	/**
+	 * Set drawn text provider
+	 * 
+	 * @param text text provider
+	 */
 	public void setText(StringProvider text)
 	{
 		this.text = text;
 	}
 	
 	
-	protected RGB getColor()
+	/**
+	 * Get draw color.<br>
+	 * <i>This getter is used for getting drawing color; so if it's overriden,
+	 * the draw color can be adjusted in real time.</i>
+	 * 
+	 * @return drawing color
+	 */
+	public RGB getColor()
 	{
 		return color;
 	}
 	
 	
-	protected Align getAlign()
+	/**
+	 * Get text align.<br>
+	 * <i>This getter is used for getting align; so if it's overidden, the align
+	 * can be adjusted in real time.</i>
+	 * 
+	 * @return text align
+	 */
+	public Align getAlign()
 	{
 		return align;
 	}
 	
 	
-	protected String getText()
+	/**
+	 * Get text to draw.<br>
+	 * <i>This getter is used for getting text to draw; so if it's overidden,
+	 * the text can be adjusted in real time. (alternative to using
+	 * StringProvider)</i>
+	 * 
+	 * @return text align
+	 */
+	public String getText()
 	{
 		return text.getString();
 	}

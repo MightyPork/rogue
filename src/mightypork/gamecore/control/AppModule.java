@@ -9,7 +9,7 @@ import mightypork.gamecore.render.DisplaySystem;
 
 /**
  * App event bus client, to be used for subsystems, screens and anything that
- * needs access to the eventbus
+ * needs access to the eventbus and other systems; Attached directly to bus.
  * 
  * @author MightyPork
  */
@@ -18,6 +18,11 @@ public abstract class AppModule extends RootBusNode implements AppAccess {
 	private final AppAccess app;
 	
 	
+	/**
+	 * Create a module
+	 * 
+	 * @param app access to app systems
+	 */
 	public AppModule(AppAccess app) {
 		super(app);
 		

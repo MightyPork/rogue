@@ -3,13 +3,15 @@ package mightypork.gamecore.control;
 
 import mightypork.gamecore.audio.SoundSystem;
 import mightypork.gamecore.control.bus.clients.BusNode;
+import mightypork.gamecore.control.bus.clients.DelegatingClient;
+import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
 
 
 /**
- * App event bus client, to be used for subsystems, screens and anything that
- * needs access to the eventbus
+ * Delegating bus client, to be attached to any {@link DelegatingClient}, such
+ * as a {@link RootBusNode}.
  * 
  * @author MightyPork
  */
@@ -18,6 +20,11 @@ public abstract class AppSubModule extends BusNode implements AppAccess {
 	private final AppAccess app;
 	
 	
+	/**
+	 * Create submodule
+	 * 
+	 * @param app access to app systems
+	 */
 	public AppSubModule(AppAccess app) {
 		super(app);
 		

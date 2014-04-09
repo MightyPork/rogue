@@ -14,6 +14,9 @@ import mightypork.utils.logging.LoggedName;
 @LoggedName(name = "NullAudio")
 public class NullAudio extends DeferredAudio implements NullResource {
 	
+	/**
+	 * new null audio
+	 */
 	public NullAudio() {
 		super(null);
 	}

@@ -24,6 +24,12 @@ public class Screenshot {
 	private BufferedImage image;
 	
 	
+	/**
+	 * @param width image width
+	 * @param height image height
+	 * @param bpp bits per pixel (typically 4)
+	 * @param buffer
+	 */
 	public Screenshot(int width, int height, int bpp, ByteBuffer buffer) {
 		this.width = width;
 		this.height = height;
@@ -32,6 +38,12 @@ public class Screenshot {
 	}
 	
 	
+	/**
+	 * Extract to an image.<br>
+	 * Subsequent calls will use a cached value.
+	 * 
+	 * @return image
+	 */
 	public BufferedImage getImage()
 	{
 		if (image != null) return image;
@@ -53,6 +65,13 @@ public class Screenshot {
 	}
 	
 	
+	/**
+	 * Save to a file.<br>
+	 * Cached value is used if any.
+	 * 
+	 * @param file target file
+	 * @throws IOException on error writing to file
+	 */
 	public void save(File file) throws IOException
 	{
 		ImageIO.write(getImage(), "PNG", file);
