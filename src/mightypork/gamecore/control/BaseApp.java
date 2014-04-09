@@ -15,7 +15,6 @@ import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.loading.AsyncResourceLoader;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.rogue.util.SlickLogRedirector;
 import mightypork.utils.files.InstanceLock;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogInstance;

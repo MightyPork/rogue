@@ -35,7 +35,7 @@ public class ScreenTestBouncy extends LayeredScreen {
 	
 	
 	@Override
-	public String getId()
+	public String getName()
 	{
 		return "test.bouncy";
 	}

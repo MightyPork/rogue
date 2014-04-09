@@ -1,4 +1,4 @@
-package mightypork.gamecore.input;
+package mightypork.gamecore.gui;
 
 
 /**
@@ -16,14 +16,23 @@ public abstract class Action implements Runnable {
 	 * 
 	 * @param enable true to enable
 	 */
-	public final void enable(boolean enable)
+	public void setEnabled(boolean enable)
 	{
 		this.enabled = enable;
 	}
 	
 	
+	/**
+	 * @return true if this action is enabled.
+	 */
+	public boolean isEnabled()
+	{
+		return enabled;
+	}
+	
+	
 	@Override
-	public final void run()
+	public void run()
 	{
 		if (enabled) execute();
 	}

@@ -2,7 +2,6 @@ package mightypork.gamecore.audio;
 
 
 import mightypork.utils.math.Calc;
-import mightypork.utils.objects.Mutable;
 
 
 /**
@@ -12,7 +11,7 @@ import mightypork.utils.objects.Mutable;
  */
 public class JointVolume extends Volume {
 	
-	private final Mutable<Double>[] volumes;
+	private final Volume[] volumes;
 	
 	
 	/**
@@ -34,7 +33,7 @@ public class JointVolume extends Volume {
 	public Double get()
 	{
 		double d = super.get();
-		for (final Mutable<Double> v : volumes)
+		for (final Volume v : volumes)
 			d *= v.get();
 		
 		return Calc.clampd(d, 0, 1);

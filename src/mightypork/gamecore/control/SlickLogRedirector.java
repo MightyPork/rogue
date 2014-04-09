@@ -1,4 +1,4 @@
-package mightypork.rogue.util;
+package mightypork.gamecore.control;
 
 
 import mightypork.utils.logging.LogInstance;
@@ -6,6 +6,11 @@ import mightypork.utils.logging.LogInstance;
 import org.newdawn.slick.util.LogSystem;
 
 
+/**
+ * Used to redirect slick log into main logger.
+ * 
+ * @author MightyPork
+ */
 public class SlickLogRedirector implements LogSystem {
 	
 	LogInstance l;

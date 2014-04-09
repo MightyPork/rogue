@@ -44,6 +44,7 @@ final public class EventBus implements Destroyable {
 	 */
 	public EventBus() {
 		busThread = new QueuePollingThread();
+		busThread.setDaemon(true);
 		busThread.start();
 	}
 	

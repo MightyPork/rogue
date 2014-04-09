@@ -84,7 +84,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	
 	
 	@Override
-	public final void deinit()
+	public void deinit()
 	{
 		for (final DeferredAudio r : resources) {
 			r.destroy();

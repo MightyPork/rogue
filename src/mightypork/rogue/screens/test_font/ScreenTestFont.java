@@ -36,7 +36,7 @@ public class ScreenTestFont extends Screen {
 	
 	
 	@Override
-	public String getId()
+	public String getName()
 	{
 		return "test.font";
 	}

@@ -57,7 +57,7 @@ public class ScreenTestCat extends LayeredScreen {
 	
 	
 	@Override
-	public String getId()
+	public String getName()
 	{
 		return "test.cat";
 	}

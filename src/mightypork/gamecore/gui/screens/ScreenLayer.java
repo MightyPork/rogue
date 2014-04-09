@@ -51,7 +51,7 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	
 	
 	@Override
-	public final Rect getRect()
+	public Rect getRect()
 	{
 		return screen.getRect();
 	}

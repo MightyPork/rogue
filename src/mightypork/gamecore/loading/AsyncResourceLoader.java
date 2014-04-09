@@ -21,13 +21,15 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	
 	public static void launch(BusAccess app)
 	{
-		(new AsyncResourceLoader(app)).start();
+		Thread loader = new AsyncResourceLoader(app);
+		loader.setDaemon(true);
+		loader.start();
 	}
 	
 	private final ExecutorService exs = Executors.newCachedThreadPool();
 	
 	private final LinkedBlockingQueue<DeferredResource> toLoad = new LinkedBlockingQueue<>();
-	private boolean stopped;
+	private volatile boolean stopped;
 	private final BusAccess app;
 	
 	

@@ -22,7 +22,7 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<>();
 	private TimerDelta timer;
 	private Renderable rootRenderable;
-	private boolean running = true;
+	private volatile boolean running = true;
 	
 	
 	/**
@@ -85,14 +85,14 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 	
 	
 	@Override
-	protected final void deinit()
+	protected void deinit()
 	{
 		running = false;
 	}
 	
 	
 	@Override
-	public final synchronized void queueTask(Runnable request)
+	public synchronized void queueTask(Runnable request)
 	{
 		taskQueue.add(request);
 	}

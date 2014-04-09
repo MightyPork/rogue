@@ -89,6 +89,7 @@ public class App extends BaseApp {
 		log.setSysoutLevel(Level.ALL);
 		log.enable(Config.LOGGING_ENABLED);
 		log.enableSysout(Config.LOG_TO_STDOUT);
+		
 		return log;
 	}
 	
@@ -182,6 +183,8 @@ public class App extends BaseApp {
 		
 		// custom channels
 		bus.addChannel(ActionRequest.class, ActionRequest.Listener.class);
+		
+		bus.detailedLogging = true;
 	}
 	
 }

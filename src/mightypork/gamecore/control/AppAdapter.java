@@ -53,7 +53,7 @@ public class AppAdapter implements AppAccess {
 	
 	
 	@Override
-	public void shutdown()
+	public final void shutdown()
 	{
 		app.shutdown();
 	}

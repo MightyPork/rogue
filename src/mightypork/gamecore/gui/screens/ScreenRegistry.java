@@ -11,10 +11,15 @@ import mightypork.gamecore.gui.renderers.Renderable;
 import mightypork.utils.logging.Log;
 
 
+/**
+ * Game screens holder; Takes care of rendering and screen requests.
+ * 
+ * @author MightyPork
+ */
 public class ScreenRegistry extends AppModule implements ScreenRequestEvent.Listener, Renderable {
 	
 	private final HashMap<String, Screen> screens = new HashMap<>();
-	private Screen active = null;
+	private volatile Screen active = null;
 	
 	
 	public ScreenRegistry(AppAccess app) {
@@ -22,9 +27,14 @@ public class ScreenRegistry extends AppModule implements ScreenRequestEvent.List
 	}
 	
 	
+	/**
+	 * Add a screen
+	 * 
+	 * @param screen added screen
+	 */
 	public void add(Screen screen)
 	{
-		screens.put(screen.getId(), screen);
+		screens.put(screen.getName(), screen);
 		addChildClient(screen);
 	}
 	

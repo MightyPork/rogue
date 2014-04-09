@@ -34,14 +34,14 @@ public abstract class ElementHolder extends BusNode implements PluggableRenderab
 	
 	
 	@Override
-	public final void setContext(RectConstraint context)
+	public void setContext(RectConstraint context)
 	{
 		this.context = context;
 	}
 	
 	
 	@Override
-	public final void render()
+	public void render()
 	{
 		for (final Renderable element : elements) {
 			element.render();
@@ -50,7 +50,7 @@ public abstract class ElementHolder extends BusNode implements PluggableRenderab
 	
 	
 	@Override
-	public final Rect getRect()
+	public Rect getRect()
 	{
 		return context.getRect();
 	}
@@ -70,7 +70,7 @@ public abstract class ElementHolder extends BusNode implements PluggableRenderab
 	 * 
 	 * @param elem element; it's context will be set to the constraint.
 	 */
-	public final void attach(PluggableRenderable elem)
+	public void attach(PluggableRenderable elem)
 	{
 		if (elem == null) return;
 		

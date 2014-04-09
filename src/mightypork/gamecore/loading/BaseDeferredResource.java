@@ -17,8 +17,8 @@ import mightypork.utils.logging.LoggedName;
 public abstract class BaseDeferredResource implements DeferredResource, Destroyable {
 	
 	private final String resource;
-	private boolean loadFailed = false;
-	private boolean loadAttempted = false;
+	private volatile boolean loadFailed = false;
+	private volatile boolean loadAttempted = false;
 	
 	
 	public BaseDeferredResource(String resource) {

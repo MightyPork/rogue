@@ -63,25 +63,25 @@ public class TextPainter extends PluggableRenderer {
 	}
 	
 	
-	public final void setColor(RGB color)
+	public void setColor(RGB color)
 	{
 		this.color = color;
 	}
 	
 	
-	public final void setAlign(Align align)
+	public void setAlign(Align align)
 	{
 		this.align = align;
 	}
 	
 	
-	public final void setText(String text)
+	public void setText(String text)
 	{
 		this.text = new StringWrapper(text);
 	}
 	
 	
-	public final void setText(StringProvider text)
+	public void setText(StringProvider text)
 	{
 		this.text = text;
 	}

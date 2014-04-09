@@ -24,8 +24,8 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
-	private boolean active;
-	private boolean needSetupViewport = false;
+	private volatile boolean active;
+	private volatile boolean needSetupViewport = false;
 	
 	
 	public Screen(AppAccess app) {
@@ -81,6 +81,48 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	
 	
 	/**
+	 * @return true if screen is the current screen
+	 */
+	public final boolean isActive()
+	{
+		return active;
+	}
+	
+	
+	@Override
+	public void receive(ScreenChangeEvent event)
+	{
+		if (!isActive()) return;
+		
+		onSizeChanged(event.getScreenSize());
+		
+		needSetupViewport = true;
+	}
+	
+	
+	@Override
+	public Rect getRect()
+	{
+		return getDisplay().getRect();
+	}
+	
+	
+	@Override
+	public void render()
+	{
+		if (!isActive()) return;
+		
+		if (needSetupViewport) {
+			Render.setupOrtho();
+		}
+		
+		Render.pushState();
+		renderScreen();
+		Render.popState();
+	}
+	
+	
+	/**
 	 * Called when the screen becomes active
 	 */
 	@NoImpl
@@ -119,49 +161,7 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	
 	
 	/**
-	 * @return true if screen is the curretn screen
-	 */
-	public final boolean isActive()
-	{
-		return active;
-	}
-	
-	
-	@Override
-	public final void receive(ScreenChangeEvent event)
-	{
-		if (!isActive()) return;
-		
-		onSizeChanged(event.getScreenSize());
-		
-		needSetupViewport = true;
-	}
-	
-	
-	@Override
-	public final Rect getRect()
-	{
-		return getDisplay().getRect();
-	}
-	
-	
-	@Override
-	public void render()
-	{
-		if (!isActive()) return;
-		
-		if (needSetupViewport) {
-			Render.setupOrtho();
-		}
-		
-		Render.pushState();
-		renderScreen();
-		Render.popState();
-	}
-	
-	
-	/**
 	 * @return screen identifier to be used for requests.
 	 */
-	public abstract String getId();
+	public abstract String getName();
 }

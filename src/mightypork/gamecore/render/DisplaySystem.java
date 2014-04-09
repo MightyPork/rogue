@@ -6,7 +6,9 @@ import static org.lwjgl.opengl.GL11.*;
 import java.nio.ByteBuffer;
 
 import mightypork.gamecore.control.AppAccess;
+import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.bus.clients.RootBusNode;
+import mightypork.gamecore.control.bus.events.DestroyEvent;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
@@ -21,7 +23,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 
-public class DisplaySystem extends RootBusNode implements RectConstraint {
+public class DisplaySystem extends AppModule implements RectConstraint {
 	
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
@@ -204,7 +206,7 @@ public class DisplaySystem extends RootBusNode implements RectConstraint {
 	/**
 	 * @return current FPS
 	 */
-	public final long getFps()
+	public long getFps()
 	{
 		return fpsMeter.getFPS();
 	}
