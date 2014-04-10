@@ -2,14 +2,16 @@ package mightypork.gamecore.control;
 
 
 import java.io.File;
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
 import mightypork.gamecore.audio.SoundSystem;
 import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.control.bus.events.*;
+import mightypork.gamecore.control.interf.DefaultImpl;
 import mightypork.gamecore.control.interf.Destroyable;
-import mightypork.gamecore.control.interf.NoImpl;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
@@ -17,7 +19,7 @@ import mightypork.gamecore.loading.AsyncResourceLoader;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.utils.files.InstanceLock;
 import mightypork.utils.logging.Log;
-import mightypork.utils.logging.LogInstance;
+import mightypork.utils.logging.LogWriter;
 
 
 /**
@@ -26,7 +28,7 @@ import mightypork.utils.logging.LogInstance;
  * 
  * @author MightyPork
  */
-public abstract class BaseApp implements AppAccess {
+public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	
 	// modules
 	private InputSystem inputSystem;
@@ -40,8 +42,9 @@ public abstract class BaseApp implements AppAccess {
 	/**
 	 * Start the application
 	 */
-	public void start()
+	public final void start()
 	{
+		Thread.setDefaultUncaughtExceptionHandler(this);
 		
 		initialize();
 		
@@ -57,7 +60,6 @@ public abstract class BaseApp implements AppAccess {
 	 */
 	protected void initialize()
 	{
-		
 		/*
 		 *  Lock working directory
 		 */
@@ -69,8 +71,11 @@ public abstract class BaseApp implements AppAccess {
 		/*
 		 * Setup logging
 		 */
-		final LogInstance log = createLog();
-		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
+		final LogWriter log = createLog();
+		if (log != null) {
+			Log.setMainLogger(log);
+			org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
+		}
 		
 		// only here it makes sense to log.
 		Log.i("=== Commencing initialization sequence ===");
@@ -82,6 +87,7 @@ public abstract class BaseApp implements AppAccess {
 		eventBus = new EventBus();
 		
 		Log.f3("Registering channels...");
+		initDefaultBusChannels(eventBus);
 		initBus(eventBus);
 		
 		/*
@@ -139,16 +145,16 @@ public abstract class BaseApp implements AppAccess {
 	 * Called at the beginning of the initialization sequence, right after lock
 	 * was obtained.
 	 */
-	@NoImpl
+	@DefaultImpl
 	protected void preInit()
 	{
 	}
 	
 	
 	/**
-	 * 
+	 * Called at the end of init sequence, before main loop starts.
 	 */
-	@NoImpl
+	@DefaultImpl
 	protected void postInit()
 	{
 	}
@@ -159,7 +165,13 @@ public abstract class BaseApp implements AppAccess {
 	 * 
 	 * @return new log instance
 	 */
-	protected abstract LogInstance createLog();
+	@DefaultImpl
+	protected LogWriter createLog()
+	{
+		final LogWriter log = Log.create("runtime", new File("runtime.log"));
+		log.setLevel(Level.ALL);
+		return log;
+	}
 	
 	
 	/**
@@ -167,7 +179,12 @@ public abstract class BaseApp implements AppAccess {
 	 * 
 	 * @param display
 	 */
-	protected abstract void initDisplay(DisplaySystem display);
+	@DefaultImpl
+	protected void initDisplay(DisplaySystem display)
+	{
+		display.createMainWindow(800, 600, true, false, "BaseApp using LWJGL display.");
+		display.setTargetFps(60);
+	}
 	
 	
 	/**
@@ -175,7 +192,10 @@ public abstract class BaseApp implements AppAccess {
 	 * 
 	 * @param audio
 	 */
-	protected abstract void initSoundSystem(SoundSystem audio);
+	@DefaultImpl
+	protected void initSoundSystem(SoundSystem audio)
+	{
+	}
 	
 	
 	/**
@@ -183,14 +203,20 @@ public abstract class BaseApp implements AppAccess {
 	 * 
 	 * @param input
 	 */
-	protected abstract void initInputSystem(InputSystem input);
+	@DefaultImpl
+	protected void initInputSystem(InputSystem input)
+	{
+	}
 	
 	
 	/**
 	 * Initialize resource banks; {@link AsyncResourceLoader} is already
 	 * started.
 	 */
-	protected abstract void initResources();
+	@DefaultImpl
+	protected void initResources()
+	{
+	}
 	
 	
 	/**
@@ -198,7 +224,10 @@ public abstract class BaseApp implements AppAccess {
 	 * 
 	 * @param screens
 	 */
-	protected abstract void initScreens(ScreenRegistry screens);
+	@DefaultImpl
+	protected void initScreens(ScreenRegistry screens)
+	{
+	}
 	
 	
 	/**
@@ -215,7 +244,13 @@ public abstract class BaseApp implements AppAccess {
 	 * 
 	 * @param bus
 	 */
+	@DefaultImpl
 	protected void initBus(EventBus bus)
+	{
+	}
+	
+	
+	private void initDefaultBusChannels(EventBus bus)
 	{
 		// framework events
 		bus.addChannel(DestroyEvent.class, Destroyable.class);
@@ -259,7 +294,7 @@ public abstract class BaseApp implements AppAccess {
 	 */
 	protected void onLockError()
 	{
-		System.err.println("Could not obtain lock file.\nOnly one instance can run at a time.");
+		Log.e("Could not obtain lock file.\nOnly one instance can run at a time.");
 		
 		//@formatter:off
 		JOptionPane.showMessageDialog(
@@ -279,7 +314,11 @@ public abstract class BaseApp implements AppAccess {
 	 * 
 	 * @return lock file, or null to disable lock.
 	 */
-	protected abstract File getLockFile();
+	@DefaultImpl
+	protected File getLockFile()
+	{
+		return new File(".lock");
+	}
 	
 	
 	@Override
@@ -310,14 +349,41 @@ public abstract class BaseApp implements AppAccess {
 	}
 	
 	
-	@Override
-	public void shutdown()
+	@DefaultImpl
+	protected void beforeShutdown()
 	{
+	}
+	
+	
+	@Override
+	public final void uncaughtException(Thread t, Throwable e)
+	{
+		onCrash(e);
+	}
+	
+	
+	@DefaultImpl
+	protected void onCrash(Throwable e)
+	{
+		Log.e("The game has crashed.", e);
+		shutdown();
+	}
+	
+	
+	@Override
+	public final void shutdown()
+	{
+		beforeShutdown();
+		
 		Log.i("Shutting down subsystems...");
 		
-		if (getEventBus() != null) {
-			getEventBus().send(new DestroyEvent());
-			getEventBus().destroy();
+		try {
+			if (getEventBus() != null) {
+				getEventBus().send(new DestroyEvent());
+				getEventBus().destroy();
+			}
+		} catch (final Exception e) {
+			// ignore it
 		}
 		
 		Log.i("Terminating...");

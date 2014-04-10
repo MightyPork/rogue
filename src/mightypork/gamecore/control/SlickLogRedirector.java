@@ -1,7 +1,9 @@
 package mightypork.gamecore.control;
 
 
-import mightypork.utils.logging.LogInstance;
+import java.util.logging.Level;
+
+import mightypork.utils.logging.LogWriter;
 
 import org.newdawn.slick.util.LogSystem;
 
@@ -13,13 +15,13 @@ import org.newdawn.slick.util.LogSystem;
  */
 public class SlickLogRedirector implements LogSystem {
 	
-	LogInstance l;
+	LogWriter l;
 	
 	
 	/**
 	 * @param log log to redirect into
 	 */
-	public SlickLogRedirector(LogInstance log) {
+	public SlickLogRedirector(LogWriter log) {
 		this.l = log;
 	}
 	
@@ -27,49 +29,49 @@ public class SlickLogRedirector implements LogSystem {
 	@Override
 	public void error(String msg, Throwable e)
 	{
-		l.e(msg, e);
+		l.log(Level.SEVERE, msg, e);
 	}
 	
 	
 	@Override
 	public void error(Throwable e)
 	{
-		l.e(e);
+		l.log(Level.SEVERE, null, e);
 	}
 	
 	
 	@Override
 	public void error(String msg)
 	{
-		l.e(msg);
+		l.log(Level.SEVERE, msg);
 	}
 	
 	
 	@Override
 	public void warn(String msg)
 	{
-		l.w(msg);
+		l.log(Level.WARNING, msg);
 	}
 	
 	
 	@Override
 	public void warn(String msg, Throwable e)
 	{
-		l.e(msg, e);
+		l.log(Level.WARNING, msg, e);
 	}
 	
 	
 	@Override
 	public void info(String msg)
 	{
-		l.i(msg);
+		l.log(Level.INFO, msg);
 	}
 	
 	
 	@Override
 	public void debug(String msg)
 	{
-		l.f3(msg);
+		l.log(Level.FINEST, msg);
 	}
 	
 }

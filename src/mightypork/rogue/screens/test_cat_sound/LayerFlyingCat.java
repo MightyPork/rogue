@@ -71,8 +71,6 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		size.update(delta);
 		xPos.update(delta);
 		yPos.update(delta);
-		
-		System.out.println(cat.getRect());
 	}
 	
 	

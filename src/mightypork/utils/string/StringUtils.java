@@ -54,6 +54,7 @@ public class StringUtils {
 	public static String toLastChar(String s, char c)
 	{
 		if (s == null) return null;
+		if (s.lastIndexOf(c) == -1) return s;
 		return s.substring(0, s.lastIndexOf(c));
 	}
 	

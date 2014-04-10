@@ -9,14 +9,14 @@ import java.lang.annotation.Target;
 
 
 /**
- * Indicates that the marked method is not implemented and can be safely
- * overriden.
+ * Marked method can be safely overriden; it's left blank (or with default
+ * implementation) as a convenience.
  * 
  * @author MightyPork
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target(value = { ElementType.METHOD })
-public @interface NoImpl {
+public @interface DefaultImpl {
 	//
 }

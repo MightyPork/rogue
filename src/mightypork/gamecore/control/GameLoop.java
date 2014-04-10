@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mightypork.gamecore.control.bus.events.MainLoopTaskRequest;
 import mightypork.gamecore.control.bus.events.UpdateEvent;
-import mightypork.gamecore.control.interf.NoImpl;
+import mightypork.gamecore.control.interf.DefaultImpl;
 import mightypork.gamecore.control.timing.TimerDelta;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
@@ -78,7 +78,7 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 	/**
 	 * Called before render
 	 */
-	@NoImpl
+	@DefaultImpl
 	protected void beforeRender()
 	{
 		//
@@ -88,7 +88,7 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 	/**
 	 * Called after render
 	 */
-	@NoImpl
+	@DefaultImpl
 	protected void afterRender()
 	{
 		//

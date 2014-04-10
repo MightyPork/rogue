@@ -2,7 +2,7 @@ package mightypork.gamecore.gui.screens;
 
 
 import mightypork.gamecore.control.AppSubModule;
-import mightypork.gamecore.control.interf.NoImpl;
+import mightypork.gamecore.control.interf.DefaultImpl;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.input.KeyBinder;
@@ -75,7 +75,7 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	/**
 	 * Called when the screen becomes active
 	 */
-	@NoImpl
+	@DefaultImpl
 	protected void onScreenEnter()
 	{
 		//
@@ -85,7 +85,7 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	/**
 	 * Called when the screen is no longer active
 	 */
-	@NoImpl
+	@DefaultImpl
 	protected void onScreenLeave()
 	{
 		//
@@ -97,7 +97,7 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	 * 
 	 * @param size screen size
 	 */
-	@NoImpl
+	@DefaultImpl
 	protected void onSizeChanged(Coord size)
 	{
 		//
