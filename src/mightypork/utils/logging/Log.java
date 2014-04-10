@@ -105,8 +105,7 @@ public class Log {
 	public static void log(Level level, String msg)
 	{
 		if (enabled) {
-			final long ms = System.currentTimeMillis() - start_ms;
-			sysoMonitor.onMessageLogged(level, formatMessage(level, msg, null, ms));
+			sysoMonitor.onMessageLogged(level, formatMessage(level, msg, null, start_ms));
 			
 			if (main != null) {
 				main.log(level, msg);
@@ -125,8 +124,7 @@ public class Log {
 	public static void log(Level level, String msg, Throwable t)
 	{
 		if (enabled) {
-			final long ms = System.currentTimeMillis() - start_ms;
-			sysoMonitor.onMessageLogged(level, formatMessage(level, msg, t, ms));
+			sysoMonitor.onMessageLogged(level, formatMessage(level, msg, t, start_ms));
 			
 			if (main != null) {
 				main.log(level, msg, t);

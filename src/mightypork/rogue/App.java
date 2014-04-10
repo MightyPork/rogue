@@ -2,6 +2,7 @@ package mightypork.rogue;
 
 
 import java.io.File;
+import java.util.Locale;
 
 import mightypork.gamecore.control.BaseApp;
 import mightypork.gamecore.control.GameLoop;
@@ -17,6 +18,8 @@ import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_font.ScreenTestFont;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
+import mightypork.utils.logging.Log;
+import mightypork.utils.logging.LogWriter;
 
 
 /**
@@ -82,17 +85,16 @@ public class App extends BaseApp {
 	}
 	
 	
-//	@Override
-//	protected LogWriter createLog()
-//	{
-//		Locale.setDefault(Locale.ENGLISH);
-//		
-//		final LogWriter log = Log.create("runtime", Paths.LOG_FILE, 10);
-//		log.setLevel(Level.WARNING);
-//		log.enable(Config.LOGGING_ENABLED);
-//		
-//		return log;
-//	}
+	@Override
+	protected LogWriter createLog()
+	{
+		Locale.setDefault(Locale.ENGLISH);
+		
+		final LogWriter log = Log.create("runtime", Paths.LOG_FILE, 10);
+		
+		return log;
+	}
+	
 	
 	@Override
 	protected void initDisplay(DisplaySystem display)
