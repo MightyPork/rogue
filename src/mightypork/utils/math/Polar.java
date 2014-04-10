@@ -106,7 +106,8 @@ public class Polar {
 	 */
 	public static Polar fromCoord(Coord coord)
 	{
-		return new Polar(Math.atan2(coord.y, coord.x), Math.sqrt(Calc.square(coord.x) + Calc.square(coord.y)));
+		return Polar.fromCoord(coord.x(), coord.y());
+		
 	}
 	
 	
@@ -119,7 +120,10 @@ public class Polar {
 	 */
 	public static Polar fromCoord(double x, double y)
 	{
-		return Polar.fromCoord(new Coord(x, y));
+		final double a = Math.atan2(y, x);
+		final double r = Math.sqrt(x * x + y * y);
+		
+		return new Polar(a, r);
 	}
 	
 	

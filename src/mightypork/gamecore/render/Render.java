@@ -26,9 +26,9 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Render {
 	
-	private static final Coord AXIS_X = new Coord(1, 0, 0);
-	private static final Coord AXIS_Y = new Coord(0, 1, 0);
-	private static final Coord AXIS_Z = new Coord(0, 0, 1);
+	public static final Coord AXIS_X = new Coord(1, 0, 0).freeze();
+	public static final Coord AXIS_Y = new Coord(0, 1, 0).freeze();
+	public static final Coord AXIS_Z = new Coord(0, 0, 1).freeze();
 	
 	
 	/**
@@ -55,13 +55,63 @@ public class Render {
 	
 	
 	/**
+	 * Translate
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public static void translate(double x, double y)
+	{
+		glTranslated(x, y, 0);
+	}
+	
+	
+	/**
+	 * Translate
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	public static void translate(double x, double y, double z)
+	{
+		glTranslated(x, y, z);
+	}
+	
+	
+	/**
 	 * Translate with coord
 	 * 
 	 * @param coord coord
 	 */
 	public static void translate(Coord coord)
 	{
-		glTranslated(coord.x, coord.y, coord.z);
+		glTranslated(coord.x(), coord.y(), coord.z());
+	}
+	
+	
+	/**
+	 * Scale
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public static void scale(double x, double y)
+	{
+		glScaled(x, y, 0);
+	}
+	
+	
+	/**
+	 * Scale
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	public static void scale(double x, double y, double z)
+	{
+		glScaled(x, y, z);
 	}
 	
 	
@@ -72,7 +122,7 @@ public class Render {
 	 */
 	public static void scale(Coord factor)
 	{
-		glScaled(factor.x, factor.y, factor.z);
+		glScaled(factor.x(), factor.y(), factor.z());
 	}
 	
 	
@@ -162,7 +212,7 @@ public class Render {
 	public static void rotate(double angle, Coord axis)
 	{
 		final Coord vec = axis.norm(1);
-		glRotated(angle, vec.x, vec.y, vec.z);
+		glRotated(angle, vec.x(), vec.y(), vec.z());
 	}
 	
 	private static int pushed = 0;
@@ -179,8 +229,6 @@ public class Render {
 			Log.w("Suspicious number of state pushes: " + pushed);
 		}
 		
-//		Log.f3("push : "+pushed);
-		
 		GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
 		GL11.glPushClientAttrib(GL11.GL_ALL_CLIENT_ATTRIB_BITS);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
@@ -188,10 +236,6 @@ public class Render {
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glPushMatrix();
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		
-//		GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
-//		GL11.glPushClientAttrib(GL11.GL_ALL_CLIENT_ATTRIB_BITS);
-//		GL11.glPushMatrix();
 	}
 	
 	
@@ -206,18 +250,30 @@ public class Render {
 		
 		pushed--;
 		
-//		Log.f3("pop  : "+pushed);
-		
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glPopMatrix();
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glPopMatrix();
 		GL11.glPopClientAttrib();
 		GL11.glPopAttrib();
-		
-//		GL11.glPopMatrix();
-//		GL11.glPopClientAttrib();
-//		GL11.glPopAttrib();
+	}
+	
+	
+	/**
+	 * Store matrix
+	 */
+	public static void pushMatrix()
+	{
+		GL11.glPushMatrix();
+	}
+	
+	
+	/**
+	 * Restore Gl state
+	 */
+	public static void popMatrix()
+	{
+		GL11.glPopMatrix();
 	}
 	
 	
@@ -254,24 +310,11 @@ public class Render {
 	 * Bind texture
 	 * 
 	 * @param texture the texture
-	 * @param linear use linear interpolation for scaling
-	 * @throws RuntimeException if not loaded yet
-	 */
-	private static void bindTexture(Texture texture, boolean linear) throws RuntimeException
-	{
-		texture.bind();
-	}
-	
-	
-	/**
-	 * Bind texture with linear interpolation
-	 * 
-	 * @param texture the texture
 	 * @throws RuntimeException if not loaded yet
 	 */
 	private static void bindTexture(Texture texture) throws RuntimeException
 	{
-		bindTexture(texture, false);
+		texture.bind();
 	}
 	
 	
@@ -280,9 +323,9 @@ public class Render {
 	 */
 	private static void unbindTexture()
 	{
-		if (TextureImpl.getLastBind() != null) {
-			TextureImpl.bindNone();
-		}
+		//if (TextureImpl.getLastBind() != null) {
+		TextureImpl.bindNone();
+		//}
 	}
 	
 	
@@ -437,11 +480,10 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, Rect uvs, Texture texture, RGB tint)
 	{
-		pushState();
 		bindTexture(texture);
 		setColor(tint);
 		quadUV(quad, uvs);
-		popState();
+		unbindTexture();
 	}
 	
 	
@@ -466,7 +508,7 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, Texture texture)
 	{
-		quadTextured(quad, Rect.one(), texture, RGB.WHITE);
+		quadTextured(quad, Rect.ONE, texture, RGB.WHITE);
 	}
 	
 	
@@ -505,7 +547,7 @@ public class Render {
 		glLoadIdentity();
 		final Coord s = DisplaySystem.getSize();
 		glViewport(0, 0, s.xi(), s.yi());
-		glOrtho(0, s.x, (DisplaySystem.yAxisDown ? 1 : -1) * s.y, 0, -1000, 1000);
+		glOrtho(0, s.x(), (DisplaySystem.yAxisDown ? 1 : -1) * s.y(), 0, -1000, 1000);
 		
 		// back to modelview
 		glMatrixMode(GL_MODELVIEW);
@@ -523,7 +565,7 @@ public class Render {
 		glShadeModel(GL_SMOOTH);
 		
 		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	
 }

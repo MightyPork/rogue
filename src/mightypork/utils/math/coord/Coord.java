@@ -3,6 +3,7 @@ package mightypork.utils.math.coord;
 
 import java.util.Random;
 
+import mightypork.gamecore.gui.constraints.NumberConstraint;
 import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.utils.math.Calc;
 
@@ -12,9 +13,12 @@ import mightypork.utils.math.Calc;
  * 
  * @author MightyPork
  */
-public class Coord {
+public class Coord implements CoordValue {
 	
 	protected static Random rand = new Random();
+	
+	public static final Coord ONE = new Coord(1).freeze();
+	public static final Coord ZERO = new Coord(0).freeze();
 	
 	
 	/**
@@ -30,13 +34,31 @@ public class Coord {
 	}
 	
 	/** X coordinate */
-	public double x = 0;
+	private double x = 0;
 	
 	/** Y coordinate */
-	public double y = 0;
+	private double y = 0;
 	
 	/** Z coordinate */
-	public double z = 0;
+	private double z = 0;
+	
+	private Coord view = null;
+	
+	private boolean frozen = false;
+	
+	private NumberConstraint xc, yc, zc;
+	
+	
+	public static Coord at(double x, double y)
+	{
+		return new Coord(x, y);
+	}
+	
+	
+	public static Coord at(double x, double y, double z)
+	{
+		return new Coord(x, y, z);
+	}
 	
 	
 	/**
@@ -61,7 +83,7 @@ public class Coord {
 	 * 
 	 * @param d coord value
 	 */
-	public Coord(Number d) {
+	public Coord(double d) {
 		setTo(d, d, d);
 	}
 	
@@ -72,7 +94,7 @@ public class Coord {
 	 * @param x x coordinate
 	 * @param y y coordinate
 	 */
-	public Coord(Number x, Number y) {
+	public Coord(double x, double y) {
 		setTo(x, y);
 	}
 	
@@ -84,8 +106,60 @@ public class Coord {
 	 * @param y y coordinate
 	 * @param z z coordinate
 	 */
-	public Coord(Number x, Number y, Number z) {
+	public Coord(double x, double y, double z) {
 		setTo(x, y, z);
+	}
+	
+	
+	/**
+	 * Freeze current coordinate values.
+	 * 
+	 * @return this
+	 */
+	public Coord freeze()
+	{
+		frozen = true;
+		return this;
+	}
+	
+	
+	/**
+	 * Get view at this coord
+	 * 
+	 * @return the view
+	 */
+	public Coord view()
+	{
+		// cache last used view
+		if (view == null) view = new CoordView(this);
+		
+		return view;
+	}
+	
+	
+	/**
+	 * @return true if this coord is writable
+	 */
+	public boolean isWritable()
+	{
+		return !frozen && !isView();
+	}
+	
+	
+	/**
+	 * @return true if this coord is a view at another
+	 */
+	public boolean isView()
+	{
+		return false;
+	}
+	
+	
+	protected void assertWritable()
+	{
+		if (!isWritable()) {
+			throw new UnsupportedOperationException("This Coord is not writable.");
+		}
 	}
 	
 	
@@ -109,7 +183,7 @@ public class Coord {
 	 */
 	public Coord add_ip(Coord vec)
 	{
-		return add_ip(vec.x, vec.y, vec.z);
+		return add_ip(vec.x(), vec.y(), vec.z());
 	}
 	
 	
@@ -121,7 +195,7 @@ public class Coord {
 	 * @param y y offset
 	 * @return changed copy
 	 */
-	public Coord add(Number x, Number y)
+	public Coord add(double x, double y)
 	{
 		return copy().add_ip(x, y);
 	}
@@ -135,7 +209,7 @@ public class Coord {
 	 * @param y y offset
 	 * @return this
 	 */
-	public Coord add_ip(Number x, Number y)
+	public Coord add_ip(double x, double y)
 	{
 		return add_ip(x, y, 0);
 	}
@@ -149,7 +223,7 @@ public class Coord {
 	 * @param z z offset
 	 * @return changed copy
 	 */
-	public Coord add(Number x, Number y, Number z)
+	public Coord add(double x, double y, double z)
 	{
 		return copy().add_ip(x, y, z);
 	}
@@ -163,11 +237,12 @@ public class Coord {
 	 * @param z z offset
 	 * @return this
 	 */
-	public Coord add_ip(Number x, Number y, Number z)
+	public Coord add_ip(double x, double y, double z)
 	{
-		this.x += x.doubleValue();
-		this.y += y.doubleValue();
-		this.z += z.doubleValue();
+		assertWritable();
+		this.x += x;
+		this.y += y;
+		this.z += z;
 		return this;
 	}
 	
@@ -179,7 +254,7 @@ public class Coord {
 	 */
 	public Coord copy()
 	{
-		return new Coord(x, y, z);
+		return new Coord(this);
 	}
 	
 	
@@ -191,7 +266,11 @@ public class Coord {
 	 */
 	public double distTo(Coord point)
 	{
-		return Math.sqrt((point.x - x) * (point.x - x) + (point.y - y) * (point.y - y) + (point.z - z) * (point.z - z));
+		final double dx = (point.x() - this.x());
+		final double dy = (point.y() - this.y());
+		final double dz = (point.z() - this.z());
+		
+		return Math.sqrt(dx * dx + dy * dy + dz * dz);
 	}
 	
 	
@@ -217,7 +296,11 @@ public class Coord {
 	 */
 	public boolean isInRect(Coord min, Coord max)
 	{
-		return (x >= min.x && x <= max.x) && (y >= min.y && y <= max.y) && (z >= min.z && z <= max.z);
+		if (!Calc.inRange(x(), min.x(), max.x())) return false;
+		if (!Calc.inRange(y(), min.y(), max.y())) return false;
+		if (!Calc.inRange(z(), min.z(), max.z())) return false;
+		
+		return true;
 	}
 	
 	
@@ -269,18 +352,6 @@ public class Coord {
 	
 	
 	/**
-	 * Multiply each component, in place.
-	 * 
-	 * @param d multiplier
-	 * @return this
-	 */
-	public Coord mul_ip(double d)
-	{
-		return mul_ip(d, d, d);
-	}
-	
-	
-	/**
 	 * Multiply each component, in a copy.
 	 * 
 	 * @param vec vector of multipliers
@@ -300,23 +371,21 @@ public class Coord {
 	 * @param y y multiplier
 	 * @return changed copy
 	 */
-	public Coord mul(double x, int y)
+	public Coord mul(double x, double y)
 	{
 		return copy().mul_ip(x, y);
 	}
 	
 	
 	/**
-	 * Multiply each component, in place.<br>
-	 * Z is unchanged.
+	 * Multiply each component, in place.
 	 * 
-	 * @param x x multiplier
-	 * @param y y multiplier
+	 * @param d multiplier
 	 * @return this
 	 */
-	public Coord mul_ip(double x, double y)
+	public Coord mul_ip(double d)
 	{
-		return mul_ip(x, y, 1);
+		return mul_ip(d, d, d);
 	}
 	
 	
@@ -335,6 +404,20 @@ public class Coord {
 	
 	
 	/**
+	 * Multiply each component, in place.<br>
+	 * Z is unchanged.
+	 * 
+	 * @param x x multiplier
+	 * @param y y multiplier
+	 * @return this
+	 */
+	public Coord mul_ip(double x, double y)
+	{
+		return mul_ip(x, y, 1);
+	}
+	
+	
+	/**
 	 * Multiply each component, in place.
 	 * 
 	 * @param vec vector of multipliers
@@ -342,7 +425,7 @@ public class Coord {
 	 */
 	public Coord mul_ip(Coord vec)
 	{
-		return mul_ip(vec.x, vec.y, vec.z);
+		return mul_ip(vec.x(), vec.y(), vec.z());
 	}
 	
 	
@@ -356,6 +439,7 @@ public class Coord {
 	 */
 	public Coord mul_ip(double x, double y, double z)
 	{
+		assertWritable();
 		this.x *= x;
 		this.y *= y;
 		this.z *= z;
@@ -370,18 +454,6 @@ public class Coord {
 	
 	
 	/**
-	 * offset randomly in place
-	 * 
-	 * @param max max +- offset
-	 * @return this
-	 */
-	public Coord random_offset_ip(double max)
-	{
-		return add(random(1).norm_ip(rand.nextDouble() * max));
-	}
-	
-	
-	/**
 	 * offset randomly
 	 * 
 	 * @param min min offset
@@ -391,6 +463,18 @@ public class Coord {
 	public Coord random_offset(double min, double max)
 	{
 		return copy().random_offset_ip(min, max);
+	}
+	
+	
+	/**
+	 * offset randomly in place
+	 * 
+	 * @param max max +- offset
+	 * @return this
+	 */
+	public Coord random_offset_ip(double max)
+	{
+		return add_ip(random(1).norm_ip(rand.nextDouble() * max));
 	}
 	
 	
@@ -426,6 +510,7 @@ public class Coord {
 	 */
 	public Coord round_ip()
 	{
+		assertWritable();
 		x = Math.round(x);
 		y = Math.round(y);
 		z = Math.round(z);
@@ -440,9 +525,10 @@ public class Coord {
 	 */
 	public void setToMax(Coord other)
 	{
-		x = Math.max(x, other.x);
-		y = Math.max(y, other.y);
-		z = Math.max(z, other.z);
+		assertWritable();
+		x = Math.max(x, other.x());
+		y = Math.max(y, other.y());
+		z = Math.max(z, other.z());
 	}
 	
 	
@@ -453,9 +539,10 @@ public class Coord {
 	 */
 	public void setToMin(Coord other)
 	{
-		x = Math.min(x, other.x);
-		y = Math.min(y, other.y);
-		z = Math.min(z, other.z);
+		assertWritable();
+		x = Math.min(x, other.x());
+		y = Math.min(y, other.y());
+		z = Math.min(z, other.z());
 	}
 	
 	
@@ -467,7 +554,7 @@ public class Coord {
 	 */
 	public Coord setTo(Coord copied)
 	{
-		return setTo(copied.x, copied.y, copied.z);
+		return setTo(copied.x(), copied.y(), copied.z());
 	}
 	
 	
@@ -478,7 +565,7 @@ public class Coord {
 	 * @param y y coordinate
 	 * @return this
 	 */
-	public Coord setTo(Number x, Number y)
+	public Coord setTo(double x, double y)
 	{
 		return setTo(x, y, 0);
 	}
@@ -492,11 +579,12 @@ public class Coord {
 	 * @param z z coordinate
 	 * @return this
 	 */
-	public Coord setTo(Number x, Number y, Number z)
+	public Coord setTo(double x, double y, double z)
 	{
-		this.x = x.doubleValue();
-		this.y = y.doubleValue();
-		this.z = z.doubleValue();
+		assertWritable();
+		this.x = x;
+		this.y = y;
+		this.z = z;
 		return this;
 	}
 	
@@ -507,22 +595,9 @@ public class Coord {
 	 * @param x x coordinate
 	 * @return copy with set coordinate
 	 */
-	public Coord setX(Number x)
+	public Coord setX(double x)
 	{
 		return copy().setX_ip(x);
-	}
-	
-	
-	/**
-	 * Set X coordinate in place
-	 * 
-	 * @param x x coordinate
-	 * @return this
-	 */
-	public Coord setX_ip(Number x)
-	{
-		this.x = x.doubleValue();
-		return this;
 	}
 	
 	
@@ -532,22 +607,9 @@ public class Coord {
 	 * @param y y coordinate
 	 * @return copy with set coordinate
 	 */
-	public Coord setY(Number y)
+	public Coord setY(double y)
 	{
 		return copy().setY_ip(y);
-	}
-	
-	
-	/**
-	 * Set Y coordinate in place
-	 * 
-	 * @param y y coordinate
-	 * @return this
-	 */
-	public Coord setY_ip(Number y)
-	{
-		this.y = y.doubleValue();
-		return this;
 	}
 	
 	
@@ -557,9 +619,37 @@ public class Coord {
 	 * @param z z coordinate
 	 * @return copy with set coordinate
 	 */
-	public Coord setZ(Number z)
+	public Coord setZ(double z)
 	{
 		return copy().setZ_ip(z);
+	}
+	
+	
+	/**
+	 * Set X coordinate in place
+	 * 
+	 * @param x x coordinate
+	 * @return this
+	 */
+	public Coord setX_ip(double x)
+	{
+		assertWritable();
+		this.x = x;
+		return this;
+	}
+	
+	
+	/**
+	 * Set Y coordinate in place
+	 * 
+	 * @param y y coordinate
+	 * @return this
+	 */
+	public Coord setY_ip(double y)
+	{
+		assertWritable();
+		this.y = y;
+		return this;
 	}
 	
 	
@@ -569,9 +659,10 @@ public class Coord {
 	 * @param z z coordinate
 	 * @return this
 	 */
-	public Coord setZ_ip(Number z)
+	public Coord setZ_ip(double z)
 	{
-		this.z = z.doubleValue();
+		assertWritable();
+		this.z = z;
 		return this;
 	}
 	
@@ -595,7 +686,7 @@ public class Coord {
 	 * @param y y offset
 	 * @return the offset copy
 	 */
-	public Coord sub(Number x, Number y)
+	public Coord sub(double x, double y)
 	{
 		return copy().sub_ip(x, y);
 	}
@@ -609,7 +700,7 @@ public class Coord {
 	 * @param z z offset
 	 * @return the offset copy
 	 */
-	public Coord sub(Number x, Number y, Number z)
+	public Coord sub(double x, double y, double z)
 	{
 		return copy().sub_ip(x, y, z);
 	}
@@ -623,7 +714,7 @@ public class Coord {
 	 */
 	public Coord sub_ip(Coord vec)
 	{
-		return sub_ip(vec.x, vec.y, vec.z);
+		return sub_ip(vec.x(), vec.y(), vec.z());
 	}
 	
 	
@@ -634,7 +725,7 @@ public class Coord {
 	 * @param y y offset
 	 * @return this
 	 */
-	public Coord sub_ip(Number x, Number y)
+	public Coord sub_ip(double x, double y)
 	{
 		return sub_ip(x, y, 0);
 	}
@@ -648,11 +739,12 @@ public class Coord {
 	 * @param z z offset
 	 * @return this
 	 */
-	public Coord sub_ip(Number x, Number y, Number z)
+	public Coord sub_ip(double x, double y, double z)
 	{
-		this.x -= x.doubleValue();
-		this.y -= y.doubleValue();
-		this.z -= z.doubleValue();
+		assertWritable();
+		this.x -= x;
+		this.y -= y;
+		this.z -= z;
 		return this;
 	}
 	
@@ -672,6 +764,7 @@ public class Coord {
 	/**
 	 * @return X as double
 	 */
+	@Override
 	public double x()
 	{
 		return x;
@@ -679,26 +772,9 @@ public class Coord {
 	
 	
 	/**
-	 * @return X as float
-	 */
-	public float xf()
-	{
-		return (float) x;
-	}
-	
-	
-	/**
-	 * @return X as int
-	 */
-	public int xi()
-	{
-		return (int) Math.round(x);
-	}
-	
-	
-	/**
 	 * @return Y as double
 	 */
+	@Override
 	public double y()
 	{
 		return y;
@@ -706,26 +782,9 @@ public class Coord {
 	
 	
 	/**
-	 * @return Y as float
-	 */
-	public float yf()
-	{
-		return (float) y;
-	}
-	
-	
-	/**
-	 * @return Y as int
-	 */
-	public int yi()
-	{
-		return (int) Math.round(y);
-	}
-	
-	
-	/**
 	 * @return Z as double
 	 */
+	@Override
 	public double z()
 	{
 		return z;
@@ -733,20 +792,107 @@ public class Coord {
 	
 	
 	/**
+	 * @return X as constraint view
+	 */
+	@Override
+	public final NumberConstraint xc()
+	{
+		return xc != null ? xc : new NumberConstraint() {
+			
+			@Override
+			public double getValue()
+			{
+				return x();
+			}
+		};
+	}
+	
+	
+	/**
+	 * @return Y as constraint view
+	 */
+	@Override
+	public final NumberConstraint yc()
+	{
+		return yc != null ? yc : new NumberConstraint() {
+			
+			@Override
+			public double getValue()
+			{
+				return y();
+			}
+		};
+	}
+	
+	
+	/**
+	 * @return Z as constraint view
+	 */
+	@Override
+	public final NumberConstraint zc()
+	{
+		return zc != null ? zc : new NumberConstraint() {
+			
+			@Override
+			public double getValue()
+			{
+				return z();
+			}
+		};
+	}
+	
+	
+	/**
+	 * @return X as float
+	 */
+	public final float xf()
+	{
+		return (float) x();
+	}
+	
+	
+	/**
+	 * @return Y as float
+	 */
+	public final float yf()
+	{
+		return (float) y();
+	}
+	
+	
+	/**
 	 * @return Z as float
 	 */
-	public float zf()
+	public final float zf()
 	{
-		return (float) z;
+		return (float) z();
+	}
+	
+	
+	/**
+	 * @return X as int
+	 */
+	public final int xi()
+	{
+		return (int) Math.round(x());
+	}
+	
+	
+	/**
+	 * @return Y as int
+	 */
+	public final int yi()
+	{
+		return (int) Math.round(y());
 	}
 	
 	
 	/**
 	 * @return Z as int
 	 */
-	public int zi()
+	public final int zi()
 	{
-		return (int) Math.round(z);
+		return (int) Math.round(z());
 	}
 	
 	
@@ -798,9 +944,9 @@ public class Coord {
 	{
 		//@formatter:off
 		setTo(
-				y * vec.z - z * vec.y,
-				z * vec.x - x * vec.z,
-				x * vec.y - y * vec.x
+				y * vec.z() - z * vec.y(),
+				z * vec.x() - x * vec.z(),
+				x * vec.y() - y * vec.x()
 		);
 		//@formatter:on
 		return this;
@@ -815,7 +961,7 @@ public class Coord {
 	 */
 	public double dot(Coord vec)
 	{
-		return x * vec.x + y * vec.y + z * vec.z;
+		return x() * vec.x() + y() * vec.y() + z() * vec.z();
 	}
 	
 	
@@ -879,7 +1025,7 @@ public class Coord {
 	{
 		if (isZero()) return 0;
 		
-		return Math.sqrt(x * x + y * y + z * z);
+		return Math.sqrt(x() * x() + y() * y() + z() * z());
 	}
 	
 	
@@ -888,14 +1034,14 @@ public class Coord {
 	 */
 	public boolean isZero()
 	{
-		return x == 0 && y == 0 && z == 0;
+		return x() == 0 && y() == 0 && z() == 0;
 	}
 	
 	
 	@Override
 	public String toString()
 	{
-		return "[" + x + ", " + y + ", " + z + "]";
+		return String.format("( %.2f, %.2f, %.2f )", x(), y(), z());
 	}
 	
 	
@@ -905,11 +1051,11 @@ public class Coord {
 		final int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(x);
+		temp = Double.doubleToLongBits(x());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(y);
+		temp = Double.doubleToLongBits(y());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(z);
+		temp = Double.doubleToLongBits(z());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
@@ -922,9 +1068,9 @@ public class Coord {
 		if (obj == null) return false;
 		if (!(obj instanceof Coord)) return false;
 		final Coord other = (Coord) obj;
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) return false;
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) return false;
-		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) return false;
+		if (Double.doubleToLongBits(x()) != Double.doubleToLongBits(other.x())) return false;
+		if (Double.doubleToLongBits(y()) != Double.doubleToLongBits(other.y())) return false;
+		if (Double.doubleToLongBits(z()) != Double.doubleToLongBits(other.z())) return false;
 		return true;
 	}
 	
@@ -936,7 +1082,7 @@ public class Coord {
 	 */
 	public static Coord zero()
 	{
-		return new Coord(0);
+		return ZERO.copy();
 	}
 	
 	
@@ -947,7 +1093,7 @@ public class Coord {
 	 */
 	public static Coord one()
 	{
-		return new Coord(1);
+		return ONE.copy();
 	}
 	
 	

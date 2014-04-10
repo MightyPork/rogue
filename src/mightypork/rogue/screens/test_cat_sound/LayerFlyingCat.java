@@ -9,7 +9,6 @@ import mightypork.gamecore.control.bus.events.MouseButtonEvent;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
@@ -40,17 +39,20 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		
 		xPos.setTo(DisplaySystem.getWidth() / 2);
 		yPos.setTo(DisplaySystem.getHeight() / 2);
-		final RectConstraint catbox = _centered(_box(size, size), xPos, yPos);
 		
 		cat = new ImagePainter(Res.getTxQuad("test.kitten"));
-		cat.setContext(catbox);
+		cat.setContext(_centered(_box(size, size), xPos, yPos));
 		
-		final RectConstraint fpsbox = _centered(_box(64, 64), _mouseX, _mouseY);
+		tp = new TextPainter(Res.getFont("default"));
+		tp.setAlign(Align.CENTER);
+		tp.setColor(RGB.YELLOW);
+		tp.setText("Meow!");
+		tp.setShadow(RGB.dark(0.8), Coord.at(2, 2));
+		tp.setContext(_centered(_box(64, 64), _mouseX, _mouseY));
 		
-		tp = new TextPainter(Res.getFont("default"), Align.CENTER, RGB.YELLOW, "Meow");
-		
-		tp.setContext(fpsbox);
-		
+		/*
+		 * Register keys
+		 */
 		bindKeyStroke(new KeyStroke(Keys.KEY_RETURN), new Runnable() {
 			
 			@Override
@@ -69,6 +71,8 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		size.update(delta);
 		xPos.update(delta);
 		yPos.update(delta);
+		
+		System.out.println(cat.getRect());
 	}
 	
 	
@@ -81,8 +85,8 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		final double t = 2;
 		size.fadeTo(100 + rand.nextInt(700), t / 2D);
 		
-		xPos.fadeTo(pos.x, t);
-		yPos.fadeTo(pos.y, t);
+		xPos.fadeTo(pos.x(), t);
+		yPos.fadeTo(pos.y(), t);
 	}
 	
 	

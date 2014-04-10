@@ -1,7 +1,7 @@
 package mightypork.gamecore.render.textures;
 
 
-import mightypork.gamecore.loading.BaseDeferredResource;
+import mightypork.gamecore.loading.DeferredResource;
 import mightypork.gamecore.loading.MustLoadInMainThread;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.logging.LoggedName;
@@ -18,10 +18,10 @@ import org.newdawn.slick.opengl.Texture;
  */
 @MustLoadInMainThread
 @LoggedName(name = "Texture")
-public class DeferredTexture extends BaseDeferredResource implements FilteredTexture {
+public class DeferredTexture extends DeferredResource implements FilteredTexture {
 	
 	private Texture backingTexture;
-	private FilterMode filter_min = FilterMode.NEAREST;
+	private FilterMode filter_min = FilterMode.LINEAR;
 	private FilterMode filter_mag = FilterMode.NEAREST;
 	private WrapMode wrap = WrapMode.CLAMP;
 	
@@ -90,7 +90,6 @@ public class DeferredTexture extends BaseDeferredResource implements FilteredTex
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filter_mag.num);
 		
 		bindRaw();
-		
 	}
 	
 	

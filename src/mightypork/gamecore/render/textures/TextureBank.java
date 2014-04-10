@@ -33,14 +33,19 @@ public class TextureBank extends AppAdapter {
 	
 	
 	/**
-	 * Load a {@link Texture} from resource, with filters LINEAR and wrap CLAMP
+	 * Load a {@link Texture}
 	 * 
 	 * @param key texture key
-	 * @param resourcePath texture resource path
+	 * @param texture texture to load
 	 */
-	public void loadTexture(String key, String resourcePath)
+	public void loadTexture(String key, DeferredTexture texture)
 	{
-		loadTexture(key, resourcePath, FilterMode.LINEAR, FilterMode.NEAREST, WrapMode.CLAMP);
+		getEventBus().send(new ResourceLoadRequest(texture));
+		
+		textures.put(key, texture);
+		lastTx = texture;
+		
+		makeQuad(key, Rect.ONE);
 	}
 	
 	
@@ -55,16 +60,11 @@ public class TextureBank extends AppAdapter {
 	 */
 	public void loadTexture(String key, String resourcePath, FilterMode filter_min, FilterMode filter_mag, WrapMode wrap)
 	{
-		final DeferredTexture tx = new DeferredTexture(resourcePath);
-		tx.setFilter(filter_min, filter_mag);
-		tx.setWrap(wrap);
+		final DeferredTexture texture = new DeferredTexture(resourcePath);
+		texture.setFilter(filter_min, filter_mag);
+		texture.setWrap(wrap);
 		
-		getEventBus().send(new ResourceLoadRequest(tx));
-		
-		textures.put(key, tx);
-		lastTx = tx;
-		
-		makeQuad(key, Rect.one());
+		loadTexture(key, texture);
 	}
 	
 	

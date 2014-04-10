@@ -62,7 +62,11 @@ public class Log {
 	 */
 	public static void w(String msg)
 	{
-		if (staticLogging && ready()) main.w(msg);
+		if (staticLogging && ready()) {
+			main.w(msg);
+		} else {
+			System.err.println(msg);
+		}
 	}
 	
 	
@@ -73,7 +77,11 @@ public class Log {
 	 */
 	public static void e(String msg)
 	{
-		if (staticLogging && ready()) main.e(msg);
+		if (staticLogging && ready()) {
+			main.e(msg);
+		} else {
+			System.err.println(msg);
+		}
 	}
 	
 	
@@ -85,7 +93,12 @@ public class Log {
 	 */
 	public static void e(String msg, Throwable thrown)
 	{
-		if (staticLogging && ready()) main.e(msg, thrown);
+		if (staticLogging && ready()) {
+			main.e(msg, thrown);
+		} else {
+			System.err.println(msg);
+			thrown.printStackTrace();
+		}
 	}
 	
 	
@@ -96,7 +109,11 @@ public class Log {
 	 */
 	public static void e(Throwable thrown)
 	{
-		if (staticLogging && ready()) main.e(thrown);
+		if (staticLogging && ready()) {
+			main.e(thrown);
+		} else {
+			thrown.printStackTrace();
+		}
 	}
 	
 	

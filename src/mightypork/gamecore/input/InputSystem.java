@@ -129,10 +129,10 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		}
 		
 		if (button != -1 || wheeld != 0) {
-			getEventBus().send(new MouseButtonEvent(pos, button, down, wheeld));
+			getEventBus().send(new MouseButtonEvent(pos.freeze(), button, down, wheeld));
 		}
 		
-		moveSum.add_ip(move);
+		moveSum.add_ip(move.freeze());
 		lastPos.setTo(pos);
 	}
 	
@@ -149,7 +149,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	
 	private static void flipScrY(Coord c)
 	{
-		if (DisplaySystem.yAxisDown) c.setY_ip(DisplaySystem.getSize().y - c.y);
+		if (DisplaySystem.yAxisDown) c.setY_ip(DisplaySystem.getSize().y() - c.y());
 	}
 	
 	
@@ -162,7 +162,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	{
 		final Coord pos = new Coord(Mouse.getX(), Mouse.getY());
 		flipScrY(pos);
-		return pos;
+		return pos.freeze();
 	}
 	
 	

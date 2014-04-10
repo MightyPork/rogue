@@ -2,7 +2,7 @@ package mightypork.gamecore.control.bus.events;
 
 
 import mightypork.gamecore.control.bus.events.types.SingleReceiverEvent;
-import mightypork.gamecore.loading.DeferredResource;
+import mightypork.gamecore.loading.Deferred;
 
 
 /**
@@ -13,13 +13,13 @@ import mightypork.gamecore.loading.DeferredResource;
 @SingleReceiverEvent
 public class ResourceLoadRequest implements Event<ResourceLoadRequest.Listener> {
 	
-	private final DeferredResource resource;
+	private final Deferred resource;
 	
 	
 	/**
 	 * @param resource resource to load
 	 */
-	public ResourceLoadRequest(DeferredResource resource) {
+	public ResourceLoadRequest(Deferred resource) {
 		this.resource = resource;
 	}
 	
@@ -42,6 +42,6 @@ public class ResourceLoadRequest implements Event<ResourceLoadRequest.Listener> 
 		 * 
 		 * @param resource
 		 */
-		void loadResource(DeferredResource resource);
+		void loadResource(Deferred resource);
 	}
 }

@@ -12,6 +12,7 @@ import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.gamecore.gui.constraints.NumberConstraint;
 import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.utils.logging.Log;
+import mightypork.utils.math.coord.ConstraintCoordView;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
@@ -176,7 +177,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	 */
 	public static Coord getSize()
 	{
-		return new Coord(getWidth(), getHeight());
+		return size;
 	}
 	
 	
@@ -227,7 +228,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	@Override
 	public Rect getRect()
 	{
-		return new Rect(getSize());
+		return new Rect(Coord.ZERO, getSize());
 	}
 	
 	
@@ -240,7 +241,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	}
 	
 	/** Screen width constraint */
-	public final NumberConstraint width = new NumberConstraint() {
+	public static final NumberConstraint width = new NumberConstraint() {
 		
 		@Override
 		public double getValue()
@@ -250,7 +251,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	};
 	
 	/** Screen height constaint */
-	public final NumberConstraint height = new NumberConstraint() {
+	public static final NumberConstraint height = new NumberConstraint() {
 		
 		@Override
 		public double getValue()
@@ -258,4 +259,6 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 			return getHeight();
 		}
 	};
+	
+	public static final ConstraintCoordView size = new ConstraintCoordView(width, height, null);
 }

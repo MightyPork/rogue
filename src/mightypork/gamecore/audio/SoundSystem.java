@@ -26,7 +26,7 @@ import org.newdawn.slick.openal.SoundStore;
  */
 public class SoundSystem extends RootBusNode implements Updateable {
 	
-	private static final Coord INITIAL_LISTENER_POS = new Coord(0, 0, 0);
+	private static final Coord INITIAL_LISTENER_POS = Coord.ZERO;
 	private static final int MAX_SOURCES = 256;
 	
 	private static Coord listener = new Coord();
@@ -45,7 +45,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 		FloatBuffer buf3 = Buffers.alloc(3);
 		FloatBuffer buf6 = Buffers.alloc(6);
 		buf3.clear();
-		Buffers.fill(buf3, (float) pos.x, (float) pos.y, (float) pos.z);
+		Buffers.fill(buf3, pos.xf(), pos.yf(), pos.zf());
 		AL10.alListener(AL10.AL_POSITION, buf3);
 		buf3.clear();
 		Buffers.fill(buf3, 0, 0, 0);

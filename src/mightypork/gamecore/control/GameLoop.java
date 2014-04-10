@@ -64,7 +64,9 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 			
 			beforeRender();
 			
-			if (rootRenderable != null) rootRenderable.render();
+			if (rootRenderable != null) {
+				rootRenderable.render();
+			}
 			
 			afterRender();
 			

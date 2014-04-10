@@ -6,10 +6,11 @@ import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.BaseApp;
-import mightypork.gamecore.render.fonts.DeferredFont;
-import mightypork.gamecore.render.fonts.DeferredFont.FontStyle;
 import mightypork.gamecore.render.fonts.FontBank;
 import mightypork.gamecore.render.fonts.GLFont;
+import mightypork.gamecore.render.fonts.Glyphs;
+import mightypork.gamecore.render.fonts.impl.DeferredFont;
+import mightypork.gamecore.render.textures.DeferredTexture;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.gamecore.render.textures.TextureBank;
 import mightypork.gamecore.render.textures.TxQuad;
@@ -54,23 +55,25 @@ public class Res {
 	
 	private static void loadFonts()
 	{
-		//@formatter:off
-		fonts.loadFont(
-				"default",
-				new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf",
-					null,
-					16,
-					FontStyle.PLAIN,
-					FilterMode.NEAREST
-				)
-		);
-		//@formatter:on
+		DeferredFont font;
+		
+		font = new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16);
+		font.setAntialias(true);
+		font.setFilter(FilterMode.NEAREST);
+		fonts.loadFont("default", font);
+		
 	}
 	
 	
 	private static void loadTextures()
 	{
-		textures.loadTexture("test.kitten", "/res/img/kitten.png", FilterMode.LINEAR, FilterMode.NEAREST, WrapMode.CLAMP);
+		DeferredTexture texture;
+		
+		texture = new DeferredTexture("/res/img/kitten.png");
+		texture.setFilter(FilterMode.LINEAR);
+		texture.setWrap(WrapMode.CLAMP);
+		textures.loadTexture("test.kitten", texture);
+		
 	}
 	
 	

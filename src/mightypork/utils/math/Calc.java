@@ -34,34 +34,20 @@ public class Calc {
 	public static double linePointDist(Coord lineDirVec, Coord linePoint, Coord point)
 	{
 		// line point L[lx,ly]
-		final double lx = linePoint.x;
-		final double ly = linePoint.y;
+		final double lx = linePoint.x();
+		final double ly = linePoint.y();
 		
 		// line equation ax+by+c=0
-		final double a = -lineDirVec.y;
-		final double b = lineDirVec.x;
+		final double a = -lineDirVec.y();
+		final double b = lineDirVec.x();
 		final double c = -a * lx - b * ly;
 		
 		// checked point P[x,y]
-		final double x = point.x;
-		final double y = point.y;
+		final double x = point.x();
+		final double y = point.y();
 		
 		// distance
 		return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
-	}
-	
-	
-	/**
-	 * Get distance from 2D line to 2D point [X,Z]
-	 * 
-	 * @param lineDirVec line directional vector
-	 * @param linePoint point of line
-	 * @param point point coordinate
-	 * @return distance
-	 */
-	public static double linePointDistXZ(Coord lineDirVec, Coord linePoint, Coord point)
-	{
-		return linePointDist(new Coord(lineDirVec.x, lineDirVec.z), new Coord(linePoint.x, linePoint.z), new Coord(point.x, point.z));
 	}
 	
 	

@@ -1,15 +1,14 @@
-package mightypork.gamecore.render.fonts;
+package mightypork.gamecore.render.fonts.impl;
 
-
-import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import mightypork.gamecore.loading.BaseDeferredResource;
+import mightypork.gamecore.loading.DeferredResource;
 import mightypork.gamecore.loading.MustLoadInMainThread;
+import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.LoggedName;
@@ -24,7 +23,7 @@ import mightypork.utils.math.coord.Coord;
  */
 @MustLoadInMainThread
 @LoggedName(name = "Font")
-public class DeferredFont extends BaseDeferredResource implements GLFont {
+public class DeferredFont extends DeferredResource implements GLFont {
 	
 	public static enum FontStyle
 	{
@@ -38,22 +37,24 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 		}
 	}
 	
-	private SlickFont font = null;
-	private final double size;
-	private final FontStyle style;
-	private final String extraChars;
+	private GLFont font = null;
+	private double size;
+	private FontStyle style;
+	private String chars;
 	private FilterMode filter;
+	private boolean antialias;
 	
 	
 	/**
-	 * A font from resource
+	 * A font from resource; setters shall be used to specify parameters in
+	 * greater detail.
 	 * 
 	 * @param resourcePath resource to load
-	 * @param extraChars extra chars (0-255 loaded by default)
+	 * @param chars chars to load; null to load basic chars only
 	 * @param size size (px)
 	 */
-	public DeferredFont(String resourcePath, String extraChars, double size) {
-		this(resourcePath, extraChars, size, FontStyle.PLAIN, FilterMode.NEAREST);
+	public DeferredFont(String resourcePath, String chars, double size) {
+		this(resourcePath, chars, size, FontStyle.PLAIN, true, FilterMode.LINEAR);
 	}
 	
 	
@@ -61,30 +62,55 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	 * A font from resource
 	 * 
 	 * @param resourcePath resource to load
-	 * @param extraChars extra chars (0-255 loaded by default)
-	 * @param size size (pt)
+	 * @param chars chars to load; null to load basic chars only
+	 * @param size size (px)
 	 * @param style font style
-	 */
-	public DeferredFont(String resourcePath, String extraChars, double size, FontStyle style) {
-		this(resourcePath, extraChars, size, style, FilterMode.NEAREST);
-	}
-	
-	
-	/**
-	 * A font from resource
-	 * 
-	 * @param resourcePath resource to load
-	 * @param extraChars extra chars (0-255 loaded by default)
-	 * @param size size (pt)
-	 * @param style font style
+	 * @param antialias use antialiasing for caching texture
 	 * @param filter gl filtering mode
 	 */
-	public DeferredFont(String resourcePath, String extraChars, double size, FontStyle style, FilterMode filter) {
+	public DeferredFont(String resourcePath, String chars, double size, FontStyle style, boolean antialias, FilterMode filter) {
 		super(resourcePath);
 		this.size = size;
 		this.style = style;
-		this.extraChars = extraChars;
+		this.chars = chars;
 		this.filter = filter;
+		this.antialias = antialias;
+	}
+	
+	
+	public void setFont(GLFont font)
+	{
+		this.font = font;
+	}
+	
+	
+	public void setSize(double size)
+	{
+		this.size = size;
+	}
+	
+	
+	public void setStyle(FontStyle style)
+	{
+		this.style = style;
+	}
+	
+	
+	public void setChars(String chars)
+	{
+		this.chars = chars;
+	}
+	
+	
+	public void setFilter(FilterMode filter)
+	{
+		this.filter = filter;
+	}
+	
+	
+	public void setAntialias(boolean antialias)
+	{
+		this.antialias = antialias;
 	}
 	
 	
@@ -92,8 +118,8 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	protected synchronized final void loadResource(String path) throws FontFormatException, IOException
 	{
 		final Font awtFont = getAwtFont(path, (float) size, style.numval);
-
-		font = new SlickFont(awtFont, filter, extraChars);
+		
+		font = new CachedFont(awtFont, antialias, filter, chars);
 	}
 	
 	
@@ -109,7 +135,6 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	 */
 	protected Font getAwtFont(String resource, float size, int style) throws FontFormatException, IOException
 	{
-		
 		try (InputStream in = FileUtils.getResource(resource)) {
 			
 			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, in);
@@ -119,7 +144,6 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 			
 			return awtFont;
 		}
-		
 	}
 	
 	
@@ -157,11 +181,11 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	 * @return font height
 	 */
 	@Override
-	public int getGlyphHeight()
+	public int getHeight()
 	{
 		if (!ensureLoaded()) return 0;
 		
-		return font.getGlyphHeight();
+		return font.getHeight();
 	}
 	
 	
@@ -187,20 +211,11 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 		// this will have to suffice
 		font = null;
 	}
-
-
-	@Override
+	
+	
 	public void setFiltering(FilterMode filter)
 	{
 		this.filter = filter;
-		
-		if(isLoaded()) font.setFiltering(filter);
-	}
-	
-	@Override
-	public FilterMode getFiltering()
-	{
-		return filter;
 	}
 	
 }

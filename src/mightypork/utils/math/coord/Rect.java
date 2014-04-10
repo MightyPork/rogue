@@ -1,6 +1,7 @@
 package mightypork.utils.math.coord;
 
 
+import mightypork.gamecore.gui.constraints.NumberConstraint;
 import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.utils.math.Calc;
 
@@ -12,8 +13,12 @@ import mightypork.utils.math.Calc;
  */
 public class Rect implements RectConstraint {
 	
+	public static final Rect ZERO = new Rect(0, 0, 0, 0).freeze();
+	public static final Rect ONE = new Rect(0, 0, 1, 1).freeze();
+	
+	
 	/**
-	 * Rectangle from size
+	 * Rectangle from size; coords are copied.
 	 * 
 	 * @param min min coord
 	 * @param size rect size
@@ -26,7 +31,7 @@ public class Rect implements RectConstraint {
 	
 	
 	/**
-	 * Make rect from min coord and size
+	 * Make rect from min coord and size; coords are copied.
 	 * 
 	 * @param min min coord
 	 * @param width size x
@@ -35,7 +40,7 @@ public class Rect implements RectConstraint {
 	 */
 	public static Rect fromSize(Coord min, double width, double height)
 	{
-		return new Rect(min, min.add(width, height));
+		return new Rect(min.copy(), min.add(width, height));
 	}
 	
 	
@@ -60,7 +65,7 @@ public class Rect implements RectConstraint {
 	 */
 	public static Rect fromSize(Coord size)
 	{
-		return fromSize(0, 0, size.x, size.y);
+		return fromSize(0, 0, size.x(), size.y());
 	}
 	
 	
@@ -79,10 +84,92 @@ public class Rect implements RectConstraint {
 	}
 	
 	/** Lowest coordinates xy */
-	private final Coord min = new Coord();
+	protected final Coord min;
 	
 	/** Highest coordinates xy */
-	private final Coord max = new Coord();
+	protected final Coord max;
+	
+	// view of secondary corners.
+	
+	//@formatter:off
+	private final ConstraintCoordView HMinVMax = new ConstraintCoordView(
+			new NumberConstraint() {
+				@Override
+				public double getValue()
+				{
+					return min.x();
+				}
+			},
+			new NumberConstraint() {		
+				@Override
+				public double getValue()
+				{
+					return max.y();
+				}
+			},
+			null
+	);
+	
+	
+	private final ConstraintCoordView HMaxVMin = new ConstraintCoordView(			
+			new NumberConstraint() {
+				@Override
+				public double getValue() {
+					return max.x();
+				}
+			},			
+			new NumberConstraint() {
+				@Override
+				public double getValue()
+				{
+					return min.y();
+				}
+			},
+			null
+	);
+	//@formatter:on
+	
+	private boolean frozen;
+	
+	
+	public boolean isWritable()
+	{
+		return !frozen && !isView();
+	}
+	
+	
+	public boolean isView()
+	{
+		return false;
+	}
+	
+	
+	public Rect freeze()
+	{
+		min.freeze();
+		max.freeze();
+		frozen = true;
+		return this;
+	}
+	
+	
+	/**
+	 * Get a readonly view
+	 * 
+	 * @return view
+	 */
+	public RectView view()
+	{
+		return new RectView(this);
+	}
+	
+	
+	protected void assertWritable()
+	{
+		if (!isWritable()) {
+			throw new UnsupportedOperationException("This Rect is not writable.");
+		}
+	}
 	
 	
 	/**
@@ -99,18 +186,20 @@ public class Rect implements RectConstraint {
 	 * @param size size coord
 	 */
 	public Rect(Coord size) {
-		this(0, 0, size.x, size.y);
+		this(0, 0, size.x(), size.y());
 	}
 	
 	
 	/**
-	 * New rect of two coords
+	 * New rect of two coords; Coords are plugged in directly (ie. views can be
+	 * used for frozen rect representing another)
 	 * 
-	 * @param c1 coord 1
-	 * @param c2 coord 2
+	 * @param min coord 1
+	 * @param max coord 2
 	 */
-	public Rect(Coord c1, Coord c2) {
-		this(c1.x, c1.y, c2.x, c2.y);
+	public Rect(Coord min, Coord max) {
+		this.min = min; // must not copy
+		this.max = max; // must not copy
 	}
 	
 	
@@ -123,7 +212,8 @@ public class Rect implements RectConstraint {
 	 * @param ymax upper y
 	 */
 	public Rect(double xmin, double ymin, double xmax, double ymax) {
-		setTo(xmin, ymin, xmax, ymax);
+		min = new Coord(xmin, ymin);
+		max = new Coord(xmax, ymax);
 	}
 	
 	
@@ -144,7 +234,7 @@ public class Rect implements RectConstraint {
 	 * @param r other rect
 	 */
 	public Rect(Rect r) {
-		this(r.min.x, r.min.y, r.max.x, r.max.y);
+		this(r.min.copy(), r.max.copy());
 	}
 	
 	
@@ -218,7 +308,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getCenter()
 	{
-		return min.midTo(max);
+		return min.midTo(max).freeze();
 	}
 	
 	
@@ -229,7 +319,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getCenterVMin()
 	{
-		return new Coord((max.x + min.x) / 2D, min.y);
+		return new Coord((max.x() + min.x()) / 2D, min.y()).freeze();
 	}
 	
 	
@@ -240,7 +330,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getCenterHMin()
 	{
-		return new Coord(min.x, (max.y + min.y) / 2D);
+		return new Coord(min.x(), (max.y() + min.y()) / 2D).freeze();
 	}
 	
 	
@@ -251,7 +341,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getCenterHMax()
 	{
-		return new Coord(max.x, (max.y + min.y) / 2D);
+		return new Coord(max.x(), (max.y() + min.y()) / 2D).freeze();
 	}
 	
 	
@@ -262,7 +352,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getCenterVMax()
 	{
-		return new Coord((max.x + min.x) / 2D, max.y);
+		return new Coord((max.x() + min.x()) / 2D, max.y()).freeze();
 	}
 	
 	
@@ -273,7 +363,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getHMinVMin()
 	{
-		return new Coord(min.x, min.y);
+		return min.view();
 	}
 	
 	
@@ -284,7 +374,29 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getHMinVMax()
 	{
-		return new Coord(min.x, max.y);
+		return HMinVMax;
+	}
+	
+	
+	/**
+	 * Get right bottom
+	 * 
+	 * @return center
+	 */
+	public Coord getHMaxVMin()
+	{
+		return HMaxVMin;
+	}
+	
+	
+	/**
+	 * Get right top
+	 * 
+	 * @return center
+	 */
+	public Coord getHMaxVMax()
+	{
+		return max.view();
 	}
 	
 	
@@ -317,29 +429,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getOrigin()
 	{
-		return getMin();
-	}
-	
-	
-	/**
-	 * Get right bottom
-	 * 
-	 * @return center
-	 */
-	public Coord getHMaxVMin()
-	{
-		return new Coord(max.x, min.y);
-	}
-	
-	
-	/**
-	 * Get right top
-	 * 
-	 * @return center
-	 */
-	public Coord getHMaxVMax()
-	{
-		return new Coord(max.x, max.y);
+		return getHMinVMin();
 	}
 	
 	
@@ -376,7 +466,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Rect shrink_ip(Coord shrink)
 	{
-		shrink_ip(shrink.x, shrink.y);
+		shrink_ip(shrink.x(), shrink.y());
 		return this;
 	}
 	
@@ -461,7 +551,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Rect grow_ip(Coord grow)
 	{
-		grow_ip(grow.x, grow.y);
+		grow_ip(grow.x(), grow.y());
 		return this;
 	}
 	
@@ -521,7 +611,7 @@ public class Rect implements RectConstraint {
 	 */
 	public boolean isInside(Coord point)
 	{
-		return Calc.inRange(point.x, min.x, max.x) && Calc.inRange(point.y, min.y, max.y);
+		return Calc.inRange(point.x(), min.x(), max.x()) && Calc.inRange(point.y(), min.y(), max.y());
 	}
 	
 	
@@ -604,17 +694,6 @@ public class Rect implements RectConstraint {
 	
 	
 	/**
-	 * Set to [0,0,coord.x,coord.y]
-	 * 
-	 * @param coord size coord
-	 */
-	public void setTo(Coord coord)
-	{
-		setTo(0, 0, coord.x, coord.y);
-	}
-	
-	
-	/**
 	 * Set to coordinates
 	 * 
 	 * @param xmin lower x
@@ -624,10 +703,8 @@ public class Rect implements RectConstraint {
 	 */
 	public void setTo(double xmin, double ymin, double xmax, double ymax)
 	{
-		min.x = Calc.min(xmin, xmax);
-		min.y = Calc.min(ymin, ymax);
-		max.x = Calc.max(xmin, xmax);
-		max.y = Calc.max(ymin, ymax);
+		min.setTo(Math.min(xmin, xmax), Math.min(ymin, ymax));
+		max.setTo(Math.max(xmin, xmax), Math.max(ymin, ymax));
 	}
 	
 	
@@ -695,28 +772,10 @@ public class Rect implements RectConstraint {
 	}
 	
 	
-	/**
-	 * @return rect [0,0-1,1]
-	 */
-	public static Rect one()
-	{
-		return new Rect(0, 0, 1, 1);
-	}
-	
-	
-	/**
-	 * @return rect [0,0-0,0]
-	 */
-	public static Rect zero()
-	{
-		return new Rect(0, 0, 0, 0);
-	}
-	
-	
 	@Override
 	public String toString()
 	{
-		return String.format("[( %4.1f; %4.1f )-( %4.1f; %4.1f )]", min.x, min.y, max.x, max.y);
+		return String.format("[%s-%s]", min.toString(), max.toString());
 	}
 	
 	
@@ -725,7 +784,7 @@ public class Rect implements RectConstraint {
 	 */
 	public double xMin()
 	{
-		return min.x;
+		return min.x();
 	}
 	
 	
@@ -734,7 +793,7 @@ public class Rect implements RectConstraint {
 	 */
 	public double xMax()
 	{
-		return max.x;
+		return max.x();
 	}
 	
 	
@@ -743,7 +802,7 @@ public class Rect implements RectConstraint {
 	 */
 	public double yMin()
 	{
-		return min.y;
+		return min.y();
 	}
 	
 	
@@ -752,19 +811,19 @@ public class Rect implements RectConstraint {
 	 */
 	public double yMax()
 	{
-		return max.y;
+		return max.y();
 	}
 	
 	
 	public double getHeight()
 	{
-		return max.y - min.y;
+		return max.y() - min.y();
 	}
 	
 	
 	public double getWidth()
 	{
-		return max.x - min.x;
+		return max.x() - min.x();
 	}
 	
 	
@@ -775,7 +834,7 @@ public class Rect implements RectConstraint {
 	 */
 	public Coord getSize()
 	{
-		return new Coord(max.x - min.x, max.y - min.y);
+		return new Coord(max.x() - min.x(), max.y() - min.y());
 	}
 	
 	
@@ -783,5 +842,27 @@ public class Rect implements RectConstraint {
 	public Rect getRect()
 	{
 		return this;
+	}
+	
+	
+	/**
+	 * Generate zero rect
+	 * 
+	 * @return zero
+	 */
+	public static Rect zero()
+	{
+		return ZERO.copy();
+	}
+	
+	
+	/**
+	 * Generate 0,0-1,1 rect
+	 * 
+	 * @return one
+	 */
+	public static Rect one()
+	{
+		return ZERO.copy();
 	}
 }

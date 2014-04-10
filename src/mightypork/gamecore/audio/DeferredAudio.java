@@ -3,7 +3,7 @@ package mightypork.gamecore.audio;
 
 import java.io.IOException;
 
-import mightypork.gamecore.loading.BaseDeferredResource;
+import mightypork.gamecore.loading.DeferredResource;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.LoggedName;
 import mightypork.utils.math.coord.Coord;
@@ -18,7 +18,7 @@ import org.newdawn.slick.openal.SoundStore;
  * @author MightyPork
  */
 @LoggedName(name = "Audio")
-public class DeferredAudio extends BaseDeferredResource {
+public class DeferredAudio extends DeferredResource {
 	
 	private enum PlayMode
 	{
@@ -168,7 +168,7 @@ public class DeferredAudio extends BaseDeferredResource {
 	 */
 	public int playAsEffect(double pitch, double gain, boolean loop, double x, double y)
 	{
-		return playAsEffect(pitch, gain, loop, x, y, SoundSystem.getListener().z);
+		return playAsEffect(pitch, gain, loop, x, y, SoundSystem.getListener().z());
 	}
 	
 	
@@ -208,7 +208,7 @@ public class DeferredAudio extends BaseDeferredResource {
 	{
 		if (!ensureLoaded()) return -1;
 		
-		return playAsEffect(pitch, gain, loop, pos.x, pos.y, pos.z);
+		return playAsEffect(pitch, gain, loop, pos.x(), pos.y(), pos.z());
 	}
 	
 	

@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import mightypork.gamecore.control.bus.BusAccess;
-import mightypork.gamecore.control.bus.events.MainLoopTaskRequest;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.interf.Destroyable;
 import mightypork.utils.logging.Log;
@@ -33,8 +32,9 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	
 	private final ExecutorService exs = Executors.newCachedThreadPool();
 	
-	private final LinkedBlockingQueue<DeferredResource> toLoad = new LinkedBlockingQueue<>();
+	private final LinkedBlockingQueue<Deferred> toLoad = new LinkedBlockingQueue<>();
 	private volatile boolean stopped;
+	@SuppressWarnings("unused")
 	private final BusAccess app;
 	
 	
@@ -49,7 +49,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	
 	
 	@Override
-	public void loadResource(final DeferredResource resource)
+	public void loadResource(final Deferred resource)
 	{
 		if (resource.isLoaded()) return;
 		if (resource instanceof NullResource) return;
@@ -57,7 +57,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 		// textures & fonts needs to be loaded in main thread
 		if (resource.getClass().isAnnotationPresent(MustLoadInMainThread.class)) {
 			
-			// just ignore
+			Log.f3("<LOADER> Cannot load async: " + Log.str(resource));
 			
 //			Log.f3("<LOADER> Delegating to main thread:\n    " + Log.str(resource));
 //			
@@ -85,12 +85,12 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 		while (!stopped) {
 			
 			try {
-				final DeferredResource def = toLoad.take();
+				final Deferred def = toLoad.take();
 				if (def == null) continue;
 				
 				if (!def.isLoaded()) {
 					
-					Log.f3("<LOADER> Loading async:\n    " + Log.str(def));
+					Log.f3("<LOADER> Loading: " + Log.str(def));
 					
 					exs.submit(new Runnable() {
 						

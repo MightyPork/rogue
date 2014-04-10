@@ -6,8 +6,6 @@ import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 import mightypork.utils.math.coord.Rect;
 
-import org.lwjgl.opengl.GL11;
-
 
 /**
  * Font renderer
@@ -17,7 +15,6 @@ import org.lwjgl.opengl.GL11;
 public class FontRenderer {
 	
 	private GLFont font;
-	private boolean nativeRes = false;
 	
 	public static enum Align
 	{
@@ -46,20 +43,6 @@ public class FontRenderer {
 	
 	
 	/**
-	 * Use size specified during font init instead of size provided by
-	 * {@link GLFont} instance (measured from tile heights.<br>
-	 * This is better when the font is drawn in original size, but can cause
-	 * weird artifacts if the font is scaled up.
-	 * 
-	 * @param use use it
-	 */
-	public void usePtSize(boolean use)
-	{
-		nativeRes = use;
-	}
-	
-	
-	/**
 	 * Get region needed to draw text at size
 	 * 
 	 * @param text text to draw
@@ -81,13 +64,13 @@ public class FontRenderer {
 	 */
 	public double getWidth(String text, double height)
 	{
-		return getNeededSpace(text, height).x;
+		return getNeededSpace(text, height).x();
 	}
 	
 	
 	private double getScale(double height)
 	{
-		return height / (nativeRes ? font.getSize() : font.getGlyphHeight());
+		return height / font.getHeight();
 	}
 	
 	
@@ -123,15 +106,14 @@ public class FontRenderer {
 	 */
 	public void draw(String text, Coord pos, double height, RGB color)
 	{
-		//Render.pushState();
+		Render.pushMatrix();
 		
-		//GL11.glEnable(GL11.GL_TEXTURE_2D);
 		Render.translate(pos.round());
 		Render.scaleXY(getScale(height));
 		
 		font.draw(text, color);
 		
-		//Render.popState();
+		Render.popMatrix();
 	}
 	
 	

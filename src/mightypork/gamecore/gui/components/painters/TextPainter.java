@@ -6,12 +6,16 @@ import mightypork.gamecore.render.fonts.FontRenderer;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.coord.Rect;
 import mightypork.utils.string.StringProvider;
 import mightypork.utils.string.StringProvider.StringWrapper;
 
 
 /**
- * Text painting component
+ * Text painting component.<br>
+ * Drawing values are obtained through getters, so overriding getters can be
+ * used to change parameters dynamically.
  * 
  * @author MightyPork
  */
@@ -21,6 +25,10 @@ public class TextPainter extends PluggableRenderer {
 	private RGB color;
 	private Align align;
 	private StringProvider text;
+	private boolean shadow;
+	
+	private RGB shadowColor = RGB.BLACK;
+	private Coord shadowOffset = Coord.one();
 	
 	
 	/**
@@ -70,110 +78,68 @@ public class TextPainter extends PluggableRenderer {
 	}
 	
 	
-	/**
-	 * Use size specified during font init instead of size provided by
-	 * {@link GLFont} instance (measured from tile heights.<br>
-	 * This is better when the font is drawn in original size, but can cause
-	 * weird artifacts if the font is scaled up.
-	 * 
-	 * @param enable use it
-	 */
-	public void usePtSize(boolean enable)
-	{
-		font.usePtSize(enable);
-	}
-	
-	
 	@Override
 	public void render()
 	{
-		if (getText() == null) return;
+		if (text == null) return;
 		
-		font.draw(getText(), getRect(), getAlign(), getColor());
+		final String str = text.getString();
+		final Rect rect = getRect();
+		
+		if (shadow) {
+			font.draw(str, rect.add(shadowOffset), align, shadowColor);
+		}
+		font.draw(str, rect, align, color);
 	}
 	
 	
-	/**
-	 * Assign paint color
-	 * 
-	 * @param color paint color
-	 */
+	public void setShadow(RGB color, Coord offset)
+	{
+		setShadow(true);
+		setShadowColor(color);
+		setShadowOffset(offset);
+	}
+	
+	
+	public void setShadow(boolean shadow)
+	{
+		this.shadow = shadow;
+	}
+	
+	
+	public void setShadowColor(RGB shadowColor)
+	{
+		this.shadowColor = shadowColor;
+	}
+	
+	
+	public void setShadowOffset(Coord shadowOffset)
+	{
+		this.shadowOffset = shadowOffset;
+	}
+	
+	
 	public void setColor(RGB color)
 	{
 		this.color = color;
 	}
 	
 	
-	/**
-	 * Set text align
-	 * 
-	 * @param align text align
-	 */
 	public void setAlign(Align align)
 	{
 		this.align = align;
 	}
 	
 	
-	/**
-	 * Set drawn text
-	 * 
-	 * @param text text
-	 */
 	public void setText(String text)
 	{
 		this.text = new StringWrapper(text);
 	}
 	
 	
-	/**
-	 * Set drawn text provider
-	 * 
-	 * @param text text provider
-	 */
 	public void setText(StringProvider text)
 	{
 		this.text = text;
-	}
-	
-	
-	/**
-	 * Get draw color.<br>
-	 * <i>This getter is used for getting drawing color; so if it's overriden,
-	 * the draw color can be adjusted in real time.</i>
-	 * 
-	 * @return drawing color
-	 */
-	public RGB getColor()
-	{
-		return color;
-	}
-	
-	
-	/**
-	 * Get text align.<br>
-	 * <i>This getter is used for getting align; so if it's overidden, the align
-	 * can be adjusted in real time.</i>
-	 * 
-	 * @return text align
-	 */
-	public Align getAlign()
-	{
-		return align;
-	}
-	
-	
-	/**
-	 * Get text to draw.<br>
-	 * <i>This getter is used for getting text to draw; so if it's overidden,
-	 * the text can be adjusted in real time. (alternative to using
-	 * StringProvider)</i>
-	 * 
-	 * @return text align
-	 */
-	public String getText()
-	{
-		return text.getString();
 	}
 	
 }

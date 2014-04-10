@@ -126,7 +126,7 @@ public class Convert {
 		
 		if (o instanceof Coord) {
 			final Coord c = (Coord) o;
-			return String.format("[%f:%f:%f]", c.x, c.y, c.z);
+			return String.format("[%f:%f:%f]", c.x(), c.y(), c.z());
 		}
 		
 		if (o instanceof Range) {

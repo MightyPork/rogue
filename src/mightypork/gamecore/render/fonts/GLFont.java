@@ -1,7 +1,6 @@
 package mightypork.gamecore.render.fonts;
 
 
-import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 
@@ -14,9 +13,9 @@ import mightypork.utils.math.coord.Coord;
 public interface GLFont {
 	
 	/**
-	 * Draw string at position
+	 * Draw without scaling at (0, 0) in given color.
 	 * 
-	 * @param text string to draw
+	 * @param text text to draw
 	 * @param color draw color
 	 */
 	void draw(String text, RGB color);
@@ -34,7 +33,7 @@ public interface GLFont {
 	/**
 	 * @return font height
 	 */
-	int getGlyphHeight();
+	int getHeight();
 	
 	
 	/**
@@ -48,20 +47,4 @@ public interface GLFont {
 	 * @return specified font size
 	 */
 	int getSize();
-
-	/**
-	 * Set used filtering
-	 * 
-	 * @param filter font filtering mode
-	 */
-	void setFiltering(FilterMode filter);
-	
-	
-	/**
-	 * Get used filter mode
-	 * 
-	 * @return filter mode
-	 */
-	FilterMode getFiltering();
-	
 }

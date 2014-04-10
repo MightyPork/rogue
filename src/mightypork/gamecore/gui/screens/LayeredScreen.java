@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.render.Render;
 import mightypork.utils.math.coord.Coord;
 
 
@@ -31,9 +30,7 @@ public abstract class LayeredScreen extends Screen {
 	protected void renderScreen()
 	{
 		for (final ScreenLayer layer : layers) {
-			Render.pushState();
 			layer.render();
-			Render.popState();
 		}
 	}
 	

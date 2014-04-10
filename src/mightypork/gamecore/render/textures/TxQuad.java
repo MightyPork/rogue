@@ -70,11 +70,11 @@ public class TxQuad {
 	
 	/**
 	 * @param tx Texture
-	 * @param uvs Rect of texture UVs (0-1)
+	 * @param uvs Rect of texture UVs (0-1); will be stored as is.
 	 */
 	public TxQuad(Texture tx, Rect uvs) {
 		this.tx = tx;
-		this.uvs = uvs.copy();
+		this.uvs = uvs.view();
 	}
 	
 	
@@ -85,7 +85,7 @@ public class TxQuad {
 	 */
 	public TxQuad(TxQuad txQuad) {
 		this.tx = txQuad.tx;
-		this.uvs = txQuad.uvs.copy();
+		this.uvs = txQuad.uvs.view();
 	}
 	
 	

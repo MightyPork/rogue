@@ -23,7 +23,7 @@ public class Constraints {
 		@Override
 		public double getValue()
 		{
-			return InputSystem.getMousePos().x;
+			return InputSystem.getMousePos().x();
 		}
 	};
 	
@@ -32,7 +32,7 @@ public class Constraints {
 		@Override
 		public double getValue()
 		{
-			return InputSystem.getMousePos().y;
+			return InputSystem.getMousePos().y();
 		}
 	};
 	
@@ -246,7 +246,7 @@ public class Constraints {
 			@Override
 			public double getValue()
 			{
-				return r.getRect().getSize().x;
+				return r.getRect().getSize().x();
 			}
 		};
 	}
@@ -259,7 +259,7 @@ public class Constraints {
 			@Override
 			public double getValue()
 			{
-				return r.getRect().getSize().y;
+				return r.getRect().getSize().y();
 			}
 		};
 	}
@@ -274,7 +274,7 @@ public class Constraints {
 			@Override
 			public Rect getRect()
 			{
-				final double height = r.getRect().getSize().y;
+				final double height = r.getRect().getSize().y();
 				final double perRow = height / rows;
 				
 				final Coord origin = r.getRect().getOrigin().add(0, perRow * index);
@@ -293,7 +293,7 @@ public class Constraints {
 			@Override
 			public Rect getRect()
 			{
-				final double width = r.getRect().getSize().x;
+				final double width = r.getRect().getSize().x();
 				final double perCol = width / columns;
 				
 				final Coord origin = r.getRect().getOrigin().add(perCol * index, 0);
@@ -312,8 +312,8 @@ public class Constraints {
 			@Override
 			public Rect getRect()
 			{
-				final double height = r.getRect().getSize().y;
-				final double width = r.getRect().getSize().y;
+				final double height = r.getRect().getSize().y();
+				final double width = r.getRect().getSize().y();
 				final double perRow = height / rows;
 				final double perCol = width / cols;
 				
@@ -522,8 +522,8 @@ public class Constraints {
 				
 				//@formatter:off
 				return Rect.fromSize(
-						origin.x,
-						origin.y,
+						origin.x(),
+						origin.y(),
 						_nv(width),
 						_nv(height)
 				);
@@ -544,8 +544,8 @@ public class Constraints {
 				
 				//@formatter:off
 				return Rect.fromSize(
-						origin.x + _nv(x),
-						origin.y + _nv(y),						
+						origin.x() + _nv(x),
+						origin.y() + _nv(y),						
 						_nv(width),
 						_nv(height)
 				);
@@ -582,7 +582,7 @@ public class Constraints {
 				final Coord size = r.getRect().getSize();
 				final Coord center = centerTo.getRect().getCenter();
 				
-				return Rect.fromSize(center.x - size.x / 2D, center.y - size.y / 2D, size.x, size.y);
+				return Rect.fromSize(center.x() - size.x() / 2D, center.y() - size.y() / 2D, size.x(), size.y());
 			}
 		};
 	}
@@ -605,7 +605,7 @@ public class Constraints {
 			{
 				final Coord size = r.getRect().getSize();
 				
-				return Rect.fromSize(_nv(x) - size.x / 2D, _nv(y) - size.y / 2D, size.x, size.y);
+				return Rect.fromSize(_nv(x) - size.x() / 2D, _nv(y) - size.y() / 2D, size.x(), size.y());
 			}
 		};
 	}

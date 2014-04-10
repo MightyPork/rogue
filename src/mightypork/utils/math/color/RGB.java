@@ -380,4 +380,15 @@ public class RGB {
 		return Double.valueOf(r).hashCode() ^ Double.valueOf(g).hashCode() ^ Double.valueOf(b).hashCode() ^ Double.valueOf(a).hashCode();
 	}
 	
+	
+	public static RGB dark(double d)
+	{
+		return new RGB(0, 0, 0, d);
+	}
+	
+	
+	public static RGB light(double d)
+	{
+		return new RGB(1, 1, 1, d);
+	}
 }
