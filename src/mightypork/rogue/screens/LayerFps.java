@@ -2,6 +2,7 @@ package mightypork.rogue.screens;
 
 
 import static mightypork.gamecore.gui.constraints.Constraints.*;
+import static org.lwjgl.opengl.GL11.*;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.gui.screens.Screen;
@@ -31,6 +32,7 @@ public class LayerFps extends ScreenLayer {
 		};
 		
 		final GLFont font = Res.getFont("default");
+				
 		final RectConstraint constraint = _round(_move(_grow_down(_right_top(this), 32), -8, 8));
 		
 		tp = new TextPainter(font, Align.RIGHT, RGB.WHITE, text);

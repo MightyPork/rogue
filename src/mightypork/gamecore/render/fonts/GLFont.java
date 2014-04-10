@@ -1,6 +1,7 @@
 package mightypork.gamecore.render.fonts;
 
 
+import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 
@@ -47,5 +48,20 @@ public interface GLFont {
 	 * @return specified font size
 	 */
 	int getSize();
+
+	/**
+	 * Set used filtering
+	 * 
+	 * @param filter font filtering mode
+	 */
+	void setFiltering(FilterMode filter);
+	
+	
+	/**
+	 * Get used filter mode
+	 * 
+	 * @return filter mode
+	 */
+	FilterMode getFiltering();
 	
 }

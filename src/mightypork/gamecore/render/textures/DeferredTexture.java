@@ -21,8 +21,8 @@ import org.newdawn.slick.opengl.Texture;
 public class DeferredTexture extends BaseDeferredResource implements FilteredTexture {
 	
 	private Texture backingTexture;
-	private FilterMode filter_min = FilterMode.LINEAR;
-	private FilterMode filter_mag = FilterMode.LINEAR;
+	private FilterMode filter_min = FilterMode.NEAREST;
+	private FilterMode filter_mag = FilterMode.NEAREST;
 	private WrapMode wrap = WrapMode.CLAMP;
 	
 	
@@ -81,8 +81,6 @@ public class DeferredTexture extends BaseDeferredResource implements FilteredTex
 	{
 		if (!ensureLoaded()) return;
 		
-		bindRaw();
-		
 		GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 		
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, wrap.num);
@@ -90,6 +88,8 @@ public class DeferredTexture extends BaseDeferredResource implements FilteredTex
 		
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filter_min.num);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filter_mag.num);
+		
+		bindRaw();
 		
 	}
 	

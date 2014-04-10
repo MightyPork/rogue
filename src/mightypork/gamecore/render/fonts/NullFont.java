@@ -1,6 +1,8 @@
 package mightypork.gamecore.render.fonts;
 
 
+import mightypork.gamecore.render.textures.FilterMode;
+import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Coord;
 
@@ -15,7 +17,7 @@ public class NullFont implements GLFont {
 	@Override
 	public void draw(String str, RGB color)
 	{
-		// nope
+		Log.w("Drawing with null font.");
 	}
 	
 	
@@ -43,8 +45,21 @@ public class NullFont implements GLFont {
 	@Override
 	public int getSize()
 	{
-		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	@Override
+	public void setFiltering(FilterMode filter)
+	{
+		// nope
+	}
+
+
+	@Override
+	public FilterMode getFiltering()
+	{
+		return null;
 	}
 	
 }

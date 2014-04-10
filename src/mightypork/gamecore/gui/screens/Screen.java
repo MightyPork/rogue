@@ -120,7 +120,9 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 		}
 		
 		Render.pushState();
+		
 		renderScreen();
+		
 		Render.popState();
 	}
 	

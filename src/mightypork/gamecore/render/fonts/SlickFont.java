@@ -41,11 +41,8 @@ public class SlickFont implements GLFont {
 	}
 	
 	
-	/**
-	 * Set used filtering
-	 * 
-	 * @param filter font filtering mode
-	 */
+
+	@Override
 	public void setFiltering(FilterMode filter)
 	{
 		this.filter = filter;
@@ -124,6 +121,14 @@ public class SlickFont implements GLFont {
 	public int getSize()
 	{
 		return fsize;
+	}
+
+
+
+	@Override
+	public FilterMode getFiltering()
+	{
+		return filter;
 	}
 	
 }

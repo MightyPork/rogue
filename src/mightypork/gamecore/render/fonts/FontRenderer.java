@@ -123,15 +123,15 @@ public class FontRenderer {
 	 */
 	public void draw(String text, Coord pos, double height, RGB color)
 	{
-		Render.pushState();
+		//Render.pushState();
 		
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		//GL11.glEnable(GL11.GL_TEXTURE_2D);
 		Render.translate(pos.round());
 		Render.scaleXY(getScale(height));
 		
 		font.draw(text, color);
 		
-		Render.popState();
+		//Render.popState();
 	}
 	
 	

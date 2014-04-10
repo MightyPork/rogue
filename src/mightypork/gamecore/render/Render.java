@@ -183,7 +183,15 @@ public class Render {
 		
 		GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
 		GL11.glPushClientAttrib(GL11.GL_ALL_CLIENT_ATTRIB_BITS);
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glPushMatrix();
+		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		GL11.glPushMatrix();
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		
+//		GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
+//		GL11.glPushClientAttrib(GL11.GL_ALL_CLIENT_ATTRIB_BITS);
+//		GL11.glPushMatrix();
 	}
 	
 	
@@ -200,9 +208,16 @@ public class Render {
 		
 //		Log.f3("pop  : "+pushed);
 		
+		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		GL11.glPopMatrix();
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glPopMatrix();
 		GL11.glPopClientAttrib();
 		GL11.glPopAttrib();
+		
+//		GL11.glPopMatrix();
+//		GL11.glPopClientAttrib();
+//		GL11.glPopAttrib();
 	}
 	
 	
@@ -508,8 +523,7 @@ public class Render {
 		glShadeModel(GL_SMOOTH);
 		
 		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	
 	}
 	
 }

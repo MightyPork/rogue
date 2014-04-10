@@ -1,6 +1,8 @@
 package mightypork.gamecore.render.fonts;
 
 
+import static org.lwjgl.opengl.GL11.*;
+
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
@@ -40,7 +42,7 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	private final double size;
 	private final FontStyle style;
 	private final String extraChars;
-	private final FilterMode filter;
+	private FilterMode filter;
 	
 	
 	/**
@@ -90,7 +92,7 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	protected synchronized final void loadResource(String path) throws FontFormatException, IOException
 	{
 		final Font awtFont = getAwtFont(path, (float) size, style.numval);
-		
+
 		font = new SlickFont(awtFont, filter, extraChars);
 	}
 	
@@ -184,6 +186,21 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	{
 		// this will have to suffice
 		font = null;
+	}
+
+
+	@Override
+	public void setFiltering(FilterMode filter)
+	{
+		this.filter = filter;
+		
+		if(isLoaded()) font.setFiltering(filter);
+	}
+	
+	@Override
+	public FilterMode getFiltering()
+	{
+		return filter;
 	}
 	
 }
