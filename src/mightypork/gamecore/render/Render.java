@@ -357,10 +357,25 @@ public class Render {
 	 * Draw quad with horizontal gradient
 	 * 
 	 * @param quad drawn quad bounds
-	 * @param colorLeft left color
-	 * @param colorRight right color
+	 * @param color1 left color
+	 * @param color2 right color
 	 */
-	public static void quadGradH(Rect quad, RGB colorLeft, RGB colorRight)
+	public static void quadGradH(Rect quad, RGB color1, RGB color2)
+	{
+		quadColor(quad, color1, color2, color2, color1);
+	}
+	
+	
+	/**
+	 * Draw quad with coloured vertices.
+	 * 
+	 * @param quad drawn quad bounds
+	 * @param colorHMinVMin
+	 * @param colorHMaxVMin
+	 * @param colorHMaxVMax
+	 * @param colorHMinVMax
+	 */
+	public static void quadColor(Rect quad, RGB colorHMinVMin, RGB colorHMaxVMin, RGB colorHMaxVMax, RGB colorHMinVMax)
 	{
 		final double x1 = quad.xMin();
 		final double y1 = quad.yMin();
@@ -371,14 +386,14 @@ public class Render {
 		unbindTexture();
 		
 		glBegin(GL_QUADS);
-		setColor(colorLeft);
+		setColor(colorHMinVMax);
 		glVertex2d(x1, y2);
-		setColor(colorRight);
+		setColor(colorHMaxVMax);
 		glVertex2d(x2, y2);
 		
-		setColor(colorRight);
+		setColor(colorHMaxVMin);
 		glVertex2d(x2, y1);
-		setColor(colorLeft);
+		setColor(colorHMinVMin);
 		glVertex2d(x1, y1);
 		glEnd();
 	}
@@ -393,23 +408,7 @@ public class Render {
 	 */
 	public static void quadGradV(Rect quad, RGB color1, RGB color2)
 	{
-		final double x1 = quad.xMin();
-		final double y1 = quad.yMin();
-		final double x2 = quad.xMax();
-		final double y2 = quad.yMax();
-		
-		// draw with color
-		unbindTexture();
-		
-		glBegin(GL_QUADS);
-		setColor(color1);
-		glVertex2d(x1, y1);
-		glVertex2d(x2, y1);
-		
-		setColor(color2);
-		glVertex2d(x2, y2);
-		glVertex2d(x1, y2);
-		glEnd();
+		quadColor(quad, color1, color1, color2, color2);
 	}
 	
 	

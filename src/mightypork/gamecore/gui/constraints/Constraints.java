@@ -1,6 +1,7 @@
 package mightypork.gamecore.gui.constraints;
 
 
+import mightypork.gamecore.control.timing.Poller;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.utils.math.coord.Coord;
@@ -352,7 +353,7 @@ public class Constraints {
 	}
 	
 	
-	public static RectConstraint _shrink_up(final RectConstraint r, final Object shrink)
+	public static RectConstraint _shrink_top(final RectConstraint r, final Object shrink)
 	{
 		return new RectConstraint() {
 			
@@ -365,7 +366,7 @@ public class Constraints {
 	}
 	
 	
-	public static RectConstraint _shrink_down(final RectConstraint r, final Object shrink)
+	public static RectConstraint _shrink_bottom(final RectConstraint r, final Object shrink)
 	{
 		return new RectConstraint() {
 			
@@ -484,6 +485,12 @@ public class Constraints {
 	
 	/* ================= Box creation ================= */
 	
+	public static RectConstraint _box(final Object side)
+	{
+		return _box(side, side);
+	}
+	
+	
 	public static RectConstraint _box(final Object width, final Object height)
 	{
 		return new RectConstraint() {
@@ -560,6 +567,22 @@ public class Constraints {
 				//@formatter:off
 				return new Rect(origin.add(_nv(xmin), _nv(ymin)), origin.add(_nv(xmax), _nv(ymax)));
 				//@formatter:on
+			}
+		};
+	}
+	
+	
+	public static RectConstraint _centered(final RectConstraint r, final RectConstraint centerTo)
+	{
+		return new RectConstraint() {
+			
+			@Override
+			public Rect getRect()
+			{
+				final Coord size = r.getRect().getSize();
+				final Coord center = centerTo.getRect().getCenter();
+				
+				return Rect.fromSize(center.x - size.x / 2D, center.y - size.y / 2D, size.x, size.y);
 			}
 		};
 	}

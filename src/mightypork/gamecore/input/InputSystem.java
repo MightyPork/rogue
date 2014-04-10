@@ -6,7 +6,7 @@ import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.control.bus.events.KeyEvent;
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;
 import mightypork.gamecore.control.bus.events.MouseMotionEvent;
-import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;

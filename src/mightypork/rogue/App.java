@@ -56,21 +56,62 @@ public class App extends BaseApp {
 	}
 	
 	
-	/**
-	 * Handle a crash
-	 * 
-	 * @param error
-	 */
-	public static void onCrash(Throwable error)
+	@Override
+	protected void initScreens(ScreenRegistry screens)
 	{
-		if (Log.ready()) {
-			Log.e("The game has crashed!", error);
-		} else {
-			System.err.println("The game has crashed!");
-			error.printStackTrace();
-		}
+		screens.add(new ScreenTestBouncy(this));
+		screens.add(new ScreenTestCat(this));
+		screens.add(new ScreenTestFont(this));
+		screens.add(new ScreenTestRender(this));
 		
-		if (inst != null) inst.shutdown();
+		screens.showScreen("test.render");
+	}
+	
+	
+	@Override
+	protected void initBus(EventBus bus)
+	{
+		super.initBus(bus);
+		
+		// custom channels
+		bus.addChannel(ActionRequest.class, ActionRequest.Listener.class);
+		
+		//bus.detailedLogging = true;
+	}
+	
+	
+	@Override
+	protected void initInputSystem(InputSystem input)
+	{
+		// Go fullscreen
+		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_F11), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				getEventBus().send(new ActionRequest(RequestType.FULLSCREEN));
+			}
+		});
+		
+		// Take screenshot
+		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_F2), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				getEventBus().send(new ActionRequest(RequestType.SCREENSHOT));
+			}
+		});
+		
+		// Exit
+		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_LCONTROL, Keys.KEY_Q), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				getEventBus().send(new ActionRequest(RequestType.SHUTDOWN));
+			}
+		});
 	}
 	
 	
@@ -111,41 +152,6 @@ public class App extends BaseApp {
 	
 	
 	@Override
-	protected void initInputSystem(InputSystem input)
-	{
-		// Go fullscreen
-		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_F11), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				getEventBus().send(new ActionRequest(RequestType.FULLSCREEN));
-			}
-		});
-		
-		// Take screenshot
-		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_F2), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				getEventBus().send(new ActionRequest(RequestType.SCREENSHOT));
-			}
-		});
-		
-		// Exit
-		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_LCONTROL, Keys.KEY_Q), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				getEventBus().send(new ActionRequest(RequestType.SHUTDOWN));
-			}
-		});
-	}
-	
-	
-	@Override
 	protected GameLoop createLoop()
 	{
 		return new MainLoop(this);
@@ -160,33 +166,27 @@ public class App extends BaseApp {
 	
 	
 	@Override
-	protected void initScreens(ScreenRegistry screens)
-	{
-		screens.add(new ScreenTestBouncy(this));
-		screens.add(new ScreenTestCat(this));
-		screens.add(new ScreenTestFont(this));
-		screens.add(new ScreenTestRender(this));
-		
-		screens.showScreen("test.cat");
-	}
-	
-	
-	@Override
 	protected File getLockFile()
 	{
 		return Paths.LOCK;
 	}
 	
 	
-	@Override
-	protected void initBus(EventBus bus)
+	/**
+	 * Handle a crash
+	 * 
+	 * @param error
+	 */
+	public static void onCrash(Throwable error)
 	{
-		super.initBus(bus);
+		if (Log.ready()) {
+			Log.e("The game has crashed!", error);
+		} else {
+			System.err.println("The game has crashed!");
+			error.printStackTrace();
+		}
 		
-		// custom channels
-		bus.addChannel(ActionRequest.class, ActionRequest.Listener.class);
-		
-		bus.detailedLogging = true;
+		if (inst != null) inst.shutdown();
 	}
 	
 }

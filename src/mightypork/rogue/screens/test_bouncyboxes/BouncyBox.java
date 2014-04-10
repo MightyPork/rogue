@@ -5,7 +5,7 @@ import static mightypork.gamecore.gui.constraints.Constraints.*;
 
 import java.util.Random;
 
-import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.components.PluggableRenderer;
 import mightypork.gamecore.gui.constraints.NumberConstraint;
 import mightypork.gamecore.gui.constraints.RectConstraint;

@@ -10,7 +10,7 @@ import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.control.bus.events.*;
 import mightypork.gamecore.control.interf.Destroyable;
 import mightypork.gamecore.control.interf.NoImpl;
-import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.loading.AsyncResourceLoader;

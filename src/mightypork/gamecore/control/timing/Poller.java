@@ -1,10 +1,10 @@
-package mightypork.gamecore.gui.constraints;
+package mightypork.gamecore.control.timing;
 
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import mightypork.gamecore.control.interf.Pollable;
+import mightypork.gamecore.gui.constraints.RectCache;
 
 
 /**

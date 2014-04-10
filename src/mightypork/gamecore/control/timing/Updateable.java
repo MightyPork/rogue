@@ -1,4 +1,4 @@
-package mightypork.gamecore.control.interf;
+package mightypork.gamecore.control.timing;
 
 
 /**

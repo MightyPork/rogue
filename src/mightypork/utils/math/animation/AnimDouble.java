@@ -1,8 +1,8 @@
 package mightypork.utils.math.animation;
 
 
-import mightypork.gamecore.control.interf.Updateable;
 import mightypork.gamecore.control.timing.Pauseable;
+import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.constraints.NumberConstraint;
 import mightypork.utils.math.Calc;
 

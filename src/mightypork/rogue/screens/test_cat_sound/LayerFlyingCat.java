@@ -6,7 +6,7 @@ import static mightypork.gamecore.gui.constraints.Constraints.*;
 import java.util.Random;
 
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;
-import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.constraints.RectConstraint;

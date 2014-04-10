@@ -10,7 +10,7 @@ import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
-import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.coord.Coord;
 

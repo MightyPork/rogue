@@ -3,7 +3,7 @@ package mightypork.gamecore.control.bus.events;
 
 import mightypork.gamecore.control.bus.events.types.ImmediateEvent;
 import mightypork.gamecore.control.bus.events.types.UnloggedEvent;
-import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.control.timing.Updateable;
 
 
 /**

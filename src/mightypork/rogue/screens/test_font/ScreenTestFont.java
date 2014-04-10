@@ -22,7 +22,7 @@ public class ScreenTestFont extends Screen {
 		tp = new TextPainter(Res.getFont("default"), Align.CENTER, RGB.GREEN);
 		tp.setText("Hello World!");
 		
-		final RectConstraint strbox = _grow(_center(this), 0, _div(_height(this), 10));
+		final RectConstraint strbox = _centered(_box(_div(_screenH, 10)), this);
 		
 		tp.setContext(strbox);
 	}

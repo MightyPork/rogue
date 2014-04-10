@@ -1,7 +1,7 @@
 package mightypork.utils.math.coord;
 
 
-import mightypork.gamecore.control.interf.Updateable;
+import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc;
 
 
