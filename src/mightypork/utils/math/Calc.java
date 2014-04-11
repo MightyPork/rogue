@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import mightypork.utils.math.animation.Easing;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.coord.Vec;
 
 import org.lwjgl.BufferUtils;
 
@@ -31,7 +31,7 @@ public class Calc {
 	 * @param point point coordinate
 	 * @return distance
 	 */
-	public static double linePointDist(Coord lineDirVec, Coord linePoint, Coord point)
+	public static double linePointDist(Vec lineDirVec, Vec linePoint, Vec point)
 	{
 		// line point L[lx,ly]
 		final double lx = linePoint.x();

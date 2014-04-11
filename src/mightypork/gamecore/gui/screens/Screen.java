@@ -6,13 +6,13 @@ import mightypork.gamecore.control.AppSubModule;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.interf.DefaultImpl;
 import mightypork.gamecore.gui.components.Renderable;
-import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.render.Render;
-import mightypork.utils.math.coord.Coord;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.rect.Rect;
 
 
 /**
@@ -153,7 +153,7 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	 * @param size screen size
 	 */
 	@DefaultImpl
-	protected void onSizeChanged(Coord size)
+	protected void onSizeChanged(Vec size)
 	{
 		//
 	}

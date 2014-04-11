@@ -198,7 +198,7 @@ public class FileUtils {
 		final List<File> list = new ArrayList<>();
 		
 		try {
-			for (final File f : dir.listFiles(filter)) {
+			for (File f : dir.listFiles(filter)) {
 				list.add(f);
 			}
 		} catch (final Exception e) {

@@ -30,6 +30,25 @@ import mightypork.utils.logging.LogWriter;
 public class App extends BaseApp {
 	
 	@Override
+	protected LogWriter createLog()
+	{
+		Locale.setDefault(Locale.ENGLISH);
+		
+		final LogWriter log = Log.create("runtime", Paths.LOG_FILE, 5);
+		
+		return log;
+	}
+	
+	
+	@Override
+	protected void initDisplay(DisplaySystem display)
+	{
+		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.START_IN_FS, Const.TITLEBAR);
+		display.setTargetFps(Const.FPS_RENDER);
+	}
+	
+	
+	@Override
 	protected void initScreens(ScreenRegistry screens)
 	{
 		screens.add(new ScreenTestBouncy(this));
@@ -38,6 +57,27 @@ public class App extends BaseApp {
 		screens.add(new ScreenTestRender(this));
 		
 		screens.showScreen("test.cat");
+	}
+	
+	
+	@Override
+	protected GameLoop createLoop()
+	{
+		return new MainLoop(this);
+	}
+	
+	
+	@Override
+	protected void initResources()
+	{
+		Res.load(this);
+	}
+	
+	
+	@Override
+	protected File getLockFile()
+	{
+		return Paths.LOCK;
 	}
 	
 	
@@ -82,46 +122,6 @@ public class App extends BaseApp {
 				getEventBus().send(new ActionRequest(RequestType.SHUTDOWN));
 			}
 		});
-	}
-	
-	
-	@Override
-	protected LogWriter createLog()
-	{
-		Locale.setDefault(Locale.ENGLISH);
-		
-		final LogWriter log = Log.create("runtime", Paths.LOG_FILE, 10);
-		
-		return log;
-	}
-	
-	
-	@Override
-	protected void initDisplay(DisplaySystem display)
-	{
-		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.START_IN_FS, Const.TITLEBAR);
-		display.setTargetFps(Const.FPS_RENDER);
-	}
-	
-	
-	@Override
-	protected GameLoop createLoop()
-	{
-		return new MainLoop(this);
-	}
-	
-	
-	@Override
-	protected void initResources()
-	{
-		Res.load(this);
-	}
-	
-	
-	@Override
-	protected File getLockFile()
-	{
-		return Paths.LOCK;
 	}
 	
 }

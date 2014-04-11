@@ -3,8 +3,8 @@ package mightypork.utils.math.animation;
 
 import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.gamecore.control.timing.Updateable;
-import mightypork.gamecore.gui.constraints.NumberConstraint;
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.constraints.NumberConstraint;
 
 
 /**
@@ -88,7 +88,7 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	 * 
 	 * @return number
 	 */
-	public double getFrom()
+	public double getGetStart()
 	{
 		return from;
 	}
@@ -99,7 +99,7 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	 * 
 	 * @return number
 	 */
-	public double getTo()
+	public double getEnd()
 	{
 		return to;
 	}
@@ -114,6 +114,13 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	{
 		if (duration == 0) return to;
 		return Calc.interpolate(from, to, (elapsedTime / duration), easing);
+	}
+	
+	
+	@Override
+	public double getValue()
+	{
+		return now();
 	}
 	
 	
@@ -230,16 +237,16 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	
 	
 	/**
-	 * Animate to a value from curretn value
+	 * Animate to a value from current value
 	 * 
 	 * @param to target state
-	 * @param time animation time (secs)
+	 * @param duration animation duration (speeds)
 	 */
-	public void fadeTo(double to, double time)
+	public void animate(double to, double duration)
 	{
 		this.from = now();
 		this.to = to;
-		this.duration = time;
+		this.duration = duration;
 		this.elapsedTime = 0;
 	}
 	
@@ -271,7 +278,7 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	 * 
 	 * @return copy
 	 */
-	public Pauseable getCopy()
+	public AnimDouble copy()
 	{
 		return new AnimDouble(this);
 	}
@@ -325,12 +332,5 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	public boolean isPaused()
 	{
 		return paused;
-	}
-	
-	
-	@Override
-	public double getValue()
-	{
-		return now();
 	}
 }

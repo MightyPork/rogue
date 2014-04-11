@@ -1,9 +1,9 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.gamecore.gui.constraints.PluggableContext;
-import mightypork.gamecore.gui.constraints.RectConstraint;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.constraints.PluggableContext;
+import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.rect.Rect;
 
 
 /**

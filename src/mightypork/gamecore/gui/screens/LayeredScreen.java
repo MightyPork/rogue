@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.coord.Vec;
 
 
 /**
@@ -79,7 +79,7 @@ public abstract class LayeredScreen extends Screen {
 	
 	
 	@Override
-	protected void onSizeChanged(Coord size)
+	protected void onSizeChanged(Vec size)
 	{
 		for (final ScreenLayer layer : layers) {
 			layer.onSizeChanged(size);

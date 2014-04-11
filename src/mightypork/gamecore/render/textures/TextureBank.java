@@ -6,7 +6,7 @@ import java.util.HashMap;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.rect.Rect;
 
 import org.newdawn.slick.opengl.Texture;
 

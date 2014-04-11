@@ -1,7 +1,8 @@
 package mightypork.gamecore.control.bus.events;
 
 
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecView;
 
 
 /**
@@ -12,7 +13,7 @@ import mightypork.utils.math.coord.Coord;
 public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	
 	private final boolean fullscreen;
-	private final Coord screenSize;
+	private final Vec screenSize;
 	private final boolean fsChanged;
 	
 	
@@ -21,7 +22,7 @@ public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	 * @param fullscreen is now fullscreen
 	 * @param size new screen size
 	 */
-	public ScreenChangeEvent(boolean fsChanged, boolean fullscreen, Coord size) {
+	public ScreenChangeEvent(boolean fsChanged, boolean fullscreen, Vec size) {
 		this.fullscreen = fullscreen;
 		this.screenSize = size;
 		this.fsChanged = fsChanged;
@@ -49,9 +50,9 @@ public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	/**
 	 * @return new screen size
 	 */
-	public Coord getScreenSize()
+	public VecView getScreenSize()
 	{
-		return screenSize;
+		return screenSize.view();
 	}
 	
 	

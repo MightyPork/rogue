@@ -2,9 +2,11 @@ package mightypork.gamecore.render.fonts;
 
 
 import mightypork.gamecore.render.Render;
+import static mightypork.utils.math.constraints.Constraints.*;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Coord;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.rect.Rect;
 
 
 /**
@@ -49,7 +51,7 @@ public class FontRenderer {
 	 * @param height drawing height
 	 * @return taken space (width, height)
 	 */
-	public Coord getNeededSpace(String text, double height)
+	public Vec getNeededSpace(String text, double height)
 	{
 		return font.getNeededSpace(text).mul(getScale(height));
 	}
@@ -104,11 +106,11 @@ public class FontRenderer {
 	 * @param height drawing height
 	 * @param color drawing color
 	 */
-	public void draw(String text, Coord pos, double height, RGB color)
+	public void draw(String text, Vec pos, double height, RGB color)
 	{
 		Render.pushMatrix();
 		
-		Render.translate(pos.round());
+		Render.translate(pos.view().round());
 		Render.scaleXY(getScale(height));
 		
 		font.draw(text, color);
@@ -142,20 +144,20 @@ public class FontRenderer {
 	 */
 	public void draw(String text, Rect bounds, Align align, RGB color)
 	{
-		Coord start;
+		VecView start;
 		
 		switch (align) {
 			case LEFT:
-				start = bounds.getHMinVMin();
+				start = _top_left(bounds);
 				break;
 			
 			case CENTER:
-				start = bounds.getCenterVMin();
+				start = _center_top(bounds);
 				break;
 			
 			case RIGHT:
 			default:
-				start = bounds.getHMaxVMin();
+				start = _top_right(bounds);
 				break;
 		}
 		
@@ -171,7 +173,7 @@ public class FontRenderer {
 	 * @param height drawing height
 	 * @param align horizontal alignment
 	 */
-	public void draw(String text, Coord pos, double height, Align align)
+	public void draw(String text, VecView pos, double height, Align align)
 	{
 		draw(text, pos, height, align, this.color);
 	}
@@ -186,12 +188,12 @@ public class FontRenderer {
 	 * @param align horizontal alignment
 	 * @param color drawing color
 	 */
-	public void draw(String text, Coord pos, double height, Align align, RGB color)
+	public void draw(String text, VecView pos, double height, Align align, RGB color)
 	{
 		
 		final double w = getWidth(text, height);
 		
-		final Coord start;
+		final VecView start;
 		
 		switch (align) {
 			case LEFT:

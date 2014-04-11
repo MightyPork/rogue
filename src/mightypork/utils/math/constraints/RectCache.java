@@ -1,9 +1,9 @@
-package mightypork.gamecore.gui.constraints;
+package mightypork.utils.math.constraints;
 
 
 import mightypork.gamecore.control.timing.Pollable;
 import mightypork.gamecore.control.timing.Poller;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.rect.Rect;
 
 
 /**

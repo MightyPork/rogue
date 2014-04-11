@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.test_cat_sound;
 
 
-import static mightypork.gamecore.gui.constraints.Constraints.*;
+import static mightypork.utils.math.constraints.Constraints.*;
 
 import java.util.Random;
 
@@ -19,14 +19,15 @@ import mightypork.rogue.Res;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.coord.AnimCoord;
+import mightypork.utils.math.coord.CoordValue;
+import mightypork.utils.math.coord.Vec;
 
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
 	
 	private final AnimDouble size = new AnimDouble(400, Easing.SINE_BOTH);
-	private final AnimDouble xPos = new AnimDouble(200, Easing.ELASTIC_OUT);
-	private final AnimDouble yPos = new AnimDouble(200, Easing.ELASTIC_OUT);
+	private final AnimCoord pos = new AnimCoord(Vec.ZERO, Easing.ELASTIC_OUT);
 	
 	private final Random rand = new Random();
 	
@@ -37,18 +38,18 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	public LayerFlyingCat(Screen screen) {
 		super(screen);
 		
-		xPos.setTo(DisplaySystem.getWidth() / 2);
-		yPos.setTo(DisplaySystem.getHeight() / 2);
+		pos.setTo(getDisplay().getCenter());
 		
 		cat = new ImagePainter(Res.getTxQuad("test.kitten"));
-		cat.setContext(_centered(_box(size, size), xPos, yPos));
+		
+		cat.setContext(_align(_box(size, size), pos));
 		
 		tp = new TextPainter(Res.getFont("default"));
 		tp.setAlign(Align.CENTER);
 		tp.setColor(RGB.YELLOW);
 		tp.setText("Meow!");
-		tp.setShadow(RGB.dark(0.8), Coord.at(2, 2));
-		tp.setContext(_centered(_box(64, 64), _mouseX, _mouseY));
+		tp.setShadow(RGB.dark(0.8), new CoordValue(2, 2));
+		tp.setContext(_align(_box(64, 64), _mouseX, _mouseY));
 		
 		/*
 		 * Register keys
@@ -58,8 +59,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 			@Override
 			public void run()
 			{
-				xPos.fadeTo(DisplaySystem.getWidth() / 2, 2);
-				yPos.fadeTo(DisplaySystem.getHeight() / 2, 2);
+				pos.animateWithSpeed(getDisplay().getCenter(), 300);
 			}
 		});
 	}
@@ -69,8 +69,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	public void update(double delta)
 	{
 		size.update(delta);
-		xPos.update(delta);
-		yPos.update(delta);
+		pos.update(delta);
 	}
 	
 	
@@ -79,12 +78,13 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	{
 		if (!event.isDown()) return;
 		
-		final Coord pos = event.getPos();
-		final double t = 2;
-		size.fadeTo(100 + rand.nextInt(700), t / 2D);
+		final Vec pos = event.getPos();
 		
-		xPos.fadeTo(pos.x(), t);
-		yPos.fadeTo(pos.y(), t);
+		final double time = 100;
+		
+		size.animate(100 + rand.nextInt(700), time/2D);
+		
+		this.pos.animateWithSpeed(pos, 300);
 	}
 	
 	
@@ -93,6 +93,8 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	{
 		cat.render();
 		tp.render();
+		
+		//System.out.println(tp.getRect());
 	}
 	
 	

@@ -10,7 +10,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import mightypork.utils.math.Range;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecView;
 import mightypork.utils.objects.Convert;
 
 
@@ -121,9 +122,9 @@ public class PropertyManager {
 		}
 	}
 	
-	private class CoordProperty extends Property<Coord> {
+	private class CoordProperty extends Property<Vec> {
 		
-		public CoordProperty(String key, Coord defaultValue, String comment) {
+		public CoordProperty(String key, Vec defaultValue, String comment) {
 			super(key, defaultValue, comment);
 		}
 		
@@ -340,6 +341,30 @@ public class PropertyManager {
 	
 	
 	/**
+	 * Get range property
+	 * 
+	 * @param n key
+	 * @return the range found, or null
+	 */
+	public Range getRange(String n)
+	{
+		return Convert.toRange(get(n).value);
+	}
+	
+	
+	/**
+	 * Get coord property
+	 * 
+	 * @param n key
+	 * @return the coord found, or null
+	 */
+	public VecView getCoord(String n)
+	{
+		return Convert.toCoord(get(n).value);
+	}
+	
+	
+	/**
 	 * Add a boolean property
 	 * 
 	 * @param n key
@@ -398,7 +423,7 @@ public class PropertyManager {
 	 * @param d default value
 	 * @param comment the in-file comment
 	 */
-	public void putCoord(String n, Coord d, String comment)
+	public void putCoord(String n, Vec d, String comment)
 	{
 		entries.put(n, new CoordProperty(n, d, comment));
 	}

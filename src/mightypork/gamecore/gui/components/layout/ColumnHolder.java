@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.components.layout;
 
 
-import static mightypork.gamecore.gui.constraints.Constraints.*;
+import static mightypork.utils.math.constraints.Constraints.*;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.components.PluggableRenderable;
-import mightypork.gamecore.gui.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectConstraint;
 
 
 /**

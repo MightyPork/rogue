@@ -1,14 +1,13 @@
 package mightypork.rogue.screens.test_bouncyboxes;
 
 
-import static mightypork.gamecore.gui.constraints.Constraints.*;
+import static mightypork.utils.math.constraints.Constraints.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mightypork.gamecore.gui.components.layout.RowHolder;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
@@ -16,6 +15,7 @@ import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.string.StringProvider;
 
 

@@ -3,7 +3,7 @@ package mightypork.utils.objects;
 
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.Range;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.coord.*;
 
 
 /**
@@ -25,8 +25,8 @@ public class Convert {
 	{
 		try {
 			if (o == null) return def;
-			if (o instanceof String) return (int) Math.round(Double.parseDouble((String) o));
 			if (o instanceof Number) return ((Number) o).intValue();
+			if (o instanceof String) return (int) Math.round(Double.parseDouble((String) o));
 			if (o instanceof Range) return ((Range) o).randInt();
 			if (o instanceof Boolean) return ((Boolean) o) ? 1 : 0;
 		} catch (final NumberFormatException e) {}
@@ -45,8 +45,8 @@ public class Convert {
 	{
 		try {
 			if (o == null) return def;
-			if (o instanceof String) return Double.parseDouble((String) o);
 			if (o instanceof Number) return ((Number) o).doubleValue();
+			if (o instanceof String) return Double.parseDouble((String) o);
 			if (o instanceof Range) return ((Range) o).randDouble();
 			if (o instanceof Boolean) return ((Boolean) o) ? 1 : 0;
 		} catch (final NumberFormatException e) {}
@@ -81,6 +81,8 @@ public class Convert {
 	public static boolean toBoolean(Object o, Boolean def)
 	{
 		if (o == null) return def;
+		if (o instanceof Boolean) return ((Boolean) o).booleanValue();
+		if (o instanceof Number) return ((Number) o).intValue() != 0;
 		
 		if (o instanceof String) {
 			final String s = ((String) o).trim().toLowerCase();
@@ -102,8 +104,6 @@ public class Convert {
 			if (s.equals("disabled")) return true;
 		}
 		
-		if (o instanceof Boolean) return ((Boolean) o).booleanValue();
-		if (o instanceof Number) return ((Number) o).intValue() != 0;
 		return def;
 	}
 	
@@ -124,14 +124,14 @@ public class Convert {
 			return (Boolean) o ? "True" : "False";
 		}
 		
-		if (o instanceof Coord) {
-			final Coord c = (Coord) o;
-			return String.format("[%f:%f:%f]", c.x(), c.y(), c.z());
+		if (o instanceof Vec) {
+			final Vec c = (Vec) o;
+			return String.format("[%f;%f;%f]", c.x(), c.y(), c.z());
 		}
 		
 		if (o instanceof Range) {
 			final Range c = (Range) o;
-			return String.format("%f:%f", c.getMin(), c.getMax());
+			return String.format("(%f:%f)", c.getMin(), c.getMax());
 		}
 		
 		if (o instanceof Class<?>) {
@@ -143,17 +143,18 @@ public class Convert {
 	
 	
 	/**
-	 * Get AI_COORD<br>
+	 * Get COORD<br>
 	 * Converts special constants to magic coordinate instances.
 	 * 
 	 * @param o object
 	 * @param def default value
 	 * @return AiCoord
 	 */
-	public static Coord toCoord(Object o, Coord def)
+	public static VecView toCoord(Object o, Vec def)
 	{
 		try {
-			if (o == null) return def;
+			if (o == null) return new CoordValue(def);
+			if (o instanceof Vec) return new CoordValue((Vec) o);
 			if (o instanceof String) {
 				String s = ((String) o).trim().toUpperCase();
 				
@@ -162,13 +163,26 @@ public class Convert {
 				// remove brackets if any
 				s = s.replaceAll("[\\(\\[\\{\\)\\]\\}]", "");
 				final String[] parts = s.split("[;]");
-				return new Coord(Double.parseDouble(parts[0].trim()), Double.parseDouble(parts[1].trim()));
+				
+				if (parts.length >= 2) {
+					
+					final double x = Double.parseDouble(parts[0].trim());
+					final double y = Double.parseDouble(parts[1].trim());
+					
+					if (parts.length == 2) {
+						return new CoordValue(x, y);
+					}
+					
+					final double z = Double.parseDouble(parts[2].trim());
+					
+					return new CoordValue(x, y, z);
+				}
 			}
-			if (o instanceof Coord) return new Coord((Coord) o);
-		} catch (final NumberFormatException e) {
+		} catch (final NumberFormatException | ArrayIndexOutOfBoundsException e) {
 			// ignore
 		}
-		return def;
+		
+		return new CoordValue(def);
 	}
 	
 	
@@ -183,6 +197,7 @@ public class Convert {
 	{
 		try {
 			if (o == null) return def;
+			if (o instanceof Range) return (Range) o;
 			if (o instanceof Number) return new Range(((Number) o).doubleValue(), ((Number) o).doubleValue());
 			if (o instanceof String) {
 				String s = ((String) o).trim();
@@ -200,7 +215,6 @@ public class Convert {
 				return new Range(Double.parseDouble(parts[0].trim()), Double.parseDouble(parts[0].trim()));
 				
 			}
-			if (o instanceof Range) return (Range) o;
 		} catch (final NumberFormatException e) {
 			// ignore
 		}
@@ -274,9 +288,9 @@ public class Convert {
 	 * @param o object
 	 * @return Coord
 	 */
-	public static Coord toCoord(Object o)
+	public static VecView toCoord(Object o)
 	{
-		return toCoord(o, Coord.zero());
+		return toCoord(o, Vec.ZERO);
 	}
 	
 	

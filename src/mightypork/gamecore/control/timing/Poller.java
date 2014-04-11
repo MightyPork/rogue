@@ -4,7 +4,7 @@ package mightypork.gamecore.control.timing;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import mightypork.gamecore.gui.constraints.RectCache;
+import mightypork.utils.math.constraints.RectCache;
 
 
 /**

@@ -9,8 +9,11 @@ import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Coord;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.coord.CoordValue;
+import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.rect.Rect;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
@@ -26,9 +29,9 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Render {
 	
-	public static final Coord AXIS_X = new Coord(1, 0, 0).freeze();
-	public static final Coord AXIS_Y = new Coord(0, 1, 0).freeze();
-	public static final Coord AXIS_Z = new Coord(0, 0, 1).freeze();
+	public static final Vec AXIS_X = new CoordValue(1, 0, 0);
+	public static final Vec AXIS_Y = new CoordValue(0, 1, 0);
+	public static final Vec AXIS_Z = new CoordValue(0, 0, 1);
 	
 	
 	/**
@@ -84,7 +87,7 @@ public class Render {
 	 * 
 	 * @param coord coord
 	 */
-	public static void translate(Coord coord)
+	public static void translate(Vec coord)
 	{
 		glTranslated(coord.x(), coord.y(), coord.z());
 	}
@@ -120,7 +123,7 @@ public class Render {
 	 * 
 	 * @param factor vector of scaling factors
 	 */
-	public static void scale(Coord factor)
+	public static void scale(Vec factor)
 	{
 		glScaled(factor.x(), factor.y(), factor.z());
 	}
@@ -209,9 +212,9 @@ public class Render {
 	 * @param angle rotate angle
 	 * @param axis rotation axis
 	 */
-	public static void rotate(double angle, Coord axis)
+	public static void rotate(double angle, Vec axis)
 	{
-		final Coord vec = axis.norm(1);
+		final Vec vec = axis.view().norm(1);
 		glRotated(angle, vec.x(), vec.y(), vec.z());
 	}
 	
@@ -434,7 +437,7 @@ public class Render {
 	 * @param colorHMinVMax
 	 */
 	public static void quadColor(Rect quad, RGB colorHMinVMin, RGB colorHMaxVMin, RGB colorHMaxVMax, RGB colorHMinVMax)
-	{
+	{		
 		final double x1 = quad.xMin();
 		final double y1 = quad.yMin();
 		final double x2 = quad.xMax();
@@ -508,7 +511,7 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, Texture texture)
 	{
-		quadTextured(quad, Rect.ONE, texture, RGB.WHITE);
+		quadTextured(quad, new Rect(0,0,1,1), texture, RGB.WHITE);
 	}
 	
 	
@@ -545,7 +548,7 @@ public class Render {
 		// fix projection for changed size
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		final Coord s = DisplaySystem.getSize();
+		final Vec s = DisplaySystem.getSize();
 		glViewport(0, 0, s.xi(), s.yi());
 		glOrtho(0, s.x(), (DisplaySystem.yAxisDown ? 1 : -1) * s.y(), 0, -1000, 1000);
 		

@@ -1,7 +1,7 @@
 package mightypork.gamecore.render.textures;
 
 
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.rect.Rect;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -74,7 +74,7 @@ public class TxQuad {
 	 */
 	public TxQuad(Texture tx, Rect uvs) {
 		this.tx = tx;
-		this.uvs = uvs.view();
+		this.uvs = uvs;
 	}
 	
 	
@@ -85,7 +85,7 @@ public class TxQuad {
 	 */
 	public TxQuad(TxQuad txQuad) {
 		this.tx = txQuad.tx;
-		this.uvs = txQuad.uvs.view();
+		this.uvs = txQuad.uvs;
 	}
 	
 	

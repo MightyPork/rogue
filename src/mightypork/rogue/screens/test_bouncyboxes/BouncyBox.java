@@ -1,18 +1,18 @@
 package mightypork.rogue.screens.test_bouncyboxes;
 
 
-import static mightypork.gamecore.gui.constraints.Constraints.*;
+import static mightypork.utils.math.constraints.Constraints.*;
 
 import java.util.Random;
 
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.components.PluggableRenderer;
-import mightypork.gamecore.gui.constraints.NumberConstraint;
-import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.constraints.NumberConstraint;
+import mightypork.utils.math.constraints.RectConstraint;
 
 
 public class BouncyBox extends PluggableRenderer implements Updateable {

@@ -10,7 +10,9 @@ import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.coord.MutableCoord;
+import mightypork.utils.math.coord.VecMutable;
+import mightypork.utils.math.coord.VecView;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -92,8 +94,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		
 		Display.processMessages();
 		
-		final Coord moveSum = Coord.zero();
-		final Coord lastPos = Coord.zero();
+		final VecMutable moveSum = new MutableCoord();
+		final VecMutable lastPos = new MutableCoord();
 		boolean wasMouse = false;
 		
 		while (Mouse.next()) {
@@ -115,24 +117,26 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
-	private void onMouseEvent(Coord moveSum, Coord lastPos)
+	private void onMouseEvent(VecMutable moveSum, VecMutable lastPos)
 	{
 		final int button = Mouse.getEventButton();
 		final boolean down = Mouse.getEventButtonState();
-		final Coord pos = new Coord(Mouse.getEventX(), Mouse.getEventY());
-		final Coord move = new Coord(Mouse.getEventDX(), Mouse.getEventDY());
+		
+		final VecMutable pos = new MutableCoord(Mouse.getEventX(), Mouse.getEventY());
+		final VecMutable move = new MutableCoord(Mouse.getEventDX(), Mouse.getEventDY());
+		
 		final int wheeld = Mouse.getEventDWheel();
 		
 		if (DisplaySystem.yAxisDown) {
 			flipScrY(pos);
-			move.mul_ip(1, -1, 1);
+			move.mul(1, -1, 1);
 		}
 		
 		if (button != -1 || wheeld != 0) {
-			getEventBus().send(new MouseButtonEvent(pos.freeze(), button, down, wheeld));
+			getEventBus().send(new MouseButtonEvent(pos.copy(), button, down, wheeld));
 		}
 		
-		moveSum.add_ip(move.freeze());
+		moveSum.add(move);
 		lastPos.setTo(pos);
 	}
 	
@@ -147,9 +151,9 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
-	private static void flipScrY(Coord c)
+	private static void flipScrY(VecMutable c)
 	{
-		if (DisplaySystem.yAxisDown) c.setY_ip(DisplaySystem.getSize().y() - c.y());
+		if (DisplaySystem.yAxisDown) c.setY(DisplaySystem.getHeight() - c.y());
 	}
 	
 	
@@ -158,11 +162,11 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	 * 
 	 * @return mouse position
 	 */
-	public static Coord getMousePos()
+	public static VecView getMousePos()
 	{
-		final Coord pos = new Coord(Mouse.getX(), Mouse.getY());
+		final VecMutable pos = new MutableCoord(Mouse.getX(), Mouse.getY());
 		flipScrY(pos);
-		return pos.freeze();
+		return pos.view();
 	}
 	
 	

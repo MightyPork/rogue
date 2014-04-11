@@ -6,8 +6,11 @@ import mightypork.gamecore.render.fonts.FontRenderer;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Coord;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.coord.CoordValue;
+import mightypork.utils.math.coord.MutableCoord;
+import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecMutable;
+import mightypork.utils.math.rect.Rect;
 import mightypork.utils.string.StringProvider;
 import mightypork.utils.string.StringProvider.StringWrapper;
 
@@ -28,7 +31,7 @@ public class TextPainter extends PluggableRenderer {
 	private boolean shadow;
 	
 	private RGB shadowColor = RGB.BLACK;
-	private Coord shadowOffset = Coord.one();
+	private VecMutable shadowOffset = new MutableCoord(1, 1);
 	
 	
 	/**
@@ -87,13 +90,13 @@ public class TextPainter extends PluggableRenderer {
 		final Rect rect = getRect();
 		
 		if (shadow) {
-			font.draw(str, rect.add(shadowOffset), align, shadowColor);
+			font.draw(str, rect.move(shadowOffset), align, shadowColor);
 		}
 		font.draw(str, rect, align, color);
 	}
 	
 	
-	public void setShadow(RGB color, Coord offset)
+	public void setShadow(RGB color, Vec offset)
 	{
 		setShadow(true);
 		setShadowColor(color);
@@ -113,9 +116,9 @@ public class TextPainter extends PluggableRenderer {
 	}
 	
 	
-	public void setShadowOffset(Coord shadowOffset)
+	public void setShadowOffset(Vec shadowOffset)
 	{
-		this.shadowOffset = shadowOffset;
+		this.shadowOffset.setTo(shadowOffset);
 	}
 	
 	

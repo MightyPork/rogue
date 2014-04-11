@@ -9,8 +9,8 @@ import mightypork.gamecore.control.bus.clients.BusNode;
 import mightypork.gamecore.gui.components.PluggableRenderable;
 import mightypork.gamecore.gui.components.PluggableRenderer;
 import mightypork.gamecore.gui.components.Renderable;
-import mightypork.gamecore.gui.constraints.RectConstraint;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.rect.Rect;
 
 
 /**

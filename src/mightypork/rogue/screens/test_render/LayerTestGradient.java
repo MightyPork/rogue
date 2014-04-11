@@ -1,14 +1,14 @@
 package mightypork.rogue.screens.test_render;
 
 
-import static mightypork.gamecore.gui.constraints.Constraints.*;
+import static mightypork.utils.math.constraints.Constraints.*;
 import mightypork.gamecore.control.timing.Poller;
-import mightypork.gamecore.gui.constraints.RectConstraint;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.coord.Vec;
 
 
 public class LayerTestGradient extends ScreenLayer {
@@ -44,7 +44,7 @@ public class LayerTestGradient extends ScreenLayer {
 	
 	
 	@Override
-	protected void onSizeChanged(Coord size)
+	protected void onSizeChanged(Vec size)
 	{
 		p.poll();
 	}

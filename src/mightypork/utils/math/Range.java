@@ -24,6 +24,7 @@ public class Range {
 	}
 	
 	
+	
 	/**
 	 * Create new range
 	 * 
@@ -31,13 +32,9 @@ public class Range {
 	 * @param max max number
 	 */
 	public Range(double min, double max) {
-		if (min > max) {
-			final double t = min;
-			min = max;
-			max = t;
-		}
 		this.min = min;
 		this.max = max;
+		norm();
 	}
 	
 	
@@ -49,6 +46,17 @@ public class Range {
 	public Range(double minmax) {
 		this.min = minmax;
 		this.max = minmax;
+	}
+	
+	/**
+	 * Make sure min is <= max
+	 */
+	private void norm() {
+		if (min > max) {
+			final double t = min;
+			min = max;
+			max = t;
+		}
 	}
 	
 	
@@ -97,28 +105,6 @@ public class Range {
 	
 	
 	/**
-	 * Get min
-	 * 
-	 * @return min number
-	 */
-	public int getMinI()
-	{
-		return (int) min;
-	}
-	
-	
-	/**
-	 * Get max
-	 * 
-	 * @return max number
-	 */
-	public int getMaxI()
-	{
-		return (int) max;
-	}
-	
-	
-	/**
 	 * Set min
 	 * 
 	 * @param min min value
@@ -126,6 +112,7 @@ public class Range {
 	public void setMin(double min)
 	{
 		this.min = min;
+		norm();
 	}
 	
 	
@@ -137,13 +124,14 @@ public class Range {
 	public void setMax(double max)
 	{
 		this.max = max;
+		norm();
 	}
 	
 	
 	@Override
 	public String toString()
 	{
-		return "Range(" + min + ";" + max + ")";
+		return String.format("( %.2f : %.2f )", min, max);
 	}
 	
 	
@@ -168,12 +156,7 @@ public class Range {
 		if (other == null) return;
 		min = other.min;
 		max = other.max;
-		
-		if (min > max) {
-			final double t = min;
-			min = max;
-			max = t;
-		}
+		norm();
 	}
 	
 	
@@ -184,15 +167,10 @@ public class Range {
 	 * @param max max value
 	 */
 	public void setTo(double min, double max)
-	{
-		if (min > max) {
-			final double t = min;
-			min = max;
-			max = t;
-		}
-		
+	{		
 		this.min = min;
 		this.max = max;
+		norm();
 	}
 	
 }

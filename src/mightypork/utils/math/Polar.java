@@ -3,7 +3,10 @@ package mightypork.utils.math;
 
 import mightypork.utils.math.Calc.Deg;
 import mightypork.utils.math.Calc.Rad;
-import mightypork.utils.math.coord.Coord;
+import mightypork.utils.math.constraints.NumberConstraint;
+import mightypork.utils.math.coord.ConstraintCoord;
+import mightypork.utils.math.coord.CoordProxy;
+import mightypork.utils.math.coord.Vec;
 
 
 /**
@@ -18,6 +21,8 @@ public class Polar {
 	
 	/** distance in units */
 	private double radius = 0;
+	
+	private ConstraintCoord coord = null;
 	
 	
 	/**
@@ -104,7 +109,7 @@ public class Polar {
 	 * @param coord coord
 	 * @return polar
 	 */
-	public static Polar fromCoord(Coord coord)
+	public static Polar fromCoord(Vec coord)
 	{
 		return Polar.fromCoord(coord.x(), coord.y());
 		
@@ -132,9 +137,28 @@ public class Polar {
 	 * 
 	 * @return coord
 	 */
-	public Coord toCoord()
+	public CoordProxy toCoord()
 	{
-		return new Coord(radius * Math.cos(angle), radius * Math.sin(angle));
+		// lazy init
+		if (coord == null) {
+			coord = new ConstraintCoord(new NumberConstraint() {
+				
+				@Override
+				public double getValue()
+				{
+					return radius * Math.cos(angle);
+				}
+			}, new NumberConstraint() {
+				
+				@Override
+				public double getValue()
+				{
+					return radius * Math.sin(angle);
+				}
+			});
+		}
+		
+		return coord.view();
 	}
 	
 	

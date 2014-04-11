@@ -5,7 +5,7 @@ import mightypork.gamecore.loading.DeferredResource;
 import mightypork.gamecore.loading.MustLoadInMainThread;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.logging.LoggedName;
-import mightypork.utils.math.coord.Rect;
+import mightypork.utils.math.rect.Rect;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
