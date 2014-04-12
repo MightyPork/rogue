@@ -3,7 +3,9 @@ package mightypork.utils.objects;
 
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.Range;
-import mightypork.utils.math.coord.*;
+import mightypork.utils.math.coord.FixedCoord;
+import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecView;
 
 
 /**
@@ -153,8 +155,8 @@ public class Convert {
 	public static VecView toCoord(Object o, Vec def)
 	{
 		try {
-			if (o == null) return new CoordValue(def);
-			if (o instanceof Vec) return new CoordValue((Vec) o);
+			if (o == null) return new FixedCoord(def);
+			if (o instanceof Vec) return new FixedCoord((Vec) o);
 			if (o instanceof String) {
 				String s = ((String) o).trim().toUpperCase();
 				
@@ -170,19 +172,19 @@ public class Convert {
 					final double y = Double.parseDouble(parts[1].trim());
 					
 					if (parts.length == 2) {
-						return new CoordValue(x, y);
+						return new FixedCoord(x, y);
 					}
 					
 					final double z = Double.parseDouble(parts[2].trim());
 					
-					return new CoordValue(x, y, z);
+					return new FixedCoord(x, y, z);
 				}
 			}
 		} catch (final NumberFormatException | ArrayIndexOutOfBoundsException e) {
 			// ignore
 		}
 		
-		return new CoordValue(def);
+		return new FixedCoord(def);
 	}
 	
 	

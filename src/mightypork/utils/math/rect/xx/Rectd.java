@@ -1,3 +1,6 @@
+package mightypork.utils.math.rect.xx;
+
+
 //package mightypork.utils.math.rect;
 //
 //
@@ -17,8 +20,8 @@
 // */
 //public class Rectd implements RectConstraint, IRect {
 //	
-//	public static final IRect ZERO = new Rect(0, 0, 0, 0).freeze();
-//	public static final Rect ONE = new Rect(0, 0, 1, 1).freeze();
+//	public static final IRect ZERO = new FixedRect(0, 0, 0, 0).freeze();
+//	public static final Rect ONE = new FixedRect(0, 0, 1, 1).freeze();
 //	
 //	
 //	/**
@@ -44,7 +47,7 @@
 //	 */
 //	public static Rect fromSize(VecArith min, double width, double height)
 //	{
-//		return new Rect(min.copy(), min.add(width, height));
+//		return new FixedRect(min.copy(), min.add(width, height));
 //	}
 //	
 //	
@@ -84,7 +87,7 @@
 //	 */
 //	public static Rect fromSize(double xmin, double ymin, double width, double height)
 //	{
-//		return new Rect(xmin, ymin, xmin + width, ymin + height);
+//		return new FixedRect(xmin, ymin, xmin + width, ymin + height);
 //	}
 //	
 //	/** Lowest coordinates xy */
@@ -304,7 +307,7 @@
 //	@Override
 //	public Rect copy()
 //	{
-//		return new Rect(this);
+//		return new FixedRect(this);
 //	}
 //	
 //	
@@ -704,7 +707,7 @@
 //	@Override
 //	public Rect round()
 //	{
-//		return new Rect(min.round(), max.round());
+//		return new FixedRect(min.round(), max.round());
 //	}
 //	
 //	
@@ -877,7 +880,7 @@
 //	
 //	
 //	@Override
-//	public Rect getRect()
+//	public RectView getRect()
 //	{
 //		return this;
 //	}

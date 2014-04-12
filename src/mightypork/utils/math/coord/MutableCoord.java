@@ -7,7 +7,7 @@ package mightypork.utils.math.coord;
  * 
  * @author MightyPork
  */
-public class MutableCoord extends VecMutableImpl<MutableCoord> {
+public class MutableCoord extends VecMutableImpl {
 	
 	private double x, y, z;
 	

@@ -1,30 +1,28 @@
 package mightypork.utils.math.coord;
 
 
-
-
 /**
  * Coordinate with immutable numeric values.<br>
  * Operations yield a new {@link MutableCoord} with the result.
  * 
  * @author MightyPork
  */
-public class CoordValue extends VecView {
+public class FixedCoord extends VecView {
 	
 	private final double x, y, z;
 	
 	
-	public CoordValue(Vec other) {
+	public FixedCoord(Vec other) {
 		this(other.x(), other.y(), other.z());
 	}
 	
 	
-	public CoordValue(double x, double y) {
+	public FixedCoord(double x, double y) {
 		this(x, y, 0);
 	}
 	
 	
-	public CoordValue(double x, double y, double z) {
+	public FixedCoord(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;

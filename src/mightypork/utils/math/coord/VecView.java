@@ -1,19 +1,24 @@
 package mightypork.utils.math.coord;
 
-import mightypork.utils.math.constraints.VecConstraint;
-
-
 
 /**
- * Read-only coordinate, operations with it will yield a new {@link MutableCoord} with the result.
+ * Read-only coordinate, operations with it will yield a new
+ * {@link MutableCoord} with the result.
  * 
  * @author MightyPork
  */
-public abstract class VecView extends VecImpl<CoordValue> {	
+public abstract class VecView extends VecMathImpl<VecView> {
 	
 	@Override
-	public CoordValue result(double x, double y, double z)
+	public VecView result(double x, double y, double z)
 	{
-		return new CoordValue(x,y,z);
+		return new FixedCoord(x, y, z);
+	}
+	
+	
+	@Override
+	public VecView view()
+	{
+		return this; // already not mutable
 	}
 }

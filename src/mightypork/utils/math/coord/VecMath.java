@@ -1,14 +1,12 @@
 package mightypork.utils.math.coord;
 
-import mightypork.utils.math.constraints.VecConstraint;
-
 
 /**
  * 3D coordinate methods
  * 
  * @author MightyPork
  */
-interface VecArith extends Vec {
+interface VecMath<V> extends Vec {
 	
 	/**
 	 * Set X coordinate (if immutable, in a copy).
@@ -16,7 +14,7 @@ interface VecArith extends Vec {
 	 * @param x x coordinate
 	 * @return result
 	 */
-	Vec setX(double x);
+	V setX(double x);
 	
 	
 	/**
@@ -25,7 +23,7 @@ interface VecArith extends Vec {
 	 * @param y y coordinate
 	 * @return result
 	 */
-	Vec setY(double y);
+	V setY(double y);
 	
 	
 	/**
@@ -34,8 +32,8 @@ interface VecArith extends Vec {
 	 * @param z z coordinate
 	 * @return result
 	 */
-	Vec setZ(double z);
-
+	V setZ(double z);
+	
 	
 	/**
 	 * Get distance to other point
@@ -64,9 +62,18 @@ interface VecArith extends Vec {
 	
 	
 	/**
+	 * Get absolute value (positive)
+	 * 
+	 * @return result
+	 */
+	V abs();
+	
+	
+	/**
 	 * @return true if zero
 	 */
 	boolean isZero();
+	
 	
 	/**
 	 * Create vector from this point to other point
@@ -74,7 +81,7 @@ interface VecArith extends Vec {
 	 * @param point second point
 	 * @return result
 	 */
-	Vec vecTo(Vec point);
+	V vecTo(Vec point);
 	
 	
 	/**
@@ -83,7 +90,7 @@ interface VecArith extends Vec {
 	 * @param point other point
 	 * @return result
 	 */
-	Vec midTo(Vec point);
+	V midTo(Vec point);
 	
 	
 	/**
@@ -92,7 +99,7 @@ interface VecArith extends Vec {
 	 * @param vec offset
 	 * @return result
 	 */
-	Vec add(Vec vec);
+	V add(Vec vec);
 	
 	
 	/**
@@ -103,7 +110,7 @@ interface VecArith extends Vec {
 	 * @param y y offset
 	 * @return result
 	 */
-	Vec add(double x, double y);
+	V add(double x, double y);
 	
 	
 	/**
@@ -114,7 +121,7 @@ interface VecArith extends Vec {
 	 * @param z z offset
 	 * @return result
 	 */
-	Vec add(double x, double y, double z);
+	V add(double x, double y, double z);
 	
 	
 	/**
@@ -122,7 +129,7 @@ interface VecArith extends Vec {
 	 * 
 	 * @return result
 	 */
-	Vec half();
+	V half();
 	
 	
 	/**
@@ -131,7 +138,7 @@ interface VecArith extends Vec {
 	 * @param d multiplier
 	 * @return result
 	 */
-	Vec mul(double d);
+	V mul(double d);
 	
 	
 	/**
@@ -140,7 +147,7 @@ interface VecArith extends Vec {
 	 * @param vec vector of multipliers
 	 * @return result
 	 */
-	Vec mul(Vec vec);
+	V mul(Vec vec);
 	
 	
 	/**
@@ -151,7 +158,7 @@ interface VecArith extends Vec {
 	 * @param y y multiplier
 	 * @return result
 	 */
-	Vec mul(double x, double y);
+	V mul(double x, double y);
 	
 	
 	/**
@@ -162,7 +169,7 @@ interface VecArith extends Vec {
 	 * @param z z multiplier
 	 * @return result
 	 */
-	Vec mul(double x, double y, double z);
+	V mul(double x, double y, double z);
 	
 	
 	/**
@@ -170,7 +177,7 @@ interface VecArith extends Vec {
 	 * 
 	 * @return result
 	 */
-	Vec round();
+	V round();
 	
 	
 	/**
@@ -178,7 +185,7 @@ interface VecArith extends Vec {
 	 * 
 	 * @return result
 	 */
-	Vec floor();
+	V floor();
 	
 	
 	/**
@@ -186,7 +193,7 @@ interface VecArith extends Vec {
 	 * 
 	 * @return result
 	 */
-	Vec ceil();
+	V ceil();
 	
 	
 	/**
@@ -195,7 +202,7 @@ interface VecArith extends Vec {
 	 * @param vec offset
 	 * @return result
 	 */
-	Vec sub(Vec vec);
+	V sub(Vec vec);
 	
 	
 	/**
@@ -206,7 +213,7 @@ interface VecArith extends Vec {
 	 * @param y y offset
 	 * @return result
 	 */
-	VecArith sub(double x, double y);
+	V sub(double x, double y);
 	
 	
 	/**
@@ -217,7 +224,7 @@ interface VecArith extends Vec {
 	 * @param z z offset
 	 * @return result
 	 */
-	Vec sub(double x, double y, double z);
+	V sub(double x, double y, double z);
 	
 	
 	/**
@@ -225,7 +232,7 @@ interface VecArith extends Vec {
 	 * 
 	 * @return result
 	 */
-	Vec neg();
+	V neg();
 	
 	
 	/**
@@ -234,7 +241,7 @@ interface VecArith extends Vec {
 	 * @param size size we need
 	 * @return result
 	 */
-	Vec norm(double size);
+	V norm(double size);
 	
 	
 	/**
@@ -243,6 +250,6 @@ interface VecArith extends Vec {
 	 * @param vec other vector
 	 * @return result
 	 */
-	public Vec cross(Vec vec);
+	V cross(Vec vec);
 	
 }

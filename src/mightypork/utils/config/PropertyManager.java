@@ -175,7 +175,7 @@ public class PropertyManager {
 		boolean needsSave = false;
 		new File(file.getParent()).mkdirs();
 		
-		try (FileInputStream fis = new FileInputStream(file)) {
+		try(FileInputStream fis = new FileInputStream(file)) {
 			props.load(fis);
 		} catch (final IOException e) {
 			needsSave = true;

@@ -16,7 +16,7 @@ public interface NumberConstraint {
 			return 0;
 		}
 	};
-
+	
 	public static final NumberConstraint ONE = new NumberConstraint() {
 		
 		@Override
@@ -25,6 +25,7 @@ public interface NumberConstraint {
 			return 0;
 		}
 	};
+	
 	
 	/**
 	 * @return current value

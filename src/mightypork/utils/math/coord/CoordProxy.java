@@ -1,12 +1,14 @@
 package mightypork.utils.math.coord;
 
-import mightypork.utils.math.constraints.VecConstraint;
-
 
 /**
- * <p><b>[ Use Vec.view() method to make a proxy! ]</b></p>
- * <p>View of another coordinate, immutable.<br>
- * Operations yield a new {@link MutableCoord} with the result.</p>
+ * <p>
+ * <b>[ Use Vec.view() method to make a proxy! ]</b>
+ * </p>
+ * <p>
+ * View of another coordinate, immutable.<br>
+ * Operations yield a new {@link MutableCoord} with the result.
+ * </p>
  * 
  * @author MightyPork
  */
@@ -24,6 +26,7 @@ public class CoordProxy extends VecView {
 	public CoordProxy(Vec observed) {
 		this.observed = observed;
 	}
+	
 	
 	@Override
 	public CoordProxy view()

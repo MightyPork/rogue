@@ -1,7 +1,5 @@
 package mightypork.utils.math.coord;
 
-import mightypork.utils.math.constraints.NumberConstraint;
-
 
 /**
  * 2D coord for anonymous implementations.<br>
@@ -13,9 +11,11 @@ public abstract class SynthCoord2D extends VecView {
 	
 	@Override
 	public abstract double x();
-
+	
+	
 	@Override
 	public abstract double y();
+	
 	
 	@Override
 	public double z()

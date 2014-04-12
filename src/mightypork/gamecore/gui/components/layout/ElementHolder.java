@@ -10,7 +10,7 @@ import mightypork.gamecore.gui.components.PluggableRenderable;
 import mightypork.gamecore.gui.components.PluggableRenderer;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.rect.RectView;
 
 
 /**
@@ -60,7 +60,7 @@ public abstract class ElementHolder extends BusNode implements PluggableRenderab
 	
 	
 	@Override
-	public Rect getRect()
+	public RectView getRect()
 	{
 		return context.getRect();
 	}

@@ -4,8 +4,13 @@ package mightypork.utils.math.constraints;
 import mightypork.gamecore.control.timing.Poller;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.utils.math.coord.*;
+import mightypork.utils.math.coord.FixedCoord;
+import mightypork.utils.math.coord.SynthCoord3D;
+import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.rect.FixedRect;
 import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.rect.RectView;
 
 
 /**
@@ -16,54 +21,79 @@ import mightypork.utils.math.rect.Rect;
  */
 public class Constraints {
 	
-	/* ================= Variables ================= */
+	public static RectCache _cache(final RectConstraint rc)
+	{
+		return new RectCache(rc);
+	}
 	
-	public static final NumberConstraint _mouseX = new NumberConstraint() {
+	
+	public static RectCache _cache(final Poller poller, final RectConstraint rc)
+	{
+		return new RectCache(poller, rc);
+	}
+	
+	
+	/**
+	 * Convert {@link Number} to {@link NumberConstraint} if needed
+	 * 
+	 * @param o unknown numeric value
+	 * @return converted
+	 */
+	public static NumberConstraint _n(final Object o)
+	{
+		if (o instanceof NumberConstraint) return (NumberConstraint) o;
 		
-		@Override
-		public double getValue()
-		{
-			return InputSystem.getMousePos().x();
-		}
-	};
-	
-	public static final NumberConstraint _mouseY = new NumberConstraint() {
+		if (o instanceof Number) return new NumberConstraint() {
+			
+			@Override
+			public double getValue()
+			{
+				return ((Number) o).doubleValue();
+			}
+		};
 		
-		@Override
-		public double getValue()
-		{
-			return InputSystem.getMousePos().y();
-		}
-	};
-	public static final NumberConstraint _mousePos = new NumberConstraint() {
-		
-		@Override
-		public double getValue()
-		{
-			return InputSystem.getMousePos().y();
-		}
-	};
-	
-	public static final NumberConstraint _screenW = new NumberConstraint() {
-		
-		@Override
-		public double getValue()
-		{
-			return DisplaySystem.getWidth();
-		}
-	};
-	
-	public static final NumberConstraint _screenH = new NumberConstraint() {
-		
-		@Override
-		public double getValue()
-		{
-			return DisplaySystem.getHeight();
-		}
-	};
+		throw new IllegalArgumentException("Invalid numeric type.");
+	}
 	
 	
-	/* ================= Arithmetics ================= */
+	/**
+	 * Convert {@link Number} or {@link NumberConstraint} to double (current
+	 * value)
+	 * 
+	 * @param o unknown numeric value
+	 * @return double value
+	 */
+	static double toDouble(final Object o)
+	{
+		return _n(o).getValue();
+	}
+	
+	
+	/**
+	 * Convert {@link VecConstraint} to {@link VecArith}.
+	 * 
+	 * @param o unknown numeric value
+	 * @return double value
+	 */
+	static VecView vec(final VecConstraint o)
+	{
+		return o.getVec();
+	}
+	
+	
+	/**
+	 * Convert {@link RectConstraint} to {@link Rect}.
+	 * 
+	 * @param o unknown numeric value
+	 * @return double value
+	 */
+	static RectView toRect(final RectConstraint o)
+	{
+		return o.getRect();
+	}
+	
+	
+	// =================== Number constraints ====================
 	
 	public static NumberConstraint _min(final Object a, final Object b)
 	{
@@ -72,7 +102,7 @@ public class Constraints {
 			@Override
 			public double getValue()
 			{
-				return Math.min(num(a), num(b));
+				return Math.min(toDouble(a), toDouble(b));
 			}
 		};
 	}
@@ -85,7 +115,7 @@ public class Constraints {
 			@Override
 			public double getValue()
 			{
-				return Math.max(num(a), num(b));
+				return Math.max(toDouble(a), toDouble(b));
 			}
 		};
 	}
@@ -135,9 +165,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).round();
+				return toRect(r).round();
 			}
 		};
 	}
@@ -189,7 +219,7 @@ public class Constraints {
 			@Override
 			public double getValue()
 			{
-				return num(a) + num(b);
+				return toDouble(a) + toDouble(b);
 			}
 		};
 	}
@@ -202,7 +232,7 @@ public class Constraints {
 			@Override
 			public double getValue()
 			{
-				return num(a) - num(b);
+				return toDouble(a) - toDouble(b);
 			}
 		};
 	}
@@ -215,7 +245,7 @@ public class Constraints {
 			@Override
 			public double getValue()
 			{
-				return num(a) * num(b);
+				return toDouble(a) * toDouble(b);
 			}
 		};
 	}
@@ -234,7 +264,7 @@ public class Constraints {
 			@Override
 			public double getValue()
 			{
-				return num(a) / num(b);
+				return toDouble(a) / toDouble(b);
 			}
 		};
 	}
@@ -247,28 +277,26 @@ public class Constraints {
 			@Override
 			public double getValue()
 			{
-				return num(whole) * (num(percent) / 100);
+				return toDouble(whole) * (toDouble(percent) / 100);
 			}
 		};
 	}
 	
-	
-	/* ================= Layout utilities ================= */
 	
 	public static RectConstraint _row(final RectConstraint r, final int rows, final int index)
 	{
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				final double height = rect(r).getHeight();
+				final double height = toRect(r).getHeight();
 				final double perRow = height / rows;
 				
-				final Vec origin = rect(r).getOrigin().add(0, perRow * index);
-				final Vec size = rect(r).getSize().setY(perRow);
+				final Vec origin = toRect(r).getOrigin().add(0, perRow * index);
+				final Vec size = toRect(r).getSize().setY(perRow);
 				
-				return new Rect(origin, size);
+				return new FixedRect(origin, size);
 			}
 		};
 	}
@@ -279,15 +307,15 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				final double width = rect(r).getWidth();
+				final double width = toRect(r).getWidth();
 				final double perCol = width / columns;
 				
-				final Vec origin = rect(r).getOrigin().add(perCol * index, 0);
-				final Vec size = rect(r).getSize().setX(perCol);
+				final Vec origin = toRect(r).getOrigin().add(perCol * index, 0);
+				final Vec size = toRect(r).getSize().setX(perCol);
 				
-				return new Rect(origin, size);
+				return new FixedRect(origin, size);
 			}
 		};
 	}
@@ -298,22 +326,22 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				final double height = rect(r).getHeight();
-				final double width = rect(r).getHeight();
+				final double height = toRect(r).getHeight();
+				final double width = toRect(r).getHeight();
 				final double perRow = height / rows;
 				final double perCol = width / cols;
 				
-				final Vec origin = rect(r).getOrigin().add(perCol * left, perRow * (rows - top - 1));
+				final Vec origin = toRect(r).getOrigin().add(perCol * left, perRow * (rows - top - 1));
 				
-				return new Rect(origin, perCol, perRow);
+				return new FixedRect(origin, perCol, perRow);
 			}
 		};
 	}
 	
 	
-	/* ================= Rect manipulation ================= */
+	/* ================= RectView manipulation ================= */
 	
 	public static RectConstraint _shrink(RectConstraint r, Object shrink)
 	{
@@ -333,9 +361,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).shrink(num(left), num(top), num(right), num(bottom));
+				return toRect(r).shrink(toDouble(left), toDouble(top), toDouble(right), toDouble(bottom));
 			}
 		};
 	}
@@ -346,9 +374,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).shrink(0, num(shrink), 0, 0);
+				return toRect(r).shrink(0, toDouble(shrink), 0, 0);
 			}
 		};
 	}
@@ -359,9 +387,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).shrink(0, 0, 0, num(shrink));
+				return toRect(r).shrink(0, 0, 0, toDouble(shrink));
 			}
 		};
 	}
@@ -372,9 +400,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).shrink(num(shrink), 0, 0, 0);
+				return toRect(r).shrink(toDouble(shrink), 0, 0, 0);
 			}
 		};
 	}
@@ -385,9 +413,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).shrink(0, 0, num(shrink), 0);
+				return toRect(r).shrink(0, 0, toDouble(shrink), 0);
 			}
 		};
 	}
@@ -411,9 +439,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).grow(num(left), num(top), num(right), num(bottom));
+				return toRect(r).grow(toDouble(left), toDouble(top), toDouble(right), toDouble(bottom));
 			}
 		};
 	}
@@ -424,9 +452,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).grow(0, num(grow), 0, 0);
+				return toRect(r).grow(0, toDouble(grow), 0, 0);
 			}
 		};
 	}
@@ -437,9 +465,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).grow(0, 0, 0, num(grow));
+				return toRect(r).grow(0, 0, 0, toDouble(grow));
 			}
 		};
 	}
@@ -450,9 +478,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).grow(num(grow), 0, 0, 0);
+				return toRect(r).grow(toDouble(grow), 0, 0, 0);
 			}
 		};
 	}
@@ -463,9 +491,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).grow(0, 0, num(grow), 0);
+				return toRect(r).grow(0, 0, toDouble(grow), 0);
 			}
 		};
 	}
@@ -484,9 +512,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return new Rect(vec(origin), num(width), num(height));
+				return new FixedRect(vec(origin), toDouble(width), toDouble(height));
 			}
 		};
 	}
@@ -497,9 +525,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return new Rect(0, 0, num(width), num(height));
+				return new FixedRect(0, 0, toDouble(width), toDouble(height));
 			}
 		};
 	}
@@ -510,11 +538,11 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				final Vec origin = rect(r).getOrigin();
+				final Vec origin = toRect(r).getOrigin();
 				
-				return new Rect(origin.x(), origin.y(), num(width), num(height));
+				return new FixedRect(origin.x(), origin.y(), toDouble(width), toDouble(height));
 			}
 		};
 	}
@@ -525,11 +553,11 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				final Vec origin = rect(r).getOrigin();
+				final Vec origin = toRect(r).getOrigin();
 				
-				return new Rect(origin.x() + num(x), origin.y() + num(y), num(width), num(height));
+				return new FixedRect(origin.x() + toDouble(x), origin.y() + toDouble(y), toDouble(width), toDouble(height));
 			}
 		};
 	}
@@ -540,11 +568,11 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				final VecView origin = rect(r).getOrigin();
+				final VecView origin = toRect(r).getOrigin();
 				
-				return new Rect(origin.add(num(left), num(top)), origin.add(num(right), num(bottom)));
+				return new FixedRect(origin.add(toDouble(left), toDouble(top)), origin.add(toDouble(right), toDouble(bottom)));
 			}
 		};
 	}
@@ -555,12 +583,12 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				final VecView size = rect(r).getSize();
+				final VecView size = toRect(r).getSize();
 				final VecView center = centerTo.getRect().getCenter();
 				
-				return new Rect(center.sub(size.half()), size);
+				return new FixedRect(center.sub(size.half()), size);
 			}
 		};
 	}
@@ -571,14 +599,15 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				VecView size = rect(r).getSize();
+				final VecView size = toRect(r).getSize();
 				
-				return new Rect(vec(centerTo).sub(size.half()), size);
+				return new FixedRect(vec(centerTo).sub(size.half()), size);
 			}
 		};
 	}
+	
 	
 	public static RectConstraint _align(final RectConstraint r, final Vec centerTo)
 	{
@@ -591,12 +620,12 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				final VecView size = rect(r).getSize();
-				final VecView v = new CoordValue(num(x), num(y));
+				final VecView size = toRect(r).getSize();
+				final VecView v = new FixedCoord(toDouble(x), toDouble(y));
 				
-				return new Rect(v.sub(size.half()), size);
+				return new FixedRect(v.sub(size.half()), size);
 			}
 		};
 	}
@@ -607,11 +636,11 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				Vec v = move.getVec();
+				final Vec v = move.getVec();
 				
-				return rect(r).move(v);
+				return toRect(r).move(v);
 			}
 		};
 	}
@@ -622,24 +651,24 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).move(num(x), num(y));
+				return toRect(r).move(toDouble(x), toDouble(y));
 			}
 		};
 	}
 	
 	
-	/* ================= Rect bounds ================= */
+	/* ================= RectView bounds ================= */
 	
 	public static RectConstraint _left_edge(final RectConstraint r)
 	{
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).shrink(0, 0, rect(r).getWidth(), 0);
+				return toRect(r).shrink(0, 0, toRect(r).getWidth(), 0);
 			}
 		};
 	}
@@ -650,9 +679,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).shrink(0, 0, 0, rect(r).getHeight());
+				return toRect(r).shrink(0, 0, 0, toRect(r).getHeight());
 			}
 		};
 	}
@@ -663,9 +692,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).shrink(rect(r).getWidth(), 0, 0, 0);
+				return toRect(r).shrink(toRect(r).getWidth(), 0, 0, 0);
 			}
 		};
 	}
@@ -676,15 +705,13 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				return rect(r).shrink(0, rect(r).getHeight(), 0, 0);
+				return toRect(r).shrink(0, toRect(r).getHeight(), 0, 0);
 			}
 		};
 	}
 	
-	
-	/* ================= Coords ================= */
 	
 	public static NumberConstraint _x(final VecConstraint c)
 	{
@@ -780,21 +807,21 @@ public class Constraints {
 			@Override
 			public double x()
 			{
-				return vec(c).x() + num(x);
+				return vec(c).x() + toDouble(x);
 			}
 			
 			
 			@Override
 			public double y()
 			{
-				return vec(c).y() + num(y);
+				return vec(c).y() + toDouble(y);
 			}
 			
 			
 			@Override
 			public double z()
 			{
-				return vec(c).z() + num(z);
+				return vec(c).z() + toDouble(z);
 			}
 			
 		});
@@ -844,21 +871,21 @@ public class Constraints {
 			@Override
 			public double x()
 			{
-				return vec(c).x() - num(x);
+				return vec(c).x() - toDouble(x);
 			}
 			
 			
 			@Override
 			public double y()
 			{
-				return vec(c).y() - num(y);
+				return vec(c).y() - toDouble(y);
 			}
 			
 			
 			@Override
 			public double z()
 			{
-				return vec(c).z() - num(z);
+				return vec(c).z() - toDouble(z);
 			}
 			
 		});
@@ -874,21 +901,21 @@ public class Constraints {
 			@Override
 			public double x()
 			{
-				return vec(c).x() * num(mul);
+				return vec(c).x() * toDouble(mul);
 			}
 			
 			
 			@Override
 			public double y()
 			{
-				return vec(c).y() * num(mul);
+				return vec(c).y() * toDouble(mul);
 			}
 			
 			
 			@Override
 			public double z()
 			{
-				return vec(c).z() * num(mul);
+				return vec(c).z() * toDouble(mul);
 			}
 			
 		});
@@ -904,7 +931,7 @@ public class Constraints {
 			@Override
 			public VecView getVec()
 			{
-				return rect(r).getOrigin();
+				return toRect(r).getOrigin();
 			}
 		};
 	}
@@ -917,7 +944,7 @@ public class Constraints {
 			@Override
 			public VecView getVec()
 			{
-				return rect(r).getSize();
+				return toRect(r).getSize();
 			}
 		};
 	}
@@ -990,7 +1017,7 @@ public class Constraints {
 	
 	
 	/**
-	 * Zero-sized rect at given coord
+	 * Zero-sized RectView at given coord
 	 * 
 	 * @param c coord
 	 * @return rect
@@ -1000,11 +1027,11 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public Rect getRect()
+			public RectView getRect()
 			{
-				Vec v = vec(c);
+				final Vec v = vec(c);
 				
-				return new Rect(v.x(), v.y(), 0, 0);
+				return new FixedRect(v.x(), v.y(), 0, 0);
 			}
 		};
 	}
@@ -1041,7 +1068,61 @@ public class Constraints {
 			}
 		};
 	}
-    /* ================= Coords ================= */
+	
+	/* ================= Variables ================= */
+	
+	public static final NumberConstraint _mouseX = new NumberConstraint() {
+		
+		@Override
+		public double getValue()
+		{
+			return InputSystem.getMousePos().x();
+		}
+	};
+	
+	public static final NumberConstraint _mouseY = new NumberConstraint() {
+		
+		@Override
+		public double getValue()
+		{
+			return InputSystem.getMousePos().y();
+		}
+	};
+	public static final NumberConstraint _mousePos = new NumberConstraint() {
+		
+		@Override
+		public double getValue()
+		{
+			return InputSystem.getMousePos().y();
+		}
+	};
+	
+	public static final NumberConstraint _screenW = new NumberConstraint() {
+		
+		@Override
+		public double getValue()
+		{
+			return DisplaySystem.getWidth();
+		}
+	};
+	
+	public static final NumberConstraint _screenH = new NumberConstraint() {
+		
+		@Override
+		public double getValue()
+		{
+			return DisplaySystem.getHeight();
+		}
+	};
+	
+	
+	/* ================= Arithmetics ================= */
+	
+	/* ================= Layout utilities ================= */
+	
+	/* ================= Coords ================= */
+	
+	/* ================= Coords ================= */
 	
 	public static NumberConstraint _x(final Vec c)
 	{
@@ -1116,21 +1197,21 @@ public class Constraints {
 			@Override
 			public double x()
 			{
-				return c.x() + num(x);
+				return c.x() + toDouble(x);
 			}
 			
 			
 			@Override
 			public double y()
 			{
-				return c.y() + num(y);
+				return c.y() + toDouble(y);
 			}
 			
 			
 			@Override
 			public double z()
 			{
-				return c.z() + num(z);
+				return c.z() + toDouble(z);
 			}
 			
 		};
@@ -1180,21 +1261,21 @@ public class Constraints {
 			@Override
 			public double x()
 			{
-				return c.x() - num(x);
+				return c.x() - toDouble(x);
 			}
 			
 			
 			@Override
 			public double y()
 			{
-				return c.y() - num(y);
+				return c.y() - toDouble(y);
 			}
 			
 			
 			@Override
 			public double z()
 			{
-				return c.z() - num(z);
+				return c.z() - toDouble(z);
 			}
 			
 		};
@@ -1210,35 +1291,36 @@ public class Constraints {
 			@Override
 			public double x()
 			{
-				return c.x() * num(mul);
+				return c.x() * toDouble(mul);
 			}
 			
 			
 			@Override
 			public double y()
 			{
-				return c.y() * num(mul);
+				return c.y() * toDouble(mul);
 			}
 			
 			
 			@Override
 			public double z()
 			{
-				return c.z() * num(mul);
+				return c.z() * toDouble(mul);
 			}
 			
 		};
 	}
-
+	
+	
 	public static VecView _origin(final Rect r)
 	{
-		return r.getOrigin().view();
+		return r.getOrigin();
 	}
 	
 	
 	public static VecView _size(final Rect r)
 	{
-		return r.getSize().view();
+		return r.getSize();
 	}
 	
 	
@@ -1306,78 +1388,4 @@ public class Constraints {
 	{
 		return _add(_origin(r), _width(r), _half(_height(r)));
 	}
-	
-	/* ================= Helpers ================= */
-	
-	public static RectCache _cache(final RectConstraint rc)
-	{
-		return new RectCache(rc);
-	}
-	
-	
-	public static RectCache _cache(final Poller poller, final RectConstraint rc)
-	{
-		return new RectCache(poller, rc);
-	}
-	
-	
-	/**
-	 * Convert {@link Number} to {@link NumberConstraint} if needed
-	 * 
-	 * @param o unknown numeric value
-	 * @return converted
-	 */
-	public static NumberConstraint _n(final Object o)
-	{
-		if (o instanceof NumberConstraint) return (NumberConstraint) o;
-		
-		if (o instanceof Number) return new NumberConstraint() {
-			
-			@Override
-			public double getValue()
-			{
-				return ((Number) o).doubleValue();
-			}
-		};
-		
-		throw new IllegalArgumentException("Invalid numeric type.");
-	}
-	
-	
-	/**
-	 * Convert {@link Number} or {@link NumberConstraint} to double (current
-	 * value)
-	 * 
-	 * @param o unknown numeric value
-	 * @return double value
-	 */
-	private static double num(final Object o)
-	{
-		return _n(o).getValue();
-	}
-	
-	
-	/**
-	 * Convert {@link VecConstraint} to {@link VecArith}.
-	 * 
-	 * @param o unknown numeric value
-	 * @return double value
-	 */
-	private static VecView vec(final VecConstraint o)
-	{
-		return o.getVec();
-	}
-	
-	
-	/**
-	 * Convert {@link RectConstraint} to {@link Rect}.
-	 * 
-	 * @param o unknown numeric value
-	 * @return double value
-	 */
-	private static Rect rect(final RectConstraint o)
-	{
-		return o.getRect();
-	}
-	
 }

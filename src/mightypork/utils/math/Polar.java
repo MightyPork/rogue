@@ -5,8 +5,8 @@ import mightypork.utils.math.Calc.Deg;
 import mightypork.utils.math.Calc.Rad;
 import mightypork.utils.math.constraints.NumberConstraint;
 import mightypork.utils.math.coord.ConstraintCoord;
-import mightypork.utils.math.coord.CoordProxy;
 import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecView;
 
 
 /**
@@ -137,7 +137,7 @@ public class Polar {
 	 * 
 	 * @return coord
 	 */
-	public CoordProxy toCoord()
+	public VecView toCoord()
 	{
 		// lazy init
 		if (coord == null) {
@@ -158,7 +158,7 @@ public class Polar {
 			});
 		}
 		
-		return coord.view();
+		return coord;
 	}
 	
 	

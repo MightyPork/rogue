@@ -12,7 +12,7 @@ import mightypork.utils.math.animation.Easing;
  * 
  * @author MightyPork
  */
-public class AnimCoord extends VecMutableImpl<AnimCoord> implements Pauseable, Updateable {
+public class AnimCoord extends VecMutableImpl implements Pauseable, Updateable {
 	
 	private final AnimDouble x, y, z;
 	
@@ -63,9 +63,18 @@ public class AnimCoord extends VecMutableImpl<AnimCoord> implements Pauseable, U
 	}
 	
 	
-	public AnimCoord add(VecArith offset, double speed)
+	public AnimCoord add(Vec offset, double speed)
 	{
-		animate(offset.add(this), speed);
+		animate(offset.x() - x(), offset.y() - y(), offset.z() - z(), speed);
+		return this;
+	}
+	
+	
+	public AnimCoord animate(double x, double y, double z, double duration)
+	{
+		this.x.animate(x, duration);
+		this.y.animate(y, duration);
+		this.z.animate(z, duration);
 		return this;
 	}
 	
@@ -81,8 +90,8 @@ public class AnimCoord extends VecMutableImpl<AnimCoord> implements Pauseable, U
 	
 	public void animateWithSpeed(Vec target, double unitsPerSecond)
 	{
-		double dist = distTo(target);
-		double duration = dist / unitsPerSecond;
+		final double dist = distTo(target);
+		final double duration = dist / unitsPerSecond;
 		animate(target, duration);
 	}
 	
@@ -126,4 +135,21 @@ public class AnimCoord extends VecMutableImpl<AnimCoord> implements Pauseable, U
 		return x.isFinished(); // BUNO
 	}
 	
+	
+	public double getDuration()
+	{
+		return x.getDuration(); // BUNO
+	}
+	
+	
+	public double getElapsed()
+	{
+		return x.getElapsed(); // BUNO
+	}
+	
+	
+	public double getProgress()
+	{
+		return x.getProgress(); // BUNO
+	}
 }

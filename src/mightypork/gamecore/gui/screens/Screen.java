@@ -12,7 +12,7 @@ import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.rect.RectView;
 
 
 /**
@@ -104,7 +104,7 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	
 	
 	@Override
-	public Rect getRect()
+	public RectView getRect()
 	{
 		return getDisplay().getRect();
 	}

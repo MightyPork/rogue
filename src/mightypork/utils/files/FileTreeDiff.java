@@ -72,11 +72,11 @@ public class FileTreeDiff {
 			ck1.reset();
 			ck2.reset();
 			
-			try (	FileInputStream in1 = new FileInputStream(pair.a);
-					FileInputStream in2 = new FileInputStream(pair.b)) {
+			try(FileInputStream in1 = new FileInputStream(pair.a);
+				FileInputStream in2 = new FileInputStream(pair.b)) {
 				
-				try (	CheckedInputStream cin1 = new CheckedInputStream(in1, ck1);
-						CheckedInputStream cin2 = new CheckedInputStream(in2, ck2)) {
+				try(CheckedInputStream cin1 = new CheckedInputStream(in1, ck1);
+					CheckedInputStream cin2 = new CheckedInputStream(in2, ck2)) {
 					
 					while (true) {
 						final int read1 = cin1.read(BUFFER);

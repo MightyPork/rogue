@@ -13,14 +13,13 @@ import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
-import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.AnimCoord;
-import mightypork.utils.math.coord.CoordValue;
+import mightypork.utils.math.coord.FixedCoord;
 import mightypork.utils.math.coord.Vec;
 
 
@@ -48,7 +47,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		tp.setAlign(Align.CENTER);
 		tp.setColor(RGB.YELLOW);
 		tp.setText("Meow!");
-		tp.setShadow(RGB.dark(0.8), new CoordValue(2, 2));
+		tp.setShadow(RGB.dark(0.8), new FixedCoord(2, 2));
 		tp.setContext(_align(_box(64, 64), _mouseX, _mouseY));
 		
 		/*
@@ -80,11 +79,9 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		
 		final Vec pos = event.getPos();
 		
-		final double time = 100;
+		this.pos.animateWithSpeed(pos, 200);
 		
-		size.animate(100 + rand.nextInt(700), time/2D);
-		
-		this.pos.animateWithSpeed(pos, 300);
+		size.animate(200 + rand.nextInt(600), this.pos.getDuration() / 2);
 	}
 	
 	

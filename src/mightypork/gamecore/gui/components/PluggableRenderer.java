@@ -3,7 +3,7 @@ package mightypork.gamecore.gui.components;
 
 import mightypork.utils.math.constraints.ContextAdapter;
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.rect.RectView;
 
 
 /**
@@ -18,7 +18,7 @@ public abstract class PluggableRenderer extends ContextAdapter implements Plugga
 	
 	
 	@Override
-	public Rect getRect()
+	public RectView getRect()
 	{
 		return super.getRect();
 	}

@@ -2,11 +2,11 @@ package mightypork.utils.math.coord;
 
 
 /**
- * Mutable coord interface. This coord can be changed at will.
+ * Mutable coord
  * 
  * @author MightyPork
  */
-public interface VecMutable extends VecArith {
+public interface VecMutable extends VecMath<VecMutable> {
 	
 	/**
 	 * Set coordinates to match other coord.

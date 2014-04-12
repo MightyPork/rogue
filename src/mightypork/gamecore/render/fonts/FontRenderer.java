@@ -1,8 +1,8 @@
 package mightypork.gamecore.render.fonts;
 
 
-import mightypork.gamecore.render.Render;
 import static mightypork.utils.math.constraints.Constraints.*;
+import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Vec;
 import mightypork.utils.math.coord.VecView;
@@ -173,7 +173,7 @@ public class FontRenderer {
 	 * @param height drawing height
 	 * @param align horizontal alignment
 	 */
-	public void draw(String text, VecView pos, double height, Align align)
+	public void draw(String text, Vec pos, double height, Align align)
 	{
 		draw(text, pos, height, align, this.color);
 	}
@@ -188,25 +188,25 @@ public class FontRenderer {
 	 * @param align horizontal alignment
 	 * @param color drawing color
 	 */
-	public void draw(String text, VecView pos, double height, Align align, RGB color)
+	public void draw(String text, Vec pos, double height, Align align, RGB color)
 	{
 		
 		final double w = getWidth(text, height);
 		
-		final VecView start;
+		final Vec start;
 		
 		switch (align) {
 			case LEFT:
-				start = pos;
+				start = pos.view();
 				break;
 			
 			case CENTER:
-				start = pos.sub(w / 2D, 0);
+				start = pos.view().sub(w / 2D, 0);
 				break;
 			
 			case RIGHT:
 			default:
-				start = pos.sub(w, 0);
+				start = pos.view().sub(w, 0);
 				break;
 		}
 		

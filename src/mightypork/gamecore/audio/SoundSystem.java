@@ -32,7 +32,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	private static final Vec INITIAL_LISTENER_POS = Vec.ZERO;
 	private static final int MAX_SOURCES = 256;
 	
-	private static VecMutable listener = new MutableCoord(0,0,0);
+	private static VecMutable listener = new MutableCoord(0, 0, 0);
 	
 	private static boolean inited;
 	

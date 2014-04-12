@@ -95,8 +95,8 @@ public class FileUtils {
 	public static void copyFile(File source, File target) throws IOException
 	{
 		
-		try (	InputStream in = new FileInputStream(source);
-				OutputStream out = new FileOutputStream(target)) {
+		try(InputStream in = new FileInputStream(source);
+			OutputStream out = new FileOutputStream(target)) {
 			
 			copyStream(in, out);
 		}
@@ -161,7 +161,7 @@ public class FileUtils {
 	 */
 	public static String fileToString(File file) throws IOException
 	{
-		try (FileInputStream fin = new FileInputStream(file)) {
+		try(FileInputStream fin = new FileInputStream(file)) {
 			
 			return streamToString(fin);
 		}
@@ -198,7 +198,7 @@ public class FileUtils {
 		final List<File> list = new ArrayList<>();
 		
 		try {
-			for (File f : dir.listFiles(filter)) {
+			for (final File f : dir.listFiles(filter)) {
 				list.add(f);
 			}
 		} catch (final Exception e) {
@@ -361,7 +361,7 @@ public class FileUtils {
 	 */
 	public static void stringToFile(File file, String text) throws IOException
 	{
-		try (PrintStream out = new PrintStream(new FileOutputStream(file), false, "UTF-8")) {
+		try(PrintStream out = new PrintStream(new FileOutputStream(file), false, "UTF-8")) {
 			
 			out.print(text);
 			
@@ -482,8 +482,8 @@ public class FileUtils {
 	 */
 	public static void resourceToFile(String resname, File file) throws IOException
 	{
-		try (	InputStream in = FileUtils.getResource(resname);
-				OutputStream out = new FileOutputStream(file)) {
+		try(InputStream in = FileUtils.getResource(resname);
+			OutputStream out = new FileOutputStream(file)) {
 			
 			FileUtils.copyStream(in, out);
 		}
@@ -500,7 +500,7 @@ public class FileUtils {
 	 */
 	public static String resourceToString(String resname) throws IOException
 	{
-		try (InputStream in = FileUtils.getResource(resname)) {
+		try(InputStream in = FileUtils.getResource(resname)) {
 			return streamToString(in);
 		}
 	}

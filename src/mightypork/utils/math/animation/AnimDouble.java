@@ -88,7 +88,7 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	 * 
 	 * @return number
 	 */
-	public double getGetStart()
+	public double getStart()
 	{
 		return from;
 	}
@@ -102,6 +102,18 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	public double getEnd()
 	{
 		return to;
+	}
+	
+	
+	public double getDuration()
+	{
+		return duration;
+	}
+	
+	
+	public double getElapsed()
+	{
+		return elapsedTime;
 	}
 	
 	
@@ -139,7 +151,7 @@ public class AnimDouble implements Updateable, Pauseable, NumberConstraint {
 	@Override
 	public void update(double delta)
 	{
-		if (paused) return;
+		if (paused || isFinished()) return;
 		
 		elapsedTime = Calc.clampd(elapsedTime + delta, 0, duration);
 		if (isFinished()) {

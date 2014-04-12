@@ -24,7 +24,6 @@ public class Range {
 	}
 	
 	
-	
 	/**
 	 * Create new range
 	 * 
@@ -48,10 +47,12 @@ public class Range {
 		this.max = minmax;
 	}
 	
+	
 	/**
 	 * Make sure min is <= max
 	 */
-	private void norm() {
+	private void norm()
+	{
 		if (min > max) {
 			final double t = min;
 			min = max;
@@ -167,7 +168,7 @@ public class Range {
 	 * @param max max value
 	 */
 	public void setTo(double min, double max)
-	{		
+	{
 		this.min = min;
 		this.max = max;
 		norm();

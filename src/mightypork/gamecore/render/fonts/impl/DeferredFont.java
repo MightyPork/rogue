@@ -136,7 +136,7 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	 */
 	protected Font getAwtFont(String resource, float size, int style) throws FontFormatException, IOException
 	{
-		try (InputStream in = FileUtils.getResource(resource)) {
+		try(InputStream in = FileUtils.getResource(resource)) {
 			
 			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, in);
 			

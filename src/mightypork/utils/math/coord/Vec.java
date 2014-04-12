@@ -4,10 +4,15 @@ package mightypork.utils.math.coord;
 import mightypork.utils.math.constraints.NumberConstraint;
 
 
+/**
+ * The most basic Vec methods
+ * 
+ * @author MightyPork
+ */
 public interface Vec {
 	
-	public static final VecView ZERO = new CoordValue(0, 0, 0);
-	public static final VecView ONE = new CoordValue(1, 1, 1);
+	public static final VecView ZERO = new FixedCoord(0, 0, 0);
+	public static final VecView ONE = new FixedCoord(1, 1, 1);
 	
 	
 	/**
@@ -87,7 +92,7 @@ public interface Vec {
 	 * 
 	 * @return a mutable copy
 	 */
-	MutableCoord copy();
+	VecMutable copy();
 	
 	
 	/**
@@ -95,7 +100,6 @@ public interface Vec {
 	 * 
 	 * @return immutable view
 	 */
-	CoordProxy view();
-	
+	VecView view();
 	
 }

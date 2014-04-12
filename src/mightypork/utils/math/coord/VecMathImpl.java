@@ -10,7 +10,7 @@ import mightypork.utils.math.constraints.NumberConstraint;
  * @author MightyPork
  * @param <V> Return type of methods
  */
-abstract class VecImpl<V extends VecArith> implements VecArith {
+abstract class VecMathImpl<V> implements VecMath<V> {
 	
 	private NumberConstraint constraintZ, constraintY, constraintX;
 	
@@ -89,14 +89,14 @@ abstract class VecImpl<V extends VecArith> implements VecArith {
 	
 	
 	@Override
-	public MutableCoord copy()
+	public VecMutable copy()
 	{
 		return new MutableCoord(this);
 	}
 	
 	
 	@Override
-	public CoordProxy view()
+	public VecView view()
 	{
 		if (view == null) view = new CoordProxy(this);
 		
@@ -176,7 +176,7 @@ abstract class VecImpl<V extends VecArith> implements VecArith {
 	@Override
 	public double size()
 	{
-		double x = x(), y = y(), z = z();
+		final double x = x(), y = y(), z = z();
 		return Math.sqrt(x * x + y * y + z * z);
 	}
 	
@@ -185,6 +185,13 @@ abstract class VecImpl<V extends VecArith> implements VecArith {
 	public boolean isZero()
 	{
 		return x() == 0 && y() == 0 && z() == 0;
+	}
+	
+	
+	@Override
+	public V abs()
+	{
+		return result(Math.abs(x()), Math.abs(y()), Math.abs(z()));
 	}
 	
 	
@@ -212,9 +219,9 @@ abstract class VecImpl<V extends VecArith> implements VecArith {
 	@Override
 	public double distTo(Vec point)
 	{
-		double dx = x() - point.x();
-		double dy = y() - point.y();
-		double dz = z() - point.z();
+		final double dx = x() - point.x();
+		final double dy = y() - point.y();
+		final double dz = z() - point.z();
 		
 		return Math.sqrt(dx * dx + dy * dy + dz * dz);
 	}
@@ -223,9 +230,9 @@ abstract class VecImpl<V extends VecArith> implements VecArith {
 	@Override
 	public V midTo(Vec point)
 	{
-		double dx = (point.x() - x()) * 0.5;
-		double dy = (point.y() - y()) * 0.5;
-		double dz = (point.z() - z()) * 0.5;
+		final double dx = (point.x() - x()) * 0.5;
+		final double dy = (point.y() - y()) * 0.5;
+		final double dz = (point.z() - z()) * 0.5;
 		
 		return result(dx, dy, dz);
 	}
@@ -346,7 +353,7 @@ abstract class VecImpl<V extends VecArith> implements VecArith {
 	{
 		if (isZero()) return result(x(), y(), z()); // can't norm zero vector
 			
-		double k = size / size();
+		final double k = size / size();
 		
 		return mul(k);
 	}
@@ -355,7 +362,7 @@ abstract class VecImpl<V extends VecArith> implements VecArith {
 	@Override
 	public int hashCode()
 	{
-		int prime = 31;
+		final int prime = 31;
 		int result = 1;
 		result = prime * result + Double.valueOf(x()).hashCode();
 		result = prime * result + Double.valueOf(y()).hashCode();
@@ -370,10 +377,11 @@ abstract class VecImpl<V extends VecArith> implements VecArith {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof Vec)) return false;
-		Vec other = (Vec) obj;
+		final Vec other = (Vec) obj;
 		
 		return x() == other.x() && y() == other.y() && z() == other.z();
 	}
+	
 	
 	@Override
 	public String toString()

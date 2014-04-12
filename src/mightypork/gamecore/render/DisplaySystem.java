@@ -10,14 +10,11 @@ import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
-import mightypork.utils.math.constraints.Constraints;
-import mightypork.utils.math.constraints.NumberConstraint;
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.coord.ConstraintCoord;
-import mightypork.utils.math.coord.SynthCoord2D;
-import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.FixedCoord;
 import mightypork.utils.math.coord.VecView;
-import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.rect.FixedRect;
+import mightypork.utils.math.rect.RectView;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -180,7 +177,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	 */
 	public static VecView getSize()
 	{
-		return size;
+		return new FixedCoord(getWidth(), getHeight());
 	}
 	
 	
@@ -229,9 +226,9 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	
 	
 	@Override
-	public Rect getRect()
+	public RectView getRect()
 	{
-		return new Rect(Vec.ZERO, getSize());
+		return new FixedRect(getSize());
 	}
 	
 	
@@ -242,49 +239,49 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	{
 		return fpsMeter.getFPS();
 	}
-
-	public Vec getCenter()
+	
+	
+	public VecView getCenter()
 	{
-		return center;
+		return getSize().half();
 	}
 	
-	private static final VecView size = new SynthCoord2D() {
-		
-		@Override
-		public double y()
-		{
-			return getHeight();
-		}
-		
-		
-		@Override
-		public double x()
-		{
-			return getWidth();
-		}
-	};
-	
-	/** Screen width constraint */
-	private static final NumberConstraint width = size.xc();
-	
-	/** Screen height constaint */
-	private static final NumberConstraint height = size.yc();
-	
-
-	private static final VecView center = new SynthCoord2D() {
-		
-		@Override
-		public double y()
-		{
-			return size.half().x();
-		}
-		
-		
-		@Override
-		public double x()
-		{
-			return size.half().y();
-		}
-	};
+//	private static final VecView size = new SynthCoord2D() {
+//		
+//		@Override
+//		public double y()
+//		{
+//			return getHeight();
+//		}
+//		
+//		
+//		@Override
+//		public double x()
+//		{
+//			return getWidth();
+//		}
+//	};
+//	
+//	/** Screen width constraint */
+//	private static final NumberConstraint width = size.xc();
+//	
+//	/** Screen height constaint */
+//	private static final NumberConstraint height = size.yc();
+//	
+//	private static final VecView center = new SynthCoord2D() {
+//		
+//		@Override
+//		public double y()
+//		{
+//			return size.half().x();
+//		}
+//		
+//		
+//		@Override
+//		public double x()
+//		{
+//			return size.half().y();
+//		}
+//	};
 	
 }
