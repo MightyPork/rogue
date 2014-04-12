@@ -23,7 +23,6 @@ import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.FixedCoord;
 import mightypork.utils.math.coord.VecView;
 
 import org.lwjgl.BufferUtils;
@@ -376,14 +375,14 @@ public class CachedFont implements GLFont {
 	
 	
 	@Override
-	public int getHeight()
+	public int getLineHeight()
 	{
 		return fontHeight;
 	}
 	
 	
 	@Override
-	public int getSize()
+	public int getFontSize()
 	{
 		return fontSize;
 	}
@@ -425,7 +424,7 @@ public class CachedFont implements GLFont {
 	@Override
 	public VecView getNeededSpace(String text)
 	{
-		return new FixedCoord(getWidth(text), getHeight());
+		return VecView.make(getWidth(text), getLineHeight());
 	}
 	
 }

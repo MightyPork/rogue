@@ -30,7 +30,7 @@ public class NullFont implements GLFont {
 	
 	
 	@Override
-	public int getHeight()
+	public int getLineHeight()
 	{
 		return 0;
 	}
@@ -44,7 +44,7 @@ public class NullFont implements GLFont {
 	
 	
 	@Override
-	public int getSize()
+	public int getFontSize()
 	{
 		return 0;
 	}

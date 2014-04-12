@@ -7,53 +7,62 @@ import mightypork.utils.math.coord.Vec;
 import mightypork.utils.math.coord.VecView;
 
 
-public abstract class RectImpl<T extends Rect> implements RectMath<T> {
+/**
+ * Abstract {@link Rect}, implementing all but the data getters
+ * 
+ * @author MightyPork
+ */
+public abstract class AbstractRect implements Rect {
 	
-	private VecConstraint tl, tc, tr, cl, c, cr, bl, bc, br;
+	private VecConstraint tl;
+	private VecConstraint tc;
+	private VecConstraint tr;
+	private VecConstraint cl;
+	private VecConstraint c;
+	private VecConstraint cr;
+	private VecConstraint bl;
+	private VecConstraint bc;
+	private VecConstraint br;
 	
 	
 	@Override
-	public RectView getRect()
+	public final RectValue getRect()
 	{
 		return this.view();
 	}
 	
 	
 	@Override
-	public abstract VecView getOrigin();
-	
-	
-	@Override
-	public abstract VecView getSize();
-	
-	
-	@Override
-	public VecView getTopLeft()
+	public final VecView getTopLeft()
 	{
+		// lazy init
 		if (tl == null) tl = cTopLeft(this);
 		return tl.getVec();
 	}
 	
 	
 	@Override
-	public VecView getTopCenter()
+	public final VecView getTopCenter()
 	{
+		// lazy init
 		if (tc == null) tc = cTopCenter(this);
 		return tc.getVec();
 	}
 	
 	
 	@Override
-	public VecView getTopRight()
+	public final VecView getTopRight()
 	{
+		// lazy init
 		if (tr == null) tr = cTopRight(this);
 		return tr.getVec();
 	}
 	
 	
 	@Override
-	public VecView getCenterLeft()
+	public final VecView getCenterLeft()
 	{
+		// lazy init
 		if (cl == null) cl = cCenterLeft(this);
 		return cl.getVec();
 	}
@@ -62,38 +71,43 @@ public abstract class RectImpl<T extends Rect> implements RectMath<T> {
 	@Override
 	public final VecView getCenter()
 	{
+		// lazy init
 		if (c == null) c = cCenter(this);
 		return c.getVec();
 	}
 	
 	
 	@Override
-	public VecView getCenterRight()
+	public final VecView getCenterRight()
 	{
+		// lazy init
 		if (cr == null) cr = cCenterRight(this);
 		return cr.getVec();
 	}
 	
 	
 	@Override
-	public VecView getBottomLeft()
+	public final VecView getBottomLeft()
 	{
+		// lazy init
 		if (bl == null) bl = cBottomLeft(this);
 		return bl.getVec();
 	}
 	
 	
 	@Override
-	public VecView getBottomCenter()
+	public final VecView getBottomCenter()
 	{
+		// lazy init
 		if (bc == null) bc = cBottomCenter(this);
 		return bc.getVec();
 	}
 	
 	
 	@Override
-	public VecView getBottomRight()
+	public final VecView getBottomRight()
 	{
+		// lazy init
 		if (br == null) br = cBottomRight(this);
 		return br.getVec();
 	}
@@ -142,51 +156,23 @@ public abstract class RectImpl<T extends Rect> implements RectMath<T> {
 	
 	
 	@Override
-	public final T move(Vec move)
-	{
-		return move(move.x(), move.y());
-	}
-	
-	
-	@Override
-	public final T shrink(Vec shrink)
-	{
-		return shrink(shrink.x(), shrink.y());
-	}
-	
-	
-	@Override
-	public final T shrink(double x, double y)
-	{
-		return shrink(x, x, y, y);
-	}
-	
-	
-	@Override
-	public final T grow(Vec grow)
-	{
-		return grow(grow.x(), grow.y());
-	}
-	
-	
-	@Override
-	public final T grow(double x, double y)
-	{
-		return grow(x, x, y, y);
-	}
-	
-	
-	@Override
-	public RectView view()
+	public RectValue view()
 	{
 		return new RectProxy(this);
 	}
 	
 	
 	@Override
-	public RectMutable copy()
+	public final RectMutable mutable()
 	{
-		return new MutableRect(this);
+		return RectMutable.make(this);
+	}
+	
+	
+	@Override
+	public RectValue value()
+	{
+		return RectValue.make(getOrigin(), getSize());
 	}
 	
 	
@@ -210,4 +196,5 @@ public abstract class RectImpl<T extends Rect> implements RectMath<T> {
 	{
 		return String.format("Rect { %s - %s }", getOrigin().toString(), getOrigin().add(getSize()));
 	}
+	
 }

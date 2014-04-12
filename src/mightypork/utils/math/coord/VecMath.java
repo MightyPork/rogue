@@ -2,11 +2,29 @@ package mightypork.utils.math.coord;
 
 
 /**
- * 3D coordinate methods
+ * Implementation of coordinate methods
  * 
  * @author MightyPork
+ * @param <V> Return type of methods
  */
-interface VecMath<V> extends Vec {
+abstract class VecMath<V extends Vec> extends AbstractVec {
+	
+	/**
+	 * <p>
+	 * Some operation was performed and this result was obtained.
+	 * </p>
+	 * <p>
+	 * It's now up to implementing class what to do - mutable ones can alter
+	 * it's data values, immutable can return a new Vec.
+	 * </p>
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return the result Vec
+	 */
+	public abstract V result(double x, double y, double z);
+	
 	
 	/**
 	 * Set X coordinate (if immutable, in a copy).
@@ -14,7 +32,10 @@ interface VecMath<V> extends Vec {
 	 * @param x x coordinate
 	 * @return result
 	 */
-	V setX(double x);
+	public V setX(double x)
+	{
+		return result(x, y(), z());
+	}
 	
 	
 	/**
@@ -23,7 +44,10 @@ interface VecMath<V> extends Vec {
 	 * @param y y coordinate
 	 * @return result
 	 */
-	V setY(double y);
+	public V setY(double y)
+	{
+		return result(x(), y, z());
+	}
 	
 	
 	/**
@@ -32,33 +56,10 @@ interface VecMath<V> extends Vec {
 	 * @param z z coordinate
 	 * @return result
 	 */
-	V setZ(double z);
-	
-	
-	/**
-	 * Get distance to other point
-	 * 
-	 * @param point other point
-	 * @return distance
-	 */
-	double distTo(Vec point);
-	
-	
-	/**
-	 * Get dot product (scalar multiplication)
-	 * 
-	 * @param vec other vector
-	 * @return dot product
-	 */
-	double dot(Vec vec);
-	
-	
-	/**
-	 * Get vector size
-	 * 
-	 * @return size
-	 */
-	double size();
+	public V setZ(double z)
+	{
+		return result(x(), y(), z);
+	}
 	
 	
 	/**
@@ -66,31 +67,10 @@ interface VecMath<V> extends Vec {
 	 * 
 	 * @return result
 	 */
-	V abs();
-	
-	
-	/**
-	 * @return true if zero
-	 */
-	boolean isZero();
-	
-	
-	/**
-	 * Create vector from this point to other point
-	 * 
-	 * @param point second point
-	 * @return result
-	 */
-	V vecTo(Vec point);
-	
-	
-	/**
-	 * Get middle of line to other point
-	 * 
-	 * @param point other point
-	 * @return result
-	 */
-	V midTo(Vec point);
+	public V abs()
+	{
+		return result(Math.abs(x()), Math.abs(y()), Math.abs(z()));
+	}
 	
 	
 	/**
@@ -99,7 +79,10 @@ interface VecMath<V> extends Vec {
 	 * @param vec offset
 	 * @return result
 	 */
-	V add(Vec vec);
+	public V add(Vec vec)
+	{
+		return add(vec.x(), vec.y(), vec.z());
+	}
 	
 	
 	/**
@@ -110,7 +93,10 @@ interface VecMath<V> extends Vec {
 	 * @param y y offset
 	 * @return result
 	 */
-	V add(double x, double y);
+	public V add(double x, double y)
+	{
+		return add(x, y, 0);
+	}
 	
 	
 	/**
@@ -121,7 +107,10 @@ interface VecMath<V> extends Vec {
 	 * @param z z offset
 	 * @return result
 	 */
-	V add(double x, double y, double z);
+	public V add(double x, double y, double z)
+	{
+		return result(x() + x, y() + y, z() + z);
+	}
 	
 	
 	/**
@@ -129,7 +118,10 @@ interface VecMath<V> extends Vec {
 	 * 
 	 * @return result
 	 */
-	V half();
+	public V half()
+	{
+		return mul(0.5);
+	}
 	
 	
 	/**
@@ -138,7 +130,10 @@ interface VecMath<V> extends Vec {
 	 * @param d multiplier
 	 * @return result
 	 */
-	V mul(double d);
+	public V mul(double d)
+	{
+		return mul(d, d, d);
+	}
 	
 	
 	/**
@@ -147,7 +142,10 @@ interface VecMath<V> extends Vec {
 	 * @param vec vector of multipliers
 	 * @return result
 	 */
-	V mul(Vec vec);
+	public V mul(Vec vec)
+	{
+		return mul(vec.x(), vec.y(), vec.z());
+	}
 	
 	
 	/**
@@ -158,7 +156,10 @@ interface VecMath<V> extends Vec {
 	 * @param y y multiplier
 	 * @return result
 	 */
-	V mul(double x, double y);
+	public V mul(double x, double y)
+	{
+		return mul(x, y, 1);
+	}
 	
 	
 	/**
@@ -169,7 +170,10 @@ interface VecMath<V> extends Vec {
 	 * @param z z multiplier
 	 * @return result
 	 */
-	V mul(double x, double y, double z);
+	public V mul(double x, double y, double z)
+	{
+		return result(x() * x, y() * y, z() * z);
+	}
 	
 	
 	/**
@@ -177,7 +181,10 @@ interface VecMath<V> extends Vec {
 	 * 
 	 * @return result
 	 */
-	V round();
+	public V round()
+	{
+		return result(Math.round(x()), Math.round(y()), Math.round(z()));
+	}
 	
 	
 	/**
@@ -185,7 +192,10 @@ interface VecMath<V> extends Vec {
 	 * 
 	 * @return result
 	 */
-	V floor();
+	public V floor()
+	{
+		return result(Math.floor(x()), Math.floor(y()), Math.floor(z()));
+	}
 	
 	
 	/**
@@ -193,7 +203,10 @@ interface VecMath<V> extends Vec {
 	 * 
 	 * @return result
 	 */
-	V ceil();
+	public V ceil()
+	{
+		return result(Math.ceil(x()), Math.ceil(y()), Math.ceil(z()));
+	}
 	
 	
 	/**
@@ -202,7 +215,10 @@ interface VecMath<V> extends Vec {
 	 * @param vec offset
 	 * @return result
 	 */
-	V sub(Vec vec);
+	public V sub(Vec vec)
+	{
+		return sub(vec.x(), vec.y(), vec.z());
+	}
 	
 	
 	/**
@@ -213,7 +229,10 @@ interface VecMath<V> extends Vec {
 	 * @param y y offset
 	 * @return result
 	 */
-	V sub(double x, double y);
+	public V sub(double x, double y)
+	{
+		return sub(x, y, 0);
+	}
 	
 	
 	/**
@@ -224,7 +243,10 @@ interface VecMath<V> extends Vec {
 	 * @param z z offset
 	 * @return result
 	 */
-	V sub(double x, double y, double z);
+	public V sub(double x, double y, double z)
+	{
+		return result(x() - x, y() - y, z() - z);
+	}
 	
 	
 	/**
@@ -232,7 +254,10 @@ interface VecMath<V> extends Vec {
 	 * 
 	 * @return result
 	 */
-	V neg();
+	public V neg()
+	{
+		return result(-x(), -y(), -z());
+	}
 	
 	
 	/**
@@ -241,15 +266,43 @@ interface VecMath<V> extends Vec {
 	 * @param size size we need
 	 * @return result
 	 */
-	V norm(double size);
+	public V norm(double size)
+	{
+		if (isZero()) return result(x(), y(), z()); // can't norm zero vector
+			
+		final double k = size / size();
+		
+		return mul(k);
+	}
 	
 	
-	/**
-	 * Get cross product (vector multiplication)
-	 * 
-	 * @param vec other vector
-	 * @return result
-	 */
-	V cross(Vec vec);
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Double.valueOf(x()).hashCode();
+		result = prime * result + Double.valueOf(y()).hashCode();
+		result = prime * result + Double.valueOf(z()).hashCode();
+		return result;
+	}
 	
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (!(obj instanceof Vec)) return false;
+		final Vec other = (Vec) obj;
+		
+		return x() == other.x() && y() == other.y() && z() == other.z();
+	}
+	
+	
+	@Override
+	public String toString()
+	{
+		return String.format("(%.1f %.1f %.1f)", x(), y(), z());
+	}
 }

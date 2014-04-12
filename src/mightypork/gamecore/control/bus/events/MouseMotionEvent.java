@@ -14,8 +14,8 @@ import mightypork.utils.math.coord.VecView;
 @UnloggedEvent
 public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	
-	private final Vec move;
-	private final Vec pos;
+	private final VecView move;
+	private final VecView pos;
 	
 	
 	/**
@@ -23,8 +23,8 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	 * @param move move vector
 	 */
 	public MouseMotionEvent(Vec pos, Vec move) {
-		this.move = move;
-		this.pos = pos;
+		this.move = move.value();
+		this.pos = pos.value();
 	}
 	
 	
@@ -33,7 +33,7 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	 */
 	public VecView getMove()
 	{
-		return move.view();
+		return move;
 	}
 	
 	
@@ -42,7 +42,7 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	 */
 	public VecView getPos()
 	{
-		return pos.view();
+		return pos;
 	}
 	
 	

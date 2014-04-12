@@ -31,7 +31,7 @@ public class InstanceLock {
 						try {
 							fileLock.release();
 							randomAccessFile.close();
-							lockFile.delete();
+							if (!lockFile.delete()) throw new IOException();
 						} catch (final Exception e) {
 							System.err.println("Unable to remove lock file.");
 							e.printStackTrace();

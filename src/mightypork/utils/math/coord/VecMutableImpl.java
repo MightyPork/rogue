@@ -2,45 +2,57 @@ package mightypork.utils.math.coord;
 
 
 /**
- * Mutable vec default implementation
+ * Mutable coordinate.<br>
+ * All Vec methods (except copy) alter data values and return this instance.
  * 
  * @author MightyPork
  */
-abstract class VecMutableImpl extends VecMathImpl<VecMutable> implements VecMutable {
+class VecMutableImpl extends VecMutable {
 	
-	@Override
-	public abstract double x();
-	
-	
-	@Override
-	public abstract double y();
+	private double x, y, z;
 	
 	
-	@Override
-	public abstract double z();
-	
-	
-	@Override
-	public abstract VecMutable result(double x, double y, double z);
-	
-	
-	@Override
-	public VecMutable setTo(Vec copied)
-	{
-		return result(copied.x(), copied.y(), copied.z());
+	/**
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 * @param z Z coordinate
+	 */
+	public VecMutableImpl(double x, double y, double z) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 	
 	
 	@Override
-	public VecMutable setTo(double x, double y, double z)
+	public double x()
 	{
-		return result(x, y, z);
+		return x;
 	}
 	
 	
 	@Override
-	public VecMutable setTo(double x, double y)
+	public double y()
 	{
-		return result(x, y, z());
+		return y;
+	}
+	
+	
+	@Override
+	public double z()
+	{
+		return z;
+	}
+	
+	
+	@Override
+	public VecMutableImpl result(double x, double y, double z)
+	{
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		
+		return this;
 	}
 }

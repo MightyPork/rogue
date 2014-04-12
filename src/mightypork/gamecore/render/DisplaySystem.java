@@ -11,10 +11,8 @@ import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.coord.SynthCoord2D;
 import mightypork.utils.math.coord.VecView;
-import mightypork.utils.math.rect.FixedRect;
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.RectValue;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -33,7 +31,8 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	private int targetFps;
 	private FpsMeter fpsMeter;
 	
-	private final VecView cScreenSize = new SynthCoord2D() {
+	/** Current screen size */
+	private final VecView screenSize = new VecView() {
 		
 		@Override
 		public double y()
@@ -191,7 +190,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	 */
 	public VecView getSize()
 	{
-		return cScreenSize;
+		return screenSize;
 	}
 	
 	
@@ -200,7 +199,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	 */
 	public int getWidth()
 	{
-		return cScreenSize.xi();
+		return screenSize.xi();
 	}
 	
 	
@@ -209,7 +208,7 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	 */
 	public int getHeight()
 	{
-		return cScreenSize.yi();
+		return screenSize.yi();
 	}
 	
 	
@@ -240,9 +239,9 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	
 	
 	@Override
-	public RectView getRect()
+	public RectValue getRect()
 	{
-		return new FixedRect(getSize());
+		return RectValue.make(getSize());
 	}
 	
 	

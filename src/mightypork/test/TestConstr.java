@@ -1,8 +1,7 @@
 package mightypork.test;
 
 
-import mightypork.utils.math.rect.FixedRect;
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.RectValue;
 
 
 public class TestConstr {
@@ -10,10 +9,10 @@ public class TestConstr {
 	public static void main(String[] args)
 	{
 		
-		final RectView rm = new FixedRect(0, 0, 100, 100);
+		final RectValue rm = RectValue.make(0, 0, 100, 100);
 		System.out.println(rm);
 		
-		final RectView added = rm.move(10, 10);
+		final RectValue added = rm.move(10, 10);
 		
 		System.out.println(added);
 		System.out.println(added.getOrigin());

@@ -12,8 +12,8 @@ import mightypork.utils.math.constraints.VecConstraint;
  */
 public interface Vec extends VecConstraint {
 	
-	public static final VecView ZERO = new FixedCoord(0, 0, 0);
-	public static final VecView ONE = new FixedCoord(1, 1, 1);
+	public static final VecView ZERO = new ConstVec(0, 0, 0);
+	public static final VecView ONE = new ConstVec(0, 0, 0);
 	
 	
 	/**
@@ -53,24 +53,6 @@ public interface Vec extends VecConstraint {
 	
 	
 	/**
-	 * @return X as float
-	 */
-	float xf();
-	
-	
-	/**
-	 * @return Y as float
-	 */
-	float yf();
-	
-	
-	/**
-	 * @return Z as float
-	 */
-	float zf();
-	
-	
-	/**
 	 * @return X constraint
 	 */
 	@Override
@@ -92,18 +74,84 @@ public interface Vec extends VecConstraint {
 	
 	
 	/**
-	 * Get a new mutable variable holding the current state
+	 * Get vector size
 	 * 
-	 * @return a mutable copy
+	 * @return size
 	 */
-	VecMutable copy();
+	double size();
 	
 	
 	/**
-	 * Get immutable view at this vec
+	 * @return true if zero
+	 */
+	public boolean isZero();
+	
+	
+	/**
+	 * Get distance to other point
+	 * 
+	 * @param point other point
+	 * @return distance
+	 */
+	double distTo(Vec point);
+	
+	
+	/**
+	 * Get middle of line to other point
+	 * 
+	 * @param point other point
+	 * @return result
+	 */
+	VecView midTo(Vec point);
+	
+	
+	/**
+	 * Create vector from this point to other point
+	 * 
+	 * @param point second point
+	 * @return result
+	 */
+	public VecView vecTo(Vec point);
+	
+	
+	/**
+	 * Get cross product (vector multiplication)
+	 * 
+	 * @param vec other vector
+	 * @return result
+	 */
+	public VecView cross(Vec vec);
+	
+	
+	/**
+	 * Get dot product (scalar multiplication)
+	 * 
+	 * @param vec other vector
+	 * @return dot product
+	 */
+	public double dot(Vec vec);
+	
+	
+	/**
+	 * Get a view at current state, not propagating further changes.
+	 * 
+	 * @return a immutable copy
+	 */
+	VecView value();
+	
+	
+	/**
+	 * Get immutable proxy view at this vec
 	 * 
 	 * @return immutable view
 	 */
 	VecView view();
 	
+	
+	/**
+	 * Get a mutable copy of current values.
+	 * 
+	 * @return mutable copy
+	 */
+	VecMutable mutable();
 }

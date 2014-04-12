@@ -79,7 +79,7 @@ public class ArchivingLog extends SimpleLog {
 				
 				for (int cnt = 0; (f2 = new File(log_dir, fbase + cntStr + suff)).exists(); cntStr = "_" + (++cnt)) {}
 				
-				f.renameTo(f2);
+				if (!f.renameTo(f2)) throw new RuntimeException("Could not move log file.");
 			}
 		}
 		
@@ -110,7 +110,9 @@ public class ArchivingLog extends SimpleLog {
 		
 		// playing with fireee
 		for (int i = 0; i < oldLogs.size() - logs_to_keep; i++) {
-			oldLogs.get(i).delete();
+			if (!oldLogs.get(i).delete()) {
+				throw new RuntimeException("Could not delete old log file.");
+			}
 		}
 	}
 	

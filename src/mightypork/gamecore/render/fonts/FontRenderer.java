@@ -4,6 +4,7 @@ package mightypork.gamecore.render.fonts;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecMutable;
 import mightypork.utils.math.coord.VecView;
 import mightypork.utils.math.rect.Rect;
 
@@ -71,7 +72,7 @@ public class FontRenderer {
 	
 	private double getScale(double height)
 	{
-		return height / font.getHeight();
+		return height / font.getLineHeight();
 	}
 	
 	
@@ -109,7 +110,7 @@ public class FontRenderer {
 	{
 		Render.pushMatrix();
 		
-		Render.translate(pos.view().round());
+		Render.translate(pos.value().round());
 		Render.scaleXY(getScale(height));
 		
 		font.draw(text, color);
@@ -192,20 +193,19 @@ public class FontRenderer {
 		
 		final double w = getWidth(text, height);
 		
-		final Vec start;
+		final VecMutable start = pos.mutable();
 		
 		switch (align) {
 			case LEFT:
-				start = pos.view();
 				break;
 			
 			case CENTER:
-				start = pos.view().sub(w / 2D, 0);
+				start.sub(w / 2D, 0);
 				break;
 			
 			case RIGHT:
 			default:
-				start = pos.view().sub(w, 0);
+				start.sub(w, 0);
 				break;
 		}
 		

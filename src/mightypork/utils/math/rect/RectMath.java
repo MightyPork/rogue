@@ -4,12 +4,7 @@ package mightypork.utils.math.rect;
 import mightypork.utils.math.coord.Vec;
 
 
-/**
- * Operations available in rects
- * 
- * @author MightyPork
- */
-interface RectMath<T extends Rect> extends Rect {
+abstract class RectMath<T extends Rect> extends AbstractRect {
 	
 	/**
 	 * Add vector to origin
@@ -17,7 +12,10 @@ interface RectMath<T extends Rect> extends Rect {
 	 * @param move offset vector
 	 * @return result
 	 */
-	T move(Vec move);
+	public T move(Vec move)
+	{
+		return move(move.x(), move.y());
+	}
 	
 	
 	/**
@@ -27,7 +25,7 @@ interface RectMath<T extends Rect> extends Rect {
 	 * @param y y to add
 	 * @return result
 	 */
-	T move(double x, double y);
+	public abstract T move(double x, double y);
 	
 	
 	/**
@@ -36,7 +34,11 @@ interface RectMath<T extends Rect> extends Rect {
 	 * @param shrink shrink size (horisontal and vertical)
 	 * @return result
 	 */
-	T shrink(Vec shrink);
+	
+	public T shrink(Vec shrink)
+	{
+		return shrink(shrink.x(), shrink.y());
+	}
 	
 	
 	/**
@@ -46,7 +48,10 @@ interface RectMath<T extends Rect> extends Rect {
 	 * @param y vertical shrink
 	 * @return result
 	 */
-	T shrink(double x, double y);
+	public T shrink(double x, double y)
+	{
+		return shrink(x, x, y, y);
+	}
 	
 	
 	/**
@@ -58,7 +63,7 @@ interface RectMath<T extends Rect> extends Rect {
 	 * @param bottom shrink
 	 * @return result
 	 */
-	T shrink(double left, double right, double top, double bottom);
+	public abstract T shrink(double left, double right, double top, double bottom);
 	
 	
 	/**
@@ -67,7 +72,10 @@ interface RectMath<T extends Rect> extends Rect {
 	 * @param grow grow size (added to each side)
 	 * @return grown copy
 	 */
-	T grow(Vec grow);
+	public final T grow(Vec grow)
+	{
+		return grow(grow.x(), grow.y());
+	}
 	
 	
 	/**
@@ -77,7 +85,10 @@ interface RectMath<T extends Rect> extends Rect {
 	 * @param y vertical grow
 	 * @return result
 	 */
-	T grow(double x, double y);
+	public final T grow(double x, double y)
+	{
+		return grow(x, x, y, y);
+	}
 	
 	
 	/**
@@ -89,16 +100,7 @@ interface RectMath<T extends Rect> extends Rect {
 	 * @param bottom growth
 	 * @return result
 	 */
-	T grow(double left, double right, double top, double bottom);
-	
-	
-	/**
-	 * Check if point is inside this rectangle
-	 * 
-	 * @param point point to test
-	 * @return is inside
-	 */
-	boolean contains(Vec point);
+	public abstract T grow(double left, double right, double top, double bottom);
 	
 	
 	/**
@@ -106,6 +108,5 @@ interface RectMath<T extends Rect> extends Rect {
 	 * 
 	 * @return result
 	 */
-	T round();
-	
+	public abstract T round();
 }

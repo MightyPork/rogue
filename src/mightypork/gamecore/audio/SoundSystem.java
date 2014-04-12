@@ -12,7 +12,6 @@ import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc.Buffers;
-import mightypork.utils.math.coord.MutableCoord;
 import mightypork.utils.math.coord.Vec;
 import mightypork.utils.math.coord.VecMutable;
 import mightypork.utils.math.coord.VecView;
@@ -32,9 +31,8 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	private static final Vec INITIAL_LISTENER_POS = Vec.ZERO;
 	private static final int MAX_SOURCES = 256;
 	
-	private static VecMutable listener = new MutableCoord(0, 0, 0);
-	
-	private static boolean inited;
+	private static VecMutable listener = VecMutable.zero();
+	private static boolean soundSystemInited = false;
 	
 	
 	/**
@@ -45,10 +43,10 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	public static void setListener(Vec pos)
 	{
 		listener.setTo(pos);
-		FloatBuffer buf3 = Buffers.alloc(3);
-		FloatBuffer buf6 = Buffers.alloc(6);
+		final FloatBuffer buf3 = Buffers.alloc(3);
+		final FloatBuffer buf6 = Buffers.alloc(6);
 		buf3.clear();
-		Buffers.fill(buf3, pos.xf(), pos.yf(), pos.zf());
+		Buffers.fill(buf3, (float) pos.x(), (float) pos.y(), (float) pos.z());
 		AL10.alListener(AL10.AL_POSITION, buf3);
 		buf3.clear();
 		Buffers.fill(buf3, 0, 0, 0);
@@ -56,7 +54,6 @@ public class SoundSystem extends RootBusNode implements Updateable {
 		buf6.clear();
 		Buffers.fill(buf6, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
 		AL10.alListener(AL10.AL_ORIENTATION, buf6);
-		buf3 = buf6 = null;
 	}
 	
 	
@@ -84,13 +81,12 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	public SoundSystem(AppAccess app) {
 		super(app);
 		
-		if (!inited) {
+		if (!soundSystemInited) {
 			SoundStore.get().setMaxSources(MAX_SOURCES);
 			SoundStore.get().init();
-			
 			setListener(INITIAL_LISTENER_POS);
 			
-			inited = true;
+			soundSystemInited = true;
 		}
 	}
 	

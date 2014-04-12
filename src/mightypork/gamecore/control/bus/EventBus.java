@@ -293,7 +293,7 @@ final public class EventBus implements Destroyable {
 		@Override
 		public int compareTo(Delayed o)
 		{
-			return -Long.valueOf(o.getDelay(TimeUnit.MILLISECONDS)).compareTo(getDelay(TimeUnit.MILLISECONDS));
+			return Long.valueOf(getDelay(TimeUnit.MILLISECONDS)).compareTo(o.getDelay(TimeUnit.MILLISECONDS));
 		}
 		
 		

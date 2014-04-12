@@ -33,7 +33,7 @@ public interface GLFont {
 	/**
 	 * @return font height
 	 */
-	int getHeight();
+	int getLineHeight();
 	
 	
 	/**
@@ -46,5 +46,5 @@ public interface GLFont {
 	/**
 	 * @return specified font size
 	 */
-	int getSize();
+	int getFontSize();
 }

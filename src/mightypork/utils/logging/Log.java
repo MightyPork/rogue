@@ -200,7 +200,30 @@ public class Log {
 	
 	
 	/**
-	 * Log THROWING message
+	 * Log warning message with exception
+	 * 
+	 * @param msg message
+	 * @param thrown thrown exception
+	 */
+	public static void w(String msg, Throwable thrown)
+	{
+		log(Level.WARNING, msg, thrown);
+	}
+	
+	
+	/**
+	 * Log exception thrown as warning
+	 * 
+	 * @param thrown thrown exception
+	 */
+	public static void w(Throwable thrown)
+	{
+		log(Level.WARNING, null, thrown);
+	}
+	
+	
+	/**
+	 * Log error message
 	 * 
 	 * @param msg message
 	 * @param thrown thrown exception
@@ -212,7 +235,7 @@ public class Log {
 	
 	
 	/**
-	 * Log exception thrown
+	 * Log exception thrown as error
 	 * 
 	 * @param thrown thrown exception
 	 */

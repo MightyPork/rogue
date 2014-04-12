@@ -117,7 +117,7 @@ public class Ion {
 			final String f = path.toString();
 			final File dir = new File(f.substring(0, f.lastIndexOf(File.separator)));
 			
-			dir.mkdirs();
+			if (!dir.mkdirs()) throw new IOException("Could not create file.");
 			
 			toStream(out, obj);
 			

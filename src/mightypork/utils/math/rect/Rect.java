@@ -2,6 +2,7 @@ package mightypork.utils.math.rect;
 
 
 import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.coord.Vec;
 import mightypork.utils.math.coord.VecView;
 
 
@@ -12,8 +13,8 @@ import mightypork.utils.math.coord.VecView;
  */
 public interface Rect extends RectConstraint {
 	
-	RectView ONE = new FixedRect(0, 0, 1, 1);
-	RectView ZERO = new FixedRect(0, 0, 0, 0);
+	RectValue ONE = new ConstRect(0, 0, 1, 1);
+	RectValue ZERO = new ConstRect(0, 0, 0, 0);
 	
 	
 	/**
@@ -21,15 +22,23 @@ public interface Rect extends RectConstraint {
 	 * 
 	 * @return copy
 	 */
-	RectMutable copy();
+	RectMutable mutable();
 	
 	
 	/**
-	 * Get a readonly copy
+	 * Get a copy of current value
 	 * 
 	 * @return copy
 	 */
-	RectView view();
+	RectValue value();
+	
+	
+	/**
+	 * Get a proxying view
+	 * 
+	 * @return copy
+	 */
+	RectValue view();
 	
 	
 	/**
@@ -84,5 +93,14 @@ public interface Rect extends RectConstraint {
 	
 	
 	double yMax();
+	
+	
+	/**
+	 * Check if point is inside this rectangle
+	 * 
+	 * @param point point to test
+	 * @return is inside
+	 */
+	boolean contains(Vec point);
 	
 }

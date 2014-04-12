@@ -1,7 +1,11 @@
 package mightypork.utils.files;
 
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -22,11 +26,11 @@ public class ZipBuilder {
 	
 	/**
 	 * @param target target zip file
-	 * @throws FileNotFoundException if the file is directory or cannot be
-	 *             created
+	 * @throws IOException if the file is directory or cannot be created
 	 */
-	public ZipBuilder(File target) throws FileNotFoundException {
-		target.getParentFile().mkdirs();
+	public ZipBuilder(File target) throws IOException {
+		
+		if (!target.getParentFile().mkdirs()) throw new IOException("Could not create output directory.");
 		
 		final FileOutputStream dest = new FileOutputStream(target);
 		out = new ZipOutputStream(new BufferedOutputStream(dest));

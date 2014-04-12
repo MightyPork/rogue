@@ -2,12 +2,10 @@ package mightypork.utils.math.constraints;
 
 
 import mightypork.gamecore.control.timing.Poller;
-import mightypork.utils.math.coord.FixedCoord;
-import mightypork.utils.math.coord.SynthCoord3D;
+import mightypork.utils.math.coord.AbstractVecProxy;
 import mightypork.utils.math.coord.Vec;
 import mightypork.utils.math.coord.VecView;
-import mightypork.utils.math.rect.FixedRect;
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.RectValue;
 
 
 /**
@@ -132,7 +130,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().round();
 			}
@@ -255,7 +253,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final double height = r.getRect().getHeight();
 				final double perRow = height / rows;
@@ -263,7 +261,7 @@ public class Constraints {
 				final Vec origin = r.getRect().getOrigin().add(0, perRow * index);
 				final Vec size = r.getRect().getSize().setY(perRow);
 				
-				return new FixedRect(origin, size);
+				return RectValue.make(origin, size);
 			}
 		};
 	}
@@ -274,7 +272,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final double width = r.getRect().getWidth();
 				final double perCol = width / columns;
@@ -282,7 +280,7 @@ public class Constraints {
 				final Vec origin = r.getRect().getOrigin().add(perCol * index, 0);
 				final Vec size = r.getRect().getSize().setX(perCol);
 				
-				return new FixedRect(origin, size);
+				return RectValue.make(origin, size);
 			}
 		};
 	}
@@ -293,7 +291,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final double height = r.getRect().getHeight();
 				final double width = r.getRect().getHeight();
@@ -302,7 +300,7 @@ public class Constraints {
 				
 				final Vec origin = r.getRect().getOrigin().add(perCol * left, perRow * (rows - top - 1));
 				
-				return new FixedRect(origin, perCol, perRow);
+				return RectValue.make(origin, perCol, perRow);
 			}
 		};
 	}
@@ -328,7 +326,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().shrink(toDouble(left), toDouble(top), toDouble(right), toDouble(bottom));
 			}
@@ -341,7 +339,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().shrink(0, toDouble(shrink), 0, 0);
 			}
@@ -354,7 +352,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().shrink(0, 0, 0, toDouble(shrink));
 			}
@@ -367,7 +365,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().shrink(toDouble(shrink), 0, 0, 0);
 			}
@@ -380,7 +378,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().shrink(0, 0, toDouble(shrink), 0);
 			}
@@ -406,7 +404,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().grow(toDouble(left), toDouble(right), toDouble(top), toDouble(bottom));
 			}
@@ -419,7 +417,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().grow(0, toDouble(grow), 0, 0);
 			}
@@ -432,7 +430,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().grow(0, 0, 0, toDouble(grow));
 			}
@@ -445,7 +443,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().grow(toDouble(grow), 0, 0, 0);
 			}
@@ -458,7 +456,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().grow(0, 0, toDouble(grow), 0);
 			}
@@ -479,9 +477,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
-				return new FixedRect(origin.getVec(), toDouble(width), toDouble(height));
+				return RectValue.make(origin.getVec(), toDouble(width), toDouble(height));
 			}
 		};
 	}
@@ -492,9 +490,9 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
-				return new FixedRect(0, 0, toDouble(width), toDouble(height));
+				return RectValue.make(0, 0, toDouble(width), toDouble(height));
 			}
 		};
 	}
@@ -505,11 +503,11 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final Vec origin = r.getRect().getOrigin();
 				
-				return new FixedRect(origin.x(), origin.y(), toDouble(width), toDouble(height));
+				return RectValue.make(origin.x(), origin.y(), toDouble(width), toDouble(height));
 			}
 		};
 	}
@@ -520,11 +518,11 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final Vec origin = r.getRect().getOrigin();
 				
-				return new FixedRect(origin.x() + toDouble(x), origin.y() + toDouble(y), toDouble(width), toDouble(height));
+				return RectValue.make(origin.x() + toDouble(x), origin.y() + toDouble(y), toDouble(width), toDouble(height));
 			}
 		};
 	}
@@ -535,12 +533,12 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final VecView size = r.getRect().getSize();
 				final VecView center = centerTo.getRect().getCenter();
 				
-				return new FixedRect(center.sub(size.half()), size);
+				return RectValue.make(center.sub(size.half()), size);
 			}
 		};
 	}
@@ -551,11 +549,11 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final VecView size = r.getRect().getSize();
 				
-				return new FixedRect(centerTo.getVec().sub(size.half()), size);
+				return RectValue.make(centerTo.getVec().sub(size.half()), size);
 			}
 		};
 	}
@@ -566,12 +564,12 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final VecView size = r.getRect().getSize();
-				final VecView v = new FixedCoord(toDouble(x), toDouble(y));
+				final VecView v = VecView.make(toDouble(x), toDouble(y));
 				
-				return new FixedRect(v.sub(size.half()), size);
+				return RectValue.make(v.sub(size.half()), size);
 			}
 		};
 	}
@@ -582,7 +580,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().move(move.getVec());
 			}
@@ -595,7 +593,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().move(toDouble(x), toDouble(y));
 			}
@@ -645,7 +643,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final double t = toDouble(top);
 				final double r = toDouble(right);
@@ -655,7 +653,7 @@ public class Constraints {
 				final double x = c.getVec().x();
 				final double y = c.getVec().y();
 				
-				return new FixedRect(x - l, y - t, l + r, t + b);
+				return RectValue.make(x - l, y - t, l + r, t + b);
 			}
 		};
 	}
@@ -668,7 +666,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().shrink(0, 0, r.getRect().getWidth(), 0);
 			}
@@ -681,7 +679,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().shrink(0, 0, 0, r.getRect().getHeight());
 			}
@@ -694,7 +692,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().shrink(r.getRect().getWidth(), 0, 0, 0);
 			}
@@ -707,7 +705,7 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				return r.getRect().shrink(0, r.getRect().getHeight(), 0, 0);
 			}
@@ -770,10 +768,10 @@ public class Constraints {
 	
 	public static VecConstraint cAdd(final VecConstraint c1, final VecConstraint c2)
 	{
-		return new VecConstraintSynth() {
+		return new AbstractVecProxy() {
 			
 			@Override
-			public VecView getVec()
+			public VecView getSource()
 			{
 				return c1.getVec().add(c2.getVec());
 			}
@@ -789,28 +787,13 @@ public class Constraints {
 	
 	public static VecConstraint cAdd(final VecConstraint c, final Object x, final Object y, final Object z)
 	{
-		return new SynthCoord3D() {
+		return new AbstractVecProxy() {
 			
 			@Override
-			public double x()
+			public VecView getSource()
 			{
-				return c.getVec().x() + toDouble(x);
+				return c.getVec().add(toDouble(x), toDouble(y), toDouble(z));
 			}
-			
-			
-			@Override
-			public double y()
-			{
-				return c.getVec().y() + toDouble(y);
-			}
-			
-			
-			@Override
-			public double z()
-			{
-				return c.getVec().z() + toDouble(z);
-			}
-			
 		};
 	}
 	
@@ -819,10 +802,10 @@ public class Constraints {
 	
 	public static VecConstraint cSub(final VecConstraint c1, final VecConstraint c2)
 	{
-		return new VecConstraintSynth() {
+		return new AbstractVecProxy() {
 			
 			@Override
-			public VecView getVec()
+			public VecView getSource()
 			{
 				return c1.getVec().sub(c2.getVec());
 			}
@@ -838,10 +821,10 @@ public class Constraints {
 	
 	public static VecConstraint cSub(final VecConstraint c, final Object x, final Object y, final Object z)
 	{
-		return new VecConstraintSynth() {
+		return new AbstractVecProxy() {
 			
 			@Override
-			public VecView getVec()
+			public VecView getSource()
 			{
 				return c.getVec().sub(toDouble(x), toDouble(y), toDouble(z));
 			}
@@ -854,10 +837,10 @@ public class Constraints {
 	
 	public static VecConstraint cMul(final VecConstraint c, final Object mul)
 	{
-		return new VecConstraintSynth() {
+		return new AbstractVecProxy() {
 			
 			@Override
-			public VecView getVec()
+			public VecView getSource()
 			{
 				return c.getVec().mul(toDouble(mul));
 			}
@@ -870,10 +853,10 @@ public class Constraints {
 	
 	public static VecConstraint cOrigin(final RectConstraint r)
 	{
-		return new VecConstraintSynth() {
+		return new AbstractVecProxy() {
 			
 			@Override
-			public VecView getVec()
+			public VecView getSource()
 			{
 				return r.getRect().getOrigin();
 			}
@@ -883,10 +866,10 @@ public class Constraints {
 	
 	public static VecConstraint cSize(final RectConstraint r)
 	{
-		return new VecConstraintSynth() {
+		return new AbstractVecProxy() {
 			
 			@Override
-			public VecView getVec()
+			public VecView getSource()
 			{
 				return r.getRect().getSize();
 			}
@@ -971,11 +954,11 @@ public class Constraints {
 		return new RectConstraint() {
 			
 			@Override
-			public RectView getRect()
+			public RectValue getRect()
 			{
 				final Vec v = c.getVec();
 				
-				return new FixedRect(v.x(), v.y(), 0, 0);
+				return RectValue.make(v.x(), v.y(), 0, 0);
 			}
 		};
 	}

@@ -173,7 +173,9 @@ public class PropertyManager {
 	public void apply()
 	{
 		boolean needsSave = false;
-		new File(file.getParent()).mkdirs();
+		if (!new File(file.getParent()).mkdirs()) {
+			throw new RuntimeException("Cound not create config file.");
+		}
 		
 		try(FileInputStream fis = new FileInputStream(file)) {
 			props.load(fis);

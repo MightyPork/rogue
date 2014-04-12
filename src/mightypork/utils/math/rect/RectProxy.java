@@ -9,7 +9,7 @@ import mightypork.utils.math.coord.VecView;
  * 
  * @author MightyPork
  */
-public class RectProxy extends RectView {
+public class RectProxy extends RectValue {
 	
 	private final Rect observed;
 	

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import mightypork.utils.logging.Log;
 import mightypork.utils.string.validation.StringFilter;
 
 
@@ -45,13 +46,13 @@ public class ZipUtils {
 	 * @param outputDir target directory
 	 * @param filter string filter (will be used to test entry names (paths))
 	 * @return list of entries extracted (paths)
-	 * @throws IOException
+	 * @throws IOException if the file)s) cannot be created
 	 */
 	public static List<String> extractZip(ZipFile zip, File outputDir, StringFilter filter) throws IOException
 	{
 		final ArrayList<String> files = new ArrayList<>();
 		
-		outputDir.mkdirs();
+		if (!outputDir.mkdirs()) throw new IOException("Could not create output directory.");
 		
 		final Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
 		
@@ -67,7 +68,7 @@ public class ZipUtils {
 			if (entry.isDirectory() || (filter != null && !filter.accept(entryPath))) continue;
 			
 			// make sure directories exist
-			destinationParent.mkdirs();
+			if (!destinationParent.mkdirs()) throw new IOException("Could not create directory.");
 			
 			if (!entry.isDirectory()) {
 				extractZipEntry(zip, entry, destFile);
@@ -130,7 +131,7 @@ public class ZipUtils {
 	 */
 	public static void extractZipEntry(ZipFile zip, ZipEntry entry, File destFile) throws IOException
 	{
-		destFile.getParentFile().mkdirs();
+		if (!destFile.getParentFile().mkdirs()) throw new IOException("Could not create output directory.");
 		
 		try(InputStream in = zip.getInputStream(entry);
 			BufferedInputStream is = new BufferedInputStream(in);
@@ -171,7 +172,8 @@ public class ZipUtils {
 	{
 		try(ZipFile zf = new ZipFile(selectedFile)) {
 			return zf.getEntry(string) != null;
-		} catch (final Exception e) {
+		} catch (final IOException | RuntimeException e) {
+			Log.w("Error reading zip.", e);
 			return false;
 		}
 		

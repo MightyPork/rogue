@@ -23,7 +23,7 @@ public class TimerFps {
 	 * @param fps target FPS
 	 */
 	public TimerFps(long fps) {
-		FRAME = Math.round(SECOND / fps);
+		FRAME = Math.round(SECOND / (double) fps);
 		
 		lastFrame = System.nanoTime();
 		nextFrame = System.nanoTime() + FRAME;

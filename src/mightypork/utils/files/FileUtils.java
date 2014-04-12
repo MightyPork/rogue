@@ -39,8 +39,8 @@ public class FileUtils {
 		if (!source.exists()) return;
 		
 		if (source.isDirectory()) {
-			if (!target.exists()) {
-				target.mkdir();
+			if (!target.exists() && !target.mkdir()) {
+				throw new IOException("Could not open destination directory.");
 			}
 			
 			final String[] children = source.list();
@@ -371,7 +371,7 @@ public class FileUtils {
 	}
 	
 	
-	public static void deleteEmptyDirs(File base)
+	public static void deleteEmptyDirs(File base) throws IOException
 	{
 		for (final File f : listDirectory(base)) {
 			if (!f.isDirectory()) continue;
@@ -380,7 +380,7 @@ public class FileUtils {
 			
 			final List<File> children = listDirectory(f);
 			if (children.size() == 0) {
-				f.delete();
+				if (!f.delete()) throw new IOException("Could not delete a directory: " + f);
 				continue;
 			}
 		}

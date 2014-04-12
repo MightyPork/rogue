@@ -79,37 +79,31 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	}
 	
 	
-	public void setFont(GLFont font)
-	{
-		this.font = font;
-	}
-	
-	
-	public void setSize(double size)
+	public synchronized void setSize(double size)
 	{
 		this.size = size;
 	}
 	
 	
-	public void setStyle(FontStyle style)
+	public synchronized void setStyle(FontStyle style)
 	{
 		this.style = style;
 	}
 	
 	
-	public void setChars(String chars)
+	public synchronized void setChars(String chars)
 	{
 		this.chars = chars;
 	}
 	
 	
-	public void setFilter(FilterMode filter)
+	public synchronized void setFilter(FilterMode filter)
 	{
 		this.filter = filter;
 	}
 	
 	
-	public void setAntialias(boolean antialias)
+	public synchronized void setAntialias(boolean antialias)
 	{
 		this.antialias = antialias;
 	}
@@ -182,20 +176,20 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	 * @return font height
 	 */
 	@Override
-	public int getHeight()
+	public int getLineHeight()
 	{
 		if (!ensureLoaded()) return 0;
 		
-		return font.getHeight();
+		return font.getLineHeight();
 	}
 	
 	
 	@Override
-	public int getSize()
+	public int getFontSize()
 	{
 		if (!ensureLoaded()) return 0;
 		
-		return font.getSize();
+		return font.getFontSize();
 	}
 	
 	
@@ -212,11 +206,4 @@ public class DeferredFont extends DeferredResource implements GLFont {
 		// this will have to suffice
 		font = null;
 	}
-	
-	
-	public void setFiltering(FilterMode filter)
-	{
-		this.filter = filter;
-	}
-	
 }

@@ -1,7 +1,7 @@
 package mightypork.utils.math.constraints;
 
 
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.RectValue;
 
 
 /**
@@ -9,7 +9,7 @@ import mightypork.utils.math.rect.RectView;
  * 
  * @author MightyPork
  */
-public abstract class ContextAdapter implements PluggableContext {
+public abstract class ContextAdapter implements PluggableRect {
 	
 	private RectConstraint backing = null;
 	
@@ -22,7 +22,7 @@ public abstract class ContextAdapter implements PluggableContext {
 	
 	
 	@Override
-	public RectView getRect()
+	public RectValue getRect()
 	{
 		return backing.getRect();
 	}

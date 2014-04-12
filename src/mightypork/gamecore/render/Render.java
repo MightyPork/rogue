@@ -9,7 +9,6 @@ import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.FixedCoord;
 import mightypork.utils.math.coord.Vec;
 import mightypork.utils.math.coord.VecView;
 import mightypork.utils.math.rect.Rect;
@@ -28,9 +27,9 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Render {
 	
-	public static final Vec AXIS_X = new FixedCoord(1, 0, 0);
-	public static final Vec AXIS_Y = new FixedCoord(0, 1, 0);
-	public static final Vec AXIS_Z = new FixedCoord(0, 0, 1);
+	public static final VecView AXIS_X = VecView.make(1, 0, 0);
+	public static final VecView AXIS_Y = VecView.make(0, 1, 0);
+	public static final VecView AXIS_Z = VecView.make(0, 0, 1);
 	
 	
 	/**
@@ -541,6 +540,7 @@ public class Render {
 	
 	/**
 	 * Setup Ortho projection for 2D graphics
+	 * 
 	 * @param size viewport size (screen size)
 	 */
 	public static void setupOrtho(VecView size)

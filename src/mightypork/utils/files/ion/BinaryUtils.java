@@ -176,7 +176,7 @@ public class BinaryUtils {
 	
 	public static char readChar(InputStream in) throws IOException
 	{
-		in.read(ac, 0, ac.length);
+		if (-1 == in.read(ac, 0, ac.length)) throw new IOException("End of stream.");
 		final ByteBuffer buf = ByteBuffer.wrap(ac);
 		return buf.getChar();
 	}
@@ -184,7 +184,7 @@ public class BinaryUtils {
 	
 	public static short readShort(InputStream in) throws IOException
 	{
-		in.read(as, 0, as.length);
+		if (-1 == in.read(as, 0, as.length)) throw new IOException("End of stream.");
 		final ByteBuffer buf = ByteBuffer.wrap(as);
 		return buf.getShort();
 	}
@@ -192,7 +192,8 @@ public class BinaryUtils {
 	
 	public static long readLong(InputStream in) throws IOException
 	{
-		in.read(al, 0, al.length);
+		if (-1 == in.read(al, 0, al.length)) throw new IOException("End of stream.");
+		
 		final ByteBuffer buf = ByteBuffer.wrap(al);
 		return buf.getLong();
 	}
@@ -200,7 +201,7 @@ public class BinaryUtils {
 	
 	public static int readInt(InputStream in) throws IOException
 	{
-		in.read(ai, 0, ai.length);
+		if (-1 == in.read(ai, 0, ai.length)) throw new IOException("End of stream.");
 		final ByteBuffer buf = ByteBuffer.wrap(ai);
 		return buf.getInt();
 	}
@@ -208,7 +209,7 @@ public class BinaryUtils {
 	
 	public static float readFloat(InputStream in) throws IOException
 	{
-		in.read(af, 0, af.length);
+		if (-1 == in.read(af, 0, af.length)) throw new IOException("End of stream.");
 		final ByteBuffer buf = ByteBuffer.wrap(af);
 		return buf.getFloat();
 	}
@@ -216,7 +217,7 @@ public class BinaryUtils {
 	
 	public static double readDouble(InputStream in) throws IOException
 	{
-		in.read(ad, 0, ad.length);
+		if (-1 == in.read(ad, 0, ad.length)) throw new IOException("End of stream.");
 		final ByteBuffer buf = ByteBuffer.wrap(ad);
 		return buf.getDouble();
 	}

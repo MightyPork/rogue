@@ -19,15 +19,16 @@ import mightypork.rogue.Res;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.AnimCoord;
-import mightypork.utils.math.coord.FixedCoord;
 import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecMutable;
+import mightypork.utils.math.coord.VecMutableAnim;
+import mightypork.utils.math.coord.VecView;
 
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
 	
 	private final AnimDouble size = new AnimDouble(400, Easing.SINE_BOTH);
-	private final AnimCoord pos = new AnimCoord(Vec.ZERO, Easing.ELASTIC_OUT);
+	private final VecMutableAnim pos = VecMutable.makeAnim(Easing.ELASTIC_OUT);
 	
 	private final Random rand = new Random();
 	
@@ -40,6 +41,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		super(screen);
 		
 		pos.setTo(getDisplay().getCenter());
+		pos.setDefaultDuration(3);
 		
 		cat = new ImagePainter(Res.getTxQuad("test.kitten"));
 		
@@ -49,7 +51,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		tp.setAlign(Align.CENTER);
 		tp.setColor(RGB.YELLOW);
 		tp.setText("Meow!");
-		tp.setShadow(RGB.dark(0.8), new FixedCoord(2, 2));
+		tp.setShadow(RGB.dark(0.8), VecView.make(2, 2));
 		
 		tp.setContext(cCenterTo(cBox(64, 64), cMousePos));
 		
@@ -64,7 +66,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 			@Override
 			public void run()
 			{
-				pos.animateWithSpeed(getDisplay().getCenter(), 300);
+				pos.setTo(getDisplay().getCenter());
 			}
 		});
 	}
@@ -85,9 +87,9 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		
 		final Vec pos = event.getPos();
 		
-		this.pos.animateWithSpeed(pos, 160);
+		this.pos.setTo(pos);
 		
-		size.animate(200 + rand.nextInt(600), Math.max(0.2, this.pos.getDuration() / 2));
+		size.animate(200 + rand.nextInt(600), 1);
 	}
 	
 	

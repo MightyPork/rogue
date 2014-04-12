@@ -8,23 +8,8 @@ package mightypork.utils.math.constraints;
  */
 public interface NumberConstraint {
 	
-	public static final NumberConstraint ZERO = new NumberConstraint() {
-		
-		@Override
-		public double getValue()
-		{
-			return 0;
-		}
-	};
-	
-	public static final NumberConstraint ONE = new NumberConstraint() {
-		
-		@Override
-		public double getValue()
-		{
-			return 0;
-		}
-	};
+	public static final NumberConstraint ZERO = new FixedNumberConstraint(0);
+	public static final NumberConstraint ONE = new FixedNumberConstraint(1);
 	
 	
 	/**

@@ -9,8 +9,6 @@ import mightypork.gamecore.control.bus.events.MouseMotionEvent;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.utils.math.coord.MutableCoord;
-import mightypork.utils.math.coord.SynthCoord2D;
 import mightypork.utils.math.coord.VecMutable;
 import mightypork.utils.math.coord.VecView;
 
@@ -30,7 +28,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	// listeners
 	private final KeyBindingPool keybindings;
 	
-	private final VecView mousePos = new SynthCoord2D() {
+	/** Current mouse position */
+	private final VecView mousePos = new VecView() {
 		
 		@Override
 		public double x()
@@ -103,9 +102,13 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		keybindings.unbindKeyStroke(stroke);
 	}
 	
+	// counters as fields to save memory.
+	private final VecMutable mouseMove = VecMutable.zero();
+	private final VecMutable mouseLastPos = VecMutable.zero();
+	
 	
 	@Override
-	public void update(double delta)
+	public synchronized void update(double delta)
 	{
 		// was destroyed
 		if (!Display.isCreated()) return;
@@ -114,17 +117,17 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		
 		Display.processMessages();
 		
-		final VecMutable moveSum = new MutableCoord();
-		final VecMutable lastPos = new MutableCoord();
+		// sum the moves
+		mouseMove.reset();
+		mouseLastPos.reset();
 		boolean wasMouse = false;
-		
 		while (Mouse.next()) {
-			onMouseEvent(moveSum, lastPos);
+			onMouseEvent(mouseMove, mouseLastPos);
 			wasMouse = true;
 		}
 		
-		if (wasMouse && !moveSum.isZero()) {
-			getEventBus().send(new MouseMotionEvent(lastPos, moveSum));
+		if (wasMouse && !mouseMove.isZero()) {
+			getEventBus().send(new MouseMotionEvent(mouseLastPos, mouseMove));
 		}
 		
 		while (Keyboard.next()) {
@@ -142,8 +145,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		final int button = Mouse.getEventButton();
 		final boolean down = Mouse.getEventButtonState();
 		
-		final VecMutable pos = new MutableCoord(Mouse.getEventX(), Mouse.getEventY());
-		final VecMutable move = new MutableCoord(Mouse.getEventDX(), Mouse.getEventDY());
+		final VecMutable pos = VecMutable.make(Mouse.getEventX(), Mouse.getEventY());
+		final VecMutable move = VecMutable.make(Mouse.getEventDX(), Mouse.getEventDY());
 		
 		final int wheeld = Mouse.getEventDWheel();
 		
@@ -152,7 +155,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		move.mul(1, -1, 1);
 		
 		if (button != -1 || wheeld != 0) {
-			getEventBus().send(new MouseButtonEvent(pos.copy(), button, down, wheeld));
+			getEventBus().send(new MouseButtonEvent(pos.value(), button, down, wheeld));
 		}
 		
 		moveSum.add(move);
