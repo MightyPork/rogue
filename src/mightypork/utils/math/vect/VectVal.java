@@ -18,7 +18,7 @@ public final class VectVal extends VectView {
 	 */
 	public static VectVal make(Vect value)
 	{
-		return value.value();
+		return value.getValue();
 	}
 	
 	
@@ -89,7 +89,7 @@ public final class VectVal extends VectView {
 	 */
 	@Override
 	@Deprecated
-	public VectVal value()
+	public VectVal getValue()
 	{
 		return this; // it's constant already
 	}

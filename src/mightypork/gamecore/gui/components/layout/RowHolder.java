@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.components.layout;
 
 
-import static mightypork.utils.math.constraints.Constraints.*;
+import static mightypork.utils.math.constraints.Bounds.*;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.components.PluggableRenderable;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectBound;
 
 
 /**
@@ -23,7 +23,7 @@ public class RowHolder extends ElementHolder {
 	 * @param context bounding context
 	 * @param rows number of rows
 	 */
-	public RowHolder(AppAccess app, RectConstraint context, int rows) {
+	public RowHolder(AppAccess app, RectBound context, int rows) {
 		super(app, context);
 		this.rows = rows;
 	}
@@ -52,7 +52,7 @@ public class RowHolder extends ElementHolder {
 	{
 		if (elem == null) return;
 		
-		elem.setContext(cRow(this, rows, row++));
+		elem.setContext(row(this, rows, row++));
 		
 		attach(elem);
 	}

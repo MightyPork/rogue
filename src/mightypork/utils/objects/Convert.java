@@ -154,8 +154,8 @@ public class Convert {
 	public static VectVal toVect(Object o, Vect def)
 	{
 		try {
-			if (o == null) return def.value();
-			if (o instanceof Vect) return ((Vect) o).value();
+			if (o == null) return def.getValue();
+			if (o instanceof Vect) return ((Vect) o).getValue();
 			if (o instanceof String) {
 				String s = ((String) o).trim().toUpperCase();
 				
@@ -183,7 +183,7 @@ public class Convert {
 			// ignore
 		}
 		
-		return def.value();
+		return def.getValue();
 	}
 	
 	

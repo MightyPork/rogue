@@ -10,7 +10,7 @@ import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.render.Render;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.rect.RectView;
 import mightypork.utils.math.vect.Vect;
 
@@ -20,7 +20,7 @@ import mightypork.utils.math.vect.Vect;
  * 
  * @author MightyPork
  */
-public abstract class Screen extends AppSubModule implements Renderable, KeyBinder, RectConstraint, ScreenChangeEvent.Listener {
+public abstract class Screen extends AppSubModule implements Renderable, KeyBinder, RectBound, ScreenChangeEvent.Listener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
@@ -66,7 +66,7 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 			active = true;
 			needSetupViewport = true;
 			
-			onSizeChanged(getRect().getSize());
+			onSizeChanged(getRect().size());
 			onScreenEnter();
 			
 			// enable events

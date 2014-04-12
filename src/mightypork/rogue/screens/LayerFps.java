@@ -1,7 +1,7 @@
 package mightypork.rogue.screens;
 
 
-import static mightypork.utils.math.constraints.Constraints.*;
+import static mightypork.utils.math.constraints.Bounds.*;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
@@ -12,7 +12,7 @@ import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.string.StringProvider;
 
@@ -39,7 +39,7 @@ public class LayerFps extends ScreenLayer {
 		
 		final GLFont font = Res.getFont("default");
 		
-		final RectConstraint constraint = cBox(cAdd(cTopRight(this), -8, 8), 0, 32);
+		final RectBound constraint = box(add(topRight(this), -8, 8), 0, 32);
 		
 		tp = new TextPainter(font, Align.RIGHT, RGB.WHITE, new StringProvider() {
 			

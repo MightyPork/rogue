@@ -92,16 +92,16 @@ class RectMutableImpl extends RectMutable {
 	
 	
 	@Override
-	public VectVal getOrigin()
+	public VectVal origin()
 	{
-		return pos.value();
+		return pos.getValue();
 	}
 	
 	
 	@Override
-	public VectVal getSize()
+	public VectVal size()
 	{
-		return size.value();
+		return size.getValue();
 	}
 	
 	

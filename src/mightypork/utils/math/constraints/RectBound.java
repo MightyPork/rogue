@@ -9,7 +9,7 @@ import mightypork.utils.math.rect.RectView;
  * 
  * @author MightyPork
  */
-public interface RectConstraint {
+public interface RectBound {
 	
 	/**
 	 * @return rect region

@@ -1,13 +1,13 @@
 package mightypork.rogue.screens.test_render;
 
 
-import static mightypork.utils.math.constraints.Constraints.*;
+import static mightypork.utils.math.constraints.Bounds.*;
 import mightypork.gamecore.control.timing.Poller;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.vect.Vect;
 
 
@@ -15,15 +15,15 @@ public class LayerTestGradient extends ScreenLayer {
 	
 	private final Poller p = new Poller();
 	
-	private final RectConstraint pos1;
-	private final RectConstraint pos2;
+	private final RectBound pos1;
+	private final RectBound pos2;
 	
 	
 	public LayerTestGradient(Screen screen) {
 		super(screen);
 		
-		pos1 = cCached(p, cGrowDown(cTopEdge(this), 64));
-		pos2 = cCached(p, cShrinkTop(cGrowRight(cLeftEdge(this), 64), 64));
+		pos1 = cached(p, growDown(edgeTop(this), 64));
+		pos2 = cached(p, shrinkTop(growRight(edgeLeft(this), 64), 64));
 	}
 	
 	

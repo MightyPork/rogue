@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.test_bouncyboxes;
 
 
-import static mightypork.utils.math.constraints.Constraints.*;
+import static mightypork.utils.math.constraints.Bounds.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.vect.VectVal;
 
 
@@ -47,7 +47,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		});
 		
 		// shrink screen rect by 8% on all sides
-		final RectConstraint holder_rect = cShrink(this, cPerc(cWidth(this), 4));
+		final RectBound holder_rect = shrink(this, perc(width(this), 4));
 		
 		addChildClient(layout = new RowHolder(screen, holder_rect, 11));
 		

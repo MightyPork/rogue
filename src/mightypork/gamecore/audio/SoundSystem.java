@@ -62,7 +62,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	 */
 	public static VectView getListener()
 	{
-		return listener.view();
+		return listener.getView();
 	}
 	
 	// -- instance --

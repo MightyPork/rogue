@@ -2,16 +2,16 @@ package mightypork.utils.math.constraints;
 
 
 /**
- * Constant number {@link NumberConstraint}
+ * Constant number {@link NumberBound}
  * 
  * @author MightyPork
  */
-public class FixedNumberConstraint implements NumberConstraint {
+public class NumberConst implements NumberBound {
 	
 	private final double value;
 	
 	
-	public FixedNumberConstraint(double value) {
+	public NumberConst(double value) {
 		this.value = value;
 	}
 	

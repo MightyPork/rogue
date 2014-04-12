@@ -1,12 +1,13 @@
 package mightypork.test;
 
 
+import static mightypork.utils.math.constraints.Bounds.*;
+
 import java.util.Locale;
 
 import mightypork.utils.math.rect.RectVal;
 import mightypork.utils.math.rect.RectView;
 import mightypork.utils.math.vect.VectVal;
-import static mightypork.utils.math.constraints.Constraints.*;
 
 
 public class TestConstr {
@@ -16,12 +17,11 @@ public class TestConstr {
 		Locale.setDefault(Locale.ENGLISH);
 		
 		final RectView rect = RectVal.make(0, 0, 10, 10);
-		final VectVal point = VectVal.make(50,50);
+		final VectVal point = VectVal.make(50, 50);
 		
 		System.out.println(rect);
 		System.out.println(point);
-		System.out.println(cCenterTo(rect, point).getRect());
-		
+		System.out.println(centerTo(rect, point).getRect());
 		
 //		final RectValue rm = RectValue.make(0, 0, 100, 100);
 //		System.out.println(rm);

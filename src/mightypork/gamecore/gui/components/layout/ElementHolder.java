@@ -9,7 +9,7 @@ import mightypork.gamecore.control.bus.clients.BusNode;
 import mightypork.gamecore.gui.components.PluggableRenderable;
 import mightypork.gamecore.gui.components.PluggableRenderer;
 import mightypork.gamecore.gui.components.Renderable;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.rect.RectView;
 
 
@@ -22,7 +22,7 @@ import mightypork.utils.math.rect.RectView;
 public abstract class ElementHolder extends BusNode implements PluggableRenderable {
 	
 	private final LinkedList<PluggableRenderable> elements = new LinkedList<>();
-	private RectConstraint context;
+	private RectBound context;
 	
 	
 	/**
@@ -37,14 +37,14 @@ public abstract class ElementHolder extends BusNode implements PluggableRenderab
 	 * @param app app access
 	 * @param context boudning context
 	 */
-	public ElementHolder(AppAccess app, RectConstraint context) {
+	public ElementHolder(AppAccess app, RectBound context) {
 		super(app);
 		setContext(context);
 	}
 	
 	
 	@Override
-	public void setContext(RectConstraint context)
+	public void setContext(RectBound context)
 	{
 		this.context = context;
 	}

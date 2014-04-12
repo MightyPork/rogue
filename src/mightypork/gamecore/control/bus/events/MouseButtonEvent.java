@@ -1,7 +1,7 @@
 package mightypork.gamecore.control.bus.events;
 
 
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectView;
 
@@ -80,7 +80,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	 */
 	public VectView getPos()
 	{
-		return pos.view();
+		return pos.getView();
 	}
 	
 	
@@ -108,7 +108,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	 * @param rect rect region
 	 * @return was over
 	 */
-	public boolean isOver(RectConstraint rect)
+	public boolean isOver(RectBound rect)
 	{
 		return rect.getRect().contains(pos);
 	}

@@ -7,7 +7,7 @@ import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.rect.RectView;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectView;
@@ -18,7 +18,7 @@ import mightypork.utils.math.vect.VectView;
  * 
  * @author MightyPork
  */
-public abstract class ScreenLayer extends AppSubModule implements Comparable<ScreenLayer>, Renderable, RectConstraint, KeyBinder {
+public abstract class ScreenLayer extends AppSubModule implements Comparable<ScreenLayer>, Renderable, RectBound, KeyBinder {
 	
 	private final Screen screen;
 	

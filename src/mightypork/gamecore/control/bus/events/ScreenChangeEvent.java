@@ -52,7 +52,7 @@ public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	 */
 	public VectView getScreenSize()
 	{
-		return screenSize.view();
+		return screenSize.getView();
 	}
 	
 	

@@ -9,12 +9,12 @@ import mightypork.utils.math.rect.RectView;
  * 
  * @author MightyPork
  */
-public interface PluggableRect extends RectConstraint {
+public interface PluggableRect extends RectBound {
 	
 	/**
 	 * @param rect context to set
 	 */
-	abstract void setContext(RectConstraint rect);
+	abstract void setContext(RectBound rect);
 	
 	
 	@Override

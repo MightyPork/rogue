@@ -1,22 +1,15 @@
 package mightypork.utils.math.vect;
 
 
-import mightypork.utils.math.constraints.NumberConstraint;
+import mightypork.utils.math.constraints.NumberBound;
 
 
 public abstract class AbstractVect implements Vect {
 	
 	private VectView proxy;
-	private NumberConstraint xc;
-	private NumberConstraint yc;
-	private NumberConstraint zc;
-	
-	
-	@Override
-	public final VectVal getVec()
-	{
-		return value();
-	}
+	private NumberBound xc;
+	private NumberBound yc;
+	private NumberBound zc;
 	
 	
 	@Override
@@ -53,9 +46,9 @@ public abstract class AbstractVect implements Vect {
 	
 	
 	@Override
-	public final NumberConstraint xc()
+	public final NumberBound xc()
 	{
-		if (xc == null) xc = new NumberConstraint() {
+		if (xc == null) xc = new NumberBound() {
 			
 			@Override
 			public double getValue()
@@ -69,9 +62,9 @@ public abstract class AbstractVect implements Vect {
 	
 	
 	@Override
-	public final NumberConstraint yc()
+	public final NumberBound yc()
 	{
-		if (yc == null) yc = new NumberConstraint() {
+		if (yc == null) yc = new NumberBound() {
 			
 			@Override
 			public double getValue()
@@ -85,9 +78,9 @@ public abstract class AbstractVect implements Vect {
 	
 	
 	@Override
-	public final NumberConstraint zc()
+	public final NumberBound zc()
 	{
-		if (zc == null) zc = new NumberConstraint() {
+		if (zc == null) zc = new NumberBound() {
 			
 			@Override
 			public double getValue()
@@ -116,7 +109,7 @@ public abstract class AbstractVect implements Vect {
 	
 	
 	@Override
-	public VectVal value()
+	public VectVal getValue()
 	{
 		return new VectVal(this);
 	}
@@ -171,20 +164,12 @@ public abstract class AbstractVect implements Vect {
 	
 	
 	@Override
-	public VectMutable mutable()
-	{
-		return VectMutable.make(this);
-	}
-	
-	
-	@Override
-	public VectView view()
+	public VectView getView()
 	{
 		if (proxy == null) proxy = new VectProxy(this);
 		
 		return proxy;
 	}
-
 	
 	
 	@Override

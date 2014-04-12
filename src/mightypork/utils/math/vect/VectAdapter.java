@@ -7,7 +7,7 @@ public abstract class VectAdapter extends VectView {
 	 * @return the proxied coord
 	 */
 	protected abstract Vect getSource();
-
+	
 	
 	@Override
 	public double x()

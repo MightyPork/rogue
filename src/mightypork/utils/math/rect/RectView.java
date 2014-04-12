@@ -1,8 +1,6 @@
 package mightypork.utils.math.rect;
 
 
-
-
 /**
  * Immutable rect
  * 
@@ -16,35 +14,37 @@ public abstract class RectView extends RectMath<RectVal> {
 	 * @param observed observed rect
 	 * @return view
 	 */
-	public static RectView make(Rect observed) {
-		return observed.view();
+	public static RectView make(Rect observed)
+	{
+		return observed.getView();
 	}
+	
 	
 	@Override
 	public RectVal move(double x, double y)
 	{
-		return RectVal.make(getOrigin().add(x, y), getSize());
+		return RectVal.make(origin().add(x, y), size());
 	}
 	
 	
 	@Override
 	public RectVal shrink(double left, double right, double top, double bottom)
 	{
-		return RectVal.make(getOrigin().add(left, top), getSize().sub(left + right, top + bottom));
+		return RectVal.make(origin().add(left, top), size().sub(left + right, top + bottom));
 	}
 	
 	
 	@Override
 	public RectVal grow(double left, double right, double top, double bottom)
 	{
-		return RectVal.make(getOrigin().sub(left, top), getSize().add(left + right, top + bottom));
+		return RectVal.make(origin().sub(left, top), size().add(left + right, top + bottom));
 	}
 	
 	
 	@Override
 	public RectVal round()
 	{
-		return RectVal.make(getOrigin().round(), getSize().round());
+		return RectVal.make(origin().round(), size().round());
 	}
 	
 }

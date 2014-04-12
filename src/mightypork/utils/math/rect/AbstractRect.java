@@ -1,11 +1,8 @@
 package mightypork.utils.math.rect;
 
 
-import static mightypork.utils.math.constraints.Constraints.*;
-import mightypork.utils.math.constraints.VectConstraint;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
-import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -16,149 +13,122 @@ import mightypork.utils.math.vect.VectView;
 public abstract class AbstractRect implements Rect {
 	
 	private RectProxy proxy;
-	private VectConstraint tl;
-	private VectConstraint tc;
-	private VectConstraint tr;
-	private VectConstraint cl;
-	private VectConstraint c;
-	private VectConstraint cr;
-	private VectConstraint bl;
-	private VectConstraint bc;
-	private VectConstraint br;
 	
 	
 	@Override
 	public final RectView getRect()
 	{
-		return this.view();
+		return this.getView();
 	}
 	
 	
 	@Override
-	public final VectVal getTopLeft()
+	public final VectVal topLeft()
 	{
-		// lazy init
-		if (tl == null) tl = cTopLeft(this);
-		return tl.getVec();
+		return origin();
 	}
 	
 	
 	@Override
-	public final VectVal getTopCenter()
+	public final VectVal topCenter()
 	{
-		// lazy init
-		if (tc == null) tc = cTopCenter(this);
-		return tc.getVec();
+		return origin().add(size().x() / 2, 0);
 	}
 	
 	
 	@Override
-	public final VectVal getTopRight()
+	public final VectVal topRight()
 	{
-		// lazy init
-		if (tr == null) tr = cTopRight(this);
-		return tr.getVec();
+		return origin().add(size().x(), 0);
 	}
 	
 	
 	@Override
-	public final VectVal getCenterLeft()
+	public final VectVal centerLeft()
 	{
-		// lazy init
-		if (cl == null) cl = cCenterLeft(this);
-		return cl.getVec();
+		return origin().add(0, size().y() / 2);
 	}
 	
 	
 	@Override
-	public final VectVal getCenter()
+	public final VectVal center()
 	{
-		// lazy init
-		if (c == null) c = cCenter(this);
-		return c.getVec();
+		return origin().add(size().half());
 	}
 	
 	
 	@Override
-	public final VectVal getCenterRight()
+	public final VectVal centerRight()
 	{
-		// lazy init
-		if (cr == null) cr = cCenterRight(this);
-		return cr.getVec();
+		return origin().add(size().x(), size().y() / 2);
 	}
 	
 	
 	@Override
-	public final VectVal getBottomLeft()
+	public final VectVal bottomLeft()
 	{
-		// lazy init
-		if (bl == null) bl = cBottomLeft(this);
-		return bl.getVec();
+		return origin().add(0, size().y());
 	}
 	
 	
 	@Override
-	public final VectVal getBottomCenter()
+	public final VectVal bottomCenter()
 	{
-		// lazy init
-		if (bc == null) bc = cBottomCenter(this);
-		return bc.getVec();
+		return origin().add(size().x() / 2, size().y());
 	}
 	
 	
 	@Override
-	public final VectVal getBottomRight()
+	public final VectVal bottomRight()
 	{
-		// lazy init
-		if (br == null) br = cBottomRight(this);
-		return br.getVec();
+		return origin().add(size().x(), size().y());
 	}
 	
 	
 	@Override
-	public final double getWidth()
+	public final double width()
 	{
-		return getSize().x();
+		return size().x();
 	}
 	
 	
 	@Override
-	public final double getHeight()
+	public final double height()
 	{
-		return getSize().y();
+		return size().y();
 	}
 	
 	
 	@Override
-	public final double xMin()
+	public final double getLeft()
 	{
-		return getOrigin().x();
+		return origin().x();
 	}
 	
 	
 	@Override
-	public final double xMax()
+	public final double right()
 	{
-		return getOrigin().x() + getSize().x();
+		return origin().x() + size().x();
 	}
 	
 	
 	@Override
-	public final double yMin()
+	public final double top()
 	{
-		return getOrigin().y();
+		return origin().y();
 	}
 	
 	
 	@Override
-	public final double yMax()
+	public final double bottom()
 	{
-		return getOrigin().y() + getSize().y();
+		return origin().y() + size().y();
 	}
 	
 	
 	@Override
-	public RectProxy view()
+	public RectProxy getView()
 	{
 		if (proxy == null) proxy = new RectProxy(this);
 		
@@ -167,16 +137,9 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public RectMutable mutable()
+	public RectVal getValue()
 	{
-		return RectMutable.make(this);
-	}
-	
-	
-	@Override
-	public RectVal value()
-	{
-		return RectVal.make(getOrigin(), getSize());
+		return RectVal.make(origin(), size());
 	}
 	
 	
@@ -186,10 +149,10 @@ public abstract class AbstractRect implements Rect {
 		final double x = point.x();
 		final double y = point.y();
 		
-		final double x1 = getOrigin().x();
-		final double y1 = getOrigin().y();
-		final double x2 = x1 + getSize().x();
-		final double y2 = y1 + getSize().y();
+		final double x1 = origin().x();
+		final double y1 = origin().y();
+		final double x2 = x1 + size().x();
+		final double y2 = y1 + size().y();
 		
 		return x >= x1 && y >= y1 && x <= x2 && y <= y2;
 	}
@@ -198,7 +161,7 @@ public abstract class AbstractRect implements Rect {
 	@Override
 	public String toString()
 	{
-		return String.format("Rect { %s - %s }", getTopLeft(), getBottomRight());
+		return String.format("Rect { %s - %s }", topLeft(), bottomRight());
 	}
 	
 }

@@ -1,33 +1,33 @@
 package mightypork.utils.math.vect;
 
 
-import mightypork.utils.math.constraints.NumberConstraint;
+import mightypork.utils.math.constraints.NumberBound;
 
 
 /**
- * Coord view composed of given {@link NumberConstraint}s, using their current
+ * Coord view composed of given {@link NumberBound}s, using their current
  * values.
  * 
  * @author MightyPork
  */
 class NumConstrVect extends VectView {
 	
-	private final NumberConstraint constrX;
-	private final NumberConstraint constrY;
-	private final NumberConstraint constrZ;
+	private final NumberBound constrX;
+	private final NumberBound constrY;
+	private final NumberBound constrZ;
 	
 	
-	public NumConstrVect(NumberConstraint x, NumberConstraint y, NumberConstraint z) {
+	public NumConstrVect(NumberBound x, NumberBound y, NumberBound z) {
 		this.constrX = x;
 		this.constrY = y;
 		this.constrZ = z;
 	}
 	
 	
-	public NumConstrVect(NumberConstraint x, NumberConstraint y) {
+	public NumConstrVect(NumberBound x, NumberBound y) {
 		this.constrX = x;
 		this.constrY = y;
-		this.constrZ = NumberConstraint.ZERO;
+		this.constrZ = NumberBound.ZERO;
 	}
 	
 	

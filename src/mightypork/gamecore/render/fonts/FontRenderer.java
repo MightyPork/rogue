@@ -110,7 +110,7 @@ public class FontRenderer {
 	{
 		Render.pushMatrix();
 		
-		Render.translate(pos.value().round());
+		Render.translate(pos.getValue().round());
 		Render.scaleXY(getScale(height));
 		
 		font.draw(text, color);
@@ -148,20 +148,20 @@ public class FontRenderer {
 		
 		switch (align) {
 			case LEFT:
-				start = bounds.getTopLeft();
+				start = bounds.topLeft();
 				break;
 			
 			case CENTER:
-				start = bounds.getTopCenter();
+				start = bounds.topCenter();
 				break;
 			
 			case RIGHT:
 			default:
-				start = bounds.getTopRight();
+				start = bounds.topRight();
 				break;
 		}
 		
-		draw(text, start, bounds.getHeight(), align, color);
+		draw(text, start, bounds.height(), align, color);
 	}
 	
 	
@@ -193,7 +193,7 @@ public class FontRenderer {
 		
 		final double w = getWidth(text, height);
 		
-		final VectMutable start = pos.mutable();
+		final VectMutable start = VectMutable.make(pos);
 		
 		switch (align) {
 			case LEFT:

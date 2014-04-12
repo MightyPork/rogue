@@ -2,7 +2,7 @@ package mightypork.utils.math.vect;
 
 
 import mightypork.gamecore.control.interf.DefaultImpl;
-import mightypork.utils.math.constraints.NumberConstraint;
+import mightypork.utils.math.constraints.NumberBound;
 
 
 /**
@@ -11,7 +11,7 @@ import mightypork.utils.math.constraints.NumberConstraint;
  * @author MightyPork
  */
 public abstract class VectView extends VectMath<VectVal> { // returns constant value on edit
-	
+
 	/**
 	 * Make a proxy view at a vector.
 	 * 
@@ -20,7 +20,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 */
 	public static VectView make(Vect observed)
 	{
-		return observed.view();
+		return observed.getView();
 	}
 	
 	
@@ -31,7 +31,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 * @param yc Y value
 	 * @return view at the values
 	 */
-	public static VectView make(NumberConstraint xc, NumberConstraint yc)
+	public static VectView make(NumberBound xc, NumberBound yc)
 	{
 		return new NumConstrVect(xc, yc);
 	}
@@ -45,7 +45,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 * @param zc Z value
 	 * @return view at the values
 	 */
-	public static VectView make(NumberConstraint xc, NumberConstraint yc, NumberConstraint zc)
+	public static VectView make(NumberBound xc, NumberBound yc, NumberBound zc)
 	{
 		return new NumConstrVect(xc, yc, zc);
 	}
@@ -63,7 +63,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 */
 	@Override
 	@Deprecated
-	public VectView view()
+	public VectView getView()
 	{
 		return this; // already not mutable
 	}
@@ -75,5 +75,5 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	{
 		return 0; // implemented for ease with 2D anonymous subtypes
 	}
-
+	
 }

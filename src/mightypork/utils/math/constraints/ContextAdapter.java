@@ -11,11 +11,11 @@ import mightypork.utils.math.rect.RectView;
  */
 public abstract class ContextAdapter implements PluggableRect {
 	
-	private RectConstraint backing = null;
+	private RectBound backing = null;
 	
 	
 	@Override
-	public void setContext(RectConstraint rect)
+	public void setContext(RectBound rect)
 	{
 		this.backing = rect;
 	}

@@ -213,7 +213,7 @@ public class Render {
 	 */
 	public static void rotate(double angle, Vect axis)
 	{
-		final Vect vec = axis.view().norm(1);
+		final Vect vec = axis.getView().norm(1);
 		glRotated(angle, vec.x(), vec.y(), vec.z());
 	}
 	
@@ -351,10 +351,10 @@ public class Render {
 	 */
 	public static void quad(Rect quad)
 	{
-		final double x1 = quad.xMin();
-		final double y1 = quad.yMin();
-		final double x2 = quad.xMax();
-		final double y2 = quad.yMax();
+		final double x1 = quad.getLeft();
+		final double y1 = quad.top();
+		final double x2 = quad.right();
+		final double y2 = quad.bottom();
 		
 		// draw with color
 		unbindTexture();
@@ -391,15 +391,15 @@ public class Render {
 	 */
 	public static void quadUV_nobound(Rect quad, Rect uvs)
 	{
-		final double x1 = quad.xMin();
-		final double y1 = quad.yMin();
-		final double x2 = quad.xMax();
-		final double y2 = quad.yMax();
+		final double x1 = quad.getLeft();
+		final double y1 = quad.top();
+		final double x2 = quad.right();
+		final double y2 = quad.bottom();
 		
-		final double tx1 = uvs.xMin();
-		final double ty1 = uvs.yMin();
-		final double tx2 = uvs.xMax();
-		final double ty2 = uvs.yMax();
+		final double tx1 = uvs.getLeft();
+		final double ty1 = uvs.top();
+		final double tx2 = uvs.right();
+		final double ty2 = uvs.bottom();
 		
 		// quad with texture
 		glTexCoord2d(tx1, ty2);
@@ -437,10 +437,10 @@ public class Render {
 	 */
 	public static void quadColor(Rect quad, RGB colorHMinVMin, RGB colorHMaxVMin, RGB colorHMaxVMax, RGB colorHMinVMax)
 	{
-		final double x1 = quad.xMin();
-		final double y1 = quad.yMin();
-		final double x2 = quad.xMax();
-		final double y2 = quad.yMax();
+		final double x1 = quad.getLeft();
+		final double y1 = quad.top();
+		final double x2 = quad.right();
+		final double y2 = quad.bottom();
 		
 		// draw with color
 		unbindTexture();

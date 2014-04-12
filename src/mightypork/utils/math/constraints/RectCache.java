@@ -8,22 +8,22 @@ import mightypork.utils.math.rect.RectView;
 
 
 /**
- * {@link RectConstraint} cache, used for caching computed Rect from a complex
- * {@link RectConstraint}.<br>
+ * {@link RectBound} cache, used for caching computed Rect from a complex
+ * {@link RectBound}.<br>
  * Calculates only when polled.
  * 
  * @author MightyPork
  */
-public class RectCache implements RectConstraint, Pollable {
+public class RectCache implements RectBound, Pollable {
 	
-	private final RectConstraint observed;
+	private final RectBound observed;
 	private final RectMutable cached = RectMutable.zero();
 	
 	
 	/**
 	 * @param observed cached constraint
 	 */
-	public RectCache(RectConstraint observed) {
+	public RectCache(RectBound observed) {
 		this.observed = observed;
 		poll();
 	}
@@ -35,7 +35,7 @@ public class RectCache implements RectConstraint, Pollable {
 	 * @param poller poller to join
 	 * @param rc observed constraint
 	 */
-	public RectCache(Poller poller, RectConstraint rc) {
+	public RectCache(Poller poller, RectBound rc) {
 		this(rc);
 		poller.add(this);
 	}
@@ -44,7 +44,7 @@ public class RectCache implements RectConstraint, Pollable {
 	@Override
 	public RectView getRect()
 	{
-		return cached.view();
+		return cached.getView();
 	}
 	
 	

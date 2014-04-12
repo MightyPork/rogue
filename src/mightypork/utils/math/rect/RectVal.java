@@ -3,7 +3,6 @@ package mightypork.utils.math.rect;
 
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
-import mightypork.utils.math.vect.VectView;
 
 
 public class RectVal extends RectView {
@@ -115,21 +114,21 @@ public class RectVal extends RectView {
 	
 	
 	@Override
-	public RectVal value()
+	public RectVal getValue()
 	{
 		return this; // nothing can change.
 	}
 	
 	
 	@Override
-	public VectVal getOrigin()
+	public VectVal origin()
 	{
 		return pos;
 	}
 	
 	
 	@Override
-	public VectVal getSize()
+	public VectVal size()
 	{
 		return size;
 	}

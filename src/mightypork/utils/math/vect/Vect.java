@@ -1,8 +1,7 @@
 package mightypork.utils.math.vect;
 
 
-import mightypork.utils.math.constraints.NumberConstraint;
-import mightypork.utils.math.constraints.VectConstraint;
+import mightypork.utils.math.constraints.NumberBound;
 
 
 /**
@@ -10,7 +9,7 @@ import mightypork.utils.math.constraints.VectConstraint;
  * 
  * @author MightyPork
  */
-public interface Vect extends VectConstraint {
+public interface Vect {
 	
 	public static final VectVal ZERO = new VectVal(0, 0, 0);
 	public static final VectVal ONE = new VectVal(0, 0, 0);
@@ -55,19 +54,19 @@ public interface Vect extends VectConstraint {
 	/**
 	 * @return X constraint
 	 */
-	NumberConstraint xc();
+	NumberBound xc();
 	
 	
 	/**
 	 * @return Y constraint
 	 */
-	NumberConstraint yc();
+	NumberBound yc();
 	
 	
 	/**
 	 * @return Z constraint
 	 */
-	NumberConstraint zc();
+	NumberBound zc();
 	
 	
 	/**
@@ -134,7 +133,7 @@ public interface Vect extends VectConstraint {
 	 * 
 	 * @return a immutable copy
 	 */
-	VectVal value();
+	VectVal getValue();
 	
 	
 	/**
@@ -142,13 +141,5 @@ public interface Vect extends VectConstraint {
 	 * 
 	 * @return immutable view
 	 */
-	VectView view();
-	
-	
-	/**
-	 * Get a mutable copy of current values.
-	 * 
-	 * @return mutable copy
-	 */
-	VectMutable mutable();
+	VectView getView();
 }

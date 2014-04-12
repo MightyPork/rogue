@@ -10,7 +10,7 @@ import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
-import mightypork.utils.math.constraints.RectConstraint;
+import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.rect.RectVal;
 import mightypork.utils.math.rect.RectView;
 import mightypork.utils.math.vect.VectView;
@@ -26,7 +26,7 @@ import org.lwjgl.opengl.DisplayMode;
  * 
  * @author MightyPork
  */
-public class DisplaySystem extends AppModule implements RectConstraint {
+public class DisplaySystem extends AppModule implements RectBound {
 	
 	private DisplayMode windowDisplayMode;
 	private int targetFps;

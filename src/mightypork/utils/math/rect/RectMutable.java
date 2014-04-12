@@ -96,7 +96,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 */
 	public static RectMutable make(Rect other)
 	{
-		return make(other.getOrigin(), other.getSize());
+		return make(other.origin(), other.size());
 	}
 	
 	
@@ -121,7 +121,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 */
 	public RectMutable setTo(Rect rect)
 	{
-		return setTo(rect.getOrigin(), rect.getSize());
+		return setTo(rect.origin(), rect.size());
 	}
 	
 	

@@ -86,7 +86,7 @@ public class VectMutableAnim extends VectMutable implements Pauseable, Updateabl
 	
 	public VectMutableAnim add(Vect offset, double speed)
 	{
-		animate(view().add(offset), speed);
+		animate(getView().add(offset), speed);
 		return this;
 	}
 	
