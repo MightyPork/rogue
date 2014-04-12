@@ -4,7 +4,7 @@ package mightypork.utils.math.rect;
 import mightypork.utils.math.coord.Vec;
 
 
-public interface RectMutable extends Rect {
+public interface RectMutable extends RectMath<RectMutable> {
 	
 	/**
 	 * Set to other rect's coordinates

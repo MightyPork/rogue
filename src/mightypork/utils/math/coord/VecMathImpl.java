@@ -71,6 +71,13 @@ abstract class VecMathImpl<V> implements VecMath<V> {
 	}
 	
 	
+	@Override
+	public VecView getVec()
+	{
+		return this.view();
+	}
+	
+	
 	/**
 	 * <p>
 	 * Some operation was performed and this result was obtained.
@@ -212,7 +219,7 @@ abstract class VecMathImpl<V> implements VecMath<V> {
 	@Override
 	public V add(double x, double y, double z)
 	{
-		return result(x, y, z);
+		return result(x() + x, y() + y, z() + z);
 	}
 	
 	
@@ -386,6 +393,6 @@ abstract class VecMathImpl<V> implements VecMath<V> {
 	@Override
 	public String toString()
 	{
-		return String.format("[ %.2f ; %.2f ; %.2f ]", x(), y(), z());
+		return String.format("(%.1f %.1f %.1f)", x(), y(), z());
 	}
 }

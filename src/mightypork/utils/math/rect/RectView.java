@@ -25,14 +25,14 @@ public abstract class RectView extends RectImpl<RectView> {
 	
 	
 	@Override
-	public RectView shrink(double left, double top, double right, double bottom)
+	public RectView shrink(double left, double right, double top, double bottom)
 	{
 		return result(getOrigin().add(left, top), getSize().sub(left + right, top + bottom));
 	}
 	
 	
 	@Override
-	public RectView grow(double left, double top, double right, double bottom)
+	public RectView grow(double left, double right, double top, double bottom)
 	{
 		return result(getOrigin().sub(left, top), getSize().add(left + right, top + bottom));
 	}

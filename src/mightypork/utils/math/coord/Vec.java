@@ -2,6 +2,7 @@ package mightypork.utils.math.coord;
 
 
 import mightypork.utils.math.constraints.NumberConstraint;
+import mightypork.utils.math.constraints.VecConstraint;
 
 
 /**
@@ -9,7 +10,7 @@ import mightypork.utils.math.constraints.NumberConstraint;
  * 
  * @author MightyPork
  */
-public interface Vec {
+public interface Vec extends VecConstraint {
 	
 	public static final VecView ZERO = new FixedCoord(0, 0, 0);
 	public static final VecView ONE = new FixedCoord(1, 1, 1);
@@ -72,18 +73,21 @@ public interface Vec {
 	/**
 	 * @return X constraint
 	 */
+	@Override
 	NumberConstraint xc();
 	
 	
 	/**
 	 * @return Y constraint
 	 */
+	@Override
 	NumberConstraint yc();
 	
 	
 	/**
 	 * @return Z constraint
 	 */
+	@Override
 	NumberConstraint zc();
 	
 	

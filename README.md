@@ -5,7 +5,8 @@ Goals
 -----
 
 - Simple retro-themed dungeon crawler
-- Multiplayer support
+- (Multiplayer support) <- maybe
+- Threads for resource loading and event handling
 
 
 Features
@@ -14,23 +15,21 @@ Features
 - Full OOP design
 - Event driven
 - OpenGL 2D rendering
-
-- Random floors
-- Real-time gameplay
-- Monsters with AI (-> combat system)
+- Screen / layer based graphics with Constraint System.
 
 
-Possibly added
+Gameplay
 --------------
 
-- Stats and leveling
-- Collectable items
-- Potions, food
-- Simple inventory system
+- Random floors
+- Turn-based
+- Monsters with AI (-> combat system)
+- Collectable items, armor upgrades etc.
+- Health, Hunger, Level
 
 
 Used libraries
 --------------
 
-- Slick2D
-- LWJGL
+- LWJGL (OpenGL & OpenAL support)
+- SlickUtil (texture loader, audio system)

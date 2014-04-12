@@ -52,7 +52,7 @@ public class RowHolder extends ElementHolder {
 	{
 		if (elem == null) return;
 		
-		elem.setContext(_row(this, rows, row++));
+		elem.setContext(cRow(this, rows, row++));
 		
 		attach(elem);
 	}

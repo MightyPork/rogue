@@ -22,8 +22,8 @@ public class LayerTestGradient extends ScreenLayer {
 	public LayerTestGradient(Screen screen) {
 		super(screen);
 		
-		pos1 = _cache(p, _grow_down(_top_edge(this), 64));
-		pos2 = _cache(p, _shrink_top(_grow_right(_left_edge(this), 64), 64));
+		pos1 = cCached(p, cGrowDown(cTopEdge(this), 64));
+		pos2 = cCached(p, cShrinkTop(cGrowRight(cLeftEdge(this), 64), 64));
 	}
 	
 	

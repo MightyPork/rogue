@@ -1,16 +1,101 @@
 package mightypork.utils.math.rect;
 
 
+import static mightypork.utils.math.constraints.Constraints.*;
+import mightypork.utils.math.constraints.VecConstraint;
 import mightypork.utils.math.coord.Vec;
 import mightypork.utils.math.coord.VecView;
 
 
 public abstract class RectImpl<T extends Rect> implements RectMath<T> {
 	
+	private VecConstraint tl, tc, tr, cl, c, cr, bl, bc, br;
+	
+	
+	@Override
+	public RectView getRect()
+	{
+		return this.view();
+	}
+	
+	
+	@Override
+	public abstract VecView getOrigin();
+	
+	
+	@Override
+	public abstract VecView getSize();
+	
+	
+	@Override
+	public VecView getTopLeft()
+	{
+		if (tl == null) tl = cTopLeft(this);
+		return tl.getVec();
+	}
+	
+	
+	@Override
+	public VecView getTopCenter()
+	{
+		if (tc == null) tc = cTopCenter(this);
+		return tc.getVec();
+	}
+	
+	
+	@Override
+	public VecView getTopRight()
+	{
+		if (tr == null) tr = cTopRight(this);
+		return tr.getVec();
+	}
+	
+	
+	@Override
+	public VecView getCenterLeft()
+	{
+		if (cl == null) cl = cCenterLeft(this);
+		return cl.getVec();
+	}
+	
+	
 	@Override
 	public final VecView getCenter()
 	{
-		return getOrigin().add(getSize().half());
+		if (c == null) c = cCenter(this);
+		return c.getVec();
+	}
+	
+	
+	@Override
+	public VecView getCenterRight()
+	{
+		if (cr == null) cr = cCenterRight(this);
+		return cr.getVec();
+	}
+	
+	
+	@Override
+	public VecView getBottomLeft()
+	{
+		if (bl == null) bl = cBottomLeft(this);
+		return bl.getVec();
+	}
+	
+	
+	@Override
+	public VecView getBottomCenter()
+	{
+		if (bc == null) bc = cBottomCenter(this);
+		return bc.getVec();
+	}
+	
+	
+	@Override
+	public VecView getBottomRight()
+	{
+		if (br == null) br = cBottomRight(this);
+		return br.getVec();
 	}
 	
 	
@@ -73,7 +158,7 @@ public abstract class RectImpl<T extends Rect> implements RectMath<T> {
 	@Override
 	public final T shrink(double x, double y)
 	{
-		return shrink(x, y, x, y);
+		return shrink(x, x, y, y);
 	}
 	
 	
@@ -87,7 +172,7 @@ public abstract class RectImpl<T extends Rect> implements RectMath<T> {
 	@Override
 	public final T grow(double x, double y)
 	{
-		return grow(x, y, x, y);
+		return grow(x, x, y, y);
 	}
 	
 	
@@ -95,6 +180,13 @@ public abstract class RectImpl<T extends Rect> implements RectMath<T> {
 	public RectView view()
 	{
 		return new RectProxy(this);
+	}
+	
+	
+	@Override
+	public RectMutable copy()
+	{
+		return new MutableRect(this);
 	}
 	
 	
@@ -116,6 +208,6 @@ public abstract class RectImpl<T extends Rect> implements RectMath<T> {
 	@Override
 	public String toString()
 	{
-		return String.format("Rect[ %s - %s ]", getOrigin().toString(), getOrigin().add(getSize()));
+		return String.format("Rect { %s - %s }", getOrigin().toString(), getOrigin().add(getSize()));
 	}
 }

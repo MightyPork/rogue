@@ -1,7 +1,6 @@
 package mightypork.gamecore.render.fonts;
 
 
-import static mightypork.utils.math.constraints.Constraints.*;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.Vec;
@@ -148,16 +147,16 @@ public class FontRenderer {
 		
 		switch (align) {
 			case LEFT:
-				start = _top_left(bounds);
+				start = bounds.getTopLeft();
 				break;
 			
 			case CENTER:
-				start = _center_top(bounds);
+				start = bounds.getTopCenter();
 				break;
 			
 			case RIGHT:
 			default:
-				start = _top_right(bounds);
+				start = bounds.getTopRight();
 				break;
 		}
 		

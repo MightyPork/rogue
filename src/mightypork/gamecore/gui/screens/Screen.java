@@ -116,7 +116,7 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 		if (!isActive()) return;
 		
 		if (needSetupViewport) {
-			Render.setupOrtho();
+			Render.setupOrtho(getDisplay().getSize());
 		}
 		
 		Render.pushState();

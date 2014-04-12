@@ -20,7 +20,20 @@ public class QuadPainter extends PluggableRenderer {
 	
 	
 	/**
-	 * Painter with cokloured vertices.
+	 * Painter with solid color
+	 * 
+	 * @param color
+	 */
+	public QuadPainter(RGB color) {
+		this.colorHMinVMin = color;
+		this.colorHMaxVMin = color;
+		this.colorHMaxVMax = color;
+		this.colorHMinVMax = color;
+	}
+	
+	
+	/**
+	 * Painter with coloured vertices.
 	 * 
 	 * @param colorHMinVMin
 	 * @param colorHMaxVMin

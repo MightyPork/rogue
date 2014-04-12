@@ -52,7 +52,7 @@ public class ColumnHolder extends ElementHolder {
 	{
 		if (elem == null) return;
 		
-		elem.setContext(_column(this, cols, col++));
+		elem.setContext(cColumn(this, cols, col++));
 		
 		attach(elem);
 	}

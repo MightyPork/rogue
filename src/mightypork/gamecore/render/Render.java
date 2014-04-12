@@ -11,6 +11,7 @@ import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.coord.FixedCoord;
 import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.coord.VecView;
 import mightypork.utils.math.rect.Rect;
 
 import org.lwjgl.opengl.GL11;
@@ -540,15 +541,15 @@ public class Render {
 	
 	/**
 	 * Setup Ortho projection for 2D graphics
+	 * @param size viewport size (screen size)
 	 */
-	public static void setupOrtho()
+	public static void setupOrtho(VecView size)
 	{
 		// fix projection for changed size
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		final Vec s = DisplaySystem.getSize();
-		glViewport(0, 0, s.xi(), s.yi());
-		glOrtho(0, s.x(), (DisplaySystem.yAxisDown ? 1 : -1) * s.y(), 0, -1000, 1000);
+		glViewport(0, 0, size.xi(), size.yi());
+		glOrtho(0, size.xi(), size.yi(), 0, -1000, 1000);
 		
 		// back to modelview
 		glMatrixMode(GL_MODELVIEW);

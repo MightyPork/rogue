@@ -7,4 +7,13 @@ import mightypork.utils.math.coord.VecView;
 public interface VecConstraint {
 	
 	VecView getVec();
+	
+	
+	NumberConstraint xc();
+	
+	
+	NumberConstraint yc();
+	
+	
+	NumberConstraint zc();
 }

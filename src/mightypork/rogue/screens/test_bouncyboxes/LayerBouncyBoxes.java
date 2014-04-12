@@ -16,7 +16,7 @@ import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.string.StringProvider;
+import mightypork.utils.math.coord.FixedCoord;
 
 
 public class LayerBouncyBoxes extends ScreenLayer {
@@ -47,7 +47,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		});
 		
 		// shrink screen rect by 8% on all sides
-		final RectConstraint holder_rect = _shrink(this, _percent(_height(this), 4));
+		final RectConstraint holder_rect = cShrink(this, cPerc(cWidth(this), 4));
 		
 		addChildClient(layout = new RowHolder(screen, holder_rect, 11));
 		
@@ -57,14 +57,11 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			boxes.add(bbr);
 		}
 		
-		layout.add(new TextPainter(Res.getFont("default"), Align.LEFT, RGB.WHITE, new StringProvider() {
-			
-			@Override
-			public String getString()
-			{
-				return "Running at " + getDisplay().getFps() + " fps!";
-			}
-		}));
+		final TextPainter tp = new TextPainter(Res.getFont("default"), Align.LEFT, RGB.WHITE);
+		tp.setText("Press \"C\" for \"Cat\" screen.");
+		tp.setShadow(RGB.RED, new FixedCoord(2, 2));
+		
+		layout.add(tp);
 	}
 	
 	

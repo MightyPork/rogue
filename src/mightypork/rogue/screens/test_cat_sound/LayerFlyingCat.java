@@ -8,6 +8,7 @@ import java.util.Random;
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
+import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
@@ -32,6 +33,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	
 	private final ImagePainter cat;
 	private final TextPainter tp;
+	private final QuadPainter qp;
 	
 	
 	public LayerFlyingCat(Screen screen) {
@@ -41,14 +43,18 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		
 		cat = new ImagePainter(Res.getTxQuad("test.kitten"));
 		
-		cat.setContext(_align(_box(size, size), pos));
+		cat.setContext(cCenterTo(cBox(size, size), pos));
 		
 		tp = new TextPainter(Res.getFont("default"));
 		tp.setAlign(Align.CENTER);
 		tp.setColor(RGB.YELLOW);
 		tp.setText("Meow!");
 		tp.setShadow(RGB.dark(0.8), new FixedCoord(2, 2));
-		tp.setContext(_align(_box(64, 64), _mouseX, _mouseY));
+		
+		tp.setContext(cCenterTo(cBox(64, 64), cMousePos));
+		
+		qp = QuadPainter.gradV(RGB.YELLOW, RGB.RED);
+		qp.setContext(cExpand(cBottomLeft(cat), 0, 0, 50, 50));
 		
 		/*
 		 * Register keys
@@ -79,9 +85,9 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		
 		final Vec pos = event.getPos();
 		
-		this.pos.animateWithSpeed(pos, 200);
+		this.pos.animateWithSpeed(pos, 160);
 		
-		size.animate(200 + rand.nextInt(600), this.pos.getDuration() / 2);
+		size.animate(200 + rand.nextInt(600), Math.max(0.2, this.pos.getDuration() / 2));
 	}
 	
 	
@@ -90,8 +96,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	{
 		cat.render();
 		tp.render();
-		
-		//System.out.println(tp.getRect());
+		qp.render();
 	}
 	
 	

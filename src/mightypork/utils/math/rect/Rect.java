@@ -1,6 +1,7 @@
 package mightypork.utils.math.rect;
 
 
+import mightypork.utils.math.constraints.RectConstraint;
 import mightypork.utils.math.coord.VecView;
 
 
@@ -9,7 +10,7 @@ import mightypork.utils.math.coord.VecView;
  * 
  * @author MightyPork
  */
-public interface Rect {
+public interface Rect extends RectConstraint {
 	
 	RectView ONE = new FixedRect(0, 0, 1, 1);
 	RectView ZERO = new FixedRect(0, 0, 0, 0);
@@ -37,28 +38,40 @@ public interface Rect {
 	VecView getOrigin();
 	
 	
-	/**
-	 * @return center
-	 */
-	VecView getCenter();
-	
-	
-	/**
-	 * @return rect size
-	 */
 	VecView getSize();
 	
 	
-	/**
-	 * @return rect width
-	 */
 	double getWidth();
 	
 	
-	/**
-	 * @return rect height
-	 */
 	double getHeight();
+	
+	
+	VecView getTopLeft();
+	
+	
+	VecView getTopCenter();
+	
+	
+	VecView getTopRight();
+	
+	
+	VecView getCenterLeft();
+	
+	
+	VecView getCenter();
+	
+	
+	VecView getCenterRight();
+	
+	
+	VecView getBottomLeft();
+	
+	
+	VecView getBottomCenter();
+	
+	
+	VecView getBottomRight();
 	
 	
 	double xMin();

@@ -11,7 +11,7 @@ import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.coord.FixedCoord;
+import mightypork.utils.math.coord.SynthCoord2D;
 import mightypork.utils.math.coord.VecView;
 import mightypork.utils.math.rect.FixedRect;
 import mightypork.utils.math.rect.RectView;
@@ -31,9 +31,23 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
-	/** Y axis goes down (not up); Used also to adjust inputs. */
-	public static boolean yAxisDown = true;
 	private FpsMeter fpsMeter;
+	
+	private final VecView cScreenSize = new SynthCoord2D() {
+		
+		@Override
+		public double y()
+		{
+			return Display.getHeight();
+		}
+		
+		
+		@Override
+		public double x()
+		{
+			return Display.getWidth();
+		}
+	};
 	
 	
 	/**
@@ -175,27 +189,27 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	 * 
 	 * @return size
 	 */
-	public static VecView getSize()
+	public VecView getSize()
 	{
-		return new FixedCoord(getWidth(), getHeight());
+		return cScreenSize;
 	}
 	
 	
 	/**
 	 * @return screen width
 	 */
-	public static int getWidth()
+	public int getWidth()
 	{
-		return Display.getWidth();
+		return cScreenSize.xi();
 	}
 	
 	
 	/**
 	 * @return screen height
 	 */
-	public static int getHeight()
+	public int getHeight()
 	{
-		return Display.getHeight();
+		return cScreenSize.yi();
 	}
 	
 	
@@ -245,43 +259,4 @@ public class DisplaySystem extends AppModule implements RectConstraint {
 	{
 		return getSize().half();
 	}
-	
-//	private static final VecView size = new SynthCoord2D() {
-//		
-//		@Override
-//		public double y()
-//		{
-//			return getHeight();
-//		}
-//		
-//		
-//		@Override
-//		public double x()
-//		{
-//			return getWidth();
-//		}
-//	};
-//	
-//	/** Screen width constraint */
-//	private static final NumberConstraint width = size.xc();
-//	
-//	/** Screen height constaint */
-//	private static final NumberConstraint height = size.yc();
-//	
-//	private static final VecView center = new SynthCoord2D() {
-//		
-//		@Override
-//		public double y()
-//		{
-//			return size.half().x();
-//		}
-//		
-//		
-//		@Override
-//		public double x()
-//		{
-//			return size.half().y();
-//		}
-//	};
-	
 }

@@ -26,16 +26,16 @@ public class BouncyBox extends PluggableRenderer implements Updateable {
 	
 	public BouncyBox() {
 		// create box
-		final NumberConstraint side = _height(this);
-		RectConstraint abox = _box(this, side, side);
+		final NumberConstraint side = cHeight(this);
+		RectConstraint abox = cBox(this, side, side);
 		
 		// move
-		final NumberConstraint move_length = _sub(_width(this), side);
-		final NumberConstraint offset = _mul(move_length, pos);
-		abox = _move(abox, offset, 0);
+		final NumberConstraint move_length = cSub(cWidth(this), side);
+		final NumberConstraint offset = cMul(move_length, pos);
+		abox = cMove(abox, offset, 0);
 		
 		// add padding
-		abox = _shrink(abox, _percent(side, 10));
+		abox = cShrink(abox, cPerc(side, 10));
 		
 		box = abox;
 	}

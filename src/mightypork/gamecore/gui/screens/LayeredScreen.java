@@ -30,7 +30,7 @@ public abstract class LayeredScreen extends Screen {
 	protected void renderScreen()
 	{
 		for (final ScreenLayer layer : layers) {
-			layer.render();
+			if (layer.isVisible()) layer.render();
 		}
 	}
 	

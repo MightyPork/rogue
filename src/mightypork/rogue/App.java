@@ -56,7 +56,7 @@ public class App extends BaseApp {
 		screens.add(new ScreenTestFont(this));
 		screens.add(new ScreenTestRender(this));
 		
-		screens.showScreen("test.cat");
+		screens.showScreen("test.bouncy");
 	}
 	
 	

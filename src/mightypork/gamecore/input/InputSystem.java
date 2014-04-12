@@ -7,10 +7,10 @@ import mightypork.gamecore.control.bus.events.KeyEvent;
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;
 import mightypork.gamecore.control.bus.events.MouseMotionEvent;
 import mightypork.gamecore.control.timing.Updateable;
-import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.utils.math.coord.MutableCoord;
+import mightypork.utils.math.coord.SynthCoord2D;
 import mightypork.utils.math.coord.VecMutable;
 import mightypork.utils.math.coord.VecView;
 
@@ -29,6 +29,26 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	
 	// listeners
 	private final KeyBindingPool keybindings;
+	
+	private final VecView mousePos = new SynthCoord2D() {
+		
+		@Override
+		public double x()
+		{
+			if (!Mouse.isInsideWindow()) return Integer.MIN_VALUE;
+			
+			return Mouse.getX();
+		}
+		
+		
+		@Override
+		public double y()
+		{
+			if (!Mouse.isInsideWindow()) return Integer.MIN_VALUE;
+			// flip Y axis
+			return Display.getHeight() - Mouse.getY();
+		}
+	};
 	
 	private static boolean inited = false;
 	
@@ -127,10 +147,9 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		
 		final int wheeld = Mouse.getEventDWheel();
 		
-		if (DisplaySystem.yAxisDown) {
-			flipScrY(pos);
-			move.mul(1, -1, 1);
-		}
+		// flip Y axis
+		pos.setY(Display.getHeight() - pos.y());
+		move.mul(1, -1, 1);
 		
 		if (button != -1 || wheeld != 0) {
 			getEventBus().send(new MouseButtonEvent(pos.copy(), button, down, wheeld));
@@ -151,22 +170,23 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
-	private static void flipScrY(VecMutable c)
-	{
-		if (DisplaySystem.yAxisDown) c.setY(DisplaySystem.getHeight() - c.y());
-	}
-	
-	
 	/**
 	 * Get absolute mouse position
 	 * 
 	 * @return mouse position
 	 */
-	public static VecView getMousePos()
+	public VecView getMousePos()
 	{
-		final VecMutable pos = new MutableCoord(Mouse.getX(), Mouse.getY());
-		flipScrY(pos);
-		return pos.view();
+		return mousePos;
+	}
+	
+	
+	/**
+	 * @return true if mouse is inside window.
+	 */
+	public boolean isMouseInside()
+	{
+		return Mouse.isInsideWindow();
 	}
 	
 	

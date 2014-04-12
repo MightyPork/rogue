@@ -53,12 +53,12 @@ interface RectMath<T extends Rect> extends Rect {
 	 * Shrink the rect
 	 * 
 	 * @param left shrink
-	 * @param top shrink
 	 * @param right shrink
+	 * @param top shrink
 	 * @param bottom shrink
 	 * @return result
 	 */
-	T shrink(double left, double top, double right, double bottom);
+	T shrink(double left, double right, double top, double bottom);
 	
 	
 	/**
@@ -84,12 +84,12 @@ interface RectMath<T extends Rect> extends Rect {
 	 * Grow the rect
 	 * 
 	 * @param left growth
-	 * @param top growth
 	 * @param right growth
+	 * @param top growth
 	 * @param bottom growth
 	 * @return result
 	 */
-	T grow(double left, double top, double right, double bottom);
+	T grow(double left, double right, double top, double bottom);
 	
 	
 	/**

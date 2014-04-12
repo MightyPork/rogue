@@ -165,13 +165,13 @@ public class MutableRect extends RectImpl<RectMutable> implements RectMutable {
 	 * Shrink the rect
 	 * 
 	 * @param left shrink
-	 * @param top shrink
 	 * @param right shrink
+	 * @param top shrink
 	 * @param bottom shrink
 	 * @return result
 	 */
 	@Override
-	public RectMutable shrink(double left, double top, double right, double bottom)
+	public RectMutable shrink(double left, double right, double top, double bottom)
 	{
 		pos.add(left, top);
 		size.sub(left + right, top + bottom).abs();
@@ -183,13 +183,13 @@ public class MutableRect extends RectImpl<RectMutable> implements RectMutable {
 	 * Grow the rect
 	 * 
 	 * @param left growth
-	 * @param top growth
 	 * @param right growth
+	 * @param top growth
 	 * @param bottom growth
 	 * @return result
 	 */
 	@Override
-	public RectMutable grow(double left, double top, double right, double bottom)
+	public RectMutable grow(double left, double right, double top, double bottom)
 	{
 		pos.sub(left, top);
 		size.add(left + right, top + bottom).abs();
