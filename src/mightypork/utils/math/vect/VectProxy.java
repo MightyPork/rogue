@@ -1,4 +1,4 @@
-package mightypork.utils.math.coord;
+package mightypork.utils.math.vect;
 
 
 /**
@@ -7,9 +7,9 @@ package mightypork.utils.math.coord;
  * 
  * @author MightyPork
  */
-class VecProxy extends AbstractVecProxy {
+class VectProxy extends VectAdapter {
 	
-	final Vec observed;
+	final Vect observed;
 	
 	
 	/**
@@ -18,13 +18,13 @@ class VecProxy extends AbstractVecProxy {
 	 * 
 	 * @param observed
 	 */
-	public VecProxy(Vec observed) {
+	public VectProxy(Vect observed) {
 		this.observed = observed;
 	}
 	
 	
 	@Override
-	protected Vec getSource()
+	protected Vect getSource()
 	{
 		return observed;
 	}

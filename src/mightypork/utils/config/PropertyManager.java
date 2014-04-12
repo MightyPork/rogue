@@ -10,8 +10,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import mightypork.utils.math.Range;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectView;
 import mightypork.utils.objects.Convert;
 
 
@@ -122,9 +122,9 @@ public class PropertyManager {
 		}
 	}
 	
-	private class CoordProperty extends Property<Vec> {
+	private class CoordProperty extends Property<Vect> {
 		
-		public CoordProperty(String key, Vec defaultValue, String comment) {
+		public CoordProperty(String key, Vect defaultValue, String comment) {
 			super(key, defaultValue, comment);
 		}
 		
@@ -132,7 +132,7 @@ public class PropertyManager {
 		@Override
 		public void parse(String string)
 		{
-			value = Convert.toCoord(string, defaultValue);
+			value = Convert.toVect(string, defaultValue);
 		}
 	}
 	
@@ -173,8 +173,10 @@ public class PropertyManager {
 	public void apply()
 	{
 		boolean needsSave = false;
-		if (!new File(file.getParent()).mkdirs()) {
-			throw new RuntimeException("Cound not create config file.");
+		if (!file.getParentFile().mkdirs()) {
+			if (!file.getParentFile().exists()) {
+				throw new RuntimeException("Cound not create config file.");
+			}
 		}
 		
 		try(FileInputStream fis = new FileInputStream(file)) {
@@ -360,7 +362,7 @@ public class PropertyManager {
 	 * @param n key
 	 * @return the coord found, or null
 	 */
-	public VecView getCoord(String n)
+	public VectView getCoord(String n)
 	{
 		return Convert.toCoord(get(n).value);
 	}
@@ -425,7 +427,7 @@ public class PropertyManager {
 	 * @param d default value
 	 * @param comment the in-file comment
 	 */
-	public void putCoord(String n, Vec d, String comment)
+	public void putCoord(String n, Vect d, String comment)
 	{
 		entries.put(n, new CoordProperty(n, d, comment));
 	}

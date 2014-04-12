@@ -6,7 +6,7 @@ import java.io.IOException;
 import mightypork.gamecore.loading.DeferredResource;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.LoggedName;
-import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.vect.Vect;
 
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;
@@ -204,7 +204,7 @@ public class DeferredAudio extends DeferredResource {
 	 * @param pos coord
 	 * @return source id
 	 */
-	public int playAsEffect(double pitch, double gain, boolean loop, Vec pos)
+	public int playAsEffect(double pitch, double gain, boolean loop, Vect pos)
 	{
 		if (!ensureLoaded()) return -1;
 		

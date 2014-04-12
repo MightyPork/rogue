@@ -2,7 +2,7 @@ package mightypork.gamecore.render.fonts;
 
 
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -27,7 +27,7 @@ public interface GLFont {
 	 * @param text string to check
 	 * @return coord (width, height)
 	 */
-	VecView getNeededSpace(String text);
+	VectView getNeededSpace(String text);
 	
 	
 	/**

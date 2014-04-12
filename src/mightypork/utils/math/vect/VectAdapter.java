@@ -1,13 +1,13 @@
-package mightypork.utils.math.coord;
+package mightypork.utils.math.vect;
 
 
-public abstract class AbstractVecProxy extends VecView {
+public abstract class VectAdapter extends VectView {
 	
 	/**
 	 * @return the proxied coord
 	 */
-	protected abstract Vec getSource();
-	
+	protected abstract Vect getSource();
+
 	
 	@Override
 	public double x()

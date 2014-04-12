@@ -2,8 +2,8 @@ package mightypork.gamecore.control.bus.events;
 
 
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -19,7 +19,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	
 	private final int button;
 	private final int wheeld;
-	private final Vec pos;
+	private final Vect pos;
 	private final boolean down;
 	
 	
@@ -31,7 +31,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	 * @param down button pressed
 	 * @param wheeld wheel change
 	 */
-	public MouseButtonEvent(Vec pos, int button, boolean down, int wheeld) {
+	public MouseButtonEvent(Vect pos, int button, boolean down, int wheeld) {
 		this.button = button;
 		this.down = down;
 		this.pos = pos;
@@ -78,7 +78,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	/**
 	 * @return mouse position when the event occurred
 	 */
-	public VecView getPos()
+	public VectView getPos()
 	{
 		return pos.view();
 	}

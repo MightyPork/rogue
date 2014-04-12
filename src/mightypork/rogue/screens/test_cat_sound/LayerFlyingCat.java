@@ -19,16 +19,16 @@ import mightypork.rogue.Res;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecMutable;
-import mightypork.utils.math.coord.VecMutableAnim;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectMutable;
+import mightypork.utils.math.vect.VectMutableAnim;
+import mightypork.utils.math.vect.VectVal;
 
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
 	
 	private final AnimDouble size = new AnimDouble(400, Easing.SINE_BOTH);
-	private final VecMutableAnim pos = VecMutable.makeAnim(Easing.ELASTIC_OUT);
+	private final VectMutableAnim pos = VectMutable.makeAnim(Easing.ELASTIC_OUT);
 	
 	private final Random rand = new Random();
 	
@@ -51,7 +51,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		tp.setAlign(Align.CENTER);
 		tp.setColor(RGB.YELLOW);
 		tp.setText("Meow!");
-		tp.setShadow(RGB.dark(0.8), VecView.make(2, 2));
+		tp.setShadow(RGB.dark(0.8), VectVal.make(2, 2));
 		
 		tp.setContext(cCenterTo(cBox(64, 64), cMousePos));
 		
@@ -85,7 +85,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	{
 		if (!event.isDown()) return;
 		
-		final Vec pos = event.getPos();
+		final Vect pos = event.getPos();
 		
 		this.pos.setTo(pos);
 		

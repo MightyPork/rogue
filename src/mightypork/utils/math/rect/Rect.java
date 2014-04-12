@@ -2,8 +2,9 @@ package mightypork.utils.math.rect;
 
 
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -13,14 +14,14 @@ import mightypork.utils.math.coord.VecView;
  */
 public interface Rect extends RectConstraint {
 	
-	RectValue ONE = new ConstRect(0, 0, 1, 1);
-	RectValue ZERO = new ConstRect(0, 0, 0, 0);
+	RectVal ONE = new RectVal(0, 0, 1, 1);
+	RectVal ZERO = new RectVal(0, 0, 0, 0);
 	
 	
 	/**
 	 * Get a writable copy
 	 * 
-	 * @return copy
+	 * @return writable copy
 	 */
 	RectMutable mutable();
 	
@@ -30,24 +31,24 @@ public interface Rect extends RectConstraint {
 	 * 
 	 * @return copy
 	 */
-	RectValue value();
+	RectVal value();
 	
 	
 	/**
 	 * Get a proxying view
 	 * 
-	 * @return copy
+	 * @return proxy
 	 */
-	RectValue view();
+	RectProxy view();
 	
 	
 	/**
 	 * @return origin
 	 */
-	VecView getOrigin();
+	VectVal getOrigin();
 	
 	
-	VecView getSize();
+	VectVal getSize();
 	
 	
 	double getWidth();
@@ -56,31 +57,31 @@ public interface Rect extends RectConstraint {
 	double getHeight();
 	
 	
-	VecView getTopLeft();
+	VectVal getTopLeft();
 	
 	
-	VecView getTopCenter();
+	VectVal getTopCenter();
 	
 	
-	VecView getTopRight();
+	VectVal getTopRight();
 	
 	
-	VecView getCenterLeft();
+	VectVal getCenterLeft();
 	
 	
-	VecView getCenter();
+	VectVal getCenter();
 	
 	
-	VecView getCenterRight();
+	VectVal getCenterRight();
 	
 	
-	VecView getBottomLeft();
+	VectVal getBottomLeft();
 	
 	
-	VecView getBottomCenter();
+	VectVal getBottomCenter();
 	
 	
-	VecView getBottomRight();
+	VectVal getBottomRight();
 	
 	
 	double xMin();
@@ -101,6 +102,6 @@ public interface Rect extends RectConstraint {
 	 * @param point point to test
 	 * @return is inside
 	 */
-	boolean contains(Vec point);
+	boolean contains(Vect point);
 	
 }

@@ -4,8 +4,8 @@ package mightypork.gamecore.render.fonts.impl;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -23,9 +23,9 @@ public class NullFont implements GLFont {
 	
 	
 	@Override
-	public VecView getNeededSpace(String str)
+	public VectView getNeededSpace(String str)
 	{
-		return Vec.ZERO;
+		return Vect.ZERO;
 	}
 	
 	

@@ -2,8 +2,8 @@ package mightypork.gamecore.control.bus.events;
 
 
 import mightypork.gamecore.control.bus.events.types.UnloggedEvent;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -14,15 +14,15 @@ import mightypork.utils.math.coord.VecView;
 @UnloggedEvent
 public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	
-	private final VecView move;
-	private final VecView pos;
+	private final VectView move;
+	private final VectView pos;
 	
 	
 	/**
 	 * @param pos end pos
 	 * @param move move vector
 	 */
-	public MouseMotionEvent(Vec pos, Vec move) {
+	public MouseMotionEvent(Vect pos, Vect move) {
 		this.move = move.value();
 		this.pos = pos.value();
 	}
@@ -31,7 +31,7 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	/**
 	 * @return movement since last {@link MouseMotionEvent}
 	 */
-	public VecView getMove()
+	public VectView getMove()
 	{
 		return move;
 	}
@@ -40,7 +40,7 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	/**
 	 * @return current mouse position
 	 */
-	public VecView getPos()
+	public VectView getPos()
 	{
 		return pos;
 	}

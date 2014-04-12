@@ -1,7 +1,8 @@
 package mightypork.utils.math.rect;
 
 
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -9,7 +10,7 @@ import mightypork.utils.math.coord.VecView;
  * 
  * @author MightyPork
  */
-public class RectProxy extends RectValue {
+public class RectProxy extends RectView {
 	
 	private final Rect observed;
 	
@@ -20,14 +21,14 @@ public class RectProxy extends RectValue {
 	
 	
 	@Override
-	public VecView getOrigin()
+	public VectVal getOrigin()
 	{
 		return observed.getOrigin();
 	}
 	
 	
 	@Override
-	public VecView getSize()
+	public VectVal getSize()
 	{
 		return observed.getSize();
 	}

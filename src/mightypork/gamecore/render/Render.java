@@ -9,9 +9,10 @@ import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
 import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectView;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
@@ -27,9 +28,9 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Render {
 	
-	public static final VecView AXIS_X = VecView.make(1, 0, 0);
-	public static final VecView AXIS_Y = VecView.make(0, 1, 0);
-	public static final VecView AXIS_Z = VecView.make(0, 0, 1);
+	public static final VectView AXIS_X = VectVal.make(1, 0, 0);
+	public static final VectView AXIS_Y = VectVal.make(0, 1, 0);
+	public static final VectView AXIS_Z = VectVal.make(0, 0, 1);
 	
 	
 	/**
@@ -85,7 +86,7 @@ public class Render {
 	 * 
 	 * @param coord coord
 	 */
-	public static void translate(Vec coord)
+	public static void translate(Vect coord)
 	{
 		glTranslated(coord.x(), coord.y(), coord.z());
 	}
@@ -121,7 +122,7 @@ public class Render {
 	 * 
 	 * @param factor vector of scaling factors
 	 */
-	public static void scale(Vec factor)
+	public static void scale(Vect factor)
 	{
 		glScaled(factor.x(), factor.y(), factor.z());
 	}
@@ -210,9 +211,9 @@ public class Render {
 	 * @param angle rotate angle
 	 * @param axis rotation axis
 	 */
-	public static void rotate(double angle, Vec axis)
+	public static void rotate(double angle, Vect axis)
 	{
-		final Vec vec = axis.view().norm(1);
+		final Vect vec = axis.view().norm(1);
 		glRotated(angle, vec.x(), vec.y(), vec.z());
 	}
 	
@@ -543,7 +544,7 @@ public class Render {
 	 * 
 	 * @param size viewport size (screen size)
 	 */
-	public static void setupOrtho(VecView size)
+	public static void setupOrtho(VectView size)
 	{
 		// fix projection for changed size
 		glMatrixMode(GL_PROJECTION);

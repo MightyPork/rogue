@@ -13,7 +13,7 @@ import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.vect.Vect;
 import mightypork.utils.string.StringProvider;
 
 
@@ -52,7 +52,7 @@ public class LayerFps extends ScreenLayer {
 		
 		tp.setContext(constraint);
 		
-		tp.setShadow(RGB.BLACK, Vec.ONE);
+		tp.setShadow(RGB.BLACK, Vect.ONE);
 	}
 	
 	

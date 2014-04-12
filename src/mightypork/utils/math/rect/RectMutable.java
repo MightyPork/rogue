@@ -1,8 +1,8 @@
 package mightypork.utils.math.rect;
 
 
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectVal;
 
 
 /**
@@ -55,9 +55,9 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param height
 	 * @return new mutable rect
 	 */
-	public static RectMutable make(Vec origin, double width, double height)
+	public static RectMutable make(Vect origin, double width, double height)
 	{
-		return make(origin, VecView.make(width, height));
+		return make(origin, VectVal.make(width, height));
 	}
 	
 	
@@ -67,9 +67,9 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param size
 	 * @return new mutable rect
 	 */
-	public static RectMutable make(Vec size)
+	public static RectMutable make(Vect size)
 	{
-		return make(VecView.zero(), size);
+		return make(Vect.ZERO, size);
 	}
 	
 	
@@ -84,7 +84,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 */
 	public static RectMutable make(double x, double y, double width, double height)
 	{
-		return make(VecView.make(x, y), VecView.make(width, height));
+		return make(x, y, width, height);
 	}
 	
 	
@@ -107,9 +107,9 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param size
 	 * @return new mutable rect
 	 */
-	public static RectMutable make(Vec origin, Vec size)
+	public static RectMutable make(Vect origin, Vect size)
 	{
-		return new RectMutableImpl(origin, size);
+		return make(origin.x(), origin.y(), size.x(), size.y());
 	}
 	
 	
@@ -133,9 +133,24 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param height new height
 	 * @return this
 	 */
-	public RectMutable setTo(Vec origin, double width, double height)
+	public RectMutable setTo(Vect origin, double width, double height)
 	{
-		return setTo(origin, VecView.make(width, height));
+		return setTo(origin, VectVal.make(width, height));
+	}
+	
+	
+	/**
+	 * Set to given size and position
+	 * 
+	 * @param x origin.x
+	 * @param y origin.y
+	 * @param width new width
+	 * @param height new height
+	 * @return this
+	 */
+	public RectMutable setTo(double x, double y, double width, double height)
+	{
+		return setTo(VectVal.make(x, y), VectVal.make(width, height));
 	}
 	
 	
@@ -146,7 +161,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param size new size
 	 * @return this
 	 */
-	public RectMutable setTo(Vec origin, Vec size)
+	public RectMutable setTo(Vect origin, Vect size)
 	{
 		setOrigin(origin);
 		setSize(size);
@@ -160,7 +175,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param origin new origin
 	 * @return this
 	 */
-	public abstract RectMutable setOrigin(Vec origin);
+	public abstract RectMutable setOrigin(Vect origin);
 	
 	
 	/**
@@ -169,6 +184,6 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param size new size
 	 * @return this
 	 */
-	public abstract RectMutable setSize(Vec size);
+	public abstract RectMutable setSize(Vect size);
 	
 }

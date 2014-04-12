@@ -4,7 +4,7 @@ package mightypork.utils.math.constraints;
 import mightypork.gamecore.control.timing.Pollable;
 import mightypork.gamecore.control.timing.Poller;
 import mightypork.utils.math.rect.RectMutable;
-import mightypork.utils.math.rect.RectValue;
+import mightypork.utils.math.rect.RectView;
 
 
 /**
@@ -42,7 +42,7 @@ public class RectCache implements RectConstraint, Pollable {
 	
 	
 	@Override
-	public RectValue getRect()
+	public RectView getRect()
 	{
 		return cached.view();
 	}

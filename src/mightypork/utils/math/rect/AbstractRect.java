@@ -2,9 +2,10 @@ package mightypork.utils.math.rect;
 
 
 import static mightypork.utils.math.constraints.Constraints.*;
-import mightypork.utils.math.constraints.VecConstraint;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.constraints.VectConstraint;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -14,26 +15,27 @@ import mightypork.utils.math.coord.VecView;
  */
 public abstract class AbstractRect implements Rect {
 	
-	private VecConstraint tl;
-	private VecConstraint tc;
-	private VecConstraint tr;
-	private VecConstraint cl;
-	private VecConstraint c;
-	private VecConstraint cr;
-	private VecConstraint bl;
-	private VecConstraint bc;
-	private VecConstraint br;
+	private RectProxy proxy;
+	private VectConstraint tl;
+	private VectConstraint tc;
+	private VectConstraint tr;
+	private VectConstraint cl;
+	private VectConstraint c;
+	private VectConstraint cr;
+	private VectConstraint bl;
+	private VectConstraint bc;
+	private VectConstraint br;
 	
 	
 	@Override
-	public final RectValue getRect()
+	public final RectView getRect()
 	{
 		return this.view();
 	}
 	
 	
 	@Override
-	public final VecView getTopLeft()
+	public final VectVal getTopLeft()
 	{
 		// lazy init
 		if (tl == null) tl = cTopLeft(this);
@@ -42,7 +44,7 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public final VecView getTopCenter()
+	public final VectVal getTopCenter()
 	{
 		// lazy init
 		if (tc == null) tc = cTopCenter(this);
@@ -51,7 +53,7 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public final VecView getTopRight()
+	public final VectVal getTopRight()
 	{
 		// lazy init
 		if (tr == null) tr = cTopRight(this);
@@ -60,7 +62,7 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public final VecView getCenterLeft()
+	public final VectVal getCenterLeft()
 	{
 		// lazy init
 		if (cl == null) cl = cCenterLeft(this);
@@ -69,7 +71,7 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public final VecView getCenter()
+	public final VectVal getCenter()
 	{
 		// lazy init
 		if (c == null) c = cCenter(this);
@@ -78,7 +80,7 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public final VecView getCenterRight()
+	public final VectVal getCenterRight()
 	{
 		// lazy init
 		if (cr == null) cr = cCenterRight(this);
@@ -87,7 +89,7 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public final VecView getBottomLeft()
+	public final VectVal getBottomLeft()
 	{
 		// lazy init
 		if (bl == null) bl = cBottomLeft(this);
@@ -96,7 +98,7 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public final VecView getBottomCenter()
+	public final VectVal getBottomCenter()
 	{
 		// lazy init
 		if (bc == null) bc = cBottomCenter(this);
@@ -105,7 +107,7 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public final VecView getBottomRight()
+	public final VectVal getBottomRight()
 	{
 		// lazy init
 		if (br == null) br = cBottomRight(this);
@@ -156,28 +158,30 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public RectValue view()
+	public RectProxy view()
 	{
-		return new RectProxy(this);
+		if (proxy == null) proxy = new RectProxy(this);
+		
+		return proxy;
 	}
 	
 	
 	@Override
-	public final RectMutable mutable()
+	public RectMutable mutable()
 	{
 		return RectMutable.make(this);
 	}
 	
 	
 	@Override
-	public RectValue value()
+	public RectVal value()
 	{
-		return RectValue.make(getOrigin(), getSize());
+		return RectVal.make(getOrigin(), getSize());
 	}
 	
 	
 	@Override
-	public final boolean contains(Vec point)
+	public final boolean contains(Vect point)
 	{
 		final double x = point.x();
 		final double y = point.y();
@@ -194,7 +198,7 @@ public abstract class AbstractRect implements Rect {
 	@Override
 	public String toString()
 	{
-		return String.format("Rect { %s - %s }", getOrigin().toString(), getOrigin().add(getSize()));
+		return String.format("Rect { %s - %s }", getTopLeft(), getBottomRight());
 	}
 	
 }

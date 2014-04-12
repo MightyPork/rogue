@@ -8,7 +8,7 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.RectConstraint;
-import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.vect.Vect;
 
 
 public class LayerTestGradient extends ScreenLayer {
@@ -44,7 +44,7 @@ public class LayerTestGradient extends ScreenLayer {
 	
 	
 	@Override
-	protected void onSizeChanged(Vec size)
+	protected void onSizeChanged(Vect size)
 	{
 		p.poll();
 	}

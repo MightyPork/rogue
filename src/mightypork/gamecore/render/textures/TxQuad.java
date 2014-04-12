@@ -2,7 +2,7 @@ package mightypork.gamecore.render.textures;
 
 
 import mightypork.utils.math.rect.Rect;
-import mightypork.utils.math.rect.RectValue;
+import mightypork.utils.math.rect.RectVal;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -65,7 +65,7 @@ public class TxQuad {
 	 * @param y2 right bottom Y (0-1)
 	 */
 	public TxQuad(Texture tx, double x1, double y1, double x2, double y2) {
-		this(tx, RectValue.make(x1, y1, x2, y2));
+		this(tx, RectVal.make(x1, y1, x2, y2));
 	}
 	
 	

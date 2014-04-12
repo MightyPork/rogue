@@ -3,8 +3,8 @@ package mightypork.utils.math;
 
 import mightypork.utils.math.Calc.Deg;
 import mightypork.utils.math.Calc.Rad;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -20,7 +20,7 @@ public class Polar {
 	/** distance in units */
 	private double radius = 0;
 	
-	private VecView coord = null;
+	private VectView coord = null;
 	
 	
 	/**
@@ -107,7 +107,7 @@ public class Polar {
 	 * @param coord coord
 	 * @return polar
 	 */
-	public static Polar fromCoord(Vec coord)
+	public static Polar fromCoord(Vect coord)
 	{
 		return Polar.fromCoord(coord.x(), coord.y());
 		
@@ -135,11 +135,11 @@ public class Polar {
 	 * 
 	 * @return coord
 	 */
-	public VecView toCoord()
+	public VectView toCoord()
 	{
 		// lazy init
 		if (coord == null) {
-			coord = new VecView() {
+			coord = new VectView() {
 				
 				@Override
 				public double x()

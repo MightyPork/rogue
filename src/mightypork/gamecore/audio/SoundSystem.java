@@ -12,9 +12,9 @@ import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc.Buffers;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecMutable;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectMutable;
+import mightypork.utils.math.vect.VectView;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
@@ -28,10 +28,10 @@ import org.newdawn.slick.openal.SoundStore;
  */
 public class SoundSystem extends RootBusNode implements Updateable {
 	
-	private static final Vec INITIAL_LISTENER_POS = Vec.ZERO;
+	private static final Vect INITIAL_LISTENER_POS = Vect.ZERO;
 	private static final int MAX_SOURCES = 256;
 	
-	private static VecMutable listener = VecMutable.zero();
+	private static VectMutable listener = VectMutable.zero();
 	private static boolean soundSystemInited = false;
 	
 	
@@ -40,7 +40,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	 * 
 	 * @param pos
 	 */
-	public static void setListener(Vec pos)
+	public static void setListener(Vect pos)
 	{
 		listener.setTo(pos);
 		final FloatBuffer buf3 = Buffers.alloc(3);
@@ -60,7 +60,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	/**
 	 * @return listener coordinate
 	 */
-	public static VecView getListener()
+	public static VectView getListener()
 	{
 		return listener.view();
 	}

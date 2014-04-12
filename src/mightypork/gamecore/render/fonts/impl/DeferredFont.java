@@ -13,8 +13,8 @@ import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.LoggedName;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -164,9 +164,9 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	 * @return coord (width, height)
 	 */
 	@Override
-	public VecView getNeededSpace(String text)
+	public VectView getNeededSpace(String text)
 	{
-		if (!ensureLoaded()) return Vec.ZERO;
+		if (!ensureLoaded()) return Vect.ZERO;
 		
 		return font.getNeededSpace(text);
 	}

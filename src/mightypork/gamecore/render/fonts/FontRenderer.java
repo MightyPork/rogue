@@ -3,10 +3,10 @@ package mightypork.gamecore.render.fonts;
 
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecMutable;
-import mightypork.utils.math.coord.VecView;
 import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectMutable;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -51,7 +51,7 @@ public class FontRenderer {
 	 * @param height drawing height
 	 * @return taken space (width, height)
 	 */
-	public Vec getNeededSpace(String text, double height)
+	public Vect getNeededSpace(String text, double height)
 	{
 		return font.getNeededSpace(text).mul(getScale(height));
 	}
@@ -106,7 +106,7 @@ public class FontRenderer {
 	 * @param height drawing height
 	 * @param color drawing color
 	 */
-	public void draw(String text, Vec pos, double height, RGB color)
+	public void draw(String text, Vect pos, double height, RGB color)
 	{
 		Render.pushMatrix();
 		
@@ -144,7 +144,7 @@ public class FontRenderer {
 	 */
 	public void draw(String text, Rect bounds, Align align, RGB color)
 	{
-		VecView start;
+		VectView start;
 		
 		switch (align) {
 			case LEFT:
@@ -173,7 +173,7 @@ public class FontRenderer {
 	 * @param height drawing height
 	 * @param align horizontal alignment
 	 */
-	public void draw(String text, Vec pos, double height, Align align)
+	public void draw(String text, Vect pos, double height, Align align)
 	{
 		draw(text, pos, height, align, this.color);
 	}
@@ -188,12 +188,12 @@ public class FontRenderer {
 	 * @param align horizontal alignment
 	 * @param color drawing color
 	 */
-	public void draw(String text, Vec pos, double height, Align align, RGB color)
+	public void draw(String text, Vect pos, double height, Align align, RGB color)
 	{
 		
 		final double w = getWidth(text, height);
 		
-		final VecMutable start = pos.mutable();
+		final VectMutable start = pos.mutable();
 		
 		switch (align) {
 			case LEFT:

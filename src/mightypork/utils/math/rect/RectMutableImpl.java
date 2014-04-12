@@ -1,26 +1,28 @@
 package mightypork.utils.math.rect;
 
 
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecMutable;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectMutable;
+import mightypork.utils.math.vect.VectVal;
 
 
 class RectMutableImpl extends RectMutable {
 	
-	final VecMutable pos = VecMutable.zero();
-	final VecMutable size = VecMutable.zero();
+	final VectMutable pos = VectMutable.zero();
+	final VectMutable size = VectMutable.zero();
 	
 	
 	/**
 	 * Create at given origin, with given size.
 	 * 
-	 * @param origin
-	 * @param size
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
 	 */
-	public RectMutableImpl(Vec origin, Vec size) {
-		this.pos.setTo(origin);
-		this.size.setTo(size).abs();
+	public RectMutableImpl(double x, double y, double width, double height) {
+		this.pos.setTo(x, y);
+		this.size.setTo(width, height).abs();
 	}
 	
 	
@@ -32,7 +34,7 @@ class RectMutableImpl extends RectMutable {
 	 * @return result
 	 */
 	@Override
-	public RectMutableImpl move(double x, double y)
+	public RectMutable move(double x, double y)
 	{
 		pos.add(x, y);
 		return this;
@@ -49,7 +51,7 @@ class RectMutableImpl extends RectMutable {
 	 * @return result
 	 */
 	@Override
-	public RectMutableImpl shrink(double left, double right, double top, double bottom)
+	public RectMutable shrink(double left, double right, double top, double bottom)
 	{
 		pos.add(left, top);
 		size.sub(left + right, top + bottom).abs();
@@ -67,7 +69,7 @@ class RectMutableImpl extends RectMutable {
 	 * @return result
 	 */
 	@Override
-	public RectMutableImpl grow(double left, double right, double top, double bottom)
+	public RectMutable grow(double left, double right, double top, double bottom)
 	{
 		pos.sub(left, top);
 		size.add(left + right, top + bottom).abs();
@@ -81,7 +83,7 @@ class RectMutableImpl extends RectMutable {
 	 * @return result
 	 */
 	@Override
-	public RectMutableImpl round()
+	public RectMutable round()
 	{
 		pos.round();
 		size.round();
@@ -90,21 +92,21 @@ class RectMutableImpl extends RectMutable {
 	
 	
 	@Override
-	public VecView getOrigin()
+	public VectVal getOrigin()
 	{
-		return pos.view();
+		return pos.value();
 	}
 	
 	
 	@Override
-	public VecView getSize()
+	public VectVal getSize()
 	{
-		return size.view();
+		return size.value();
 	}
 	
 	
 	@Override
-	public RectMutable setOrigin(Vec origin)
+	public RectMutable setOrigin(Vect origin)
 	{
 		this.pos.setTo(origin);
 		return this;
@@ -112,7 +114,7 @@ class RectMutableImpl extends RectMutable {
 	
 	
 	@Override
-	public RectMutable setSize(Vec size)
+	public RectMutable setSize(Vect size)
 	{
 		this.size.setTo(size).abs();
 		return this;

@@ -1,7 +1,7 @@
 package mightypork.utils.math.constraints;
 
 
-import mightypork.utils.math.rect.RectValue;
+import mightypork.utils.math.rect.RectView;
 
 
 /**
@@ -18,6 +18,6 @@ public interface PluggableRect extends RectConstraint {
 	
 	
 	@Override
-	abstract RectValue getRect();
+	abstract RectView getRect();
 	
 }

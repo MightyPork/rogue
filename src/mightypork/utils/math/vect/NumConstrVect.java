@@ -1,4 +1,4 @@
-package mightypork.utils.math.coord;
+package mightypork.utils.math.vect;
 
 
 import mightypork.utils.math.constraints.NumberConstraint;
@@ -10,21 +10,21 @@ import mightypork.utils.math.constraints.NumberConstraint;
  * 
  * @author MightyPork
  */
-class NumConstrVec extends VecView {
+class NumConstrVect extends VectView {
 	
 	private final NumberConstraint constrX;
 	private final NumberConstraint constrY;
 	private final NumberConstraint constrZ;
 	
 	
-	public NumConstrVec(NumberConstraint x, NumberConstraint y, NumberConstraint z) {
+	public NumConstrVect(NumberConstraint x, NumberConstraint y, NumberConstraint z) {
 		this.constrX = x;
 		this.constrY = y;
 		this.constrZ = z;
 	}
 	
 	
-	public NumConstrVec(NumberConstraint x, NumberConstraint y) {
+	public NumConstrVect(NumberConstraint x, NumberConstraint y) {
 		this.constrX = x;
 		this.constrY = y;
 		this.constrZ = NumberConstraint.ZERO;

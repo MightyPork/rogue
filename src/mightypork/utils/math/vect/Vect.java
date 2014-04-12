@@ -1,8 +1,8 @@
-package mightypork.utils.math.coord;
+package mightypork.utils.math.vect;
 
 
 import mightypork.utils.math.constraints.NumberConstraint;
-import mightypork.utils.math.constraints.VecConstraint;
+import mightypork.utils.math.constraints.VectConstraint;
 
 
 /**
@@ -10,10 +10,10 @@ import mightypork.utils.math.constraints.VecConstraint;
  * 
  * @author MightyPork
  */
-public interface Vec extends VecConstraint {
+public interface Vect extends VectConstraint {
 	
-	public static final VecView ZERO = new ConstVec(0, 0, 0);
-	public static final VecView ONE = new ConstVec(0, 0, 0);
+	public static final VectVal ZERO = new VectVal(0, 0, 0);
+	public static final VectVal ONE = new VectVal(0, 0, 0);
 	
 	
 	/**
@@ -55,21 +55,18 @@ public interface Vec extends VecConstraint {
 	/**
 	 * @return X constraint
 	 */
-	@Override
 	NumberConstraint xc();
 	
 	
 	/**
 	 * @return Y constraint
 	 */
-	@Override
 	NumberConstraint yc();
 	
 	
 	/**
 	 * @return Z constraint
 	 */
-	@Override
 	NumberConstraint zc();
 	
 	
@@ -93,7 +90,7 @@ public interface Vec extends VecConstraint {
 	 * @param point other point
 	 * @return distance
 	 */
-	double distTo(Vec point);
+	double distTo(Vect point);
 	
 	
 	/**
@@ -102,7 +99,7 @@ public interface Vec extends VecConstraint {
 	 * @param point other point
 	 * @return result
 	 */
-	VecView midTo(Vec point);
+	VectVal midTo(Vect point);
 	
 	
 	/**
@@ -111,7 +108,7 @@ public interface Vec extends VecConstraint {
 	 * @param point second point
 	 * @return result
 	 */
-	public VecView vecTo(Vec point);
+	VectVal vecTo(Vect point);
 	
 	
 	/**
@@ -120,7 +117,7 @@ public interface Vec extends VecConstraint {
 	 * @param vec other vector
 	 * @return result
 	 */
-	public VecView cross(Vec vec);
+	VectVal cross(Vect vec);
 	
 	
 	/**
@@ -129,7 +126,7 @@ public interface Vec extends VecConstraint {
 	 * @param vec other vector
 	 * @return dot product
 	 */
-	public double dot(Vec vec);
+	double dot(Vect vec);
 	
 	
 	/**
@@ -137,7 +134,7 @@ public interface Vec extends VecConstraint {
 	 * 
 	 * @return a immutable copy
 	 */
-	VecView value();
+	VectVal value();
 	
 	
 	/**
@@ -145,7 +142,7 @@ public interface Vec extends VecConstraint {
 	 * 
 	 * @return immutable view
 	 */
-	VecView view();
+	VectView view();
 	
 	
 	/**
@@ -153,5 +150,5 @@ public interface Vec extends VecConstraint {
 	 * 
 	 * @return mutable copy
 	 */
-	VecMutable mutable();
+	VectMutable mutable();
 }

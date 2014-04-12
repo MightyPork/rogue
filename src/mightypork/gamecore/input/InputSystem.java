@@ -9,8 +9,8 @@ import mightypork.gamecore.control.bus.events.MouseMotionEvent;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.utils.math.coord.VecMutable;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.VectMutable;
+import mightypork.utils.math.vect.VectView;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -29,7 +29,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	private final KeyBindingPool keybindings;
 	
 	/** Current mouse position */
-	private final VecView mousePos = new VecView() {
+	private final VectView mousePos = new VectView() {
 		
 		@Override
 		public double x()
@@ -103,8 +103,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	// counters as fields to save memory.
-	private final VecMutable mouseMove = VecMutable.zero();
-	private final VecMutable mouseLastPos = VecMutable.zero();
+	private final VectMutable mouseMove = VectMutable.zero();
+	private final VectMutable mouseLastPos = VectMutable.zero();
 	
 	
 	@Override
@@ -140,13 +140,13 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
-	private void onMouseEvent(VecMutable moveSum, VecMutable lastPos)
+	private void onMouseEvent(VectMutable moveSum, VectMutable lastPos)
 	{
 		final int button = Mouse.getEventButton();
 		final boolean down = Mouse.getEventButtonState();
 		
-		final VecMutable pos = VecMutable.make(Mouse.getEventX(), Mouse.getEventY());
-		final VecMutable move = VecMutable.make(Mouse.getEventDX(), Mouse.getEventDY());
+		final VectMutable pos = VectMutable.make(Mouse.getEventX(), Mouse.getEventY());
+		final VectMutable move = VectMutable.make(Mouse.getEventDX(), Mouse.getEventDY());
 		
 		final int wheeld = Mouse.getEventDWheel();
 		
@@ -178,7 +178,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	 * 
 	 * @return mouse position
 	 */
-	public VecView getMousePos()
+	public VectView getMousePos()
 	{
 		return mousePos;
 	}

@@ -3,7 +3,7 @@ package mightypork.gamecore.audio.players;
 
 import mightypork.gamecore.audio.DeferredAudio;
 import mightypork.gamecore.audio.Volume;
-import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.vect.Vect;
 
 
 /**
@@ -59,7 +59,7 @@ public class EffectPlayer extends BaseAudioPlayer {
 	 * @param pos play position
 	 * @return source id
 	 */
-	public int play(double pitch, double gain, Vec pos)
+	public int play(double pitch, double gain, Vect pos)
 	{
 		if (!hasAudio()) return -1;
 		

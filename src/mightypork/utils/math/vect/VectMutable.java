@@ -1,4 +1,4 @@
-package mightypork.utils.math.coord;
+package mightypork.utils.math.vect;
 
 
 import mightypork.utils.math.animation.AnimDouble;
@@ -10,14 +10,14 @@ import mightypork.utils.math.animation.Easing;
  * 
  * @author MightyPork
  */
-public abstract class VecMutable extends VecMath<VecMutable> {
-	
+public abstract class VectMutable extends VectMath<VectMutable> { // returns itself on edit
+
 	/**
 	 * Get a variable initialized as zero (0,0,0)
 	 * 
 	 * @return new mutable vector
 	 */
-	public static VecMutable zero()
+	public static VectMutable zero()
 	{
 		return make(ZERO);
 	}
@@ -28,7 +28,7 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * 
 	 * @return one mutable vector
 	 */
-	public static VecMutable one()
+	public static VectMutable one()
 	{
 		return make(ONE);
 	}
@@ -41,7 +41,7 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * @param y Y coordinate
 	 * @return mutable vector
 	 */
-	public static VecMutable make(double x, double y)
+	public static VectMutable make(double x, double y)
 	{
 		return make(x, y, 0);
 	}
@@ -53,7 +53,7 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * @param copied copied vec
 	 * @return mutable vector
 	 */
-	public static VecMutable make(Vec copied)
+	public static VectMutable make(Vect copied)
 	{
 		return make(copied.x(), copied.y(), copied.z());
 	}
@@ -67,9 +67,9 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * @param z Z coordinate
 	 * @return mutable vector
 	 */
-	public static VecMutable make(double x, double y, double z)
+	public static VectMutable make(double x, double y, double z)
 	{
-		return new VecMutableImpl(x, y, z);
+		return new VectMutableImpl(x, y, z);
 	}
 	
 	
@@ -82,9 +82,9 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * @param animZ z animator
 	 * @return animated mutable vector
 	 */
-	public static VecMutableAnim makeAnim(AnimDouble animX, AnimDouble animY, AnimDouble animZ)
+	public static VectMutableAnim makeAnim(AnimDouble animX, AnimDouble animY, AnimDouble animZ)
 	{
-		return new VecMutableAnim(animX, animY, animZ);
+		return new VectMutableAnim(animX, animY, animZ);
 	}
 	
 	
@@ -95,9 +95,9 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * @param easing animation easing
 	 * @return animated mutable vector
 	 */
-	public static VecMutableAnim makeAnim(Vec animStart, Easing easing)
+	public static VectMutableAnim makeAnim(Vect animStart, Easing easing)
 	{
-		return new VecMutableAnim(animStart, easing);
+		return new VectMutableAnim(animStart, easing);
 	}
 	
 	
@@ -107,14 +107,14 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * @param easing animation easing
 	 * @return animated mutable vector
 	 */
-	public static VecMutableAnim makeAnim(Easing easing)
+	public static VectMutableAnim makeAnim(Easing easing)
 	{
-		return new VecMutableAnim(Vec.ZERO, easing);
+		return new VectMutableAnim(Vect.ZERO, easing);
 	}
 	
 	
 	@Override
-	public abstract VecMutable result(double x, double y, double z);
+	public abstract VectMutable result(double x, double y, double z);
 	
 	
 	@Override
@@ -129,7 +129,7 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	public abstract double z();
 	
 	
-	public VecMutable reset()
+	public VectMutable reset()
 	{
 		return result(0, 0, 0);
 	}
@@ -141,7 +141,7 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * @param copied coord whose coordinates are used
 	 * @return result
 	 */
-	public VecMutable setTo(Vec copied)
+	public VectMutable setTo(Vect copied)
 	{
 		return result(copied.x(), copied.y(), copied.z());
 	}
@@ -155,7 +155,7 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * @param y y coordinate
 	 * @return result
 	 */
-	public VecMutable setTo(double x, double y)
+	public VectMutable setTo(double x, double y)
 	{
 		return result(x, y, z());
 	}
@@ -169,7 +169,7 @@ public abstract class VecMutable extends VecMath<VecMutable> {
 	 * @param z z coordinate
 	 * @return result
 	 */
-	public VecMutable setTo(double x, double y, double z)
+	public VectMutable setTo(double x, double y, double z)
 	{
 		return result(x, y, z);
 	}

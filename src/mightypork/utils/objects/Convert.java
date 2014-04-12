@@ -3,8 +3,9 @@ package mightypork.utils.objects;
 
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.Range;
-import mightypork.utils.math.coord.Vec;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -125,8 +126,8 @@ public class Convert {
 			return (Boolean) o ? "True" : "False";
 		}
 		
-		if (o instanceof Vec) {
-			final Vec c = (Vec) o;
+		if (o instanceof Vect) {
+			final Vect c = (Vect) o;
 			return String.format("[%f;%f;%f]", c.x(), c.y(), c.z());
 		}
 		
@@ -144,18 +145,17 @@ public class Convert {
 	
 	
 	/**
-	 * Get COORD<br>
-	 * Converts special constants to magic coordinate instances.
+	 * Get a vector
 	 * 
 	 * @param o object
 	 * @param def default value
-	 * @return AiCoord
+	 * @return vector
 	 */
-	public static VecView toCoord(Object o, Vec def)
+	public static VectVal toVect(Object o, Vect def)
 	{
 		try {
 			if (o == null) return def.value();
-			if (o instanceof Vec) return ((Vec) o).value();
+			if (o instanceof Vect) return ((Vect) o).value();
 			if (o instanceof String) {
 				String s = ((String) o).trim().toUpperCase();
 				
@@ -171,12 +171,12 @@ public class Convert {
 					final double y = Double.parseDouble(parts[1].trim());
 					
 					if (parts.length == 2) {
-						return VecView.make(x, y);
+						return VectVal.make(x, y);
 					}
 					
 					final double z = Double.parseDouble(parts[2].trim());
 					
-					return VecView.make(x, y, z);
+					return VectVal.make(x, y, z);
 				}
 			}
 		} catch (final NumberFormatException | ArrayIndexOutOfBoundsException e) {
@@ -289,9 +289,9 @@ public class Convert {
 	 * @param o object
 	 * @return Coord
 	 */
-	public static VecView toCoord(Object o)
+	public static VectView toCoord(Object o)
 	{
-		return toCoord(o, VecView.zero());
+		return toVect(o, Vect.ZERO);
 	}
 	
 	

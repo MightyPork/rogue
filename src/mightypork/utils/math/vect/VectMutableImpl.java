@@ -1,4 +1,4 @@
-package mightypork.utils.math.coord;
+package mightypork.utils.math.vect;
 
 
 /**
@@ -7,7 +7,7 @@ package mightypork.utils.math.coord;
  * 
  * @author MightyPork
  */
-class VecMutableImpl extends VecMutable {
+class VectMutableImpl extends VectMutable {
 	
 	private double x, y, z;
 	
@@ -17,7 +17,7 @@ class VecMutableImpl extends VecMutable {
 	 * @param y Y coordinate
 	 * @param z Z coordinate
 	 */
-	public VecMutableImpl(double x, double y, double z) {
+	public VectMutableImpl(double x, double y, double z) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -47,7 +47,7 @@ class VecMutableImpl extends VecMutable {
 	
 	
 	@Override
-	public VecMutableImpl result(double x, double y, double z)
+	public VectMutableImpl result(double x, double y, double z)
 	{
 		this.x = x;
 		this.y = y;

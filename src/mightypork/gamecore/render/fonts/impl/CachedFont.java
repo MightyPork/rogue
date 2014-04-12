@@ -23,7 +23,8 @@ import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.coord.VecView;
+import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectView;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.util.glu.GLU;
@@ -422,9 +423,9 @@ public class CachedFont implements GLFont {
 	
 	
 	@Override
-	public VecView getNeededSpace(String text)
+	public VectVal getNeededSpace(String text)
 	{
-		return VecView.make(getWidth(text), getLineHeight());
+		return VectVal.make(getWidth(text), getLineHeight());
 	}
 	
 }

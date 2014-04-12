@@ -1,7 +1,7 @@
 package mightypork.utils.math.rect;
 
 
-import mightypork.utils.math.coord.Vec;
+import mightypork.utils.math.vect.Vect;
 
 
 abstract class RectMath<T extends Rect> extends AbstractRect {
@@ -12,7 +12,7 @@ abstract class RectMath<T extends Rect> extends AbstractRect {
 	 * @param move offset vector
 	 * @return result
 	 */
-	public T move(Vec move)
+	public T move(Vect move)
 	{
 		return move(move.x(), move.y());
 	}
@@ -35,7 +35,7 @@ abstract class RectMath<T extends Rect> extends AbstractRect {
 	 * @return result
 	 */
 	
-	public T shrink(Vec shrink)
+	public T shrink(Vect shrink)
 	{
 		return shrink(shrink.x(), shrink.y());
 	}
@@ -72,7 +72,7 @@ abstract class RectMath<T extends Rect> extends AbstractRect {
 	 * @param grow grow size (added to each side)
 	 * @return grown copy
 	 */
-	public final T grow(Vec grow)
+	public final T grow(Vect grow)
 	{
 		return grow(grow.x(), grow.y());
 	}

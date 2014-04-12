@@ -1,4 +1,4 @@
-package mightypork.utils.math.coord;
+package mightypork.utils.math.vect;
 
 
 import mightypork.gamecore.control.timing.Pauseable;
@@ -12,20 +12,20 @@ import mightypork.utils.math.animation.Easing;
  * 
  * @author MightyPork
  */
-public class VecMutableAnim extends VecMutable implements Pauseable, Updateable {
+public class VectMutableAnim extends VectMutable implements Pauseable, Updateable {
 	
 	private final AnimDouble x, y, z;
 	private double defaultDuration = 0;
 	
 	
-	VecMutableAnim(AnimDouble x, AnimDouble y, AnimDouble z) {
+	VectMutableAnim(AnimDouble x, AnimDouble y, AnimDouble z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
 	
-	VecMutableAnim(Vec start, Easing easing) {
+	VectMutableAnim(Vect start, Easing easing) {
 		x = new AnimDouble(start.x(), easing);
 		y = new AnimDouble(start.y(), easing);
 		z = new AnimDouble(start.z(), easing);
@@ -74,7 +74,7 @@ public class VecMutableAnim extends VecMutable implements Pauseable, Updateable 
 	
 	
 	@Override
-	public VecMutableAnim result(double x, double y, double z)
+	public VectMutableAnim result(double x, double y, double z)
 	{
 		this.x.animate(x, defaultDuration);
 		this.y.animate(y, defaultDuration);
@@ -84,14 +84,14 @@ public class VecMutableAnim extends VecMutable implements Pauseable, Updateable 
 	}
 	
 	
-	public VecMutableAnim add(Vec offset, double speed)
+	public VectMutableAnim add(Vect offset, double speed)
 	{
 		animate(view().add(offset), speed);
 		return this;
 	}
 	
 	
-	public VecMutableAnim animate(double x, double y, double z, double duration)
+	public VectMutableAnim animate(double x, double y, double z, double duration)
 	{
 		this.x.animate(x, duration);
 		this.y.animate(y, duration);
@@ -100,7 +100,7 @@ public class VecMutableAnim extends VecMutable implements Pauseable, Updateable 
 	}
 	
 	
-	public VecMutableAnim animate(Vec target, double duration)
+	public VectMutableAnim animate(Vect target, double duration)
 	{
 		animate(target.x(), target.y(), target.z(), duration);
 		return this;

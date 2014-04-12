@@ -1,4 +1,4 @@
-package mightypork.utils.math.coord;
+package mightypork.utils.math.vect;
 
 
 /**
@@ -7,7 +7,7 @@ package mightypork.utils.math.coord;
  * @author MightyPork
  * @param <V> Return type of methods
  */
-abstract class VecMath<V extends Vec> extends AbstractVec {
+abstract class VectMath<V extends Vect> extends AbstractVect {
 	
 	/**
 	 * <p>
@@ -79,7 +79,7 @@ abstract class VecMath<V extends Vec> extends AbstractVec {
 	 * @param vec offset
 	 * @return result
 	 */
-	public V add(Vec vec)
+	public V add(Vect vec)
 	{
 		return add(vec.x(), vec.y(), vec.z());
 	}
@@ -142,7 +142,7 @@ abstract class VecMath<V extends Vec> extends AbstractVec {
 	 * @param vec vector of multipliers
 	 * @return result
 	 */
-	public V mul(Vec vec)
+	public V mul(Vect vec)
 	{
 		return mul(vec.x(), vec.y(), vec.z());
 	}
@@ -215,7 +215,7 @@ abstract class VecMath<V extends Vec> extends AbstractVec {
 	 * @param vec offset
 	 * @return result
 	 */
-	public V sub(Vec vec)
+	public V sub(Vect vec)
 	{
 		return sub(vec.x(), vec.y(), vec.z());
 	}
@@ -273,36 +273,5 @@ abstract class VecMath<V extends Vec> extends AbstractVec {
 		final double k = size / size();
 		
 		return mul(k);
-	}
-	
-	
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Double.valueOf(x()).hashCode();
-		result = prime * result + Double.valueOf(y()).hashCode();
-		result = prime * result + Double.valueOf(z()).hashCode();
-		return result;
-	}
-	
-	
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (!(obj instanceof Vec)) return false;
-		final Vec other = (Vec) obj;
-		
-		return x() == other.x() && y() == other.y() && z() == other.z();
-	}
-	
-	
-	@Override
-	public String toString()
-	{
-		return String.format("(%.1f %.1f %.1f)", x(), y(), z());
 	}
 }
