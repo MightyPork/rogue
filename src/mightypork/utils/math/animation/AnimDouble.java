@@ -4,9 +4,7 @@ package mightypork.utils.math.animation;
 import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc;
-import mightypork.utils.math.constraints.NumBound;
 import mightypork.utils.math.num.NumMutable;
-import mightypork.utils.math.num.NumVal;
 
 
 /**
@@ -135,8 +133,8 @@ public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	{
 		return defaultDuration;
 	}
-
-
+	
+	
 	/**
 	 * @param defaultDuration default animation duration (seconds)
 	 */
@@ -144,8 +142,8 @@ public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	{
 		this.defaultDuration = defaultDuration;
 	}
-
-
+	
+	
 	/**
 	 * Get value at delta time
 	 * 
@@ -202,12 +200,11 @@ public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	 * @param value
 	 */
 	@Override
-	public AnimDouble setTo(double value)
+	public void setTo(double value)
 	{
 		from = to = value;
 		elapsedTime = 0;
 		duration = defaultDuration;
-		return this;
 	}
 	
 	

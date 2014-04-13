@@ -1,6 +1,9 @@
 package mightypork.utils.math.num;
 
 
+import mightypork.utils.math.rect.Rect;
+
+
 /**
  * Math operations for numbers
  * 
@@ -36,7 +39,7 @@ interface NumMath<N extends NumMath<N>> extends Num {
 	N pow(Num other);
 	
 	
-	N average(Num other);	
+	N average(Num other);
 	
 	
 	N add(double addend);
@@ -154,4 +157,12 @@ interface NumMath<N extends NumMath<N>> extends Num {
 	
 	
 	boolean isZero();
+	
+	
+	/**
+	 * Make a square rect with this side, positioned at 0,0
+	 * 
+	 * @return new rect
+	 */
+	Rect box();
 }

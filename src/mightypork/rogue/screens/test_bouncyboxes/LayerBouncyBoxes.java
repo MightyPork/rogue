@@ -1,8 +1,6 @@
 package mightypork.rogue.screens.test_bouncyboxes;
 
 
-import static mightypork.utils.math.constraints.ConstraintFactory.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

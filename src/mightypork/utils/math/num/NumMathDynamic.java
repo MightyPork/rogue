@@ -1,8 +1,11 @@
 package mightypork.utils.math.num;
 
 
-public abstract class NumMathDynamic extends NumMathBase<NumView>{
+import mightypork.utils.math.rect.RectView;
 
+
+abstract class NumMathDynamic extends NumMathBase<NumView> {
+	
 	private NumView ceil;
 	private NumView floor;
 	private NumView sgn;
@@ -19,13 +22,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 	private NumView square;
 	private NumView neg;
 	private NumView abs;
-
+	
+	
 	@Override
 	public NumView add(final double addend)
 	{
 		return new NumView() {
 			
-			private Num t = NumMathDynamic.this;
+			private final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -34,19 +39,22 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 			}
 		};
 	}
-
+	
+	
 	@Override
 	public NumView sub(final double subtrahend)
 	{
 		return add(-subtrahend);
 	}
-
+	
+	
 	@Override
 	public NumView mul(final double factor)
 	{
 		return new NumView() {
 			
-			private Num t = NumMathDynamic.this;
+			private final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -55,42 +63,48 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 			}
 		};
 	}
-
+	
+	
 	@Override
 	public NumView div(final double factor)
 	{
-		return mul(1/factor);
+		return mul(1 / factor);
 	}
-
+	
+	
 	@Override
 	public NumView perc(final double percent)
 	{
-		return mul(percent/100);
+		return mul(percent / 100);
 	}
-
+	
+	
 	@Override
 	public NumView neg()
 	{
-		if(neg==null) neg = new NumView() {
+		if (neg == null) neg = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
 			{
-				return -1*t.value();
+				return -1 * t.value();
 			}
 		};
 		
 		return neg;
 	}
-
+	
+	
 	@Override
 	public NumView abs()
 	{
-		if(abs==null) abs = new NumView() {
+		if (abs == null) abs = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -101,13 +115,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return abs;
 	}
-
+	
+	
 	@Override
 	public NumView max(final double other)
 	{
 		return new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -116,13 +132,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 			}
 		};
 	}
-
+	
+	
 	@Override
 	public NumView min(final double other)
 	{
 		return new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -131,13 +149,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 			}
 		};
 	}
-
+	
+	
 	@Override
 	public NumView pow(final double other)
 	{
 		return new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -146,49 +166,55 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 			}
 		};
 	}
-
+	
+	
 	@Override
 	public NumView square()
 	{
-		if(square==null) square = new NumView() {
+		if (square == null) square = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
 			{
 				final double v = t.value();
-				return v*v;
+				return v * v;
 			}
 		};
 		
 		return square;
 	}
-
+	
+	
 	@Override
 	public NumView cube()
 	{
-		if(cube==null) cube = new NumView() {
+		if (cube == null) cube = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
 			{
 				final double v = t.value();
-				return v*v*v;
+				return v * v * v;
 			}
 		};
 		
 		return cube;
 	}
-
+	
+	
 	@Override
 	public NumView sqrt()
 	{
-		if(sqrt==null) sqrt = new NumView() {
+		if (sqrt == null) sqrt = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -199,13 +225,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return sqrt;
 	}
-
+	
+	
 	@Override
 	public NumView cbrt()
 	{
-		if(cbrt==null) cbrt = new NumView() {
+		if (cbrt == null) cbrt = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -216,13 +244,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return cbrt;
 	}
-
+	
+	
 	@Override
 	public NumView sin()
 	{
-		if(sin==null) sin = new NumView() {
+		if (sin == null) sin = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -233,13 +263,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return sin;
 	}
-
+	
+	
 	@Override
 	public NumView cos()
 	{
-		if(cos==null) cos = new NumView() {
+		if (cos == null) cos = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -250,13 +282,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return cos;
 	}
-
+	
+	
 	@Override
 	public NumView tan()
 	{
-		if(tan==null) tan = new NumView() {
+		if (tan == null) tan = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -267,13 +301,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return tan;
 	}
-
+	
+	
 	@Override
 	public NumView asin()
 	{
-		if(asin==null) asin = new NumView() {
+		if (asin == null) asin = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -284,13 +320,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return asin;
 	}
-
+	
+	
 	@Override
 	public NumView acos()
 	{
-		if(acos==null) acos = new NumView() {
+		if (acos == null) acos = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -301,13 +339,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return acos;
 	}
-
+	
+	
 	@Override
 	public NumView atan()
 	{
-		if(atan==null) atan = new NumView() {
+		if (atan == null) atan = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -318,13 +358,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return atan;
 	}
-
+	
+	
 	@Override
 	public NumView round()
 	{
-		if(round==null) round = new NumView() {
+		if (round == null) round = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -335,13 +377,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return round;
 	}
-
+	
+	
 	@Override
 	public NumView floor()
 	{
-		if(floor==null) floor = new NumView() {
+		if (floor == null) floor = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -352,13 +396,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return floor;
 	}
-
+	
+	
 	@Override
 	public NumView ceil()
 	{
-		if(ceil==null) ceil = new NumView() {
+		if (ceil == null) ceil = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -369,13 +415,15 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return ceil;
 	}
-
+	
+	
 	@Override
 	public NumView signum()
 	{
-		if(sgn==null) sgn = new NumView() {
+		if (sgn == null) sgn = new NumView() {
 			
 			final Num t = NumMathDynamic.this;
+			
 			
 			@Override
 			public double value()
@@ -386,7 +434,8 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 		
 		return sgn;
 	}
-
+	
+	
 	@Override
 	public NumView average(final double other)
 	{
@@ -399,7 +448,6 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 	{
 		return mul(0.5);
 	}
-
 	
 	
 	@Override
@@ -554,5 +602,12 @@ public abstract class NumMathDynamic extends NumMathBase<NumView>{
 				return (t.value() + eval(other)) / 2;
 			}
 		};
+	}
+	
+	
+	@Override
+	public RectView box()
+	{
+		return RectView.make(this, this);
 	}
 }

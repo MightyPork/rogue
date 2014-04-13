@@ -10,7 +10,7 @@ import mightypork.utils.math.constraints.NumBound;
  * 
  * @author MightyPork
  */
-public abstract class NumMutable extends NumMathStatic<NumMutable> {
+public abstract class NumMutable extends NumView {
 	
 	/**
 	 * Make a new mutable number initialized as zero (0)
@@ -36,7 +36,6 @@ public abstract class NumMutable extends NumMathStatic<NumMutable> {
 	}
 	
 	
-	
 	/**
 	 * Make as copy of another
 	 * 
@@ -49,6 +48,7 @@ public abstract class NumMutable extends NumMathStatic<NumMutable> {
 		return new NumMutableImpl(value);
 	}
 	
+	
 	/**
 	 * Make as copy of another
 	 * 
@@ -60,6 +60,7 @@ public abstract class NumMutable extends NumMathStatic<NumMutable> {
 	{
 		return new NumMutableImpl(eval(copied));
 	}
+	
 	
 	/**
 	 * Make as copy of another
@@ -74,31 +75,31 @@ public abstract class NumMutable extends NumMathStatic<NumMutable> {
 	}
 	
 	
-	@Override
-	protected NumMutable result(double a)
-	{
-		return setTo(a);
-	}
+	/**
+	 * Assign a value
+	 * 
+	 * @param value new value
+	 */
+	public abstract void setTo(double value);
 	
 	
 	/**
 	 * Assign a value
 	 * 
 	 * @param value new value
-	 * @return this
 	 */
-	public NumMutable set(Num value)
+	public void setTo(Num value)
 	{
-		return setTo(eval(value));
+		setTo(eval(value));
 	}
-	
-	
+
+
 	/**
-	 * Assign a value
-	 * 
-	 * @param value new value
-	 * @return this
+	 * Set to zero
 	 */
-	public abstract NumMutable setTo(double value);
+	public void reset()
+	{
+		setTo(0);
+	}
 	
 }

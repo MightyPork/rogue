@@ -54,14 +54,14 @@ public class QuadPainter extends AbstractPainter {
 		Render.quadColor(getRect(), colorHMinVMin, colorHMaxVMin, colorHMaxVMax, colorHMinVMax);
 	}
 	
-
+	
 	@FactoryMethod
 	public static QuadPainter gradH(RGB colorLeft, RGB colorRight)
 	{
 		return new QuadPainter(colorLeft, colorRight, colorRight, colorLeft);
 	}
 	
-
+	
 	@FactoryMethod
 	public static QuadPainter gradV(RGB colorTop, RGB colorBottom)
 	{

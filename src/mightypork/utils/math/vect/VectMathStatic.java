@@ -11,7 +11,7 @@ import mightypork.utils.math.num.NumVal;
  * @author MightyPork
  * @param <V> Return type of methods
  */
-public abstract class VectMathStatic<V extends VectMathStatic<V>> extends VectMath<V, NumVal> {
+abstract class VectMathStatic<V extends VectMathStatic<V>> extends VectMath<V, NumVal> {
 	
 	@Override
 	public NumVal xn()

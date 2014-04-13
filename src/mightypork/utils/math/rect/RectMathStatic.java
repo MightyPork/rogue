@@ -4,9 +4,10 @@ package mightypork.utils.math.rect;
 import mightypork.utils.math.num.NumVal;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectView;
 
 
-public abstract class RectMathStatic<R extends RectMathStatic<R>> extends RectMath<R> {
+abstract class RectMathStatic<R extends RectMathStatic<R>> extends RectMath<R> {
 	
 	@Override
 	public abstract VectVal origin();
@@ -14,6 +15,7 @@ public abstract class RectMathStatic<R extends RectMathStatic<R>> extends RectMa
 	
 	@Override
 	public abstract VectVal size();
+	
 	
 	@Override
 	public R move(Vect move)
@@ -23,36 +25,44 @@ public abstract class RectMathStatic<R extends RectMathStatic<R>> extends RectMa
 	
 	
 	@Override
-	public R move(double x, double y) {
-		return result(p_origin.add(x,y), p_size);
+	public R move(double x, double y)
+	{
+		return result(origin().add(x, y), size());
 	}
 	
 	
 	@Override
-	public R shrink(double left, double right, double top, double bottom) 
+	public R shrink(double left, double right, double top, double bottom)
 	{
-		return result(p_origin.add(left, top), p_size.sub(left + right, top + bottom));
+		return result(origin().add(left, top), size().sub(left + right, top + bottom));
+		
 	}
 	
 	
 	@Override
 	public R grow(double left, double right, double top, double bottom)
-	{		
-		return result(p_origin.sub(left, top), p_size.add(left + right, top + bottom));
+	{
+		return result(origin().sub(left, top), size().add(left + right, top + bottom));
 	}
 	
 	
 	@Override
 	public R centerTo(final Vect point)
-	{		
-		return result(p_origin.sub(p_size.half()), p_size);
+	{
+		final VectView s = size().view();
+		final VectView o = origin().view();
+		
+		return result(o.sub(s.half()), s);
 	}
 	
 	
 	@Override
 	public R round()
-	{		
-		return result(p_origin.round(), p_size.round());
+	{
+		final VectView s = size().view();
+		final VectView o = origin().view();
+		
+		return result(o.round(), s.round());
 	}
 	
 	
@@ -62,118 +72,118 @@ public abstract class RectMathStatic<R extends RectMathStatic<R>> extends RectMa
 	@Override
 	public NumVal x()
 	{
-		return p_x.copy();
+		return origin().xn();
 	}
 	
 	
 	@Override
 	public NumVal y()
 	{
-		return p_y.copy();
+		return origin().yn();
 	}
 	
 	
 	@Override
 	public NumVal width()
 	{
-		return p_width.copy();
+		return size().xn();
 	}
 	
 	
 	@Override
 	public NumVal height()
 	{
-		return p_height.copy();
+		return size().yn();
 	}
 	
 	
 	@Override
 	public NumVal left()
 	{
-		return p_left.copy();
+		return origin().xn();
 	}
 	
 	
 	@Override
 	public NumVal right()
 	{
-		return p_right.copy();
+		return origin().xn().add(size().xn());
 	}
 	
 	
 	@Override
 	public NumVal top()
 	{
-		return p_top.copy();
+		return origin().yn();
 	}
 	
 	
 	@Override
 	public NumVal bottom()
 	{
-		return p_bottom.copy();
+		return origin().yn().add(size().yn());
 	}
 	
 	
 	@Override
 	public VectVal topLeft()
 	{
-		return p_tl.copy();
+		return origin();
 	}
 	
 	
 	@Override
 	public VectVal topCenter()
 	{
-		return p_tc.copy();
+		return origin().add(size().x() / 2, 0);
 	}
 	
 	
 	@Override
 	public VectVal topRight()
 	{
-		return p_tr.copy();
+		return origin().add(size().x(), 0);
 	}
 	
 	
 	@Override
 	public VectVal centerLeft()
 	{
-		return p_cl.copy();
+		return origin().add(0, size().y() / 2);
 	}
 	
 	
 	@Override
 	public VectVal center()
 	{
-		return p_cc.copy();
+		return origin().add(size().view().half());
 	}
 	
 	
 	@Override
 	public VectVal centerRight()
 	{
-		return p_cr.copy();
+		return origin().add(size().x(), size().y() / 2);
 	}
 	
 	
 	@Override
 	public VectVal bottomLeft()
 	{
-		return p_bl.copy();
+		return origin().add(0, size().y());
 	}
 	
 	
 	@Override
 	public VectVal bottomCenter()
 	{
-		return p_bc.copy();
+		return origin().add(size().x() / 2, size().y());
 	}
 	
 	
 	@Override
 	public VectVal bottomRight()
 	{
-		return p_br.copy();
+		return origin().add(size().view());
 	}
 }

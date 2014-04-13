@@ -1,23 +1,37 @@
 package mightypork.utils.math.num;
 
 
-public abstract class AbstractNum implements Num {
+abstract class AbstractNum implements Num {
+	
+	private NumView proxy;
+	
 	
 	@Override
-	public Num getNum() {
+	public Num getNum()
+	{
 		return this;
 	}
+	
 	
 	@Override
 	public NumView view()
 	{
-		return new NumProxy(this);
+		if (proxy == null) proxy = new NumProxy(this);
+		
+		return proxy;
 	}
+	
 	
 	@Override
 	public NumVal copy()
 	{
 		return new NumVal(this);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return String.format("#{%.1f}",value());
 	}
 	
 }

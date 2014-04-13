@@ -20,7 +20,7 @@ import mightypork.utils.math.constraints.RectBound;
  */
 public abstract class AbstractLayout extends AbstractComponent {
 	
-	final LinkedList<PluggableRenderable>	elements	= new LinkedList<>();
+	final LinkedList<PluggableRenderable> elements = new LinkedList<>();
 	
 	
 	/**

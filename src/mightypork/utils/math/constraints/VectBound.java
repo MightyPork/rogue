@@ -1,7 +1,6 @@
 package mightypork.utils.math.constraints;
 
 
-import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectView;
 
 

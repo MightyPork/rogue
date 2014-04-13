@@ -1,7 +1,6 @@
 package mightypork.rogue.screens;
 
 
-import static mightypork.utils.math.constraints.ConstraintFactory.*;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;

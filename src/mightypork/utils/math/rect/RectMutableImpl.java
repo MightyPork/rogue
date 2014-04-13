@@ -3,7 +3,7 @@ package mightypork.utils.math.rect;
 
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectMutable;
-import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectView;
 
 
 class RectMutableImpl extends RectMutable {
@@ -22,45 +22,34 @@ class RectMutableImpl extends RectMutable {
 	 */
 	public RectMutableImpl(double x, double y, double width, double height) {
 		this.pos.setTo(x, y);
-		this.size.setTo(width, height).abs();
+		this.size.setTo(width, height);
 	}
 	
 	
 	@Override
-	public VectVal origin()
+	public VectView origin()
 	{
-		return pos.copy();
+		return pos;
 	}
 	
 	
 	@Override
-	public VectVal size()
+	public VectView size()
 	{
-		return size.copy();
+		return size;
 	}
 	
 	
 	@Override
-	protected RectMutable result(Vect newOrigin, Vect newSize)
-	{
-		setOrigin(newOrigin);
-		setSize(newSize);
-		return this;
-	}
-	
-	
-	@Override
-	public RectMutable setOrigin(Vect origin)
+	public void setOrigin(Vect origin)
 	{
 		this.pos.setTo(origin);
-		return this;
 	}
 	
 	
 	@Override
-	public RectMutable setSize(Vect size)
+	public void setSize(Vect size)
 	{
-		this.size.setTo(size).abs();
-		return this;
+		this.size.setTo(size);
 	}
 }

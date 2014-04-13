@@ -111,37 +111,32 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	
 	
 	@Override
-	public VectAnimated result(double x, double y, double z)
+	public void setTo(double x, double y, double z)
 	{
 		setX(x);
 		setY(y);
 		setZ(z);
-		
-		return this;
 	}
 	
 	
 	@Override
-	public VectMutable setX(double x)
+	public void setX(double x)
 	{
 		this.x.animate(x, defaultDuration);
-		return this;
 	}
 	
 	
 	@Override
-	public VectMutable setY(double y)
+	public void setY(double y)
 	{
 		this.y.animate(y, defaultDuration);
-		return this;
 	}
 	
 	
 	@Override
-	public VectMutable setZ(double z)
+	public void setZ(double z)
 	{
 		this.z.animate(z, defaultDuration);
-		return this;
 	}
 	
 	
@@ -150,12 +145,10 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	 * 
 	 * @param offset added offset
 	 * @param duration animation time (seconds)
-	 * @return this
 	 */
-	public VectAnimated add(Vect offset, double duration)
+	public void add(Vect offset, double duration)
 	{
-		animate(view().add(offset), duration);
-		return this;
+		animate(this.add(offset), duration);
 	}
 	
 	

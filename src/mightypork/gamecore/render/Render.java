@@ -352,7 +352,7 @@ public class Render {
 	 */
 	public static void quad(Rect quad)
 	{
-		RectView rv = quad.view();
+		final RectView rv = quad.view();
 		
 		final double x1 = rv.left().value();
 		final double y1 = rv.top().value();

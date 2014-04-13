@@ -29,10 +29,9 @@ class NumMutableImpl extends NumMutable {
 	
 	
 	@Override
-	public NumMutable setTo(double value)
+	public void setTo(double value)
 	{
 		this.value = value;
-		return this;
 	}
 	
 }

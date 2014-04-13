@@ -47,36 +47,31 @@ class VectMutableImpl extends VectMutable {
 	
 	
 	@Override
-	public VectMutable result(double x, double y, double z)
+	public void setTo(double x, double y, double z)
 	{
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		
-		return this;
 	}
 	
 	
 	@Override
-	public VectMutable setX(double x)
+	public void setX(double x)
 	{
 		this.x = x;
-		return this;
 	}
 	
 	
 	@Override
-	public VectMutable setY(double y)
+	public void setY(double y)
 	{
 		this.y = y;
-		return this;
 	}
 	
 	
 	@Override
-	public VectMutable setZ(double z)
+	public void setZ(double z)
 	{
 		this.z = z;
-		return this;
 	}
 }

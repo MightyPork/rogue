@@ -11,8 +11,7 @@ import mightypork.utils.math.rect.RectAdapter;
  * @author MightyPork
  */
 public abstract class RectBoundAdapter extends RectAdapter implements PluggableRectBound {
-
-
+	
 	private RectBound backing = null;
 	
 	
@@ -22,10 +21,11 @@ public abstract class RectBoundAdapter extends RectAdapter implements PluggableR
 		this.backing = rect;
 	}
 	
+	
 	@Override
-	public Rect getSource() {
+	public Rect getSource()
+	{
 		return backing.getRect();
 	}
-
 	
 }

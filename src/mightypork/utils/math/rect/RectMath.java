@@ -1,96 +1,10 @@
 package mightypork.utils.math.rect;
 
 
-import mightypork.utils.math.num.Num;
-import mightypork.utils.math.num.NumView;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectAdapter;
-import mightypork.utils.math.vect.VectView;
 
 
 abstract class RectMath<R extends Rect> extends AbstractRect {
-	
-	protected NumView p_x;
-	protected NumView p_y;
-	protected NumView p_width;
-	protected NumView p_height;
-	
-	protected NumView p_left;
-	protected NumView p_top;
-	protected NumView p_right;
-	protected NumView p_bottom;
-	
-	protected VectView p_tl;
-	protected VectView p_tc;
-	protected VectView p_tr;
-	
-	protected VectView p_cl;
-	protected VectView p_cc;
-	protected VectView p_cr;
-	
-	protected VectView p_bl;
-	protected VectView p_bc;
-	protected VectView p_br;
-	
-	protected VectView p_origin;
-	protected VectView p_size;
-	
-	
-	public RectMath() {
-		
-		p_origin = new VectAdapter() {
-			
-			@Override
-			protected Vect getSource()
-			{
-				return RectMath.this.origin();
-			}
-		};
-		
-		p_size = new VectAdapter() {
-			
-			@Override
-			protected Vect getSource()
-			{
-				return RectMath.this.size();
-			}
-		};
-		
-		// setup proxies
-		
-		// origin, size disassembled
-		p_width = p_size.xn();
-		p_height = p_size.yn();
-		p_x = p_origin.xn();
-		p_y = p_origin.yn();
-		
-		// coordinates
-		p_top = p_y;
-		p_left = p_x;
-		p_right = p_left.add(p_width);
-		p_bottom = p_top.add(p_height);
-		
-		// corners
-		// -- top line --
-		Num width_half = p_width.half();
-		Num ya = Num.ZERO;
-		p_tl = p_origin;
-		p_tc = p_origin.add(width_half, ya);
-		p_tr = p_origin.add(p_width, ya);
-		
-		// --center line--
-		ya = p_height.half();
-		p_cl = p_origin.add(Num.ZERO, ya);
-		p_cc = p_origin.add(width_half, ya);
-		p_cr = p_origin.add(p_width, ya);
-		
-		// -- bottom line --
-		ya = p_height;
-		p_bl = p_origin.add(Num.ZERO, ya);
-		p_bc = p_origin.add(width_half, ya);
-		p_br = p_origin.add(p_width, ya);
-	}
-	
 	
 	/**
 	 * Add vector to origin
@@ -221,4 +135,5 @@ abstract class RectMath<R extends Rect> extends AbstractRect {
 		
 		return x >= x1 && y >= y1 && x <= x2 && y <= y2;
 	}
+	
 }

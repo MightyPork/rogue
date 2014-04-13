@@ -2,6 +2,7 @@ package mightypork.utils.math.vect;
 
 
 import mightypork.utils.annotations.FactoryMethod;
+import mightypork.utils.math.num.Num;
 
 
 /**
@@ -50,6 +51,20 @@ public final class VectVal extends VectMathStatic<VectVal> {
 	 * 
 	 * @param x X value
 	 * @param y Y value
+	 * @return new constant vec
+	 */
+	@FactoryMethod
+	public static VectVal make(Num x, Num y)
+	{
+		return make(x, y, Num.ZERO);
+	}
+	
+	
+	/**
+	 * Make a constant vector
+	 * 
+	 * @param x X value
+	 * @param y Y value
 	 * @param z Z value
 	 * @return new constant vector
 	 */
@@ -59,15 +74,30 @@ public final class VectVal extends VectMathStatic<VectVal> {
 		return new VectVal(x, y, z);
 	}
 	
+	
+	/**
+	 * Make a constant vector
+	 * 
+	 * @param x X value
+	 * @param y Y value
+	 * @param z Z value
+	 * @return new constant vector
+	 */
+	@FactoryMethod
+	public static VectVal make(Num x, Num y, Num z)
+	{
+		return new VectVal(x.value(), y.value(), z.value());
+	}
+	
 	private final double x, y, z;
 	
 	
-	public VectVal(Vect other) {
+	VectVal(Vect other) {
 		this(other.x(), other.y(), other.z());
 	}
 	
 	
-	public VectVal(double x, double y, double z) {
+	VectVal(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;

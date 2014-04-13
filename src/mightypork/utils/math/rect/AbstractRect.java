@@ -6,9 +6,9 @@ package mightypork.utils.math.rect;
  * 
  * @author MightyPork
  */
-public abstract class AbstractRect implements Rect {
+abstract class AbstractRect implements Rect {
 	
-	private RectProxy	proxy;
+	private RectProxy proxy;
 	
 	
 	@Override
@@ -39,10 +39,7 @@ public abstract class AbstractRect implements Rect {
 	@Override
 	public String toString()
 	{
-		return String.format(
-				"Rect { %s - %s }",
-				origin(),
-				origin().view().add(size()));
+		return String.format("Rect { %s - %s }", origin(), origin().copy().add(size()));
 	}
 	
 }

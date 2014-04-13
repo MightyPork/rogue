@@ -294,7 +294,8 @@ public class CachedFont implements GLFont {
 				
 				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(newI);
 			} else {
-				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
+				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder())
+						.put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
 			}
 			
 			byteBuffer.flip();
@@ -411,7 +412,8 @@ public class CachedFont implements GLFont {
 			chtx = chars.get(charCurrent);
 			
 			if (chtx != null) {
-				drawQuad((totalwidth), 0, (totalwidth + chtx.width), (chtx.height), chtx.texPosX, chtx.texPosY, chtx.texPosX + chtx.width, chtx.texPosY + chtx.height);
+				drawQuad((totalwidth), 0, (totalwidth + chtx.width), (chtx.height), chtx.texPosX, chtx.texPosY, chtx.texPosX + chtx.width, chtx.texPosY
+						+ chtx.height);
 				totalwidth += chtx.width;
 			}
 		}

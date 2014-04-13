@@ -252,12 +252,33 @@ abstract class VectMath<V extends Vect, N> extends AbstractVect {
 	public abstract V mul(double x, double y, double z);
 	
 	
+	/**
+	 * Multiply each component.
+	 * 
+	 * @param d multiplier
+	 * @return result
+	 */
 	public abstract V mul(final Num d);
 	
 	
+	/**
+	 * Multiply each component.
+	 * 
+	 * @param x x multiplier
+	 * @param y y multiplier
+	 * @return result
+	 */
 	public abstract V mul(final Num x, final Num y);
 	
 	
+	/**
+	 * Multiply each component.
+	 * 
+	 * @param x x multiplier
+	 * @param y y multiplier
+	 * @param z z multiplier
+	 * @return result
+	 */
 	public abstract V mul(final Num x, final Num y, final Num z);
 	
 	

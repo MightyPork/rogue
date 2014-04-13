@@ -44,7 +44,7 @@ public class RectCache implements RectBound, Pollable {
 	@Override
 	public RectView getRect()
 	{
-		return cached.view();
+		return cached;
 	}
 	
 	

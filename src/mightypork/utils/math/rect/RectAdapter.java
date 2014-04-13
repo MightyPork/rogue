@@ -14,7 +14,7 @@ import mightypork.utils.math.vect.VectView;
  */
 public abstract class RectAdapter extends RectView {
 	
-	private VectAdapter originAdapter = new VectAdapter() {
+	private final VectAdapter originAdapter = new VectAdapter() {
 		
 		@Override
 		protected Vect getSource()
@@ -23,7 +23,7 @@ public abstract class RectAdapter extends RectView {
 		}
 	};
 	
-	private VectAdapter sizeAdapter = new VectAdapter() {
+	private final VectAdapter sizeAdapter = new VectAdapter() {
 		
 		@Override
 		protected Vect getSource()

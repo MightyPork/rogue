@@ -19,6 +19,9 @@ class VectProxy extends VectAdapter {
 	 * @param observed
 	 */
 	public VectProxy(Vect observed) {
+		
+		assert (!(observed instanceof VectView));
+		
 		this.observed = observed;
 	}
 	

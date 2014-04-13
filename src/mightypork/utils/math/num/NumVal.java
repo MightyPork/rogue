@@ -17,6 +17,7 @@ public class NumVal extends NumMathStatic<NumVal> {
 	@SuppressWarnings("hiding")
 	public static final NumVal ONE = NumVal.make(1);
 	
+	
 	/**
 	 * Make a new constant
 	 * 
@@ -58,12 +59,12 @@ public class NumVal extends NumMathStatic<NumVal> {
 	private final double value;
 	
 	
-	public NumVal(Num copied) {
+	NumVal(Num copied) {
 		this.value = copied.value();
 	}
 	
 	
-	public NumVal(double value) {
+	NumVal(double value) {
 		this.value = value;
 	}
 	

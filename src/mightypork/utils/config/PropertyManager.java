@@ -12,7 +12,6 @@ import java.util.TreeMap;
 import mightypork.utils.math.Range;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
-import mightypork.utils.math.vect.VectView;
 import mightypork.utils.objects.Convert;
 
 

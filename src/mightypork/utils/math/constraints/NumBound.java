@@ -1,8 +1,7 @@
 package mightypork.utils.math.constraints;
 
+
 import mightypork.utils.math.num.Num;
-import mightypork.utils.math.num.NumVal;
-import mightypork.utils.math.num.NumView;
 
 
 /**
@@ -10,7 +9,7 @@ import mightypork.utils.math.num.NumView;
  * 
  * @author MightyPork
  */
-public interface NumBound {	
+public interface NumBound {
 	
 	/**
 	 * @return current value

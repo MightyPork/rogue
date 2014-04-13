@@ -2,12 +2,11 @@ package mightypork.utils.math.rect;
 
 
 import mightypork.utils.math.num.Num;
-import mightypork.utils.math.num.NumView;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectView;
 
 
-public abstract class RectMathDynamic extends RectMath<RectView> {
+abstract class RectMathDynamic extends RectMath<RectView> {
 	
 	@Override
 	public abstract VectView origin();
@@ -22,20 +21,20 @@ public abstract class RectMathDynamic extends RectMath<RectView> {
 	{
 		return new RectView() {
 			
-			private RectMathDynamic t = RectMathDynamic.this;
+			private final RectMathDynamic t = RectMathDynamic.this;
 			
 			
 			@Override
 			public VectView size()
 			{
-				return t.p_size;
+				return t.size();
 			}
 			
 			
 			@Override
 			public VectView origin()
 			{
-				return t.p_origin.add(move);
+				return t.origin().add(move);
 			}
 			
 		};
@@ -43,73 +42,48 @@ public abstract class RectMathDynamic extends RectMath<RectView> {
 	
 	
 	@Override
-	public RectView move(final double xd, final double yd)
+	public RectView move(final double x, final double y)
 	{
 		return new RectView() {
 			
-			private RectMathDynamic t = RectMathDynamic.this;
+			private final RectMathDynamic t = RectMathDynamic.this;
 			
 			
 			@Override
 			public VectView size()
 			{
-				return t.p_size;
+				return t.size();
 			}
 			
 			
 			@Override
 			public VectView origin()
 			{
-				return t.p_origin.add(xd, yd);
+				return t.origin().add(x, y);
 			}
 			
 		};
 	}
 	
 	
-	public RectView move(final Num xd, final Num yd)
+	public RectView move(final Num x, final Num y)
 	{
 		return new RectView() {
 			
-			private RectMathDynamic t = RectMathDynamic.this;
+			private final RectMathDynamic t = RectMathDynamic.this;
 			
 			
 			@Override
 			public VectView size()
 			{
-				return t.p_size;
+				return t.size();
 			}
 			
 			
 			@Override
 			public VectView origin()
 			{
-				return t.p_origin.add(xd, yd);
-			}
-			
-		};
-	}
-	
-	
-	@Override
-	public RectView shrink(final double leftd, final double rightd, final double topd, final double bottomd)
-	{
-		return new RectView() {
-			
-			private RectMathDynamic t = RectMathDynamic.this;
-			
-			
-			@Override
-			public VectView size()
-			{
-				return t.p_size.sub(leftd + rightd, topd + bottomd);
-			}
-			
-			
-			@Override
-			public VectView origin()
-			{
-				return t.p_origin.add(leftd, topd);
+				return t.origin().add(x, y);
 			}
 			
 		};
@@ -117,73 +91,98 @@ public abstract class RectMathDynamic extends RectMath<RectView> {
 	
 	
 	@Override
-	public RectView grow(final double leftd, final double rightd, final double topd, final double bottomd)
+	public RectView shrink(final double left, final double right, final double top, final double bottom)
 	{
 		return new RectView() {
 			
-			private RectMathDynamic t = RectMathDynamic.this;
+			private final RectMathDynamic t = RectMathDynamic.this;
 			
 			
 			@Override
 			public VectView size()
 			{
-				return t.p_size.add(leftd + rightd, topd + bottomd);
+				return t.size().sub(left + right, top + bottom);
 			}
 			
 			
 			@Override
 			public VectView origin()
 			{
-				return t.p_origin.sub(leftd, topd);
+				return t.origin().add(left, top);
 			}
 			
 		};
 	}
 	
 	
-	public RectView shrink(final Num leftd, final Num rightd, final Num topd, final Num bottomd)
+	@Override
+	public RectView grow(final double left, final double right, final double top, final double bottom)
 	{
 		return new RectView() {
 			
-			private RectMathDynamic t = RectMathDynamic.this;
+			private final RectMathDynamic t = RectMathDynamic.this;
 			
 			
 			@Override
 			public VectView size()
 			{
-				return t.p_size.sub(leftd.view().add(rightd), topd.view().add(bottomd));
+				return t.size().add(left + right, top + bottom);
 			}
 			
 			
 			@Override
 			public VectView origin()
 			{
-				return t.p_origin.add(leftd, topd);
+				return t.origin().sub(left, top);
 			}
 			
 		};
 	}
 	
 	
-	public RectView grow(final Num leftd, final Num rightd, final Num topd, final Num bottomd)
+	public RectView shrink(final Num left, final Num right, final Num top, final Num bottom)
+	{
+		return new RectView() {
+			
+			private final RectMathDynamic t = RectMathDynamic.this;
+			
+			
+			@Override
+			public VectView size()
+			{
+				return t.size().sub(left.view().add(right), top.view().add(bottom));
+			}
+			
+			
+			@Override
+			public VectView origin()
+			{
+				return t.origin().add(left, top);
+			}
+			
+		};
+	}
+	
+	
+	public RectView grow(final Num left, final Num right, final Num top, final Num bottom)
 	{
 		
 		return new RectView() {
 			
-			private RectMathDynamic t = RectMathDynamic.this;
+			private final RectMathDynamic t = RectMathDynamic.this;
 			
 			
 			@Override
 			public VectView size()
 			{
-				return t.p_size.add(leftd.view().add(rightd), topd.view().add(bottomd));
+				return t.size().add(left.view().add(right), top.view().add(bottom));
 			}
 			
 			
 			@Override
 			public VectView origin()
 			{
-				return t.p_origin.sub(leftd, topd);
+				return t.origin().sub(left, top);
 			}
 			
 		};
@@ -196,20 +195,20 @@ public abstract class RectMathDynamic extends RectMath<RectView> {
 		
 		return new RectView() {
 			
-			private RectMathDynamic t = RectMathDynamic.this;
+			private final RectMathDynamic t = RectMathDynamic.this;
 			
 			
 			@Override
 			public VectView size()
 			{
-				return t.p_size.round();
+				return t.size().round();
 			}
 			
 			
 			@Override
 			public VectView origin()
 			{
-				return t.p_origin.round();
+				return t.origin().round();
 			}
 			
 		};
@@ -217,121 +216,121 @@ public abstract class RectMathDynamic extends RectMath<RectView> {
 	
 	
 	@Override
-	public NumView x()
+	public Num x()
 	{
-		return p_x;
+		return origin().xn();
 	}
 	
 	
 	@Override
-	public NumView y()
+	public Num y()
 	{
-		return p_y;
+		return origin().yn();
 	}
 	
 	
 	@Override
-	public NumView width()
+	public Num width()
 	{
-		return p_width;
+		return size().xn();
 	}
 	
 	
 	@Override
-	public NumView height()
+	public Num height()
 	{
-		return p_height;
+		return size().yn();
 	}
 	
 	
 	@Override
-	public NumView left()
+	public Num left()
 	{
-		return p_left;
+		return origin().yn();
 	}
 	
 	
 	@Override
-	public NumView right()
+	public Num right()
 	{
-		return p_right;
+		return origin().xn().add(size().xn());
 	}
 	
 	
 	@Override
-	public NumView top()
+	public Num top()
 	{
-		return p_top;
+		return origin().yn();
 	}
 	
 	
 	@Override
-	public NumView bottom()
+	public Num bottom()
 	{
-		return p_bottom;
+		return origin().yn().add(size().yn());
 	}
 	
 	
 	@Override
 	public VectView topLeft()
 	{
-		return p_tl;
+		return origin();
 	}
 	
 	
 	@Override
 	public VectView topCenter()
 	{
-		return p_tc;
+		return origin().add(size().xn().half(), Num.ZERO);
 	}
 	
 	
 	@Override
 	public VectView topRight()
 	{
-		return p_tr;
+		return origin().add(size().xn(), Num.ZERO);
 	}
 	
 	
 	@Override
 	public VectView centerLeft()
 	{
-		return p_cl;
+		return origin().add(Num.ZERO, size().yn().half());
 	}
 	
 	
 	@Override
 	public VectView center()
 	{
-		return p_cc;
+		return origin().add(size().half());
 	}
 	
 	
 	@Override
 	public VectView centerRight()
 	{
-		return p_cr;
+		return origin().add(size().xn(), size().yn().half());
 	}
 	
 	
 	@Override
 	public VectView bottomLeft()
 	{
-		return p_bl;
+		return origin().add(Num.ZERO, size().yn());
 	}
 	
 	
 	@Override
 	public VectView bottomCenter()
 	{
-		return p_bc;
+		return origin().add(size().xn().half(), size().yn());
 	}
 	
 	
 	@Override
 	public VectView bottomRight()
 	{
-		return p_br;
+		return origin().add(size().xn(), size().yn());
 	}
 	
 	
@@ -346,14 +345,14 @@ public abstract class RectMathDynamic extends RectMath<RectView> {
 			@Override
 			public VectView size()
 			{
-				return t.p_size;
+				return t.size();
 			}
 			
 			
 			@Override
 			public VectView origin()
 			{
-				return point.view().sub(t.p_size.half());
+				return point.view().sub(t.size().half());
 			}
 		};
 	}

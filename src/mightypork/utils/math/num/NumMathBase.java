@@ -1,9 +1,10 @@
 package mightypork.utils.math.num;
 
+
 import mightypork.utils.math.constraints.NumBound;
 
 
-public abstract class NumMathBase<N extends NumMath<N>> extends AbstractNum implements NumMath<N> {
+abstract class NumMathBase<N extends NumMath<N>> extends AbstractNum implements NumMath<N> {
 	
 	/**
 	 * Convert to double, turning null into zero.
@@ -19,6 +20,7 @@ public abstract class NumMathBase<N extends NumMath<N>> extends AbstractNum impl
 	
 	/**
 	 * Convert {@link NumBound} to {@link Num}, turning null to Num.ZERO.
+	 * 
 	 * @param a numeric bound
 	 * @return num
 	 */
@@ -144,7 +146,7 @@ public abstract class NumMathBase<N extends NumMath<N>> extends AbstractNum impl
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof NumMathBase)) return false;
-		NumMathBase<?> other = (NumMathBase<?>) obj;
+		final NumMathBase<?> other = (NumMathBase<?>) obj;
 		
 		return eq(other);
 	}

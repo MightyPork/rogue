@@ -2,6 +2,7 @@ package mightypork.utils.math.rect;
 
 
 import mightypork.utils.annotations.FactoryMethod;
+import mightypork.utils.math.num.Num;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
 
@@ -40,6 +41,20 @@ public class RectVal extends RectMathStatic<RectVal> {
 	 * @return new mutable rect
 	 */
 	@FactoryMethod
+	public static RectVal make(Num width, Num height)
+	{
+		return make(0, 0, width.value(), height.value());
+	}
+	
+	
+	/**
+	 * Create at 0,0 with given size
+	 * 
+	 * @param width
+	 * @param height
+	 * @return new mutable rect
+	 */
+	@FactoryMethod
 	public static RectVal make(double width, double height)
 	{
 		return make(0, 0, width, height);
@@ -56,6 +71,21 @@ public class RectVal extends RectMathStatic<RectVal> {
 	 */
 	@FactoryMethod
 	public static RectVal make(Vect origin, double width, double height)
+	{
+		return make(origin, VectVal.make(width, height));
+	}
+	
+	
+	/**
+	 * Create at given origin, with given size.
+	 * 
+	 * @param origin
+	 * @param width
+	 * @param height
+	 * @return new mutable rect
+	 */
+	@FactoryMethod
+	public static RectVal make(Vect origin, Num width, Num height)
 	{
 		return make(origin, VectVal.make(width, height));
 	}
@@ -93,6 +123,22 @@ public class RectVal extends RectMathStatic<RectVal> {
 	/**
 	 * Create at given origin, with given size.
 	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @return new mutable rect
+	 */
+	@FactoryMethod
+	public static RectVal make(Num x, Num y, Num width, Num height)
+	{
+		return new RectVal(x.value(), y.value(), width.value(), height.value());
+	}
+	
+	
+	/**
+	 * Create at given origin, with given size.
+	 * 
 	 * @param origin
 	 * @param size
 	 * @return new mutable rect
@@ -115,7 +161,7 @@ public class RectVal extends RectMathStatic<RectVal> {
 	 * @param width
 	 * @param height
 	 */
-	public RectVal(double x, double y, double width, double height) {
+	RectVal(double x, double y, double width, double height) {
 		this.pos = VectVal.make(x, y);
 		this.size = VectVal.make(width, height);
 	}
@@ -127,7 +173,7 @@ public class RectVal extends RectMathStatic<RectVal> {
 	 * @param origin
 	 * @param size
 	 */
-	public RectVal(Vect origin, Vect size) {
+	RectVal(Vect origin, Vect size) {
 		this.pos = origin.copy();
 		this.size = size.copy();
 	}
@@ -138,7 +184,7 @@ public class RectVal extends RectMathStatic<RectVal> {
 	 * 
 	 * @param another other coord
 	 */
-	public RectVal(Rect another) {
+	RectVal(Rect another) {
 		this.pos = another.origin().copy();
 		this.size = another.size().copy();
 	}

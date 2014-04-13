@@ -1,8 +1,6 @@
 package mightypork.rogue.screens.test_cat_sound;
 
 
-import static mightypork.utils.math.constraints.ConstraintFactory.*;
-
 import java.util.Random;
 
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;

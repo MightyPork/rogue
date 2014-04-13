@@ -1,7 +1,10 @@
 package mightypork.utils.math.num;
 
 
-public abstract class NumMathStatic<N extends NumMathStatic<N>> extends NumMathBase<N> {
+import mightypork.utils.math.rect.RectVal;
+
+
+abstract class NumMathStatic<N extends NumMathStatic<N>> extends NumMathBase<N> {
 	
 	protected abstract N result(double a);
 	
@@ -250,6 +253,13 @@ public abstract class NumMathStatic<N extends NumMathStatic<N>> extends NumMathB
 	public N average(final Num other)
 	{
 		return average(eval(other));
+	}
+	
+	
+	@Override
+	public RectVal box()
+	{
+		return RectVal.make(this, this);
 	}
 	
 	

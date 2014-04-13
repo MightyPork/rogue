@@ -11,7 +11,7 @@ import mightypork.utils.math.vect.VectVal;
  * 
  * @author MightyPork
  */
-public abstract class RectMutable extends RectMathStatic<RectMutable> {
+public abstract class RectMutable extends RectView {
 	
 	/**
 	 * Create at 0,0 with zero size
@@ -125,11 +125,10 @@ public abstract class RectMutable extends RectMathStatic<RectMutable> {
 	 * Set to other rect's coordinates
 	 * 
 	 * @param rect other rect
-	 * @return this
 	 */
-	public RectMutable setTo(Rect rect)
+	public void setTo(Rect rect)
 	{
-		return setTo(rect.origin(), rect.size());
+		setTo(rect.origin(), rect.size());
 	}
 	
 	
@@ -139,11 +138,10 @@ public abstract class RectMutable extends RectMathStatic<RectMutable> {
 	 * @param origin new origin
 	 * @param width new width
 	 * @param height new height
-	 * @return this
 	 */
-	public RectMutable setTo(Vect origin, double width, double height)
+	public void setTo(Vect origin, double width, double height)
 	{
-		return setTo(origin, VectVal.make(width, height));
+		setTo(origin, VectVal.make(width, height));
 	}
 	
 	
@@ -154,11 +152,10 @@ public abstract class RectMutable extends RectMathStatic<RectMutable> {
 	 * @param y origin.y
 	 * @param width new width
 	 * @param height new height
-	 * @return this
 	 */
-	public RectMutable setTo(double x, double y, double width, double height)
+	public void setTo(double x, double y, double width, double height)
 	{
-		return setTo(VectVal.make(x, y), VectVal.make(width, height));
+		setTo(VectVal.make(x, y), VectVal.make(width, height));
 	}
 	
 	
@@ -167,31 +164,35 @@ public abstract class RectMutable extends RectMathStatic<RectMutable> {
 	 * 
 	 * @param origin new origin
 	 * @param size new size
-	 * @return this
 	 */
-	public RectMutable setTo(Vect origin, Vect size)
+	public void setTo(Vect origin, Vect size)
 	{
 		setOrigin(origin);
 		setSize(size);
-		return this;
 	}
 	
+	
+	/**
+	 * Set to zero
+	 */
+	public void reset()
+	{
+		setTo(Vect.ZERO, Vect.ZERO);
+	}
 	
 	/**
 	 * Set new origin
 	 * 
 	 * @param origin new origin
-	 * @return this
 	 */
-	public abstract RectMutable setOrigin(Vect origin);
+	public abstract void setOrigin(Vect origin);
 	
 	
 	/**
 	 * Set new size
 	 * 
 	 * @param size new size
-	 * @return this
 	 */
-	public abstract RectMutable setSize(Vect size);
+	public abstract void setSize(Vect size);
 	
 }

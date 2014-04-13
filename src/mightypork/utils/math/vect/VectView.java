@@ -15,12 +15,6 @@ import mightypork.utils.math.num.Num;
  */
 public abstract class VectView extends VectMathDynamic { // returns constant value on edit
 
-	@SuppressWarnings("hiding")
-	public static final VectView ZERO = new VectVal(0, 0, 0).view();
-	@SuppressWarnings("hiding")
-	public static final VectView ONE = new VectVal(1, 1, 1).view();
-	
-	
 	/**
 	 * Make a proxy view at a vector.
 	 * 
@@ -78,7 +72,7 @@ public abstract class VectView extends VectMathDynamic { // returns constant val
 	@Deprecated
 	public VectView view()
 	{
-		return super.view();
+		return this;
 	}
 	
 }

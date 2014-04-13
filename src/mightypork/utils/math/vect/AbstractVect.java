@@ -1,9 +1,7 @@
 package mightypork.utils.math.vect;
 
 
-
-
-public abstract class AbstractVect implements Vect {
+abstract class AbstractVect implements Vect {
 	
 	private VectView proxy;
 	
@@ -47,8 +45,6 @@ public abstract class AbstractVect implements Vect {
 	@Override
 	public VectView view()
 	{
-		// must NOT call VectView.make, it'd cause infinite recursion.
-		
 		if (proxy == null) proxy = new VectProxy(this);
 		
 		return proxy;
