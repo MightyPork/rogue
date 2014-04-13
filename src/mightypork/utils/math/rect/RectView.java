@@ -1,5 +1,7 @@
 package mightypork.utils.math.rect;
 
+import mightypork.utils.annotations.FactoryMethod;
+
 
 /**
  * Immutable rect
@@ -14,9 +16,10 @@ public abstract class RectView extends RectMath<RectVal> {
 	 * @param observed observed rect
 	 * @return view
 	 */
+	@FactoryMethod
 	public static RectView make(Rect observed)
 	{
-		return observed.view();
+		return observed.view(); // let the rect handle it
 	}
 	
 	
@@ -45,6 +48,13 @@ public abstract class RectView extends RectMath<RectVal> {
 	public RectVal round()
 	{
 		return RectVal.make(origin().round(), size().round());
+	}
+	
+	@Override
+	public RectView view()
+	{
+		// must NOT call RectView.make, it'd cause infinite recursion.
+		return this; // wont change
 	}
 	
 }

@@ -1,6 +1,7 @@
 package mightypork.utils.math.rect;
 
 
+import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
 
@@ -17,6 +18,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * 
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectMutable zero()
 	{
 		return make(0, 0, 0, 0);
@@ -28,6 +30,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * 
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectMutable one()
 	{
 		return make(0, 0, 1, 1);
@@ -55,6 +58,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param height
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectMutable make(Vect origin, double width, double height)
 	{
 		return make(origin, VectVal.make(width, height));
@@ -67,6 +71,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param size
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectMutable make(Vect size)
 	{
 		return make(Vect.ZERO, size);
@@ -82,6 +87,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param height
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectMutable make(double x, double y, double width, double height)
 	{
 		return make(x, y, width, height);
@@ -94,6 +100,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param other copied
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectMutable make(Rect other)
 	{
 		return make(other.origin(), other.size());
@@ -107,6 +114,7 @@ public abstract class RectMutable extends RectMath<RectMutable> {
 	 * @param size
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectMutable make(Vect origin, Vect size)
 	{
 		return make(origin.x(), origin.y(), size.x(), size.y());

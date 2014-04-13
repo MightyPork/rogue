@@ -1,5 +1,7 @@
 package mightypork.utils.math.vect;
 
+import mightypork.utils.annotations.FactoryMethod;
+
 
 
 
@@ -15,6 +17,7 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	 * 
 	 * @return new mutable vector
 	 */
+	@FactoryMethod
 	public static VectMutable zero()
 	{
 		return make(ZERO);
@@ -26,6 +29,7 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	 * 
 	 * @return one mutable vector
 	 */
+	@FactoryMethod
 	public static VectMutable one()
 	{
 		return make(ONE);
@@ -39,6 +43,7 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	 * @param y Y coordinate
 	 * @return mutable vector
 	 */
+	@FactoryMethod
 	public static VectMutable make(double x, double y)
 	{
 		return make(x, y, 0);
@@ -51,6 +56,7 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	 * @param copied copied vec
 	 * @return mutable vector
 	 */
+	@FactoryMethod
 	public static VectMutable make(Vect copied)
 	{
 		return make(copied.x(), copied.y(), copied.z());
@@ -65,6 +71,7 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	 * @param z Z coordinate
 	 * @return mutable vector
 	 */
+	@FactoryMethod
 	public static VectMutable make(double x, double y, double z)
 	{
 		return new VectMutableVariable(x, y, z);

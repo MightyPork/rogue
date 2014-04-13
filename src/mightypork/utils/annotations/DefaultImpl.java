@@ -1,4 +1,4 @@
-package mightypork.gamecore.control.interf;
+package mightypork.utils.annotations;
 
 
 import java.lang.annotation.Documented;

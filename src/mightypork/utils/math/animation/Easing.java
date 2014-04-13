@@ -1,5 +1,7 @@
 package mightypork.utils.math.animation;
 
+import mightypork.utils.annotations.FactoryMethod;
+
 
 /**
  * EasingFunction function.
@@ -23,6 +25,7 @@ public abstract class Easing {
 	 * @param original original easing
 	 * @return reversed easing
 	 */
+	@FactoryMethod
 	public static Easing reverse(Easing original)
 	{
 		return new Reverse(original);
@@ -36,6 +39,7 @@ public abstract class Easing {
 	 * @param out terminal easing
 	 * @return product
 	 */
+	@FactoryMethod
 	public static Easing combine(Easing in, Easing out)
 	{
 		return new Composite(in, out);
@@ -48,6 +52,7 @@ public abstract class Easing {
 	 * @param in initial easing
 	 * @return product
 	 */
+	@FactoryMethod
 	public static Easing inOut(Easing in)
 	{
 		return combine(in, reverse(in));

@@ -682,7 +682,7 @@ public class Calc {
 	 * @param d double
 	 * @return string
 	 */
-	public static String doubleToString(double d)
+	public static String toString(double d)
 	{
 		String s = Double.toString(d);
 		s = s.replaceAll("([0-9]+\\.[0-9]+)00+[0-9]+", "$1");
@@ -698,7 +698,7 @@ public class Calc {
 	 * @param f float
 	 * @return string
 	 */
-	public static String floatToString(float f)
+	public static String toString(float f)
 	{
 		String s = Float.toString(f);
 		s = s.replaceAll("([0-9]+\\.[0-9]+)00+[0-9]+", "$1");

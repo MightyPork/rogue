@@ -118,6 +118,7 @@ public abstract class AbstractVect implements Vect {
 	@Override
 	public VectVal copy()
 	{
+		// must NOT call VectVal.make, it'd cause infinite recursion.
 		return new VectVal(this);
 	}
 	
@@ -125,6 +126,8 @@ public abstract class AbstractVect implements Vect {
 	@Override
 	public VectView view()
 	{
+		// must NOT call VectView.make, it'd cause infinite recursion.
+		
 		if (proxy == null) proxy = new VectProxy(this);
 		
 		return proxy;

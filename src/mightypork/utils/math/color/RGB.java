@@ -3,6 +3,7 @@ package mightypork.utils.math.color;
 
 import java.awt.Color;
 
+import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.Calc;
 
 
@@ -337,6 +338,7 @@ public class RGB {
 	 * @param hex hex RRGGBB
 	 * @return the new color
 	 */
+	@FactoryMethod
 	public static RGB fromHex(int hex)
 	{
 		final int bi = hex & 0xff;
@@ -352,6 +354,7 @@ public class RGB {
 	 * @param color HSV color
 	 * @return RGB
 	 */
+	@FactoryMethod
 	public static RGB fromHSV(HSV color)
 	{
 		return color.toRGB();
@@ -381,12 +384,14 @@ public class RGB {
 	}
 	
 	
+	@FactoryMethod
 	public static RGB dark(double d)
 	{
 		return new RGB(0, 0, 0, d);
 	}
 	
 	
+	@FactoryMethod
 	public static RGB light(double d)
 	{
 		return new RGB(1, 1, 1, d);

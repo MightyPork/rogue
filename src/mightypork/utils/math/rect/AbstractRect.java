@@ -144,6 +144,8 @@ public abstract class AbstractRect implements Rect {
 	@Override
 	public RectView view()
 	{
+		// must NOT call VectView.make, it'd cause infinite recursion.
+		
 		if (proxy == null) proxy = new RectProxy(this);
 		
 		return proxy;
@@ -153,6 +155,7 @@ public abstract class AbstractRect implements Rect {
 	@Override
 	public RectVal copy()
 	{
+		// must NOT call RectVal.make, it'd cause infinite recursion.
 		return new RectVal(x(), y(), width(), height());
 	}
 	

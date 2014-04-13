@@ -7,6 +7,8 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.logging.Level;
 
+import mightypork.utils.annotations.Alias;
+import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.string.StringUtils;
 
 
@@ -34,6 +36,7 @@ public class Log {
 	 * @param oldLogsCount number of old logs to keep, -1 infinite, 0 none.
 	 * @return the created Log instance
 	 */
+	@FactoryMethod
 	public static synchronized LogWriter create(String logName, File logFile, int oldLogsCount)
 	{
 		if (logs.containsKey(logName)) return logs.get(logName);
@@ -55,6 +58,7 @@ public class Log {
 	 * @param logFile log file; old logs will be kept here too.
 	 * @return the created Log instance
 	 */
+	@FactoryMethod
 	public static synchronized LogWriter create(String logName, File logFile)
 	{
 		if (logs.containsKey(logName)) return logs.get(logName);
@@ -348,7 +352,7 @@ public class Log {
 	
 	public static String str(Class<?> cls)
 	{
-		final LoggedName ln = cls.getAnnotation(LoggedName.class);
+		final Alias ln = cls.getAnnotation(Alias.class);
 		if (ln != null) {
 			return ln.name();
 		}

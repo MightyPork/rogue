@@ -12,8 +12,8 @@ import mightypork.utils.math.constraints.VectBound;
  */
 public interface Vect extends VectBound {
 	
-	public static final VectVal ZERO = new VectVal(0, 0, 0);
-	public static final VectVal ONE = new VectVal(0, 0, 0);
+	VectVal ZERO = new VectVal(0, 0, 0);
+	VectVal ONE = new VectVal(0, 0, 0);
 	
 	
 	/**

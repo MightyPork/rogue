@@ -6,8 +6,8 @@ import java.util.HashMap;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.bus.events.ScreenRequestEvent;
-import mightypork.gamecore.control.interf.DefaultImpl;
 import mightypork.gamecore.gui.components.Renderable;
+import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.logging.Log;
 
 

@@ -1,5 +1,7 @@
 package mightypork.utils.math.vect;
 
+import mightypork.utils.annotations.FactoryMethod;
+
 
 /**
  * Coordinate with immutable numeric values.<br>
@@ -15,9 +17,10 @@ public final class VectVal extends VectView {
 	 * @param value source vector
 	 * @return new constant vec
 	 */
+	@FactoryMethod
 	public static VectVal make(Vect value)
 	{
-		return value.copy();
+		return value.copy(); // let the vect handle it
 	}
 	
 	
@@ -28,6 +31,7 @@ public final class VectVal extends VectView {
 	 * @param y Y value
 	 * @return new constant vec
 	 */
+	@FactoryMethod
 	public static VectVal make(double x, double y)
 	{
 		return make(x, y, 0);
@@ -42,6 +46,7 @@ public final class VectVal extends VectView {
 	 * @param z Z value
 	 * @return new constant vector
 	 */
+	@FactoryMethod
 	public static VectVal make(double x, double y, double z)
 	{
 		return new VectVal(x, y, z);

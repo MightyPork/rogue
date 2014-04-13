@@ -1,7 +1,8 @@
 package mightypork.utils.math.vect;
 
 
-import mightypork.gamecore.control.interf.DefaultImpl;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.constraints.NumBound;
 
 
@@ -19,9 +20,10 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 * @param observed vector to observe
 	 * @return view
 	 */
+	@FactoryMethod
 	public static VectView make(Vect observed)
 	{
-		return observed.view();
+		return observed.view(); // let the vect handle it
 	}
 	
 	
@@ -32,6 +34,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 * @param yc Y value
 	 * @return view at the values
 	 */
+	@FactoryMethod
 	public static VectView make(NumBound xc, NumBound yc)
 	{
 		return new NumConstrVect(xc, yc);
@@ -46,6 +49,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 * @param zc Z value
 	 * @return view at the values
 	 */
+	@FactoryMethod
 	public static VectView make(NumBound xc, NumBound yc, NumBound zc)
 	{
 		return new NumConstrVect(xc, yc, zc);
@@ -62,6 +66,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	@Override
 	public VectView view()
 	{
+		// must NOT call VectView.copy, it'd cause infinite recursion.
 		return this; // already a view
 	}
 	

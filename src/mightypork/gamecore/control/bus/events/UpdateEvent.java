@@ -7,11 +7,10 @@ import mightypork.gamecore.control.timing.Updateable;
 
 
 /**
- * Delta timing update event
+ * Delta timing update event. Not logged.
  * 
  * @author MightyPork
  */
-// sending via queue would hog the bus
 @UnloggedEvent
 @ImmediateEvent
 public class UpdateEvent implements Event<Updateable> {

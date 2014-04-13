@@ -2,6 +2,7 @@ package mightypork.utils.objects;
 
 
 import mightypork.utils.logging.Log;
+import mightypork.utils.math.Calc;
 import mightypork.utils.math.Range;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
@@ -98,6 +99,7 @@ public class Convert {
 			if (s.equals("true")) return true;
 			if (s.equals("yes")) return true;
 			if (s.equals("y")) return true;
+			if (s.equals("a")) return true;
 			if (s.equals("enabled")) return true;
 			
 			if (s.equals("false")) return false;
@@ -122,18 +124,18 @@ public class Convert {
 		if (o == null) return def;
 		if (o instanceof String) return ((String) o);
 		
-		if (o instanceof Boolean) {
-			return (Boolean) o ? "True" : "False";
-		}
+		if (o instanceof Float) return Calc.toString((float) o);
+		
+		if (o instanceof Double) return Calc.toString((double) o);
 		
 		if (o instanceof Vect) {
 			final Vect c = (Vect) o;
-			return String.format("[%f;%f;%f]", c.x(), c.y(), c.z());
+			return String.format("(%f|%f|%f)", c.x(), c.y(), c.z());
 		}
 		
 		if (o instanceof Range) {
 			final Range c = (Range) o;
-			return String.format("(%f:%f)", c.getMin(), c.getMax());
+			return String.format("{%f|%f}", c.getMin(), c.getMax());
 		}
 		
 		if (o instanceof Class<?>) {

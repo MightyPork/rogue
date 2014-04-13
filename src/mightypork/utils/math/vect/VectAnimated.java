@@ -3,6 +3,7 @@ package mightypork.utils.math.vect;
 
 import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.gamecore.control.timing.Updateable;
+import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 
@@ -23,6 +24,7 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	 * @param z z animator
 	 * @return animated mutable vector
 	 */
+	@FactoryMethod
 	public static VectAnimated make(AnimDouble x, AnimDouble y, AnimDouble z)
 	{
 		return new VectAnimated(x, y, z);
@@ -36,6 +38,7 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	 * @param easing animation easing
 	 * @return animated mutable vector
 	 */
+	@FactoryMethod
 	public static VectAnimated make(Vect start, Easing easing)
 	{
 		return new VectAnimated(start, easing);
@@ -48,6 +51,7 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	 * @param easing animation easing
 	 * @return animated mutable vector
 	 */
+	@FactoryMethod
 	public static VectAnimated make(Easing easing)
 	{
 		return new VectAnimated(Vect.ZERO, easing);

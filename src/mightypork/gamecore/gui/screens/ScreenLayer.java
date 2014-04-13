@@ -2,11 +2,11 @@ package mightypork.gamecore.gui.screens;
 
 
 import mightypork.gamecore.control.AppSubModule;
-import mightypork.gamecore.control.interf.DefaultImpl;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
+import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.rect.RectView;
 import mightypork.utils.math.vect.Vect;

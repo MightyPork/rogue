@@ -8,6 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import mightypork.gamecore.control.bus.BusAccess;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.interf.Destroyable;
+import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.logging.Log;
 
 
@@ -22,12 +23,15 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	 * Start a new loader thread.
 	 * 
 	 * @param app app access
+	 * @return the launched thread
 	 */
-	public static void launch(BusAccess app)
+	@FactoryMethod
+	public static AsyncResourceLoader launch(BusAccess app)
 	{
-		final Thread loader = new AsyncResourceLoader(app);
+		final AsyncResourceLoader loader = new AsyncResourceLoader(app);
 		loader.setDaemon(true);
 		loader.start();
+		return loader;
 	}
 	
 	private final ExecutorService exs = Executors.newCachedThreadPool();

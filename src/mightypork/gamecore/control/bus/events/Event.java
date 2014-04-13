@@ -4,6 +4,7 @@ package mightypork.gamecore.control.bus.events;
 import mightypork.gamecore.control.bus.events.types.DelayedEvent;
 import mightypork.gamecore.control.bus.events.types.ImmediateEvent;
 import mightypork.gamecore.control.bus.events.types.SingleReceiverEvent;
+import mightypork.gamecore.control.bus.events.types.UnloggedEvent;
 
 
 /**
@@ -13,7 +14,8 @@ import mightypork.gamecore.control.bus.events.types.SingleReceiverEvent;
  * <p>
  * Can be annotated as {@link SingleReceiverEvent} to be delivered once only,
  * and {@link DelayedEvent} or {@link ImmediateEvent} to specify default sending
- * mode.
+ * mode. When marked as {@link UnloggedEvent}, it will not appear in detailed
+ * bus logging (useful for very frequent events, such as UpdateEvent).
  * </p>
  * <p>
  * Default sending mode (if not changed by annotations) is <i>queued</i> with

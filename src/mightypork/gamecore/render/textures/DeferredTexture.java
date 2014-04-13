@@ -4,7 +4,7 @@ package mightypork.gamecore.render.textures;
 import mightypork.gamecore.loading.DeferredResource;
 import mightypork.gamecore.loading.MustLoadInMainThread;
 import mightypork.gamecore.render.Render;
-import mightypork.utils.logging.LoggedName;
+import mightypork.utils.annotations.Alias;
 import mightypork.utils.math.rect.Rect;
 
 import org.lwjgl.opengl.GL11;
@@ -17,7 +17,7 @@ import org.newdawn.slick.opengl.Texture;
  * @author MightyPork
  */
 @MustLoadInMainThread
-@LoggedName(name = "Texture")
+@Alias(name = "Texture")
 public class DeferredTexture extends DeferredResource implements FilteredTexture {
 	
 	private Texture backingTexture;

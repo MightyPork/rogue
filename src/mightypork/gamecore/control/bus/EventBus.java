@@ -11,6 +11,7 @@ import mightypork.gamecore.control.bus.events.types.ImmediateEvent;
 import mightypork.gamecore.control.bus.events.types.SingleReceiverEvent;
 import mightypork.gamecore.control.bus.events.types.UnloggedEvent;
 import mightypork.gamecore.control.interf.Destroyable;
+import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.logging.Log;
 
 
@@ -85,12 +86,13 @@ final public class EventBus implements Destroyable {
 	
 	
 	/**
-	 * Add a channel for given event and client type.
+	 * Make & connect a channel for given event and client type.
 	 * 
 	 * @param eventClass event type
 	 * @param clientClass client type
 	 * @return the created channel instance
 	 */
+	@FactoryMethod
 	public <F_EVENT extends Event<F_CLIENT>, F_CLIENT> EventChannel<?, ?> addChannel(Class<F_EVENT> eventClass, Class<F_CLIENT> clientClass)
 	{
 		assertLive();

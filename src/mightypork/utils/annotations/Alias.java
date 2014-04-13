@@ -1,4 +1,4 @@
-package mightypork.utils.logging;
+package mightypork.utils.annotations;
 
 
 import java.lang.annotation.Documented;
@@ -8,14 +8,14 @@ import java.lang.annotation.RetentionPolicy;
 
 
 /**
- * Specify pretty name to be used when logging (<code>Log.str()</code>)
+ * Specify pretty name to be used when logging (eg. <code>Log.str()</code>)
  * 
  * @author MightyPork
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface LoggedName {
+public @interface Alias {
 	
 	String name();
 }

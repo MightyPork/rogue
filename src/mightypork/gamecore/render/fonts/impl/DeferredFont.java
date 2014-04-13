@@ -10,8 +10,8 @@ import mightypork.gamecore.loading.DeferredResource;
 import mightypork.gamecore.loading.MustLoadInMainThread;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
+import mightypork.utils.annotations.Alias;
 import mightypork.utils.files.FileUtils;
-import mightypork.utils.logging.LoggedName;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectView;
@@ -23,7 +23,7 @@ import mightypork.utils.math.vect.VectView;
  * @author MightyPork
  */
 @MustLoadInMainThread
-@LoggedName(name = "Font")
+@Alias(name = "Font")
 public class DeferredFont extends DeferredResource implements GLFont {
 	
 	public static enum FontStyle

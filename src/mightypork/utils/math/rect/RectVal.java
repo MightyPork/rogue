@@ -1,6 +1,7 @@
 package mightypork.utils.math.rect;
 
 
+import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
 
@@ -18,31 +19,10 @@ public class RectVal extends RectView {
 	 * @param observed observed rect
 	 * @return view
 	 */
+	@FactoryMethod
 	public static RectVal make(Rect observed)
 	{
-		return observed.copy();
-	}
-	
-	
-	/**
-	 * Create at 0,0 with zero size
-	 * 
-	 * @return new mutable rect
-	 */
-	public static RectVal zero()
-	{
-		return make(0, 0, 0, 0);
-	}
-	
-	
-	/**
-	 * Create at 1,1 with zero size
-	 * 
-	 * @return new mutable rect
-	 */
-	public static RectVal one()
-	{
-		return make(0, 0, 1, 1);
+		return observed.copy(); // let the rect handle it
 	}
 	
 	
@@ -53,6 +33,7 @@ public class RectVal extends RectView {
 	 * @param height
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectVal make(double width, double height)
 	{
 		return make(0, 0, width, height);
@@ -67,6 +48,7 @@ public class RectVal extends RectView {
 	 * @param height
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectVal make(Vect origin, double width, double height)
 	{
 		return make(origin, VectVal.make(width, height));
@@ -79,6 +61,7 @@ public class RectVal extends RectView {
 	 * @param size
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectVal make(Vect size)
 	{
 		return make(Vect.ZERO, size);
@@ -94,6 +77,7 @@ public class RectVal extends RectView {
 	 * @param height
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectVal make(double x, double y, double width, double height)
 	{
 		return new RectVal(x, y, width, height);
@@ -107,6 +91,7 @@ public class RectVal extends RectView {
 	 * @param size
 	 * @return new mutable rect
 	 */
+	@FactoryMethod
 	public static RectVal make(Vect origin, Vect size)
 	{
 		return make(origin.x(), origin.y(), size.x(), size.y());
@@ -133,6 +118,7 @@ public class RectVal extends RectView {
 	@Override
 	public RectVal copy()
 	{
+		// must NOT call RectVal.make, it'd cause infinite recursion.
 		return this; // nothing can change.
 	}
 	

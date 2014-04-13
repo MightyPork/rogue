@@ -137,7 +137,7 @@ public class Range {
 	@Override
 	public String toString()
 	{
-		return String.format("Range(%.1f|%.1f)", min, max);
+		return String.format("{%.1f|%.1f}", min, max);
 	}
 	
 	
