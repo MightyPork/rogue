@@ -11,7 +11,7 @@ import mightypork.utils.math.vect.VectVal;
  * 
  * @author MightyPork
  */
-public abstract class RectMutable extends RectMath<RectMutable> {
+public abstract class RectMutable extends RectMathStatic<RectMutable> {
 	
 	/**
 	 * Create at 0,0 with zero size

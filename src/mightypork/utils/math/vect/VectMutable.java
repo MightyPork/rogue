@@ -1,8 +1,7 @@
 package mightypork.utils.math.vect;
 
+
 import mightypork.utils.annotations.FactoryMethod;
-
-
 
 
 /**
@@ -10,7 +9,7 @@ import mightypork.utils.annotations.FactoryMethod;
  * 
  * @author MightyPork
  */
-public abstract class VectMutable extends VectMath<VectMutable> { // returns itself on edit
+public abstract class VectMutable extends VectMathStatic<VectMutable> { // returns itself on edit
 
 	/**
 	 * Get a variable initialized as zero (0,0,0)
@@ -74,10 +73,15 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	@FactoryMethod
 	public static VectMutable make(double x, double y, double z)
 	{
-		return new VectMutableVariable(x, y, z);
+		return new VectMutableImpl(x, y, z);
 	}
 	
 	
+	/**
+	 * Set all to zeros.
+	 * 
+	 * @return this
+	 */
 	public VectMutable reset()
 	{
 		return result(0, 0, 0);
@@ -88,7 +92,7 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	 * Set coordinates to match other coord.
 	 * 
 	 * @param copied coord whose coordinates are used
-	 * @return result
+	 * @return this
 	 */
 	public VectMutable setTo(Vect copied)
 	{
@@ -102,7 +106,7 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	 * 
 	 * @param x x coordinate
 	 * @param y y coordinate
-	 * @return result
+	 * @return this
 	 */
 	public VectMutable setTo(double x, double y)
 	{
@@ -116,10 +120,37 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	 * @param x x coordinate
 	 * @param y y coordinate
 	 * @param z z coordinate
-	 * @return result
+	 * @return this
 	 */
 	public VectMutable setTo(double x, double y, double z)
 	{
 		return result(x, y, z);
 	}
+	
+	
+	/**
+	 * Set X coordinate.
+	 * 
+	 * @param x x coordinate
+	 * @return this
+	 */
+	public abstract VectMutable setX(double x);
+	
+	
+	/**
+	 * Set Y coordinate.
+	 * 
+	 * @param y y coordinate
+	 * @return this
+	 */
+	public abstract VectMutable setY(double y);
+	
+	
+	/**
+	 * Set Z coordinate.
+	 * 
+	 * @param z z coordinate
+	 * @return this
+	 */
+	public abstract VectMutable setZ(double z);
 }

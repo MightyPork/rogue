@@ -1,7 +1,9 @@
-package mightypork.gamecore.gui.components;
+package mightypork.gamecore.gui.components.painters;
 
 
-import mightypork.utils.math.constraints.ContextAdapter;
+import mightypork.gamecore.gui.components.PluggableRenderable;
+import mightypork.gamecore.gui.components.Renderable;
+import mightypork.utils.math.constraints.RectBoundAdapter;
 import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.rect.RectView;
 
@@ -11,7 +13,7 @@ import mightypork.utils.math.rect.RectView;
  * 
  * @author MightyPork
  */
-public abstract class PluggableRenderer extends ContextAdapter implements PluggableRenderable {
+public abstract class AbstractPainter extends RectBoundAdapter implements PluggableRenderable {
 	
 	@Override
 	public abstract void render();

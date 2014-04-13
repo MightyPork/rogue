@@ -11,7 +11,13 @@ import mightypork.utils.math.vect.VectVal;
  * 
  * @author MightyPork
  */
-public class RectVal extends RectView {
+public class RectVal extends RectMathStatic<RectVal> {
+	
+	@SuppressWarnings("hiding")
+	public static final RectVal ZERO = Rect.ZERO.copy();
+	@SuppressWarnings("hiding")
+	public static final RectVal ONE = Rect.ONE.copy();
+	
 	
 	/**
 	 * Get a proxy at given rect
@@ -110,16 +116,42 @@ public class RectVal extends RectView {
 	 * @param height
 	 */
 	public RectVal(double x, double y, double width, double height) {
-		pos = VectVal.make(x, y);
-		size = VectVal.make(width, height);
+		this.pos = VectVal.make(x, y);
+		this.size = VectVal.make(width, height);
 	}
 	
 	
+	/**
+	 * Create at given origin, with given size.
+	 * 
+	 * @param origin
+	 * @param size
+	 */
+	public RectVal(Vect origin, Vect size) {
+		this.pos = origin.copy();
+		this.size = size.copy();
+	}
+	
+	
+	/**
+	 * Create at given origin, with given size.
+	 * 
+	 * @param another other coord
+	 */
+	public RectVal(Rect another) {
+		this.pos = another.origin().copy();
+		this.size = another.size().copy();
+	}
+	
+	
+	/**
+	 * @deprecated it's useless to copy a constant
+	 */
 	@Override
+	@Deprecated
 	public RectVal copy()
 	{
-		// must NOT call RectVal.make, it'd cause infinite recursion.
-		return this; // nothing can change.
+		return this; // already constant
 	}
 	
 	
@@ -134,6 +166,13 @@ public class RectVal extends RectView {
 	public VectVal size()
 	{
 		return size;
+	}
+	
+	
+	@Override
+	protected RectVal result(Vect newOrigin, Vect newSize)
+	{
+		return make(newOrigin, newSize);
 	}
 	
 }

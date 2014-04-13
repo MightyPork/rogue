@@ -5,6 +5,8 @@ import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.constraints.NumBound;
+import mightypork.utils.math.num.NumMutable;
+import mightypork.utils.math.num.NumVal;
 
 
 /**
@@ -12,7 +14,7 @@ import mightypork.utils.math.constraints.NumBound;
  * 
  * @author MightyPork
  */
-public class AnimDouble implements Updateable, Pauseable, NumBound {
+public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	
 	/** target double */
 	protected double to = 0;
@@ -32,6 +34,9 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 	/** Easing fn */
 	protected Easing easing = Easing.LINEAR;
 	
+	/** Default duration (seconds) */
+	private double defaultDuration = 0;
+	
 	
 	/**
 	 * Create linear animator
@@ -50,7 +55,7 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 	 * @param easing easing function
 	 */
 	public AnimDouble(double value, Easing easing) {
-		setTo(value);
+		this(value);
 		setEasing(easing);
 	}
 	
@@ -105,12 +110,18 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 	}
 	
 	
+	/**
+	 * @return current animation duration (seconds)
+	 */
 	public double getDuration()
 	{
 		return duration;
 	}
 	
 	
+	/**
+	 * @return elapsed time in current animation (seconds)
+	 */
 	public double getElapsed()
 	{
 		return elapsedTime;
@@ -118,21 +129,33 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 	
 	
 	/**
+	 * @return default animation duration (seconds)
+	 */
+	public double getDefaultDuration()
+	{
+		return defaultDuration;
+	}
+
+
+	/**
+	 * @param defaultDuration default animation duration (seconds)
+	 */
+	public void setDefaultDuration(double defaultDuration)
+	{
+		this.defaultDuration = defaultDuration;
+	}
+
+
+	/**
 	 * Get value at delta time
 	 * 
 	 * @return the value
 	 */
-	public double now()
+	@Override
+	public double value()
 	{
 		if (duration == 0) return to;
 		return Calc.interpolate(from, to, (elapsedTime / duration), easing);
-	}
-	
-	
-	@Override
-	public double getValue()
-	{
-		return now();
 	}
 	
 	
@@ -178,11 +201,13 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 	 * 
 	 * @param value
 	 */
-	public void setTo(double value)
+	@Override
+	public AnimDouble setTo(double value)
 	{
 		from = to = value;
 		elapsedTime = 0;
-		duration = 0;
+		duration = defaultDuration;
+		return this;
 	}
 	
 	
@@ -199,6 +224,7 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 		this.elapsedTime = other.elapsedTime;
 		this.paused = other.paused;
 		this.easing = other.easing;
+		this.defaultDuration = other.defaultDuration;
 	}
 	
 	
@@ -211,7 +237,7 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 	 */
 	public void animate(double from, double to, double time)
 	{
-		final double current = now();
+		final double current = value();
 		
 		this.from = from;
 		this.to = to;
@@ -256,7 +282,7 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 	 */
 	public void animate(double to, double duration)
 	{
-		this.from = now();
+		this.from = value();
 		this.to = to;
 		this.duration = duration;
 		this.elapsedTime = 0;
@@ -290,7 +316,8 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 	 * 
 	 * @return copy
 	 */
-	public AnimDouble copy()
+	@Override
+	public AnimDouble clone()
 	{
 		return new AnimDouble(this);
 	}
@@ -320,7 +347,7 @@ public class AnimDouble implements Updateable, Pauseable, NumBound {
 	 */
 	public void stop()
 	{
-		from = to = now();
+		from = to = value();
 		elapsedTime = 0;
 		duration = 0;
 	}

@@ -1,20 +1,20 @@
 package mightypork.utils.math.constraints;
 
+import mightypork.utils.math.num.Num;
+import mightypork.utils.math.num.NumVal;
+import mightypork.utils.math.num.NumView;
+
 
 /**
  * Numeric constraint
  * 
  * @author MightyPork
  */
-public interface NumBound {
-	
-	public static final NumBound ZERO = new NumberConst(0);
-	public static final NumBound ONE = new NumberConst(1);
-	
+public interface NumBound {	
 	
 	/**
 	 * @return current value
 	 */
-	double getValue();
+	Num getNum();
 	
 }

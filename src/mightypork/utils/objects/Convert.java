@@ -315,7 +315,7 @@ public class Convert {
 	 * @param o object
 	 * @return Coord
 	 */
-	public static VectView toVect(Object o)
+	public static VectVal toVect(Object o)
 	{
 		return toVect(o, Vect.ZERO);
 	}

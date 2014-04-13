@@ -26,71 +26,6 @@ class RectMutableImpl extends RectMutable {
 	}
 	
 	
-	/**
-	 * Add X and Y to origin
-	 * 
-	 * @param x x to add
-	 * @param y y to add
-	 * @return result
-	 */
-	@Override
-	public RectMutable move(double x, double y)
-	{
-		pos.add(x, y);
-		return this;
-	}
-	
-	
-	/**
-	 * Shrink the rect
-	 * 
-	 * @param left shrink
-	 * @param right shrink
-	 * @param top shrink
-	 * @param bottom shrink
-	 * @return result
-	 */
-	@Override
-	public RectMutable shrink(double left, double right, double top, double bottom)
-	{
-		pos.add(left, top);
-		size.sub(left + right, top + bottom).abs();
-		return this;
-	}
-	
-	
-	/**
-	 * Grow the rect
-	 * 
-	 * @param left growth
-	 * @param right growth
-	 * @param top growth
-	 * @param bottom growth
-	 * @return result
-	 */
-	@Override
-	public RectMutable grow(double left, double right, double top, double bottom)
-	{
-		pos.sub(left, top);
-		size.add(left + right, top + bottom).abs();
-		return this;
-	}
-	
-	
-	/**
-	 * Round coords
-	 * 
-	 * @return result
-	 */
-	@Override
-	public RectMutable round()
-	{
-		pos.round();
-		size.round();
-		return this;
-	}
-	
-	
 	@Override
 	public VectVal origin()
 	{
@@ -102,6 +37,15 @@ class RectMutableImpl extends RectMutable {
 	public VectVal size()
 	{
 		return size.copy();
+	}
+	
+	
+	@Override
+	protected RectMutable result(Vect newOrigin, Vect newSize)
+	{
+		setOrigin(newOrigin);
+		setSize(newSize);
+		return this;
 	}
 	
 	

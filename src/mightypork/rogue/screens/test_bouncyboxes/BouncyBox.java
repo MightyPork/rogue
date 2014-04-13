@@ -6,7 +6,7 @@ import static mightypork.utils.math.constraints.ConstraintFactory.*;
 import java.util.Random;
 
 import mightypork.gamecore.control.timing.Updateable;
-import mightypork.gamecore.gui.components.PluggableRenderer;
+import mightypork.gamecore.gui.components.painters.AbstractPainter;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
@@ -15,7 +15,7 @@ import mightypork.utils.math.constraints.NumBound;
 import mightypork.utils.math.constraints.RectBound;
 
 
-public class BouncyBox extends PluggableRenderer implements Updateable {
+public class BouncyBox extends AbstractPainter implements Updateable {
 	
 	private final Random rand = new Random();
 	

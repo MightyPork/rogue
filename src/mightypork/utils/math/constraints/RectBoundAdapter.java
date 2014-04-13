@@ -1,16 +1,18 @@
 package mightypork.utils.math.constraints;
 
 
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.rect.RectAdapter;
 
 
 /**
- * Basic pluggable context implementation
+ * Pluggable rect bound adapter
  * 
  * @author MightyPork
  */
-public abstract class ContextAdapter implements PluggableRect {
-	
+public abstract class RectBoundAdapter extends RectAdapter implements PluggableRectBound {
+
+
 	private RectBound backing = null;
 	
 	
@@ -20,11 +22,10 @@ public abstract class ContextAdapter implements PluggableRect {
 		this.backing = rect;
 	}
 	
-	
 	@Override
-	public RectView getRect()
-	{
+	public Rect getSource() {
 		return backing.getRect();
 	}
+
 	
 }

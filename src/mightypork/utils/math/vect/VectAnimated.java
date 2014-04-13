@@ -92,21 +92,102 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	@Override
 	public double x()
 	{
-		return x.now();
+		return x.value();
 	}
 	
 	
 	@Override
 	public double y()
 	{
-		return y.now();
+		return y.value();
 	}
 	
 	
 	@Override
 	public double z()
 	{
-		return z.now();
+		return z.value();
+	}
+	
+	
+	@Override
+	public VectAnimated result(double x, double y, double z)
+	{
+		setX(x);
+		setY(y);
+		setZ(z);
+		
+		return this;
+	}
+	
+	
+	@Override
+	public VectMutable setX(double x)
+	{
+		this.x.animate(x, defaultDuration);
+		return this;
+	}
+	
+	
+	@Override
+	public VectMutable setY(double y)
+	{
+		this.y.animate(y, defaultDuration);
+		return this;
+	}
+	
+	
+	@Override
+	public VectMutable setZ(double z)
+	{
+		this.z.animate(z, defaultDuration);
+		return this;
+	}
+	
+	
+	/**
+	 * Add offset with animation
+	 * 
+	 * @param offset added offset
+	 * @param duration animation time (seconds)
+	 * @return this
+	 */
+	public VectAnimated add(Vect offset, double duration)
+	{
+		animate(view().add(offset), duration);
+		return this;
+	}
+	
+	
+	/**
+	 * Animate to given coordinates in given amount of time
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param duration animation time (seconds)
+	 * @return this
+	 */
+	public VectAnimated animate(double x, double y, double z, double duration)
+	{
+		this.x.animate(x, duration);
+		this.y.animate(y, duration);
+		this.z.animate(z, duration);
+		return this;
+	}
+	
+	
+	/**
+	 * Animate to given vec in given amount of time.
+	 * 
+	 * @param target target (only it's current value will be used)
+	 * @param duration animation time (seconds)
+	 * @return this
+	 */
+	public VectAnimated animate(Vect target, double duration)
+	{
+		animate(target.x(), target.y(), target.z(), duration);
+		return this;
 	}
 	
 	
@@ -127,40 +208,6 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	public void setDefaultDuration(double defaultDuration)
 	{
 		this.defaultDuration = defaultDuration;
-	}
-	
-	
-	@Override
-	public VectAnimated result(double x, double y, double z)
-	{
-		this.x.animate(x, defaultDuration);
-		this.y.animate(y, defaultDuration);
-		this.z.animate(z, defaultDuration);
-		
-		return this;
-	}
-	
-	
-	public VectAnimated add(Vect offset, double speed)
-	{
-		animate(view().add(offset), speed);
-		return this;
-	}
-	
-	
-	public VectAnimated animate(double x, double y, double z, double duration)
-	{
-		this.x.animate(x, duration);
-		this.y.animate(y, duration);
-		this.z.animate(z, duration);
-		return this;
-	}
-	
-	
-	public VectAnimated animate(Vect target, double duration)
-	{
-		animate(target.x(), target.y(), target.z(), duration);
-		return this;
 	}
 	
 	

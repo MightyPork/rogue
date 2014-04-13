@@ -12,7 +12,7 @@ import mightypork.utils.math.constraints.RectBound;
  * 
  * @author MightyPork
  */
-public class RowHolder extends ElementHolder {
+public class RowHolder extends AbstractLayout {
 	
 	private final int rows;
 	private int row = 0;

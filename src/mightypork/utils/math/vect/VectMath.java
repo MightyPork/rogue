@@ -1,29 +1,36 @@
 package mightypork.utils.math.vect;
 
 
+import mightypork.utils.math.num.Num;
+import mightypork.utils.math.num.NumVal;
+
+
 /**
- * Implementation of coordinate methods
+ * Vec operations
  * 
  * @author MightyPork
- * @param <V> Return type of methods
+ * @param <V> return type of vector functions
+ * @param <N> return type of numeric functions
+ * @param <B> return type of boolean functions
  */
-abstract class VectMath<V extends Vect> extends AbstractVect {
+abstract class VectMath<V extends Vect, N> extends AbstractVect {
 	
 	/**
-	 * <p>
-	 * Some operation was performed and this result was obtained.
-	 * </p>
-	 * <p>
-	 * It's now up to implementing class what to do - mutable ones can alter
-	 * it's data values, immutable can return a new Vec.
-	 * </p>
-	 * 
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @return the result Vec
+	 * @return X constraint
 	 */
-	public abstract V result(double x, double y, double z);
+	public abstract Num xn();
+	
+	
+	/**
+	 * @return Y constraint
+	 */
+	public abstract Num yn();
+	
+	
+	/**
+	 * @return Z constraint
+	 */
+	public abstract Num zn();
 	
 	
 	/**
@@ -32,9 +39,9 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param x x coordinate
 	 * @return result
 	 */
-	public V setX(double x)
+	public VectView withX(double x)
 	{
-		return result(x, y(), z());
+		return withX(NumVal.make(x));
 	}
 	
 	
@@ -44,9 +51,9 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param y y coordinate
 	 * @return result
 	 */
-	public V setY(double y)
+	public VectView withY(double y)
 	{
-		return result(x(), y, z());
+		return withY(NumVal.make(y));
 	}
 	
 	
@@ -56,9 +63,99 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param z z coordinate
 	 * @return result
 	 */
-	public V setZ(double z)
+	public VectView withZ(double z)
 	{
-		return result(x(), y(), z);
+		return withZ(NumVal.make(z));
+	}
+	
+	
+	public VectView withX(final Num x)
+	{
+		return new VectView() {
+			
+			final Vect t = VectMath.this;
+			
+			
+			@Override
+			public double x()
+			{
+				return x.value();
+			}
+			
+			
+			@Override
+			public double y()
+			{
+				return t.z();
+			}
+			
+			
+			@Override
+			public double z()
+			{
+				return t.z();
+			}
+		};
+	}
+	
+	
+	public VectView withY(final Num y)
+	{
+		return new VectView() {
+			
+			final Vect t = VectMath.this;
+			
+			
+			@Override
+			public double x()
+			{
+				return t.x();
+			}
+			
+			
+			@Override
+			public double y()
+			{
+				return y.value();
+			}
+			
+			
+			@Override
+			public double z()
+			{
+				return t.z();
+			}
+		};
+	}
+	
+	
+	public VectView withZ(final Num z)
+	{
+		return new VectView() {
+			
+			final Vect t = VectMath.this;
+			
+			
+			@Override
+			public double x()
+			{
+				return t.x();
+			}
+			
+			
+			@Override
+			public double y()
+			{
+				return t.y();
+			}
+			
+			
+			@Override
+			public double z()
+			{
+				return z.value();
+			}
+		};
 	}
 	
 	
@@ -67,10 +164,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * 
 	 * @return result
 	 */
-	public V abs()
-	{
-		return result(Math.abs(x()), Math.abs(y()), Math.abs(z()));
-	}
+	public abstract V abs();
 	
 	
 	/**
@@ -79,10 +173,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param vec offset
 	 * @return result
 	 */
-	public V add(Vect vec)
-	{
-		return add(vec.x(), vec.y(), vec.z());
-	}
+	public abstract V add(Vect vec);
 	
 	
 	/**
@@ -93,10 +184,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param y y offset
 	 * @return result
 	 */
-	public V add(double x, double y)
-	{
-		return add(x, y, 0);
-	}
+	public abstract V add(double x, double y);
 	
 	
 	/**
@@ -107,10 +195,13 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param z z offset
 	 * @return result
 	 */
-	public V add(double x, double y, double z)
-	{
-		return result(x() + x, y() + y, z() + z);
-	}
+	public abstract V add(double x, double y, double z);
+	
+	
+	public abstract V add(Num x, Num y);
+	
+	
+	public abstract V add(final Num x, final Num y, final Num z);
 	
 	
 	/**
@@ -118,10 +209,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * 
 	 * @return result
 	 */
-	public V half()
-	{
-		return mul(0.5);
-	}
+	public abstract V half();
 	
 	
 	/**
@@ -130,10 +218,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param d multiplier
 	 * @return result
 	 */
-	public V mul(double d)
-	{
-		return mul(d, d, d);
-	}
+	public abstract V mul(double d);
 	
 	
 	/**
@@ -142,10 +227,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param vec vector of multipliers
 	 * @return result
 	 */
-	public V mul(Vect vec)
-	{
-		return mul(vec.x(), vec.y(), vec.z());
-	}
+	public abstract V mul(Vect vec);
 	
 	
 	/**
@@ -156,10 +238,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param y y multiplier
 	 * @return result
 	 */
-	public V mul(double x, double y)
-	{
-		return mul(x, y, 1);
-	}
+	public abstract V mul(double x, double y);
 	
 	
 	/**
@@ -170,10 +249,16 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param z z multiplier
 	 * @return result
 	 */
-	public V mul(double x, double y, double z)
-	{
-		return result(x() * x, y() * y, z() * z);
-	}
+	public abstract V mul(double x, double y, double z);
+	
+	
+	public abstract V mul(final Num d);
+	
+	
+	public abstract V mul(final Num x, final Num y);
+	
+	
+	public abstract V mul(final Num x, final Num y, final Num z);
 	
 	
 	/**
@@ -181,10 +266,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * 
 	 * @return result
 	 */
-	public V round()
-	{
-		return result(Math.round(x()), Math.round(y()), Math.round(z()));
-	}
+	public abstract V round();
 	
 	
 	/**
@@ -192,10 +274,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * 
 	 * @return result
 	 */
-	public V floor()
-	{
-		return result(Math.floor(x()), Math.floor(y()), Math.floor(z()));
-	}
+	public abstract V floor();
 	
 	
 	/**
@@ -203,10 +282,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * 
 	 * @return result
 	 */
-	public V ceil()
-	{
-		return result(Math.ceil(x()), Math.ceil(y()), Math.ceil(z()));
-	}
+	public abstract V ceil();
 	
 	
 	/**
@@ -215,10 +291,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param vec offset
 	 * @return result
 	 */
-	public V sub(Vect vec)
-	{
-		return sub(vec.x(), vec.y(), vec.z());
-	}
+	public abstract V sub(Vect vec);
 	
 	
 	/**
@@ -229,10 +302,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param y y offset
 	 * @return result
 	 */
-	public V sub(double x, double y)
-	{
-		return sub(x, y, 0);
-	}
+	public abstract V sub(double x, double y);
 	
 	
 	/**
@@ -243,10 +313,13 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param z z offset
 	 * @return result
 	 */
-	public V sub(double x, double y, double z)
-	{
-		return result(x() - x, y() - y, z() - z);
-	}
+	public abstract V sub(double x, double y, double z);
+	
+	
+	public abstract V sub(Num x, Num y);
+	
+	
+	public abstract V sub(final Num x, final Num y, final Num z);
 	
 	
 	/**
@@ -254,10 +327,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * 
 	 * @return result
 	 */
-	public V neg()
-	{
-		return result(-x(), -y(), -z());
-	}
+	public abstract V neg();
 	
 	
 	/**
@@ -266,14 +336,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param size size we need
 	 * @return result
 	 */
-	public V norm(double size)
-	{
-		if (isZero()) return result(x(), y(), z()); // can't norm zero vector
-			
-		final double k = size / size();
-		
-		return mul(k);
-	}
+	public abstract V norm(double size);
 	
 	
 	/**
@@ -282,14 +345,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param point other point
 	 * @return distance
 	 */
-	public final double distTo(Vect point)
-	{
-		final double dx = x() - point.x();
-		final double dy = y() - point.y();
-		final double dz = z() - point.z();
-		
-		return Math.sqrt(dx * dx + dy * dy + dz * dz);
-	}
+	public abstract N distTo(Vect point);
 	
 	
 	/**
@@ -298,14 +354,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param point other point
 	 * @return result
 	 */
-	public final VectVal midTo(Vect point)
-	{
-		final double dx = (point.x() - x()) * 0.5;
-		final double dy = (point.y() - y()) * 0.5;
-		final double dz = (point.z() - z()) * 0.5;
-		
-		return VectVal.make(dx, dy, dz);
-	}
+	public abstract V midTo(Vect point);
 	
 	
 	/**
@@ -314,10 +363,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param point second point
 	 * @return result
 	 */
-	public final VectVal vectTo(Vect point)
-	{
-		return VectVal.make(point.x() - x(), point.y() - y(), point.z() - z());
-	}
+	public abstract V vectTo(Vect point);
 	
 	
 	/**
@@ -326,15 +372,7 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param vec other vector
 	 * @return result
 	 */
-	public final VectVal cross(Vect vec)
-	{
-		//@formatter:off
-		return VectVal.make(
-				y() * vec.z() - z() * vec.y(),
-				z() * vec.x() - x() * vec.z(),
-				x() * vec.y() - y() * vec.x());
-		//@formatter:on
-	}
+	public abstract V cross(Vect vec);
 	
 	
 	/**
@@ -343,8 +381,21 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 	 * @param vec other vector
 	 * @return dot product
 	 */
-	public final double dot(Vect vec)
+	public abstract N dot(Vect vec);
+	
+	
+	/**
+	 * Get vector size
+	 * 
+	 * @return size
+	 */
+	public abstract N size();
+	
+	
+	@Override
+	public boolean isZero()
 	{
-		return x() * vec.x() + y() * vec.y() + z() * vec.z();
+		return x() == 0 && y() == 0 && z() == 0;
 	}
+	
 }

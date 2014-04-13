@@ -23,7 +23,7 @@ public class ScreenTestFont extends Screen {
 		tp = new TextPainter(Res.getFont("default"), Align.CENTER, RGB.GREEN);
 		tp.setText("Hello World!");
 		
-		final NumBound fontHeight = mul(getDisplay().getSize().yc(), 0.1);
+		final NumBound fontHeight = mul(getDisplay().getSize().yn(), 0.1);
 		
 		final RectBound strbox = centerTo(box(fontHeight), this);
 		

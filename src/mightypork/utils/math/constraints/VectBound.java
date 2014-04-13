@@ -2,6 +2,7 @@ package mightypork.utils.math.constraints;
 
 
 import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -14,5 +15,5 @@ public interface VectBound {
 	/**
 	 * @return the current vector.
 	 */
-	public Vect getVect();
+	public VectView getVect();
 }

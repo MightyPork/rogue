@@ -1,7 +1,6 @@
 package mightypork.gamecore.gui.components.painters;
 
 
-import mightypork.gamecore.gui.components.PluggableRenderer;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.color.RGB;
@@ -12,7 +11,7 @@ import mightypork.utils.math.color.RGB;
  * 
  * @author MightyPork
  */
-public class QuadPainter extends PluggableRenderer {
+public class QuadPainter extends AbstractPainter {
 	
 	private final RGB colorHMinVMin;
 	private final RGB colorHMaxVMin;

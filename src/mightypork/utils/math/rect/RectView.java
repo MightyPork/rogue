@@ -1,5 +1,6 @@
 package mightypork.utils.math.rect;
 
+
 import mightypork.utils.annotations.FactoryMethod;
 
 
@@ -8,7 +9,13 @@ import mightypork.utils.annotations.FactoryMethod;
  * 
  * @author MightyPork
  */
-public abstract class RectView extends RectMath<RectVal> {
+public abstract class RectView extends RectMathDynamic {
+	
+	@SuppressWarnings("hiding")
+	public static final RectView ZERO = Rect.ZERO.view();
+	@SuppressWarnings("hiding")
+	public static final RectView ONE = Rect.ONE.view();
+	
 	
 	/**
 	 * Get a proxy at given rect
@@ -23,34 +30,11 @@ public abstract class RectView extends RectMath<RectVal> {
 	}
 	
 	
+	/**
+	 * @deprecated No point in taking view of a view
+	 */
 	@Override
-	public RectVal move(double x, double y)
-	{
-		return RectVal.make(origin().add(x, y), size());
-	}
-	
-	
-	@Override
-	public RectVal shrink(double left, double right, double top, double bottom)
-	{
-		return RectVal.make(origin().add(left, top), size().sub(left + right, top + bottom));
-	}
-	
-	
-	@Override
-	public RectVal grow(double left, double right, double top, double bottom)
-	{
-		return RectVal.make(origin().sub(left, top), size().add(left + right, top + bottom));
-	}
-	
-	
-	@Override
-	public RectVal round()
-	{
-		return RectVal.make(origin().round(), size().round());
-	}
-	
-	@Override
+	@Deprecated
 	public RectView view()
 	{
 		// must NOT call RectView.make, it'd cause infinite recursion.

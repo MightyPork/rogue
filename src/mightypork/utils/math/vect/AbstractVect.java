@@ -1,27 +1,11 @@
 package mightypork.utils.math.vect;
 
 
-import mightypork.utils.math.constraints.NumBound;
 
 
 public abstract class AbstractVect implements Vect {
 	
 	private VectView proxy;
-	private NumBound xc;
-	private NumBound yc;
-	private NumBound zc;
-	
-	
-	@Override
-	public abstract double x();
-	
-	
-	@Override
-	public abstract double y();
-	
-	
-	@Override
-	public abstract double z();
 	
 	
 	@Override
@@ -46,72 +30,9 @@ public abstract class AbstractVect implements Vect {
 	
 	
 	@Override
-	public final NumBound xc()
+	public final VectView getVect()
 	{
-		if (xc == null) xc = new NumBound() {
-			
-			@Override
-			public double getValue()
-			{
-				return x();
-			}
-		};
-		
-		return xc;
-	}
-	
-	
-	@Override
-	public final NumBound yc()
-	{
-		if (yc == null) yc = new NumBound() {
-			
-			@Override
-			public double getValue()
-			{
-				return y();
-			}
-		};
-		
-		return yc;
-	}
-	
-	
-	@Override
-	public final NumBound zc()
-	{
-		if (zc == null) zc = new NumBound() {
-			
-			@Override
-			public double getValue()
-			{
-				return z();
-			}
-		};
-		
-		return zc;
-	}
-	
-	
-	@Override
-	public final Vect getVect()
-	{
-		return this;
-	}
-	
-	
-	@Override
-	public final double size()
-	{
-		final double x = x(), y = y(), z = z();
-		return Math.sqrt(x * x + y * y + z * z);
-	}
-	
-	
-	@Override
-	public final boolean isZero()
-	{
-		return x() == 0 && y() == 0 && z() == 0;
+		return view();
 	}
 	
 	

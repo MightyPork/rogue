@@ -28,7 +28,7 @@ public class AnimDoubleRad extends AnimDouble {
 	
 	
 	@Override
-	public double now()
+	public double value()
 	{
 		if (duration == 0) return Rad.norm(to);
 		return Calc.interpolateRad(from, to, (elapsedTime / duration), easing);

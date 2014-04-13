@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 import mightypork.utils.math.Range;
 import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectVal;
 import mightypork.utils.math.vect.VectView;
 import mightypork.utils.objects.Convert;
 
@@ -362,7 +363,7 @@ public class PropertyManager {
 	 * @param n key
 	 * @return the coord found, or null
 	 */
-	public VectView getCoord(String n)
+	public VectVal getCoord(String n)
 	{
 		return Convert.toVect(get(n).value);
 	}

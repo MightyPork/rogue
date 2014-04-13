@@ -10,6 +10,7 @@ import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.rect.RectView;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
 import mightypork.utils.math.vect.VectView;
@@ -351,10 +352,12 @@ public class Render {
 	 */
 	public static void quad(Rect quad)
 	{
-		final double x1 = quad.left();
-		final double y1 = quad.top();
-		final double x2 = quad.right();
-		final double y2 = quad.bottom();
+		RectView rv = quad.view();
+		
+		final double x1 = rv.left().value();
+		final double y1 = rv.top().value();
+		final double x2 = rv.right().value();
+		final double y2 = rv.bottom().value();
 		
 		// draw with color
 		unbindTexture();

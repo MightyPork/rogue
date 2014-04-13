@@ -2,6 +2,7 @@ package mightypork.utils.math.vect;
 
 
 import mightypork.utils.math.constraints.NumBound;
+import mightypork.utils.math.num.Num;
 
 
 /**
@@ -11,43 +12,43 @@ import mightypork.utils.math.constraints.NumBound;
  */
 class NumConstrVect extends VectView {
 	
-	private final NumBound constrX;
-	private final NumBound constrY;
-	private final NumBound constrZ;
+	private final Num constrX;
+	private final Num constrY;
+	private final Num constrZ;
 	
 	
-	public NumConstrVect(NumBound x, NumBound y, NumBound z) {
+	public NumConstrVect(Num x, Num y, Num z) {
 		this.constrX = x;
 		this.constrY = y;
 		this.constrZ = z;
 	}
 	
 	
-	public NumConstrVect(NumBound x, NumBound y) {
+	public NumConstrVect(Num x, Num y) {
 		this.constrX = x;
 		this.constrY = y;
-		this.constrZ = NumBound.ZERO;
+		this.constrZ = Num.ZERO;
 	}
 	
 	
 	@Override
 	public double x()
 	{
-		return constrX.getValue();
+		return constrX.value();
 	}
 	
 	
 	@Override
 	public double y()
 	{
-		return constrY.getValue();
+		return constrY.value();
 	}
 	
 	
 	@Override
 	public double z()
 	{
-		return constrZ.getValue();
+		return constrZ.value();
 	}
 	
 }

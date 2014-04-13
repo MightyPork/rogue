@@ -1,5 +1,6 @@
 package mightypork.utils.math.vect;
 
+
 import mightypork.utils.annotations.FactoryMethod;
 
 
@@ -9,7 +10,13 @@ import mightypork.utils.annotations.FactoryMethod;
  * 
  * @author MightyPork
  */
-public final class VectVal extends VectView {
+public final class VectVal extends VectMathStatic<VectVal> {
+	
+	@SuppressWarnings("hiding")
+	public static final VectVal ZERO = new VectVal(0, 0, 0);
+	@SuppressWarnings("hiding")
+	public static final VectVal ONE = new VectVal(1, 1, 1);
+	
 	
 	/**
 	 * Make a constant vector
@@ -88,10 +95,21 @@ public final class VectVal extends VectView {
 	}
 	
 	
+	/**
+	 * @deprecated it's useless to copy a constant
+	 */
 	@Override
+	@Deprecated
 	public VectVal copy()
 	{
 		return this; // it's constant already
+	}
+	
+	
+	@Override
+	public VectVal result(double x, double y, double z)
+	{
+		return new VectVal(x, y, z);
 	}
 	
 }

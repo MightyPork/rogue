@@ -1,7 +1,6 @@
 package mightypork.utils.math.vect;
 
 
-import mightypork.utils.math.constraints.NumBound;
 import mightypork.utils.math.constraints.VectBound;
 
 
@@ -12,8 +11,8 @@ import mightypork.utils.math.constraints.VectBound;
  */
 public interface Vect extends VectBound {
 	
-	VectVal ZERO = new VectVal(0, 0, 0);
-	VectVal ONE = new VectVal(0, 0, 0);
+	Vect ZERO = new VectVal(0, 0, 0);
+	Vect ONE = new VectVal(1, 1, 1);
 	
 	
 	/**
@@ -53,39 +52,13 @@ public interface Vect extends VectBound {
 	
 	
 	/**
-	 * @return X constraint
-	 */
-	NumBound xc();
-	
-	
-	/**
-	 * @return Y constraint
-	 */
-	NumBound yc();
-	
-	
-	/**
-	 * @return Z constraint
-	 */
-	NumBound zc();
-	
-	
-	/**
-	 * Get vector size
-	 * 
-	 * @return size
-	 */
-	double size();
-	
-	
-	/**
 	 * @return true if zero
 	 */
-	public boolean isZero();
+	boolean isZero();
 	
 	
 	/**
-	 * Get a view at current state, not propagating further changes.
+	 * Get a static immutable copy of the current state.
 	 * 
 	 * @return a immutable copy
 	 */
@@ -93,7 +66,7 @@ public interface Vect extends VectBound {
 	
 	
 	/**
-	 * Get immutable proxy view at this vec
+	 * Get dynamic immutable view at this rect
 	 * 
 	 * @return immutable view
 	 */

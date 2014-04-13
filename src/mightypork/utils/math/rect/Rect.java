@@ -2,8 +2,8 @@ package mightypork.utils.math.rect;
 
 
 import mightypork.utils.math.constraints.RectBound;
+import mightypork.utils.math.num.Num;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectVal;
 
 
 /**
@@ -13,8 +13,8 @@ import mightypork.utils.math.vect.VectVal;
  */
 public interface Rect extends RectBound {
 	
-	RectVal ONE = new RectVal(0, 0, 1, 1);
-	RectVal ZERO = new RectVal(0, 0, 0, 0);
+	Rect ZERO = new RectVal(0, 0, 0, 0);
+	Rect ONE = new RectVal(0, 0, 1, 1);
 	
 	
 	/**
@@ -34,125 +34,119 @@ public interface Rect extends RectBound {
 	
 	
 	/**
+	 * Origin (top left).
+	 * 
 	 * @return origin (top left)
 	 */
-	VectVal origin();
+	Vect origin();
 	
 	
 	/**
+	 * Size (spanning right down from Origin).
+	 * 
 	 * @return size vector
 	 */
-	VectVal size();
+	Vect size();
 	
 	
 	/**
 	 * @return current width
 	 */
-	double width();
+	public abstract Num width();
 	
 	
 	/**
 	 * @return current height
 	 */
-	double height();
+	public abstract Num height();
 	
 	
 	/**
 	 * @return origin X
 	 */
-	double x();
+	public abstract Num x();
 	
 	
 	/**
 	 * @return origin Y
 	 */
-	double y();
+	public abstract Num y();
 	
 	
 	/**
 	 * @return left X (low)
 	 */
-	double left();
+	public abstract Num left();
 	
 	
 	/**
 	 * @return right X (high)
 	 */
-	double right();
+	public abstract Num right();
 	
 	
 	/**
 	 * @return top Y (low)
 	 */
-	double top();
+	public abstract Num top();
 	
 	
 	/**
 	 * @return bottom Y (high)
 	 */
-	double bottom();
+	public abstract Num bottom();
 	
 	
 	/**
 	 * @return top left corner position
 	 */
-	VectVal topLeft();
+	public abstract Vect topLeft();
 	
 	
 	/**
 	 * @return top center position
 	 */
-	VectVal topCenter();
+	public abstract Vect topCenter();
 	
 	
 	/**
 	 * @return top right corner position
 	 */
-	VectVal topRight();
+	public abstract Vect topRight();
 	
 	
 	/**
 	 * @return left center position
 	 */
-	VectVal centerLeft();
+	public abstract Vect centerLeft();
 	
 	
 	/**
 	 * @return center position
 	 */
-	VectVal center();
+	public abstract Vect center();
 	
 	
 	/**
 	 * @return right center position
 	 */
-	VectVal centerRight();
+	public abstract Vect centerRight();
 	
 	
 	/**
 	 * @return bottom left corner position
 	 */
-	VectVal bottomLeft();
+	public abstract Vect bottomLeft();
 	
 	
 	/**
 	 * @return bottom center position
 	 */
-	VectVal bottomCenter();
+	public abstract Vect bottomCenter();
 	
 	
 	/**
 	 * @return bottom right corner position
 	 */
-	VectVal bottomRight();
-	
-	
-	/**
-	 * Check if point is inside this rectangle
-	 * 
-	 * @param point point to test
-	 * @return is inside
-	 */
-	boolean contains(Vect point);
-	
+	public abstract Vect bottomRight();
 }
