@@ -1,8 +1,6 @@
 package mightypork.utils.math.vect;
 
 
-import mightypork.utils.math.animation.AnimDouble;
-import mightypork.utils.math.animation.Easing;
 
 
 /**
@@ -69,64 +67,8 @@ public abstract class VectMutable extends VectMath<VectMutable> { // returns its
 	 */
 	public static VectMutable make(double x, double y, double z)
 	{
-		return new VectMutableImpl(x, y, z);
+		return new VectMutableVariable(x, y, z);
 	}
-	
-	
-	/**
-	 * Create an animated vector; This way different easing / settings can be
-	 * specified for each coordinate.
-	 * 
-	 * @param animX x animator
-	 * @param animY y animator
-	 * @param animZ z animator
-	 * @return animated mutable vector
-	 */
-	public static VectMutableAnim makeAnim(AnimDouble animX, AnimDouble animY, AnimDouble animZ)
-	{
-		return new VectMutableAnim(animX, animY, animZ);
-	}
-	
-	
-	/**
-	 * Create an animated vector
-	 * 
-	 * @param animStart initial positioon
-	 * @param easing animation easing
-	 * @return animated mutable vector
-	 */
-	public static VectMutableAnim makeAnim(Vect animStart, Easing easing)
-	{
-		return new VectMutableAnim(animStart, easing);
-	}
-	
-	
-	/**
-	 * Create an animated vector, initialized at 0,0,0
-	 * 
-	 * @param easing animation easing
-	 * @return animated mutable vector
-	 */
-	public static VectMutableAnim makeAnim(Easing easing)
-	{
-		return new VectMutableAnim(Vect.ZERO, easing);
-	}
-	
-	
-	@Override
-	public abstract VectMutable result(double x, double y, double z);
-	
-	
-	@Override
-	public abstract double x();
-	
-	
-	@Override
-	public abstract double y();
-	
-	
-	@Override
-	public abstract double z();
 	
 	
 	public VectMutable reset()

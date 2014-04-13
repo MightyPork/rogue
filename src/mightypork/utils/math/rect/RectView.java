@@ -16,7 +16,7 @@ public abstract class RectView extends RectMath<RectVal> {
 	 */
 	public static RectView make(Rect observed)
 	{
-		return observed.getView();
+		return observed.view();
 	}
 	
 	

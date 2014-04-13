@@ -12,20 +12,73 @@ import mightypork.utils.math.animation.Easing;
  * 
  * @author MightyPork
  */
-public class VectMutableAnim extends VectMutable implements Pauseable, Updateable {
+public class VectAnimated extends VectMutable implements Pauseable, Updateable {
+	
+	/**
+	 * Create an animated vector; This way different easing / settings can be
+	 * specified for each coordinate.
+	 * 
+	 * @param x x animator
+	 * @param y y animator
+	 * @param z z animator
+	 * @return animated mutable vector
+	 */
+	public static VectAnimated make(AnimDouble x, AnimDouble y, AnimDouble z)
+	{
+		return new VectAnimated(x, y, z);
+	}
+	
+	
+	/**
+	 * Create an animated vector
+	 * 
+	 * @param start initial positioon
+	 * @param easing animation easing
+	 * @return animated mutable vector
+	 */
+	public static VectAnimated make(Vect start, Easing easing)
+	{
+		return new VectAnimated(start, easing);
+	}
+	
+	
+	/**
+	 * Create an animated vector, initialized at 0,0,0
+	 * 
+	 * @param easing animation easing
+	 * @return animated mutable vector
+	 */
+	public static VectAnimated make(Easing easing)
+	{
+		return new VectAnimated(Vect.ZERO, easing);
+	}
 	
 	private final AnimDouble x, y, z;
 	private double defaultDuration = 0;
 	
 	
-	VectMutableAnim(AnimDouble x, AnimDouble y, AnimDouble z) {
+	/**
+	 * Create an animated vector; This way different easing / settings can be
+	 * specified for each coordinate.
+	 * 
+	 * @param x x animator
+	 * @param y y animator
+	 * @param z z animator
+	 */
+	public VectAnimated(AnimDouble x, AnimDouble y, AnimDouble z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
 	
-	VectMutableAnim(Vect start, Easing easing) {
+	/**
+	 * Create an animated vector
+	 * 
+	 * @param start initial positioon
+	 * @param easing animation easing
+	 */
+	public VectAnimated(Vect start, Easing easing) {
 		x = new AnimDouble(start.x(), easing);
 		y = new AnimDouble(start.y(), easing);
 		z = new AnimDouble(start.z(), easing);
@@ -74,7 +127,7 @@ public class VectMutableAnim extends VectMutable implements Pauseable, Updateabl
 	
 	
 	@Override
-	public VectMutableAnim result(double x, double y, double z)
+	public VectAnimated result(double x, double y, double z)
 	{
 		this.x.animate(x, defaultDuration);
 		this.y.animate(y, defaultDuration);
@@ -84,14 +137,14 @@ public class VectMutableAnim extends VectMutable implements Pauseable, Updateabl
 	}
 	
 	
-	public VectMutableAnim add(Vect offset, double speed)
+	public VectAnimated add(Vect offset, double speed)
 	{
-		animate(getView().add(offset), speed);
+		animate(view().add(offset), speed);
 		return this;
 	}
 	
 	
-	public VectMutableAnim animate(double x, double y, double z, double duration)
+	public VectAnimated animate(double x, double y, double z, double duration)
 	{
 		this.x.animate(x, duration);
 		this.y.animate(y, duration);
@@ -100,7 +153,7 @@ public class VectMutableAnim extends VectMutable implements Pauseable, Updateabl
 	}
 	
 	
-	public VectMutableAnim animate(Vect target, double duration)
+	public VectAnimated animate(Vect target, double duration)
 	{
 		animate(target.x(), target.y(), target.z(), duration);
 		return this;

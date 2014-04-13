@@ -16,7 +16,7 @@ import mightypork.utils.math.vect.VectView;
  * 
  * @author MightyPork
  */
-public class Bounds {
+public class ConstraintFactory {
 	
 	public static RectCache cached(final Poller poller, final RectBound rc)
 	{
@@ -25,16 +25,16 @@ public class Bounds {
 	
 	
 	/**
-	 * Convert {@link Number} to {@link NumberBound} if needed
+	 * Convert {@link Number} to {@link NumBound} if needed
 	 * 
 	 * @param o unknown numeric value
 	 * @return converted
 	 */
-	private static NumberBound toNumberBound(final Object o)
+	private static NumBound toNumberBound(final Object o)
 	{
-		if (o instanceof NumberBound) return (NumberBound) o;
+		if (o instanceof NumBound) return (NumBound) o;
 		
-		if (o instanceof Number) return new NumberBound() {
+		if (o instanceof Number) return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -48,7 +48,7 @@ public class Bounds {
 	
 	
 	/**
-	 * Convert {@link Number} or {@link NumberBound} to double (current value)
+	 * Convert {@link Number} or {@link NumBound} to double (current value)
 	 * 
 	 * @param o unknown numeric value
 	 * @return double value
@@ -59,9 +59,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound min(final Object a, final Object b)
+	public static NumBound min(final Object a, final Object b)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -72,9 +72,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound max(final Object a, final Object b)
+	public static NumBound max(final Object a, final Object b)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -85,9 +85,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound abs(final NumberBound a)
+	public static NumBound abs(final NumBound a)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -98,9 +98,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound half(final NumberBound a)
+	public static NumBound half(final NumBound a)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -111,9 +111,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound round(final NumberBound a)
+	public static NumBound round(final NumBound a)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -137,9 +137,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound ceil(final NumberBound a)
+	public static NumBound ceil(final NumBound a)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -150,9 +150,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound floor(final NumberBound a)
+	public static NumBound floor(final NumBound a)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -163,9 +163,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound neg(final NumberBound a)
+	public static NumBound neg(final NumBound a)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -176,9 +176,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound add(final Object a, final Object b)
+	public static NumBound add(final Object a, final Object b)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -189,9 +189,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound sub(final Object a, final Object b)
+	public static NumBound sub(final Object a, final Object b)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -202,9 +202,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound mul(final Object a, final Object b)
+	public static NumBound mul(final Object a, final Object b)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -215,15 +215,15 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound half(final Object a)
+	public static NumBound half(final Object a)
 	{
 		return mul(a, 0.5);
 	}
 	
 	
-	public static NumberBound div(final Object a, final Object b)
+	public static NumBound div(final Object a, final Object b)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -234,9 +234,9 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound perc(final Object whole, final Object percent)
+	public static NumBound perc(final Object whole, final Object percent)
 	{
-		return new NumberBound() {
+		return new NumBound() {
 			
 			@Override
 			public double getValue()
@@ -546,7 +546,7 @@ public class Bounds {
 			{
 				final VectView size = r.getRect().size();
 				
-				return RectVal.make(centerTo.getValue().sub(size.half()), size);
+				return RectVal.make(centerTo.copy().sub(size.half()), size);
 			}
 		};
 	}
@@ -720,7 +720,7 @@ public class Bounds {
 			@Override
 			public VectView getSource()
 			{
-				return c1.getValue().add(c2);
+				return c1.copy().add(c2);
 			}
 		};
 	}
@@ -739,7 +739,7 @@ public class Bounds {
 			@Override
 			public VectView getSource()
 			{
-				return c.getValue().add(eval(x), eval(y), eval(z));
+				return c.copy().add(eval(x), eval(y), eval(z));
 			}
 		};
 	}
@@ -752,7 +752,7 @@ public class Bounds {
 			@Override
 			public VectView getSource()
 			{
-				return c1.getValue().sub(c2);
+				return c1.copy().sub(c2);
 			}
 		};
 	}
@@ -771,7 +771,7 @@ public class Bounds {
 			@Override
 			public VectView getSource()
 			{
-				return c.getValue().sub(eval(x), eval(y), eval(z));
+				return c.copy().sub(eval(x), eval(y), eval(z));
 			}
 			
 		};
@@ -785,7 +785,7 @@ public class Bounds {
 			@Override
 			public VectView getSource()
 			{
-				return c.getValue().mul(eval(mul));
+				return c.copy().mul(eval(mul));
 			}
 			
 		};
@@ -799,7 +799,7 @@ public class Bounds {
 			@Override
 			public VectView getSource()
 			{
-				return c.getValue().norm(eval(norm));
+				return c.copy().norm(eval(norm));
 			}
 			
 		};
@@ -832,13 +832,13 @@ public class Bounds {
 	}
 	
 	
-	public static NumberBound height(final RectBound r)
+	public static NumBound height(final RectBound r)
 	{
 		return size(r).yc();
 	}
 	
 	
-	public static NumberBound width(final RectBound r)
+	public static NumBound width(final RectBound r)
 	{
 		return size(r).xc();
 	}

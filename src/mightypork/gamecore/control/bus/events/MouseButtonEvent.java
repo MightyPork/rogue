@@ -80,7 +80,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	 */
 	public VectView getPos()
 	{
-		return pos.getView();
+		return pos.view();
 	}
 	
 	

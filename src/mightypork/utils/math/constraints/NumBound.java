@@ -6,10 +6,10 @@ package mightypork.utils.math.constraints;
  * 
  * @author MightyPork
  */
-public interface NumberBound {
+public interface NumBound {
 	
-	public static final NumberBound ZERO = new NumberConst(0);
-	public static final NumberBound ONE = new NumberConst(1);
+	public static final NumBound ZERO = new NumberConst(0);
+	public static final NumBound ONE = new NumberConst(1);
 	
 	
 	/**

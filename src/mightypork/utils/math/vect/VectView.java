@@ -2,11 +2,12 @@ package mightypork.utils.math.vect;
 
 
 import mightypork.gamecore.control.interf.DefaultImpl;
-import mightypork.utils.math.constraints.NumberBound;
+import mightypork.utils.math.constraints.NumBound;
 
 
 /**
- * Read-only coordinate.
+ * Read-only coordinate, whose values cannot be changed directly. To keep
+ * current state, use the value() method.
  * 
  * @author MightyPork
  */
@@ -20,7 +21,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 */
 	public static VectView make(Vect observed)
 	{
-		return observed.getView();
+		return observed.view();
 	}
 	
 	
@@ -31,7 +32,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 * @param yc Y value
 	 * @return view at the values
 	 */
-	public static VectView make(NumberBound xc, NumberBound yc)
+	public static VectView make(NumBound xc, NumBound yc)
 	{
 		return new NumConstrVect(xc, yc);
 	}
@@ -45,7 +46,7 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	 * @param zc Z value
 	 * @return view at the values
 	 */
-	public static VectView make(NumberBound xc, NumberBound yc, NumberBound zc)
+	public static VectView make(NumBound xc, NumBound yc, NumBound zc)
 	{
 		return new NumConstrVect(xc, yc, zc);
 	}
@@ -58,14 +59,10 @@ public abstract class VectView extends VectMath<VectVal> { // returns constant v
 	}
 	
 	
-	/**
-	 * @deprecated VecView is not mutable, making a proxy has no effect.
-	 */
 	@Override
-	@Deprecated
-	public VectView getView()
+	public VectView view()
 	{
-		return this; // already not mutable
+		return this; // already a view
 	}
 	
 	

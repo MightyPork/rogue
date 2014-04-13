@@ -1,7 +1,7 @@
 package mightypork.test;
 
 
-import static mightypork.utils.math.constraints.Bounds.*;
+import static mightypork.utils.math.constraints.ConstraintFactory.*;
 
 import java.util.Locale;
 

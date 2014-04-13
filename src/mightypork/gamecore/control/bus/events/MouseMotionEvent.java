@@ -23,8 +23,8 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	 * @param move move vector
 	 */
 	public MouseMotionEvent(Vect pos, Vect move) {
-		this.move = move.getValue();
-		this.pos = pos.getValue();
+		this.move = move.copy();
+		this.pos = pos.copy();
 	}
 	
 	

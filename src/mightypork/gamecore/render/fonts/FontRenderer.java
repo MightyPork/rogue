@@ -110,7 +110,7 @@ public class FontRenderer {
 	{
 		Render.pushMatrix();
 		
-		Render.translate(pos.getValue().round());
+		Render.translate(pos.copy().round());
 		Render.scaleXY(getScale(height));
 		
 		font.draw(text, color);

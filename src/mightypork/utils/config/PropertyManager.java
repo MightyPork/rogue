@@ -364,7 +364,7 @@ public class PropertyManager {
 	 */
 	public VectView getCoord(String n)
 	{
-		return Convert.toCoord(get(n).value);
+		return Convert.toVect(get(n).value);
 	}
 	
 	

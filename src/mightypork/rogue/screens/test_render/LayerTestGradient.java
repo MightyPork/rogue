@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.test_render;
 
 
-import static mightypork.utils.math.constraints.Bounds.*;
+import static mightypork.utils.math.constraints.ConstraintFactory.*;
 import mightypork.gamecore.control.timing.Poller;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;

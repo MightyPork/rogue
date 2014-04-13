@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.test_bouncyboxes;
 
 
-import static mightypork.utils.math.constraints.Bounds.*;
+import static mightypork.utils.math.constraints.ConstraintFactory.*;
 
 import java.util.Random;
 
@@ -11,7 +11,7 @@ import mightypork.gamecore.render.Render;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.NumberBound;
+import mightypork.utils.math.constraints.NumBound;
 import mightypork.utils.math.constraints.RectBound;
 
 
@@ -26,15 +26,28 @@ public class BouncyBox extends PluggableRenderer implements Updateable {
 	
 	public BouncyBox() {
 		// create box
-		final NumberBound side = height(this);
+		final NumBound side = height(this);
 		RectBound abox = box(this, side, side);
 		
 		// move
-		final NumberBound move_length = sub(width(this), side);
-		final NumberBound offset = mul(move_length, pos);
+		final NumBound move_length = sub(width(this), side);
+		final NumBound offset = mul(move_length, pos);
 		abox = move(abox, offset, 0);
 		
 		// add padding
+		/*
+		 *  leftEdge(this)
+		 *  	.growRight(height(this))
+		 *  	.move(
+		 *  		width(this)
+		 *  			.sub(height(this))
+		 *  			.mul(pos),
+		 *  		0)
+		 *  	.shrink(
+		 *  		height(this)
+		 *  			.perc(10)
+		 *  	)
+		 */
 		abox = shrink(abox, perc(side, 10));
 		
 		box = abox;

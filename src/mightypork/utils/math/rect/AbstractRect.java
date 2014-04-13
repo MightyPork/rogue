@@ -16,119 +16,133 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public final RectView getRect()
+	public RectView getRect()
 	{
-		return this.getView();
+		return this.view();
 	}
 	
 	
 	@Override
-	public final VectVal topLeft()
+	public VectVal topLeft()
 	{
 		return origin();
 	}
 	
 	
 	@Override
-	public final VectVal topCenter()
+	public VectVal topCenter()
 	{
 		return origin().add(size().x() / 2, 0);
 	}
 	
 	
 	@Override
-	public final VectVal topRight()
+	public VectVal topRight()
 	{
 		return origin().add(size().x(), 0);
 	}
 	
 	
 	@Override
-	public final VectVal centerLeft()
+	public VectVal centerLeft()
 	{
 		return origin().add(0, size().y() / 2);
 	}
 	
 	
 	@Override
-	public final VectVal center()
+	public VectVal center()
 	{
 		return origin().add(size().half());
 	}
 	
 	
 	@Override
-	public final VectVal centerRight()
+	public VectVal centerRight()
 	{
 		return origin().add(size().x(), size().y() / 2);
 	}
 	
 	
 	@Override
-	public final VectVal bottomLeft()
+	public VectVal bottomLeft()
 	{
 		return origin().add(0, size().y());
 	}
 	
 	
 	@Override
-	public final VectVal bottomCenter()
+	public VectVal bottomCenter()
 	{
 		return origin().add(size().x() / 2, size().y());
 	}
 	
 	
 	@Override
-	public final VectVal bottomRight()
+	public VectVal bottomRight()
 	{
 		return origin().add(size().x(), size().y());
 	}
 	
 	
 	@Override
-	public final double width()
-	{
-		return size().x();
-	}
-	
-	
-	@Override
-	public final double height()
-	{
-		return size().y();
-	}
-	
-	
-	@Override
-	public final double getLeft()
+	public double x()
 	{
 		return origin().x();
 	}
 	
 	
 	@Override
-	public final double right()
-	{
-		return origin().x() + size().x();
-	}
-	
-	
-	@Override
-	public final double top()
+	public double y()
 	{
 		return origin().y();
 	}
 	
 	
 	@Override
-	public final double bottom()
+	public double width()
+	{
+		return size().x();
+	}
+	
+	
+	@Override
+	public double height()
+	{
+		return size().y();
+	}
+	
+	
+	@Override
+	public double left()
+	{
+		return origin().x();
+	}
+	
+	
+	@Override
+	public double right()
+	{
+		return origin().x() + size().x();
+	}
+	
+	
+	@Override
+	public double top()
+	{
+		return origin().y();
+	}
+	
+	
+	@Override
+	public double bottom()
 	{
 		return origin().y() + size().y();
 	}
 	
 	
 	@Override
-	public RectProxy getView()
+	public RectView view()
 	{
 		if (proxy == null) proxy = new RectProxy(this);
 		
@@ -137,14 +151,14 @@ public abstract class AbstractRect implements Rect {
 	
 	
 	@Override
-	public RectVal getValue()
+	public RectVal copy()
 	{
-		return RectVal.make(origin(), size());
+		return new RectVal(x(), y(), width(), height());
 	}
 	
 	
 	@Override
-	public final boolean contains(Vect point)
+	public boolean contains(Vect point)
 	{
 		final double x = point.x();
 		final double y = point.y();

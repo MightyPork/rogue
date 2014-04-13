@@ -1,7 +1,8 @@
 package mightypork.utils.math.vect;
 
 
-import mightypork.utils.math.constraints.NumberBound;
+import mightypork.utils.math.constraints.NumBound;
+import mightypork.utils.math.constraints.VectBound;
 
 
 /**
@@ -9,7 +10,7 @@ import mightypork.utils.math.constraints.NumberBound;
  * 
  * @author MightyPork
  */
-public interface Vect {
+public interface Vect extends VectBound {
 	
 	public static final VectVal ZERO = new VectVal(0, 0, 0);
 	public static final VectVal ONE = new VectVal(0, 0, 0);
@@ -54,19 +55,19 @@ public interface Vect {
 	/**
 	 * @return X constraint
 	 */
-	NumberBound xc();
+	NumBound xc();
 	
 	
 	/**
 	 * @return Y constraint
 	 */
-	NumberBound yc();
+	NumBound yc();
 	
 	
 	/**
 	 * @return Z constraint
 	 */
-	NumberBound zc();
+	NumBound zc();
 	
 	
 	/**
@@ -84,56 +85,11 @@ public interface Vect {
 	
 	
 	/**
-	 * Get distance to other point
-	 * 
-	 * @param point other point
-	 * @return distance
-	 */
-	double distTo(Vect point);
-	
-	
-	/**
-	 * Get middle of line to other point
-	 * 
-	 * @param point other point
-	 * @return result
-	 */
-	VectVal midTo(Vect point);
-	
-	
-	/**
-	 * Create vector from this point to other point
-	 * 
-	 * @param point second point
-	 * @return result
-	 */
-	VectVal vecTo(Vect point);
-	
-	
-	/**
-	 * Get cross product (vector multiplication)
-	 * 
-	 * @param vec other vector
-	 * @return result
-	 */
-	VectVal cross(Vect vec);
-	
-	
-	/**
-	 * Get dot product (scalar multiplication)
-	 * 
-	 * @param vec other vector
-	 * @return dot product
-	 */
-	double dot(Vect vec);
-	
-	
-	/**
 	 * Get a view at current state, not propagating further changes.
 	 * 
 	 * @return a immutable copy
 	 */
-	VectVal getValue();
+	VectVal copy();
 	
 	
 	/**
@@ -141,5 +97,5 @@ public interface Vect {
 	 * 
 	 * @return immutable view
 	 */
-	VectView getView();
+	VectView view();
 }

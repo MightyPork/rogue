@@ -7,7 +7,7 @@ package mightypork.utils.math.vect;
  * 
  * @author MightyPork
  */
-class VectMutableImpl extends VectMutable {
+class VectMutableVariable extends VectMutable {
 	
 	private double x, y, z;
 	
@@ -17,7 +17,7 @@ class VectMutableImpl extends VectMutable {
 	 * @param y Y coordinate
 	 * @param z Z coordinate
 	 */
-	public VectMutableImpl(double x, double y, double z) {
+	public VectMutableVariable(double x, double y, double z) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -47,7 +47,7 @@ class VectMutableImpl extends VectMutable {
 	
 	
 	@Override
-	public VectMutableImpl result(double x, double y, double z)
+	public VectMutable result(double x, double y, double z)
 	{
 		this.x = x;
 		this.y = y;

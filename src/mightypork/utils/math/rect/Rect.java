@@ -22,7 +22,7 @@ public interface Rect extends RectBound {
 	 * 
 	 * @return copy
 	 */
-	RectVal getValue();
+	RectVal copy();
 	
 	
 	/**
@@ -30,61 +30,121 @@ public interface Rect extends RectBound {
 	 * 
 	 * @return proxy
 	 */
-	RectProxy getView();
+	RectView view();
 	
 	
 	/**
-	 * @return origin
+	 * @return origin (top left)
 	 */
 	VectVal origin();
 	
 	
+	/**
+	 * @return size vector
+	 */
 	VectVal size();
 	
 	
+	/**
+	 * @return current width
+	 */
 	double width();
 	
 	
+	/**
+	 * @return current height
+	 */
 	double height();
 	
 	
-	VectVal topLeft();
+	/**
+	 * @return origin X
+	 */
+	double x();
 	
 	
-	VectVal topCenter();
+	/**
+	 * @return origin Y
+	 */
+	double y();
 	
 	
-	VectVal topRight();
+	/**
+	 * @return left X (low)
+	 */
+	double left();
 	
 	
-	VectVal centerLeft();
-	
-	
-	VectVal center();
-	
-	
-	VectVal centerRight();
-	
-	
-	VectVal bottomLeft();
-	
-	
-	VectVal bottomCenter();
-	
-	
-	VectVal bottomRight();
-	
-	
-	double getLeft();
-	
-	
+	/**
+	 * @return right X (high)
+	 */
 	double right();
 	
 	
+	/**
+	 * @return top Y (low)
+	 */
 	double top();
 	
 	
+	/**
+	 * @return bottom Y (high)
+	 */
 	double bottom();
+	
+	
+	/**
+	 * @return top left corner position
+	 */
+	VectVal topLeft();
+	
+	
+	/**
+	 * @return top center position
+	 */
+	VectVal topCenter();
+	
+	
+	/**
+	 * @return top right corner position
+	 */
+	VectVal topRight();
+	
+	
+	/**
+	 * @return left center position
+	 */
+	VectVal centerLeft();
+	
+	
+	/**
+	 * @return center position
+	 */
+	VectVal center();
+	
+	
+	/**
+	 * @return right center position
+	 */
+	VectVal centerRight();
+	
+	
+	/**
+	 * @return bottom left corner position
+	 */
+	VectVal bottomLeft();
+	
+	
+	/**
+	 * @return bottom center position
+	 */
+	VectVal bottomCenter();
+	
+	
+	/**
+	 * @return bottom right corner position
+	 */
+	VectVal bottomRight();
 	
 	
 	/**

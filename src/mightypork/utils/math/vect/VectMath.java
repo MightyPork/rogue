@@ -274,4 +274,77 @@ abstract class VectMath<V extends Vect> extends AbstractVect {
 		
 		return mul(k);
 	}
+	
+	
+	/**
+	 * Get distance to other point
+	 * 
+	 * @param point other point
+	 * @return distance
+	 */
+	public final double distTo(Vect point)
+	{
+		final double dx = x() - point.x();
+		final double dy = y() - point.y();
+		final double dz = z() - point.z();
+		
+		return Math.sqrt(dx * dx + dy * dy + dz * dz);
+	}
+	
+	
+	/**
+	 * Get middle of line to other point
+	 * 
+	 * @param point other point
+	 * @return result
+	 */
+	public final VectVal midTo(Vect point)
+	{
+		final double dx = (point.x() - x()) * 0.5;
+		final double dy = (point.y() - y()) * 0.5;
+		final double dz = (point.z() - z()) * 0.5;
+		
+		return VectVal.make(dx, dy, dz);
+	}
+	
+	
+	/**
+	 * Create vector from this point to other point
+	 * 
+	 * @param point second point
+	 * @return result
+	 */
+	public final VectVal vectTo(Vect point)
+	{
+		return VectVal.make(point.x() - x(), point.y() - y(), point.z() - z());
+	}
+	
+	
+	/**
+	 * Get cross product (vector multiplication)
+	 * 
+	 * @param vec other vector
+	 * @return result
+	 */
+	public final VectVal cross(Vect vec)
+	{
+		//@formatter:off
+		return VectVal.make(
+				y() * vec.z() - z() * vec.y(),
+				z() * vec.x() - x() * vec.z(),
+				x() * vec.y() - y() * vec.x());
+		//@formatter:on
+	}
+	
+	
+	/**
+	 * Get dot product (scalar multiplication)
+	 * 
+	 * @param vec other vector
+	 * @return dot product
+	 */
+	public final double dot(Vect vec)
+	{
+		return x() * vec.x() + y() * vec.y() + z() * vec.z();
+	}
 }

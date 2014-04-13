@@ -154,16 +154,24 @@ public class Convert {
 	public static VectVal toVect(Object o, Vect def)
 	{
 		try {
-			if (o == null) return def.getValue();
-			if (o instanceof Vect) return ((Vect) o).getValue();
+			if (o == null) return def.copy();
+			if (o instanceof Vect) return ((Vect) o).copy();
 			if (o instanceof String) {
-				String s = ((String) o).trim().toUpperCase();
+				String s = ((String) o).trim();
 				
-				// colon to semicolon
-				s = s.replace(':', ';');
-				// remove brackets if any
+				// drop whitespace
+				s = s.replaceAll("\\s", "");
+				
+				// drop brackets
 				s = s.replaceAll("[\\(\\[\\{\\)\\]\\}]", "");
-				final String[] parts = s.split("[;]");
+				
+				// norm separators
+				s = s.replaceAll("[:;]", "|");
+				
+				// norm floating point
+				s = s.replaceAll("[,]", ".");
+				
+				final String[] parts = s.split("[|]");
 				
 				if (parts.length >= 2) {
 					
@@ -183,7 +191,7 @@ public class Convert {
 			// ignore
 		}
 		
-		return def.getValue();
+		return def.copy();
 	}
 	
 	
@@ -203,18 +211,34 @@ public class Convert {
 			if (o instanceof String) {
 				String s = ((String) o).trim();
 				
-				// colon to semicolon
-				s = s.replace(',', ':');
-				// comma to dot.
-				s = s.replace(';', ':');
-				// dash
-				s = s.replaceAll("([0-9])\\s?[\\-]", "$1:");
-				// remove brackets if any
-				s = s.replaceAll("[\\(\\[\\{\\)\\]\\}]", "");
-				final String[] parts = s.split("[:]");
-				if (parts.length == 2) return new Range(Double.parseDouble(parts[0].trim()), Double.parseDouble(parts[1].trim()));
-				return new Range(Double.parseDouble(parts[0].trim()), Double.parseDouble(parts[0].trim()));
+				// drop whitespace
+				s = s.replaceAll("\\s", "");
 				
+				// drop brackets
+				s = s.replaceAll("[\\(\\[\\{\\)\\]\\}]", "");
+				
+				// norm separators
+				s = s.replaceAll("[:;]", "|").replace("..", "|");
+				
+				// norm floating point
+				s = s.replaceAll("[,]", ".");
+				
+				// dash to pipe, if not a minus sign
+				s = s.replaceAll("([0-9])\\s?[\\-]", "$1|");
+				
+				final String[] parts = s.split("[|]");
+				
+				if (parts.length >= 1) {
+					
+					final double low = Double.parseDouble(parts[0].trim());
+					
+					if (parts.length == 2) {
+						final double high = Double.parseDouble(parts[1].trim());
+						return Range.make(low, high);
+					}
+					
+					return Range.make(low, low);
+				}
 			}
 		} catch (final NumberFormatException e) {
 			// ignore
@@ -284,12 +308,12 @@ public class Convert {
 	
 	
 	/**
-	 * Get Coord
+	 * Get a vector of two or three coordinates
 	 * 
 	 * @param o object
 	 * @return Coord
 	 */
-	public static VectView toCoord(Object o)
+	public static VectView toVect(Object o)
 	{
 		return toVect(o, Vect.ZERO);
 	}

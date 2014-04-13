@@ -5,7 +5,24 @@ import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectVal;
 
 
+/**
+ * Rectangle with constant bounds, that can never change.
+ * 
+ * @author MightyPork
+ */
 public class RectVal extends RectView {
+	
+	/**
+	 * Get a proxy at given rect
+	 * 
+	 * @param observed observed rect
+	 * @return view
+	 */
+	public static RectVal make(Rect observed)
+	{
+		return observed.copy();
+	}
+	
 	
 	/**
 	 * Create at 0,0 with zero size
@@ -114,7 +131,7 @@ public class RectVal extends RectView {
 	
 	
 	@Override
-	public RectVal getValue()
+	public RectVal copy()
 	{
 		return this; // nothing can change.
 	}

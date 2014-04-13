@@ -2,11 +2,11 @@ package mightypork.utils.math.constraints;
 
 
 /**
- * Constant number {@link NumberBound}
+ * Constant number {@link NumBound}
  * 
  * @author MightyPork
  */
-public class NumberConst implements NumberBound {
+public class NumberConst implements NumBound {
 	
 	private final double value;
 	

@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.test_cat_sound;
 
 
-import static mightypork.utils.math.constraints.Bounds.*;
+import static mightypork.utils.math.constraints.ConstraintFactory.*;
 
 import java.util.Random;
 
@@ -19,17 +19,15 @@ import mightypork.rogue.Res;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.Bounds;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectMutable;
-import mightypork.utils.math.vect.VectMutableAnim;
+import mightypork.utils.math.vect.VectAnimated;
 import mightypork.utils.math.vect.VectVal;
 
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
 	
 	private final AnimDouble size = new AnimDouble(400, Easing.SINE_BOTH);
-	private final VectMutableAnim pos = VectMutable.makeAnim(Easing.ELASTIC_OUT);
+	private final VectAnimated pos = VectAnimated.make(Easing.ELASTIC_OUT);
 	
 	private final Random rand = new Random();
 	
@@ -46,6 +44,7 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		
 		cat = new ImagePainter(Res.getTxQuad("test.kitten"));
 		
+		// Bounds.box(size,size).centerTo(pos)
 		cat.setContext(centerTo(box(size, size), pos));
 		
 		tp = new TextPainter(Res.getFont("default"));
@@ -54,9 +53,12 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		tp.setText("Meow!");
 		tp.setShadow(RGB.dark(0.8), VectVal.make(2, 2));
 		
+		// Bounds.box(64,64).centerTo(cMousePos)
 		tp.setContext(centerTo(box(64, 64), cMousePos));
 		
 		qp = QuadPainter.gradV(RGB.YELLOW, RGB.RED);
+		
+		// Bounds.wrap(cat).bottomLeft().expand(0,0,50,50)
 		qp.setContext(expand(bottomLeft(cat), 0, 0, 50, 50));
 		
 		/*

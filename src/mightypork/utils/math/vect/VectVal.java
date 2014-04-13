@@ -3,8 +3,7 @@ package mightypork.utils.math.vect;
 
 /**
  * Coordinate with immutable numeric values.<br>
- * This coordinate is guaranteed to never change, as opposed to view, which can
- * be a proxy or a synthetic vector.
+ * This coordinate is guaranteed to never change, as opposed to view.
  * 
  * @author MightyPork
  */
@@ -18,7 +17,7 @@ public final class VectVal extends VectView {
 	 */
 	public static VectVal make(Vect value)
 	{
-		return value.getValue();
+		return value.copy();
 	}
 	
 	
@@ -51,12 +50,12 @@ public final class VectVal extends VectView {
 	private final double x, y, z;
 	
 	
-	protected VectVal(Vect other) {
+	public VectVal(Vect other) {
 		this(other.x(), other.y(), other.z());
 	}
 	
 	
-	protected VectVal(double x, double y, double z) {
+	public VectVal(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -84,12 +83,8 @@ public final class VectVal extends VectView {
 	}
 	
 	
-	/**
-	 * @deprecated It's constant already.
-	 */
 	@Override
-	@Deprecated
-	public VectVal getValue()
+	public VectVal copy()
 	{
 		return this; // it's constant already
 	}

@@ -213,7 +213,7 @@ public class Render {
 	 */
 	public static void rotate(double angle, Vect axis)
 	{
-		final Vect vec = axis.getView().norm(1);
+		final Vect vec = axis.view().norm(1);
 		glRotated(angle, vec.x(), vec.y(), vec.z());
 	}
 	
@@ -351,7 +351,7 @@ public class Render {
 	 */
 	public static void quad(Rect quad)
 	{
-		final double x1 = quad.getLeft();
+		final double x1 = quad.left();
 		final double y1 = quad.top();
 		final double x2 = quad.right();
 		final double y2 = quad.bottom();
@@ -391,12 +391,12 @@ public class Render {
 	 */
 	public static void quadUV_nobound(Rect quad, Rect uvs)
 	{
-		final double x1 = quad.getLeft();
+		final double x1 = quad.left();
 		final double y1 = quad.top();
 		final double x2 = quad.right();
 		final double y2 = quad.bottom();
 		
-		final double tx1 = uvs.getLeft();
+		final double tx1 = uvs.left();
 		final double ty1 = uvs.top();
 		final double tx2 = uvs.right();
 		final double ty2 = uvs.bottom();
@@ -437,7 +437,7 @@ public class Render {
 	 */
 	public static void quadColor(Rect quad, RGB colorHMinVMin, RGB colorHMaxVMin, RGB colorHMaxVMax, RGB colorHMinVMax)
 	{
-		final double x1 = quad.getLeft();
+		final double x1 = quad.left();
 		final double y1 = quad.top();
 		final double x2 = quad.right();
 		final double y2 = quad.bottom();

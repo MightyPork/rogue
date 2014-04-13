@@ -11,6 +11,11 @@ import java.util.Random;
  */
 public class Range {
 	
+	public static Range make(double low, double high)
+	{
+		return new Range(low, high);
+	}
+	
 	private double min = 0;
 	private double max = 1;
 	
@@ -132,7 +137,7 @@ public class Range {
 	@Override
 	public String toString()
 	{
-		return String.format("( %.2f : %.2f )", min, max);
+		return String.format("Range(%.1f|%.1f)", min, max);
 	}
 	
 	

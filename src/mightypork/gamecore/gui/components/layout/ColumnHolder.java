@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.components.layout;
 
 
-import static mightypork.utils.math.constraints.Bounds.*;
+import static mightypork.utils.math.constraints.ConstraintFactory.*;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.components.PluggableRenderable;
 import mightypork.utils.math.constraints.RectBound;
