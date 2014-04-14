@@ -37,6 +37,13 @@ public abstract class Rect implements RectBound {
 	
 	
 	@FactoryMethod
+	public static Rect make(RectBound bound)
+	{
+		return new RectBoundAdapter(bound);
+	}
+	
+	
+	@FactoryMethod
 	public static Rect make(Num x, Num y, Num width, Num height)
 	{
 		final Vect origin = Vect.make(x, y);

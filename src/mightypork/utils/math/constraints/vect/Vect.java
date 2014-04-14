@@ -36,6 +36,13 @@ public abstract class Vect implements VectBound {
 	
 	
 	@FactoryMethod
+	public static Vect make(VectBound bound)
+	{
+		return new VectBoundAdapter(bound);
+	}
+	
+	
+	@FactoryMethod
 	public static VectConst make(NumConst xc, NumConst yc)
 	{
 		return Vect.make(xc, yc, Num.ZERO);

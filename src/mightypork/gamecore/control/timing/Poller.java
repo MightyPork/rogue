@@ -4,11 +4,9 @@ package mightypork.gamecore.control.timing;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import mightypork.utils.math.constraints.RectCache;
-
 
 /**
- * Used to poll a number of {@link Pollable}s, such as {@link RectCache}
+ * Used to poll a number of {@link Pollable}s
  * 
  * @author MightyPork
  */

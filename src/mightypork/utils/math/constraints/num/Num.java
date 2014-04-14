@@ -7,10 +7,15 @@ import mightypork.utils.math.Calc;
 
 public abstract class Num implements NumBound {
 	
-	static final double CMP_EPSILON = 0.0000001;
-	
 	public static final NumConst ZERO = Num.make(0);
 	public static final NumConst ONE = Num.make(1);
+	
+	
+	@FactoryMethod
+	public static Num make(NumBound bound)
+	{
+		return new NumBoundAdapter(bound);
+	}
 	
 	
 	@FactoryMethod
