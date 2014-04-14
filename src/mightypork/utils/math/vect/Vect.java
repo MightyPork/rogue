@@ -7,6 +7,7 @@ import mightypork.utils.math.Calc;
 import mightypork.utils.math.constraints.VectBound;
 import mightypork.utils.math.num.Num;
 import mightypork.utils.math.num.NumConst;
+import mightypork.utils.math.rect.Rect;
 
 
 /**
@@ -1101,5 +1102,35 @@ public abstract class Vect implements VectBound {
 		final Vect other = (Vect) obj;
 		
 		return x() == other.x() && y() == other.y() && z() == other.z();
+	}
+	
+	
+	/**
+	 * Expand to a rect, with given growth to each side.
+	 * 
+	 * @param left
+	 * @param right
+	 * @param top
+	 * @param bottom
+	 * @return the rect
+	 */
+	public Rect expand(int left, int right, int top, int bottom)
+	{
+		return Rect.make(this, Vect.ZERO).grow(left, right, top, bottom);
+	}
+	
+	
+	/**
+	 * Expand to a rect, with given growth to each side.
+	 * 
+	 * @param left
+	 * @param right
+	 * @param top
+	 * @param bottom
+	 * @return the rect
+	 */
+	public Rect expand(Num left, Num right, Num top, Num bottom)
+	{
+		return Rect.make(this, Vect.ZERO).grow(left, right, top, bottom);
 	}
 }

@@ -3,7 +3,7 @@ package mightypork.gamecore.gui.components;
 
 import mightypork.utils.math.constraints.PluggableRectBound;
 import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.Rect;
 
 
 /**
@@ -18,7 +18,7 @@ public interface PluggableRenderable extends Renderable, PluggableRectBound {
 	
 	
 	@Override
-	RectView getRect();
+	Rect getRect();
 	
 	
 	@Override

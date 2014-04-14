@@ -11,9 +11,8 @@ import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.rect.RectVal;
-import mightypork.utils.math.rect.RectView;
-import mightypork.utils.math.vect.VectView;
+import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.vect.Vect;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -33,7 +32,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	private FpsMeter fpsMeter;
 	
 	/** Current screen size */
-	private final VectView screenSize = new VectView() {
+	private final Vect screenSize = new Vect() {
 		
 		@Override
 		public double y()
@@ -48,6 +47,8 @@ public class DisplaySystem extends AppModule implements RectBound {
 			return Display.getWidth();
 		}
 	};
+	
+	private final Rect rect = Rect.make(screenSize);
 	
 	
 	/**
@@ -189,7 +190,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	 * 
 	 * @return size
 	 */
-	public VectView getSize()
+	public Vect getSize()
 	{
 		return screenSize;
 	}
@@ -240,9 +241,9 @@ public class DisplaySystem extends AppModule implements RectBound {
 	
 	
 	@Override
-	public RectView getRect()
+	public Rect getRect()
 	{
-		return RectVal.make(getSize());
+		return rect;
 	}
 	
 	
@@ -255,7 +256,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	}
 	
 	
-	public VectView getCenter()
+	public Vect getCenter()
 	{
 		return getSize().half();
 	}

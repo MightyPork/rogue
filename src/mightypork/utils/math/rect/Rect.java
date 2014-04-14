@@ -30,6 +30,12 @@ public abstract class Rect implements RectBound {
 	}
 	
 	
+	public static Rect make(Vect size)
+	{
+		return Rect.make(size.xn(), size.yn());
+	}
+	
+	
 	@FactoryMethod
 	public static Rect make(Num x, Num y, Num width, Num height)
 	{
@@ -121,6 +127,26 @@ public abstract class Rect implements RectBound {
 	{
 		return Rect.makeVar(Rect.ZERO);
 	}
+	
+	private Vect p_bl;
+	private Vect p_bc;
+	private Vect p_br;
+	// p_t == origin
+	private Vect p_tc;
+	private Vect p_tr;
+	
+	private Vect p_cl;
+	private Vect p_cc;
+	private Vect p_cr;
+	
+	private Num p_x;
+	private Num p_y;
+	private Num p_w;
+	private Num p_h;
+	private Num p_l;
+	private Num p_r;
+	private Num p_t;
+	private Num p_b;
 	
 	
 	/**
@@ -448,49 +474,49 @@ public abstract class Rect implements RectBound {
 	
 	public Num x()
 	{
-		return origin().xn();
+		return p_x != null ? p_x : (p_x = origin().xn());
 	}
 	
 	
 	public Num y()
 	{
-		return origin().yn();
+		return p_y != null ? p_y : (p_y = origin().yn());
 	}
 	
 	
 	public Num width()
 	{
-		return size().xn();
+		return p_w != null ? p_w : (p_w = size().xn());
 	}
 	
 	
 	public Num height()
 	{
-		return size().yn();
+		return p_h != null ? p_h : (p_h = size().yn());
 	}
 	
 	
 	public Num left()
 	{
-		return origin().yn();
+		return p_l != null ? p_l : (p_l = origin().yn());
 	}
 	
 	
 	public Num right()
 	{
-		return origin().xn().add(size().xn());
+		return p_r != null ? p_r : (p_r = origin().xn().add(size().xn()));
 	}
 	
 	
 	public Num top()
 	{
-		return origin().yn();
+		return p_t != null ? p_t : (p_t = origin().yn());
 	}
 	
 	
 	public Num bottom()
 	{
-		return origin().yn().add(size().yn());
+		return p_b != null ? p_b : (p_b = origin().yn().add(size().yn()));
 	}
 	
 	
@@ -502,49 +528,49 @@ public abstract class Rect implements RectBound {
 	
 	public Vect topCenter()
 	{
-		return origin().add(size().xn().half(), Num.ZERO);
+		return p_tc != null ? p_tc : (p_tc = origin().add(size().xn().half(), Num.ZERO));
 	}
 	
 	
 	public Vect topRight()
 	{
-		return origin().add(size().xn(), Num.ZERO);
+		return p_tr != null ? p_tr : (p_tr = origin().add(size().xn(), Num.ZERO));
 	}
 	
 	
 	public Vect centerLeft()
 	{
-		return origin().add(Num.ZERO, size().yn().half());
+		return p_cl != null ? p_cl : (p_cl = origin().add(Num.ZERO, size().yn().half()));
 	}
 	
 	
 	public Vect center()
 	{
-		return origin().add(size().half());
+		return p_cc != null ? p_cc : (p_cc = origin().add(size().half()));
 	}
 	
 	
 	public Vect centerRight()
 	{
-		return origin().add(size().xn(), size().yn().half());
+		return p_cr != null ? p_cr : (p_cr = origin().add(size().xn(), size().yn().half()));
 	}
 	
 	
 	public Vect bottomLeft()
 	{
-		return origin().add(Num.ZERO, size().yn());
+		return p_bl != null ? p_bl : (p_bl = origin().add(Num.ZERO, size().yn()));
 	}
 	
 	
 	public Vect bottomCenter()
 	{
-		return origin().add(size().xn().half(), size().yn());
+		return p_bc != null ? p_bc : (p_bc = origin().add(size().xn().half(), size().yn()));
 	}
 	
 	
 	public Vect bottomRight()
 	{
-		return origin().add(size().xn(), size().yn());
+		return p_br != null ? p_br : (p_br = origin().add(size().xn(), size().yn()));
 	}
 	
 	
@@ -595,4 +621,11 @@ public abstract class Rect implements RectBound {
 		
 		return x >= x1 && y >= y1 && x <= x2 && y <= y2;
 	}
+	
+	
+	public Rect centerTo(Rect parent)
+	{
+		return centerTo(parent.center());
+	}
+	
 }

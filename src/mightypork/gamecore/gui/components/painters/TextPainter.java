@@ -5,9 +5,9 @@ import mightypork.gamecore.render.fonts.FontRenderer;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.Rect;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectMutable;
+import mightypork.utils.math.vect.VectVar;
 import mightypork.utils.string.StringProvider;
 import mightypork.utils.string.StringProvider.StringWrapper;
 
@@ -28,7 +28,7 @@ public class TextPainter extends AbstractPainter {
 	private boolean shadow;
 	
 	private RGB shadowColor = RGB.BLACK;
-	private final VectMutable shadowOffset = VectMutable.make(1, 1);
+	private final VectVar shadowOffset = Vect.makeVar(1, 1);
 	
 	
 	/**
@@ -84,7 +84,7 @@ public class TextPainter extends AbstractPainter {
 		if (text == null) return;
 		
 		final String str = text.getString();
-		final RectView rect = getRect();
+		final Rect rect = getRect();
 		
 		if (shadow) {
 			font.draw(str, rect.move(shadowOffset), align, shadowColor);

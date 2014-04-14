@@ -5,8 +5,7 @@ import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.rect.Rect;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectMutable;
-import mightypork.utils.math.vect.VectView;
+import mightypork.utils.math.vect.VectVar;
 
 
 /**
@@ -110,7 +109,7 @@ public class FontRenderer {
 	{
 		Render.pushMatrix();
 		
-		Render.translate(pos.copy().round());
+		Render.translate(pos.freeze().round());
 		Render.scaleXY(getScale(height));
 		
 		font.draw(text, color);
@@ -144,7 +143,7 @@ public class FontRenderer {
 	 */
 	public void draw(String text, Rect bounds, Align align, RGB color)
 	{
-		VectView start;
+		Vect start;
 		
 		switch (align) {
 			case LEFT:
@@ -161,7 +160,7 @@ public class FontRenderer {
 				break;
 		}
 		
-		draw(text, start, bounds.height(), align, color);
+		draw(text, start, bounds.height().value(), align, color);
 	}
 	
 	
@@ -193,7 +192,7 @@ public class FontRenderer {
 		
 		final double w = getWidth(text, height);
 		
-		final VectMutable start = VectMutable.make(pos);
+		final VectVar start = Vect.makeVar(pos);
 		
 		switch (align) {
 			case LEFT:

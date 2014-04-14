@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 import mightypork.utils.math.Range;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectConst;
 import mightypork.utils.objects.Convert;
 
 
@@ -179,7 +179,7 @@ public class PropertyManager {
 			}
 		}
 		
-		try(FileInputStream fis = new FileInputStream(file)) {
+		try (FileInputStream fis = new FileInputStream(file)) {
 			props.load(fis);
 		} catch (final IOException e) {
 			needsSave = true;
@@ -362,7 +362,7 @@ public class PropertyManager {
 	 * @param n key
 	 * @return the coord found, or null
 	 */
-	public VectVal getCoord(String n)
+	public VectConst getCoord(String n)
 	{
 		return Convert.toVect(get(n).value);
 	}

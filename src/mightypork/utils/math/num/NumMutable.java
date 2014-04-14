@@ -21,7 +21,7 @@ public abstract class NumMutable extends Num {
 	 * 
 	 * @param value new value
 	 */
-	public void setTo(Num value)
+	public void assign(Num value)
 	{
 		setTo(eval(value));
 	}

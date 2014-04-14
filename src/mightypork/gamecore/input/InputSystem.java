@@ -9,8 +9,8 @@ import mightypork.gamecore.control.bus.events.MouseMotionEvent;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.utils.math.vect.VectMutable;
-import mightypork.utils.math.vect.VectView;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectVar;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -29,7 +29,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	private final KeyBindingPool keybindings;
 	
 	/** Current mouse position */
-	private final VectView mousePos = new VectView() {
+	private final Vect mousePos = new Vect() {
 		
 		@Override
 		public double x()
@@ -103,8 +103,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	// counters as fields to save memory.
-	private final VectMutable mouseMove = VectMutable.zero();
-	private final VectMutable mouseLastPos = VectMutable.zero();
+	private final VectVar mouseMove = VectVar.makeVar();
+	private final VectVar mouseLastPos = VectVar.makeVar();
 	
 	
 	@Override
@@ -140,13 +140,13 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
-	private void onMouseEvent(VectMutable moveSum, VectMutable lastPos)
+	private void onMouseEvent(VectVar moveSum, VectVar lastPos)
 	{
 		final int button = Mouse.getEventButton();
 		final boolean down = Mouse.getEventButtonState();
 		
-		final VectMutable pos = VectMutable.make(Mouse.getEventX(), Mouse.getEventY());
-		final VectMutable move = VectMutable.make(Mouse.getEventDX(), Mouse.getEventDY());
+		final VectVar pos = Vect.makeVar(Mouse.getEventX(), Mouse.getEventY());
+		final VectVar move = Vect.makeVar(Mouse.getEventDX(), Mouse.getEventDY());
 		
 		final int wheeld = Mouse.getEventDWheel();
 		
@@ -155,7 +155,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		move.mul(1, -1, 1);
 		
 		if (button != -1 || wheeld != 0) {
-			getEventBus().send(new MouseButtonEvent(pos.copy(), button, down, wheeld));
+			getEventBus().send(new MouseButtonEvent(pos.freeze(), button, down, wheeld));
 		}
 		
 		moveSum.add(move);
@@ -178,7 +178,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	 * 
 	 * @return mouse position
 	 */
-	public VectView getMousePos()
+	public Vect getMousePos()
 	{
 		return mousePos;
 	}

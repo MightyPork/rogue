@@ -2,7 +2,6 @@ package mightypork.gamecore.control.bus.events;
 
 
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -50,9 +49,9 @@ public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	/**
 	 * @return new screen size
 	 */
-	public VectView getScreenSize()
+	public Vect getScreenSize()
 	{
-		return screenSize.view();
+		return screenSize;
 	}
 	
 	

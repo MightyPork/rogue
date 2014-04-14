@@ -11,7 +11,7 @@
 //import mightypork.utils.math.vect.Vect;
 //import mightypork.utils.math.vect.VectAdapter;
 //import mightypork.utils.math.vect.VectVal;
-//import mightypork.utils.math.vect.VectView;
+//import mightypork.utils.math.vect.Vect;
 //
 //
 ///**
@@ -69,9 +69,9 @@
 //	 * @param vectBound vect bound
 //	 * @return contained vect
 //	 */
-//	private static VectView eval(final VectBound vectBound)
+//	private static Vect eval(final VectBound vectBound)
 //	{
-//		return vectBound == null ? Vect.ZERO.view() : vectBound.getVect();
+//		return vectBound == null ? Vect.ZERO : vectBound.getVect();
 //	}
 //	
 //	
@@ -83,7 +83,7 @@
 //	 */
 //	private static RectView eval(final RectBound rectBound)
 //	{
-//		return rectBound == null ? Rect.ZERO.view() : rectBound.getRect();
+//		return rectBound == null ? Rect.ZERO : rectBound.getRect();
 //	}
 //	
 //	
@@ -670,7 +670,7 @@
 //				final double b = eval(bottom);
 //				final double l = eval(left);
 //				
-//				final VectView v = eval(c);
+//				final Vect v = eval(c);
 //				
 //				return RectVal.make(v.x() - l, v.y() - t, l + r, t + b);
 //			}
@@ -736,24 +736,24 @@
 //	}
 //	
 //	
-//	public static VectView neg(final VectBound c)
+//	public static Vect neg(final VectBound c)
 //	{
 //		return mul(c, -1);
 //	}
 //	
 //	
-//	public static VectView half(final VectBound c)
+//	public static Vect half(final VectBound c)
 //	{
 //		return mul(c, 0.5);
 //	}
 //	
 //	
-//	public static VectView add(final VectBound c1, final VectBound c2)
+//	public static Vect add(final VectBound c1, final VectBound c2)
 //	{
 //		return new VectAdapter() {
 //			
 //			@Override
-//			public VectView getSource()
+//			public Vect getSource()
 //			{
 //				return eval(c1).add(eval(c2));
 //			}
@@ -761,18 +761,18 @@
 //	}
 //	
 //	
-//	public static VectView add(final VectBound c, final Object x, final Object y)
+//	public static Vect add(final VectBound c, final Object x, final Object y)
 //	{
 //		return add(c, x, y, 0);
 //	}
 //	
 //	
-//	public static VectView add(final VectBound c, final Object x, final Object y, final Object z)
+//	public static Vect add(final VectBound c, final Object x, final Object y, final Object z)
 //	{
 //		return new VectAdapter() {
 //			
 //			@Override
-//			public VectView getSource()
+//			public Vect getSource()
 //			{
 //				return eval(c).add(eval(x), eval(y), eval(z));
 //			}
@@ -780,12 +780,12 @@
 //	}
 //	
 //	
-//	public static VectView sub(final VectBound c1, final VectBound c2)
+//	public static Vect sub(final VectBound c1, final VectBound c2)
 //	{
 //		return new VectAdapter() {
 //			
 //			@Override
-//			public VectView getSource()
+//			public Vect getSource()
 //			{
 //				return eval(c1).sub(eval(c2));
 //			}
@@ -793,18 +793,18 @@
 //	}
 //	
 //	
-//	public static VectView sub(final VectBound c, final Object x, final Object y)
+//	public static Vect sub(final VectBound c, final Object x, final Object y)
 //	{
 //		return sub(c, x, y, 0);
 //	}
 //	
 //	
-//	public static VectView sub(final VectBound c, final Object x, final Object y, final Object z)
+//	public static Vect sub(final VectBound c, final Object x, final Object y, final Object z)
 //	{
 //		return new VectAdapter() {
 //			
 //			@Override
-//			public VectView getSource()
+//			public Vect getSource()
 //			{
 //				return eval(c).sub(eval(x), eval(y), eval(z));
 //			}
@@ -813,12 +813,12 @@
 //	}
 //	
 //	
-//	public static VectView mul(final VectBound c, final Object mul)
+//	public static Vect mul(final VectBound c, final Object mul)
 //	{
 //		return new VectAdapter() {
 //			
 //			@Override
-//			public VectView getSource()
+//			public Vect getSource()
 //			{
 //				return eval(c).mul(eval(mul));
 //			}
@@ -827,12 +827,12 @@
 //	}
 //	
 //	
-//	public static VectView norm(final VectBound c, final Object norm)
+//	public static Vect norm(final VectBound c, final Object norm)
 //	{
 //		return new VectAdapter() {
 //			
 //			@Override
-//			public VectView getSource()
+//			public Vect getSource()
 //			{
 //				return eval(c).norm(eval(norm));
 //			}
@@ -841,12 +841,12 @@
 //	}
 //	
 //	
-//	public static VectView origin(final RectBound r)
+//	public static Vect origin(final RectBound r)
 //	{
 //		return new VectAdapter() {
 //			
 //			@Override
-//			public VectView getSource()
+//			public Vect getSource()
 //			{
 //				return eval(r).origin();
 //			}
@@ -854,12 +854,12 @@
 //	}
 //	
 //	
-//	public static VectView size(final RectBound r)
+//	public static Vect size(final RectBound r)
 //	{
 //		return new VectAdapter() {
 //			
 //			@Override
-//			public VectView getSource()
+//			public Vect getSource()
 //			{
 //				return eval(r).size();
 //			}
@@ -879,55 +879,55 @@
 //	}
 //	
 //	
-//	public static VectView center(final RectBound r)
+//	public static Vect center(final RectBound r)
 //	{
 //		return add(origin(r), half(size(r)));
 //	}
 //	
 //	
-//	public static VectView topLeft(final RectBound r)
+//	public static Vect topLeft(final RectBound r)
 //	{
 //		return origin(r);
 //	}
 //	
 //	
-//	public static VectView topRight(final RectBound r)
+//	public static Vect topRight(final RectBound r)
 //	{
 //		return add(origin(r), width(r), 0);
 //	}
 //	
 //	
-//	public static VectView bottomLeft(final RectBound r)
+//	public static Vect bottomLeft(final RectBound r)
 //	{
 //		return add(origin(r), 0, width(r));
 //	}
 //	
 //	
-//	public static VectView bottomRight(final RectBound r)
+//	public static Vect bottomRight(final RectBound r)
 //	{
 //		return add(origin(r), size(r));
 //	}
 //	
 //	
-//	public static VectView topCenter(final RectBound r)
+//	public static Vect topCenter(final RectBound r)
 //	{
 //		return add(origin(r), half(width(r)), 0);
 //	}
 //	
 //	
-//	public static VectView bottomCenter(final RectBound r)
+//	public static Vect bottomCenter(final RectBound r)
 //	{
 //		return add(origin(r), half(width(r)), width(r));
 //	}
 //	
 //	
-//	public static VectView centerLeft(final RectBound r)
+//	public static Vect centerLeft(final RectBound r)
 //	{
 //		return add(origin(r), 0, half(width(r)));
 //	}
 //	
 //	
-//	public static VectView centerRight(final RectBound r)
+//	public static Vect centerRight(final RectBound r)
 //	{
 //		return add(origin(r), width(r), half(width(r)));
 //	}
@@ -946,19 +946,19 @@
 //			@Override
 //			public RectView getRect()
 //			{
-//				VectView cv = eval(c);
+//				Vect cv = eval(c);
 //				
 //				return new RectView() {
 //					
 //					@Override
-//					public VectView size()
+//					public Vect size()
 //					{
-//						return Vect.ZERO.view();
+//						return Vect.ZERO;
 //					}
 //					
 //					
 //					@Override
-//					public VectView origin()
+//					public Vect origin()
 //					{
 //						return null;
 //					}

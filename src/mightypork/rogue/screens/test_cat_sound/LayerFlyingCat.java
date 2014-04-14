@@ -17,15 +17,16 @@ import mightypork.rogue.Res;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.num.Num;
+import mightypork.utils.math.rect.Rect;
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectAnimated;
-import mightypork.utils.math.vect.VectVal;
 
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
 	
 	private final AnimDouble size = new AnimDouble(400, Easing.SINE_BOTH);
-	private final VectAnimated pos = VectAnimated.make(Easing.ELASTIC_OUT);
+	private final VectAnimated pos = VectAnimated.makeVar(Easing.ELASTIC_OUT);
 	
 	private final Random rand = new Random();
 	
@@ -42,22 +43,19 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 		
 		cat = new ImagePainter(Res.getTxQuad("test.kitten"));
 		
-		// Bounds.box(size,size).centerTo(pos)
-		cat.setContext(centerTo(box(size, size), pos));
+		cat.setContext(Rect.make(size, size).centerTo(pos));
 		
 		tp = new TextPainter(Res.getFont("default"));
 		tp.setAlign(Align.CENTER);
 		tp.setColor(RGB.YELLOW);
 		tp.setText("Meow!");
-		tp.setShadow(RGB.dark(0.8), VectVal.make(2, 2));
+		tp.setShadow(RGB.dark(0.8), Vect.make(2, 2));
 		
-		// Bounds.box(64,64).centerTo(cMousePos)
-		tp.setContext(centerTo(box(64, 64), cMousePos));
+		tp.setContext(Rect.make(64, 64).centerTo(mouse()));
 		
 		qp = QuadPainter.gradV(RGB.YELLOW, RGB.RED);
 		
-		// Bounds.wrap(cat).bottomLeft().expand(0,0,50,50)
-		qp.setContext(expand(bottomLeft(cat), 0, 0, 50, 50));
+		qp.setContext(cat.getRect().bottomLeft().expand(size.half(), Num.ZERO, Num.ZERO, size.half()));
 		
 		/*
 		 * Register keys

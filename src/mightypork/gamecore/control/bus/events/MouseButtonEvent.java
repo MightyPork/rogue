@@ -3,7 +3,6 @@ package mightypork.gamecore.control.bus.events;
 
 import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -78,9 +77,9 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	/**
 	 * @return mouse position when the event occurred
 	 */
-	public VectView getPos()
+	public Vect getPos()
 	{
-		return pos.view();
+		return pos;
 	}
 	
 	

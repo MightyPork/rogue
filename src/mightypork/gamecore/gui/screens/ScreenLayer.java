@@ -8,9 +8,8 @@ import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.Rect;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -25,11 +24,6 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	private boolean visible = true;
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
-	
-	/** Mouse position constraint */
-	protected final VectView cMousePos = getInput().getMousePos();
-	/** Screen size constraint */
-	protected final VectView cScreenSize = getDisplay().getSize();
 	
 	
 	/**
@@ -67,7 +61,7 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	
 	
 	@Override
-	public RectView getRect()
+	public Rect getRect()
 	{
 		return screen.getRect();
 	}
@@ -128,5 +122,17 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	 * @return higher = on top.
 	 */
 	public abstract int getPriority();
+	
+	
+	protected final Rect bounds()
+	{
+		return screen.bounds();
+	}
+	
+	
+	protected final Vect mouse()
+	{
+		return screen.mouse();
+	}
 	
 }

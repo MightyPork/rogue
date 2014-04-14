@@ -3,14 +3,13 @@ package mightypork.test;
 
 import java.util.Locale;
 
-import mightypork.utils.math.num.NumMutable;
+import mightypork.utils.math.num.Num;
+import mightypork.utils.math.num.NumVar;
 import mightypork.utils.math.rect.Rect;
-import mightypork.utils.math.rect.RectVal;
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.RectConst;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectMutable;
-import mightypork.utils.math.vect.VectVal;
-import mightypork.utils.math.vect.VectView;
+import mightypork.utils.math.vect.VectConst;
+import mightypork.utils.math.vect.VectVar;
 
 
 public class TestConstr {
@@ -22,52 +21,52 @@ public class TestConstr {
 		int cnt = -1;
 		
 		{
-			final RectVal rect = RectVal.make(0, 0, 10, 10);
-			final VectVal point = VectVal.make(50, 50);
+			final RectConst rect = Rect.make(0, 0, 10, 10);
+			final VectConst point = Vect.make(50, 50);
 			System.out.println("Test " + ++cnt + ": rect = " + rect);
 			System.out.println("Test " + cnt + ": point = " + point);
-			System.out.println("Test " + cnt + ": centered rect = " + rect.view().centerTo(point));
+			System.out.println("Test " + cnt + ": centered rect = " + rect.centerTo(point));
 		}
 		
 		{
-			final RectVal rect = RectVal.make(0, 0, 10, 10);
-			final RectView v = rect.view().view();
-			System.out.println("\nTest " + ++cnt + ": " + (v == rect.view()));
+			final RectConst rect = Rect.make(0, 0, 10, 10);
+			final Rect v = rect;
+			System.out.println("\nTest " + ++cnt + ": " + (v == rect));
 		}
 		
 		{
-			final RectVal rect = RectVal.make(0, 0, 10, 10);
-			final RectView v = rect.view().view().view().view().view().view();
-			System.out.println("\nTest " + ++cnt + ": " + (v == rect.view()));
+			final RectConst rect = Rect.make(0, 0, 10, 10);
+			final Rect v = rect;
+			System.out.println("\nTest " + ++cnt + ": " + (v == rect));
 		}
 		
 		{
-			final Vect a = VectVal.make(3, 3);
-			final VectVal v = a.copy().copy().copy();
-			System.out.println("\nTest " + ++cnt + ": " + (v == a.copy()));
+			final Vect a = Vect.make(3, 3);
+			final VectConst v = a.freeze().freeze().freeze();
+			System.out.println("\nTest " + ++cnt + ": " + (v == a.freeze()));
 		}
 		
 		{
-			final Vect a = VectVal.make(3, 3);
-			final VectVal v = a.copy().copy().copy();
-			System.out.println("\nTest " + ++cnt + ": " + (v == a.copy()));
+			final Vect a = Vect.make(3, 3);
+			final VectConst v = a.freeze().freeze().freeze();
+			System.out.println("\nTest " + ++cnt + ": " + (v == a.freeze()));
 		}
 		
 		{
-			final VectMutable a = VectMutable.make(10, 10);
-			final VectView view = a.view().mul(10).half().sub(1, 1);
-			System.out.println("\nTest " + ++cnt + ": " + (view.equals(VectVal.make(49, 49))));
+			final VectVar a = Vect.makeVar(10, 10);
+			final Vect view = a.mul(10).half().sub(1, 1);
+			System.out.println("\nTest " + ++cnt + ": " + (view.equals(Vect.make(49, 49))));
 			a.add(10, 0);
-			System.out.println("Test " + cnt + ": " + (view.equals(VectVal.make(99, 49))));
+			System.out.println("Test " + cnt + ": " + (view.equals(Vect.make(99, 49))));
 			a.setTo(900, 999);
 			System.out.println(view);
 		}
 		
 		{
-			final NumMutable side = NumMutable.make(100);
-			final VectMutable center = VectMutable.make(0, 0);
+			final NumVar side = Num.makeVar(100);
+			final VectVar center = Vect.makeVar(0, 0);
 			
-			final Rect box = side.view().box().centerTo(center);
+			final Rect box = Rect.make(side, side).centerTo(center);
 			
 			System.out.println(box);
 			
@@ -82,17 +81,11 @@ public class TestConstr {
 		}
 		
 		{
-			final NumMutable a = NumMutable.make(100);
+			final NumVar a = Num.makeVar(100);
 			
-			a.setTo(a.mul(50).add(10).div(2));
+			a.assign(a.mul(50).add(10).div(2));
 			
 			System.out.println(a);
-			Rect r;
-			System.out.println(r = a.box());
-			
-			a.reset();
-			
-			System.out.println(r);
 			
 		}
 	}

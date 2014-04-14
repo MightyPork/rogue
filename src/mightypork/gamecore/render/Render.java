@@ -10,10 +10,8 @@ import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.rect.Rect;
-import mightypork.utils.math.rect.RectView;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectVal;
-import mightypork.utils.math.vect.VectView;
+import mightypork.utils.math.vect.VectConst;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
@@ -29,9 +27,9 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class Render {
 	
-	public static final VectView AXIS_X = VectVal.make(1, 0, 0);
-	public static final VectView AXIS_Y = VectVal.make(0, 1, 0);
-	public static final VectView AXIS_Z = VectVal.make(0, 0, 1);
+	public static final VectConst AXIS_X = Vect.make(1, 0, 0);
+	public static final VectConst AXIS_Y = Vect.make(0, 1, 0);
+	public static final VectConst AXIS_Z = Vect.make(0, 0, 1);
 	
 	
 	/**
@@ -214,7 +212,7 @@ public class Render {
 	 */
 	public static void rotate(double angle, Vect axis)
 	{
-		final Vect vec = axis.view().norm(1);
+		final Vect vec = axis.norm(1);
 		glRotated(angle, vec.x(), vec.y(), vec.z());
 	}
 	
@@ -352,12 +350,10 @@ public class Render {
 	 */
 	public static void quad(Rect quad)
 	{
-		final RectView rv = quad.view();
-		
-		final double x1 = rv.left().value();
-		final double y1 = rv.top().value();
-		final double x2 = rv.right().value();
-		final double y2 = rv.bottom().value();
+		final double x1 = quad.left().value();
+		final double y1 = quad.top().value();
+		final double x2 = quad.right().value();
+		final double y2 = quad.bottom().value();
 		
 		// draw with color
 		unbindTexture();
@@ -394,15 +390,15 @@ public class Render {
 	 */
 	public static void quadUV_nobound(Rect quad, Rect uvs)
 	{
-		final double x1 = quad.left();
-		final double y1 = quad.top();
-		final double x2 = quad.right();
-		final double y2 = quad.bottom();
+		final double x1 = quad.left().value();
+		final double y1 = quad.top().value();
+		final double x2 = quad.right().value();
+		final double y2 = quad.bottom().value();
 		
-		final double tx1 = uvs.left();
-		final double ty1 = uvs.top();
-		final double tx2 = uvs.right();
-		final double ty2 = uvs.bottom();
+		final double tx1 = uvs.left().value();
+		final double ty1 = uvs.top().value();
+		final double tx2 = uvs.right().value();
+		final double ty2 = uvs.bottom().value();
 		
 		// quad with texture
 		glTexCoord2d(tx1, ty2);
@@ -440,10 +436,10 @@ public class Render {
 	 */
 	public static void quadColor(Rect quad, RGB colorHMinVMin, RGB colorHMaxVMin, RGB colorHMaxVMax, RGB colorHMinVMax)
 	{
-		final double x1 = quad.left();
-		final double y1 = quad.top();
-		final double x2 = quad.right();
-		final double y2 = quad.bottom();
+		final double x1 = quad.left().value();
+		final double y1 = quad.top().value();
+		final double x2 = quad.right().value();
+		final double y2 = quad.bottom().value();
 		
 		// draw with color
 		unbindTexture();
@@ -547,7 +543,7 @@ public class Render {
 	 * 
 	 * @param size viewport size (screen size)
 	 */
-	public static void setupOrtho(VectView size)
+	public static void setupOrtho(Vect size)
 	{
 		// fix projection for changed size
 		glMatrixMode(GL_PROJECTION);

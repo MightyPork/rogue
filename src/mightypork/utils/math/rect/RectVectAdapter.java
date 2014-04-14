@@ -5,7 +5,7 @@ import mightypork.utils.math.vect.Vect;
 
 
 /**
- * Rect made of two {@link VectView}s
+ * Rect made of two {@link Vect}s
  * 
  * @author MightyPork
  */

@@ -4,7 +4,7 @@ package mightypork.gamecore.gui.components;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
 import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.Rect;
 
 
 public abstract class AbstractComponent extends AppSubModule implements PluggableRenderable {
@@ -25,7 +25,7 @@ public abstract class AbstractComponent extends AppSubModule implements Pluggabl
 	
 	
 	@Override
-	public RectView getRect()
+	public Rect getRect()
 	{
 		return context.getRect();
 	}

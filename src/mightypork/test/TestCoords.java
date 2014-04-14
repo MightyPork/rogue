@@ -1,47 +1,50 @@
 package mightypork.test;
 
 
-import java.util.Locale;
-
-import mightypork.utils.math.num.NumView;
-import mightypork.utils.math.vect.VectMutable;
-import mightypork.utils.math.vect.VectView;
+import mightypork.utils.math.num.Num;
+import mightypork.utils.math.num.NumVar;
+import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.vect.VectVar;
 
 
 public class TestCoords {
 	
 	public static void main(String[] args)
 	{
-		Locale.setDefault(Locale.ENGLISH);
+		{
+			VectVar a = Vect.makeVar();
+			VectVar b = Vect.makeVar();
+			
+			Vect cross = a.cross(b);
+			Num dot = a.dot(b);
+			Vect sum = a.add(b);
+			Num dist = a.dist(b);
+			
+			a.setTo(0, 10, 0);
+			b.setTo(0, 6, 7);
+			
+			System.out.println("a = " + a);
+			System.out.println("b = " + b);
+			System.out.println("axb = " + cross);
+			System.out.println("a.b = " + dot);
+			System.out.println("a+b = " + sum);
+			System.out.println("dist(a,b) = " + dist);
+		}
 		
-		// test
-		final VectMutable var = VectMutable.make(1, 2, 3);
-		
-		final VectView cubicRoot = var.mul(var).mul(var);
-		final VectView half = var.half();
-		
-		System.out.println("x, x^3, x/5");
-		System.out.println(var);
-		System.out.println(cubicRoot);
-		System.out.println(half);
-		
-		var.setTo(var.mul(10));
-		
-		System.out.println("x = x*10; x, x^3, x/5");
-		System.out.println(var);
-		System.out.println(cubicRoot);
-		System.out.println(half);
-		
-		final NumView y = var.yn();
-		System.out.println("y: " + y.value());
-		
-		var.setTo(var.add(100, 100));
-		
-		System.out.println("x = x*100; x.y(), x, x^3, x/5");
-		System.out.println(y.value());
-		System.out.println(var);
-		System.out.println(cubicRoot);
-		System.out.println(half);
+		{
+			NumVar a = Num.makeVar();
+			
+			Num end = a;
+			
+			for (int i = 0; i < 100; i++) {
+				end = end.add(1);
+			}
+			
+			System.out.println(end);
+			a.setTo(37);
+			System.out.println(end);
+			
+		}
 		
 	}
 }

@@ -13,8 +13,7 @@ import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc.Buffers;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectMutable;
-import mightypork.utils.math.vect.VectView;
+import mightypork.utils.math.vect.VectVar;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
@@ -31,7 +30,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	private static final Vect INITIAL_LISTENER_POS = Vect.ZERO;
 	private static final int MAX_SOURCES = 256;
 	
-	private static VectMutable listener = VectMutable.zero();
+	private static VectVar listener = Vect.makeVar();
 	private static boolean soundSystemInited = false;
 	
 	
@@ -60,9 +59,9 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	/**
 	 * @return listener coordinate
 	 */
-	public static VectView getListener()
+	public static Vect getListener()
 	{
-		return listener.view();
+		return listener;
 	}
 	
 	// -- instance --

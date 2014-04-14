@@ -14,7 +14,7 @@ import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectConst;
 
 
 public class LayerBouncyBoxes extends ScreenLayer {
@@ -57,7 +57,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		
 		final TextPainter tp = new TextPainter(Res.getFont("default"), Align.LEFT, RGB.WHITE);
 		tp.setText("Press \"C\" for \"Cat\" screen.");
-		tp.setShadow(RGB.RED, VectVal.make(2, 2));
+		tp.setShadow(RGB.RED, VectConst.make(2, 2));
 		
 		layout.add(tp);
 	}
