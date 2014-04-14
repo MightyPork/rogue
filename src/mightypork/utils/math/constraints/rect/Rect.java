@@ -758,4 +758,21 @@ public abstract class Rect implements RectBound {
 		return centerTo(parent.center());
 	}
 	
+	
+	public TiledRect tiles(int horizontal, int vertical)
+	{
+		return new TiledRect(this, horizontal, vertical);
+	}
+	
+	
+	public TiledRect columns(int columns)
+	{
+		return new TiledRect(this, columns, 1);
+	}
+	
+	
+	public TiledRect rows(int rows)
+	{
+		return new TiledRect(this, 1, rows);
+	}
 }
