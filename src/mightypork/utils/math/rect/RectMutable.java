@@ -1,9 +1,7 @@
 package mightypork.utils.math.rect;
 
 
-import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectVal;
 
 
 /**
@@ -11,115 +9,7 @@ import mightypork.utils.math.vect.VectVal;
  * 
  * @author MightyPork
  */
-public abstract class RectMutable extends RectView {
-	
-	/**
-	 * Create at 0,0 with zero size
-	 * 
-	 * @return new mutable rect
-	 */
-	@FactoryMethod
-	public static RectMutable zero()
-	{
-		return make(0, 0, 0, 0);
-	}
-	
-	
-	/**
-	 * Create at 1,1 with zero size
-	 * 
-	 * @return new mutable rect
-	 */
-	@FactoryMethod
-	public static RectMutable one()
-	{
-		return make(0, 0, 1, 1);
-	}
-	
-	
-	/**
-	 * Create at 0,0 with given size
-	 * 
-	 * @param width
-	 * @param height
-	 * @return new mutable rect
-	 */
-	public static RectMutable make(double width, double height)
-	{
-		return make(0, 0, width, height);
-	}
-	
-	
-	/**
-	 * Create at given origin, with given size.
-	 * 
-	 * @param origin
-	 * @param width
-	 * @param height
-	 * @return new mutable rect
-	 */
-	@FactoryMethod
-	public static RectMutable make(Vect origin, double width, double height)
-	{
-		return make(origin, VectVal.make(width, height));
-	}
-	
-	
-	/**
-	 * Create at 0,0 with given size.
-	 * 
-	 * @param size
-	 * @return new mutable rect
-	 */
-	@FactoryMethod
-	public static RectMutable make(Vect size)
-	{
-		return make(Vect.ZERO, size);
-	}
-	
-	
-	/**
-	 * Create at given origin, with given size.
-	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @return new mutable rect
-	 */
-	@FactoryMethod
-	public static RectMutable make(double x, double y, double width, double height)
-	{
-		return make(x, y, width, height);
-	}
-	
-	
-	/**
-	 * Create as copy of another
-	 * 
-	 * @param other copied
-	 * @return new mutable rect
-	 */
-	@FactoryMethod
-	public static RectMutable make(Rect other)
-	{
-		return make(other.origin(), other.size());
-	}
-	
-	
-	/**
-	 * Create at given origin, with given size.
-	 * 
-	 * @param origin
-	 * @param size
-	 * @return new mutable rect
-	 */
-	@FactoryMethod
-	public static RectMutable make(Vect origin, Vect size)
-	{
-		return make(origin.x(), origin.y(), size.x(), size.y());
-	}
-	
+public abstract class RectMutable extends Rect {
 	
 	/**
 	 * Set to other rect's coordinates
@@ -141,7 +31,7 @@ public abstract class RectMutable extends RectView {
 	 */
 	public void setTo(Vect origin, double width, double height)
 	{
-		setTo(origin, VectVal.make(width, height));
+		setTo(origin, Vect.make(width, height));
 	}
 	
 	
@@ -155,7 +45,7 @@ public abstract class RectMutable extends RectView {
 	 */
 	public void setTo(double x, double y, double width, double height)
 	{
-		setTo(VectVal.make(x, y), VectVal.make(width, height));
+		setTo(Vect.make(x, y), Vect.make(width, height));
 	}
 	
 	
@@ -179,6 +69,7 @@ public abstract class RectMutable extends RectView {
 	{
 		setTo(Vect.ZERO, Vect.ZERO);
 	}
+	
 	
 	/**
 	 * Set new origin

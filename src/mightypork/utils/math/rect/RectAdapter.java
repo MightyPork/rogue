@@ -3,7 +3,6 @@ package mightypork.utils.math.rect;
 
 import mightypork.utils.math.vect.Vect;
 import mightypork.utils.math.vect.VectAdapter;
-import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -12,7 +11,10 @@ import mightypork.utils.math.vect.VectView;
  * 
  * @author MightyPork
  */
-public abstract class RectAdapter extends RectView {
+public abstract class RectAdapter extends Rect {
+	
+	// adapters are needed in case the vect returned from source changes
+	// (is replaced). This way, references to origin and rect will stay intack.
 	
 	private final VectAdapter originAdapter = new VectAdapter() {
 		
@@ -40,14 +42,14 @@ public abstract class RectAdapter extends RectView {
 	
 	
 	@Override
-	public VectView origin()
+	public Vect origin()
 	{
 		return originAdapter;
 	}
 	
 	
 	@Override
-	public VectView size()
+	public Vect size()
 	{
 		return sizeAdapter;
 	}

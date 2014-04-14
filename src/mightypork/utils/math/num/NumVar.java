@@ -6,17 +6,17 @@ package mightypork.utils.math.num;
  * 
  * @author MightyPork
  */
-class NumMutableImpl extends NumMutable {
+public class NumVar extends NumMutable {
 	
 	private double value;
 	
 	
-	public NumMutableImpl(Num value) {
+	public NumVar(Num value) {
 		this.value = eval(value);
 	}
 	
 	
-	public NumMutableImpl(double value) {
+	public NumVar(double value) {
 		this.value = value;
 	}
 	

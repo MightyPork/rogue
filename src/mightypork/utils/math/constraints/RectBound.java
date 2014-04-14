@@ -1,7 +1,7 @@
 package mightypork.utils.math.constraints;
 
 
-import mightypork.utils.math.rect.RectView;
+import mightypork.utils.math.rect.Rect;
 
 
 /**
@@ -14,5 +14,5 @@ public interface RectBound {
 	/**
 	 * @return rect region
 	 */
-	RectView getRect();
+	Rect getRect();
 }

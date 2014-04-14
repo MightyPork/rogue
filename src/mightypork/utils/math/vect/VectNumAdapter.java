@@ -10,21 +10,21 @@ import mightypork.utils.math.num.Num;
  * 
  * @author MightyPork
  */
-class NumConstrVect extends VectView {
+class VectNumAdapter extends Vect {
 	
 	private final Num constrX;
 	private final Num constrY;
 	private final Num constrZ;
 	
 	
-	public NumConstrVect(Num x, Num y, Num z) {
+	public VectNumAdapter(Num x, Num y, Num z) {
 		this.constrX = x;
 		this.constrY = y;
 		this.constrZ = z;
 	}
 	
 	
-	public NumConstrVect(Num x, Num y) {
+	public VectNumAdapter(Num x, Num y) {
 		this.constrX = x;
 		this.constrY = y;
 		this.constrZ = Num.ZERO;

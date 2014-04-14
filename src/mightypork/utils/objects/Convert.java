@@ -5,7 +5,7 @@ import mightypork.utils.logging.Log;
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.Range;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectVal;
+import mightypork.utils.math.vect.VectConst;
 
 
 /**
@@ -152,11 +152,11 @@ public class Convert {
 	 * @param def default value
 	 * @return vector
 	 */
-	public static VectVal toVect(Object o, Vect def)
+	public static VectConst toVect(Object o, Vect def)
 	{
 		try {
-			if (o == null) return def.copy();
-			if (o instanceof Vect) return ((Vect) o).copy();
+			if (o == null) return def.freeze();
+			if (o instanceof Vect) return ((Vect) o).freeze();
 			if (o instanceof String) {
 				String s = ((String) o).trim();
 				
@@ -180,19 +180,19 @@ public class Convert {
 					final double y = Double.parseDouble(parts[1].trim());
 					
 					if (parts.length == 2) {
-						return VectVal.make(x, y);
+						return VectConst.make(x, y);
 					}
 					
 					final double z = Double.parseDouble(parts[2].trim());
 					
-					return VectVal.make(x, y, z);
+					return VectConst.make(x, y, z);
 				}
 			}
 		} catch (final NumberFormatException | ArrayIndexOutOfBoundsException e) {
 			// ignore
 		}
 		
-		return def.copy();
+		return def.freeze();
 	}
 	
 	
@@ -314,7 +314,7 @@ public class Convert {
 	 * @param o object
 	 * @return Coord
 	 */
-	public static VectVal toVect(Object o)
+	public static VectConst toVect(Object o)
 	{
 		return toVect(o, Vect.ZERO);
 	}

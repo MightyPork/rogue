@@ -3,7 +3,7 @@
 //
 //import mightypork.gamecore.control.timing.Poller;
 //import mightypork.utils.math.num.Num;
-//import mightypork.utils.math.num.NumView;
+//import mightypork.utils.math.num.Num;
 //import mightypork.utils.math.rect.Rect;
 //import mightypork.utils.math.rect.RectVal;
 //import mightypork.utils.math.rect.RectView;
@@ -38,7 +38,7 @@
 //	{
 //		if (o instanceof NumBound) return (NumBound) o;
 //		
-//		if (o instanceof Number) return new NumView() {
+//		if (o instanceof Number) return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -87,9 +87,9 @@
 //	}
 //	
 //	
-//	public static NumView min(final Object a, final Object b)
+//	public static Num min(final Object a, final Object b)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -100,9 +100,9 @@
 //	}
 //	
 //	
-//	public static NumView max(final Object a, final Object b)
+//	public static Num max(final Object a, final Object b)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -113,9 +113,9 @@
 //	}
 //	
 //	
-//	public static NumView abs(final NumBound a)
+//	public static Num abs(final NumBound a)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -126,9 +126,9 @@
 //	}
 //	
 //	
-//	public static NumView half(final NumBound a)
+//	public static Num half(final NumBound a)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -139,9 +139,9 @@
 //	}
 //	
 //	
-//	public static NumView round(final NumBound a)
+//	public static Num round(final NumBound a)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -165,9 +165,9 @@
 //	}
 //	
 //	
-//	public static NumView ceil(final NumBound a)
+//	public static Num ceil(final NumBound a)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -178,9 +178,9 @@
 //	}
 //	
 //	
-//	public static NumView floor(final NumBound a)
+//	public static Num floor(final NumBound a)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -191,9 +191,9 @@
 //	}
 //	
 //	
-//	public static NumView neg(final NumBound a)
+//	public static Num neg(final NumBound a)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -204,9 +204,9 @@
 //	}
 //	
 //	
-//	public static NumView add(final Object a, final Object b)
+//	public static Num add(final Object a, final Object b)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -217,9 +217,9 @@
 //	}
 //	
 //	
-//	public static NumView sub(final Object a, final Object b)
+//	public static Num sub(final Object a, final Object b)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -230,9 +230,9 @@
 //	}
 //	
 //	
-//	public static NumView mul(final Object a, final Object b)
+//	public static Num mul(final Object a, final Object b)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -243,15 +243,15 @@
 //	}
 //	
 //	
-//	public static NumView half(final Object a)
+//	public static Num half(final Object a)
 //	{
 //		return mul(a, 0.5);
 //	}
 //	
 //	
-//	public static NumView div(final Object a, final Object b)
+//	public static Num div(final Object a, final Object b)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -262,9 +262,9 @@
 //	}
 //	
 //	
-//	public static NumView perc(final Object whole, final Object percent)
+//	public static Num perc(final Object whole, final Object percent)
 //	{
-//		return new NumView() {
+//		return new Num() {
 //			
 //			@Override
 //			public double value()
@@ -867,13 +867,13 @@
 //	}
 //	
 //	
-//	public static NumView height(final RectBound r)
+//	public static Num height(final RectBound r)
 //	{
 //		return size(r).yC();
 //	}
 //	
 //	
-//	public static NumView width(final RectBound r)
+//	public static Num width(final RectBound r)
 //	{
 //		return size(r).xC();
 //	}

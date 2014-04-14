@@ -7,7 +7,7 @@ package mightypork.utils.math.vect;
  * 
  * @author MightyPork
  */
-public abstract class VectAdapter extends VectView {
+public abstract class VectAdapter extends Vect {
 	
 	/**
 	 * @return the proxied coord

@@ -15,48 +15,6 @@ import mightypork.utils.math.animation.Easing;
  */
 public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	
-	/**
-	 * Create an animated vector; This way different easing / settings can be
-	 * specified for each coordinate.
-	 * 
-	 * @param x x animator
-	 * @param y y animator
-	 * @param z z animator
-	 * @return animated mutable vector
-	 */
-	@FactoryMethod
-	public static VectAnimated make(AnimDouble x, AnimDouble y, AnimDouble z)
-	{
-		return new VectAnimated(x, y, z);
-	}
-	
-	
-	/**
-	 * Create an animated vector
-	 * 
-	 * @param start initial positioon
-	 * @param easing animation easing
-	 * @return animated mutable vector
-	 */
-	@FactoryMethod
-	public static VectAnimated make(Vect start, Easing easing)
-	{
-		return new VectAnimated(start, easing);
-	}
-	
-	
-	/**
-	 * Create an animated vector, initialized at 0,0,0
-	 * 
-	 * @param easing animation easing
-	 * @return animated mutable vector
-	 */
-	@FactoryMethod
-	public static VectAnimated make(Easing easing)
-	{
-		return new VectAnimated(Vect.ZERO, easing);
-	}
-	
 	private final AnimDouble x, y, z;
 	private double defaultDuration = 0;
 	
@@ -284,6 +242,49 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 		x.setEasing(easing);
 		y.setEasing(easing);
 		z.setEasing(easing);
+	}
+	
+	
+	/**
+	 * Create an animated vector; This way different easing / settings can be
+	 * specified for each coordinate.
+	 * 
+	 * @param x x animator
+	 * @param y y animator
+	 * @param z z animator
+	 * @return animated mutable vector
+	 */
+	@FactoryMethod
+	public static VectAnimated makeVar(AnimDouble x, AnimDouble y, AnimDouble z)
+	{
+		return new VectAnimated(x, y, z);
+	}
+	
+	
+	/**
+	 * Create an animated vector
+	 * 
+	 * @param start initial positioon
+	 * @param easing animation easing
+	 * @return animated mutable vector
+	 */
+	@FactoryMethod
+	public static VectAnimated makeVar(Vect start, Easing easing)
+	{
+		return new VectAnimated(start, easing);
+	}
+	
+	
+	/**
+	 * Create an animated vector, initialized at 0,0,0
+	 * 
+	 * @param easing animation easing
+	 * @return animated mutable vector
+	 */
+	@FactoryMethod
+	public static VectAnimated makeVar(Easing easing)
+	{
+		return new VectAnimated(Vect.ZERO, easing);
 	}
 	
 }

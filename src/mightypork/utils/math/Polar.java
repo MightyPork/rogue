@@ -4,7 +4,6 @@ package mightypork.utils.math;
 import mightypork.utils.math.Calc.Deg;
 import mightypork.utils.math.Calc.Rad;
 import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectView;
 
 
 /**
@@ -20,7 +19,7 @@ public class Polar {
 	/** distance in units */
 	private double radius = 0;
 	
-	private VectView coord = null;
+	private Vect coord = null;
 	
 	
 	/**
@@ -135,26 +134,24 @@ public class Polar {
 	 * 
 	 * @return coord
 	 */
-	public VectView toCoord()
+	public Vect toCoord()
 	{
 		// lazy init
-		if (coord == null) {
-			coord = new VectView() {
-				
-				@Override
-				public double x()
-				{
-					return radius * Math.cos(angle);
-				}
-				
-				
-				@Override
-				public double y()
-				{
-					return radius * Math.sin(angle);
-				}
-			};
-		}
+		if (coord == null) coord = new Vect() {
+			
+			@Override
+			public double x()
+			{
+				return radius * Math.cos(angle);
+			}
+			
+			
+			@Override
+			public double y()
+			{
+				return radius * Math.sin(angle);
+			}
+		};
 		
 		return coord;
 	}

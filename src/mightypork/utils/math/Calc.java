@@ -685,6 +685,7 @@ public class Calc {
 	public static String toString(double d)
 	{
 		String s = Double.toString(d);
+		s = s.replace(',', '.');
 		s = s.replaceAll("([0-9]+\\.[0-9]+)00+[0-9]+", "$1");
 		s = s.replaceAll("0+$", "");
 		s = s.replaceAll("\\.$", "");
