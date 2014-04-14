@@ -1,8 +1,8 @@
-package mightypork.utils.math.rect;
+package mightypork.utils.math.constraints.rect;
 
 
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectAdapter;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectAdapter;
 
 
 /**

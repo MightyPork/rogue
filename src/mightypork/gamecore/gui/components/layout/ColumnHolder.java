@@ -51,7 +51,7 @@ public class ColumnHolder extends AbstractLayout {
 	{
 		if (elem == null) return;
 		
-		elem.setContext(column(this, cols, col++));
+		elem.setRect(column(this, cols, col++));
 		
 		attach(elem);
 	}

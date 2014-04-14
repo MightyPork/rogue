@@ -12,8 +12,8 @@ import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc.Buffers;
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectVar;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectVar;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;

@@ -1,7 +1,4 @@
-package mightypork.utils.math.constraints;
-
-
-import mightypork.utils.math.num.Num;
+package mightypork.utils.math.constraints.num;
 
 
 /**

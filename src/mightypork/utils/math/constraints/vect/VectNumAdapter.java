@@ -1,8 +1,8 @@
-package mightypork.utils.math.vect;
+package mightypork.utils.math.constraints.vect;
 
 
-import mightypork.utils.math.constraints.NumBound;
-import mightypork.utils.math.num.Num;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.NumBound;
 
 
 /**

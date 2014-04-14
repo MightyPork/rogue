@@ -1,7 +1,7 @@
-package mightypork.utils.math.rect;
+package mightypork.utils.math.constraints.rect;
 
 
-import mightypork.utils.math.vect.VectConst;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 
 public class RectDigest {

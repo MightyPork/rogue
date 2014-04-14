@@ -51,7 +51,7 @@ public class RowHolder extends AbstractLayout {
 	{
 		if (elem == null) return;
 		
-		elem.setContext(row(this, rows, row++));
+		elem.setRect(row(this, rows, row++));
 		
 		attach(elem);
 	}

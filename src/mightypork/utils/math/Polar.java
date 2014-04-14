@@ -3,7 +3,7 @@ package mightypork.utils.math;
 
 import mightypork.utils.math.Calc.Deg;
 import mightypork.utils.math.Calc.Rad;
-import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 /**

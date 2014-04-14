@@ -4,8 +4,8 @@ package mightypork.utils.objects;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.Range;
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectConst;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 
 /**

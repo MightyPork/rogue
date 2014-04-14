@@ -1,13 +1,15 @@
-package mightypork.utils.math.rect;
+package mightypork.utils.math.constraints.rect;
 
 
-import mightypork.utils.math.num.NumConst;
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectConst;
+import mightypork.utils.math.constraints.num.NumConst;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 
 /**
- * Rectangle with constant bounds, that can never change.
+ * Rectangle with constant bounds, that can never change.<br>
+ * It's arranged so that operations with constant arguments yield constant
+ * results.
  * 
  * @author MightyPork
  */
@@ -81,13 +83,14 @@ public class RectConst extends Rect {
 	{
 		return this; // already constant
 	}
-
+	
 	
 	@Override
 	public RectDigest digest()
 	{
 		return (digest != null) ? digest : (digest = super.digest());
 	}
+	
 	
 	@Override
 	public VectConst origin()
@@ -115,8 +118,8 @@ public class RectConst extends Rect {
 	{
 		return Rect.make(pos.add(x, y), size);
 	}
-
-
+	
+	
 	public RectConst move(NumConst x, NumConst y)
 	{
 		return super.move(x, y).freeze();
@@ -264,28 +267,27 @@ public class RectConst extends Rect {
 	}
 	
 	
-	
 	@Override
 	public RectConst leftEdge()
 	{
 		return (v_edge_l != null) ? v_edge_l : (v_edge_l = super.leftEdge().freeze());
 	}
-
-
+	
+	
 	@Override
 	public RectConst rightEdge()
 	{
 		return (v_edge_r != null) ? v_edge_r : (v_edge_r = super.rightEdge().freeze());
 	}
-
-
+	
+	
 	@Override
 	public RectConst topEdge()
 	{
 		return (v_edge_t != null) ? v_edge_t : (v_edge_t = super.topEdge().freeze());
 	}
-
-
+	
+	
 	@Override
 	public RectConst bottomEdge()
 	{
@@ -316,6 +318,110 @@ public class RectConst extends Rect {
 	public RectConst grow(NumConst left, NumConst right, NumConst top, NumConst bottom)
 	{
 		return super.grow(left, right, top, bottom).freeze();
+	}
+	
+	
+	@Override
+	public RectConst shrinkLeft(double shrink)
+	{
+		return super.shrinkLeft(shrink).freeze();
+	}
+	
+	
+	@Override
+	public RectConst shrinkRight(double shrink)
+	{
+		return super.shrinkRight(shrink).freeze();
+	}
+	
+	
+	@Override
+	public RectConst shrinkTop(double shrink)
+	{
+		return super.shrinkTop(shrink).freeze();
+	}
+	
+	
+	@Override
+	public RectConst shrinkBottom(double shrink)
+	{
+		return super.shrinkBottom(shrink).freeze();
+	}
+	
+	
+	@Override
+	public RectConst growLeft(double shrink)
+	{
+		return super.growLeft(shrink).freeze();
+	}
+	
+	
+	@Override
+	public RectConst growRight(double shrink)
+	{
+		return super.growRight(shrink).freeze();
+	}
+	
+	
+	@Override
+	public RectConst growTop(double shrink)
+	{
+		return super.growTop(shrink).freeze();
+	}
+	
+	
+	@Override
+	public RectConst growBottom(double shrink)
+	{
+		return super.growBottom(shrink).freeze();
+	}
+	
+	
+	public RectConst shrinkLeft(NumConst shrink)
+	{
+		return super.shrinkLeft(shrink).freeze();
+	}
+	
+	
+	public RectConst shrinkRight(NumConst shrink)
+	{
+		return super.shrinkRight(shrink).freeze();
+	}
+	
+	
+	public RectConst shrinkTop(NumConst shrink)
+	{
+		return super.shrinkTop(shrink).freeze();
+	}
+	
+	
+	public RectConst shrinkBottom(NumConst shrink)
+	{
+		return super.shrinkBottom(shrink).freeze();
+	}
+	
+	
+	public RectConst growLeft(NumConst shrink)
+	{
+		return super.growLeft(shrink).freeze();
+	}
+	
+	
+	public RectConst growRight(NumConst shrink)
+	{
+		return super.growRight(shrink).freeze();
+	}
+	
+	
+	public RectConst growTop(NumConst shrink)
+	{
+		return super.growTop(shrink).freeze();
+	}
+	
+	
+	public RectConst growBottom(NumConst shrink)
+	{
+		return super.growBottom(shrink).freeze();
 	}
 	
 	

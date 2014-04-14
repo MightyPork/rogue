@@ -2,8 +2,8 @@ package mightypork.gamecore.control.bus.events;
 
 
 import mightypork.gamecore.control.bus.events.types.UnloggedEvent;
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectConst;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 
 /**

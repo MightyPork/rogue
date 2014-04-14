@@ -1,8 +1,8 @@
 package mightypork.gamecore.render.textures;
 
 
-import mightypork.utils.math.rect.Rect;
-import mightypork.utils.math.rect.RectConst;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectConst;
 
 import org.newdawn.slick.opengl.Texture;
 

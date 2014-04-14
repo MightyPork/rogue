@@ -6,7 +6,7 @@ import java.io.IOException;
 import mightypork.gamecore.loading.DeferredResource;
 import mightypork.utils.annotations.Alias;
 import mightypork.utils.files.FileUtils;
-import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.constraints.vect.Vect;
 
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import mightypork.utils.math.animation.Easing;
-import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.constraints.vect.Vect;
 
 import org.lwjgl.BufferUtils;
 

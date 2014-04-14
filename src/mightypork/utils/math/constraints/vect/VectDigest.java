@@ -1,4 +1,4 @@
-package mightypork.utils.math.vect;
+package mightypork.utils.math.constraints.vect;
 
 
 public class VectDigest {

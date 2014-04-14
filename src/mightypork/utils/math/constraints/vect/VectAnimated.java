@@ -1,4 +1,4 @@
-package mightypork.utils.math.vect;
+package mightypork.utils.math.constraints.vect;
 
 
 import mightypork.gamecore.control.timing.Pauseable;

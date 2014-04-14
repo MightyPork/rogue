@@ -2,7 +2,7 @@ package mightypork.gamecore.render.fonts;
 
 
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 /**

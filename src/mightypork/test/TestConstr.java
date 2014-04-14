@@ -3,13 +3,13 @@ package mightypork.test;
 
 import java.util.Locale;
 
-import mightypork.utils.math.num.Num;
-import mightypork.utils.math.num.NumVar;
-import mightypork.utils.math.rect.Rect;
-import mightypork.utils.math.rect.RectConst;
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectConst;
-import mightypork.utils.math.vect.VectVar;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.NumVar;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectConst;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
+import mightypork.utils.math.constraints.vect.VectVar;
 
 
 public class TestConstr {

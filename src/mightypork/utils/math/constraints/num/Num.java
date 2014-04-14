@@ -1,9 +1,8 @@
-package mightypork.utils.math.num;
+package mightypork.utils.math.constraints.num;
 
 
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.Calc;
-import mightypork.utils.math.constraints.NumBound;
 
 
 public abstract class Num implements NumBound {

@@ -14,7 +14,7 @@ import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.vect.VectConst;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 
 public class LayerBouncyBoxes extends ScreenLayer {

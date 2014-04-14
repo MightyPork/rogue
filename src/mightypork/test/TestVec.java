@@ -1,9 +1,9 @@
 package mightypork.test;
 
 
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectConst;
-import mightypork.utils.math.vect.VectVar;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
+import mightypork.utils.math.constraints.vect.VectVar;
 
 
 public class TestVec {

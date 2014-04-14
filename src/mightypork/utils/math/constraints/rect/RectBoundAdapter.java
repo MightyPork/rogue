@@ -1,8 +1,8 @@
-package mightypork.utils.math.constraints;
+package mightypork.utils.math.constraints.rect;
 
 
-import mightypork.utils.math.rect.Rect;
-import mightypork.utils.math.rect.RectAdapter;
+import mightypork.utils.math.constraints.PluggableRectBound;
+import mightypork.utils.math.constraints.RectBound;
 
 
 /**
@@ -16,7 +16,7 @@ public abstract class RectBoundAdapter extends RectAdapter implements PluggableR
 	
 	
 	@Override
-	public void setContext(RectBound rect)
+	public void setRect(RectBound rect)
 	{
 		this.backing = rect;
 	}

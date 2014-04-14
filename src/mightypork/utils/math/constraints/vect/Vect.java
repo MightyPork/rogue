@@ -1,14 +1,13 @@
-package mightypork.utils.math.vect;
+package mightypork.utils.math.constraints.vect;
 
 
 import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.constraints.VectBound;
-import mightypork.utils.math.num.Num;
-import mightypork.utils.math.num.NumConst;
-import mightypork.utils.math.rect.Rect;
-import mightypork.utils.math.rect.RectDigest;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.NumConst;
+import mightypork.utils.math.constraints.rect.Rect;
 
 
 /**
@@ -236,7 +235,6 @@ public abstract class Vect implements VectBound {
 	{
 		return new VectConst(this);
 	}
-
 	
 	
 	/**
@@ -1127,7 +1125,7 @@ public abstract class Vect implements VectBound {
 	 * @param bottom
 	 * @return the rect
 	 */
-	public Rect expand(int left, int right, int top, int bottom)
+	public Rect expand(double left, double right, double top, double bottom)
 	{
 		return Rect.make(this, Vect.ZERO).grow(left, right, top, bottom);
 	}

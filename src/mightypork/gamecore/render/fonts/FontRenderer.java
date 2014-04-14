@@ -3,9 +3,9 @@ package mightypork.gamecore.render.fonts;
 
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.rect.Rect;
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectVar;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectVar;
 
 
 /**

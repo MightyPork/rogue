@@ -13,7 +13,7 @@ import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.annotations.Alias;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 /**

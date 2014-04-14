@@ -23,7 +23,7 @@ import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.vect.VectConst;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.util.glu.GLU;

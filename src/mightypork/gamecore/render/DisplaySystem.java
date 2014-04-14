@@ -11,8 +11,8 @@ import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.FpsMeter;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.rect.Rect;
-import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.vect.Vect;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;

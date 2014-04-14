@@ -9,8 +9,8 @@ import mightypork.gamecore.render.Render;
 import mightypork.utils.math.animation.AnimDouble;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.NumBound;
 import mightypork.utils.math.constraints.RectBound;
+import mightypork.utils.math.constraints.num.NumBound;
 
 
 public class BouncyBox extends AbstractPainter implements Updateable {

@@ -1,7 +1,7 @@
 package mightypork.utils.math.constraints;
 
 
-import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.constraints.rect.Rect;
 
 
 /**

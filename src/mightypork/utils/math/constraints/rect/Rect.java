@@ -1,12 +1,12 @@
-package mightypork.utils.math.rect;
+package mightypork.utils.math.constraints.rect;
 
 
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.num.Num;
-import mightypork.utils.math.num.NumConst;
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectConst;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.NumConst;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 
 /**
@@ -329,6 +329,102 @@ public abstract class Rect implements RectBound {
 	public Rect shrink(final double left, final double right, final double top, final double bottom)
 	{
 		return grow(-left, -right, -top, -bottom);
+	}
+	
+	
+	public Rect shrinkLeft(final double shrink)
+	{
+		return growLeft(-shrink);
+	}
+	
+	
+	public Rect shrinkRight(final double shrink)
+	{
+		return growLeft(-shrink);
+	}
+	
+	
+	public Rect shrinkTop(final double shrink)
+	{
+		return growTop(-shrink);
+	}
+	
+	
+	public Rect shrinkBottom(final double shrink)
+	{
+		return growBottom(-shrink);
+	}
+	
+	
+	public Rect growLeft(final double shrink)
+	{
+		return grow(shrink, 0, 0, 0);
+	}
+	
+	
+	public Rect growRight(final double shrink)
+	{
+		return grow(0, shrink, 0, 0);
+	}
+	
+	
+	public Rect growTop(final double shrink)
+	{
+		return grow(0, 0, shrink, 0);
+	}
+	
+	
+	public Rect growBottom(final double shrink)
+	{
+		return grow(0, 0, 0, shrink);
+	}
+	
+	
+	public Rect shrinkLeft(final Num shrink)
+	{
+		return shrink(shrink, Num.ZERO, Num.ZERO, Num.ZERO);
+	}
+	
+	
+	public Rect shrinkRight(final Num shrink)
+	{
+		return shrink(Num.ZERO, shrink, Num.ZERO, Num.ZERO);
+	}
+	
+	
+	public Rect shrinkTop(final Num shrink)
+	{
+		return shrink(Num.ZERO, Num.ZERO, shrink, Num.ZERO);
+	}
+	
+	
+	public Rect shrinkBottom(final Num shrink)
+	{
+		return shrink(Num.ZERO, Num.ZERO, Num.ZERO, shrink);
+	}
+	
+	
+	public Rect growLeft(final Num shrink)
+	{
+		return grow(shrink, Num.ZERO, Num.ZERO, Num.ZERO);
+	}
+	
+	
+	public Rect growRight(final Num shrink)
+	{
+		return grow(Num.ZERO, shrink, Num.ZERO, Num.ZERO);
+	}
+	
+	
+	public Rect growTop(final Num shrink)
+	{
+		return grow(Num.ZERO, Num.ZERO, shrink, Num.ZERO);
+	}
+	
+	
+	public Rect growBottom(final Num shrink)
+	{
+		return grow(Num.ZERO, Num.ZERO, Num.ZERO, shrink);
 	}
 	
 	

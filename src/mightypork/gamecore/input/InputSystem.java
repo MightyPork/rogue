@@ -9,8 +9,8 @@ import mightypork.gamecore.control.bus.events.MouseMotionEvent;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectVar;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectVar;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;

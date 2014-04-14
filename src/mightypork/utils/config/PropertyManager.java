@@ -10,8 +10,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import mightypork.utils.math.Range;
-import mightypork.utils.math.vect.Vect;
-import mightypork.utils.math.vect.VectConst;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
 import mightypork.utils.objects.Convert;
 
 

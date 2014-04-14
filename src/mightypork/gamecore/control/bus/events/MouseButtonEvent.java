@@ -2,7 +2,7 @@ package mightypork.gamecore.control.bus.events;
 
 
 import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.vect.Vect;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 /**

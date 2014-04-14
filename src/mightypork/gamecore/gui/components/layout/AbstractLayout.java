@@ -37,7 +37,7 @@ public abstract class AbstractLayout extends AbstractComponent {
 	 */
 	public AbstractLayout(AppAccess app, RectBound context) {
 		super(app);
-		setContext(context);
+		setRect(context);
 	}
 	
 	

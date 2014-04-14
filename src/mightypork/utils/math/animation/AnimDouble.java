@@ -4,7 +4,7 @@ package mightypork.utils.math.animation;
 import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc;
-import mightypork.utils.math.num.NumMutable;
+import mightypork.utils.math.constraints.num.NumMutable;
 
 
 /**

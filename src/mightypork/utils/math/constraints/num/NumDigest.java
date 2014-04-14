@@ -1,4 +1,4 @@
-package mightypork.utils.math.num;
+package mightypork.utils.math.constraints.num;
 
 
 public class NumDigest {

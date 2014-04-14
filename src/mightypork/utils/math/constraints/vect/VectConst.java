@@ -1,14 +1,16 @@
-package mightypork.utils.math.vect;
+package mightypork.utils.math.constraints.vect;
 
 
-import mightypork.utils.math.num.Num;
-import mightypork.utils.math.num.NumConst;
-import mightypork.utils.math.rect.RectConst;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.NumConst;
+import mightypork.utils.math.constraints.rect.RectConst;
 
 
 /**
  * Coordinate with immutable numeric values.<br>
- * This coordinate is guaranteed to never change, as opposed to view.
+ * This coordinate is guaranteed to never change, as opposed to view.<br>
+ * It's arranged so that operations with constant arguments yield constant
+ * results.
  * 
  * @author MightyPork
  */
@@ -350,7 +352,7 @@ public final class VectConst extends Vect {
 	
 	
 	@Override
-	public RectConst expand(int left, int right, int top, int bottom)
+	public RectConst expand(double left, double right, double top, double bottom)
 	{
 		return super.expand(left, right, top, bottom).freeze();
 	}

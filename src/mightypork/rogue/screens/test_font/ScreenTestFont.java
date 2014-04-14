@@ -7,8 +7,8 @@ import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.num.Num;
-import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
 
 
 public class ScreenTestFont extends Screen {
@@ -25,7 +25,7 @@ public class ScreenTestFont extends Screen {
 		final Num h = bounds().height().mul(0.1);
 		final Rect strbox = Rect.make(Num.ZERO, h).centerTo(bounds());
 		
-		tp.setContext(strbox);
+		tp.setRect(strbox);
 	}
 	
 	

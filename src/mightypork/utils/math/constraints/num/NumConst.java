@@ -1,8 +1,10 @@
-package mightypork.utils.math.num;
+package mightypork.utils.math.constraints.num;
 
 
 /**
- * Constant number
+ * Constant number.<br>
+ * It's arranged so that operations with constant arguments yield constant
+ * results.
  * 
  * @author MightyPork
  */
@@ -39,11 +41,13 @@ public class NumConst extends Num {
 		return this;
 	}
 	
+	
 	@Override
 	public NumDigest digest()
 	{
 		return (digest != null) ? digest : (digest = super.digest());
 	}
+	
 	
 	@Override
 	public NumConst add(double addend)
