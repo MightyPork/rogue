@@ -12,13 +12,13 @@ public class TestCoords {
 	public static void main(String[] args)
 	{
 		{
-			VectVar a = Vect.makeVar();
-			VectVar b = Vect.makeVar();
+			final VectVar a = Vect.makeVar();
+			final VectVar b = Vect.makeVar();
 			
-			Vect cross = a.cross(b);
-			Num dot = a.dot(b);
-			Vect sum = a.add(b);
-			Num dist = a.dist(b);
+			final Vect cross = a.cross(b);
+			final Num dot = a.dot(b);
+			final Vect sum = a.add(b);
+			final Num dist = a.dist(b);
 			
 			a.setTo(0, 10, 0);
 			b.setTo(0, 6, 7);
@@ -32,7 +32,7 @@ public class TestCoords {
 		}
 		
 		{
-			NumVar a = Num.makeVar();
+			final NumVar a = Num.makeVar();
 			
 			Num end = a;
 			

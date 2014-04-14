@@ -10,16 +10,16 @@ public class TestVec {
 	
 	public static void main(String[] args)
 	{
-		VectVar a = Vect.makeVar(-100, 12, 6);
+		final VectVar a = Vect.makeVar(-100, 12, 6);
 		
-		VectConst b = a.freeze();
+		final VectConst b = a.freeze();
 		
 		a.setTo(400, 400, 300);
 		
 		System.out.println(a);
 		System.out.println(b);
 		
-		Vect c = a.abs().neg();
+		final Vect c = a.abs().neg();
 		
 		System.out.println(c);
 		
