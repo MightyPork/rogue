@@ -28,6 +28,11 @@ public class RectConst extends Rect {
 	private VectConst v_bl;
 	private VectConst v_bc;
 	private RectConst v_round;
+	private RectConst v_edge_l;
+	private RectConst v_edge_r;
+	private RectConst v_edge_t;
+	private RectConst v_edge_b;
+	private RectDigest digest;
 	
 	
 	/**
@@ -76,7 +81,13 @@ public class RectConst extends Rect {
 	{
 		return this; // already constant
 	}
+
 	
+	@Override
+	public RectDigest digest()
+	{
+		return (digest != null) ? digest : (digest = super.digest());
+	}
 	
 	@Override
 	public VectConst origin()
@@ -104,12 +115,18 @@ public class RectConst extends Rect {
 	{
 		return Rect.make(pos.add(x, y), size);
 	}
+
+
+	public RectConst move(NumConst x, NumConst y)
+	{
+		return super.move(x, y).freeze();
+	}
 	
 	
 	@Override
 	public RectConst shrink(double left, double right, double top, double bottom)
 	{
-		return Rect.make(pos.add(left, top), size.sub(left + right, top + bottom)).freeze();
+		return super.shrink(left, right, top, bottom).freeze();
 		
 	}
 	
@@ -117,15 +134,14 @@ public class RectConst extends Rect {
 	@Override
 	public RectConst grow(double left, double right, double top, double bottom)
 	{
-		return Rect.make(pos.sub(left, top), size.add(left + right, top + bottom)).freeze();
+		return super.grow(left, right, top, bottom).freeze();
 	}
 	
 	
 	@Override
 	public RectConst round()
 	{
-		if (v_round == null) v_round = Rect.make(pos.round(), size.round());
-		return v_round;
+		return (v_round != null) ? v_round : (v_round = Rect.make(pos.round(), size.round()));
 	}
 	
 	
@@ -167,8 +183,7 @@ public class RectConst extends Rect {
 	@Override
 	public NumConst right()
 	{
-		if (v_r == null) v_r = super.right().freeze();
-		return v_r;
+		return (v_r != null) ? v_r : (v_r = super.right().freeze());
 	}
 	
 	
@@ -182,8 +197,7 @@ public class RectConst extends Rect {
 	@Override
 	public NumConst bottom()
 	{
-		if (v_b == null) v_b = super.bottom().freeze();
-		return v_b;
+		return (v_b != null) ? v_b : (v_b = super.bottom().freeze());
 	}
 	
 	
@@ -197,64 +211,123 @@ public class RectConst extends Rect {
 	@Override
 	public VectConst topCenter()
 	{
-		if (v_tc == null) v_tc = super.topCenter().freeze();
-		return v_tc;
+		return (v_tc != null) ? v_tc : (v_tc = super.topCenter().freeze());
 	}
 	
 	
 	@Override
 	public VectConst topRight()
 	{
-		if (v_tr == null) v_tr = super.topRight().freeze();
-		return v_tr;
+		return (v_tr != null) ? v_tr : (v_tr = super.topRight().freeze());
 	}
 	
 	
 	@Override
 	public VectConst centerLeft()
 	{
-		if (v_cl == null) v_cl = super.centerLeft().freeze();
-		return v_cl;
+		return (v_cl != null) ? v_cl : (v_cl = super.centerLeft().freeze());
 	}
 	
 	
 	@Override
 	public VectConst center()
 	{
-		if (v_c == null) v_c = super.center().freeze();
-		return v_c;
+		return (v_c != null) ? v_c : (v_c = super.center().freeze());
 	}
 	
 	
 	@Override
 	public VectConst centerRight()
 	{
-		if (v_cr == null) v_cr = super.centerRight().freeze();
-		return v_cr;
+		return (v_cr != null) ? v_cr : (v_cr = super.centerRight().freeze());
 	}
 	
 	
 	@Override
 	public VectConst bottomLeft()
 	{
-		if (v_bl == null) v_bl = super.bottomLeft().freeze();
-		return v_bl;
+		return (v_bl != null) ? v_bl : (v_bl = super.bottomLeft().freeze());
 	}
 	
 	
 	@Override
 	public VectConst bottomCenter()
 	{
-		if (v_bc == null) v_bc = super.bottomCenter().freeze();
-		return v_bc;
+		return (v_bc != null) ? v_bc : (v_bc = super.bottomCenter().freeze());
 	}
 	
 	
 	@Override
 	public VectConst bottomRight()
 	{
-		if (v_br == null) v_br = super.bottomRight().freeze();
-		return v_br;
+		return (v_br != null) ? v_br : (v_br = super.bottomRight().freeze());
+	}
+	
+	
+	
+	@Override
+	public RectConst leftEdge()
+	{
+		return (v_edge_l != null) ? v_edge_l : (v_edge_l = super.leftEdge().freeze());
+	}
+
+
+	@Override
+	public RectConst rightEdge()
+	{
+		return (v_edge_r != null) ? v_edge_r : (v_edge_r = super.rightEdge().freeze());
+	}
+
+
+	@Override
+	public RectConst topEdge()
+	{
+		return (v_edge_t != null) ? v_edge_t : (v_edge_t = super.topEdge().freeze());
+	}
+
+
+	@Override
+	public RectConst bottomEdge()
+	{
+		return (v_edge_b != null) ? v_edge_b : (v_edge_b = super.bottomEdge().freeze());
+	}
+	
+	
+	@Override
+	public Rect shrink(Vect shrink)
+	{
+		return super.shrink(shrink);
+	}
+	
+	
+	@Override
+	public RectConst shrink(double x, double y)
+	{
+		return super.shrink(x, y).freeze();
+	}
+	
+	
+	public RectConst shrink(NumConst left, NumConst right, NumConst top, NumConst bottom)
+	{
+		return super.shrink(left, right, top, bottom).freeze();
+	}
+	
+	
+	public RectConst grow(NumConst left, NumConst right, NumConst top, NumConst bottom)
+	{
+		return super.grow(left, right, top, bottom).freeze();
+	}
+	
+	
+	public RectConst centerTo(VectConst point)
+	{
+		return super.centerTo(point).freeze();
+	}
+	
+	
+	public RectConst centerTo(RectConst parent)
+	{
+		return super.centerTo(parent).freeze();
 	}
 	
 }

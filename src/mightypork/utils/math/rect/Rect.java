@@ -147,6 +147,10 @@ public abstract class Rect implements RectBound {
 	private Num p_r;
 	private Num p_t;
 	private Num p_b;
+	private Rect p_edge_l;
+	private Rect p_edge_r;
+	private Rect p_edge_t;
+	private Rect p_edge_b;
 	
 	
 	/**
@@ -158,6 +162,17 @@ public abstract class Rect implements RectBound {
 	{
 		// must NOT call RectVal.make, it'd cause infinite recursion.
 		return new RectConst(this);
+	}
+	
+	
+	/**
+	 * Get a snapshot of the current state, to be used for processing.
+	 * 
+	 * @return digest
+	 */
+	public RectDigest digest()
+	{
+		return new RectDigest(this);
 	}
 	
 	
@@ -313,25 +328,7 @@ public abstract class Rect implements RectBound {
 	 */
 	public Rect shrink(final double left, final double right, final double top, final double bottom)
 	{
-		return new Rect() {
-			
-			private final Rect t = Rect.this;
-			
-			
-			@Override
-			public Vect size()
-			{
-				return t.size().sub(left + right, top + bottom);
-			}
-			
-			
-			@Override
-			public Vect origin()
-			{
-				return t.origin().add(left, top);
-			}
-			
-		};
+		return grow(-left, -right, -top, -bottom);
 	}
 	
 	
@@ -574,6 +571,30 @@ public abstract class Rect implements RectBound {
 	}
 	
 	
+	public Rect leftEdge()
+	{
+		return p_edge_l != null ? p_edge_l : (p_edge_l = topLeft().expand(Num.ZERO, Num.ZERO, Num.ZERO, height()));
+	}
+	
+	
+	public Rect rightEdge()
+	{
+		return p_edge_r != null ? p_edge_r : (p_edge_r = topRight().expand(Num.ZERO, Num.ZERO, Num.ZERO, height()));
+	}
+	
+	
+	public Rect topEdge()
+	{
+		return p_edge_t != null ? p_edge_t : (p_edge_t = topLeft().expand(Num.ZERO, width(), Num.ZERO, Num.ZERO));
+	}
+	
+	
+	public Rect bottomEdge()
+	{
+		return p_edge_b != null ? p_edge_b : (p_edge_b = bottomLeft().expand(Num.ZERO, width(), Num.ZERO, Num.ZERO));
+	}
+	
+	
 	/**
 	 * Center to given point
 	 * 
@@ -623,6 +644,12 @@ public abstract class Rect implements RectBound {
 	}
 	
 	
+	/**
+	 * Center to given rect's center
+	 * 
+	 * @param parent rect to center to
+	 * @return centered
+	 */
 	public Rect centerTo(Rect parent)
 	{
 		return centerTo(parent.center());

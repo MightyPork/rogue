@@ -12,7 +12,7 @@ public class NumVar extends NumMutable {
 	
 	
 	public NumVar(Num value) {
-		this.value = eval(value);
+		this(value.value());
 	}
 	
 	

@@ -38,7 +38,7 @@ public abstract class Num implements NumBound {
 	@FactoryMethod
 	public static NumVar makeVar(Num copied)
 	{
-		return new NumVar(eval(copied));
+		return new NumVar(copied.value());
 	}
 	
 	private Num p_ceil;
@@ -59,33 +59,20 @@ public abstract class Num implements NumBound {
 	private Num p_abs;
 	
 	
-	/**
-	 * Convert to double, turning null into zero.
-	 * 
-	 * @param a num
-	 * @return double
-	 */
-	protected static double eval(final NumBound a)
-	{
-		return toNum(a).value();
-	}
-	
-	
-	/**
-	 * Convert {@link NumBound} to {@link Num}, turning null to Num.ZERO.
-	 * 
-	 * @param a numeric bound
-	 * @return num
-	 */
-	protected static Num toNum(final NumBound a)
-	{
-		return (a == null) ? Num.ZERO : (a.getNum() == null ? Num.ZERO : a.getNum());
-	}
-	
-	
 	public NumConst freeze()
 	{
 		return new NumConst(value());
+	}
+	
+	
+	/**
+	 * Get a snapshot of the current state, to be used for processing.
+	 * 
+	 * @return digest
+	 */
+	public NumDigest digest()
+	{
+		return new NumDigest(this);
 	}
 	
 	
@@ -100,42 +87,6 @@ public abstract class Num implements NumBound {
 	 * @return the number
 	 */
 	public abstract double value();
-	
-	
-	public Num abs()
-	{
-		if (p_abs == null) p_abs = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.abs(t.value());
-			}
-		};
-		
-		return p_abs;
-	}
-	
-	
-	public Num acos()
-	{
-		if (p_acos == null) p_acos = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.acos(t.value());
-			}
-		};
-		
-		return p_acos;
-	}
 	
 	
 	public Num add(final double addend)
@@ -164,15 +115,21 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return t.value() + eval(addend);
+				return t.value() + addend.value();
 			}
 		};
 	}
 	
 	
-	public Num asin()
+	public Num sub(final double subtrahend)
 	{
-		if (p_asin == null) p_asin = new Num() {
+		return add(-subtrahend);
+	}
+	
+	
+	public Num abs()
+	{
+		if (p_abs == null) p_abs = new Num() {
 			
 			final Num t = Num.this;
 			
@@ -180,33 +137,15 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return Math.asin(t.value());
+				return Math.abs(t.value());
 			}
 		};
 		
-		return p_asin;
+		return p_abs;
 	}
 	
 	
-	public Num atan()
-	{
-		if (p_atan == null) p_atan = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.atan(t.value());
-			}
-		};
-		
-		return p_atan;
-	}
-	
-	
-	public Num average(final double other)
+	public Num sub(final Num subtrahend)
 	{
 		return new Num() {
 			
@@ -216,98 +155,9 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return (t.value() + other) / 2;
+				return t.value() - subtrahend.value();
 			}
 		};
-	}
-	
-	
-	public Num average(final Num other)
-	{
-		return new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return (t.value() + eval(other)) / 2;
-			}
-		};
-	}
-	
-	
-	public Num cbrt()
-	{
-		if (p_cbrt == null) p_cbrt = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.cbrt(t.value());
-			}
-		};
-		
-		return p_cbrt;
-	}
-	
-	
-	public Num ceil()
-	{
-		if (p_ceil == null) p_ceil = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.round(t.value());
-			}
-		};
-		
-		return p_ceil;
-	}
-	
-	
-	public Num cos()
-	{
-		if (p_cos == null) p_cos = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.cos(t.value());
-			}
-		};
-		
-		return p_cos;
-	}
-	
-	
-	public Num cube()
-	{
-		if (p_cube == null) p_cube = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				final double v = t.value();
-				return v * v * v;
-			}
-		};
-		
-		return p_cube;
 	}
 	
 	
@@ -328,173 +178,7 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return t.value() / eval(factor);
-			}
-		};
-	}
-	
-	
-	public boolean eq(double other)
-	{
-		return value() == other;
-	}
-	
-	
-	public boolean eq(final Num a)
-	{
-		return eq(eval(a));
-	}
-	
-	
-	public Num floor()
-	{
-		if (p_floor == null) p_floor = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.floor(t.value());
-			}
-		};
-		
-		return p_floor;
-	}
-	
-	
-	public boolean gt(double other)
-	{
-		return Math.signum(value() - other) >= 0;
-	}
-	
-	
-	public boolean gt(final Num other)
-	{
-		return gt(eval(other));
-	}
-	
-	
-	public boolean gte(double other)
-	{
-		return Math.signum(value() - other) >= 0;
-	}
-	
-	
-	public boolean gte(final Num other)
-	{
-		return gte(eval(other));
-	}
-	
-	
-	public Num half()
-	{
-		return mul(0.5);
-	}
-	
-	
-	public boolean isNegative()
-	{
-		return value() < 0;
-	}
-	
-	
-	public boolean isPositive()
-	{
-		return value() > 0;
-	}
-	
-	
-	public boolean isZero()
-	{
-		return value() == 0;
-	}
-	
-	
-	public boolean lt(double other)
-	{
-		return !gte(other);
-	}
-	
-	
-	public boolean lt(final Num other)
-	{
-		return !gte(other);
-	}
-	
-	
-	public boolean lte(double other)
-	{
-		return !gt(other);
-	}
-	
-	
-	public boolean lte(final Num other)
-	{
-		return !gt(other);
-	}
-	
-	
-	public Num max(final double other)
-	{
-		return new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.max(t.value(), other);
-			}
-		};
-	}
-	
-	
-	public Num max(final Num other)
-	{
-		return new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.max(t.value(), eval(other));
-			}
-		};
-	}
-	
-	
-	public Num min(final double other)
-	{
-		return new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.min(t.value(), other);
-			}
-		};
-	}
-	
-	
-	public Num min(final Num other)
-	{
-		return new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.min(t.value(), eval(other));
+				return t.value() / factor.value();
 			}
 		};
 	}
@@ -527,9 +211,207 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return t.value() * eval(factor);
+				return t.value() * factor.value();
 			}
 		};
+	}
+	
+	
+	public Num average(final double other)
+	{
+		return new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return (t.value() + other) / 2;
+			}
+		};
+	}
+	
+	
+	public Num average(final Num other)
+	{
+		return new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return (t.value() + other.value()) / 2;
+			}
+		};
+	}
+	
+	
+	public Num perc(final double percent)
+	{
+		return mul(percent / 100);
+	}
+	
+	
+	public Num perc(final Num percent)
+	{
+		return new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return t.value() * (percent.value() / 100);
+			}
+		};
+	}
+	
+	
+	public Num cos()
+	{
+		if (p_cos == null) p_cos = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.cos(t.value());
+			}
+		};
+		
+		return p_cos;
+	}
+	
+	
+	public Num acos()
+	{
+		if (p_acos == null) p_acos = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.acos(t.value());
+			}
+		};
+		
+		return p_acos;
+	}
+	
+	
+	public Num sin()
+	{
+		if (p_sin == null) p_sin = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.sin(t.value());
+			}
+		};
+		
+		return p_sin;
+	}
+	
+	
+	public Num asin()
+	{
+		if (p_asin == null) p_asin = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.asin(t.value());
+			}
+		};
+		
+		return p_asin;
+	}
+	
+	
+	public Num tan()
+	{
+		if (p_tan == null) p_tan = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.tan(t.value());
+			}
+		};
+		
+		return p_tan;
+	}
+	
+	
+	public Num atan()
+	{
+		if (p_atan == null) p_atan = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.atan(t.value());
+			}
+		};
+		
+		return p_atan;
+	}
+	
+	
+	public Num cbrt()
+	{
+		if (p_cbrt == null) p_cbrt = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.cbrt(t.value());
+			}
+		};
+		
+		return p_cbrt;
+	}
+	
+	
+	public Num sqrt()
+	{
+		if (p_sqrt == null) p_sqrt = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.sqrt(t.value());
+			}
+		};
+		
+		return p_sqrt;
 	}
 	
 	
@@ -551,15 +433,9 @@ public abstract class Num implements NumBound {
 	}
 	
 	
-	public Num perc(final double percent)
+	public Num round()
 	{
-		return mul(percent / 100);
-	}
-	
-	
-	public Num perc(final Num percent)
-	{
-		return new Num() {
+		if (p_round == null) p_round = new Num() {
 			
 			final Num t = Num.this;
 			
@@ -567,9 +443,47 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return t.value() * (eval(percent) / 100);
+				return Math.round(t.value());
 			}
 		};
+		
+		return p_round;
+	}
+	
+	
+	public Num floor()
+	{
+		if (p_floor == null) p_floor = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.floor(t.value());
+			}
+		};
+		
+		return p_floor;
+	}
+	
+	
+	public Num ceil()
+	{
+		if (p_ceil == null) p_ceil = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.round(t.value());
+			}
+		};
+		
+		return p_ceil;
 	}
 	
 	
@@ -599,15 +513,15 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return Math.pow(t.value(), eval(power));
+				return Math.pow(t.value(), power.value());
 			}
 		};
 	}
 	
 	
-	public Num round()
+	public Num cube()
 	{
-		if (p_round == null) p_round = new Num() {
+		if (p_cube == null) p_cube = new Num() {
 			
 			final Num t = Num.this;
 			
@@ -615,65 +529,12 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return Math.round(t.value());
+				final double v = t.value();
+				return v * v * v;
 			}
 		};
 		
-		return p_round;
-	}
-	
-	
-	public Num signum()
-	{
-		if (p_sgn == null) p_sgn = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.signum(t.value());
-			}
-		};
-		
-		return p_sgn;
-	}
-	
-	
-	public Num sin()
-	{
-		if (p_sin == null) p_sin = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.sin(t.value());
-			}
-		};
-		
-		return p_sin;
-	}
-	
-	
-	public Num sqrt()
-	{
-		if (p_sqrt == null) p_sqrt = new Num() {
-			
-			final Num t = Num.this;
-			
-			
-			@Override
-			public double value()
-			{
-				return Math.sqrt(t.value());
-			}
-		};
-		
-		return p_sqrt;
+		return p_cube;
 	}
 	
 	
@@ -696,13 +557,13 @@ public abstract class Num implements NumBound {
 	}
 	
 	
-	public Num sub(final double subtrahend)
+	public Num half()
 	{
-		return add(-subtrahend);
+		return mul(0.5);
 	}
 	
 	
-	public Num sub(final Num subtrahend)
+	public Num max(final double other)
 	{
 		return new Num() {
 			
@@ -712,15 +573,15 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return t.value() - eval(subtrahend);
+				return Math.max(t.value(), other);
 			}
 		};
 	}
 	
 	
-	public Num tan()
+	public Num max(final Num other)
 	{
-		if (p_tan == null) p_tan = new Num() {
+		return new Num() {
 			
 			final Num t = Num.this;
 			
@@ -728,11 +589,77 @@ public abstract class Num implements NumBound {
 			@Override
 			public double value()
 			{
-				return Math.tan(t.value());
+				return Math.max(t.value(), other.value());
+			}
+		};
+	}
+	
+	
+	public Num min(final Num other)
+	{
+		return new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.min(t.value(), other.value());
+			}
+		};
+	}
+	
+	
+	public Num min(final double other)
+	{
+		return new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.min(t.value(), other);
+			}
+		};
+	}
+	
+	
+	public Num signum()
+	{
+		if (p_sgn == null) p_sgn = new Num() {
+			
+			final Num t = Num.this;
+			
+			
+			@Override
+			public double value()
+			{
+				return Math.signum(t.value());
 			}
 		};
 		
-		return p_tan;
+		return p_sgn;
+	}
+	
+	
+	public boolean isNegative()
+	{
+		return value() < 0;
+	}
+	
+	
+	public boolean isPositive()
+	{
+		return value() > 0;
+	}
+	
+	
+	public boolean isZero()
+	{
+		return value() == 0;
 	}
 	
 	
@@ -756,7 +683,7 @@ public abstract class Num implements NumBound {
 		if (!(obj instanceof Num)) return false;
 		final Num other = (Num) obj;
 		
-		return eq(other);
+		return value() == other.value();
 	}
 	
 	

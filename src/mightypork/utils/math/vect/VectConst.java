@@ -3,6 +3,7 @@ package mightypork.utils.math.vect;
 
 import mightypork.utils.math.num.Num;
 import mightypork.utils.math.num.NumConst;
+import mightypork.utils.math.rect.RectConst;
 
 
 /**
@@ -25,6 +26,7 @@ public final class VectConst extends Vect {
 	private NumConst v_xc;
 	private NumConst v_yc;
 	private NumConst v_zc;
+	private VectDigest digest;
 	
 	
 	VectConst(Vect other) {
@@ -63,43 +65,40 @@ public final class VectConst extends Vect {
 	/**
 	 * @return X constraint
 	 */
+	
 	@Override
 	public final NumConst xn()
 	{
-		if (v_xc == null) v_xc = Num.make(this.x);
-		
-		return v_xc;
+		return (v_xc != null) ? v_xc : (v_xc = Num.make(this.x));
 	}
 	
 	
 	/**
 	 * @return Y constraint
 	 */
+	
 	@Override
 	public final NumConst yn()
 	{
-		if (v_yc == null) v_yc = Num.make(this.y);
-		
-		return v_yc;
+		return (v_yc != null) ? v_yc : (v_yc = Num.make(this.y));
 	}
 	
 	
 	/**
 	 * @return Z constraint
 	 */
+	
 	@Override
 	public final NumConst zn()
 	{
-		
-		if (v_zc == null) v_zc = Num.make(this.z);
-		
-		return v_zc;
+		return (v_zc != null) ? v_zc : (v_zc = Num.make(this.z));
 	}
 	
 	
 	/**
 	 * @deprecated it's useless to copy a constant
 	 */
+	
 	@Override
 	@Deprecated
 	public VectConst freeze()
@@ -109,69 +108,72 @@ public final class VectConst extends Vect {
 	
 	
 	@Override
+	public VectDigest digest()
+	{
+		return (digest != null) ? digest : (digest = super.digest());
+	}
+	
+	
+	@Override
 	public VectConst abs()
 	{
-		if (v_abs != null) return v_abs;
-		return v_abs = Vect.make(Math.abs(x()), Math.abs(y()), Math.abs(z()));
+		return (v_abs != null) ? v_abs : (v_abs = super.abs().freeze());
 	}
 	
 	
 	@Override
 	public VectConst add(double x, double y)
 	{
-		return add(x, y, 0);
+		return super.add(x, y).freeze();
 	}
 	
 	
 	@Override
 	public VectConst add(double x, double y, double z)
 	{
-		return Vect.make(x() + x, y() + y, z() + z);
+		return super.add(x, y, z).freeze();
 	}
 	
 	
 	@Override
 	public VectConst half()
 	{
-		if (v_half != null) return v_half;
-		return v_half = mul(0.5);
+		return (v_half != null) ? v_half : (v_half = super.half().freeze());
 	}
 	
 	
 	@Override
 	public VectConst mul(double d)
 	{
-		return mul(d, d, d);
+		return super.mul(d).freeze();
 	}
 	
 	
 	@Override
 	public VectConst mul(double x, double y)
 	{
-		return mul(x, y, 1);
+		return super.mul(x, y).freeze();
 	}
 	
 	
 	@Override
 	public VectConst mul(double x, double y, double z)
 	{
-		return Vect.make(x() * x, y() * y, z() * z);
+		return super.mul(x, y, z).freeze();
 	}
 	
 	
 	@Override
 	public VectConst round()
 	{
-		if (v_round != null) return v_round;
-		return v_round = Vect.make(Math.round(x()), Math.round(y()), Math.round(z()));
+		return (v_round != null) ? v_round : (v_round = super.round().freeze());
 	}
 	
 	
 	@Override
 	public VectConst floor()
 	{
-		if (v_floor != null) return v_floor;
-		return v_floor = Vect.make(Math.floor(x()), Math.floor(y()), Math.floor(z()));
+		return (v_floor != null) ? v_floor : (v_floor = super.floor().freeze());
 	}
 	
 	
@@ -179,50 +181,184 @@ public final class VectConst extends Vect {
 	public VectConst ceil()
 	{
 		if (v_ceil != null) return v_ceil;
-		return v_ceil = Vect.make(Math.ceil(x()), Math.ceil(y()), Math.ceil(z()));
+		return v_ceil = super.ceil().freeze();
 	}
 	
 	
 	@Override
 	public VectConst sub(double x, double y)
 	{
-		return sub(x, y, 0);
+		return super.sub(x, y).freeze();
 	}
 	
 	
 	@Override
 	public VectConst sub(double x, double y, double z)
 	{
-		return Vect.make(x() - x, y() - y, z() - z);
+		return super.sub(x, y, z).freeze();
 	}
 	
 	
 	@Override
 	public VectConst neg()
 	{
-		if (v_neg != null) return v_neg;
-		return v_neg = Vect.make(-x(), -y(), -z());
+		return (v_neg != null) ? v_neg : (v_neg = super.neg().freeze());
 	}
 	
 	
 	@Override
 	public VectConst norm(double size)
 	{
-		if (isZero()) return this; // can't norm zero vector
-			
-		final double k = size().mul(1 / size).value();
-		
-		return mul(k);
+		return super.norm(size).freeze();
 	}
 	
 	
 	@Override
 	public NumConst size()
 	{
-		if (v_size != null) return v_size;
-		
-		final double x = x(), y = y(), z = z();
-		return v_size = Num.make(Math.sqrt(x * x + y * y + z * z));
+		return (v_size != null) ? v_size : (v_size = super.size().freeze());
+	}
+	
+	
+	@Override
+	public VectConst withX(double x)
+	{
+		return super.withX(x).freeze();
+	}
+	
+	
+	@Override
+	public VectConst withY(double y)
+	{
+		return super.withY(y).freeze();
+	}
+	
+	
+	@Override
+	public VectConst withZ(double z)
+	{
+		return super.withZ(z).freeze();
+	}
+	
+	
+	public VectConst withX(NumConst x)
+	{
+		return super.withX(x).freeze();
+	}
+	
+	
+	public VectConst withY(NumConst y)
+	{
+		return super.withY(y).freeze();
+	}
+	
+	
+	public VectConst withZ(NumConst z)
+	{
+		return super.withZ(z).freeze();
+	}
+	
+	
+	public VectConst add(VectConst vec)
+	{
+		return super.add(vec).freeze();
+	}
+	
+	
+	public VectConst add(NumConst x, NumConst y)
+	{
+		return super.add(x, y).freeze();
+	}
+	
+	
+	public VectConst add(NumConst x, NumConst y, NumConst z)
+	{
+		return super.add(x, y, z).freeze();
+	}
+	
+	
+	public VectConst mul(VectConst vec)
+	{
+		return super.mul(vec).freeze();
+	}
+	
+	
+	public VectConst mul(NumConst d)
+	{
+		return super.mul(d).freeze();
+	}
+	
+	
+	public VectConst mul(NumConst x, NumConst y)
+	{
+		return super.mul(x, y).freeze();
+	}
+	
+	
+	public VectConst mul(NumConst x, NumConst y, NumConst z)
+	{
+		return super.mul(x, y, z).freeze();
+	}
+	
+	
+	public VectConst sub(VectConst vec)
+	{
+		return super.sub(vec).freeze();
+	}
+	
+	
+	public VectConst sub(NumConst x, NumConst y)
+	{
+		return super.sub(x, y).freeze();
+	}
+	
+	
+	public VectConst sub(NumConst x, NumConst y, NumConst z)
+	{
+		return super.sub(x, y, z).freeze();
+	}
+	
+	
+	public VectConst norm(NumConst size)
+	{
+		return super.norm(size).freeze();
+	}
+	
+	
+	public NumConst dist(VectConst point)
+	{
+		return super.dist(point).freeze();
+	}
+	
+	
+	public VectConst midTo(VectConst point)
+	{
+		return super.midTo(point).freeze();
+	}
+	
+	
+	public VectConst vectTo(VectConst point)
+	{
+		return super.vectTo(point).freeze();
+	}
+	
+	
+	public NumConst dot(VectConst vec)
+	{
+		return super.dot(vec).freeze();
+	}
+	
+	
+	@Override
+	public RectConst expand(int left, int right, int top, int bottom)
+	{
+		return super.expand(left, right, top, bottom).freeze();
+	}
+	
+	
+	public RectConst expand(NumConst left, NumConst right, NumConst top, NumConst bottom)
+	{
+		return super.expand(left, right, top, bottom).freeze();
 	}
 	
 }

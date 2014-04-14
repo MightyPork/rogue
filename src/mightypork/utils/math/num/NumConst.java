@@ -1,17 +1,15 @@
 package mightypork.utils.math.num;
 
 
-import mightypork.utils.math.constraints.NumBound;
-
-
 /**
- * Constant number {@link NumBound}
+ * Constant number
  * 
  * @author MightyPork
  */
 public class NumConst extends Num {
 	
 	private final double value;
+	private NumDigest digest;
 	
 	
 	NumConst(Num copied) {
@@ -32,7 +30,7 @@ public class NumConst extends Num {
 	
 	
 	/**
-	 * No good to copy a constant.
+	 * @deprecated No good to copy a constant.
 	 */
 	@Override
 	@Deprecated
@@ -41,11 +39,22 @@ public class NumConst extends Num {
 		return this;
 	}
 	
+	@Override
+	public NumDigest digest()
+	{
+		return (digest != null) ? digest : (digest = super.digest());
+	}
 	
 	@Override
 	public NumConst add(double addend)
 	{
 		return Num.make(value() + addend);
+	}
+	
+	
+	public NumConst add(NumConst addend)
+	{
+		return Num.make(value + addend.value);
 	}
 	
 	
@@ -56,6 +65,12 @@ public class NumConst extends Num {
 	}
 	
 	
+	public NumConst sub(NumConst addend)
+	{
+		return Num.make(value - addend.value);
+	}
+	
+	
 	@Override
 	public NumConst mul(double factor)
 	{
@@ -63,10 +78,22 @@ public class NumConst extends Num {
 	}
 	
 	
+	public NumConst mul(NumConst addend)
+	{
+		return Num.make(value * addend.value);
+	}
+	
+	
 	@Override
 	public NumConst div(double factor)
 	{
 		return mul(1 / factor);
+	}
+	
+	
+	public NumConst div(NumConst addend)
+	{
+		return Num.make(value / addend.value);
 	}
 	
 	
@@ -198,6 +225,12 @@ public class NumConst extends Num {
 	}
 	
 	
+	public NumConst average(NumConst other)
+	{
+		return super.average(other).freeze();
+	}
+	
+	
 	@Override
 	public NumConst round()
 	{
@@ -225,27 +258,4 @@ public class NumConst extends Num {
 		return mul(0.5);
 	}
 	
-	
-	public NumConst add(NumConst addend)
-	{
-		return make(value + addend.value);
-	}
-	
-	
-	public NumConst sub(NumConst addend)
-	{
-		return make(value - addend.value);
-	}
-	
-	
-	public NumConst mul(NumConst addend)
-	{
-		return make(value * addend.value);
-	}
-	
-	
-	public NumConst div(NumConst addend)
-	{
-		return make(value / addend.value);
-	}
 }

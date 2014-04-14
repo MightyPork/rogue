@@ -8,6 +8,7 @@ import mightypork.utils.math.constraints.VectBound;
 import mightypork.utils.math.num.Num;
 import mightypork.utils.math.num.NumConst;
 import mightypork.utils.math.rect.Rect;
+import mightypork.utils.math.rect.RectDigest;
 
 
 /**
@@ -234,6 +235,18 @@ public abstract class Vect implements VectBound {
 	public VectConst freeze()
 	{
 		return new VectConst(this);
+	}
+
+	
+	
+	/**
+	 * Get a snapshot of the current state, to be used for processing.
+	 * 
+	 * @return digest
+	 */
+	public VectDigest digest()
+	{
+		return new VectDigest(this);
 	}
 	
 	

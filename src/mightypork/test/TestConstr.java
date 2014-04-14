@@ -83,7 +83,7 @@ public class TestConstr {
 		{
 			final NumVar a = Num.makeVar(100);
 			
-			a.assign(a.mul(50).add(10).div(2));
+			a.setTo(a.mul(50).add(10).div(2));
 			
 			System.out.println(a);
 			

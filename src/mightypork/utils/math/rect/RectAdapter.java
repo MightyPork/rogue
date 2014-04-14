@@ -14,7 +14,7 @@ import mightypork.utils.math.vect.VectAdapter;
 public abstract class RectAdapter extends Rect {
 	
 	// adapters are needed in case the vect returned from source changes
-	// (is replaced). This way, references to origin and rect will stay intack.
+	// (is replaced). This way, references to origin and rect will stay intact.
 	
 	private final VectAdapter originAdapter = new VectAdapter() {
 		
