@@ -180,12 +180,12 @@ public class Convert {
 					final double y = Double.parseDouble(parts[1].trim());
 					
 					if (parts.length == 2) {
-						return VectConst.make(x, y);
+						return Vect.make(x, y);
 					}
 					
 					final double z = Double.parseDouble(parts[2].trim());
 					
-					return VectConst.make(x, y, z);
+					return Vect.make(x, y, z);
 				}
 			}
 		} catch (final NumberFormatException | ArrayIndexOutOfBoundsException e) {
