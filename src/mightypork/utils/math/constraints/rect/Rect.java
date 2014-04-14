@@ -193,7 +193,7 @@ public abstract class Rect implements RectBound {
 	@Override
 	public String toString()
 	{
-		return String.format("Rect { %s - %s }", origin(), origin().freeze().add(size()));
+		return String.format("Rect { at %s , size %s }", origin(), size());
 	}
 	
 	
@@ -301,13 +301,37 @@ public abstract class Rect implements RectBound {
 	/**
 	 * Shrink to sides
 	 * 
-	 * @param shrink shrink size (horisontal and vertical)
+	 * @param shrink shrink size (horizontal and vertical)
 	 * @return result
 	 */
 	
 	public Rect shrink(Vect shrink)
 	{
 		return shrink(shrink.x(), shrink.y());
+	}
+	
+	
+	/**
+	 * Shrink to all sides
+	 * 
+	 * @param shrink shrink
+	 * @return result
+	 */
+	public final Rect shrink(double shrink)
+	{
+		return shrink(shrink, shrink, shrink, shrink);
+	}
+	
+	
+	/**
+	 * Shrink to all sides
+	 * 
+	 * @param shrink shrink
+	 * @return result
+	 */
+	public final Rect shrink(Num shrink)
+	{
+		return shrink(shrink, shrink, shrink, shrink);
 	}
 	
 	
@@ -353,13 +377,13 @@ public abstract class Rect implements RectBound {
 	
 	public Rect shrinkTop(final double shrink)
 	{
-		return growTop(-shrink);
+		return growUp(-shrink);
 	}
 	
 	
 	public Rect shrinkBottom(final double shrink)
 	{
-		return growBottom(-shrink);
+		return growDown(-shrink);
 	}
 	
 	
@@ -375,13 +399,13 @@ public abstract class Rect implements RectBound {
 	}
 	
 	
-	public Rect growTop(final double shrink)
+	public Rect growUp(final double shrink)
 	{
 		return grow(0, 0, shrink, 0);
 	}
 	
 	
-	public Rect growBottom(final double shrink)
+	public Rect growDown(final double shrink)
 	{
 		return grow(0, 0, 0, shrink);
 	}
@@ -423,13 +447,13 @@ public abstract class Rect implements RectBound {
 	}
 	
 	
-	public Rect growTop(final Num shrink)
+	public Rect growUp(final Num shrink)
 	{
 		return grow(Num.ZERO, Num.ZERO, shrink, Num.ZERO);
 	}
 	
 	
-	public Rect growBottom(final Num shrink)
+	public Rect growDown(final Num shrink)
 	{
 		return grow(Num.ZERO, Num.ZERO, Num.ZERO, shrink);
 	}
@@ -444,6 +468,30 @@ public abstract class Rect implements RectBound {
 	public final Rect grow(Vect grow)
 	{
 		return grow(grow.x(), grow.y());
+	}
+	
+	
+	/**
+	 * Grow to all sides
+	 * 
+	 * @param grow grow
+	 * @return result
+	 */
+	public final Rect grow(double grow)
+	{
+		return grow(grow, grow, grow, grow);
+	}
+	
+	
+	/**
+	 * Grow to all sides
+	 * 
+	 * @param grow grow
+	 * @return result
+	 */
+	public final Rect grow(Num grow)
+	{
+		return grow(grow, grow, grow, grow);
 	}
 	
 	
@@ -598,7 +646,7 @@ public abstract class Rect implements RectBound {
 	
 	public Num left()
 	{
-		return p_l != null ? p_l : (p_l = origin().yn());
+		return p_l != null ? p_l : (p_l = origin().xn());
 	}
 	
 	
@@ -759,18 +807,40 @@ public abstract class Rect implements RectBound {
 	}
 	
 	
+	/**
+	 * Get TiledRect with given number of evenly spaced tiles. Tile indexes are
+	 * one-based by default.
+	 * 
+	 * @param horizontal horizontal tile count
+	 * @param vertical vertical tile count
+	 * @return tiled rect
+	 */
 	public TiledRect tiles(int horizontal, int vertical)
 	{
 		return new TiledRect(this, horizontal, vertical);
 	}
 	
 	
+	/**
+	 * Get TiledRect with N columns and 1 row. Column indexes are one-based by
+	 * default.
+	 * 
+	 * @param columns number of columns
+	 * @return tiled rect
+	 */
 	public TiledRect columns(int columns)
 	{
 		return new TiledRect(this, columns, 1);
 	}
 	
 	
+	/**
+	 * Get TiledRect with N rows and 1 column. Row indexes are one-based by
+	 * default.
+	 * 
+	 * @param rows number of columns
+	 * @return tiled rect
+	 */
 	public TiledRect rows(int rows)
 	{
 		return new TiledRect(this, 1, rows);

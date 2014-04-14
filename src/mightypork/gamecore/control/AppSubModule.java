@@ -15,7 +15,7 @@ import mightypork.gamecore.render.DisplaySystem;
  * 
  * @author MightyPork
  */
-public abstract class AppSubModule extends BusNode implements AppAccess {
+public class AppSubModule extends BusNode implements AppAccess {
 	
 	private final AppAccess app;
 	

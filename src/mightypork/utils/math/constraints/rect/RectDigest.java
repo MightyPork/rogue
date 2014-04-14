@@ -38,4 +38,11 @@ public class RectDigest {
 		this.top = rect.top().value();
 		this.bottom = rect.bottom().value();
 	}
+	
+	
+	@Override
+	public String toString()
+	{
+		return String.format("Rect at: (%.1f, %.1f), size: (%.1f, %.1f), bounds: L %.1f R %.1f T %.1f B %.1f", x, y, width, height, left, right, top, bottom);
+	}
 }

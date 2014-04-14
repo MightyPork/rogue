@@ -4,6 +4,7 @@ package mightypork.gamecore.gui.components.layout;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.components.PluggableRenderable;
 import mightypork.utils.math.constraints.RectBound;
+import mightypork.utils.math.constraints.rect.TiledRect;
 
 
 /**
@@ -13,19 +14,8 @@ import mightypork.utils.math.constraints.RectBound;
  */
 public class RowHolder extends AbstractLayout {
 	
-	private final int rows;
+	private final TiledRect tiler;
 	private int row = 0;
-	
-	
-	/**
-	 * @param app app access
-	 * @param context bounding context
-	 * @param rows number of rows
-	 */
-	public RowHolder(AppAccess app, RectBound context, int rows) {
-		super(app, context);
-		this.rows = rows;
-	}
 	
 	
 	/**
@@ -36,8 +26,18 @@ public class RowHolder extends AbstractLayout {
 	 * @param rows number of rows
 	 */
 	public RowHolder(AppAccess app, int rows) {
-		super(app);
-		this.rows = rows;
+		this(app, null, rows);
+	}
+	
+	
+	/**
+	 * @param app app access
+	 * @param context bounding context
+	 * @param rows number of rows
+	 */
+	public RowHolder(AppAccess app, RectBound context, int rows) {
+		super(app, context);
+		this.tiler = getRect().rows(rows).zeroBased();
 	}
 	
 	
@@ -51,7 +51,7 @@ public class RowHolder extends AbstractLayout {
 	{
 		if (elem == null) return;
 		
-		elem.setRect(row(this, rows, row++));
+		elem.setRect(tiler.row(row++));
 		
 		attach(elem);
 	}

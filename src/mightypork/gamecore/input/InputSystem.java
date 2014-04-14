@@ -103,8 +103,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	// counters as fields to save memory.
-	private final VectVar mouseMove = VectVar.makeVar();
-	private final VectVar mouseLastPos = VectVar.makeVar();
+	private final VectVar mouseMove = Vect.makeVar();
+	private final VectVar mouseLastPos = Vect.makeVar();
 	
 	
 	@Override

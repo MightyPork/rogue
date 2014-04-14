@@ -13,8 +13,8 @@ import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.RectBound;
-import mightypork.utils.math.constraints.vect.VectConst;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 public class LayerBouncyBoxes extends ScreenLayer {
@@ -45,11 +45,14 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		});
 		
 		// shrink screen rect by 8% on all sides
-		final RectBound holder_rect = shrink(this, perc(width(this), 4));
 		
-		addChildClient(layout = new RowHolder(screen, holder_rect, 11));
+		final Rect b = bounds();
 		
-		for (int i = 0; i <= 9; i++) {
+		final Rect holder_rect = b.shrink(b.height().perc(8));
+		
+		addChildClient(layout = new RowHolder(screen, holder_rect, 2));
+		
+		for (int i = 0; i <= 0; i++) {
 			final BouncyBox bbr = new BouncyBox();
 			layout.add(bbr);
 			boxes.add(bbr);
@@ -57,7 +60,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		
 		final TextPainter tp = new TextPainter(Res.getFont("default"), Align.LEFT, RGB.WHITE);
 		tp.setText("Press \"C\" for \"Cat\" screen.");
-		tp.setShadow(RGB.RED, VectConst.make(2, 2));
+		tp.setShadow(RGB.RED, Vect.make(2, 2));
 		
 		layout.add(tp);
 	}

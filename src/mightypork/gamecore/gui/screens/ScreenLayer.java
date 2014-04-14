@@ -2,6 +2,7 @@ package mightypork.gamecore.gui.screens;
 
 
 import mightypork.gamecore.control.AppSubModule;
+import mightypork.gamecore.gui.Hideable;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
@@ -17,7 +18,7 @@ import mightypork.utils.math.constraints.vect.Vect;
  * 
  * @author MightyPork
  */
-public abstract class ScreenLayer extends AppSubModule implements Comparable<ScreenLayer>, Renderable, RectBound, KeyBinder {
+public abstract class ScreenLayer extends AppSubModule implements Comparable<ScreenLayer>, Renderable, RectBound, KeyBinder, Hideable {
 	
 	private final Screen screen;
 	
@@ -67,12 +68,14 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	}
 	
 	
+	@Override
 	public boolean isVisible()
 	{
 		return visible;
 	}
 	
 	
+	@Override
 	public void setVisible(boolean visible)
 	{
 		this.visible = visible;

@@ -15,7 +15,7 @@ import mightypork.gamecore.control.bus.EventBus;
  * 
  * @author MightyPork
  */
-public abstract class BusNode implements BusAccess, DelegatingClient, ToggleableClient {
+public abstract class BusNode implements BusAccess, ClientHub {
 	
 	private final BusAccess busAccess;
 	
@@ -58,6 +58,7 @@ public abstract class BusNode implements BusAccess, DelegatingClient, Toggleable
 	 * 
 	 * @param client
 	 */
+	@Override
 	public final void addChildClient(Object client)
 	{
 		if (client instanceof RootBusNode) {
@@ -75,6 +76,7 @@ public abstract class BusNode implements BusAccess, DelegatingClient, Toggleable
 	 * 
 	 * @param client subscriber to remove
 	 */
+	@Override
 	public final void removeChildClient(Object client)
 	{
 		if (client != null) {

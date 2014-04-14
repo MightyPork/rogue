@@ -10,6 +10,7 @@ import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectDigest;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.VectConst;
 
@@ -350,20 +351,18 @@ public class Render {
 	 */
 	public static void quad(Rect quad)
 	{
-		final double x1 = quad.left().value();
-		final double y1 = quad.top().value();
-		final double x2 = quad.right().value();
-		final double y2 = quad.bottom().value();
+		final RectDigest q = quad.digest();
+		System.out.println(q);
 		
 		// draw with color
 		unbindTexture();
 		
 		// quad
 		glBegin(GL_QUADS);
-		glVertex2d(x1, y2);
-		glVertex2d(x2, y2);
-		glVertex2d(x2, y1);
-		glVertex2d(x1, y1);
+		glVertex2d(q.left, q.bottom);
+		glVertex2d(q.right, q.bottom);
+		glVertex2d(q.right, q.top);
+		glVertex2d(q.left, q.top);
 		glEnd();
 	}
 	
@@ -390,25 +389,22 @@ public class Render {
 	 */
 	public static void quadUV_nobound(Rect quad, Rect uvs)
 	{
-		final double x1 = quad.left().value();
-		final double y1 = quad.top().value();
-		final double x2 = quad.right().value();
-		final double y2 = quad.bottom().value();
+		final RectDigest q = quad.digest();
 		
-		final double tx1 = uvs.left().value();
-		final double ty1 = uvs.top().value();
-		final double tx2 = uvs.right().value();
-		final double ty2 = uvs.bottom().value();
+		final RectDigest u = uvs.digest();
 		
 		// quad with texture
-		glTexCoord2d(tx1, ty2);
-		glVertex2d(x1, y2);
-		glTexCoord2d(tx2, ty2);
-		glVertex2d(x2, y2);
-		glTexCoord2d(tx2, ty1);
-		glVertex2d(x2, y1);
-		glTexCoord2d(tx1, ty1);
-		glVertex2d(x1, y1);
+		glTexCoord2d(u.left, u.bottom);
+		glVertex2d(q.left, q.bottom);
+		
+		glTexCoord2d(u.right, u.bottom);
+		glVertex2d(q.right, q.bottom);
+		
+		glTexCoord2d(u.right, u.top);
+		glVertex2d(q.right, q.top);
+		
+		glTexCoord2d(u.left, u.top);
+		glVertex2d(q.left, q.top);
 	}
 	
 	
@@ -436,24 +432,23 @@ public class Render {
 	 */
 	public static void quadColor(Rect quad, RGB colorHMinVMin, RGB colorHMaxVMin, RGB colorHMaxVMax, RGB colorHMinVMax)
 	{
-		final double x1 = quad.left().value();
-		final double y1 = quad.top().value();
-		final double x2 = quad.right().value();
-		final double y2 = quad.bottom().value();
+		final RectDigest r = quad.digest();
 		
 		// draw with color
 		unbindTexture();
 		
 		glBegin(GL_QUADS);
 		setColor(colorHMinVMax);
-		glVertex2d(x1, y2);
+		glVertex2d(r.left, r.bottom);
+		
 		setColor(colorHMaxVMax);
-		glVertex2d(x2, y2);
+		glVertex2d(r.right, r.bottom);
 		
 		setColor(colorHMaxVMin);
-		glVertex2d(x2, y1);
+		glVertex2d(r.right, r.top);
+		
 		setColor(colorHMinVMin);
-		glVertex2d(x1, y1);
+		glVertex2d(r.left, r.top);
 		glEnd();
 	}
 	

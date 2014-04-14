@@ -5,20 +5,20 @@ import java.util.LinkedList;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.bus.EventBus;
-import mightypork.gamecore.gui.components.AbstractComponent;
+import mightypork.gamecore.gui.components.BusEnabledPainter;
 import mightypork.gamecore.gui.components.PluggableRenderable;
 import mightypork.gamecore.gui.components.Renderable;
-import mightypork.gamecore.gui.components.painters.AbstractPainter;
+import mightypork.gamecore.gui.components.SimplePainter;
 import mightypork.utils.math.constraints.RectBound;
 
 
 /**
- * Bag for {@link AbstractPainter} elements with constraints.<br>
+ * Bag for {@link SimplePainter} elements with constraints.<br>
  * Elements are exposed to {@link EventBus}.
  * 
  * @author MightyPork
  */
-public abstract class AbstractLayout extends AbstractComponent {
+public abstract class AbstractLayout extends BusEnabledPainter {
 	
 	final LinkedList<PluggableRenderable> elements = new LinkedList<>();
 	
@@ -65,7 +65,7 @@ public abstract class AbstractLayout extends AbstractComponent {
 	
 	
 	@Override
-	public void render()
+	public void paint()
 	{
 		for (final Renderable element : elements) {
 			element.render();

@@ -3,12 +3,14 @@ package mightypork.utils.math.constraints.rect;
 
 public class RectProxy extends RectAdapter {
 	
-	private Rect source;
-
+	private final Rect source;
+	
+	
 	public RectProxy(Rect source) {
 		this.source = source;
 	}
-
+	
+	
 	@Override
 	protected Rect getSource()
 	{

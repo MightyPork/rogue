@@ -3,7 +3,6 @@ package mightypork.utils.math.constraints.vect;
 
 import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.annotations.FactoryMethod;
-import mightypork.utils.math.Calc;
 import mightypork.utils.math.constraints.VectBound;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.NumConst;
@@ -105,13 +104,6 @@ public abstract class Vect implements VectBound {
 	private Num p_xc;
 	private Num p_yc;
 	private Num p_zc;
-	
-	
-	@Override
-	public String toString()
-	{
-		return String.format("(%s,%s,%s)", Calc.toString(x()), Calc.toString(y()), Calc.toString(z()));
-	}
 	
 	
 	/**
@@ -1099,30 +1091,6 @@ public abstract class Vect implements VectBound {
 	}
 	
 	
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Double.valueOf(x()).hashCode();
-		result = prime * result + Double.valueOf(y()).hashCode();
-		result = prime * result + Double.valueOf(z()).hashCode();
-		return result;
-	}
-	
-	
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (!(obj instanceof Vect)) return false;
-		final Vect other = (Vect) obj;
-		
-		return x() == other.x() && y() == other.y() && z() == other.z();
-	}
-	
-	
 	/**
 	 * Expand to a rect, with given growth to each side.
 	 * 
@@ -1150,5 +1118,36 @@ public abstract class Vect implements VectBound {
 	public Rect expand(Num left, Num right, Num top, Num bottom)
 	{
 		return Rect.make(this, Vect.ZERO).grow(left, right, top, bottom);
+	}
+	
+	
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Double.valueOf(x()).hashCode();
+		result = prime * result + Double.valueOf(y()).hashCode();
+		result = prime * result + Double.valueOf(z()).hashCode();
+		return result;
+	}
+	
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (!(obj instanceof Vect)) return false;
+		final Vect other = (Vect) obj;
+		
+		return x() == other.x() && y() == other.y() && z() == other.z();
+	}
+	
+	
+	@Override
+	public String toString()
+	{
+		return String.format("(%.1f, %.1f, %.1f)", x(), y(), z());
 	}
 }

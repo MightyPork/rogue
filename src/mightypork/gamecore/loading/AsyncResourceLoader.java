@@ -114,9 +114,12 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	}
 	
 	
+	// apparently, destroy method exists on thread :/
+	@SuppressWarnings("deprecation")
 	@Override
 	public void destroy()
 	{
+		Log.i("Stopping resource loader thread.");
 		stopped = true;
 		exs.shutdownNow();
 	}

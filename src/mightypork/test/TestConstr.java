@@ -42,12 +42,14 @@ public class TestConstr {
 		
 		{
 			final Vect a = Vect.make(3, 3);
+			@SuppressWarnings("deprecation")
 			final VectConst v = a.freeze().freeze().freeze();
 			System.out.println("\nTest " + ++cnt + ": " + (v == a.freeze()));
 		}
 		
 		{
 			final Vect a = Vect.make(3, 3);
+			@SuppressWarnings("deprecation")
 			final VectConst v = a.freeze().freeze().freeze();
 			System.out.println("\nTest " + ++cnt + ": " + (v == a.freeze()));
 		}

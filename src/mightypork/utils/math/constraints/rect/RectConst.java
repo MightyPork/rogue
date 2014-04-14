@@ -364,16 +364,16 @@ public class RectConst extends Rect {
 	
 	
 	@Override
-	public RectConst growTop(double shrink)
+	public RectConst growUp(double shrink)
 	{
-		return super.growTop(shrink).freeze();
+		return super.growUp(shrink).freeze();
 	}
 	
 	
 	@Override
-	public RectConst growBottom(double shrink)
+	public RectConst growDown(double shrink)
 	{
-		return super.growBottom(shrink).freeze();
+		return super.growDown(shrink).freeze();
 	}
 	
 	
@@ -413,15 +413,15 @@ public class RectConst extends Rect {
 	}
 	
 	
-	public RectConst growTop(NumConst shrink)
+	public RectConst growUp(NumConst shrink)
 	{
-		return super.growTop(shrink).freeze();
+		return super.growUp(shrink).freeze();
 	}
 	
 	
 	public RectConst growBottom(NumConst shrink)
 	{
-		return super.growBottom(shrink).freeze();
+		return super.growDown(shrink).freeze();
 	}
 	
 	

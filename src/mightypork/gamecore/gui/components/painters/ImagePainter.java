@@ -1,6 +1,7 @@
 package mightypork.gamecore.gui.components.painters;
 
 
+import mightypork.gamecore.gui.components.SimplePainter;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
 
@@ -10,7 +11,7 @@ import mightypork.gamecore.render.textures.TxQuad;
  * 
  * @author MightyPork
  */
-public class ImagePainter extends AbstractPainter {
+public class ImagePainter extends SimplePainter {
 	
 	private TxQuad texture;
 	
