@@ -1,4 +1,4 @@
-package mightypork.utils.math.constraints.vect;
+package mightypork.utils.math.constraints;
 
 
 import mightypork.gamecore.control.timing.Pollable;
