@@ -1,8 +1,6 @@
 package mightypork.utils.math.constraints.rect;
 
 
-
-
 public class RectDigest {
 	
 	public final double x;

@@ -104,8 +104,9 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	private Num p_xc;
 	private Num p_yc;
 	private Num p_zc;
-	private boolean digestCachingEnabled;
-	private VectDigest lastDigest;
+	private VectDigest lastDigest = null;
+	private boolean digestCachingEnabled = false;
+	private boolean digestDirty = true; // it's null
 	
 	
 	/**
@@ -238,12 +239,31 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	}
 	
 	
+	/**
+	 * Wrap this constraint into a caching adapter. Value will stay fixed (ie.
+	 * no re-calculations) until cache receives a poll() call.
+	 * 
+	 * @return the caching adapter
+	 */
+	public VectCache cached()
+	{
+		return new VectCache(this);
+	}
+	
+	
 	@Override
 	public VectDigest digest()
 	{
-		if (digestCachingEnabled && lastDigest != null) return lastDigest;
+		if (digestCachingEnabled) {
+			if (digestDirty) {
+				lastDigest = new VectDigest(this);
+				digestDirty = false;
+			}
+			
+			return lastDigest;
+		}
 		
-		return lastDigest = new VectDigest(this);
+		return new VectDigest(this);
 	}
 	
 	
@@ -251,6 +271,7 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	public void enableDigestCaching(boolean yes)
 	{
 		digestCachingEnabled = yes;
+		digestDirty = true; // schedule update nest time digest() is called
 	}
 	
 	
@@ -264,7 +285,7 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	@Override
 	public void poll()
 	{
-		if (digestCachingEnabled) lastDigest = new VectDigest(this);
+		if (digestCachingEnabled) digestDirty = true;
 	}
 	
 	
@@ -1036,7 +1057,7 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	 * @param vec other vector
 	 * @return result
 	 */
-	public final Vect cross(final Vect vec)
+	public Vect cross(final Vect vec)
 	{
 		return new Vect() {
 			

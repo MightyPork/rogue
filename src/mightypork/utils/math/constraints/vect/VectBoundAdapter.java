@@ -1,8 +1,6 @@
 package mightypork.utils.math.constraints.vect;
 
 
-
-
 public class VectBoundAdapter extends VectAdapter implements PluggableVectBound {
 	
 	private VectBound backing = null;

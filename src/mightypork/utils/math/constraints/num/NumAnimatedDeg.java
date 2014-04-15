@@ -2,8 +2,8 @@ package mightypork.utils.math.constraints.num;
 
 
 import mightypork.utils.math.Calc;
-import mightypork.utils.math.Easing;
 import mightypork.utils.math.Calc.Deg;
+import mightypork.utils.math.Easing;
 
 
 /**

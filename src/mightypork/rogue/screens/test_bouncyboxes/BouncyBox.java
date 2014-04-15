@@ -9,8 +9,8 @@ import mightypork.gamecore.gui.components.SimplePainter;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.Easing;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.num.NumAnimated;
 import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.NumAnimated;
 import mightypork.utils.math.constraints.rect.Rect;
 
 

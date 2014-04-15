@@ -62,13 +62,26 @@ public abstract class Num implements NumBound, Digestable<NumDigest> {
 	private Num p_square;
 	private Num p_neg;
 	private Num p_abs;
-	private NumDigest lastDigest;
-	private boolean digestCachingEnabled;
+	private NumDigest lastDigest = null;
+	private boolean digestCachingEnabled = false;
+	private boolean digestDirty = true;
 	
 	
 	public NumConst freeze()
 	{
 		return new NumConst(value());
+	}
+	
+	
+	/**
+	 * Wrap this constraint into a caching adapter. Value will stay fixed (ie.
+	 * no re-calculations) until cache receives a poll() call.
+	 * 
+	 * @return the caching adapter
+	 */
+	public NumCache cached()
+	{
+		return new NumCache(this);
 	}
 	
 	
@@ -81,9 +94,16 @@ public abstract class Num implements NumBound, Digestable<NumDigest> {
 	@Override
 	public NumDigest digest()
 	{
-		if (digestCachingEnabled && lastDigest != null) return lastDigest;
+		if (digestCachingEnabled) {
+			if (digestDirty) {
+				lastDigest = new NumDigest(this);
+				digestDirty = false;
+			}
+			
+			return lastDigest;
+		}
 		
-		return lastDigest = new NumDigest(this);
+		return new NumDigest(this);
 	}
 	
 	
@@ -91,12 +111,10 @@ public abstract class Num implements NumBound, Digestable<NumDigest> {
 	public void enableDigestCaching(boolean yes)
 	{
 		digestCachingEnabled = yes;
+		digestDirty = true; // schedule update nest time digest() is called
 	}
 	
 	
-	/**
-	 * @return true if digest caching is enabled.
-	 */
 	@Override
 	public boolean isDigestCachingEnabled()
 	{
@@ -107,7 +125,7 @@ public abstract class Num implements NumBound, Digestable<NumDigest> {
 	@Override
 	public void poll()
 	{
-		if (digestCachingEnabled) lastDigest = new NumDigest(this);
+		if (digestCachingEnabled) digestDirty = true;
 	}
 	
 	

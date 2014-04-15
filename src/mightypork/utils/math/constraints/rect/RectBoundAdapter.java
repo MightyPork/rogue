@@ -1,8 +1,6 @@
 package mightypork.utils.math.constraints.rect;
 
 
-
-
 /**
  * Pluggable rect bound adapter
  * 

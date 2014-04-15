@@ -351,6 +351,12 @@ public final class VectConst extends Vect {
 	}
 	
 	
+	public VectConst cross(VectConst vec)
+	{
+		return super.cross(vec).freeze();
+	}
+	
+	
 	@Override
 	public RectConst expand(double left, double right, double top, double bottom)
 	{

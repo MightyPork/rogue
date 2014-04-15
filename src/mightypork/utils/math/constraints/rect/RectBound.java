@@ -1,8 +1,6 @@
 package mightypork.utils.math.constraints.rect;
 
 
-
-
 /**
  * Rect constraint (ie. region)
  * 

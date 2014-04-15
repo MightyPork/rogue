@@ -1,8 +1,6 @@
 package mightypork.utils.math.constraints.vect;
 
 
-
-
 /**
  * Element holding a vector, used for constraint building.
  * 
