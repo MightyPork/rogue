@@ -100,7 +100,7 @@ public class App extends BaseApp {
 	{
 		bus.addChannel(ActionRequest.class, ActionRequest.Listener.class);
 		
-		//bus.detailedLogging = true;
+		bus.detailedLogging = true;
 	}
 	
 	

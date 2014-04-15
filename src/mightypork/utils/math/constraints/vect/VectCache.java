@@ -1,6 +1,17 @@
 package mightypork.utils.math.constraints.vect;
 
 
+/**
+ * <p>
+ * A vect cache.
+ * </p>
+ * <p>
+ * Values are held in a caching VectVar, and digest caching is enabled by
+ * default.
+ * </p>
+ * 
+ * @author MightyPork
+ */
 public class VectCache extends VectAdapter {
 	
 	private final VectVar cache = Vect.makeVar();
@@ -10,6 +21,7 @@ public class VectCache extends VectAdapter {
 	
 	public VectCache(Vect source) {
 		this.source = source;
+		enableDigestCaching(true);
 	}
 	
 	

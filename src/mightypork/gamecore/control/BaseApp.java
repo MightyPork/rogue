@@ -11,6 +11,7 @@ import mightypork.gamecore.audio.SoundSystem;
 import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.control.bus.events.*;
 import mightypork.gamecore.control.interf.Destroyable;
+import mightypork.gamecore.control.timing.Pollable;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
@@ -255,6 +256,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		// framework events
 		bus.addChannel(DestroyEvent.class, Destroyable.class);
 		bus.addChannel(UpdateEvent.class, Updateable.class);
+		bus.addChannel(LayoutChangeEvent.class, Pollable.class);
 		
 		// input events
 		bus.addChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);

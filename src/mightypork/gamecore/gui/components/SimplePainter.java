@@ -1,9 +1,12 @@
 package mightypork.gamecore.gui.components;
 
 
+import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectAdapter;
 import mightypork.utils.math.constraints.rect.RectBound;
 import mightypork.utils.math.constraints.rect.RectBoundAdapter;
+import mightypork.utils.math.constraints.rect.RectCache;
 
 
 /**
@@ -11,10 +14,9 @@ import mightypork.utils.math.constraints.rect.RectBoundAdapter;
  * 
  * @author MightyPork
  */
-public abstract class SimplePainter extends RectBoundAdapter implements PluggableRenderable {
+public abstract class SimplePainter extends RectAdapter implements PluggableRenderable {
 	
-	@Override
-	public abstract void render();
+	private RectCache source;
 	
 	
 	@Override
@@ -27,6 +29,41 @@ public abstract class SimplePainter extends RectBoundAdapter implements Pluggabl
 	@Override
 	public void setRect(RectBound rect)
 	{
-		super.setRect(rect);
+		System.out.println("SP set rect");
+		this.source = new RectBoundAdapter(rect).cached();
+	}
+	
+	
+	@Override
+	protected Rect getSource()
+	{
+		return source;
+	}
+	
+	
+	/**
+	 * Poll bounds
+	 */
+	@Override
+	public final void poll()
+	{
+		System.out.println("SP poll, source: "+source);
+		source.poll();
+		super.poll();
+		
+		onPoll();
+	}
+	
+	
+	@Override
+	public abstract void render();
+	
+	
+	/**
+	 * Called after painter was polled; contained constraints can now poll too.
+	 */
+	@DefaultImpl
+	public void onPoll()
+	{
 	}
 }

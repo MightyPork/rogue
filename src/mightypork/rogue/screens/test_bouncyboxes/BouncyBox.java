@@ -3,7 +3,6 @@ package mightypork.rogue.screens.test_bouncyboxes;
 
 import java.util.Random;
 
-import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.components.SimplePainter;
 import mightypork.gamecore.render.Render;
@@ -12,13 +11,14 @@ import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.NumAnimated;
 import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectCache;
 
 
-public class BouncyBox extends SimplePainter implements Updateable, ScreenChangeEvent.Listener {
+public class BouncyBox extends SimplePainter implements Updateable {
 	
 	private final Random rand = new Random();
 	
-	private final Rect box;
+	private final RectCache box;
 	
 	private final NumAnimated pos = new NumAnimated(0, Easing.BOUNCE_OUT);
 	
@@ -30,8 +30,7 @@ public class BouncyBox extends SimplePainter implements Updateable, ScreenChange
 		abox = abox.move(width().sub(height()).mul(pos), Num.ZERO);
 		abox = abox.shrink(height().perc(10));
 		
-		box = abox;
-		box.enableDigestCaching(true);
+		box = abox.cached();
 	}
 	
 	
@@ -65,7 +64,7 @@ public class BouncyBox extends SimplePainter implements Updateable, ScreenChange
 	
 	
 	@Override
-	public void receive(ScreenChangeEvent event)
+	public void onPoll()
 	{
 		box.poll();
 	}

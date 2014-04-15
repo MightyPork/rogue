@@ -3,6 +3,7 @@ package mightypork.gamecore.gui.screens;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
+import mightypork.gamecore.control.bus.events.LayoutChangeEvent;
 import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.input.KeyBinder;
@@ -98,6 +99,9 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 		if (!isActive()) return;
 		
 		onSizeChanged(event.getScreenSize());
+		
+		// poll constraints
+		getEventBus().sendDirectToChildren(this, new LayoutChangeEvent());
 		
 		needSetupViewport = true;
 	}

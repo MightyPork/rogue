@@ -141,5 +141,4 @@ public class TextPainter extends SimplePainter {
 	{
 		this.text = text;
 	}
-	
 }

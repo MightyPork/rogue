@@ -1,6 +1,17 @@
 package mightypork.utils.math.constraints.rect;
 
 
+/**
+ * <p>
+ * A rect cache.
+ * </p>
+ * <p>
+ * Values are held in a caching VectVar, and digest caching is enabled by
+ * default.
+ * </p>
+ * 
+ * @author MightyPork
+ */
 public class RectCache extends RectAdapter {
 	
 	private final RectVar cache = Rect.makeVar();
@@ -10,6 +21,7 @@ public class RectCache extends RectAdapter {
 	
 	public RectCache(Rect source) {
 		this.source = source;
+		enableDigestCaching(true);
 	}
 	
 	
