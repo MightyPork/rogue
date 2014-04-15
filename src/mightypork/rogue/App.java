@@ -16,7 +16,6 @@ import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
-import mightypork.rogue.screens.test_font.ScreenTestFont;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogWriter;
@@ -67,10 +66,9 @@ public class App extends BaseApp {
 	{
 		screens.add(new ScreenTestBouncy(this));
 		screens.add(new ScreenTestCat(this));
-		screens.add(new ScreenTestFont(this));
 		screens.add(new ScreenTestRender(this));
 		
-		screens.showScreen("test.bouncy");
+		screens.showScreen("test.render");
 	}
 	
 	

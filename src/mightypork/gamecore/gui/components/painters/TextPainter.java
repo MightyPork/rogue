@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.components.painters;
 
 
-import mightypork.gamecore.gui.components.AbstractVisualComponent;
+import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.render.fonts.FontRenderer;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.gamecore.render.fonts.GLFont;
@@ -19,7 +19,7 @@ import mightypork.utils.string.StringProvider.StringWrapper;
  * 
  * @author MightyPork
  */
-public class TextPainter extends AbstractVisualComponent {
+public class TextPainter extends VisualComponent {
 	
 	private final FontRenderer font;
 	private RGB color;

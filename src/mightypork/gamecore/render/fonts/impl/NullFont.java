@@ -17,7 +17,7 @@ public class NullFont implements GLFont {
 	@Override
 	public void draw(String str, RGB color)
 	{
-		Log.w("Drawing with null font.");
+		// yeah right
 	}
 	
 	

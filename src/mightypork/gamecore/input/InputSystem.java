@@ -174,7 +174,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	
 	
 	/**
-	 * Get absolute mouse position
+	 * Get absolute mouse position. This vect is final and views at it can safely be made.
 	 * 
 	 * @return mouse position
 	 */

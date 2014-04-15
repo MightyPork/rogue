@@ -186,7 +186,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	
 	
 	/**
-	 * Get screen size
+	 * Get screen size. This Vect is final and views at it can safely be made.
 	 * 
 	 * @return size
 	 */
@@ -240,6 +240,9 @@ public class DisplaySystem extends AppModule implements RectBound {
 	}
 	
 	
+	/**
+	 * Get screen rect. This Rect is final and views at it can safely be made.
+	 */
 	@Override
 	public Rect getRect()
 	{
@@ -256,8 +259,13 @@ public class DisplaySystem extends AppModule implements RectBound {
 	}
 	
 	
+	/**
+	 * Get screen center. This vect is final and views at it can safely be made.
+	 * 
+	 * @return screen center.
+	 */
 	public Vect getCenter()
 	{
-		return getSize().half();
+		return rect.center();
 	}
 }

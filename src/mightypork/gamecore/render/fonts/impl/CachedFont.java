@@ -334,8 +334,9 @@ public class CachedFont implements GLFont {
 	
 	private void drawQuad(float xmin, float ymin, float xmax, float ymax, float txmin, float tymin, float txmax, float tymax)
 	{
-		final float draw_h = xmax - xmin;
-		final float draw_w = ymax - ymin;
+		final float draw_width = xmax - xmin;
+		final float draw_height = ymax - ymin;
+		
 		final float txmin01 = txmin / textureWidth;
 		final float tymin01 = tymin / textureHeight;
 		final float twidth01 = ((txmax - txmin) / textureWidth);
@@ -345,13 +346,13 @@ public class CachedFont implements GLFont {
 		glVertex2f(xmin, ymin);
 		
 		glTexCoord2f(txmin01, tymin01 + theight01);
-		glVertex2f(xmin, ymin + draw_w);
+		glVertex2f(xmin, ymin + draw_height);
 		
 		glTexCoord2f(txmin01 + twidth01, tymin01 + theight01);
-		glVertex2f(xmin + draw_h, ymin + draw_w);
+		glVertex2f(xmin + draw_width, ymin + draw_height);
 		
 		glTexCoord2f(txmin01 + twidth01, tymin01);
-		glVertex2f(xmin + draw_h, ymin);
+		glVertex2f(xmin + draw_width, ymin);
 	}
 	
 	

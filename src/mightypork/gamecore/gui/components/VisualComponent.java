@@ -10,14 +10,20 @@ import mightypork.utils.math.constraints.rect.proxy.RectBoundAdapter;
 
 
 /**
- * {@link Renderable} with pluggable context
+ * {@link Renderable} with pluggable context. When caching is enabled, the
+ * layout update can be triggered by firing the {@link LayoutChangeEvent}.
  * 
  * @author MightyPork
  */
-public abstract class AbstractVisualComponent extends AbstractRectCache implements Component, LayoutChangeEvent.Listener {
+public abstract class VisualComponent extends AbstractRectCache implements Component, LayoutChangeEvent.Listener {
 	
 	private Rect source;
 	private boolean visible = true;
+	
+	
+	public VisualComponent() {
+		super();
+	}
 	
 	
 	@Override

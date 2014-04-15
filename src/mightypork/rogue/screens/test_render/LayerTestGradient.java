@@ -17,15 +17,15 @@ public class LayerTestGradient extends ScreenLayer {
 	public LayerTestGradient(Screen screen) {
 		super(screen);
 		
-		pos1 = bounds().topEdge().growDown(64);
-		pos2 = bounds().leftEdge().growUp(-64).growRight(64);
+		pos1 = root.topEdge().growDown(64);
+		pos2 = root.leftEdge().growUp(-64).growRight(64);
 	}
 	
 	
 	@Override
-	public void render()
+	protected void renderLayer()
 	{
-		Render.quadColor(getRect(), RGB.WHITE, RGB.BLUE, RGB.BLACK, RGB.PURPLE);
+		Render.quadColor(root, RGB.WHITE, RGB.BLUE, RGB.BLACK, RGB.PURPLE);
 		Render.quadGradH(pos1.getRect(), RGB.GREEN, RGB.RED);
 		Render.quadGradV(pos2.getRect(), RGB.WHITE, RGB.PURPLE);
 	}
@@ -34,7 +34,7 @@ public class LayerTestGradient extends ScreenLayer {
 	@Override
 	public int getPriority()
 	{
-		return 5;
+		return 0;
 	}
 	
 }

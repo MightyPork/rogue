@@ -36,6 +36,9 @@ public abstract class Action implements Runnable, Enableable {
 	}
 	
 	
+	/**
+	 * Run the action, if it's enabled.
+	 */
 	@Override
 	public final void run()
 	{
@@ -46,6 +49,6 @@ public abstract class Action implements Runnable, Enableable {
 	/**
 	 * Do the work.
 	 */
-	public abstract void execute();
+	protected abstract void execute();
 	
 }

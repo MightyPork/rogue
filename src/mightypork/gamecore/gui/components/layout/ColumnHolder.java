@@ -2,7 +2,7 @@ package mightypork.gamecore.gui.components.layout;
 
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.gui.components.AbstractLayoutComponent;
+import mightypork.gamecore.gui.components.LayoutComponent;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.utils.math.constraints.rect.builders.TiledRect;
 import mightypork.utils.math.constraints.rect.proxy.RectBound;
@@ -13,7 +13,7 @@ import mightypork.utils.math.constraints.rect.proxy.RectBound;
  * 
  * @author MightyPork
  */
-public class ColumnHolder extends AbstractLayoutComponent {
+public class ColumnHolder extends LayoutComponent {
 	
 	private final TiledRect tiler;
 	private int col = 0;
@@ -47,7 +47,6 @@ public class ColumnHolder extends AbstractLayoutComponent {
 	 * 
 	 * @param elem
 	 */
-	@Override
 	public void add(final Component elem)
 	{
 		if (elem == null) return;

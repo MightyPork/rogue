@@ -23,40 +23,54 @@ import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.mutable.VectAnimated;
 
 
-public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
+public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.Listener, Updateable {
 	
-	private final NumAnimated size = new NumAnimated(400, Easing.SINE_BOTH);
-	private final VectAnimated pos = VectAnimated.makeVar(Easing.ELASTIC_OUT);
+	private final NumAnimated size = new NumAnimated(300, Easing.SINE_BOTH);
+	private final VectAnimated cat_position = VectAnimated.makeVar(Easing.ELASTIC_OUT);
 	
 	private final Random rand = new Random();
-	
-	private final ImagePainter cat;
-	private final TextPainter tp;
-	private final QuadPainter qp;
 	
 	
 	public LayerFlyingCat(Screen screen) {
 		super(screen);
 		
-		pos.setTo(getDisplay().getCenter());
-		pos.setDefaultDuration(3);
+		// timing
+		updated.add(size);
+		updated.add(cat_position);
+		size.setTo(root.height().perc(60));
 		
-		cat = new ImagePainter(Res.getTxQuad("test.kitten"));
+		// cat
+		cat_position.setTo(getDisplay().getCenter());
+		cat_position.setDefaultDuration(3);
 		
-		cat.setRect(Rect.make(size, size).centerTo(pos));
+		ImagePainter cat = new ImagePainter(Res.getTxQuad("test.kitten"));
+		cat.setRect(Rect.make(size, size).centerTo(cat_position));
+		cat.enableCaching(false);
 		
-		tp = new TextPainter(Res.getFont("default"));
+		// frame around cat
+		QuadPainter cat_frame = QuadPainter.gradV(RGB.YELLOW, RGB.RED);
+		cat_frame.setRect(cat.grow(cat.height().mul(0.05)));
+		cat_frame.enableCaching(false);
+
+		// frame shadow
+		QuadPainter cat_shadow = new QuadPainter(RGB.dark(0.4));
+		cat_shadow.setRect(cat_frame.move(Vect.make(cat.height().mul(0.05))));
+		cat_shadow.enableCaching(false);
+
+		root.add(cat_shadow);
+		root.add(cat_frame);
+		root.add(cat);
+		
+		
+		// Meow
+		TextPainter tp = new TextPainter(Res.getFont("press_start"));
 		tp.setAlign(Align.CENTER);
 		tp.setColor(RGB.YELLOW);
 		tp.setText("Meow!");
-		tp.setShadow(RGB.dark(0.8), Vect.make(2, 2));
-		
-		tp.setRect(Rect.make(64, 64).centerTo(mouse()));
-		
-		qp = QuadPainter.gradV(RGB.YELLOW, RGB.RED);
-		
-		qp.setRect(cat.getRect().bottomLeft().expand(size.half(), Num.ZERO, Num.ZERO, size.half()));
-		
+		tp.setShadow(RGB.dark(0.5), Vect.make(tp.height().div(16)));
+		tp.setRect(Rect.make(Num.ZERO, cat.height().half()).centerTo(mouse));
+		tp.enableCaching(false);
+		root.add(tp);
 		/*
 		 * Register keys
 		 */
@@ -65,17 +79,9 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 			@Override
 			public void run()
 			{
-				pos.setTo(getDisplay().getCenter());
+				cat_position.setTo(getDisplay().getCenter());
 			}
 		});
-	}
-	
-	
-	@Override
-	public void update(double delta)
-	{
-		size.update(delta);
-		pos.update(delta);
 	}
 	
 	
@@ -84,27 +90,18 @@ public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButt
 	{
 		if (!event.isDown()) return;
 		
-		final Vect pos = event.getPos();
+		this.cat_position.setTo(event.getPos());
 		
-		this.pos.setTo(pos);
+		double newSize = root.height().perc(10 + rand.nextInt(40)).value();
 		
-		size.animate(200 + rand.nextInt(600), 1);
-	}
-	
-	
-	@Override
-	public void render()
-	{
-		cat.render();
-		tp.render();
-		qp.render();
+		size.animate(newSize, 1);
 	}
 	
 	
 	@Override
 	public int getPriority()
 	{
-		return 0;
+		return 10;
 	}
 	
 }

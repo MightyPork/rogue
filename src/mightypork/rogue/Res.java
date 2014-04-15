@@ -61,7 +61,11 @@ public class Res {
 		font.setAntialias(true);
 		font.setFilter(FilterMode.NEAREST);
 		fonts.loadFont("default", font);
-		
+
+		font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16);
+		font.setAntialias(true);
+		font.setFilter(FilterMode.NEAREST);
+		fonts.loadFont("press_start", font);
 	}
 	
 	

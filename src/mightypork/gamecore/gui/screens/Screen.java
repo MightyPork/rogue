@@ -94,13 +94,13 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	
 	
 	@Override
-	public void receive(ScreenChangeEvent event)
+	public final void receive(ScreenChangeEvent event)
 	{
 		if (!isActive()) return;
 		
 		onSizeChanged(event.getScreenSize());
 		
-		// poll constraints
+		// fire event
 		getEventBus().sendDirectToChildren(this, new LayoutChangeEvent());
 		
 		needSetupViewport = true;
@@ -108,7 +108,7 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	
 	
 	@Override
-	public Rect getRect()
+	public final Rect getRect()
 	{
 		return getDisplay().getRect();
 	}
@@ -137,7 +137,6 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	@DefaultImpl
 	protected void onScreenEnter()
 	{
-		//
 	}
 	
 	
@@ -147,7 +146,6 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	@DefaultImpl
 	protected void onScreenLeave()
 	{
-		//
 	}
 	
 	
@@ -159,7 +157,6 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	@DefaultImpl
 	protected void onSizeChanged(Vect size)
 	{
-		//
 	}
 	
 	
@@ -173,17 +170,5 @@ public abstract class Screen extends AppSubModule implements Renderable, KeyBind
 	 * @return screen identifier to be used for requests.
 	 */
 	public abstract String getName();
-	
-	
-	protected final Rect bounds()
-	{
-		return getRect();
-	}
-	
-	
-	protected final Vect mouse()
-	{
-		return getInput().getMousePos();
-	}
 	
 }

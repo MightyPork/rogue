@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.components.painters;
 
 
-import mightypork.gamecore.gui.components.AbstractVisualComponent;
+import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
 
@@ -11,7 +11,7 @@ import mightypork.gamecore.render.textures.TxQuad;
  * 
  * @author MightyPork
  */
-public class ImagePainter extends AbstractVisualComponent {
+public class ImagePainter extends VisualComponent {
 	
 	private TxQuad texture;
 	
@@ -34,17 +34,9 @@ public class ImagePainter extends AbstractVisualComponent {
 	
 	
 	@Override
-	public void updateLayout()
-	{
-		Render.quadTextured(getRect(), texture);
-	}
-	
-	
-	@Override
 	public void renderComponent()
 	{
-		// TODO Auto-generated method stub
-		
+		Render.quadTextured(getRect(), texture);
 	}
 	
 }

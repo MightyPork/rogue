@@ -28,6 +28,13 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	
 	
 	@FactoryMethod
+	public static Vect make(Num xy)
+	{
+		return make(xy, xy);
+	}
+	
+	
+	@FactoryMethod
 	public static Vect make(Num xc, Num yc)
 	{
 		return Vect.make(xc, yc, Num.ZERO);
@@ -49,6 +56,13 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	
 	
 	@FactoryMethod
+	public static VectConst make(NumConst xy)
+	{
+		return make(xy, xy);
+	}
+	
+	
+	@FactoryMethod
 	public static VectConst make(NumConst xc, NumConst yc)
 	{
 		return Vect.make(xc, yc, Num.ZERO);
@@ -59,6 +73,13 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	public static VectConst make(NumConst xc, NumConst yc, NumConst zc)
 	{
 		return new VectConst(xc.value(), yc.value(), zc.value());
+	}
+	
+	
+	@FactoryMethod
+	public static VectConst make(double xy)
+	{
+		return make(xy, xy);
 	}
 	
 	

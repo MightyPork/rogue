@@ -38,7 +38,7 @@ public class LayerFps extends ScreenLayer {
 		
 		final GLFont font = Res.getFont("default");
 		
-		final RectBound constraint = bounds().topRight().add(-8, 8).expand(0, 0, 0, 32);
+		final RectBound constraint = root.topRight().add(-8, 8).expand(0, 0, 0, 32);
 		
 		tp = new TextPainter(font, Align.RIGHT, RGB.WHITE, new StringProvider() {
 			
@@ -49,16 +49,10 @@ public class LayerFps extends ScreenLayer {
 			}
 		});
 		
-		tp.setRect(constraint);
+		tp.setRect(constraint);		
+		tp.setShadow(RGB.BLACK, Vect.make(tp.height().div(16)));
 		
-		tp.setShadow(RGB.BLACK, Vect.ONE);
-	}
-	
-	
-	@Override
-	public void render()
-	{
-		tp.render();
+		root.add(tp);
 	}
 	
 	

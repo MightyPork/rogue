@@ -1,15 +1,18 @@
 package mightypork.gamecore.gui.screens;
 
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
+
 import mightypork.gamecore.control.AppSubModule;
+import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.Hideable;
 import mightypork.gamecore.gui.components.Renderable;
+import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.utils.annotations.DefaultImpl;
-import mightypork.utils.math.constraints.rect.Rect;
-import mightypork.utils.math.constraints.rect.proxy.RectBound;
 import mightypork.utils.math.constraints.vect.Vect;
 
 
@@ -18,13 +21,24 @@ import mightypork.utils.math.constraints.vect.Vect;
  * 
  * @author MightyPork
  */
-public abstract class ScreenLayer extends AppSubModule implements Comparable<ScreenLayer>, Renderable, RectBound, KeyBinder, Hideable {
-	
-	private final Screen screen;
+public abstract class ScreenLayer extends AppSubModule implements Updateable, Comparable<ScreenLayer>, Renderable, KeyBinder, Hideable {
 	
 	private boolean visible = true;
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
+	
+	/** Root layout, rendered and attached to the event bus */
+	protected final ConstraintLayout root;
+	
+	protected final Vect mouse;
+	
+	private final Screen screen;
+	
+	/** Extra rendered items (outside root) */
+	protected final Collection<Renderable> rendered = new LinkedHashSet<>();
+	
+	/** Extra updated items (outside root - those can just implement Updateable) */
+	protected final Collection<Updateable> updated = new LinkedHashSet<>();
 	
 	
 	/**
@@ -34,7 +48,17 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 		super(screen); // screen as AppAccess
 		
 		this.screen = screen;
+		
+		this.mouse = getInput().getMousePos();
+		
+		this.root = new ConstraintLayout(screen, screen);
+		addChildClient(root);
 		addChildClient(keybindings);
+		
+		rendered.add(root);
+		
+		// root is on the bus, all attached components
+		// will receive events (such as update)
 	}
 	
 	
@@ -62,14 +86,7 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	
 	
 	@Override
-	public Rect getRect()
-	{
-		return screen.getRect();
-	}
-	
-	
-	@Override
-	public boolean isVisible()
+	public final boolean isVisible()
 	{
 		return visible;
 	}
@@ -95,7 +112,6 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	@DefaultImpl
 	protected void onScreenEnter()
 	{
-		//
 	}
 	
 	
@@ -105,7 +121,6 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	@DefaultImpl
 	protected void onScreenLeave()
 	{
-		//
 	}
 	
 	
@@ -117,25 +132,42 @@ public abstract class ScreenLayer extends AppSubModule implements Comparable<Scr
 	@DefaultImpl
 	protected void onSizeChanged(Vect size)
 	{
-		//
 	}
 	
 	
 	/**
 	 * @return higher = on top.
 	 */
+	@DefaultImpl
 	public abstract int getPriority();
 	
 	
-	protected final Rect bounds()
+	@Override
+	public final void render()
 	{
-		return screen.bounds();
+		if (!visible) return;
+		
+		renderLayer();
 	}
 	
 	
-	protected final Vect mouse()
+	/**
+	 * Render layer contents.
+	 */
+	protected void renderLayer()
 	{
-		return screen.mouse();
+		// render renderables (including root layout)
+		for (Renderable r : rendered)
+			r.render();
+	}
+	
+	
+	@Override
+	public void update(double delta)
+	{
+		// update updateables
+		for (Updateable u : updated)
+			u.update(delta);
 	}
 	
 }
