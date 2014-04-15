@@ -5,7 +5,7 @@ import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.RectBound;
+import mightypork.utils.math.constraints.rect.RectBound;
 
 
 public class LayerTestGradient extends ScreenLayer {

@@ -14,9 +14,9 @@ import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
-import mightypork.utils.math.animation.AnimDouble;
-import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.Easing;
 import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.constraints.num.NumAnimated;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.vect.Vect;
@@ -25,7 +25,7 @@ import mightypork.utils.math.constraints.vect.VectAnimated;
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {
 	
-	private final AnimDouble size = new AnimDouble(400, Easing.SINE_BOTH);
+	private final NumAnimated size = new NumAnimated(400, Easing.SINE_BOTH);
 	private final VectAnimated pos = VectAnimated.makeVar(Easing.ELASTIC_OUT);
 	
 	private final Random rand = new Random();

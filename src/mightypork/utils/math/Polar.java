@@ -1,8 +1,6 @@
 package mightypork.utils.math;
 
 
-import mightypork.utils.math.Calc.Deg;
-import mightypork.utils.math.Calc.Rad;
 import mightypork.utils.math.constraints.vect.Vect;
 
 
@@ -42,7 +40,7 @@ public class Polar {
 	 */
 	public Polar(double angle, boolean deg, double distance) {
 		this.radius = distance;
-		this.angle = deg ? Deg.toRad(angle) : angle;
+		this.angle = deg ? Math.toRadians(angle) : angle;
 	}
 	
 	
@@ -60,7 +58,7 @@ public class Polar {
 	 */
 	public double getAngleDeg()
 	{
-		return Rad.toDeg(angle);
+		return Math.toDegrees(angle);
 	}
 	
 	
@@ -78,7 +76,7 @@ public class Polar {
 	 */
 	public void setAngleDeg(double angle)
 	{
-		this.angle = Deg.toRad(angle);
+		this.angle = Math.toRadians(angle);
 	}
 	
 	

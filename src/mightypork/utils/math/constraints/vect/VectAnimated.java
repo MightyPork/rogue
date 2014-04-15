@@ -4,8 +4,8 @@ package mightypork.utils.math.constraints.vect;
 import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.annotations.FactoryMethod;
-import mightypork.utils.math.animation.AnimDouble;
-import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.Easing;
+import mightypork.utils.math.constraints.num.NumAnimated;
 
 
 /**
@@ -15,7 +15,7 @@ import mightypork.utils.math.animation.Easing;
  */
 public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	
-	private final AnimDouble x, y, z;
+	private final NumAnimated x, y, z;
 	private double defaultDuration = 0;
 	
 	
@@ -27,7 +27,7 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	 * @param y y animator
 	 * @param z z animator
 	 */
-	public VectAnimated(AnimDouble x, AnimDouble y, AnimDouble z) {
+	public VectAnimated(NumAnimated x, NumAnimated y, NumAnimated z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -41,9 +41,9 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	 * @param easing animation easing
 	 */
 	public VectAnimated(Vect start, Easing easing) {
-		x = new AnimDouble(start.x(), easing);
-		y = new AnimDouble(start.y(), easing);
-		z = new AnimDouble(start.z(), easing);
+		x = new NumAnimated(start.x(), easing);
+		y = new NumAnimated(start.y(), easing);
+		z = new NumAnimated(start.z(), easing);
 	}
 	
 	
@@ -255,7 +255,7 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	 * @return animated mutable vector
 	 */
 	@FactoryMethod
-	public static VectAnimated makeVar(AnimDouble x, AnimDouble y, AnimDouble z)
+	public static VectAnimated makeVar(NumAnimated x, NumAnimated y, NumAnimated z)
 	{
 		return new VectAnimated(x, y, z);
 	}

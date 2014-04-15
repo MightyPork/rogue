@@ -1,7 +1,8 @@
-package mightypork.utils.math.animation;
+package mightypork.utils.math.constraints.num;
 
 
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.Easing;
 import mightypork.utils.math.Calc.Rad;
 
 
@@ -10,19 +11,19 @@ import mightypork.utils.math.Calc.Rad;
  * 
  * @author MightyPork
  */
-public class AnimDoubleRad extends AnimDouble {
+public class NumAnimatedRad extends NumAnimated {
 	
-	public AnimDoubleRad(AnimDouble other) {
+	public NumAnimatedRad(NumAnimated other) {
 		super(other);
 	}
 	
 	
-	public AnimDoubleRad(double value) {
+	public NumAnimatedRad(double value) {
 		super(value);
 	}
 	
 	
-	public AnimDoubleRad(double value, Easing easing) {
+	public NumAnimatedRad(double value, Easing easing) {
 		super(value, easing);
 	}
 	

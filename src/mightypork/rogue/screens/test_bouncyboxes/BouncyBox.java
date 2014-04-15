@@ -7,9 +7,9 @@ import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.components.SimplePainter;
 import mightypork.gamecore.render.Render;
-import mightypork.utils.math.animation.AnimDouble;
-import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.Easing;
 import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.constraints.num.NumAnimated;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.Rect;
 
@@ -20,7 +20,7 @@ public class BouncyBox extends SimplePainter implements Updateable, ScreenChange
 	
 	private final Rect box;
 	
-	private final AnimDouble pos = new AnimDouble(0, Easing.BOUNCE_OUT);
+	private final NumAnimated pos = new NumAnimated(0, Easing.BOUNCE_OUT);
 	
 	
 	public BouncyBox() {

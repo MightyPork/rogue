@@ -1,7 +1,6 @@
-package mightypork.utils.math.constraints;
+package mightypork.utils.math.constraints.num;
 
 
-import mightypork.utils.math.constraints.num.NumBound;
 
 
 /**

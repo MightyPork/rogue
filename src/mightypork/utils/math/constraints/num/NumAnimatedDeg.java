@@ -1,7 +1,8 @@
-package mightypork.utils.math.animation;
+package mightypork.utils.math.constraints.num;
 
 
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.Easing;
 import mightypork.utils.math.Calc.Deg;
 
 
@@ -10,19 +11,19 @@ import mightypork.utils.math.Calc.Deg;
  * 
  * @author MightyPork
  */
-public class AnimDoubleDeg extends AnimDouble {
+public class NumAnimatedDeg extends NumAnimated {
 	
-	public AnimDoubleDeg(AnimDouble other) {
+	public NumAnimatedDeg(NumAnimated other) {
 		super(other);
 	}
 	
 	
-	public AnimDoubleDeg(double value) {
+	public NumAnimatedDeg(double value) {
 		super(value);
 	}
 	
 	
-	public AnimDoubleDeg(double value, Easing easing) {
+	public NumAnimatedDeg(double value, Easing easing) {
 		super(value, easing);
 	}
 	

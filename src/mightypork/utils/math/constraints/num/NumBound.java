@@ -1,6 +1,7 @@
 package mightypork.utils.math.constraints.num;
 
 
+
 /**
  * Numeric constraint
  * 

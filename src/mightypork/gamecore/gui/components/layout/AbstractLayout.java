@@ -9,7 +9,7 @@ import mightypork.gamecore.gui.components.BusEnabledPainter;
 import mightypork.gamecore.gui.components.PluggableRenderable;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.gui.components.SimplePainter;
-import mightypork.utils.math.constraints.RectBound;
+import mightypork.utils.math.constraints.rect.RectBound;
 
 
 /**

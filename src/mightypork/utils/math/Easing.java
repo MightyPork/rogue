@@ -1,4 +1,4 @@
-package mightypork.utils.math.animation;
+package mightypork.utils.math;
 
 
 import mightypork.utils.annotations.FactoryMethod;

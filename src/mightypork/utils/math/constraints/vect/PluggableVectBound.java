@@ -1,4 +1,4 @@
-package mightypork.utils.math.constraints;
+package mightypork.utils.math.constraints.vect;
 
 
 /**

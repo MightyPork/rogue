@@ -5,7 +5,7 @@ import mightypork.gamecore.audio.DeferredAudio;
 import mightypork.gamecore.audio.Volume;
 import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.gamecore.control.timing.Updateable;
-import mightypork.utils.math.animation.AnimDouble;
+import mightypork.utils.math.constraints.num.NumAnimated;
 
 import org.lwjgl.openal.AL10;
 
@@ -20,7 +20,7 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	private int sourceID = -1;
 	
 	/** animator for fade in and fade out */
-	private final AnimDouble fadeAnim = new AnimDouble(0);
+	private final NumAnimated fadeAnim = new NumAnimated(0);
 	
 	private double lastUpdateGain = 0;
 	

@@ -1,10 +1,12 @@
 package mightypork.gamecore.control.bus;
 
 
+import java.util.Collection;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
+import mightypork.gamecore.control.bus.clients.DelegatingClient;
 import mightypork.gamecore.control.bus.events.Event;
 import mightypork.gamecore.control.bus.events.types.DelayedEvent;
 import mightypork.gamecore.control.bus.events.types.ImmediateEvent;
@@ -116,7 +118,7 @@ final public class EventBus implements Destroyable {
 	
 	
 	/**
-	 * Send based on annotation.
+	 * Send based on annotation.clients
 	 * 
 	 * @param event event
 	 */
@@ -187,6 +189,16 @@ final public class EventBus implements Destroyable {
 	}
 	
 	
+	public void sendDirectToChildren(DelegatingClient delegatingClient, Event<?> event)
+	{
+		assertLive();
+		
+		if (shallLog(event)) Log.f3("<bus> Di sub " + Log.str(event));
+		
+		doDispatch(delegatingClient.getChildClients(), event);
+	}
+	
+	
 	/**
 	 * Send immediately.<br>
 	 * Should be used for real-time events that require immediate response, such
@@ -201,6 +213,21 @@ final public class EventBus implements Destroyable {
 		channels.setBuffering(true);
 		clients.setBuffering(true);
 		
+		doDispatch(clients, event);
+		
+		channels.setBuffering(false);
+		clients.setBuffering(false);
+	}
+	
+	
+	/**
+	 * Send to a set of clients
+	 * 
+	 * @param clients clients
+	 * @param event event
+	 */
+	private void doDispatch(Collection<Object> clients, Event<?> event)
+	{
 		boolean sent = false;
 		boolean accepted = false;
 		
@@ -218,8 +245,6 @@ final public class EventBus implements Destroyable {
 		if (!accepted) Log.e("<bus> Not accepted by any channel: " + Log.str(event));
 		if (!sent && shallLog(event)) Log.w("<bus> Not delivered: " + Log.str(event));
 		
-		channels.setBuffering(false);
-		clients.setBuffering(false);
 	}
 	
 	

@@ -4,7 +4,6 @@ package mightypork.utils.math.constraints.vect;
 import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.constraints.Digestable;
-import mightypork.utils.math.constraints.VectBound;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.NumConst;
 import mightypork.utils.math.constraints.rect.Rect;

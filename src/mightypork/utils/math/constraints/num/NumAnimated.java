@@ -1,10 +1,10 @@
-package mightypork.utils.math.animation;
+package mightypork.utils.math.constraints.num;
 
 
 import mightypork.gamecore.control.timing.Pauseable;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.utils.math.Calc;
-import mightypork.utils.math.constraints.num.NumMutable;
+import mightypork.utils.math.Easing;
 
 
 /**
@@ -12,7 +12,7 @@ import mightypork.utils.math.constraints.num.NumMutable;
  * 
  * @author MightyPork
  */
-public class AnimDouble extends NumMutable implements Updateable, Pauseable {
+public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	
 	/** target double */
 	protected double to = 0;
@@ -41,7 +41,7 @@ public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	 * 
 	 * @param value initial value
 	 */
-	public AnimDouble(double value) {
+	public NumAnimated(double value) {
 		setTo(value);
 	}
 	
@@ -52,7 +52,7 @@ public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	 * @param value initial value
 	 * @param easing easing function
 	 */
-	public AnimDouble(double value, Easing easing) {
+	public NumAnimated(double value, Easing easing) {
 		this(value);
 		setEasing(easing);
 	}
@@ -63,7 +63,7 @@ public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	 * 
 	 * @param other other animator
 	 */
-	public AnimDouble(AnimDouble other) {
+	public NumAnimated(NumAnimated other) {
 		setTo(other);
 	}
 	
@@ -213,7 +213,7 @@ public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	 * 
 	 * @param other
 	 */
-	public void setTo(AnimDouble other)
+	public void setTo(NumAnimated other)
 	{
 		this.from = other.from;
 		this.to = other.to;
@@ -314,9 +314,9 @@ public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	 * @return copy
 	 */
 	@Override
-	public AnimDouble clone()
+	public NumAnimated clone()
 	{
-		return new AnimDouble(this);
+		return new NumAnimated(this);
 	}
 	
 	

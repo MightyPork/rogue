@@ -1,8 +1,6 @@
 package mightypork.utils.math.constraints.rect;
 
 
-import mightypork.utils.math.constraints.PluggableRectBound;
-import mightypork.utils.math.constraints.RectBound;
 
 
 /**

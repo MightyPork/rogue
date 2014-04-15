@@ -10,8 +10,8 @@ import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.control.bus.clients.ClientHub;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectBound;
 
 
 public abstract class BusEnabledPainter extends SimplePainter implements ClientHub, Component, AppAccess {

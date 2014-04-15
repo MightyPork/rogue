@@ -5,7 +5,9 @@ import java.util.Collection;
 
 
 /**
- * Client containing child clients
+ * Client containing child clients. According to the contract, if the collection
+ * of clients is ordered, the clients will be served in that order. In any case,
+ * the {@link DelegatingClient} itself will be served beforehand.
  * 
  * @author MightyPork
  */
