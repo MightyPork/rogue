@@ -3,13 +3,17 @@ package mightypork.utils.math.constraints.num;
 
 public class NumDigest {
 	
-	public final NumConst source;
-	
 	public final double value;
 	
 	
 	public NumDigest(Num num) {
 		this.value = num.value();
-		this.source = num.freeze();
+	}
+	
+	
+	@Override
+	public String toString()
+	{
+		return String.format("Num(%.1f)", value);
 	}
 }

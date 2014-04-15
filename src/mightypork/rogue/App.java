@@ -29,6 +29,20 @@ import mightypork.utils.logging.LogWriter;
  */
 public class App extends BaseApp {
 	
+	/**
+	 * Launcher
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args)
+	{
+		Config.init();
+		Config.save();
+		
+		(new App()).start();
+	}
+	
+	
 	@Override
 	protected LogWriter createLog()
 	{

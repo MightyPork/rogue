@@ -1,12 +1,15 @@
 package mightypork.gamecore.gui;
 
 
+import mightypork.gamecore.control.interf.Enableable;
+
+
 /**
  * Triggered action
  * 
  * @author MightyPork
  */
-public abstract class Action implements Runnable {
+public abstract class Action implements Runnable, Enableable {
 	
 	private boolean enabled = true;
 	
@@ -16,7 +19,8 @@ public abstract class Action implements Runnable {
 	 * 
 	 * @param enable true to enable
 	 */
-	public void setEnabled(boolean enable)
+	@Override
+	public final void enable(boolean enable)
 	{
 		this.enabled = enable;
 	}
@@ -25,14 +29,15 @@ public abstract class Action implements Runnable {
 	/**
 	 * @return true if this action is enabled.
 	 */
-	public boolean isEnabled()
+	@Override
+	public final boolean isEnabled()
 	{
 		return enabled;
 	}
 	
 	
 	@Override
-	public void run()
+	public final void run()
 	{
 		if (enabled) execute();
 	}

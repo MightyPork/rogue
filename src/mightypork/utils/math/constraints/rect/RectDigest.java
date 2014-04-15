@@ -1,14 +1,9 @@
 package mightypork.utils.math.constraints.rect;
 
 
-import mightypork.utils.math.constraints.vect.VectConst;
 
 
 public class RectDigest {
-	
-	public final RectConst source;
-	public final VectConst origin;
-	public final VectConst size;
 	
 	public final double x;
 	public final double y;
@@ -22,27 +17,26 @@ public class RectDigest {
 	
 	
 	public RectDigest(Rect rect) {
-		this.source = rect.freeze();
 		
-		this.origin = rect.origin().freeze();
-		this.size = rect.size().freeze();
+		final RectConst frozen = rect.freeze();
 		
-		this.x = rect.x().value();
-		this.y = rect.y().value();
+		this.x = frozen.x().value();
+		this.y = frozen.y().value();
 		
-		this.width = rect.width().value();
-		this.height = rect.height().value();
+		this.width = frozen.width().value();
+		this.height = frozen.height().value();
 		
-		this.left = rect.left().value();
-		this.right = rect.right().value();
-		this.top = rect.top().value();
-		this.bottom = rect.bottom().value();
+		this.left = frozen.left().value();
+		this.right = frozen.right().value();
+		this.top = frozen.top().value();
+		this.bottom = frozen.bottom().value();
 	}
 	
 	
 	@Override
 	public String toString()
 	{
-		return String.format("Rect at: (%.1f, %.1f), size: (%.1f, %.1f), bounds: L %.1f R %.1f T %.1f B %.1f", x, y, width, height, left, right, top, bottom);
+		return String
+				.format("Rect{ at: (%.1f, %.1f), size: (%.1f, %.1f), bounds: L %.1f R %.1f T %.1f B %.1f }", x, y, width, height, left, right, top, bottom);
 	}
 }

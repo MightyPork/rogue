@@ -14,7 +14,7 @@ import mightypork.utils.math.constraints.rect.Rect;
  * 
  * @author MightyPork
  */
-public abstract class Vect implements VectBound {
+public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	
 	public static final VectConst ZERO = new VectConst(0, 0, 0);
 	public static final VectConst ONE = new VectConst(1, 1, 1);
@@ -104,6 +104,8 @@ public abstract class Vect implements VectBound {
 	private Num p_xc;
 	private Num p_yc;
 	private Num p_zc;
+	private boolean digestCachingEnabled;
+	private VectDigest lastDigest;
 	
 	
 	/**
@@ -236,14 +238,33 @@ public abstract class Vect implements VectBound {
 	}
 	
 	
-	/**
-	 * Get a snapshot of the current state, to be used for processing.
-	 * 
-	 * @return digest
-	 */
+	@Override
 	public VectDigest digest()
 	{
-		return new VectDigest(this);
+		if (digestCachingEnabled && lastDigest != null) return lastDigest;
+		
+		return lastDigest = new VectDigest(this);
+	}
+	
+	
+	@Override
+	public void enableDigestCaching(boolean yes)
+	{
+		digestCachingEnabled = yes;
+	}
+	
+	
+	@Override
+	public boolean isDigestCachingEnabled()
+	{
+		return digestCachingEnabled;
+	}
+	
+	
+	@Override
+	public void poll()
+	{
+		if (digestCachingEnabled) lastDigest = new VectDigest(this);
 	}
 	
 	

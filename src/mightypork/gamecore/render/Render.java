@@ -93,6 +93,17 @@ public class Render {
 	
 	
 	/**
+	 * Translate with coord, discard Z
+	 * 
+	 * @param coord coord
+	 */
+	public static void translateXY(Vect coord)
+	{
+		glTranslated(coord.x(), coord.y(), 0);
+	}
+	
+	
+	/**
 	 * Scale
 	 * 
 	 * @param x
@@ -352,7 +363,6 @@ public class Render {
 	public static void quad(Rect quad)
 	{
 		final RectDigest q = quad.digest();
-		System.out.println(q);
 		
 		// draw with color
 		unbindTexture();

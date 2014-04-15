@@ -3,7 +3,6 @@ package mightypork.gamecore.gui.components;
 
 import mightypork.gamecore.control.bus.clients.ToggleableClient;
 import mightypork.gamecore.control.interf.Enableable;
-import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.Hideable;
 import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.constraints.rect.Rect;
@@ -14,7 +13,7 @@ import mightypork.utils.math.constraints.rect.Rect;
  * 
  * @author MightyPork
  */
-public interface Component extends Hideable, PluggableRenderable, Updateable, Enableable, ToggleableClient {
+public interface Component extends Hideable, PluggableRenderable, Enableable, ToggleableClient {
 	
 	/**
 	 * Enable the component. This includes listening to event bus, and any
@@ -49,10 +48,6 @@ public interface Component extends Hideable, PluggableRenderable, Updateable, En
 	
 	@Override
 	void render();
-	
-	
-	@Override
-	void update(double delta);
 	
 	
 	@Override

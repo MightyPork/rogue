@@ -13,6 +13,7 @@ import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.vect.Vect;
 
@@ -50,9 +51,9 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		
 		final Rect holder_rect = b.shrink(b.height().perc(8));
 		
-		addChildClient(layout = new RowHolder(screen, holder_rect, 2));
+		addChildClient(layout = new RowHolder(screen, holder_rect, 100));
 		
-		for (int i = 0; i <= 0; i++) {
+		for (int i = 0; i < 99; i++) {
 			final BouncyBox bbr = new BouncyBox();
 			layout.add(bbr);
 			boxes.add(bbr);
@@ -60,7 +61,10 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		
 		final TextPainter tp = new TextPainter(Res.getFont("default"), Align.LEFT, RGB.WHITE);
 		tp.setText("Press \"C\" for \"Cat\" screen.");
-		tp.setShadow(RGB.RED, Vect.make(2, 2));
+		
+		final Num shadowOffset = tp.height().div(16 * 2); // half pixel if 16px font
+		
+		tp.setShadow(RGB.RED, Vect.make(shadowOffset, shadowOffset));
 		
 		layout.add(tp);
 	}

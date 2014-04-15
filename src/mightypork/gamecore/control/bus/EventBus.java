@@ -198,30 +198,28 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		synchronized (this) {
-			channels.setBuffering(true);
-			clients.setBuffering(true);
-			
-			boolean sent = false;
-			boolean accepted = false;
-			
-			final boolean singular = event.getClass().isAnnotationPresent(SingleReceiverEvent.class);
-			
-			for (final EventChannel<?, ?> b : channels) {
-				if (b.canBroadcast(event)) {
-					accepted = true;
-					sent |= b.broadcast(event, clients);
-				}
-				
-				if (sent && singular) break;
+		channels.setBuffering(true);
+		clients.setBuffering(true);
+		
+		boolean sent = false;
+		boolean accepted = false;
+		
+		final boolean singular = event.getClass().isAnnotationPresent(SingleReceiverEvent.class);
+		
+		for (final EventChannel<?, ?> b : channels) {
+			if (b.canBroadcast(event)) {
+				accepted = true;
+				sent |= b.broadcast(event, clients);
 			}
 			
-			if (!accepted) Log.e("<bus> Not accepted by any channel: " + Log.str(event));
-			if (!sent && shallLog(event)) Log.w("<bus> Not delivered: " + Log.str(event));
-			
-			channels.setBuffering(false);
-			clients.setBuffering(false);
+			if (sent && singular) break;
 		}
+		
+		if (!accepted) Log.e("<bus> Not accepted by any channel: " + Log.str(event));
+		if (!sent && shallLog(event)) Log.w("<bus> Not delivered: " + Log.str(event));
+		
+		channels.setBuffering(false);
+		clients.setBuffering(false);
 	}
 	
 	

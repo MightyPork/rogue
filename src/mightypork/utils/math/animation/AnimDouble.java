@@ -369,4 +369,10 @@ public class AnimDouble extends NumMutable implements Updateable, Pauseable {
 	{
 		return paused;
 	}
+	
+	
+	public boolean isInProgress()
+	{
+		return !isFinished() && !isPaused();
+	}
 }

@@ -3,9 +3,10 @@ package mightypork.utils.math.constraints.num;
 
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.constraints.vect.Digestable;
 
 
-public abstract class Num implements NumBound {
+public abstract class Num implements NumBound, Digestable<NumDigest> {
 	
 	public static final NumConst ZERO = Num.make(0);
 	public static final NumConst ONE = Num.make(1);
@@ -61,6 +62,8 @@ public abstract class Num implements NumBound {
 	private Num p_square;
 	private Num p_neg;
 	private Num p_abs;
+	private NumDigest lastDigest;
+	private boolean digestCachingEnabled;
 	
 	
 	public NumConst freeze()
@@ -74,9 +77,37 @@ public abstract class Num implements NumBound {
 	 * 
 	 * @return digest
 	 */
+	
+	@Override
 	public NumDigest digest()
 	{
-		return new NumDigest(this);
+		if (digestCachingEnabled && lastDigest != null) return lastDigest;
+		
+		return lastDigest = new NumDigest(this);
+	}
+	
+	
+	@Override
+	public void enableDigestCaching(boolean yes)
+	{
+		digestCachingEnabled = yes;
+	}
+	
+	
+	/**
+	 * @return true if digest caching is enabled.
+	 */
+	@Override
+	public boolean isDigestCachingEnabled()
+	{
+		return digestCachingEnabled;
+	}
+	
+	
+	@Override
+	public void poll()
+	{
+		if (digestCachingEnabled) lastDigest = new NumDigest(this);
 	}
 	
 	

@@ -8,7 +8,6 @@ import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.vect.Vect;
-import mightypork.utils.math.constraints.vect.VectVar;
 import mightypork.utils.string.StringProvider;
 import mightypork.utils.string.StringProvider.StringWrapper;
 
@@ -29,7 +28,7 @@ public class TextPainter extends SimplePainter {
 	private boolean shadow;
 	
 	private RGB shadowColor = RGB.BLACK;
-	private final VectVar shadowOffset = Vect.makeVar(1, 1);
+	private Vect shadowOffset = Vect.make(1, 1);
 	
 	
 	/**
@@ -116,7 +115,7 @@ public class TextPainter extends SimplePainter {
 	
 	public void setShadowOffset(Vect shadowOffset)
 	{
-		this.shadowOffset.setTo(shadowOffset);
+		this.shadowOffset = shadowOffset;
 	}
 	
 	

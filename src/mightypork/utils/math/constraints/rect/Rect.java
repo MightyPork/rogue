@@ -5,6 +5,7 @@ import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.constraints.RectBound;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.NumConst;
+import mightypork.utils.math.constraints.vect.Digestable;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.VectConst;
 
@@ -14,7 +15,7 @@ import mightypork.utils.math.constraints.vect.VectConst;
  * 
  * @author MightyPork
  */
-public abstract class Rect implements RectBound {
+public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	
 	public static final RectConst ZERO = new RectConst(0, 0, 0, 0);
 	public static final RectConst ONE = new RectConst(0, 0, 1, 1);
@@ -159,6 +160,9 @@ public abstract class Rect implements RectBound {
 	private Rect p_edge_t;
 	private Rect p_edge_b;
 	
+	private RectDigest lastDigest = null;
+	private boolean digestCachingEnabled = false;
+	
 	
 	/**
 	 * Get a copy of current value
@@ -172,14 +176,36 @@ public abstract class Rect implements RectBound {
 	}
 	
 	
-	/**
-	 * Get a snapshot of the current state, to be used for processing.
-	 * 
-	 * @return digest
-	 */
+	@Override
 	public RectDigest digest()
 	{
-		return new RectDigest(this);
+		if (digestCachingEnabled && lastDigest != null) return lastDigest;
+		
+		return lastDigest = new RectDigest(this);
+	}
+	
+	
+	@Override
+	public void enableDigestCaching(boolean yes)
+	{
+		digestCachingEnabled = yes;
+	}
+	
+	
+	/**
+	 * @return true if digest caching is enabled.
+	 */
+	@Override
+	public boolean isDigestCachingEnabled()
+	{
+		return digestCachingEnabled;
+	}
+	
+	
+	@Override
+	public void poll()
+	{
+		if (digestCachingEnabled) lastDigest = new RectDigest(this);
 	}
 	
 	
