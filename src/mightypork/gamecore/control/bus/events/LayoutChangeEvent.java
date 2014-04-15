@@ -2,7 +2,6 @@ package mightypork.gamecore.control.bus.events;
 
 
 import mightypork.gamecore.control.bus.events.types.ImmediateEvent;
-import mightypork.utils.math.constraints.Pollable;
 
 
 /**
@@ -12,15 +11,19 @@ import mightypork.utils.math.constraints.Pollable;
  * @author MightyPork
  */
 @ImmediateEvent
-public class LayoutChangeEvent implements Event<Pollable> {
+public class LayoutChangeEvent implements Event<LayoutChangeEvent.Listener> {
 	
 	public LayoutChangeEvent() {
 	}
 	
 	
 	@Override
-	public void handleBy(Pollable handler)
+	public void handleBy(Listener handler)
 	{
-		handler.poll();
+		handler.onLayoutChanged();
+	}
+	
+	public interface Listener {
+		public void onLayoutChanged();
 	}
 }

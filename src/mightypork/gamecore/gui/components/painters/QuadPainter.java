@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.components.painters;
 
 
-import mightypork.gamecore.gui.components.SimplePainter;
+import mightypork.gamecore.gui.components.AbstractVisualComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.color.RGB;
@@ -12,7 +12,20 @@ import mightypork.utils.math.color.RGB;
  * 
  * @author MightyPork
  */
-public class QuadPainter extends SimplePainter {
+public class QuadPainter extends AbstractVisualComponent {
+	
+	@FactoryMethod
+	public static QuadPainter gradH(RGB colorLeft, RGB colorRight)
+	{
+		return new QuadPainter(colorLeft, colorRight, colorRight, colorLeft);
+	}
+	
+	
+	@FactoryMethod
+	public static QuadPainter gradV(RGB colorTop, RGB colorBottom)
+	{
+		return new QuadPainter(colorTop, colorTop, colorBottom, colorBottom);
+	}
 	
 	private final RGB colorHMinVMin;
 	private final RGB colorHMaxVMin;
@@ -50,23 +63,8 @@ public class QuadPainter extends SimplePainter {
 	
 	
 	@Override
-	public void render()
+	public void renderComponent()
 	{
 		Render.quadColor(getRect(), colorHMinVMin, colorHMaxVMin, colorHMaxVMax, colorHMinVMax);
 	}
-	
-	
-	@FactoryMethod
-	public static QuadPainter gradH(RGB colorLeft, RGB colorRight)
-	{
-		return new QuadPainter(colorLeft, colorRight, colorRight, colorLeft);
-	}
-	
-	
-	@FactoryMethod
-	public static QuadPainter gradV(RGB colorTop, RGB colorBottom)
-	{
-		return new QuadPainter(colorTop, colorTop, colorBottom, colorBottom);
-	}
-	
 }

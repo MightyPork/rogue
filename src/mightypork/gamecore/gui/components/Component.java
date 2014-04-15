@@ -1,31 +1,17 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.gamecore.control.bus.clients.ToggleableClient;
-import mightypork.gamecore.control.interf.Enableable;
 import mightypork.gamecore.gui.Hideable;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.rect.proxy.RectBound;
 
 
 /**
- * UI component interface
+ * Basic UI component interface
  * 
  * @author MightyPork
  */
-public interface Component extends Hideable, PluggableRenderable, Enableable, ToggleableClient {
-	
-	/**
-	 * Enable the component. This includes listening to event bus, and any
-	 * event-related actions.
-	 */
-	@Override
-	void enable(boolean yes);
-	
-	
-	@Override
-	boolean isEnabled();
-	
+public interface Component extends Hideable, PluggableRenderable {
 	
 	/**
 	 * Set visible. When not visible, the component should not render.
@@ -46,10 +32,16 @@ public interface Component extends Hideable, PluggableRenderable, Enableable, To
 	void setRect(RectBound rect);
 	
 	
+	/**
+	 * Render the component, if it is visible.
+	 */
 	@Override
 	void render();
 	
 	
-	@Override
-	public boolean isListening();
+	/**
+	 * The bounding rect was changed. The component should now update any cached
+	 * constraints derived from it.
+	 */
+	void updateLayout();
 }

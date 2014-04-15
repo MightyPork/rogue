@@ -32,7 +32,7 @@ public abstract class AbstractRectCache extends RectAdapter implements Constrain
 	@Override
 	protected final Rect getSource()
 	{
-		if (!inited) markDigestDirty();
+		if (!inited) poll();
 		
 		return (cachingEnabled ? cache : getCacheSource());
 	}

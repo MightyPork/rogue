@@ -2,27 +2,35 @@ package mightypork.gamecore.gui.components;
 
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 import mightypork.gamecore.audio.SoundSystem;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
 import mightypork.gamecore.control.bus.EventBus;
-import mightypork.gamecore.control.bus.clients.ClientHub;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
+import mightypork.utils.math.constraints.rect.proxy.RectBound;
 
 
-public abstract class BusEnabledPainter extends SimplePainter implements ClientHub, Component, AppAccess {
+public abstract class AbstractLayoutComponent extends AbstractVisualComponent implements LayoutComponent, AppAccess {
 	
 	private boolean enabled;
-	private boolean visible = true;
 	
 	private final AppSubModule subModule;
+	final LinkedList<Component> elements = new LinkedList<>();
 	
 	
-	public BusEnabledPainter(AppAccess app) {
+	public AbstractLayoutComponent(AppAccess app, RectBound context) {
 		this.subModule = new AppSubModule(app);
+		setRect(context);
 	}
+	
+	
+	public AbstractLayoutComponent(AppAccess app) {
+		this(app, null);
+	}
+	
 	
 	@Override
 	public EventBus getEventBus()
@@ -110,28 +118,43 @@ public abstract class BusEnabledPainter extends SimplePainter implements ClientH
 	}
 	
 	
-	@Override
-	public void setVisible(boolean visible)
+	/**
+	 * Add element to the holder, setting it's context.<br>
+	 * Element must then be then attached using the <code>attach</code> method.
+	 * 
+	 * @param elem element
+	 */
+	public abstract void add(Component elem);
+	
+	
+	/**
+	 * Connect to bus and add to element list
+	 * 
+	 * @param elem element; it's context will be set to the constraint.
+	 */
+	public final void attach(Component elem)
 	{
-		this.visible = visible;
+		if (elem == null) return;
+		
+		elements.add(elem);
+		addChildClient(elem);
+	}
+	
+	@Override
+	public void renderComponent()
+	{
+		for (final Component element : elements) {
+			element.render();
+		}
 	}
 	
 	
 	@Override
-	public boolean isVisible()
+	public void updateLayout()
 	{
-		return visible;
+		for (final Component element : elements) {
+			element.render();
+		}
 	}
-	
-	
-	@Override
-	public final void render()
-	{
-		if (!visible) return;
-		paint();
-	}
-	
-	
-	protected abstract void paint();
 	
 }

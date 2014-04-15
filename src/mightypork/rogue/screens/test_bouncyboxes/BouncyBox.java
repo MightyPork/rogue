@@ -4,7 +4,7 @@ package mightypork.rogue.screens.test_bouncyboxes;
 import java.util.Random;
 
 import mightypork.gamecore.control.timing.Updateable;
-import mightypork.gamecore.gui.components.SimplePainter;
+import mightypork.gamecore.gui.components.AbstractVisualComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.Easing;
 import mightypork.utils.math.color.RGB;
@@ -14,7 +14,7 @@ import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.rect.caching.RectCache;
 
 
-public class BouncyBox extends SimplePainter implements Updateable {
+public class BouncyBox extends AbstractVisualComponent implements Updateable {
 	
 	private final Random rand = new Random();
 	
@@ -35,7 +35,7 @@ public class BouncyBox extends SimplePainter implements Updateable {
 	
 	
 	@Override
-	public void render()
+	public void renderComponent()
 	{
 		Render.quad(box, RGB.GREEN);
 	}
@@ -64,7 +64,7 @@ public class BouncyBox extends SimplePainter implements Updateable {
 	
 	
 	@Override
-	public void onChange()
+	public void updateLayout()
 	{
 		box.poll();
 	}

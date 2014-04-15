@@ -20,7 +20,6 @@ import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.files.InstanceLock;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogWriter;
-import mightypork.utils.math.constraints.Pollable;
 
 
 /**
@@ -256,7 +255,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		// framework events
 		bus.addChannel(DestroyEvent.class, Destroyable.class);
 		bus.addChannel(UpdateEvent.class, Updateable.class);
-		bus.addChannel(LayoutChangeEvent.class, Pollable.class);
+		bus.addChannel(LayoutChangeEvent.class, LayoutChangeEvent.Listener.class);
 		
 		// input events
 		bus.addChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
