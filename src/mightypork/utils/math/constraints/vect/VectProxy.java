@@ -1,5 +1,7 @@
 package mightypork.utils.math.constraints.vect;
 
+import mightypork.utils.math.constraints.vect.proxy.VectAdapter;
+
 
 public class VectProxy extends VectAdapter {
 	

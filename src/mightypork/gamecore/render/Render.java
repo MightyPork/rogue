@@ -10,7 +10,7 @@ import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.rect.Rect;
-import mightypork.utils.math.constraints.rect.RectDigest;
+import mightypork.utils.math.constraints.rect.caching.RectDigest;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.VectConst;
 

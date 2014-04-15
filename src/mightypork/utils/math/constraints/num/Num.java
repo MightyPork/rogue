@@ -3,7 +3,13 @@ package mightypork.utils.math.constraints.num;
 
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.Calc;
+import mightypork.utils.math.constraints.DigestCache;
 import mightypork.utils.math.constraints.Digestable;
+import mightypork.utils.math.constraints.num.caching.NumCache;
+import mightypork.utils.math.constraints.num.caching.NumDigest;
+import mightypork.utils.math.constraints.num.mutable.NumVar;
+import mightypork.utils.math.constraints.num.proxy.NumBound;
+import mightypork.utils.math.constraints.num.proxy.NumBoundAdapter;
 
 
 public abstract class Num implements NumBound, Digestable<NumDigest> {
@@ -62,9 +68,15 @@ public abstract class Num implements NumBound, Digestable<NumDigest> {
 	private Num p_square;
 	private Num p_neg;
 	private Num p_abs;
-	private NumDigest lastDigest = null;
-	private boolean digestCachingEnabled = false;
-	private boolean digestDirty = true;
+	
+	private DigestCache<NumDigest> dc = new DigestCache<NumDigest>() {
+		
+		@Override
+		protected NumDigest createDigest()
+		{
+			return new NumDigest(Num.this);
+		}
+	};
 	
 	
 	public NumConst freeze()
@@ -94,38 +106,28 @@ public abstract class Num implements NumBound, Digestable<NumDigest> {
 	@Override
 	public NumDigest digest()
 	{
-		if (digestCachingEnabled) {
-			if (digestDirty) {
-				lastDigest = new NumDigest(this);
-				digestDirty = false;
-			}
-			
-			return lastDigest;
-		}
-		
-		return new NumDigest(this);
+		return dc.digest();
 	}
 	
 	
 	@Override
 	public void enableDigestCaching(boolean yes)
 	{
-		digestCachingEnabled = yes;
-		digestDirty = true; // schedule update nest time digest() is called
+		dc.enableDigestCaching(yes);
 	}
 	
 	
 	@Override
 	public boolean isDigestCachingEnabled()
 	{
-		return digestCachingEnabled;
+		return dc.isDigestCachingEnabled();
 	}
 	
 	
 	@Override
-	public void poll()
+	public void markDigestDirty()
 	{
-		if (digestCachingEnabled) digestDirty = true;
+		dc.markDigestDirty();
 	}
 	
 	

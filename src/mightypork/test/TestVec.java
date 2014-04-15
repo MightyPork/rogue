@@ -3,7 +3,7 @@ package mightypork.test;
 
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.VectConst;
-import mightypork.utils.math.constraints.vect.VectVar;
+import mightypork.utils.math.constraints.vect.mutable.VectVar;
 
 
 public class TestVec {

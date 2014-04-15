@@ -2,8 +2,8 @@ package mightypork.test;
 
 
 import mightypork.utils.math.constraints.vect.Vect;
-import mightypork.utils.math.constraints.vect.VectCache;
-import mightypork.utils.math.constraints.vect.VectVar;
+import mightypork.utils.math.constraints.vect.caching.VectCache;
+import mightypork.utils.math.constraints.vect.mutable.VectVar;
 
 
 public class TestConstCaching {
@@ -23,7 +23,7 @@ public class TestConstCaching {
 		System.out.println("cache = " + cache);
 		System.out.println("cache digest = " + cache.digest());
 		System.out.println("\n-- cache.poll() --\n");
-		cache.poll();
+		cache.markDigestDirty();
 		System.out.println("in = " + in);
 		System.out.println("cache = " + cache);
 		System.out.println("cache digest = " + cache.digest());
@@ -33,7 +33,7 @@ public class TestConstCaching {
 		System.out.println("cache = " + cache);
 		System.out.println("cache digest = " + cache.digest());
 		System.out.println("\n-- cache.poll() --\n");
-		cache.poll();
+		cache.markDigestDirty();
 		System.out.println("cache = " + cache);
 		System.out.println("cache digest = " + cache.digest());
 		

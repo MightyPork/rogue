@@ -3,8 +3,8 @@ package mightypork.gamecore.gui.components.layout;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.components.PluggableRenderable;
-import mightypork.utils.math.constraints.rect.RectBound;
-import mightypork.utils.math.constraints.rect.TiledRect;
+import mightypork.utils.math.constraints.rect.builders.TiledRect;
+import mightypork.utils.math.constraints.rect.proxy.RectBound;
 
 
 /**

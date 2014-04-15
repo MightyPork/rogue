@@ -9,9 +9,9 @@ import mightypork.gamecore.render.Render;
 import mightypork.utils.math.Easing;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.num.Num;
-import mightypork.utils.math.constraints.num.NumAnimated;
+import mightypork.utils.math.constraints.num.mutable.NumAnimated;
 import mightypork.utils.math.constraints.rect.Rect;
-import mightypork.utils.math.constraints.rect.RectCache;
+import mightypork.utils.math.constraints.rect.caching.RectCache;
 
 
 public class BouncyBox extends SimplePainter implements Updateable {
@@ -64,7 +64,7 @@ public class BouncyBox extends SimplePainter implements Updateable {
 	
 	
 	@Override
-	public void onPoll()
+	public void onChange()
 	{
 		box.poll();
 	}

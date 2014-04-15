@@ -2,7 +2,7 @@ package mightypork.gamecore.control.bus.events;
 
 
 import mightypork.gamecore.control.bus.events.types.ImmediateEvent;
-import mightypork.gamecore.control.timing.Pollable;
+import mightypork.utils.math.constraints.Pollable;
 
 
 /**

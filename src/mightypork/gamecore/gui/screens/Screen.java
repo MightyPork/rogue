@@ -12,7 +12,7 @@ import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.math.constraints.rect.Rect;
-import mightypork.utils.math.constraints.rect.RectBound;
+import mightypork.utils.math.constraints.rect.proxy.RectBound;
 import mightypork.utils.math.constraints.vect.Vect;
 
 

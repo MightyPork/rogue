@@ -10,13 +10,10 @@ import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.control.bus.clients.ClientHub;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.utils.math.constraints.rect.Rect;
-import mightypork.utils.math.constraints.rect.RectBound;
 
 
 public abstract class BusEnabledPainter extends SimplePainter implements ClientHub, Component, AppAccess {
 	
-	private RectBound context;
 	private boolean enabled;
 	private boolean visible = true;
 	
@@ -26,21 +23,6 @@ public abstract class BusEnabledPainter extends SimplePainter implements ClientH
 	public BusEnabledPainter(AppAccess app) {
 		this.subModule = new AppSubModule(app);
 	}
-	
-	
-	@Override
-	public void setRect(RectBound context)
-	{
-		this.context = context;
-	}
-	
-	
-	@Override
-	public Rect getRect()
-	{
-		return context.getRect();
-	}
-	
 	
 	@Override
 	public EventBus getEventBus()

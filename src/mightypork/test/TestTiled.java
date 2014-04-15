@@ -2,7 +2,7 @@ package mightypork.test;
 
 
 import mightypork.utils.math.constraints.num.Num;
-import mightypork.utils.math.constraints.num.NumVar;
+import mightypork.utils.math.constraints.num.mutable.NumVar;
 import mightypork.utils.math.constraints.rect.Rect;
 
 

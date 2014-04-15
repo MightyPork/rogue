@@ -11,7 +11,7 @@ import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
-import mightypork.utils.math.constraints.rect.RectBound;
+import mightypork.utils.math.constraints.rect.proxy.RectBound;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.string.StringProvider;
 

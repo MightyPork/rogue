@@ -11,7 +11,6 @@ import mightypork.gamecore.audio.SoundSystem;
 import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.control.bus.events.*;
 import mightypork.gamecore.control.interf.Destroyable;
-import mightypork.gamecore.control.timing.Pollable;
 import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
@@ -21,6 +20,7 @@ import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.files.InstanceLock;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.LogWriter;
+import mightypork.utils.math.constraints.Pollable;
 
 
 /**

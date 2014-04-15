@@ -1,5 +1,7 @@
 package mightypork.utils.math.constraints.num;
 
+import mightypork.utils.math.constraints.num.caching.NumDigest;
+
 
 /**
  * Constant number.<br>

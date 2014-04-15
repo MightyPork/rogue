@@ -2,9 +2,17 @@ package mightypork.utils.math.constraints.rect;
 
 
 import mightypork.utils.annotations.FactoryMethod;
+import mightypork.utils.math.constraints.DigestCache;
 import mightypork.utils.math.constraints.Digestable;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.NumConst;
+import mightypork.utils.math.constraints.rect.builders.TiledRect;
+import mightypork.utils.math.constraints.rect.caching.RectCache;
+import mightypork.utils.math.constraints.rect.caching.RectDigest;
+import mightypork.utils.math.constraints.rect.mutable.RectVar;
+import mightypork.utils.math.constraints.rect.proxy.RectBound;
+import mightypork.utils.math.constraints.rect.proxy.RectBoundAdapter;
+import mightypork.utils.math.constraints.rect.proxy.RectVectAdapter;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.VectConst;
 
@@ -159,9 +167,14 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	private Rect p_edge_t;
 	private Rect p_edge_b;
 	
-	private RectDigest lastDigest = null;
-	private boolean digestCachingEnabled = false;
-	private boolean digestDirty = true; // digest is null
+	private DigestCache<RectDigest> dc = new DigestCache<RectDigest>() {
+		
+		@Override
+		protected RectDigest createDigest()
+		{
+			return new RectDigest(Rect.this);
+		}
+	};
 	
 	
 	/**
@@ -191,38 +204,28 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	@Override
 	public RectDigest digest()
 	{
-		if (digestCachingEnabled) {
-			if (digestDirty) {
-				lastDigest = new RectDigest(this);
-				digestDirty = false;
-			}
-			
-			return lastDigest;
-		}
-		
-		return new RectDigest(this);
+		return dc.digest();
 	}
 	
 	
 	@Override
 	public void enableDigestCaching(boolean yes)
 	{
-		digestCachingEnabled = yes;
-		digestDirty = true; // schedule update nest time digest() is called
+		dc.enableDigestCaching(yes);
 	}
 	
 	
 	@Override
 	public boolean isDigestCachingEnabled()
 	{
-		return digestCachingEnabled;
+		return dc.isDigestCachingEnabled();
 	}
 	
 	
 	@Override
-	public void poll()
+	public void markDigestDirty()
 	{
-		if (digestCachingEnabled) digestDirty = true;
+		dc.markDigestDirty();
 	}
 	
 	

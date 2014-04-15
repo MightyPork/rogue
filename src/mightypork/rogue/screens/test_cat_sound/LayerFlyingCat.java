@@ -17,10 +17,10 @@ import mightypork.rogue.Res;
 import mightypork.utils.math.Easing;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.num.Num;
-import mightypork.utils.math.constraints.num.NumAnimated;
+import mightypork.utils.math.constraints.num.mutable.NumAnimated;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.vect.Vect;
-import mightypork.utils.math.constraints.vect.VectAnimated;
+import mightypork.utils.math.constraints.vect.mutable.VectAnimated;
 
 
 public class LayerFlyingCat extends ScreenLayer implements Updateable, MouseButtonEvent.Listener {

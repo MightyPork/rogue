@@ -2,6 +2,7 @@ package mightypork.utils.math.constraints.rect;
 
 
 import mightypork.utils.math.constraints.num.NumConst;
+import mightypork.utils.math.constraints.rect.caching.RectDigest;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.VectConst;
 

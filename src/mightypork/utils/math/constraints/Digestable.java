@@ -1,14 +1,11 @@
 package mightypork.utils.math.constraints;
 
 
-import mightypork.gamecore.control.timing.Pollable;
-
-
 /**
  * <p>
  * Interface for constraints that support digests. Digest is a small data object
- * with final fields, typically primitive, used for procesing (such as rendering
- * or other very frequent operations).
+ * with final fields, typically primitive, used for processing (such as
+ * rendering or other very frequent operations).
  * </p>
  * <p>
  * Taking a digest is expensive, so if it needs to be done often and the value
@@ -16,15 +13,19 @@ import mightypork.gamecore.control.timing.Pollable;
  * resize), it's useful to cache the last digest and reuse it until such an
  * event occurs again.
  * </p>
+ * <p>
+ * Implementing class typically needs a field to store the last digest, a flag
+ * that digest caching is enabled, and a flag that a digest is dirty.
+ * </p>
  * 
  * @author MightyPork
  * @param <D> digest class
  */
-public interface Digestable<D> extends Pollable {
+public interface Digestable<D> {
 	
 	/**
-	 * Take a digest. If digest caching is enabled and a digest is already
-	 * cached, it should be reused instead of making a new one.
+	 * Take a digest. If digest caching is enabled and the cached digest is
+	 * marked as dirty, a new one should be made.
 	 * 
 	 * @return digest
 	 */
@@ -51,11 +52,10 @@ public interface Digestable<D> extends Pollable {
 	
 	
 	/**
-	 * If digest caching is enabled, query for a new digest and store it in a
-	 * cache variable. This method shall only be called when the constraint is
-	 * expected to have changed.
+	 * If digest caching is enabled, mark current cached value as "dirty". Dirty
+	 * digest should be re-created next time a value is requested.<br>
+	 * 
 	 */
-	@Override
-	void poll();
+	void markDigestDirty();
 	
 }
