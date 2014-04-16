@@ -8,7 +8,7 @@ import java.io.IOException;
 import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
-import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.rect.caching.RectDigest;
 import mightypork.utils.math.constraints.vect.Vect;
@@ -36,23 +36,23 @@ public class Render {
 	/**
 	 * Bind GL color
 	 * 
-	 * @param color RGB color
+	 * @param color Color color
 	 */
-	public static void setColor(RGB color)
+	public static void setColor(Color color)
 	{
-		if (color != null) glColor4d(color.r, color.g, color.b, color.a);
+		if (color != null) glColor4d(color.red(), color.green(), color.blue(), color.alpha());
 	}
 	
 	
 	/**
 	 * Bind GL color
 	 * 
-	 * @param color RGB color
+	 * @param color Color color
 	 * @param alpha alpha multiplier
 	 */
-	public static void setColor(RGB color, double alpha)
+	public static void setColor(Color color, double alpha)
 	{
-		if (color != null) glColor4d(color.r, color.g, color.b, color.a * alpha);
+		if (color != null) glColor4d(color.red(), color.green(), color.blue(), color.alpha() * alpha);
 	}
 	
 	
@@ -348,7 +348,7 @@ public class Render {
 	 * @param rect rectangle
 	 * @param color draw color
 	 */
-	public static void quad(Rect rect, RGB color)
+	public static void quad(Rect rect, Color color)
 	{
 		setColor(color);
 		quad(rect);
@@ -425,7 +425,7 @@ public class Render {
 	 * @param color1 left color
 	 * @param color2 right color
 	 */
-	public static void quadGradH(Rect quad, RGB color1, RGB color2)
+	public static void quadGradH(Rect quad, Color color1, Color color2)
 	{
 		quadColor(quad, color1, color2, color2, color1);
 	}
@@ -440,7 +440,7 @@ public class Render {
 	 * @param colorHMaxVMax
 	 * @param colorHMinVMax
 	 */
-	public static void quadColor(Rect quad, RGB colorHMinVMin, RGB colorHMaxVMin, RGB colorHMaxVMax, RGB colorHMinVMax)
+	public static void quadColor(Rect quad, Color colorHMinVMin, Color colorHMaxVMin, Color colorHMaxVMax, Color colorHMinVMax)
 	{
 		final RectDigest r = quad.digest();
 		
@@ -470,7 +470,7 @@ public class Render {
 	 * @param color1 top color
 	 * @param color2 bottom color
 	 */
-	public static void quadGradV(Rect quad, RGB color1, RGB color2)
+	public static void quadGradV(Rect quad, Color color1, Color color2)
 	{
 		quadColor(quad, color1, color1, color2, color2);
 	}
@@ -484,7 +484,7 @@ public class Render {
 	 * @param texture texture instance
 	 * @param tint color tint
 	 */
-	public static void quadTextured(Rect quad, Rect uvs, Texture texture, RGB tint)
+	public static void quadTextured(Rect quad, Rect uvs, Texture texture, Color tint)
 	{
 		bindTexture(texture);
 		setColor(tint);
@@ -502,7 +502,7 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, Rect uvs, Texture texture)
 	{
-		quadTextured(quad, uvs, texture, RGB.WHITE);
+		quadTextured(quad, uvs, texture, Color.WHITE);
 	}
 	
 	
@@ -514,7 +514,7 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, Texture texture)
 	{
-		quadTextured(quad, Rect.ONE, texture, RGB.WHITE);
+		quadTextured(quad, Rect.ONE, texture, Color.WHITE);
 	}
 	
 	
@@ -526,7 +526,7 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, TxQuad txquad)
 	{
-		quadTextured(quad, txquad, RGB.WHITE);
+		quadTextured(quad, txquad, Color.WHITE);
 	}
 	
 	
@@ -537,7 +537,7 @@ public class Render {
 	 * @param txquad texture instance
 	 * @param tint color tint
 	 */
-	public static void quadTextured(Rect quad, TxQuad txquad, RGB tint)
+	public static void quadTextured(Rect quad, TxQuad txquad, Color tint)
 	{
 		quadTextured(quad, txquad.uvs, txquad.tx, tint);
 	}

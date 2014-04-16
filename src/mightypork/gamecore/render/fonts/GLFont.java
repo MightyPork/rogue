@@ -1,7 +1,7 @@
 package mightypork.gamecore.render.fonts;
 
 
-import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.vect.Vect;
 
 
@@ -18,7 +18,7 @@ public interface GLFont {
 	 * @param text text to draw
 	 * @param color draw color
 	 */
-	void draw(String text, RGB color);
+	void draw(String text, Color color);
 	
 	
 	/**

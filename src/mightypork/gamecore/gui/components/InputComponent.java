@@ -33,11 +33,7 @@ public abstract class InputComponent extends VisualComponent implements Enableab
 		return enabled;
 	}
 	
-	
-	@Override
-	public abstract void renderComponent();
-	
 	protected void triggerAction() {
-		action.run();
+		if(action != null) action.run();
 	}
 }

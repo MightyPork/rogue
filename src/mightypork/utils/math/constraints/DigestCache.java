@@ -9,21 +9,21 @@ package mightypork.utils.math.constraints;
  */
 public abstract class DigestCache<D> implements Digestable<D> {
 	
-	private D digest;
-	private boolean enabled;
-	private boolean dirty;
+	private D last_digest;
+	private boolean caching_enabled;
+	private boolean dirty = true;
 	
 	
 	@Override
 	public final D digest()
 	{
-		if (enabled) {
-			if (dirty || digest == null) {
-				digest = createDigest();
+		if (caching_enabled) {
+			if (dirty || last_digest == null) {
+				last_digest = createDigest();
 				dirty = false;
 			}
 			
-			return digest;
+			return last_digest;
 		}
 		
 		return createDigest();
@@ -39,7 +39,7 @@ public abstract class DigestCache<D> implements Digestable<D> {
 	@Override
 	public final void enableDigestCaching(boolean yes)
 	{
-		enabled = yes;
+		caching_enabled = yes;
 		markDigestDirty(); // mark dirty
 	}
 	
@@ -47,7 +47,7 @@ public abstract class DigestCache<D> implements Digestable<D> {
 	@Override
 	public final boolean isDigestCachingEnabled()
 	{
-		return enabled;
+		return caching_enabled;
 	}
 	
 	

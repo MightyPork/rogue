@@ -14,7 +14,6 @@ public class ScreenTestRender extends LayeredScreen {
 		
 		addLayer(new LayerFps(this));
 		addLayer(new LayerTestGradient(this));
-		addLayer(new LayerFlyingCat(this));
 	}
 	
 	

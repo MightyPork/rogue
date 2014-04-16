@@ -12,7 +12,7 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Res;
-import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.vect.Vect;
 
@@ -54,10 +54,10 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			boxes.add(bbr);
 		}
 		
-		final TextPainter tp = new TextPainter(Res.getFont("default"), AlignX.LEFT, RGB.WHITE);
+		final TextPainter tp = new TextPainter(Res.getFont("default"), AlignX.LEFT, Color.WHITE);
 		tp.setText("Press \"C\" for \"Cat\" screen.");
 		final Num shadowOffset = tp.height().div(16);
-		tp.setShadow(RGB.RED, Vect.make(shadowOffset, shadowOffset));
+		tp.setShadow(Color.RED, Vect.make(shadowOffset, shadowOffset));
 		
 		layout.add(tp);
 	}

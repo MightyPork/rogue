@@ -7,8 +7,6 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.render.fonts.impl.DeferredFont;
-import mightypork.gamecore.render.fonts.impl.NullFont;
-import mightypork.utils.logging.Log;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -18,10 +16,7 @@ import org.newdawn.slick.opengl.Texture;
  * 
  * @author MightyPork
  */
-public class FontBank extends AppAdapter {
-	
-	private static final GLFont NULL_FONT = new NullFont();
-	
+public class FontBank extends AppAdapter {	
 	
 	/**
 	 * @param app app access
@@ -31,6 +26,7 @@ public class FontBank extends AppAdapter {
 	}
 	
 	private final HashMap<String, GLFont> fonts = new HashMap<>();
+	private final HashMap<String, String> aliases = new HashMap<>();
 	
 	
 	/**
@@ -57,6 +53,17 @@ public class FontBank extends AppAdapter {
 	{
 		fonts.put(key, font);
 	}
+
+	/**
+	 * Add a font alias.
+	 * 
+	 * @param alias_key alias key
+	 * @param font_key font key
+	 */
+	public void addAlias(String alias_key, String font_key)
+	{
+		aliases.put(alias_key, font_key);
+	}
 	
 	
 	/**
@@ -67,11 +74,12 @@ public class FontBank extends AppAdapter {
 	 */
 	public GLFont getFont(String key)
 	{
-		final GLFont f = fonts.get(key);
+		GLFont f = fonts.get(key);
 		
-		if (f == null) {
-			Log.w("There's no font called " + key + "!");
-			return NULL_FONT;
+		if(f == null) f = fonts.get(aliases.get(key));
+		
+		if (f == null) {			
+			throw new RuntimeException("There's no font called " + key + "!");
 		}
 		
 		return f;

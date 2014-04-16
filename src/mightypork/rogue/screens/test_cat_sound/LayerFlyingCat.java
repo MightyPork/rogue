@@ -15,7 +15,7 @@ import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Res;
 import mightypork.utils.math.Easing;
-import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.mutable.NumAnimated;
 import mightypork.utils.math.constraints.rect.Rect;
@@ -48,12 +48,12 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		cat.enableCaching(false);
 		
 		// frame around cat
-		QuadPainter cat_frame = QuadPainter.gradV(RGB.YELLOW, RGB.RED);
+		QuadPainter cat_frame = QuadPainter.gradV(Color.YELLOW, Color.RED);
 		cat_frame.setRect(cat.grow(cat.height().mul(0.05)));
 		cat_frame.enableCaching(false);
 
 		// frame shadow
-		QuadPainter cat_shadow = new QuadPainter(RGB.dark(0.4));
+		QuadPainter cat_shadow = new QuadPainter(Color.dark(0.4));
 		cat_shadow.setRect(cat_frame.move(Vect.make(cat.height().mul(0.05))));
 		cat_shadow.enableCaching(false);
 
@@ -66,9 +66,9 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		// Meow
 		TextPainter tp = new TextPainter(Res.getFont("press_start"));
 		tp.setAlign(AlignX.CENTER);
-		tp.setColor(RGB.YELLOW);
+		tp.setColor(Color.YELLOW);
 		tp.setText("Meow!");
-		tp.setShadow(RGB.dark(0.5), Vect.make(tp.height().div(16)));
+		tp.setShadow(Color.dark(0.5), Vect.make(tp.height().div(16)));
 		tp.setRect(Rect.make(cat.height().half()).centerTo(mouse));
 		tp.enableCaching(false);
 		root.add(tp);

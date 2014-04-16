@@ -60,12 +60,15 @@ public class Res {
 		font = new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16);
 		font.setAntialias(true);
 		font.setFilter(FilterMode.NEAREST);
-		fonts.loadFont("default", font);
+		fonts.loadFont("polygon_pixel", font);
 
 		font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16);
 		font.setAntialias(true);
 		font.setFilter(FilterMode.NEAREST);
 		fonts.loadFont("press_start", font);
+		
+		fonts.addAlias("default", "polygon_pixel");
+		fonts.addAlias("main_menu_button", "press_start");
 	}
 	
 	

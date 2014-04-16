@@ -10,7 +10,7 @@ import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.rogue.Res;
-import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.rect.proxy.RectBound;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.string.StringProvider;
@@ -40,7 +40,7 @@ public class LayerFps extends ScreenLayer {
 		
 		final RectBound constraint = root.topRight().add(-8, 8).expand(0, 0, 0, 32);
 		
-		tp = new TextPainter(font, AlignX.RIGHT, RGB.WHITE, new StringProvider() {
+		tp = new TextPainter(font, AlignX.RIGHT, Color.WHITE, new StringProvider() {
 			
 			@Override
 			public String getString()
@@ -50,7 +50,7 @@ public class LayerFps extends ScreenLayer {
 		});
 		
 		tp.setRect(constraint);		
-		tp.setShadow(RGB.BLACK, Vect.make(tp.height().div(16)));
+		tp.setShadow(Color.BLACK, Vect.make(tp.height().div(16)));
 		
 		root.add(tp);
 	}

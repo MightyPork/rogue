@@ -3,7 +3,6 @@ package mightypork.gamecore.render.fonts.impl;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -22,7 +21,7 @@ import java.util.Map;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.logging.Log;
-import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.VectConst;
 
@@ -141,7 +140,7 @@ public class CachedFont implements GLFont {
 		g = (Graphics2D) fontImage.getGraphics();
 		if (antiAlias == true) g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setFont(font);
-		g.setColor(Color.WHITE);
+		g.setColor(java.awt.Color.WHITE);
 		g.drawString(String.valueOf(ch), 0, metrics.getAscent());
 		
 		return fontImage;
@@ -225,7 +224,7 @@ public class CachedFont implements GLFont {
 			BufferedImage imag = new BufferedImage(textureWidth, textureHeight, BufferedImage.TYPE_INT_ARGB);
 			final Graphics2D g = (Graphics2D) imag.getGraphics();
 			
-			g.setColor(new Color(0, 0, 0, 1));
+			g.setColor(new java.awt.Color(0, 0, 0, 1));
 			g.fillRect(0, 0, textureWidth, textureHeight);
 			
 			int rowHeight = 0, posX = 0, posY = 0;
@@ -392,14 +391,14 @@ public class CachedFont implements GLFont {
 	
 	
 	@Override
-	public void draw(String text, RGB color)
+	public void draw(String text, Color color)
 	{
 		GLUtils.checkGLContext();
 		
 		glPushAttrib(GL_ENABLE_BIT);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, textureID);
-		glColor4d(color.r, color.g, color.b, color.a);
+		glColor4d(color.red(), color.green(), color.blue(), color.alpha());
 		glBegin(GL_QUADS);
 		
 		CharTile chtx = null;

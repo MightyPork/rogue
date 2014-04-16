@@ -12,7 +12,7 @@ import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.utils.annotations.Alias;
 import mightypork.utils.files.FileUtils;
-import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.vect.Vect;
 
 
@@ -148,7 +148,7 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	 * @param color draw color
 	 */
 	@Override
-	public void draw(String str, RGB color)
+	public void draw(String str, Color color)
 	{
 		if (!ensureLoaded()) return;
 		

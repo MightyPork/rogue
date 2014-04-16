@@ -4,7 +4,7 @@ package mightypork.gamecore.gui.components.painters;
 import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.annotations.FactoryMethod;
-import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.color.Color;
 
 
 /**
@@ -15,22 +15,22 @@ import mightypork.utils.math.color.RGB;
 public class QuadPainter extends VisualComponent {
 	
 	@FactoryMethod
-	public static QuadPainter gradH(RGB colorLeft, RGB colorRight)
+	public static QuadPainter gradH(Color colorLeft, Color colorRight)
 	{
 		return new QuadPainter(colorLeft, colorRight, colorRight, colorLeft);
 	}
 	
 	
 	@FactoryMethod
-	public static QuadPainter gradV(RGB colorTop, RGB colorBottom)
+	public static QuadPainter gradV(Color colorTop, Color colorBottom)
 	{
 		return new QuadPainter(colorTop, colorTop, colorBottom, colorBottom);
 	}
 	
-	private final RGB colorHMinVMin;
-	private final RGB colorHMaxVMin;
-	private final RGB colorHMaxVMax;
-	private final RGB colorHMinVMax;
+	private final Color colorHMinVMin;
+	private final Color colorHMaxVMin;
+	private final Color colorHMaxVMax;
+	private final Color colorHMinVMax;
 	
 	
 	/**
@@ -38,7 +38,7 @@ public class QuadPainter extends VisualComponent {
 	 * 
 	 * @param color
 	 */
-	public QuadPainter(RGB color) {
+	public QuadPainter(Color color) {
 		this.colorHMinVMin = color;
 		this.colorHMaxVMin = color;
 		this.colorHMaxVMax = color;
@@ -54,7 +54,7 @@ public class QuadPainter extends VisualComponent {
 	 * @param colorHMaxVMax
 	 * @param colorHMinVMax
 	 */
-	public QuadPainter(RGB colorHMinVMin, RGB colorHMaxVMin, RGB colorHMaxVMax, RGB colorHMinVMax) {
+	public QuadPainter(Color colorHMinVMin, Color colorHMaxVMin, Color colorHMaxVMax, Color colorHMinVMax) {
 		this.colorHMinVMin = colorHMinVMin;
 		this.colorHMaxVMin = colorHMaxVMin;
 		this.colorHMaxVMax = colorHMaxVMax;

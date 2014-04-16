@@ -61,12 +61,4 @@ public class ScreenTestCat extends LayeredScreen {
 	{
 		return "test.cat";
 	}
-	
-	
-	@Override
-	protected void renderScreen()
-	{
-		
-		super.renderScreen();
-	}
 }

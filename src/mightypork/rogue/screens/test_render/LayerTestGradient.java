@@ -4,7 +4,7 @@ package mightypork.rogue.screens.test_render;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.render.Render;
-import mightypork.utils.math.color.RGB;
+import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.rect.proxy.RectBound;
 
 
@@ -25,9 +25,9 @@ public class LayerTestGradient extends ScreenLayer {
 	@Override
 	protected void renderLayer()
 	{
-		Render.quadColor(root, RGB.WHITE, RGB.BLUE, RGB.BLACK, RGB.PURPLE);
-		Render.quadGradH(pos1.getRect(), RGB.GREEN, RGB.RED);
-		Render.quadGradV(pos2.getRect(), RGB.WHITE, RGB.PURPLE);
+		Render.quadColor(root, Color.WHITE, Color.BLUE, Color.BLACK, Color.MAGENTA);
+		Render.quadGradH(pos1.getRect(), Color.GREEN, Color.RED);
+		Render.quadGradV(pos2.getRect(), Color.WHITE, Color.MAGENTA);
 	}
 	
 	

@@ -23,6 +23,7 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	
 	public VisualComponent() {
 		super();
+		enableCaching(false);
 	}
 	
 	
@@ -87,7 +88,7 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	/**
 	 * Draw the component (it's visible)
 	 */
-	public abstract void renderComponent();
+	protected abstract void renderComponent();
 	
 	
 	@Override

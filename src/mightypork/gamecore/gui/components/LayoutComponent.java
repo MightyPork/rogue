@@ -26,6 +26,7 @@ public abstract class LayoutComponent extends VisualComponent implements Enablea
 	public LayoutComponent(AppAccess app, RectBound context) {
 		this.subModule = new AppSubModule(app);
 		setRect(context);
+		enableCaching(true); // layout is typically updated only when screen resizes.
 	}
 	
 	
