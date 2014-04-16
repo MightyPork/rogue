@@ -14,6 +14,7 @@ import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
+import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
@@ -68,7 +69,9 @@ public class App extends BaseApp {
 		screens.add(new ScreenTestCat(this));
 		screens.add(new ScreenTestRender(this));
 		
-		screens.showScreen("test.render");
+		screens.add(new ScreenMainMenu(this));
+		
+		screens.showScreen("rogue.menu");
 	}
 	
 	

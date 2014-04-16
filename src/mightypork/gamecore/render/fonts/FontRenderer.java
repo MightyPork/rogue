@@ -1,6 +1,7 @@
 package mightypork.gamecore.render.fonts;
 
 
+import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.render.Render;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.rect.Rect;
@@ -15,11 +16,6 @@ import mightypork.utils.math.constraints.vect.Vect;
 public class FontRenderer {
 	
 	private GLFont font;
-	
-	public static enum Align
-	{
-		LEFT, CENTER, RIGHT;
-	}
 	
 	private RGB color;
 	
@@ -125,7 +121,7 @@ public class FontRenderer {
 	 *            for align)
 	 * @param align horizontal alignment (with respect to bounds)
 	 */
-	public void draw(String text, Rect bounds, Align align)
+	public void draw(String text, Rect bounds, AlignX align)
 	{
 		this.draw(text, bounds, align, this.color);
 	}
@@ -140,7 +136,7 @@ public class FontRenderer {
 	 * @param align horizontal alignment (with respect to bounds)
 	 * @param color drawing color
 	 */
-	public void draw(String text, Rect bounds, Align align, RGB color)
+	public void draw(String text, Rect bounds, AlignX align, RGB color)
 	{
 		Vect start;
 		
@@ -171,7 +167,7 @@ public class FontRenderer {
 	 * @param height drawing height
 	 * @param align horizontal alignment
 	 */
-	public void draw(String text, Vect pos, double height, Align align)
+	public void draw(String text, Vect pos, double height, AlignX align)
 	{
 		draw(text, pos, height, align, this.color);
 	}
@@ -186,7 +182,7 @@ public class FontRenderer {
 	 * @param align horizontal alignment
 	 * @param color drawing color
 	 */
-	public void draw(String text, Vect pos, double height, Align align, RGB color)
+	public void draw(String text, Vect pos, double height, AlignX align, RGB color)
 	{
 		
 		final double w = getWidth(text, height);

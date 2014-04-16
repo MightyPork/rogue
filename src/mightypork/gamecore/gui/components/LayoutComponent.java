@@ -15,7 +15,7 @@ import mightypork.gamecore.render.DisplaySystem;
 import mightypork.utils.math.constraints.rect.proxy.RectBound;
 
 
-public abstract class LayoutComponent extends VisualComponent implements Component, Enableable, ClientHub, AppAccess {
+public abstract class LayoutComponent extends VisualComponent implements Enableable, ClientHub, AppAccess {
 	
 	private boolean enabled;
 	

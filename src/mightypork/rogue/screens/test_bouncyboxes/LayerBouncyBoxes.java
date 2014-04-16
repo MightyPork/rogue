@@ -4,13 +4,13 @@ package mightypork.rogue.screens.test_bouncyboxes;
 import java.util.ArrayList;
 import java.util.List;
 
+import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.RowHolder;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
-import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.num.Num;
@@ -54,7 +54,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			boxes.add(bbr);
 		}
 		
-		final TextPainter tp = new TextPainter(Res.getFont("default"), Align.LEFT, RGB.WHITE);
+		final TextPainter tp = new TextPainter(Res.getFont("default"), AlignX.LEFT, RGB.WHITE);
 		tp.setText("Press \"C\" for \"Cat\" screen.");
 		final Num shadowOffset = tp.height().div(16);
 		tp.setShadow(RGB.RED, Vect.make(shadowOffset, shadowOffset));

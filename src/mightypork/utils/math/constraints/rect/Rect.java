@@ -6,6 +6,7 @@ import mightypork.utils.math.constraints.DigestCache;
 import mightypork.utils.math.constraints.Digestable;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.NumConst;
+import mightypork.utils.math.constraints.num.mutable.NumAnimated;
 import mightypork.utils.math.constraints.rect.builders.TiledRect;
 import mightypork.utils.math.constraints.rect.caching.RectCache;
 import mightypork.utils.math.constraints.rect.caching.RectDigest;
@@ -62,6 +63,13 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	
 	
 	@FactoryMethod
+	public static Rect make(Vect origin, Num width, Num height)
+	{
+		return make(origin, Vect.make(width, height));
+	}
+	
+	
+	@FactoryMethod
 	public static Rect make(final Vect origin, final Vect size)
 	{
 		return new RectVectAdapter(origin, size);
@@ -76,7 +84,22 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 		
 		return Rect.make(origin, size);
 	}
+
+
+	public static Rect make(Num side)
+	{
+		return make(side,side);
+	}
 	
+	public static RectConst make(NumConst side)
+	{
+		return make(side,side);
+	}
+	
+	public static RectConst make(double side)
+	{
+		return make(side,side);
+	}
 	
 	@FactoryMethod
 	public static RectConst make(NumConst x, NumConst y, NumConst width, NumConst height)
@@ -286,6 +309,30 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 			}
 			
 		};
+	}
+	
+	
+	public Rect moveX(Num x)
+	{
+		return move(x, Num.ZERO);
+	}
+	
+	
+	public Rect moveY(Num y)
+	{
+		return move(Num.ZERO, y);
+	}
+	
+	
+	public Rect moveX(double x)
+	{
+		return move(x, 0);
+	}
+	
+	
+	public Rect moveY(double y)
+	{
+		return move(0, y);
 	}
 	
 	

@@ -67,7 +67,7 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 		if (!visible) return;
 		
 		renderComponent();
-	};
+	}
 	
 	
 	@Override

@@ -2,7 +2,6 @@ package mightypork.gamecore.render.fonts.impl;
 
 
 import mightypork.gamecore.render.fonts.GLFont;
-import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.vect.Vect;
 

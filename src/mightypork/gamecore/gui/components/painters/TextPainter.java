@@ -1,9 +1,9 @@
 package mightypork.gamecore.gui.components.painters;
 
 
+import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.render.fonts.FontRenderer;
-import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.utils.math.color.RGB;
 import mightypork.utils.math.constraints.rect.Rect;
@@ -23,7 +23,7 @@ public class TextPainter extends VisualComponent {
 	
 	private final FontRenderer font;
 	private RGB color;
-	private Align align;
+	private AlignX align;
 	private StringProvider text;
 	private boolean shadow;
 	
@@ -35,7 +35,7 @@ public class TextPainter extends VisualComponent {
 	 * @param font font to use
 	 */
 	public TextPainter(GLFont font) {
-		this(font, Align.LEFT, RGB.WHITE);
+		this(font, AlignX.LEFT, RGB.WHITE);
 	}
 	
 	
@@ -47,7 +47,7 @@ public class TextPainter extends VisualComponent {
 	 * @param color default color
 	 * @param text drawn text
 	 */
-	public TextPainter(GLFont font, Align align, RGB color, String text) {
+	public TextPainter(GLFont font, AlignX align, RGB color, String text) {
 		this(font, align, color, new StringWrapper(text));
 	}
 	
@@ -60,7 +60,7 @@ public class TextPainter extends VisualComponent {
 	 * @param color default color
 	 * @param text text provider
 	 */
-	public TextPainter(GLFont font, Align align, RGB color, StringProvider text) {
+	public TextPainter(GLFont font, AlignX align, RGB color, StringProvider text) {
 		this.font = new FontRenderer(font);
 		this.color = color;
 		this.align = align;
@@ -73,7 +73,7 @@ public class TextPainter extends VisualComponent {
 	 * @param align text align
 	 * @param color default color
 	 */
-	public TextPainter(GLFont font, Align align, RGB color) {
+	public TextPainter(GLFont font, AlignX align, RGB color) {
 		this(font, align, color, (StringProvider) null);
 	}
 	
@@ -125,7 +125,7 @@ public class TextPainter extends VisualComponent {
 	}
 	
 	
-	public void setAlign(Align align)
+	public void setAlign(AlignX align)
 	{
 		this.align = align;
 	}

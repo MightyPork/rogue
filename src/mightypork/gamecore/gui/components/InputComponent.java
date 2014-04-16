@@ -7,7 +7,7 @@ import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionTrigger;
 
 
-public abstract class InputComponent extends VisualComponent implements Component, Enableable, ActionTrigger, MouseButtonEvent.Listener {
+public abstract class InputComponent extends VisualComponent implements Enableable, ActionTrigger, MouseButtonEvent.Listener {
 	
 	private boolean enabled;
 	private Action action;

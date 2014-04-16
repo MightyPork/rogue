@@ -26,7 +26,7 @@ public class ColumnHolder extends LayoutComponent {
 	 */
 	public ColumnHolder(AppAccess app, RectBound context, int cols) {
 		super(app, context);
-		this.tiler = getRect().columns(cols).zeroBased();
+		this.tiler = columns(cols).zeroBased();
 	}
 	
 	

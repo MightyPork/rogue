@@ -2,12 +2,12 @@ package mightypork.rogue.screens;
 
 
 import mightypork.gamecore.gui.Action;
+import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
-import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.rogue.Res;
 import mightypork.utils.math.color.RGB;
@@ -40,7 +40,7 @@ public class LayerFps extends ScreenLayer {
 		
 		final RectBound constraint = root.topRight().add(-8, 8).expand(0, 0, 0, 32);
 		
-		tp = new TextPainter(font, Align.RIGHT, RGB.WHITE, new StringProvider() {
+		tp = new TextPainter(font, AlignX.RIGHT, RGB.WHITE, new StringProvider() {
 			
 			@Override
 			public String getString()

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import mightypork.gamecore.control.bus.events.MouseButtonEvent;
 import mightypork.gamecore.control.timing.Updateable;
+import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
@@ -12,7 +13,6 @@ import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
-import mightypork.gamecore.render.fonts.FontRenderer.Align;
 import mightypork.rogue.Res;
 import mightypork.utils.math.Easing;
 import mightypork.utils.math.color.RGB;
@@ -23,7 +23,7 @@ import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.mutable.VectAnimated;
 
 
-public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.Listener, Updateable {
+public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.Listener {
 	
 	private final NumAnimated size = new NumAnimated(300, Easing.SINE_BOTH);
 	private final VectAnimated cat_position = VectAnimated.makeVar(Easing.ELASTIC_OUT);
@@ -44,7 +44,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		cat_position.setDefaultDuration(3);
 		
 		ImagePainter cat = new ImagePainter(Res.getTxQuad("test.kitten"));
-		cat.setRect(Rect.make(size, size).centerTo(cat_position));
+		cat.setRect(Rect.make(size).centerTo(cat_position));
 		cat.enableCaching(false);
 		
 		// frame around cat
@@ -57,6 +57,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		cat_shadow.setRect(cat_frame.move(Vect.make(cat.height().mul(0.05))));
 		cat_shadow.enableCaching(false);
 
+		// add to root layout
 		root.add(cat_shadow);
 		root.add(cat_frame);
 		root.add(cat);
@@ -64,13 +65,14 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		
 		// Meow
 		TextPainter tp = new TextPainter(Res.getFont("press_start"));
-		tp.setAlign(Align.CENTER);
+		tp.setAlign(AlignX.CENTER);
 		tp.setColor(RGB.YELLOW);
 		tp.setText("Meow!");
 		tp.setShadow(RGB.dark(0.5), Vect.make(tp.height().div(16)));
-		tp.setRect(Rect.make(Num.ZERO, cat.height().half()).centerTo(mouse));
+		tp.setRect(Rect.make(cat.height().half()).centerTo(mouse));
 		tp.enableCaching(false);
 		root.add(tp);
+		
 		/*
 		 * Register keys
 		 */
@@ -90,7 +92,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 	{
 		if (!event.isDown()) return;
 		
-		this.cat_position.setTo(event.getPos());
+		cat_position.setTo(event.getPos());
 		
 		double newSize = root.height().perc(10 + rand.nextInt(40)).value();
 		
