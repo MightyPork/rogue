@@ -12,7 +12,7 @@ public interface ConstraintCache<C> extends Pollable {
 	/**
 	 * Called after the cache has changed value (and digest).
 	 */
-	void onChange();
+	void onConstraintChanged();
 	
 	
 	/**

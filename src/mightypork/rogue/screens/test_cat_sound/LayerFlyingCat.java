@@ -8,7 +8,7 @@ import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.screens.Screen;
+import mightypork.gamecore.gui.screens.BaseScreen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
@@ -29,7 +29,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 	private final Random rand = new Random();
 	
 	
-	public LayerFlyingCat(Screen screen) {
+	public LayerFlyingCat(BaseScreen screen) {
 		super(screen);
 		
 		// timing

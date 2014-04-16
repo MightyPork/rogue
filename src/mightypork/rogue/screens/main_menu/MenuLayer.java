@@ -4,7 +4,7 @@ package mightypork.rogue.screens.main_menu;
 import mightypork.gamecore.control.events.ScreenRequestEvent;
 import mightypork.gamecore.gui.AlignY;
 import mightypork.gamecore.gui.components.layout.VerticalFixedFlowLayout;
-import mightypork.gamecore.gui.screens.Screen;
+import mightypork.gamecore.gui.screens.BaseScreen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
@@ -16,7 +16,7 @@ import mightypork.util.math.color.Color;
 
 class MenuLayer extends ScreenLayer {
 	
-	public MenuLayer(Screen screen) {
+	public MenuLayer(BaseScreen screen) {
 		super(screen);
 		
 		init();

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.util.constraints.vect.Vect;
 
 
 /**
@@ -13,7 +12,7 @@ import mightypork.util.constraints.vect.Vect;
  * 
  * @author MightyPork
  */
-public abstract class LayeredScreen extends Screen {
+public abstract class LayeredScreen extends BaseScreen {
 	
 	private final Collection<ScreenLayer> layers = new TreeSet<>();
 	
@@ -47,18 +46,6 @@ public abstract class LayeredScreen extends Screen {
 	}
 	
 	
-	/**
-	 * Remove a layer
-	 * 
-	 * @param layer
-	 */
-	protected void removeLayer(ScreenLayer layer)
-	{
-		this.layers.remove(layer);
-		removeChildClient(layer);
-	}
-	
-	
 	@Override
 	protected void onScreenEnter()
 	{
@@ -71,18 +58,8 @@ public abstract class LayeredScreen extends Screen {
 	@Override
 	protected void onScreenLeave()
 	{
-		
 		for (final ScreenLayer layer : layers) {
 			layer.onScreenLeave();
-		}
-	}
-	
-	
-	@Override
-	protected void onSizeChanged(Vect size)
-	{
-		for (final ScreenLayer layer : layers) {
-			layer.onSizeChanged(size);
 		}
 	}
 	

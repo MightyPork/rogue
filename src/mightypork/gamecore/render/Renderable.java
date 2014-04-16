@@ -1,4 +1,4 @@
-package mightypork.gamecore.gui.components;
+package mightypork.gamecore.render;
 
 
 /**
@@ -9,7 +9,7 @@ package mightypork.gamecore.gui.components;
 public interface Renderable {
 	
 	/**
-	 * Render on screen
+	 * Render on screen.
 	 */
 	void render();
 	

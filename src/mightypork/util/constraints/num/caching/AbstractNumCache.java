@@ -54,12 +54,12 @@ public abstract class AbstractNumCache extends NumAdapter implements ConstraintC
 		// mark my digest dirty
 		markDigestDirty();
 		
-		onChange();
+		onConstraintChanged();
 	}
 	
 	
 	@Override
-	public abstract void onChange();
+	public abstract void onConstraintChanged();
 	
 	
 	@Override

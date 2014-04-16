@@ -10,7 +10,7 @@ import mightypork.util.control.eventbus.events.Event;
  * 
  * @author MightyPork
  */
-public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
+public class ViewportChangeEvent implements Event<ViewportChangeEvent.Listener> {
 	
 	private final boolean fullscreen;
 	private final Vect screenSize;
@@ -22,7 +22,7 @@ public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	 * @param fullscreen is now fullscreen
 	 * @param size new screen size
 	 */
-	public ScreenChangeEvent(boolean fsChanged, boolean fullscreen, Vect size) {
+	public ViewportChangeEvent(boolean fsChanged, boolean fullscreen, Vect size) {
 		this.fullscreen = fullscreen;
 		this.screenSize = size;
 		this.fsChanged = fsChanged;
@@ -59,11 +59,11 @@ public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 	@Override
 	public void handleBy(Listener handler)
 	{
-		handler.receive(this);
+		handler.onViewportChanged(this);
 	}
 	
 	/**
-	 * {@link ScreenChangeEvent} listener
+	 * {@link ViewportChangeEvent} listener
 	 * 
 	 * @author MightyPork
 	 */
@@ -74,6 +74,6 @@ public class ScreenChangeEvent implements Event<ScreenChangeEvent.Listener> {
 		 * 
 		 * @param event
 		 */
-		void receive(ScreenChangeEvent event);
+		void onViewportChanged(ViewportChangeEvent event);
 	}
 }

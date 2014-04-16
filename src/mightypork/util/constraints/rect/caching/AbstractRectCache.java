@@ -53,7 +53,7 @@ public abstract class AbstractRectCache extends RectAdapter implements Constrain
 		
 		markDigestDirty();
 		
-		onChange();
+		onConstraintChanged();
 	}
 	
 	

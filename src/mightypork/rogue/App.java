@@ -66,11 +66,11 @@ public class App extends BaseApp {
 	@Override
 	protected void initScreens(ScreenRegistry screens)
 	{
-		screens.add(new ScreenTestBouncy(this));
-		screens.add(new ScreenTestCat(this));
-		screens.add(new ScreenTestRender(this));
+		screens.addScreen(new ScreenTestBouncy(this));
+		screens.addScreen(new ScreenTestCat(this));
+		screens.addScreen(new ScreenTestRender(this));
 		
-		screens.add(new ScreenMainMenu(this));
+		screens.addScreen(new ScreenMainMenu(this));
 		
 		screens.showScreen("rogue.menu");
 	}

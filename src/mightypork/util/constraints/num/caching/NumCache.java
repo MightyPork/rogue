@@ -29,7 +29,7 @@ public class NumCache extends AbstractNumCache {
 	
 	@Override
 	@DefaultImpl
-	public void onChange()
+	public void onConstraintChanged()
 	{
 	}
 	

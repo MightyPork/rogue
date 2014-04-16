@@ -2,6 +2,7 @@ package mightypork.gamecore.gui.components;
 
 
 import mightypork.gamecore.control.events.LayoutChangeEvent;
+import mightypork.gamecore.render.Renderable;
 import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.caching.AbstractRectCache;
@@ -79,7 +80,7 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	
 	
 	@Override
-	public final void onChange()
+	public final void onConstraintChanged()
 	{
 		updateLayout();
 	}

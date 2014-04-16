@@ -255,7 +255,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		bus.addChannel(LayoutChangeEvent.class, LayoutChangeEvent.Listener.class);
 		
 		// input events
-		bus.addChannel(ScreenChangeEvent.class, ScreenChangeEvent.Listener.class);
+		bus.addChannel(ViewportChangeEvent.class, ViewportChangeEvent.Listener.class);
 		bus.addChannel(KeyEvent.class, KeyEvent.Listener.class);
 		bus.addChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
 		bus.addChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);

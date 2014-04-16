@@ -29,7 +29,7 @@ public class RectCache extends AbstractRectCache {
 	
 	@Override
 	@DefaultImpl
-	public void onChange()
+	public void onConstraintChanged()
 	{
 	}
 	

@@ -30,7 +30,7 @@ public class VectCache extends AbstractVectCache {
 	
 	@Override
 	@DefaultImpl
-	public void onChange()
+	public void onConstraintChanged()
 	{
 	}
 }

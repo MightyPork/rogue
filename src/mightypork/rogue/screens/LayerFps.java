@@ -3,7 +3,7 @@ package mightypork.rogue.screens;
 
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.screens.Screen;
+import mightypork.gamecore.gui.screens.BaseScreen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
@@ -21,7 +21,7 @@ public class LayerFps extends ScreenLayer {
 	TextPainter tp;
 	
 	
-	public LayerFps(Screen screen) {
+	public LayerFps(BaseScreen screen) {
 		super(screen);
 		
 		/*
@@ -53,13 +53,6 @@ public class LayerFps extends ScreenLayer {
 		tp.setShadow(Color.BLACK, Vect.make(tp.height().div(16)));
 		
 		root.add(tp);
-	}
-	
-	
-	@Override
-	protected void renderLayer()
-	{
-		super.renderLayer();
 	}
 	
 	

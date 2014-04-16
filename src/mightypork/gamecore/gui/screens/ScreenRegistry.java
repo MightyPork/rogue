@@ -1,12 +1,15 @@
 package mightypork.gamecore.gui.screens;
 
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.events.ScreenRequestEvent;
-import mightypork.gamecore.gui.components.Renderable;
+import mightypork.gamecore.render.Renderable;
 import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.logging.Log;
 
@@ -18,7 +21,8 @@ import mightypork.util.logging.Log;
  */
 public class ScreenRegistry extends AppModule implements ScreenRequestEvent.Listener, Renderable {
 	
-	private final HashMap<String, Screen> screens = new HashMap<>();
+	private final Map<String, Screen> screens = new HashMap<>();
+	private final Collection<Overlay> overlays = new TreeSet<>();
 	private volatile Screen active = null;
 	
 	
@@ -35,33 +39,58 @@ public class ScreenRegistry extends AppModule implements ScreenRequestEvent.List
 	 * 
 	 * @param screen added screen
 	 */
-	public void add(Screen screen)
+	public void addScreen(Screen screen)
 	{
 		screens.put(screen.getName(), screen);
 		addChildClient(screen);
 	}
+
 	
+	
+	/**
+	 * Add an overlay
+	 * 
+	 * @param overlay added overlay
+	 */
+	public void addOverlay(Overlay overlay)
+	{
+		overlays.add(overlay);
+		addChildClient(overlay);
+	}
 	
 	@Override
 	public void showScreen(String key)
 	{
 		Log.f3("Request to show screen \"" + key + "\"");
 		
-		final Screen toshow = screens.get(key);
-		if (toshow == null) throw new RuntimeException("Screen " + key + " not defined.");
+		// find screen to show
+		final Screen toShow = screens.get(key);
+		if (toShow == null) {
+			throw new RuntimeException("Screen " + key + " not defined.");
+		}
 		
-		if (active != null) active.setActive(false);
+		// deactivate last screen
+		if (active != null) {
+			active.setActive(false);
+		}
 		
-		toshow.setActive(true);
+		// activate new screen
+		toShow.setActive(true);
 		
-		active = toshow;
+		active = toShow;
 	}
 	
 	
 	@Override
 	public void render()
 	{
-		if (active != null) active.render();
+		if (active != null) {
+			active.render();
+
+			for (final Overlay overlay : overlays) {
+				if (overlay.isVisible()) overlay.render();
+			}
+		}
 	}
 	
 	

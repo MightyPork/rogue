@@ -53,7 +53,7 @@ public abstract class AbstractVectCache extends VectAdapter implements Constrain
 		
 		markDigestDirty();
 		
-		onChange();
+		onConstraintChanged();
 	}
 	
 	

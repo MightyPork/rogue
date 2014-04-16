@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.test_render;
 
 
-import mightypork.gamecore.gui.screens.Screen;
+import mightypork.gamecore.gui.screens.BaseScreen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.render.Render;
 import mightypork.util.constraints.rect.proxy.RectBound;
@@ -14,7 +14,7 @@ public class LayerTestGradient extends ScreenLayer {
 	private final RectBound pos2;
 	
 	
-	public LayerTestGradient(Screen screen) {
+	public LayerTestGradient(BaseScreen screen) {
 		super(screen);
 		
 		pos1 = root.topEdge().growDown(64);
@@ -23,7 +23,7 @@ public class LayerTestGradient extends ScreenLayer {
 	
 	
 	@Override
-	protected void renderLayer()
+	public void render()
 	{
 		Render.quadColor(root, Color.WHITE, Color.BLUE, Color.BLACK, Color.MAGENTA);
 		Render.quadGradH(pos1.getRect(), Color.GREEN, Color.RED);

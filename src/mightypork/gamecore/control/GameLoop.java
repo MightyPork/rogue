@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mightypork.gamecore.control.events.MainLoopTaskRequest;
 import mightypork.gamecore.control.events.UpdateEvent;
-import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
+import mightypork.gamecore.render.Renderable;
 import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.control.timing.TimerDelta;
 
