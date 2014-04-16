@@ -1,10 +1,10 @@
 package mightypork.test;
 
 
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.num.mutable.NumVar;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.math.constraints.vect.mutable.VectVar;
+import mightypork.util.constraints.num.Num;
+import mightypork.util.constraints.num.mutable.NumVar;
+import mightypork.util.constraints.vect.Vect;
+import mightypork.util.constraints.vect.mutable.VectVar;
 
 
 public class TestCoords {

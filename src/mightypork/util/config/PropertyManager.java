@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import mightypork.util.constraints.vect.Vect;
+import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.math.Range;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.math.constraints.vect.VectConst;
 import mightypork.util.objects.Convert;
 
 

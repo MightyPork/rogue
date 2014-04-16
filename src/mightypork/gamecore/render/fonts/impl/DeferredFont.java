@@ -10,10 +10,10 @@ import mightypork.gamecore.loading.DeferredResource;
 import mightypork.gamecore.loading.MustLoadInMainThread;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
+import mightypork.util.constraints.vect.Vect;
 import mightypork.util.files.FileUtils;
 import mightypork.util.logging.LogAlias;
 import mightypork.util.math.color.Color;
-import mightypork.util.math.constraints.vect.Vect;
 
 
 /**

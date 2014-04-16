@@ -9,11 +9,11 @@ import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.events.ResourceLoadRequest;
+import mightypork.util.constraints.vect.Vect;
+import mightypork.util.constraints.vect.mutable.VectVar;
 import mightypork.util.control.eventbus.clients.RootBusNode;
 import mightypork.util.control.timing.Updateable;
 import mightypork.util.math.Calc.Buffers;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.math.constraints.vect.mutable.VectVar;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;

@@ -1,9 +1,9 @@
 package mightypork.test;
 
 
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.math.constraints.vect.caching.VectCache;
-import mightypork.util.math.constraints.vect.mutable.VectVar;
+import mightypork.util.constraints.vect.Vect;
+import mightypork.util.constraints.vect.caching.VectCache;
+import mightypork.util.constraints.vect.mutable.VectVar;
 
 
 public class TestConstCaching {

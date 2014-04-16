@@ -4,8 +4,8 @@ package mightypork.util.math.color;
 import java.util.Stack;
 
 import mightypork.util.annotations.FactoryMethod;
+import mightypork.util.constraints.num.Num;
 import mightypork.util.math.Calc;
-import mightypork.util.math.constraints.num.Num;
 
 
 /**
@@ -36,7 +36,8 @@ public abstract class Color {
 	public static final Color ORANGE = rgb(1, 0.78, 0);
 	public static final Color PINK = rgb(1, 0.68, 0.68);
 	
-	private static final Stack<Num> globalAlphaStack = new Stack<>();
+	private static final Stack<Num> alphaStack = new Stack<>();
+	private static volatile boolean alphaStackEnabled = true;
 	
 	
 	@FactoryMethod
@@ -160,8 +161,11 @@ public abstract class Color {
 	{
 		double alpha = rawAlpha();
 		
-		for (Num n : globalAlphaStack) {
-			alpha *= clamp(n.value());
+		if (alphaStackEnabled) {
+			
+			for (Num n : alphaStack) {
+				alpha *= clamp(n.value());
+			}
 		}
 		
 		return clamp(alpha);
@@ -190,7 +194,11 @@ public abstract class Color {
 	 */
 	public static void pushAlpha(Num alpha)
 	{
-		globalAlphaStack.push(alpha);
+		if (!alphaStackEnabled) {
+			return;
+		}
+		
+		alphaStack.push(alpha);
 	}
 	
 	
@@ -198,15 +206,39 @@ public abstract class Color {
 	 * Remove a pushed alpha multiplier from the stack. If there's no remaining
 	 * multiplier on the stack, an exception is raised.
 	 * 
-	 * @return the popped multiplier
 	 * @throws IllegalStateException if the stack is empty
 	 */
-	public static Num popAlpha()
+	public static void popAlpha()
 	{
-		if (globalAlphaStack.isEmpty()) {
+		if (!alphaStackEnabled) {
+			return;
+		}
+		
+		if (alphaStack.isEmpty()) {
 			throw new IllegalStateException("Global alpha stack underflow.");
 		}
 		
-		return globalAlphaStack.pop();
+		alphaStack.pop();
+	}
+	
+	
+	/**
+	 * Enable alpha stack. When disabled, pushAlpha() and popAlpha() have no
+	 * effect.
+	 * 
+	 * @param yes
+	 */
+	public static void enableAlphaStack(boolean yes)
+	{
+		alphaStackEnabled = yes;
+	}
+	
+	
+	/**
+	 * @return true if alpha stack is enabled.
+	 */
+	public static boolean isAlphaStackEnabled()
+	{
+		return alphaStackEnabled;
 	}
 }

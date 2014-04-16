@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.constraints.vect.Vect;
 
 
 /**

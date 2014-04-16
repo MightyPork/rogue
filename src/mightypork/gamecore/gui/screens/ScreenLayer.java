@@ -12,8 +12,8 @@ import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.util.annotations.DefaultImpl;
+import mightypork.util.constraints.vect.Vect;
 import mightypork.util.control.timing.Updateable;
-import mightypork.util.math.constraints.vect.Vect;
 
 
 /**

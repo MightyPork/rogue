@@ -1,9 +1,9 @@
 package mightypork.test;
 
 
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.num.mutable.NumVar;
-import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.constraints.num.Num;
+import mightypork.util.constraints.num.mutable.NumVar;
+import mightypork.util.constraints.rect.Rect;
 
 
 public class TestTiled {

@@ -20,10 +20,10 @@ import java.util.Map;
 
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
+import mightypork.util.constraints.vect.Vect;
+import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.logging.Log;
 import mightypork.util.math.color.Color;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.math.constraints.vect.VectConst;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.util.glu.GLU;

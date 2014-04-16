@@ -1,9 +1,9 @@
 package mightypork.gamecore.control.events;
 
 
+import mightypork.util.constraints.rect.proxy.RectBound;
+import mightypork.util.constraints.vect.Vect;
 import mightypork.util.control.eventbus.events.Event;
-import mightypork.util.math.constraints.rect.proxy.RectBound;
-import mightypork.util.math.constraints.vect.Vect;
 
 
 /**

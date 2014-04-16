@@ -2,8 +2,8 @@ package mightypork.gamecore.gui.components;
 
 
 import mightypork.gamecore.gui.Hideable;
-import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.rect.proxy.RectBound;
+import mightypork.util.constraints.rect.Rect;
+import mightypork.util.constraints.rect.proxy.RectBound;
 
 
 /**

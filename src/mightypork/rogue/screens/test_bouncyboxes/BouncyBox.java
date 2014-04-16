@@ -5,13 +5,13 @@ import java.util.Random;
 
 import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.render.Render;
+import mightypork.util.constraints.num.Num;
+import mightypork.util.constraints.num.mutable.NumAnimated;
+import mightypork.util.constraints.rect.Rect;
+import mightypork.util.constraints.rect.caching.RectCache;
 import mightypork.util.control.timing.Updateable;
 import mightypork.util.math.Easing;
 import mightypork.util.math.color.Color;
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.num.mutable.NumAnimated;
-import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.rect.caching.RectCache;
 
 
 public class BouncyBox extends VisualComponent implements Updateable {

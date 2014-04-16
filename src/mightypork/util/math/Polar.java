@@ -1,7 +1,7 @@
 package mightypork.util.math;
 
 
-import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.constraints.vect.Vect;
 
 
 /**

@@ -6,14 +6,12 @@ import mightypork.gamecore.gui.AlignY;
 import mightypork.gamecore.gui.components.layout.VerticalFixedFlowLayout;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.render.fonts.GLFont;
-import mightypork.rogue.Res;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
+import mightypork.util.constraints.num.Num;
+import mightypork.util.constraints.rect.Rect;
 import mightypork.util.control.Action;
 import mightypork.util.math.color.Color;
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.rect.Rect;
 
 
 class MenuLayer extends ScreenLayer {
@@ -34,7 +32,6 @@ class MenuLayer extends ScreenLayer {
 		VerticalFixedFlowLayout layout = new VerticalFixedFlowLayout(root, menuBox, lineHeight, AlignY.TOP);
 		root.add(layout);
 		
-		GLFont f = Res.getFont("press_start");
 		MenuButton b1, b2, b3, b4;
 		layout.add(b1 = new MenuButton("Render test", Color.WHITE));
 		layout.add(b2 = new MenuButton("Bouncy Cubes", Color.CYAN));

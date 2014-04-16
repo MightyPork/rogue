@@ -1,11 +1,11 @@
 package mightypork.util.objects;
 
 
+import mightypork.util.constraints.vect.Vect;
+import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.logging.Log;
 import mightypork.util.math.Calc;
 import mightypork.util.math.Range;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.math.constraints.vect.VectConst;
 
 
 /**
