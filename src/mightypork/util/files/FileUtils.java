@@ -7,7 +7,7 @@ import java.util.List;
 
 import mightypork.util.logging.Log;
 import mightypork.util.string.StringUtils;
-import mightypork.util.string.validation.StringFilter;
+import mightypork.util.string.filtering.StringFilter;
 
 
 public class FileUtils {

@@ -1,4 +1,4 @@
-package mightypork.util.string.validation;
+package mightypork.util.string.filtering;
 
 
 public class WhitelistCharFilter implements CharFilter {

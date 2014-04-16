@@ -10,7 +10,7 @@ import java.util.zip.ZipFile;
 
 import mightypork.util.files.FileUtils;
 import mightypork.util.logging.Log;
-import mightypork.util.string.validation.StringFilter;
+import mightypork.util.string.filtering.StringFilter;
 
 
 /**

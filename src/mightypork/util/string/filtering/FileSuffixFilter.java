@@ -1,4 +1,4 @@
-package mightypork.util.string.validation;
+package mightypork.util.string.filtering;
 
 
 import java.io.File;
