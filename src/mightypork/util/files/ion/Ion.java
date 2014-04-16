@@ -67,7 +67,7 @@ public class Ion {
 	 */
 	public static Object fromFile(File file) throws IonException
 	{
-		try (InputStream in = new FileInputStream(file)) {
+		try(InputStream in = new FileInputStream(file)) {
 			
 			final Object obj = fromStream(in);
 			return obj;
@@ -113,7 +113,7 @@ public class Ion {
 	 */
 	public static void toFile(File path, Object obj) throws IonException
 	{
-		try (OutputStream out = new FileOutputStream(path)) {
+		try(OutputStream out = new FileOutputStream(path)) {
 			final String f = path.toString();
 			final File dir = new File(f.substring(0, f.lastIndexOf(File.separator)));
 			

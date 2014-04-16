@@ -65,9 +65,7 @@ public abstract class BusNode implements BusAccess, ClientHub {
 			throw new IllegalArgumentException("Cannot nest RootBusNode.");
 		}
 		
-		if (getEventBus().isClientValid(client)) {
-			clients.add(client);
-		}
+		clients.add(client);
 	}
 	
 	

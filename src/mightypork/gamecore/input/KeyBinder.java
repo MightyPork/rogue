@@ -17,7 +17,7 @@ public interface KeyBinder {
 	 * @param stroke trigger keystroke
 	 * @param task handler; can be {@link Runnable} or {@link Action}
 	 */
-	void bindKeyStroke(KeyStroke stroke, Runnable task);
+	void bindKey(KeyStroke stroke, Runnable task);
 	
 	
 	/**
@@ -25,6 +25,6 @@ public interface KeyBinder {
 	 * 
 	 * @param stroke stroke
 	 */
-	void unbindKeyStroke(KeyStroke stroke);
+	void unbindKey(KeyStroke stroke);
 	
 }

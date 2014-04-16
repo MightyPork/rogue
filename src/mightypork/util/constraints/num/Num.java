@@ -9,6 +9,7 @@ import mightypork.util.constraints.num.caching.NumDigest;
 import mightypork.util.constraints.num.mutable.NumVar;
 import mightypork.util.constraints.num.proxy.NumBound;
 import mightypork.util.constraints.num.proxy.NumBoundAdapter;
+import mightypork.util.constraints.vect.Vect;
 import mightypork.util.math.Calc;
 
 
@@ -69,7 +70,7 @@ public abstract class Num implements NumBound, Digestable<NumDigest> {
 	private Num p_neg;
 	private Num p_abs;
 	
-	private DigestCache<NumDigest> dc = new DigestCache<NumDigest>() {
+	private final DigestCache<NumDigest> dc = new DigestCache<NumDigest>() {
 		
 		@Override
 		protected NumDigest createDigest()
@@ -746,5 +747,14 @@ public abstract class Num implements NumBound, Digestable<NumDigest> {
 	public String toString()
 	{
 		return Calc.toString(value());
+	}
+	
+	
+	/**
+	 * @return vect with both coords of this size
+	 */
+	public Vect toVectXY()
+	{
+		return Vect.make(this);
 	}
 }

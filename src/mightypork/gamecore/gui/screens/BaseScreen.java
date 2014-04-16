@@ -4,7 +4,6 @@ package mightypork.gamecore.gui.screens;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
 import mightypork.gamecore.control.events.LayoutChangeEvent;
-import mightypork.gamecore.control.events.ViewportChangeEvent;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
@@ -18,7 +17,7 @@ import mightypork.util.constraints.rect.Rect;
  * 
  * @author MightyPork
  */
-public abstract class BaseScreen extends AppSubModule implements Screen, KeyBinder, ViewportChangeEvent.Listener {
+public abstract class BaseScreen extends AppSubModule implements Screen, KeyBinder, LayoutChangeEvent.Listener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
@@ -46,16 +45,16 @@ public abstract class BaseScreen extends AppSubModule implements Screen, KeyBind
 	
 	
 	@Override
-	public final void bindKeyStroke(KeyStroke stroke, Runnable task)
+	public final void bindKey(KeyStroke stroke, Runnable task)
 	{
-		keybindings.bindKeyStroke(stroke, task);
+		keybindings.bindKey(stroke, task);
 	}
 	
 	
 	@Override
-	public final void unbindKeyStroke(KeyStroke stroke)
+	public final void unbindKey(KeyStroke stroke)
 	{
-		keybindings.unbindKeyStroke(stroke);
+		keybindings.unbindKey(stroke);
 	}
 	
 	
@@ -99,12 +98,9 @@ public abstract class BaseScreen extends AppSubModule implements Screen, KeyBind
 	
 	
 	@Override
-	public final void onViewportChanged(ViewportChangeEvent event)
+	public void onLayoutChanged()
 	{
 		if (!isActive()) return;
-		
-		// fire event
-		fireLayoutChangeEvent();
 		
 		needSetupViewport = true;
 	}

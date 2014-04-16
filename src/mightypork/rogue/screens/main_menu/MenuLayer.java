@@ -2,16 +2,19 @@ package mightypork.rogue.screens.main_menu;
 
 
 import mightypork.gamecore.control.events.ScreenRequestEvent;
-import mightypork.gamecore.gui.AlignY;
-import mightypork.gamecore.gui.components.layout.VerticalFixedFlowLayout;
+import mightypork.gamecore.gui.AlignX;
+import mightypork.gamecore.gui.components.layout.GridLayout;
+import mightypork.gamecore.gui.components.painters.QuadPainter;
+import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.BaseScreen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.rogue.Res;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.util.constraints.num.Num;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.control.Action;
-import mightypork.util.math.color.Color;
+import mightypork.util.math.color.PAL16;
 
 
 class MenuLayer extends ScreenLayer {
@@ -25,19 +28,31 @@ class MenuLayer extends ScreenLayer {
 	
 	private void init()
 	{
-		Rect menuBox = root.shrink(root.height().min(root.width()).mul(0.1));
+		final Rect menuBox = root.shrink(Num.ZERO, root.height().mul(0.18)).moveY(root.height().mul(-0.03));
 		
-		Num lineHeight = menuBox.height().min(menuBox.width()).mul(0.1);
+		final GridLayout layout = new GridLayout(root, menuBox, 17, 1);
+		layout.enableCaching(true);
 		
-		VerticalFixedFlowLayout layout = new VerticalFixedFlowLayout(root, menuBox, lineHeight, AlignY.TOP);
+		final QuadPainter bg = QuadPainter.gradV(PAL16.NIGHTBLUE, PAL16.SEABLUE);
+		bg.setRect(root);
+		root.add(bg);
+		
 		root.add(layout);
 		
+		TextPainter tp;
 		MenuButton b1, b2, b3, b4;
-		layout.add(b1 = new MenuButton("Render test", Color.WHITE));
-		layout.add(b2 = new MenuButton("Bouncy Cubes", Color.CYAN));
-		layout.add(b3 = new MenuButton("Flying Cat", Color.MAGENTA));
-		layout.add(b4 = new MenuButton("Bye!", Color.GREEN));
+		tp = new TextPainter(Res.getFont("main_menu_title"), AlignX.CENTER, PAL16.SLIMEGREEN, "Rogue!");
+		b1 = new MenuButton("Gradientz", PAL16.BLAZE);
+		b2 = new MenuButton("Bouncy Cubes", PAL16.NEWPOOP);
+		b3 = new MenuButton("Flying Cat", PAL16.PIGMEAT);
+		b4 = new MenuButton("Bye!", PAL16.BLOODRED);
 		
+		layout.put(tp, 1, 0, 4, 1);
+		layout.put(b1, 6, 0, 2, 1);
+		layout.put(b2, 8, 0, 2, 1);
+		layout.put(b3, 10, 0, 2, 1);
+		layout.put(b4, 13, 0, 2, 1);
+		root.add(layout);
 		b1.setAction(new Action() {
 			
 			@Override

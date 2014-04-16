@@ -65,6 +65,7 @@ public class Res {
 		
 		fonts.addAlias("default", "polygon_pixel");
 		fonts.addAlias("main_menu_button", "press_start");
+		fonts.addAlias("main_menu_title", "press_start");
 	}
 	
 	

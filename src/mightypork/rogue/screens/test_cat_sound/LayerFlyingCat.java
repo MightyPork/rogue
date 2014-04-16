@@ -41,17 +41,17 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		cat_position.setTo(getDisplay().getCenter());
 		cat_position.setDefaultDuration(3);
 		
-		ImagePainter cat = new ImagePainter(Res.getTxQuad("test.kitten"));
+		final ImagePainter cat = new ImagePainter(Res.getTxQuad("test.kitten"));
 		cat.setRect(Rect.make(size).centerTo(cat_position));
 		cat.enableCaching(false);
 		
 		// frame around cat
-		QuadPainter cat_frame = QuadPainter.gradV(Color.YELLOW, Color.RED);
+		final QuadPainter cat_frame = QuadPainter.gradV(Color.YELLOW, Color.RED);
 		cat_frame.setRect(cat.grow(cat.height().mul(0.05)));
 		cat_frame.enableCaching(false);
 		
 		// frame shadow
-		QuadPainter cat_shadow = new QuadPainter(Color.dark(0.4));
+		final QuadPainter cat_shadow = new QuadPainter(Color.dark(0.4));
 		cat_shadow.setRect(cat_frame.move(Vect.make(cat.height().mul(0.05))));
 		cat_shadow.enableCaching(false);
 		
@@ -61,7 +61,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		root.add(cat);
 		
 		// Meow
-		TextPainter tp = new TextPainter(Res.getFont("press_start"));
+		final TextPainter tp = new TextPainter(Res.getFont("press_start"));
 		tp.setAlign(AlignX.CENTER);
 		tp.setColor(Color.YELLOW);
 		tp.setText("Meow!");
@@ -73,7 +73,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		/*
 		 * Register keys
 		 */
-		bindKeyStroke(new KeyStroke(Keys.KEY_RETURN), new Runnable() {
+		bindKey(new KeyStroke(Keys.RETURN), new Runnable() {
 			
 			@Override
 			public void run()
@@ -91,7 +91,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		
 		cat_position.setTo(event.getPos());
 		
-		double newSize = root.height().perc(10 + rand.nextInt(40)).value();
+		final double newSize = root.height().perc(10 + rand.nextInt(40)).value();
 		
 		size.animate(newSize, 1);
 	}

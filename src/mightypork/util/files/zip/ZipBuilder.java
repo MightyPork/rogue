@@ -75,7 +75,7 @@ public class ZipBuilder {
 		
 		out.putNextEntry(new ZipEntry(path));
 		
-		try (InputStream in = FileUtils.stringToStream(text)) {
+		try(InputStream in = FileUtils.stringToStream(text)) {
 			FileUtils.copyStream(in, out);
 		}
 	}
@@ -96,7 +96,7 @@ public class ZipBuilder {
 		
 		out.putNextEntry(new ZipEntry(path));
 		
-		try (InputStream in = FileUtils.getResource(resPath)) {
+		try(InputStream in = FileUtils.getResource(resPath)) {
 			FileUtils.copyStream(in, out);
 		}
 	}

@@ -9,7 +9,7 @@ import mightypork.util.control.eventbus.events.flags.UnloggedEvent;
 
 /**
  * <p>
- * Something that can be handled by HANDLER.
+ * Something that can be handled by HANDLER, subscribing to the event bus.
  * </p>
  * <p>
  * Can be annotated as {@link SingleReceiverEvent} to be delivered once only,

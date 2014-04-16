@@ -18,8 +18,8 @@ import mightypork.util.constraints.rect.proxy.RectBound;
 public class VerticalFixedFlowLayout extends LayoutComponent {
 	
 	private int row = 0;
-	private Num rowHeight;
-	private AlignY align;
+	private final Num rowHeight;
+	private final AlignY align;
 	
 	
 	/**

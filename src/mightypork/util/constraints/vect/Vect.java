@@ -133,7 +133,7 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	private Num p_yc;
 	private Num p_zc;
 	
-	private DigestCache<VectDigest> dc = new DigestCache<VectDigest>() {
+	private final DigestCache<VectDigest> dc = new DigestCache<VectDigest>() {
 		
 		@Override
 		protected VectDigest createDigest()
@@ -1215,5 +1215,17 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	public String toString()
 	{
 		return String.format("(%.1f, %.1f, %.1f)", x(), y(), z());
+	}
+	
+	
+	public final boolean isInside(Rect bounds)
+	{
+		return bounds.contains(this);
+	}
+	
+	
+	public Rect startRect()
+	{
+		return expand(0, 0, 0, 0);
 	}
 }

@@ -1,12 +1,13 @@
 package mightypork.util.control.eventbus;
 
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
-import mightypork.util.annotations.FactoryMethod;
 import mightypork.util.control.Destroyable;
 import mightypork.util.control.eventbus.clients.DelegatingClient;
 import mightypork.util.control.eventbus.events.Event;
@@ -18,29 +19,123 @@ import mightypork.util.logging.Log;
 
 
 /**
- * An event bus, accommodating multiple {@link EventChannel}s.
+ * An event bus, accommodating multiple EventChannels.<br>
+ * Channel will be created when an event of type is first encountered.
  * 
  * @author MightyPork
  */
 final public class EventBus implements Destroyable {
 	
-	/** Message channels */
-	private final BufferedHashSet<EventChannel<?, ?>> channels = new BufferedHashSet<>();
+	/**
+	 * Queued event holder
+	 */
+	private class DelayQueueEntry implements Delayed {
+		
+		private final long due;
+		private final Event<?> evt;
+		
+		
+		public DelayQueueEntry(double seconds, Event<?> event) {
+			super();
+			this.due = System.currentTimeMillis() + (long) (seconds * 1000);
+			this.evt = event;
+		}
+		
+		
+		@Override
+		public int compareTo(Delayed o)
+		{
+			return Long.valueOf(getDelay(TimeUnit.MILLISECONDS)).compareTo(o.getDelay(TimeUnit.MILLISECONDS));
+		}
+		
+		
+		@Override
+		public long getDelay(TimeUnit unit)
+		{
+			return unit.convert(due - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+		}
+		
+		
+		public Event<?> getEvent()
+		{
+			return evt;
+		}
+		
+	}
 	
-	/** Registered clients */
-	private final BufferedHashSet<Object> clients = new BufferedHashSet<>();
+	/**
+	 * Thread handling queued events
+	 */
+	private class QueuePollingThread extends Thread {
+		
+		public volatile boolean stopped = false;
+		
+		
+		public QueuePollingThread() {
+			super("Queue Polling Thread");
+		}
+		
+		
+		@Override
+		public void run()
+		{
+			DelayQueueEntry evt;
+			
+			while (!stopped) {
+				evt = null;
+				
+				try {
+					evt = sendQueue.take();
+				} catch (final InterruptedException ignored) {
+					//
+				}
+				
+				if (evt != null) {
+					dispatch(evt.getEvent());
+				}
+			}
+		}
+		
+	}
 	
-	/** Messages queued for delivery */
-	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<>();
+	static final String logMark = "<BUS> ";
+	
+	
+	private static Class<?> getEventListenerClass(Event<?> event)
+	{
+		// BEHOLD, MAGIC!
+		final Type[] interfaces = event.getClass().getGenericInterfaces();
+		for (final Type interf : interfaces) {
+			if (interf instanceof ParameterizedType) {
+				if (((ParameterizedType) interf).getRawType() == Event.class) {
+					final Type[] types = ((ParameterizedType) interf).getActualTypeArguments();
+					for (final Type genericType : types) {
+						return (Class<?>) genericType;
+					}
+				}
+			}
+		}
+		
+		throw new RuntimeException("Could not detect event listener type.");
+	}
+	
+	/** Log detailed messages (debug) */
+	public boolean detailedLogging = false;
 	
 	/** Queue polling thread */
 	private final QueuePollingThread busThread;
 	
+	/** Registered clients */
+	private final BufferedHashSet<Object> clients = new BufferedHashSet<>();
+	
 	/** Whether the bus was destroyed */
 	private boolean dead = false;
 	
-	/** Log detailed messages (debug) */
-	public boolean detailedLogging = false;
+	/** Message channels */
+	private final BufferedHashSet<EventChannel<?, ?>> channels = new BufferedHashSet<>();
+	
+	/** Messages queued for delivery */
+	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<>();
 	
 	
 	/**
@@ -53,72 +148,21 @@ final public class EventBus implements Destroyable {
 	}
 	
 	
-	private boolean shallLog(Event<?> event)
-	{
-		if (!detailedLogging) return false;
-		if (event.getClass().isAnnotationPresent(UnloggedEvent.class)) return false;
-		
-		return true;
-	}
-	
-	
 	/**
-	 * Add a {@link EventChannel} to this bus.<br>
-	 * If a channel of matching types is already added, it is returned instead.
-	 * 
-	 * @param channel channel to be added
-	 * @return the channel that's now in the bus
+	 * Halt bus thread and reject any future events.
 	 */
-	public EventChannel<?, ?> addChannel(EventChannel<?, ?> channel)
+	@Override
+	public void destroy()
 	{
 		assertLive();
 		
-		// if the channel already exists, return this instance instead.
-		for (final EventChannel<?, ?> ch : channels) {
-			if (ch.equals(channel)) {
-				Log.w("<bus> Channel of type " + Log.str(channel) + " already registered.");
-				return ch;
-			}
-		}
-		
-		channels.add(channel);
-		
-		return channel;
+		busThread.stopped = true;
+		dead = true;
 	}
 	
 	
 	/**
-	 * Make & connect a channel for given event and client type.
-	 * 
-	 * @param eventClass event type
-	 * @param clientClass client type
-	 * @return the created channel instance
-	 */
-	@FactoryMethod
-	public <F_EVENT extends Event<F_CLIENT>, F_CLIENT> EventChannel<?, ?> addChannel(Class<F_EVENT> eventClass, Class<F_CLIENT> clientClass)
-	{
-		assertLive();
-		
-		final EventChannel<F_EVENT, F_CLIENT> channel = EventChannel.create(eventClass, clientClass);
-		return addChannel(channel);
-	}
-	
-	
-	/**
-	 * Remove a {@link EventChannel} from this bus
-	 * 
-	 * @param channel true if channel was removed
-	 */
-	public void removeChannel(EventChannel<?, ?> channel)
-	{
-		assertLive();
-		
-		channels.remove(channel);
-	}
-	
-	
-	/**
-	 * Send based on annotation.clients
+	 * Send based on annotation
 	 * 
 	 * @param event event
 	 */
@@ -166,7 +210,9 @@ final public class EventBus implements Destroyable {
 		
 		final DelayQueueEntry dm = new DelayQueueEntry(delay, event);
 		
-		if (shallLog(event)) Log.f3("<bus> Qu " + Log.str(event) + ", t = +" + delay + "s");
+		if (shallLog(event)) {
+			Log.f3(logMark + "Qu [" + Log.str(event) + "]" + (delay == 0 ? "" : (", delay: " + delay + "s")));
+		}
 		
 		sendQueue.add(dm);
 	}
@@ -183,7 +229,7 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		if (shallLog(event)) Log.f3("<bus> Di " + Log.str(event));
+		if (shallLog(event)) Log.f3(logMark + "Di [" + Log.str(event) + "]");
 		
 		dispatch(event);
 	}
@@ -193,58 +239,9 @@ final public class EventBus implements Destroyable {
 	{
 		assertLive();
 		
-		if (shallLog(event)) Log.f3("<bus> Di sub " + Log.str(event));
+		if (shallLog(event)) Log.f3(logMark + "Di->sub [" + Log.str(event) + "]");
 		
 		doDispatch(delegatingClient.getChildClients(), event);
-	}
-	
-	
-	/**
-	 * Send immediately.<br>
-	 * Should be used for real-time events that require immediate response, such
-	 * as timing events.
-	 * 
-	 * @param event event
-	 */
-	private void dispatch(Event<?> event)
-	{
-		assertLive();
-		
-		channels.setBuffering(true);
-		clients.setBuffering(true);
-		
-		doDispatch(clients, event);
-		
-		channels.setBuffering(false);
-		clients.setBuffering(false);
-	}
-	
-	
-	/**
-	 * Send to a set of clients
-	 * 
-	 * @param clients clients
-	 * @param event event
-	 */
-	private void doDispatch(Collection<Object> clients, Event<?> event)
-	{
-		boolean sent = false;
-		boolean accepted = false;
-		
-		final boolean singular = event.getClass().isAnnotationPresent(SingleReceiverEvent.class);
-		
-		for (final EventChannel<?, ?> b : channels) {
-			if (b.canBroadcast(event)) {
-				accepted = true;
-				sent |= b.broadcast(event, clients);
-			}
-			
-			if (sent && singular) break;
-		}
-		
-		if (!accepted) Log.e("<bus> Not accepted by any channel: " + Log.str(event));
-		if (!sent && shallLog(event)) Log.w("<bus> Not delivered: " + Log.str(event));
-		
 	}
 	
 	
@@ -262,7 +259,7 @@ final public class EventBus implements Destroyable {
 		
 		clients.add(client);
 		
-		if (detailedLogging) Log.f3("<bus> Client joined: " + Log.str(client));
+		if (detailedLogging) Log.f3(logMark + "Client joined: " + Log.str(client));
 	}
 	
 	
@@ -277,109 +274,41 @@ final public class EventBus implements Destroyable {
 		
 		clients.remove(client);
 		
-		if (detailedLogging) Log.f3("<bus> Client left: " + Log.str(client));
+		if (detailedLogging) Log.f3(logMark + "Client left: " + Log.str(client));
 	}
 	
 	
-	/**
-	 * Check if client can be accepted by any channel
-	 * 
-	 * @param client tested client
-	 * @return would be accepted
-	 */
-	public boolean isClientValid(Object client)
+	@SuppressWarnings("unchecked")
+	private boolean addChannelForEvent(Event<?> event)
 	{
-		assertLive();
-		
-		if (client == null) return false;
-		
-		for (final EventChannel<?, ?> ch : channels) {
-			if (ch.isClientValid(client)) {
-				return true;
+		try {
+			if (detailedLogging) {
+				Log.f2(logMark + "Setting up channel for new event type: " + Log.str(event.getClass()));
 			}
+			
+			final Class<?> listener = getEventListenerClass(event);
+			final EventChannel<?, ?> ch = EventChannel.create(event.getClass(), listener);
+			
+			if (ch.canBroadcast(event)) {
+				
+				channels.add(ch);
+				//channels.flush();
+				
+				if (detailedLogging) {
+					Log.f2("<bus> Created new channel: " + Log.str(event.getClass()) + " -> " + Log.str(listener));
+				}
+				
+				return true;
+				
+			} else {
+				Log.w(logMark + "Could not create channel for event " + Log.str(event.getClass()));
+			}
+			
+		} catch (final Throwable t) {
+			Log.w(logMark + "Error while trying to add channel for event.", t);
 		}
 		
 		return false;
-	}
-	
-	private class DelayQueueEntry implements Delayed {
-		
-		private final long due;
-		private Event<?> evt = null;
-		
-		
-		public DelayQueueEntry(double seconds, Event<?> event) {
-			super();
-			this.due = System.currentTimeMillis() + (long) (seconds * 1000);
-			this.evt = event;
-		}
-		
-		
-		@Override
-		public int compareTo(Delayed o)
-		{
-			return Long.valueOf(getDelay(TimeUnit.MILLISECONDS)).compareTo(o.getDelay(TimeUnit.MILLISECONDS));
-		}
-		
-		
-		@Override
-		public long getDelay(TimeUnit unit)
-		{
-			return unit.convert(due - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
-		}
-		
-		
-		public Event<?> getEvent()
-		{
-			return evt;
-		}
-		
-	}
-	
-	private class QueuePollingThread extends Thread {
-		
-		public boolean stopped = false;
-		
-		
-		public QueuePollingThread() {
-			super("Queue Polling Thread");
-		}
-		
-		
-		@Override
-		public void run()
-		{
-			DelayQueueEntry evt;
-			
-			while (!stopped) {
-				evt = null;
-				
-				try {
-					evt = sendQueue.take();
-				} catch (final InterruptedException ignored) {
-					//
-				}
-				
-				if (evt != null) {
-					dispatch(evt.getEvent());
-				}
-			}
-		}
-		
-	}
-	
-	
-	/**
-	 * Halt bus thread and reject any future events.
-	 */
-	@Override
-	public void destroy()
-	{
-		assertLive();
-		
-		busThread.stopped = true;
-		
-		dead = true;
 	}
 	
 	
@@ -391,6 +320,68 @@ final public class EventBus implements Destroyable {
 	private void assertLive() throws IllegalStateException
 	{
 		if (dead) throw new IllegalStateException("EventBus is dead.");
+	}
+	
+	
+	/**
+	 * Send immediately.<br>
+	 * Should be used for real-time events that require immediate response, such
+	 * as timing events.
+	 * 
+	 * @param event event
+	 */
+	private synchronized void dispatch(Event<?> event)
+	{
+		assertLive();
+		
+		clients.setBuffering(true);
+		doDispatch(clients, event);
+		clients.setBuffering(false);
+	}
+	
+	
+	/**
+	 * Send to a set of clients
+	 * 
+	 * @param clients clients
+	 * @param event event
+	 */
+	private synchronized void doDispatch(Collection<Object> clients, Event<?> event)
+	{
+		boolean sent = false;
+		boolean accepted = false;
+		
+		final boolean singular = event.getClass().isAnnotationPresent(SingleReceiverEvent.class);
+		
+		for (int i = 0; i < 2; i++) { // two tries.
+		
+			channels.setBuffering(true);
+			for (final EventChannel<?, ?> b : channels) {
+				if (b.canBroadcast(event)) {
+					accepted = true;
+					sent |= b.broadcast(event, clients);
+				}
+				
+				if (sent && singular) break;
+			}
+			channels.setBuffering(false);
+			
+			if (!accepted) if (addChannelForEvent(event)) continue;
+			
+			break;
+		}
+		
+		if (!accepted) Log.e(logMark + "Not accepted by any channel: " + Log.str(event));
+		if (!sent && shallLog(event)) Log.w(logMark + "Not delivered: " + Log.str(event));
+	}
+	
+	
+	private boolean shallLog(Event<?> event)
+	{
+		if (!detailedLogging) return false;
+		if (event.getClass().isAnnotationPresent(UnloggedEvent.class)) return false;
+		
+		return true;
 	}
 	
 }

@@ -8,7 +8,6 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
 import mightypork.gamecore.control.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.Hideable;
-import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
@@ -57,16 +56,16 @@ public abstract class Overlay extends AppSubModule implements Updateable, Compar
 	
 	
 	@Override
-	public final void bindKeyStroke(KeyStroke stroke, Runnable task)
+	public final void bindKey(KeyStroke stroke, Runnable task)
 	{
-		keybindings.bindKeyStroke(stroke, task);
+		keybindings.bindKey(stroke, task);
 	}
 	
 	
 	@Override
-	public final void unbindKeyStroke(KeyStroke stroke)
+	public final void unbindKey(KeyStroke stroke)
 	{
-		keybindings.unbindKeyStroke(stroke);
+		keybindings.unbindKey(stroke);
 	}
 	
 	
@@ -106,7 +105,7 @@ public abstract class Overlay extends AppSubModule implements Updateable, Compar
 	@Override
 	public void render()
 	{
-		for (Renderable r : rendered) {
+		for (final Renderable r : rendered) {
 			r.render();
 		}
 	}
@@ -115,7 +114,7 @@ public abstract class Overlay extends AppSubModule implements Updateable, Compar
 	@Override
 	public void update(double delta)
 	{
-		for (Updateable u : updated) {
+		for (final Updateable u : updated) {
 			u.update(delta);
 		}
 	}

@@ -18,8 +18,8 @@ import mightypork.util.constraints.rect.proxy.RectBound;
 public class HorizontalFixedFlowLayout extends LayoutComponent {
 	
 	private int col = 0;
-	private Num colWidth;
-	private AlignX align;
+	private final Num colWidth;
+	private final AlignX align;
 	
 	
 	/**

@@ -34,7 +34,7 @@ public class ZipUtils {
 	 */
 	public static List<String> extractZip(File file, File outputDir, StringFilter filter) throws IOException
 	{
-		try (ZipFile zip = new ZipFile(file)) {
+		try(ZipFile zip = new ZipFile(file)) {
 			return extractZip(zip, outputDir, filter);
 		}
 	}
@@ -90,7 +90,7 @@ public class ZipUtils {
 	 */
 	public static List<String> listZip(File zipFile) throws IOException
 	{
-		try (ZipFile zip = new ZipFile(zipFile)) {
+		try(ZipFile zip = new ZipFile(zipFile)) {
 			return listZip(zip);
 		}
 	}
@@ -134,7 +134,10 @@ public class ZipUtils {
 	{
 		if (!destFile.getParentFile().mkdirs()) throw new IOException("Could not create output directory.");
 		
-		try (InputStream in = zip.getInputStream(entry); BufferedInputStream is = new BufferedInputStream(in); FileOutputStream fos = new FileOutputStream(destFile); BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER_SIZE)) {
+		try(InputStream in = zip.getInputStream(entry);
+			BufferedInputStream is = new BufferedInputStream(in);
+			FileOutputStream fos = new FileOutputStream(destFile);
+			BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER_SIZE)) {
 			
 			FileUtils.copyStream(is, dest);
 		}
@@ -168,7 +171,7 @@ public class ZipUtils {
 	
 	public static boolean entryExists(File selectedFile, String string)
 	{
-		try (ZipFile zf = new ZipFile(selectedFile)) {
+		try(ZipFile zf = new ZipFile(selectedFile)) {
 			return zf.getEntry(string) != null;
 		} catch (final IOException | RuntimeException e) {
 			Log.w("Error reading zip.", e);

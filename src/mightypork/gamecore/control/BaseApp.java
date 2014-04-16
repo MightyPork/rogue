@@ -8,14 +8,12 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
 import mightypork.gamecore.audio.SoundSystem;
-import mightypork.gamecore.control.events.*;
+import mightypork.gamecore.control.events.DestroyEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.control.Destroyable;
 import mightypork.util.control.eventbus.EventBus;
-import mightypork.util.control.timing.Updateable;
 import mightypork.util.files.InstanceLock;
 import mightypork.util.logging.Log;
 import mightypork.util.logging.writers.LogWriter;
@@ -86,7 +84,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		eventBus = new EventBus();
 		
 		Log.f3("Registering channels...");
-		initDefaultBusChannels(eventBus);
 		initBus(eventBus);
 		
 		/*
@@ -236,34 +233,14 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	
 	
 	/**
-	 * Initialize event bus (ie. add custom channels)<br>
-	 * When overriding, must call super!
+	 * Initialize event bus. Usually, no action is needed, since the bus
+	 * automatically recognizes new event types.
 	 * 
 	 * @param bus
 	 */
 	@DefaultImpl
 	protected void initBus(EventBus bus)
 	{
-	}
-	
-	
-	private void initDefaultBusChannels(EventBus bus)
-	{
-		// framework events
-		bus.addChannel(DestroyEvent.class, Destroyable.class);
-		bus.addChannel(UpdateEvent.class, Updateable.class);
-		bus.addChannel(LayoutChangeEvent.class, LayoutChangeEvent.Listener.class);
-		
-		// input events
-		bus.addChannel(ViewportChangeEvent.class, ViewportChangeEvent.Listener.class);
-		bus.addChannel(KeyEvent.class, KeyEvent.Listener.class);
-		bus.addChannel(MouseMotionEvent.class, MouseMotionEvent.Listener.class);
-		bus.addChannel(MouseButtonEvent.class, MouseButtonEvent.Listener.class);
-		
-		// control events
-		bus.addChannel(ScreenRequestEvent.class, ScreenRequestEvent.Listener.class);
-		bus.addChannel(ResourceLoadRequest.class, ResourceLoadRequest.Listener.class);
-		bus.addChannel(MainLoopTaskRequest.class, MainLoopTaskRequest.Listener.class);
 	}
 	
 	

@@ -192,7 +192,7 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	private Rect p_edge_t;
 	private Rect p_edge_b;
 	
-	private DigestCache<RectDigest> dc = new DigestCache<RectDigest>() {
+	private final DigestCache<RectDigest> dc = new DigestCache<RectDigest>() {
 		
 		@Override
 		protected RectDigest createDigest()
@@ -443,6 +443,12 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	}
 	
 	
+	public Rect shrink(Num x, Num y)
+	{
+		return shrink(x, x, y, y);
+	}
+	
+	
 	/**
 	 * Shrink the rect
 	 * 
@@ -598,6 +604,12 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	 * @return result
 	 */
 	public final Rect grow(double x, double y)
+	{
+		return grow(x, x, y, y);
+	}
+	
+	
+	public Rect grow(Num x, Num y)
 	{
 		return grow(x, x, y, y);
 	}

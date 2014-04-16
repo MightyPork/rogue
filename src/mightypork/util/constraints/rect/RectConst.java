@@ -437,4 +437,15 @@ public class RectConst extends Rect {
 		return super.centerTo(parent).freeze();
 	}
 	
+	
+	public RectConst shrink(NumConst x, NumConst y)
+	{
+		return super.shrink(x, y).freeze();
+	}
+	
+	
+	public RectConst grow(NumConst x, NumConst y)
+	{
+		return super.grow(x, y).freeze();
+	}
 }

@@ -8,8 +8,8 @@ import java.util.List;
 
 
 /**
- * HashSet that buffers add and remove calls and performs them all at once when
- * a flush() method is called.
+ * HashSet that buffers "add" and "remove" calls and performs them all at once
+ * when a flush() method is called.
  * 
  * @author MightyPork
  * @param <E> element type
@@ -89,7 +89,7 @@ public class BufferedHashSet<E> extends HashSet<E> {
 	/**
 	 * Flush all
 	 */
-	private void flush()
+	public void flush()
 	{
 		for (final E e : toAdd) {
 			super.add(e);

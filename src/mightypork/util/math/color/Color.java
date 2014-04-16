@@ -19,9 +19,9 @@ public abstract class Color {
 	public static final Color NONE = rgba(0, 0, 0, 0);
 	public static final Color SHADOW = rgba(0, 0, 0, 0.5);
 	
-	public static final Color WHITE = rgb(1, 1, 1);
-	public static final Color BLACK = rgb(0, 0, 0);
-	public static final Color DARK_GRAY = rgb(0.25, 0.25, 0.25);
+	public static final Color WHITE = fromHex(0xFFFFFF);
+	public static final Color BLACK = fromHex(0x000000);
+	public static final Color DARK_GRAY = fromHex(0x808080);
 	public static final Color GRAY = rgb(0.5, 0.5, 0.5);
 	public static final Color LIGHT_GRAY = rgb(0.75, 0.75, 0.75);
 	
@@ -38,6 +38,16 @@ public abstract class Color {
 	
 	private static final Stack<Num> alphaStack = new Stack<>();
 	private static volatile boolean alphaStackEnabled = true;
+	
+	
+	@FactoryMethod
+	public static final Color fromHex(int rgb_hex)
+	{
+		final int bi = rgb_hex & 0xff;
+		final int gi = (rgb_hex >> 8) & 0xff;
+		final int ri = (rgb_hex >> 16) & 0xff;
+		return rgb(ri / 255D, gi / 255D, bi / 255D);
+	}
 	
 	
 	@FactoryMethod
@@ -163,7 +173,7 @@ public abstract class Color {
 		
 		if (alphaStackEnabled) {
 			
-			for (Num n : alphaStack) {
+			for (final Num n : alphaStack) {
 				alpha *= clamp(n.value());
 			}
 		}
@@ -240,5 +250,17 @@ public abstract class Color {
 	public static boolean isAlphaStackEnabled()
 	{
 		return alphaStackEnabled;
+	}
+	
+	
+	public Color withAlpha(double multiplier)
+	{
+		return new ColorAlphaAdjuster(this, Num.make(multiplier));
+	}
+	
+	
+	public Color withAlpha(Num multiplier)
+	{
+		return new ColorAlphaAdjuster(this, Num.make(multiplier));
 	}
 }

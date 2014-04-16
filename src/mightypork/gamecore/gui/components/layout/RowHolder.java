@@ -38,7 +38,7 @@ public class RowHolder extends LayoutComponent {
 	 */
 	public RowHolder(AppAccess app, RectBound context, int rows) {
 		super(app, context);
-		this.tiler = rows(rows).zeroBased();
+		this.tiler = rows(rows);
 	}
 	
 	

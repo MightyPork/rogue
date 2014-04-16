@@ -2,6 +2,7 @@ package mightypork.gamecore.gui.components;
 
 
 import mightypork.gamecore.control.events.LayoutChangeEvent;
+import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.Renderable;
 import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.constraints.rect.Rect;
@@ -83,6 +84,12 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	public final void onConstraintChanged()
 	{
 		updateLayout();
+	}
+	
+	
+	protected boolean isMouseOver()
+	{
+		return InputSystem.getMousePos().isInside(this);
 	}
 	
 	

@@ -26,7 +26,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 	public LayerBouncyBoxes(BaseScreen screen) {
 		super(screen);
 		
-		bindKeyStroke(new KeyStroke(true, Keys.KEY_RIGHT), new Runnable() {
+		bindKey(new KeyStroke(true, Keys.RIGHT), new Runnable() {
 			
 			@Override
 			public void run()
@@ -35,7 +35,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			}
 		});
 		
-		bindKeyStroke(new KeyStroke(true, Keys.KEY_LEFT), new Runnable() {
+		bindKey(new KeyStroke(true, Keys.LEFT), new Runnable() {
 			
 			@Override
 			public void run()

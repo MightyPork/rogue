@@ -18,7 +18,7 @@ import mightypork.util.logging.Log;
  * @param <EVENT> event type
  * @param <CLIENT> client (subscriber) type
  */
-final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
+class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	
 	private final Class<CLIENT> clientClass;
 	private final Class<EVENT> eventClass;
@@ -79,7 +79,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 			
 			// avoid executing more times
 			if (processed.contains(client)) {
-				Log.w("<bus> Client already served: " + Log.str(client));
+				Log.w(EventBus.logMark + "Client already served: " + Log.str(client));
 				continue;
 			}
 			processed.add(client);
@@ -131,7 +131,7 @@ final public class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	
 	
 	/**
-	 * Check if the given event can be broadcasted by this {@link EventChannel}
+	 * Check if the given event can be broadcasted by this channel
 	 * 
 	 * @param event event object
 	 * @return can be broadcasted

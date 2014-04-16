@@ -29,7 +29,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	private final KeyBindingPool keybindings;
 	
 	/** Current mouse position */
-	private final Vect mousePos = new Vect() {
+	private static final Vect mousePos = new Vect() {
 		
 		@Override
 		public double x()
@@ -90,16 +90,16 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	
 	
 	@Override
-	public final void bindKeyStroke(KeyStroke stroke, Runnable task)
+	public final void bindKey(KeyStroke stroke, Runnable task)
 	{
-		keybindings.bindKeyStroke(stroke, task);
+		keybindings.bindKey(stroke, task);
 	}
 	
 	
 	@Override
-	public void unbindKeyStroke(KeyStroke stroke)
+	public void unbindKey(KeyStroke stroke)
 	{
-		keybindings.unbindKeyStroke(stroke);
+		keybindings.unbindKey(stroke);
 	}
 	
 	// counters as fields to save memory.
@@ -179,7 +179,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	 * 
 	 * @return mouse position
 	 */
-	public Vect getMousePos()
+	public static Vect getMousePos()
 	{
 		return mousePos;
 	}
@@ -188,7 +188,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	/**
 	 * @return true if mouse is inside window.
 	 */
-	public boolean isMouseInside()
+	public static boolean isMouseInside()
 	{
 		return Mouse.isInsideWindow();
 	}
@@ -199,7 +199,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	 * 
 	 * @param grab true to grab
 	 */
-	public void grabMouse(boolean grab)
+	public static void grabMouse(boolean grab)
 	{
 		Mouse.setGrabbed(grab);
 	}

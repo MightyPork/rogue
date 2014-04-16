@@ -14,6 +14,7 @@ import mightypork.gamecore.loading.AsyncResourceLoader;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
+import mightypork.rogue.screens.FpsOverlay;
 import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
@@ -47,11 +48,9 @@ public class App extends BaseApp {
 	@Override
 	protected LogWriter createLog()
 	{
-		Locale.setDefault(Locale.ENGLISH);
+		Locale.setDefault(Locale.ENGLISH); // for decimal point in numbers
 		
-		final LogWriter log = Log.create("runtime", Paths.LOG_FILE, 5);
-		
-		return log;
+		return Log.create("runtime", Paths.LOG_FILE, 5);
 	}
 	
 	
@@ -69,8 +68,9 @@ public class App extends BaseApp {
 		screens.addScreen(new ScreenTestBouncy(this));
 		screens.addScreen(new ScreenTestCat(this));
 		screens.addScreen(new ScreenTestRender(this));
-		
 		screens.addScreen(new ScreenMainMenu(this));
+		
+		screens.addOverlay(new FpsOverlay(this));
 		
 		screens.showScreen("rogue.menu");
 	}
@@ -86,7 +86,7 @@ public class App extends BaseApp {
 	@Override
 	protected void initResources()
 	{
-		AsyncResourceLoader thread = AsyncResourceLoader.launch(this);
+		final AsyncResourceLoader thread = AsyncResourceLoader.launch(this);
 		thread.enableMainLoopQueuing(true);
 		
 		Res.load(this);
@@ -103,8 +103,6 @@ public class App extends BaseApp {
 	@Override
 	protected void initBus(EventBus bus)
 	{
-		bus.addChannel(ActionRequest.class, ActionRequest.Listener.class);
-		
 		bus.detailedLogging = true;
 	}
 	
@@ -113,7 +111,7 @@ public class App extends BaseApp {
 	protected void initInputSystem(InputSystem input)
 	{
 		// Go fullscreen
-		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_F11), new Runnable() {
+		input.bindKey(new KeyStroke(Keys.F11), new Runnable() {
 			
 			@Override
 			public void run()
@@ -123,7 +121,7 @@ public class App extends BaseApp {
 		});
 		
 		// Take screenshot
-		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_F2), new Runnable() {
+		input.bindKey(new KeyStroke(Keys.F2), new Runnable() {
 			
 			@Override
 			public void run()
@@ -133,7 +131,7 @@ public class App extends BaseApp {
 		});
 		
 		// Exit
-		getInput().bindKeyStroke(new KeyStroke(Keys.KEY_LCONTROL, Keys.KEY_Q), new Runnable() {
+		input.bindKey(new KeyStroke(Keys.L_CONTROL, Keys.Q), new Runnable() {
 			
 			@Override
 			public void run()

@@ -4,12 +4,11 @@ package mightypork.util.constraints.rect.builders;
 import mightypork.util.constraints.num.Num;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.proxy.RectProxy;
+import mightypork.util.logging.Log;
 
 
 /**
- * Utility for cutting rect into evenly sized cells.<br>
- * It's by default one-based, but this can be switched by calling the oneBased()
- * and zeroBased() methods.
+ * Utility for cutting rect into evenly sized cells.
  * 
  * @author MightyPork
  */
@@ -19,8 +18,6 @@ public class TiledRect extends RectProxy {
 	final private int tilesX;
 	final private Num perRow;
 	final private Num perCol;
-	
-	private int based = 1;
 	
 	
 	public TiledRect(Rect source, int horizontal, int vertical) {
@@ -34,30 +31,6 @@ public class TiledRect extends RectProxy {
 	
 	
 	/**
-	 * Set to one-based mode, and return itself (for chaining).
-	 * 
-	 * @return this
-	 */
-	public TiledRect oneBased()
-	{
-		based = 1;
-		return this;
-	}
-	
-	
-	/**
-	 * Set to zero-based mode, and return itself (for chaining).
-	 * 
-	 * @return this
-	 */
-	public TiledRect zeroBased()
-	{
-		based = 0;
-		return this;
-	}
-	
-	
-	/**
 	 * Get a tile.
 	 * 
 	 * @param x x position
@@ -67,9 +40,6 @@ public class TiledRect extends RectProxy {
 	 */
 	public Rect tile(int x, int y)
 	{
-		x -= based;
-		y -= based;
-		
 		if (x >= tilesX || x < 0) {
 			throw new IndexOutOfBoundsException("X coordinate out fo range.");
 		}
@@ -97,22 +67,19 @@ public class TiledRect extends RectProxy {
 	 */
 	public Rect span(int x_from, int y_from, int size_x, int size_y)
 	{
-		x_from -= based;
-		y_from -= based;
-		
-		final int x_to = x_from + size_x;
-		final int y_to = y_from + size_y;
+		final int x_to = x_from + size_x - 1;
+		final int y_to = y_from + size_y - 1;
 		
 		if (size_x <= 0 || size_y <= 0) {
-			throw new IndexOutOfBoundsException("Size must be > 0.");
+			Log.w("Size must be > 0.", new IllegalAccessException());
 		}
 		
 		if (x_from >= tilesX || x_from < 0 || x_to >= tilesX || x_to < 0) {
-			throw new IndexOutOfBoundsException("X coordinate(s) out of range.");
+			Log.w("X coordinate(s) out of range.", new IllegalAccessException());
 		}
 		
 		if (y_from >= tilesY || y_from < 0 || y_to >= tilesY || y_to < 0) {
-			throw new IndexOutOfBoundsException("Y coordinate(s) out of range.");
+			Log.w("Y coordinate(s) out of range.", new IllegalAccessException());
 		}
 		
 		final Num leftMove = left().add(perCol.mul(x_from));
@@ -131,7 +98,7 @@ public class TiledRect extends RectProxy {
 	 */
 	public Rect column(int n)
 	{
-		return tile(n, based);
+		return tile(n, 0);
 	}
 	
 	
@@ -144,6 +111,6 @@ public class TiledRect extends RectProxy {
 	 */
 	public Rect row(int n)
 	{
-		return tile(based, n);
+		return tile(0, n);
 	}
 }
