@@ -41,7 +41,7 @@ public class ColorRgb extends Color {
 	
 	
 	@Override
-	public double alpha()
+	public double rawAlpha()
 	{
 		return clamp(a);
 	}

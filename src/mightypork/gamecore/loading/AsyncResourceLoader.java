@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import mightypork.gamecore.control.bus.BusAccess;
+import mightypork.gamecore.control.bus.events.MainLoopTaskRequest;
 import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
 import mightypork.gamecore.control.interf.Destroyable;
 import mightypork.utils.annotations.FactoryMethod;
@@ -38,8 +39,14 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	
 	private final LinkedBlockingQueue<Deferred> toLoad = new LinkedBlockingQueue<>();
 	private volatile boolean stopped;
-	@SuppressWarnings("unused")
 	private final BusAccess app;
+	private volatile boolean mainLoopQueuing = false;
+	
+	
+	public void enableMainLoopQueuing(boolean yes)
+	{
+		mainLoopQueuing = yes;
+	}
 	
 	
 	/**
@@ -61,18 +68,20 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 		// textures & fonts needs to be loaded in main thread
 		if (resource.getClass().isAnnotationPresent(MustLoadInMainThread.class)) {
 			
-			Log.f3("<LOADER> Cannot load async: " + Log.str(resource));
-			
-//			Log.f3("<LOADER> Delegating to main thread:\n    " + Log.str(resource));
-//			
-//			app.getEventBus().send(new MainLoopTaskRequest(new Runnable() {
-//				
-//				@Override
-//				public void run()
-//				{
-//					resource.load();
-//				}
-//			}));
+			if (!mainLoopQueuing) {
+				Log.f3("<LOADER> Cannot load async: " + Log.str(resource));
+			} else {
+				Log.f3("<LOADER> Delegating to main thread:\n    " + Log.str(resource));
+				
+				app.getEventBus().send(new MainLoopTaskRequest(new Runnable() {
+					
+					@Override
+					public void run()
+					{
+						resource.load();
+					}
+				}));
+			}
 			
 			return;
 		}

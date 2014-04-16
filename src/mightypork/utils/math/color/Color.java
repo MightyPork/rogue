@@ -1,6 +1,8 @@
 package mightypork.utils.math.color;
 
 
+import java.util.Stack;
+
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.constraints.num.Num;
@@ -34,11 +36,15 @@ public abstract class Color {
 	public static final Color ORANGE = rgb(1, 0.78, 0);
 	public static final Color PINK = rgb(1, 0.68, 0.68);
 	
+	private static final Stack<Num> globalAlphaStack = new Stack<>();
+	
+	
 	@FactoryMethod
 	public static final Color rgb(double r, double g, double b)
 	{
 		return rgba(Num.make(r), Num.make(g), Num.make(b), Num.ONE);
 	}
+	
 	
 	@FactoryMethod
 	public static final Color rgba(double r, double g, double b, double a)
@@ -46,11 +52,13 @@ public abstract class Color {
 		return rgba(Num.make(r), Num.make(g), Num.make(b), Num.make(a));
 	}
 	
+	
 	@FactoryMethod
 	public static final Color rgba(Num r, Num g, Num b)
 	{
 		return rgba(r, g, b, Num.ONE);
 	}
+	
 	
 	@FactoryMethod
 	public static final Color rgba(Num r, Num g, Num b, Num a)
@@ -58,11 +66,13 @@ public abstract class Color {
 		return new ColorRgb(r, g, b, a);
 	}
 	
+	
 	@FactoryMethod
 	public static final Color hsb(double h, double s, double b)
 	{
 		return hsba(Num.make(h), Num.make(s), Num.make(b), Num.ONE);
 	}
+	
 	
 	@FactoryMethod
 	public static final Color hsba(double h, double s, double b, double a)
@@ -70,11 +80,13 @@ public abstract class Color {
 		return hsba(Num.make(h), Num.make(s), Num.make(b), Num.make(a));
 	}
 	
+	
 	@FactoryMethod
 	public static final Color hsb(Num h, Num s, Num b)
 	{
 		return hsba(h, s, b, Num.ONE);
 	}
+	
 	
 	@FactoryMethod
 	public static final Color hsba(Num h, Num s, Num b, Num a)
@@ -82,11 +94,13 @@ public abstract class Color {
 		return new ColorHsb(h, s, b, a);
 	}
 	
+	
 	@FactoryMethod
 	public static final Color light(double a)
 	{
 		return light(Num.make(a));
 	}
+	
 	
 	@FactoryMethod
 	public static final Color light(Num a)
@@ -94,11 +108,13 @@ public abstract class Color {
 		return rgba(Num.ONE, Num.ONE, Num.ONE, a);
 	}
 	
-	@FactoryMethod				
+	
+	@FactoryMethod
 	public static final Color dark(double a)
 	{
 		return dark(Num.make(a));
 	}
+	
 	
 	@FactoryMethod
 	public static final Color dark(Num a)
@@ -140,5 +156,57 @@ public abstract class Color {
 	/**
 	 * @return alpha 0-1
 	 */
-	public abstract double alpha();
+	public final double alpha()
+	{
+		double alpha = rawAlpha();
+		
+		for (Num n : globalAlphaStack) {
+			alpha *= clamp(n.value());
+		}
+		
+		return clamp(alpha);
+	}
+	
+	
+	/**
+	 * @return alpha 0-1, before multiplying with the global alpha value.
+	 */
+	protected abstract double rawAlpha();
+	
+	
+	/**
+	 * <p>
+	 * Push alpha multiplier on the stack (can be animated or whatever you
+	 * like). Once done with rendering, the popAlpha() method should be called,
+	 * otherwise you may experience unexpected glitches (such as all going
+	 * transparent).
+	 * </p>
+	 * <p>
+	 * multiplier value should not exceed the range 0..1, otherwise it will be
+	 * clamped to it.
+	 * </p>
+	 * 
+	 * @param alpha alpha multiplier
+	 */
+	public static void pushAlpha(Num alpha)
+	{
+		globalAlphaStack.push(alpha);
+	}
+	
+	
+	/**
+	 * Remove a pushed alpha multiplier from the stack. If there's no remaining
+	 * multiplier on the stack, an exception is raised.
+	 * 
+	 * @return the popped multiplier
+	 * @throws IllegalStateException if the stack is empty
+	 */
+	public static Num popAlpha()
+	{
+		if (globalAlphaStack.isEmpty()) {
+			throw new IllegalStateException("Global alpha stack underflow.");
+		}
+		
+		return globalAlphaStack.pop();
+	}
 }

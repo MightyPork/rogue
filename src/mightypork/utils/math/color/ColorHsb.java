@@ -52,7 +52,7 @@ public class ColorHsb extends Color {
 	
 	
 	@Override
-	public double alpha()
+	public double rawAlpha()
 	{
 		return asRgb()[3];
 	}

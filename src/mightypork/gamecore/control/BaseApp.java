@@ -125,7 +125,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		 * Resources should be registered to banks, and AsyncResourceLoader will load them.
 		 */
 		Log.f1("Loading resources...");
-		AsyncResourceLoader.launch(this);
 		initResources();
 		
 		/*
@@ -210,8 +209,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	
 	
 	/**
-	 * Initialize resource banks; {@link AsyncResourceLoader} is already
-	 * started.
+	 * Initialize resource banks.
 	 */
 	@DefaultImpl
 	protected void initResources()

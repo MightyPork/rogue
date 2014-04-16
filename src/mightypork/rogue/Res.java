@@ -48,8 +48,8 @@ public class Res {
 		fonts = new FontBank(app);
 		
 		loadSounds();
-		loadTextures();
 		loadFonts();
+		loadTextures();
 	}
 	
 	
@@ -58,13 +58,9 @@ public class Res {
 		DeferredFont font;
 		
 		font = new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16);
-		font.setAntialias(true);
-		font.setFilter(FilterMode.NEAREST);
 		fonts.loadFont("polygon_pixel", font);
 
 		font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16);
-		font.setAntialias(true);
-		font.setFilter(FilterMode.NEAREST);
 		fonts.loadFont("press_start", font);
 		
 		fonts.addAlias("default", "polygon_pixel");

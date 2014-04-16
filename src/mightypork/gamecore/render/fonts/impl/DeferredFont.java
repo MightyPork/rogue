@@ -54,7 +54,7 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	 * @param size size (px)
 	 */
 	public DeferredFont(String resourcePath, String chars, double size) {
-		this(resourcePath, chars, size, FontStyle.PLAIN, true, FilterMode.LINEAR);
+		this(resourcePath, chars, size, FontStyle.PLAIN, false, FilterMode.NEAREST);
 	}
 	
 	

@@ -11,6 +11,7 @@ import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.loading.AsyncResourceLoader;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
@@ -85,6 +86,9 @@ public class App extends BaseApp {
 	@Override
 	protected void initResources()
 	{
+		AsyncResourceLoader thread = AsyncResourceLoader.launch(this);
+		thread.enableMainLoopQueuing(true);
+		
 		Res.load(this);
 	}
 	
