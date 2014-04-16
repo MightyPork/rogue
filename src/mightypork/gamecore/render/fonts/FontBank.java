@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
-import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
+import mightypork.gamecore.control.events.ResourceLoadRequest;
 import mightypork.gamecore.render.fonts.impl.DeferredFont;
 
 import org.newdawn.slick.opengl.Texture;
@@ -16,7 +16,7 @@ import org.newdawn.slick.opengl.Texture;
  * 
  * @author MightyPork
  */
-public class FontBank extends AppAdapter {	
+public class FontBank extends AppAdapter {
 	
 	/**
 	 * @param app app access
@@ -53,7 +53,8 @@ public class FontBank extends AppAdapter {
 	{
 		fonts.put(key, font);
 	}
-
+	
+	
 	/**
 	 * Add a font alias.
 	 * 
@@ -76,9 +77,9 @@ public class FontBank extends AppAdapter {
 	{
 		GLFont f = fonts.get(key);
 		
-		if(f == null) f = fonts.get(aliases.get(key));
+		if (f == null) f = fonts.get(aliases.get(key));
 		
-		if (f == null) {			
+		if (f == null) {
 			throw new RuntimeException("There's no font called " + key + "!");
 		}
 		

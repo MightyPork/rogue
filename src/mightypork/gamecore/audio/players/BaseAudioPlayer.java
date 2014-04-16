@@ -3,7 +3,7 @@ package mightypork.gamecore.audio.players;
 
 import mightypork.gamecore.audio.DeferredAudio;
 import mightypork.gamecore.audio.Volume;
-import mightypork.gamecore.control.interf.Destroyable;
+import mightypork.util.control.Destroyable;
 
 
 /**

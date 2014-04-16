@@ -3,7 +3,7 @@ package mightypork.gamecore.audio.players;
 
 import mightypork.gamecore.audio.DeferredAudio;
 import mightypork.gamecore.audio.Volume;
-import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 /**

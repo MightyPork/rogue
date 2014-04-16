@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.gamecore.control.bus.events.MouseButtonEvent;
-import mightypork.gamecore.control.interf.Enableable;
-import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.gui.ActionTrigger;
+import mightypork.gamecore.control.events.MouseButtonEvent;
+import mightypork.util.control.Action;
+import mightypork.util.control.ActionTrigger;
+import mightypork.util.control.Enableable;
 
 
 public abstract class InputComponent extends VisualComponent implements Enableable, ActionTrigger, MouseButtonEvent.Listener {
@@ -33,7 +33,9 @@ public abstract class InputComponent extends VisualComponent implements Enableab
 		return enabled;
 	}
 	
-	protected void triggerAction() {
-		if(action != null) action.run();
+	
+	protected void triggerAction()
+	{
+		if (action != null) action.run();
 	}
 }

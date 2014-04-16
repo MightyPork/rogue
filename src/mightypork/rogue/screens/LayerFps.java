@@ -1,7 +1,6 @@
 package mightypork.rogue.screens;
 
 
-import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
@@ -10,11 +9,11 @@ import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.rogue.Res;
-import mightypork.utils.math.color.Color;
-import mightypork.utils.math.constraints.num.Num;
-import mightypork.utils.math.constraints.rect.proxy.RectBound;
-import mightypork.utils.math.constraints.vect.Vect;
-import mightypork.utils.string.StringProvider;
+import mightypork.util.control.Action;
+import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.string.StringProvider;
 
 
 public class LayerFps extends ScreenLayer {
@@ -50,11 +49,12 @@ public class LayerFps extends ScreenLayer {
 			}
 		});
 		
-		tp.setRect(constraint);		
+		tp.setRect(constraint);
 		tp.setShadow(Color.BLACK, Vect.make(tp.height().div(16)));
 		
 		root.add(tp);
 	}
+	
 	
 	@Override
 	protected void renderLayer()

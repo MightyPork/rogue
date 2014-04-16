@@ -3,7 +3,7 @@ package mightypork.rogue;
 
 import java.io.File;
 
-import mightypork.utils.files.OsUtils;
+import mightypork.util.files.OsUtils;
 
 
 public class Paths {

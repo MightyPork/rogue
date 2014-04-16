@@ -5,12 +5,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import mightypork.gamecore.control.bus.BusAccess;
-import mightypork.gamecore.control.bus.events.MainLoopTaskRequest;
-import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
-import mightypork.gamecore.control.interf.Destroyable;
-import mightypork.utils.annotations.FactoryMethod;
-import mightypork.utils.logging.Log;
+import mightypork.gamecore.control.events.MainLoopTaskRequest;
+import mightypork.gamecore.control.events.ResourceLoadRequest;
+import mightypork.util.annotations.FactoryMethod;
+import mightypork.util.control.Destroyable;
+import mightypork.util.control.eventbus.BusAccess;
+import mightypork.util.logging.Log;
 
 
 /**

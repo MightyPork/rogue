@@ -3,7 +3,7 @@ package mightypork.test;
 
 import java.util.Locale;
 
-import mightypork.utils.objects.Convert;
+import mightypork.util.objects.Convert;
 
 
 public class TestConvert {

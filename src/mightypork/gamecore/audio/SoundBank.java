@@ -8,7 +8,7 @@ import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
-import mightypork.utils.logging.Log;
+import mightypork.util.logging.Log;
 
 
 /**

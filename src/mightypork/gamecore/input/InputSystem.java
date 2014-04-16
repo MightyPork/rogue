@@ -2,15 +2,15 @@ package mightypork.gamecore.input;
 
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.bus.clients.RootBusNode;
-import mightypork.gamecore.control.bus.events.KeyEvent;
-import mightypork.gamecore.control.bus.events.MouseButtonEvent;
-import mightypork.gamecore.control.bus.events.MouseMotionEvent;
-import mightypork.gamecore.control.timing.Updateable;
+import mightypork.gamecore.control.events.KeyEvent;
+import mightypork.gamecore.control.events.MouseButtonEvent;
+import mightypork.gamecore.control.events.MouseMotionEvent;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.utils.math.constraints.vect.Vect;
-import mightypork.utils.math.constraints.vect.mutable.VectVar;
+import mightypork.util.control.eventbus.clients.RootBusNode;
+import mightypork.util.control.timing.Updateable;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.mutable.VectVar;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -174,7 +174,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	
 	
 	/**
-	 * Get absolute mouse position. This vect is final and views at it can safely be made.
+	 * Get absolute mouse position. This vect is final and views at it can
+	 * safely be made.
 	 * 
 	 * @return mouse position
 	 */

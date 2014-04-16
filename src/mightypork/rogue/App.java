@@ -6,7 +6,6 @@ import java.util.Locale;
 
 import mightypork.gamecore.control.BaseApp;
 import mightypork.gamecore.control.GameLoop;
-import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
@@ -19,8 +18,9 @@ import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
-import mightypork.utils.logging.Log;
-import mightypork.utils.logging.LogWriter;
+import mightypork.util.control.eventbus.EventBus;
+import mightypork.util.logging.Log;
+import mightypork.util.logging.writers.LogWriter;
 
 
 /**

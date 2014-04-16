@@ -12,9 +12,9 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Res;
-import mightypork.utils.math.color.Color;
-import mightypork.utils.math.constraints.num.Num;
-import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.num.Num;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 public class LayerBouncyBoxes extends ScreenLayer {

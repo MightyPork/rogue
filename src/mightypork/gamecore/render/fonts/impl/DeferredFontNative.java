@@ -6,7 +6,7 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 
 import mightypork.gamecore.render.textures.FilterMode;
-import mightypork.utils.annotations.Alias;
+import mightypork.util.logging.LogAlias;
 
 
 /**
@@ -14,7 +14,7 @@ import mightypork.utils.annotations.Alias;
  * 
  * @author MightyPork
  */
-@Alias(name = "FontNative")
+@LogAlias(name = "FontNative")
 public class DeferredFontNative extends DeferredFont {
 	
 	/**

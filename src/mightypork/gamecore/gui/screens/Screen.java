@@ -3,17 +3,17 @@ package mightypork.gamecore.gui.screens;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
-import mightypork.gamecore.control.bus.events.LayoutChangeEvent;
-import mightypork.gamecore.control.bus.events.ScreenChangeEvent;
+import mightypork.gamecore.control.events.LayoutChangeEvent;
+import mightypork.gamecore.control.events.ScreenChangeEvent;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.render.Render;
-import mightypork.utils.annotations.DefaultImpl;
-import mightypork.utils.math.constraints.rect.Rect;
-import mightypork.utils.math.constraints.rect.proxy.RectBound;
-import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.util.annotations.DefaultImpl;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 /**

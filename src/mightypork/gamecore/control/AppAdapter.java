@@ -2,9 +2,9 @@ package mightypork.gamecore.control;
 
 
 import mightypork.gamecore.audio.SoundSystem;
-import mightypork.gamecore.control.bus.EventBus;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
+import mightypork.util.control.eventbus.EventBus;
 
 
 /**

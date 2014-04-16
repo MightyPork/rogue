@@ -5,15 +5,15 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import mightypork.gamecore.control.AppSubModule;
-import mightypork.gamecore.control.timing.Updateable;
 import mightypork.gamecore.gui.Hideable;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.utils.annotations.DefaultImpl;
-import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.util.annotations.DefaultImpl;
+import mightypork.util.control.timing.Updateable;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 /**

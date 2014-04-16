@@ -8,12 +8,12 @@ import java.util.Set;
 import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.bus.clients.RootBusNode;
-import mightypork.gamecore.control.bus.events.ResourceLoadRequest;
-import mightypork.gamecore.control.timing.Updateable;
-import mightypork.utils.math.Calc.Buffers;
-import mightypork.utils.math.constraints.vect.Vect;
-import mightypork.utils.math.constraints.vect.mutable.VectVar;
+import mightypork.gamecore.control.events.ResourceLoadRequest;
+import mightypork.util.control.eventbus.clients.RootBusNode;
+import mightypork.util.control.timing.Updateable;
+import mightypork.util.math.Calc.Buffers;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.mutable.VectVar;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;

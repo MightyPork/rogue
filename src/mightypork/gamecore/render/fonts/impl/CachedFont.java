@@ -20,10 +20,10 @@ import java.util.Map;
 
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
-import mightypork.utils.logging.Log;
-import mightypork.utils.math.color.Color;
-import mightypork.utils.math.constraints.vect.Vect;
-import mightypork.utils.math.constraints.vect.VectConst;
+import mightypork.util.logging.Log;
+import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.VectConst;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.util.glu.GLU;
@@ -294,8 +294,7 @@ public class CachedFont implements GLFont {
 				
 				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(newI);
 			} else {
-				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder())
-						.put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
+				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
 			}
 			
 			byteBuffer.flip();
@@ -413,8 +412,7 @@ public class CachedFont implements GLFont {
 			chtx = chars.get(charCurrent);
 			
 			if (chtx != null) {
-				drawQuad((totalwidth), 0, (totalwidth + chtx.width), (chtx.height), chtx.texPosX, chtx.texPosY, chtx.texPosX + chtx.width, chtx.texPosY
-						+ chtx.height);
+				drawQuad((totalwidth), 0, (totalwidth + chtx.width), (chtx.height), chtx.texPosX, chtx.texPosY, chtx.texPosX + chtx.width, chtx.texPosY + chtx.height);
 				totalwidth += chtx.width;
 			}
 		}

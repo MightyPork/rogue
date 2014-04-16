@@ -3,7 +3,7 @@ package mightypork.gamecore.control;
 
 import java.util.logging.Level;
 
-import mightypork.utils.logging.LogWriter;
+import mightypork.util.logging.writers.LogWriter;
 
 import org.newdawn.slick.util.LogSystem;
 

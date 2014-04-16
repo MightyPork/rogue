@@ -10,10 +10,10 @@ import mightypork.gamecore.loading.DeferredResource;
 import mightypork.gamecore.loading.MustLoadInMainThread;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.textures.FilterMode;
-import mightypork.utils.annotations.Alias;
-import mightypork.utils.files.FileUtils;
-import mightypork.utils.math.color.Color;
-import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.util.files.FileUtils;
+import mightypork.util.logging.LogAlias;
+import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 /**
@@ -22,7 +22,7 @@ import mightypork.utils.math.constraints.vect.Vect;
  * @author MightyPork
  */
 @MustLoadInMainThread
-@Alias(name = "Font")
+@LogAlias(name = "Font")
 public class DeferredFont extends DeferredResource implements GLFont {
 	
 	public static enum FontStyle
@@ -129,7 +129,7 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	 */
 	protected Font getAwtFont(String resource, float size, int style) throws FontFormatException, IOException
 	{
-		try(InputStream in = FileUtils.getResource(resource)) {
+		try (InputStream in = FileUtils.getResource(resource)) {
 			
 			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, in);
 			

@@ -1,7 +1,7 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.control.bus.events.KeyEvent;
+import mightypork.gamecore.control.events.KeyEvent;
 
 
 /**

@@ -7,12 +7,12 @@ import java.util.LinkedList;
 import mightypork.gamecore.audio.SoundSystem;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
-import mightypork.gamecore.control.bus.EventBus;
-import mightypork.gamecore.control.bus.clients.ClientHub;
-import mightypork.gamecore.control.interf.Enableable;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.utils.math.constraints.rect.proxy.RectBound;
+import mightypork.util.control.Enableable;
+import mightypork.util.control.eventbus.EventBus;
+import mightypork.util.control.eventbus.clients.ClientHub;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
 
 
 public abstract class LayoutComponent extends VisualComponent implements Enableable, ClientHub, AppAccess {

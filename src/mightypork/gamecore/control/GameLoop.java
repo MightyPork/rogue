@@ -4,12 +4,12 @@ package mightypork.gamecore.control;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import mightypork.gamecore.control.bus.events.MainLoopTaskRequest;
-import mightypork.gamecore.control.bus.events.UpdateEvent;
-import mightypork.gamecore.control.timing.TimerDelta;
+import mightypork.gamecore.control.events.MainLoopTaskRequest;
+import mightypork.gamecore.control.events.UpdateEvent;
 import mightypork.gamecore.gui.components.Renderable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.util.annotations.DefaultImpl;
+import mightypork.util.control.timing.TimerDelta;
 
 
 /**

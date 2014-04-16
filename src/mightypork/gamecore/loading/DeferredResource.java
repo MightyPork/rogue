@@ -1,9 +1,9 @@
 package mightypork.gamecore.loading;
 
 
-import mightypork.gamecore.control.interf.Destroyable;
-import mightypork.utils.annotations.Alias;
-import mightypork.utils.logging.Log;
+import mightypork.util.control.Destroyable;
+import mightypork.util.logging.Log;
+import mightypork.util.logging.LogAlias;
 
 
 /**
@@ -13,7 +13,7 @@ import mightypork.utils.logging.Log;
  * 
  * @author MightyPork
  */
-@Alias(name = "Resource")
+@LogAlias(name = "Resource")
 public abstract class DeferredResource implements Deferred, Destroyable {
 	
 	private final String resource;

@@ -1,8 +1,8 @@
 package mightypork.gamecore.render.fonts;
 
 
-import mightypork.utils.math.color.Color;
-import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 /**

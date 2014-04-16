@@ -3,8 +3,7 @@ package mightypork.rogue.screens.test_cat_sound;
 
 import java.util.Random;
 
-import mightypork.gamecore.control.bus.events.MouseButtonEvent;
-import mightypork.gamecore.control.timing.Updateable;
+import mightypork.gamecore.control.events.MouseButtonEvent;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
@@ -14,13 +13,12 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Res;
-import mightypork.utils.math.Easing;
-import mightypork.utils.math.color.Color;
-import mightypork.utils.math.constraints.num.Num;
-import mightypork.utils.math.constraints.num.mutable.NumAnimated;
-import mightypork.utils.math.constraints.rect.Rect;
-import mightypork.utils.math.constraints.vect.Vect;
-import mightypork.utils.math.constraints.vect.mutable.VectAnimated;
+import mightypork.util.math.Easing;
+import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.mutable.VectAnimated;
 
 
 public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.Listener {
@@ -51,17 +49,16 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		QuadPainter cat_frame = QuadPainter.gradV(Color.YELLOW, Color.RED);
 		cat_frame.setRect(cat.grow(cat.height().mul(0.05)));
 		cat_frame.enableCaching(false);
-
+		
 		// frame shadow
 		QuadPainter cat_shadow = new QuadPainter(Color.dark(0.4));
 		cat_shadow.setRect(cat_frame.move(Vect.make(cat.height().mul(0.05))));
 		cat_shadow.enableCaching(false);
-
+		
 		// add to root layout
 		root.add(cat_shadow);
 		root.add(cat_frame);
 		root.add(cat);
-		
 		
 		// Meow
 		TextPainter tp = new TextPainter(Res.getFont("press_start"));

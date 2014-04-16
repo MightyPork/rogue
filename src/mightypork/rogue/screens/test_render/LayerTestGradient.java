@@ -4,8 +4,8 @@ package mightypork.rogue.screens.test_render;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.render.Render;
-import mightypork.utils.math.color.Color;
-import mightypork.utils.math.constraints.rect.proxy.RectBound;
+import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
 
 
 public class LayerTestGradient extends ScreenLayer {

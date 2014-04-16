@@ -59,7 +59,7 @@ public class Res {
 		
 		font = new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16);
 		fonts.loadFont("polygon_pixel", font);
-
+		
 		font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16);
 		fonts.loadFont("press_start", font);
 		

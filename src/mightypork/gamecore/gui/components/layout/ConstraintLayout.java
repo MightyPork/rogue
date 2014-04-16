@@ -2,9 +2,9 @@ package mightypork.gamecore.gui.components.layout;
 
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.gui.components.LayoutComponent;
 import mightypork.gamecore.gui.components.Component;
-import mightypork.utils.math.constraints.rect.proxy.RectBound;
+import mightypork.gamecore.gui.components.LayoutComponent;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
 
 
 /**

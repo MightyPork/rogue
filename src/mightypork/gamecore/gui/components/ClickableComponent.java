@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.gamecore.control.bus.events.MouseButtonEvent;
+import mightypork.gamecore.control.events.MouseButtonEvent;
 
 
 public abstract class ClickableComponent extends InputComponent {

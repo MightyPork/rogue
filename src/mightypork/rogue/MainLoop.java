@@ -9,12 +9,12 @@ import java.util.Date;
 
 import mightypork.gamecore.control.BaseApp;
 import mightypork.gamecore.control.GameLoop;
-import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.render.Screenshot;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.rogue.util.Utils;
-import mightypork.utils.logging.Log;
+import mightypork.util.control.Action;
+import mightypork.util.logging.Log;
 
 
 public class MainLoop extends GameLoop implements ActionRequest.Listener {

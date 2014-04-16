@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import mightypork.gamecore.control.bus.events.KeyEvent;
-import mightypork.utils.logging.Log;
+import mightypork.gamecore.control.events.KeyEvent;
+import mightypork.util.logging.Log;
 
 
 /**

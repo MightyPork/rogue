@@ -2,11 +2,11 @@ package mightypork.gamecore.control;
 
 
 import mightypork.gamecore.audio.SoundSystem;
-import mightypork.gamecore.control.bus.clients.BusNode;
-import mightypork.gamecore.control.bus.clients.DelegatingClient;
-import mightypork.gamecore.control.bus.clients.RootBusNode;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
+import mightypork.util.control.eventbus.clients.BusNode;
+import mightypork.util.control.eventbus.clients.DelegatingClient;
+import mightypork.util.control.eventbus.clients.RootBusNode;
 
 
 /**

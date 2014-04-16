@@ -2,7 +2,7 @@ package mightypork.gamecore.audio;
 
 
 import mightypork.gamecore.loading.NullResource;
-import mightypork.utils.annotations.Alias;
+import mightypork.util.logging.LogAlias;
 
 
 /**
@@ -11,7 +11,7 @@ import mightypork.utils.annotations.Alias;
  * 
  * @author MightyPork
  */
-@Alias(name = "NullAudio")
+@LogAlias(name = "NullAudio")
 public class NullAudio extends DeferredAudio implements NullResource {
 	
 	/**
