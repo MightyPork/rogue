@@ -32,7 +32,7 @@ public class NumAnimatedDeg extends NumAnimated {
 	public double value()
 	{
 		if (duration == 0) return Deg.norm(to);
-		return Calc.interpolateDeg(from, to, (elapsedTime / duration), easing);
+		return Calc.interpolateDeg(from, to, (elapsedTime / duration), easingCurrent);
 	}
 	
 	

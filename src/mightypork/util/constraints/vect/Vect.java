@@ -941,7 +941,7 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 				
 				if (tSize == 0 || nSize == 0) return 0;
 				
-				return x() / (nSize / tSize);
+				return t.x() / (nSize / tSize);
 			}
 			
 			
@@ -953,7 +953,7 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 				
 				if (tSize == 0 || nSize == 0) return 0;
 				
-				return y() / (nSize / tSize);
+				return t.y() / (nSize / tSize);
 			}
 			
 			
@@ -965,7 +965,7 @@ public abstract class Vect implements VectBound, Digestable<VectDigest> {
 				
 				if (tSize == 0 || nSize == 0) return 0;
 				
-				return z() / (nSize / tSize);
+				return t.z() / (nSize / tSize);
 			}
 		};
 	}

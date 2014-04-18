@@ -158,7 +158,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 			getEventBus().send(new MouseButtonEvent(pos.freeze(), button, down, wheeld));
 		}
 		
-		moveSum.add(move);
+		moveSum.setTo(moveSum.add(move));
 		lastPos.setTo(pos);
 	}
 	

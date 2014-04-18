@@ -15,6 +15,7 @@ import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.gamecore.render.textures.TextureBank;
 import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.gamecore.render.textures.WrapMode;
+import mightypork.util.constraints.rect.Rect;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -78,6 +79,27 @@ public class Res {
 		texture.setWrap(WrapMode.CLAMP);
 		textures.loadTexture("test.kitten", texture);
 		
+		texture = new DeferredTexture("/res/img/gui1.png");
+		texture.setFilter(FilterMode.NEAREST);
+		texture.setWrap(WrapMode.CLAMP);
+		textures.loadTexture("gui1", texture);
+		
+		final double p16 = 0.25D;
+		final double p8 = 0.125D;
+		
+		//@formatter:off
+		textures.makeQuad("item_frame",  Rect.make(0, 0, p16, p16));
+		textures.makeQuad("sword",       Rect.make(p16, 0, p16, p16));
+		textures.makeQuad("meat",        Rect.make(p16*2, 0, p16, p16));
+		
+		textures.makeQuad("heart_on",    Rect.make(0, p16, p8, p8));
+		textures.makeQuad("heart_off",   Rect.make(p8, p16, p8, p8));
+		
+		textures.makeQuad("xp_on",    Rect.make(0, p16+p8, p8, p8));
+		textures.makeQuad("xp_off",   Rect.make(p8, p16+p8, p8, p8));
+		
+		textures.makeQuad("panel", Rect.make(0, p16*4-p8/2, p16*4, p8/2));
+		//@formatter:off
 	}
 	
 	

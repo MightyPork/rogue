@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import mightypork.gamecore.control.BaseApp;
 import mightypork.gamecore.control.GameLoop;
+import mightypork.gamecore.control.events.ScreenRequestEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
@@ -14,12 +15,16 @@ import mightypork.gamecore.loading.AsyncResourceLoader;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
+import mightypork.rogue.screens.CrossfadeOverlay;
+import mightypork.rogue.screens.CrossfadeRequest;
 import mightypork.rogue.screens.FpsOverlay;
+import mightypork.rogue.screens.ingame.ScreenGame;
 import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
 import mightypork.util.control.eventbus.EventBus;
+import mightypork.util.control.eventbus.events.Event;
 import mightypork.util.logging.Log;
 import mightypork.util.logging.writers.LogWriter;
 
@@ -69,10 +74,12 @@ public class App extends BaseApp {
 		screens.addScreen(new ScreenTestCat(this));
 		screens.addScreen(new ScreenTestRender(this));
 		screens.addScreen(new ScreenMainMenu(this));
+		screens.addScreen(new ScreenGame(this));
 		
 		screens.addOverlay(new FpsOverlay(this));
+		screens.addOverlay(new CrossfadeOverlay(this));
 		
-		screens.showScreen("rogue.menu");
+		screens.showScreen("main_menu");
 	}
 	
 	
@@ -110,33 +117,22 @@ public class App extends BaseApp {
 	@Override
 	protected void initInputSystem(InputSystem input)
 	{
-		// Go fullscreen
-		input.bindKey(new KeyStroke(Keys.F11), new Runnable() {
+		// this will work only with reusable events (such as requests)
+		bindToKey(new ActionRequest(RequestType.FULLSCREEN), Keys.F11);
+		bindToKey(new ActionRequest(RequestType.SCREENSHOT), Keys.F2);
+		bindToKey(new ActionRequest(RequestType.SHUTDOWN), Keys.L_CONTROL, Keys.Q);
+		bindToKey(new CrossfadeRequest("main_menu"), Keys.L_CONTROL, Keys.M);
+	}
+	
+	
+	private void bindToKey(final Event<?> event, int... keys)
+	{
+		getInput().bindKey(new KeyStroke(keys), new Runnable() {
 			
 			@Override
 			public void run()
 			{
-				getEventBus().send(new ActionRequest(RequestType.FULLSCREEN));
-			}
-		});
-		
-		// Take screenshot
-		input.bindKey(new KeyStroke(Keys.F2), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				getEventBus().send(new ActionRequest(RequestType.SCREENSHOT));
-			}
-		});
-		
-		// Exit
-		input.bindKey(new KeyStroke(Keys.L_CONTROL, Keys.Q), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				getEventBus().send(new ActionRequest(RequestType.SHUTDOWN));
+				getEventBus().send(event);
 			}
 		});
 	}

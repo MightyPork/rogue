@@ -55,7 +55,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 		}
 		
 		final TextPainter tp = new TextPainter(Res.getFont("default"), AlignX.LEFT, Color.WHITE);
-		tp.setText("Press \"C\" for \"Cat\" screen.");
+		tp.setText("Press left & right to move.");
 		final Num shadowOffset = tp.height().div(16);
 		tp.setShadow(Color.RED, Vect.make(shadowOffset, shadowOffset));
 		

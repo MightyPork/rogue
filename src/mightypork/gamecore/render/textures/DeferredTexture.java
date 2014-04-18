@@ -21,8 +21,7 @@ import org.newdawn.slick.opengl.Texture;
 public class DeferredTexture extends DeferredResource implements FilteredTexture {
 	
 	private Texture backingTexture;
-	private FilterMode filter_min = FilterMode.LINEAR;
-	private FilterMode filter_mag = FilterMode.NEAREST;
+	private FilterMode filter = FilterMode.NEAREST;
 	private WrapMode wrap = WrapMode.CLAMP;
 	
 	
@@ -49,7 +48,7 @@ public class DeferredTexture extends DeferredResource implements FilteredTexture
 	@Override
 	protected synchronized void loadResource(String path)
 	{
-		backingTexture = Render.loadTexture(path);
+		backingTexture = Render.loadTexture(path, filter);
 	}
 	
 	
@@ -86,8 +85,8 @@ public class DeferredTexture extends DeferredResource implements FilteredTexture
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, wrap.num);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, wrap.num);
 		
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filter_min.num);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filter_mag.num);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filter.num);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filter.num);
 		
 		bindRaw();
 	}
@@ -200,10 +199,9 @@ public class DeferredTexture extends DeferredResource implements FilteredTexture
 	
 	
 	@Override
-	public void setFilter(FilterMode filterMin, FilterMode filterMag)
+	public void setFilter(FilterMode filterMin)
 	{
-		this.filter_min = filterMin;
-		this.filter_mag = filterMag;
+		this.filter = filterMin;
 	}
 	
 	
@@ -211,13 +209,6 @@ public class DeferredTexture extends DeferredResource implements FilteredTexture
 	public void setWrap(WrapMode wrapping)
 	{
 		this.wrap = wrapping;
-	}
-	
-	
-	@Override
-	public void setFilter(FilterMode filter)
-	{
-		setFilter(filter, filter);
 	}
 	
 }

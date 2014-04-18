@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
 
+import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.caching.RectDigest;
@@ -296,14 +297,14 @@ public class Render {
 	 * @param resourcePath
 	 * @return the loaded texture
 	 */
-	public synchronized static Texture loadTexture(String resourcePath)
+	public synchronized static Texture loadTexture(String resourcePath, FilterMode filtering)
 	{
 		
 		try {
 			
 			final String ext = FileUtils.getExtension(resourcePath).toUpperCase();
 			
-			final Texture texture = TextureLoader.getTexture(ext, ResourceLoader.getResourceAsStream(resourcePath));
+			final Texture texture = TextureLoader.getTexture(ext, ResourceLoader.getResourceAsStream(resourcePath), false, filtering.num);
 			
 			if (texture == null) {
 				Log.w("Texture " + resourcePath + " could not be loaded.");

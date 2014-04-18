@@ -17,7 +17,7 @@ public class ScreenMainMenu extends LayeredScreen {
 	@Override
 	public String getName()
 	{
-		return "rogue.menu";
+		return "main_menu";
 	}
 	
 }

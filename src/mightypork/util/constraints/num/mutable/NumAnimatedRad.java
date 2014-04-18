@@ -32,7 +32,7 @@ public class NumAnimatedRad extends NumAnimated {
 	public double value()
 	{
 		if (duration == 0) return Rad.norm(to);
-		return Calc.interpolateRad(from, to, (elapsedTime / duration), easing);
+		return Calc.interpolateRad(from, to, (elapsedTime / duration), easingCurrent);
 	}
 	
 	

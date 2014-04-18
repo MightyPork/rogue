@@ -8,7 +8,9 @@ import mightypork.util.math.Easing;
 
 
 /**
- * Double which supports delta timing
+ * Double which supports delta timing.<br>
+ * When both in and out easings are set differently, then they'll be used for
+ * fade-in and fade-out respectively. Otherwise both use the same.
  * 
  * @author MightyPork
  */
@@ -30,7 +32,9 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	protected boolean paused = false;
 	
 	/** Easing fn */
-	protected Easing easing = Easing.LINEAR;
+	protected Easing easingCurrent = Easing.LINEAR;
+	protected Easing easingOut = Easing.LINEAR;
+	protected Easing easingIn = Easing.LINEAR;
 	
 	/** Default duration (seconds) */
 	private double defaultDuration = 0;
@@ -56,7 +60,19 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 		this(value);
 		setEasing(easing);
 	}
+
 	
+	/**
+	 * Create animator with easing
+	 * 
+	 * @param value initial value
+	 * @param easingIn easing function (fade in)
+	 * @param easingOut easing function (fade out)
+	 */
+	public NumAnimated(double value, Easing easingIn, Easing easingOut) {
+		this(value);
+		setEasing(easingIn, easingOut);
+	}
 	
 	/**
 	 * Create as copy of another
@@ -69,20 +85,23 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	
 	
 	/**
-	 * @return easing function
-	 */
-	public Easing getEasing()
-	{
-		return easing;
-	}
-	
-	
-	/**
 	 * @param easing easing function
 	 */
 	public void setEasing(Easing easing)
 	{
-		this.easing = easing;
+		this.easingCurrent = this.easingIn = this.easingOut = easing;
+	}
+	
+	
+	/**
+	 * @param easingIn easing for fade in
+	 * @param easingOut easing for fade out
+	 */
+	public void setEasing(Easing easingIn, Easing easingOut)
+	{
+		this.easingIn = easingIn;
+		this.easingOut = easingOut;
+		this.easingCurrent = easingIn;
 	}
 	
 	
@@ -153,7 +172,7 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	public double value()
 	{
 		if (duration == 0) return to;
-		return Calc.interpolate(from, to, (elapsedTime / duration), easing);
+		return Calc.interpolate(from, to, (elapsedTime / duration), easingCurrent);
 	}
 	
 	
@@ -220,7 +239,9 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 		this.duration = other.duration;
 		this.elapsedTime = other.elapsedTime;
 		this.paused = other.paused;
-		this.easing = other.easing;
+		this.easingCurrent = other.easingCurrent;
+		this.easingIn = other.easingIn;
+		this.easingOut = other.easingOut;
 		this.defaultDuration = other.defaultDuration;
 	}
 	
@@ -293,6 +314,7 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	 */
 	public void fadeIn(double time)
 	{
+		easingCurrent = easingIn;
 		animate(0, 1, time);
 	}
 	
@@ -304,7 +326,28 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	 */
 	public void fadeOut(double time)
 	{
+		easingCurrent = easingOut;
 		animate(1, 0, time);
+	}
+	
+	
+	/**
+	 * Animate 0 to 1 with default duration
+	 */
+	public void fadeIn()
+	{
+		easingCurrent = easingIn;
+		animate(0, 1, defaultDuration);
+	}
+	
+	
+	/**
+	 * Animate 1 to 0 with default duration
+	 */
+	public void fadeOut()
+	{
+		easingCurrent = easingOut;
+		animate(1, 0, defaultDuration);
 	}
 	
 	

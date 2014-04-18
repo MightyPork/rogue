@@ -54,14 +54,13 @@ public class TextureBank extends AppAdapter {
 	 * 
 	 * @param key texture key
 	 * @param resourcePath texture resource path
-	 * @param filter_min min filter (when rendered smaller)
-	 * @param filter_mag mag filter (when rendered larger)
+	 * @param filter filter
 	 * @param wrap texture wrapping
 	 */
-	public void loadTexture(String key, String resourcePath, FilterMode filter_min, FilterMode filter_mag, WrapMode wrap)
+	public void loadTexture(String key, String resourcePath, FilterMode filter, WrapMode wrap)
 	{
 		final DeferredTexture texture = new DeferredTexture(resourcePath);
-		texture.setFilter(filter_min, filter_mag);
+		texture.setFilter(filter);
 		texture.setWrap(wrap);
 		
 		loadTexture(key, texture);
@@ -90,7 +89,7 @@ public class TextureBank extends AppAdapter {
 	 * Create a {@link TxQuad} in the last loaded texture
 	 * 
 	 * @param quadKey quad key
-	 * @param quad quad rectangle (absolute pixel coordinates)
+	 * @param quad quad rectangle (0-1)
 	 */
 	public void makeQuad(String quadKey, Rect quad)
 	{

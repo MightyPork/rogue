@@ -11,17 +11,9 @@ import org.newdawn.slick.opengl.Texture;
  */
 public interface FilteredTexture extends Texture {
 	
+	
 	/**
 	 * Set filter for scaling
-	 * 
-	 * @param filterMin downscale filter
-	 * @param filterMag upscale filter
-	 */
-	void setFilter(FilterMode filterMin, FilterMode filterMag);
-	
-	
-	/**
-	 * Set filter for scaling (both up and down)
 	 * 
 	 * @param filter filter
 	 */
