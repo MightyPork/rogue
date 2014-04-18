@@ -25,7 +25,7 @@ import org.newdawn.slick.opengl.Texture;
  * 
  * @author MightyPork
  */
-public class Res {
+public final class Res {
 	
 	private static TextureBank textures;
 	private static SoundBank sounds;

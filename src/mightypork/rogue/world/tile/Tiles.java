@@ -1,11 +1,11 @@
-package mightypork.rogue.world;
+package mightypork.rogue.world.tile;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class Tiles {
+public final class Tiles {
 	
 	private static final Map<Integer, TileModel> registered = new HashMap<>();
 	

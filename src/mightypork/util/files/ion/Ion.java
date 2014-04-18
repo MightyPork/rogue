@@ -112,22 +112,28 @@ public class Ion {
 	/**
 	 * Register new {@link Ionizable} for direct reconstructing.
 	 * 
-	 * @param mark mark to be used. Numbers 0..99 are reserved.
+	 * @param mark mark to be used. Numbers 0..99 are reserved. Mark is of type
+	 *            Short, using values out of the short range will raise an
+	 *            exception.
 	 * @param objClass class of the registered Ionizable
 	 */
-	public static void registerIonizable(short mark, Class<?> objClass)
+	public static void registerIonizable(int mark, Class<?> objClass)
 	{
 		// negative marks are allowed.
+		if (mark > Short.MAX_VALUE) throw new IllegalArgumentException("Mark too high (max " + Short.MAX_VALUE + ").");
+		if (mark < Short.MIN_VALUE) throw new IllegalArgumentException("Mark too low (min " + Short.MIN_VALUE + ").");
 		
-		if (markRangeChecking && mark >= 0 && mark < 100) {
-			throw new RuntimeException("Marks 0..99 are reserved.");
+		short m = (short) mark;
+		
+		if (markRangeChecking && m >= 0 && m < 100) {
+			throw new IllegalArgumentException("Marks 0..99 are reserved.");
 		}
 		
-		if (customIonizables.containsKey(mark)) {
-			throw new RuntimeException("Mark " + mark + " is already in use.");
+		if (customIonizables.containsKey(m)) {
+			throw new IllegalArgumentException("Mark " + m + " is already in use.");
 		}
 		
-		customIonizables.put(mark, objClass);
+		customIonizables.put(m, objClass);
 	}
 	
 	
@@ -150,6 +156,27 @@ public class Ion {
 		}
 	}
 	
+	
+	
+	/**
+	 * Store an object to file.
+	 * 
+	 * @param path file path
+	 * @param obj object to store
+	 * @throws IOException
+	 */
+	public static void toFile(File path, Object obj) throws IOException
+	{
+		try(OutputStream out = new FileOutputStream(path)) {
+			
+			writeObject(out, obj);
+			
+			out.flush();
+			out.close();
+		} catch (final Exception e) {
+			throw new IOException("Error writing to ION file.", e);
+		}
+	}
 	
 	/**
 	 * Load an object from stream.
@@ -174,27 +201,6 @@ public class Ion {
 	public static void toStream(OutputStream out, Object obj) throws IOException
 	{
 		writeObject(out, obj);
-	}
-	
-	
-	/**
-	 * Store an object to file.
-	 * 
-	 * @param path file path
-	 * @param obj object to store
-	 * @throws IOException
-	 */
-	public static void toFile(File path, Object obj) throws IOException
-	{
-		try(OutputStream out = new FileOutputStream(path)) {
-			
-			writeObject(out, obj);
-			
-			out.flush();
-			out.close();
-		} catch (final Exception e) {
-			throw new IOException("Error writing to ION file.", e);
-		}
 	}
 	
 	

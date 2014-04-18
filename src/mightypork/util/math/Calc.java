@@ -651,19 +651,6 @@ public class Calc {
 	
 	
 	/**
-	 * Get class simple name
-	 * 
-	 * @param obj object
-	 * @return simple name
-	 */
-	public static String cname(Object obj)
-	{
-		if (obj == null) return "NULL";
-		return obj.getClass().getSimpleName();
-	}
-	
-	
-	/**
 	 * Cube a double
 	 * 
 	 * @param a squared double

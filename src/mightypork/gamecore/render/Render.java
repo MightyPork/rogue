@@ -295,6 +295,7 @@ public class Render {
 	 * Load texture
 	 * 
 	 * @param resourcePath
+	 * @param filtering filtering mode to use while loading.
 	 * @return the loaded texture
 	 */
 	public synchronized static Texture loadTexture(String resourcePath, FilterMode filtering)

@@ -17,7 +17,7 @@ import mightypork.util.control.Action;
 import mightypork.util.logging.Log;
 
 
-public class MainLoop extends GameLoop implements ActionRequest.Listener {
+public final class MainLoop extends GameLoop implements ActionRequest.Listener {
 	
 	public MainLoop(BaseApp app) {
 		super(app);

@@ -6,7 +6,6 @@ import java.util.Locale;
 
 import mightypork.gamecore.control.BaseApp;
 import mightypork.gamecore.control.GameLoop;
-import mightypork.gamecore.control.events.ScreenRequestEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
@@ -23,8 +22,11 @@ import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
+import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.tile.Tile;
 import mightypork.util.control.eventbus.EventBus;
 import mightypork.util.control.eventbus.events.Event;
+import mightypork.util.files.ion.Ion;
 import mightypork.util.logging.Log;
 import mightypork.util.logging.writers.LogWriter;
 
@@ -34,7 +36,7 @@ import mightypork.util.logging.writers.LogWriter;
  * 
  * @author MightyPork
  */
-public class App extends BaseApp {
+public final class App extends BaseApp {
 	
 	/**
 	 * Launcher
@@ -99,6 +101,13 @@ public class App extends BaseApp {
 		Res.load(this);
 	}
 	
+	
+	@Override
+	protected void preInit()
+	{
+		Ion.registerIonizable(Tile.ION_MARK, Tile.class);
+		Ion.registerIonizable(Item.ION_MARK, Item.class);
+	}
 	
 	@Override
 	protected File getLockFile()

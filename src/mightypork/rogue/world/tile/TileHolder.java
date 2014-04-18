@@ -1,9 +1,9 @@
-package mightypork.rogue.world;
+package mightypork.rogue.world.tile;
 
 
 public interface TileHolder {
 	
-	TileData getTile(int x, int y);
+	Tile getTile(int x, int y);
 	
 	
 	int getWidth();

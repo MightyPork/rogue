@@ -10,7 +10,7 @@ import mightypork.util.logging.Log;
  * 
  * @author MightyPork
  */
-public class Config {
+public final class Config {
 	
 	private static PropertyManager mgr;
 	

@@ -6,7 +6,7 @@ import java.io.File;
 import mightypork.util.files.OsUtils;
 
 
-public class Paths {
+public final class Paths {
 	
 	private static final String APPDIR_NAME = "rogue";
 	

@@ -6,7 +6,7 @@ package mightypork.rogue;
  * 
  * @author MightyPork
  */
-public class Const {
+public final class Const {
 	
 	// STRINGS
 	public static final int VERSION = 1;

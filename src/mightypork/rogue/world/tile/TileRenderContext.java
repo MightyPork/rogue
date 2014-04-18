@@ -1,4 +1,4 @@
-package mightypork.rogue.world;
+package mightypork.rogue.world.tile;
 
 
 import mightypork.util.constraints.rect.Rect;
@@ -6,7 +6,7 @@ import mightypork.util.constraints.rect.builders.TiledRect;
 import mightypork.util.constraints.rect.proxy.RectBound;
 
 
-public class TileRenderContext implements RectBound {
+public final class TileRenderContext implements RectBound {
 	
 	private final TileHolder map;
 	private final TiledRect tiler;
@@ -19,13 +19,13 @@ public class TileRenderContext implements RectBound {
 	}
 	
 	
-	public TileData getTile()
+	public Tile getTile()
 	{
 		return map.getTile(x, y);
 	}
 	
 	
-	public TileData getAdjacentTile(int offsetX, int offsetY)
+	public Tile getAdjacentTile(int offsetX, int offsetY)
 	{
 		return map.getTile(x + offsetX, y + offsetY);
 	}

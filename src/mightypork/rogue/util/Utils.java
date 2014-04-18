@@ -6,7 +6,7 @@ package mightypork.rogue.util;
  * 
  * @author MightyPork
  */
-public class Utils {
+public final class Utils {
 	
 	public static Thread runAsThread(Runnable r)
 	{

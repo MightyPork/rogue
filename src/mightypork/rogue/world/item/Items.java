@@ -1,11 +1,11 @@
-package mightypork.rogue.world;
+package mightypork.rogue.world.item;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class Items {
+public final class Items {
 	
 	private static final Map<Integer, ItemModel> registered = new HashMap<>();
 	
