@@ -1,156 +1,104 @@
 package mightypork.util.files.ion;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.LinkedHashMap;
+
+import mightypork.util.annotations.DefaultImpl;
+
+
 /**
  * Ionizable HashMap
  * 
  * @author MightyPork
+ * @param <K> key
+ * @param <V> value
  */
-public class IonMap extends AbstractIonMap<Object> {
+public abstract class IonMap<K, V> extends LinkedHashMap<K, V> implements Ionizable {
 	
-	public boolean getBoolean(String key)
+	@Override
+	public V get(Object key)
 	{
-		return (Boolean) get(key);
-	}
-	
-	
-	public boolean getBool(String key)
-	{
-		return (Boolean) get(key);
-	}
-	
-	
-	public byte getByte(String key)
-	{
-		return (Byte) get(key);
-	}
-	
-	
-	public char getChar(String key)
-	{
-		return (Character) get(key);
-	}
-	
-	
-	public short getShort(String key)
-	{
-		return (Short) get(key);
-	}
-	
-	
-	public int getInt(String key)
-	{
-		return (Integer) get(key);
-	}
-	
-	
-	public long getLong(String key)
-	{
-		return (Long) get(key);
-	}
-	
-	
-	public float getFloat(String key)
-	{
-		return (Float) get(key);
-	}
-	
-	
-	public double getDouble(String key)
-	{
-		return (Double) get(key);
-	}
-	
-	
-	public String getString(String key)
-	{
-		return (String) get(key);
+		return super.get(key);
 	}
 	
 	
 	@Override
-	public Object get(Object arg0)
+	public V put(K key, V value)
 	{
-		return super.get(arg0);
-	}
-	
-	
-	public void putBoolean(String key, boolean num)
-	{
-		put(key, num);
-	}
-	
-	
-	public void putBool(String key, boolean num)
-	{
-		put(key, num);
-	}
-	
-	
-	public void putByte(String key, int num)
-	{
-		put(key, (byte) num);
-	}
-	
-	
-	public void putChar(String key, char num)
-	{
-		put(key, num);
-	}
-	
-	
-	public void putCharacter(String key, char num)
-	{
-		put(key, num);
-	}
-	
-	
-	public void putShort(String key, int num)
-	{
-		put(key, num);
-	}
-	
-	
-	public void putInt(String key, int num)
-	{
-		put(key, num);
-	}
-	
-	
-	public void putInteger(String key, int num)
-	{
-		put(key, num);
-	}
-	
-	
-	public void putLong(String key, long num)
-	{
-		put(key, num);
-	}
-	
-	
-	public void putFloat(String key, double num)
-	{
-		put(key, (float) num);
-	}
-	
-	
-	public void putDouble(String key, double num)
-	{
-		put(key, num);
-	}
-	
-	
-	public void putString(String key, String num)
-	{
-		put(key, num);
+		return super.put(key, value);
 	}
 	
 	
 	@Override
-	public byte ionMark()
+	public void loadFrom(InputStream in) throws IOException
 	{
-		return IonMarks.MAP;
+		try {
+			while (true) {
+				final short mark = Ion.readMark(in);
+				if (mark == Ion.ENTRY) {
+					final K key = (K) Ion.readObject(in);
+					final V value = (V) Ion.readObject(in);
+					put(key, value);
+					
+				} else if (mark == Ion.END) {
+					break;
+				} else {
+					throw new RuntimeException("Unexpected mark in IonMap: " + mark);
+				}
+			}
+			readCustomData(in);
+		} catch (final IOException | ClassCastException e) {
+			throw new IOException("Error reading ion map", e);
+		}
+	}
+	
+	
+	@Override
+	public void saveTo(OutputStream out) throws IOException
+	{
+		try {
+			for (final java.util.Map.Entry<K, V> entry : entrySet()) {
+				Ion.writeMark(out, Ion.ENTRY);
+				Ion.writeObject(out, entry.getKey());
+				Ion.writeObject(out, entry.getValue());
+			}
+			Ion.writeMark(out, Ion.END);
+			writeCustomData(out);
+		} catch (final IOException e) {
+			throw new IOException("Error writing ion map", e);
+		}
+	}
+	
+	
+	/**
+	 * Read custom data of this AbstractIonMap implementation
+	 * 
+	 * @param in input stream
+	 */
+	@DefaultImpl
+	public void readCustomData(InputStream in)
+	{
+	}
+	
+	
+	/**
+	 * Write custom data of this AbstractIonMap implementation
+	 * 
+	 * @param out output stream
+	 */
+	@DefaultImpl
+	public void writeCustomData(OutputStream out)
+	{
+	}
+	
+	
+	@Override
+	public short getIonMark()
+	{
+		return Ion.DATA_BUNDLE;
 	}
 	
 }

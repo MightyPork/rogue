@@ -2,10 +2,11 @@ package mightypork.util.files.ion;
 
 
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.util.math.Calc;
+import mightypork.util.logging.Log;
 
 
 /**
@@ -15,46 +16,117 @@ import mightypork.util.math.Calc;
  */
 public class Ion {
 	
-	/** Ionizables<Mark, Class> */
-	private static Map<Byte, Class<?>> customIonizables = new HashMap<>();
+	/*
+	 *  0-29 ... primitive and Java built-in types 
+	 * 30-59 ... technical marks
+	 * 60-99 ... built-in ION types
+	 */
 	
-	// register default ionizables
+	// primitives
+	/** Null mark (for internal use) */
+	private static final short NULL = 0;
+	/** Boolean mark (for internal use) */
+	private static final short BOOLEAN = 1;
+	/** Byte mark (for internal use) */
+	private static final short BYTE = 2;
+	/** Character mark (for internal use) */
+	private static final short CHAR = 3;
+	/** Short mark (for internal use) */
+	private static final short SHORT = 4;
+	/** Integer mark (for internal use) */
+	private static final short INT = 5;
+	/** Long mark (for internal use) */
+	private static final short LONG = 6;
+	/** Float mark (for internal use) */
+	private static final short FLOAT = 7;
+	/** Double mark (for internal use) */
+	private static final short DOUBLE = 8;
+	/** String mark (for internal use) */
+	private static final short STRING = 9;
+	
+	// technical
+	
+	/**
+	 * Entry mark - general purpose, marks an entry in sequence of objects. Used
+	 * to indicate that the sequence continues wityh another element.
+	 */
+	public static final short ENTRY = 30;
+	
+	/**
+	 * Start mark - general purpose, marks start of a sequence of stored
+	 * objects.
+	 */
+	public static final short START = 31;
+	
+	/**
+	 * End mark - general purpose, marks end of sequence of stored objects.
+	 */
+	public static final short END = 32;
+	
+	/**
+	 * Length mark, indicating length of something (such as array) - general
+	 * purpose
+	 */
+	public static final short LENGTH = 33;
+	
+	// built in
+	/** Map mark (built-in data structure) */
+	static final short DATA_BUNDLE = 60;
+	
+	/** List mark (built-in data structure) */
+	static final short DATA_LIST = 61;
+	
+	/** Ionizables<Mark, Class> */
+	private static Map<Short, Class<?>> customIonizables = new HashMap<>();
+	
+	// buffers and helper arrays for storing to streams.
+	private static ByteBuffer bi = ByteBuffer.allocate(Integer.SIZE / 8);
+	private static ByteBuffer bd = ByteBuffer.allocate(Double.SIZE / 8);
+	private static ByteBuffer bf = ByteBuffer.allocate(Float.SIZE / 8);
+	private static ByteBuffer bc = ByteBuffer.allocate(Character.SIZE / 8);
+	private static ByteBuffer bl = ByteBuffer.allocate(Long.SIZE / 8);
+	private static ByteBuffer bs = ByteBuffer.allocate(Short.SIZE / 8);
+	private static byte[] ai = new byte[Integer.SIZE / 8];
+	private static byte[] ad = new byte[Double.SIZE / 8];
+	private static byte[] af = new byte[Float.SIZE / 8];
+	private static byte[] ac = new byte[Character.SIZE / 8];
+	private static byte[] al = new byte[Long.SIZE / 8];
+	private static byte[] as = new byte[Short.SIZE / 8];
+	
+	/**
+	 * Indicates whether range checking should be performed when registering
+	 * marks.
+	 */
+	private static boolean safety;
+	
 	static {
-		try {
-			registerIonizable(IonMarks.MAP, IonMap.class);
-			registerIonizable(IonMarks.LIST, IonList.class);
-		} catch (final IonException e) {
-			e.printStackTrace();
-		}
+		// register default ionizables
+		safety = false;
+		registerIonizable(Ion.DATA_BUNDLE, IonDataBundle.class);
+		registerIonizable(Ion.DATA_LIST, IonDataList.class);
+		safety = true;
 	}
 	
 	
 	/**
 	 * Register new Ionizable for direct reconstructing.
 	 * 
-	 * @param mark byte mark to be used, see {@link IonMarks} for reference.
+	 * @param mark mark to be used. Numbers 0..99 are reserved.
 	 * @param objClass class of the registered Ionizable
-	 * @throws IonException
 	 */
-	public static void registerIonizable(byte mark, Class<?> objClass) throws IonException
+	public static void registerIonizable(short mark, Class<?> objClass)
 	{
-		if (customIonizables.containsKey(mark)) {
-			throw new IonException("IonMark " + mark + " is already used.");
+		// negative marks are allowed.
+		
+		if (safety && mark >= 0 && mark < 100) {
+			throw new RuntimeException("Marks 0..99 are reserved.");
 		}
+		
+		if (customIonizables.containsKey(mark)) {
+			throw new RuntimeException("Mark " + mark + " is already in use.");
+		}
+		
 		customIonizables.put(mark, objClass);
-	}
-	
-	
-	/**
-	 * Load Ion object from file.
-	 * 
-	 * @param file file path
-	 * @return the loaded object
-	 * @throws IonException
-	 */
-	public static Object fromFile(String file) throws IonException
-	{
-		return fromFile(new File(file));
 	}
 	
 	
@@ -63,9 +135,9 @@ public class Ion {
 	 * 
 	 * @param file file
 	 * @return the loaded object
-	 * @throws IonException on failure
+	 * @throws IOException on failure
 	 */
-	public static Object fromFile(File file) throws IonException
+	public static Object fromFile(File file) throws IOException
 	{
 		try(InputStream in = new FileInputStream(file)) {
 			
@@ -73,7 +145,7 @@ public class Ion {
 			return obj;
 			
 		} catch (final IOException e) {
-			throw new IonException("Error loading ION file.", e);
+			throw new IOException("Error loading ION file.", e);
 		}
 	}
 	
@@ -83,9 +155,9 @@ public class Ion {
 	 * 
 	 * @param in input stream
 	 * @return the loaded object
-	 * @throws IonException
+	 * @throws IOException
 	 */
-	public static Object fromStream(InputStream in) throws IonException
+	public static Object fromStream(InputStream in) throws IOException
 	{
 		return readObject(in);
 	}
@@ -96,22 +168,9 @@ public class Ion {
 	 * 
 	 * @param path file path
 	 * @param obj object to store
-	 * @throws IonException
+	 * @throws IOException
 	 */
-	public static void toFile(String path, Object obj) throws IonException
-	{
-		toFile(new File(path), obj);
-	}
-	
-	
-	/**
-	 * Store Ion object to file.
-	 * 
-	 * @param path file path
-	 * @param obj object to store
-	 * @throws IonException
-	 */
-	public static void toFile(File path, Object obj) throws IonException
+	public static void toFile(File path, Object obj) throws IOException
 	{
 		try(OutputStream out = new FileOutputStream(path)) {
 			final String f = path.toString();
@@ -119,81 +178,95 @@ public class Ion {
 			
 			if (!dir.mkdirs()) throw new IOException("Could not create file.");
 			
-			toStream(out, obj);
+			writeObject(out, obj);
 			
 			out.flush();
 			out.close();
 		} catch (final Exception e) {
-			throw new IonException("Error writing to ION file.", e);
+			throw new IOException("Error writing to ION file.", e);
 		}
 	}
 	
 	
 	/**
-	 * Store Ion object to output stream.
-	 * 
-	 * @param out output stream *
-	 * @param obj object to store
-	 * @throws IonException
-	 */
-	public static void toStream(OutputStream out, Object obj) throws IonException
-	{
-		writeObject(out, obj);
-	}
-	
-	
-	/**
-	 * Read single ionizable or primitive object from input stream
+	 * Read single object from input stream
 	 * 
 	 * @param in input stream
 	 * @return the loaded object
-	 * @throws IonException
+	 * @throws IOException
 	 */
-	public static Object readObject(InputStream in) throws IonException
+	public static Object readObject(InputStream in) throws IOException
 	{
 		try {
-			final int bi = in.read();
-			if (bi == -1) throw new IonException("Unexpected end of stream.");
-			final byte b = (byte) bi;
-			if (customIonizables.containsKey(b)) {
-				Ionizable ion;
+			final short mark = readMark(in);
+			if (customIonizables.containsKey(mark)) {
+				Ionizable ionObj;
+				
 				try {
-					ion = ((Ionizable) customIonizables.get(b).newInstance());
-				} catch (final InstantiationException e) {
-					throw new IonException("Cound not instantiate " + customIonizables.get(b).getSimpleName(), e);
-				} catch (final IllegalAccessException e) {
-					throw new IonException("Cound not instantiate " + customIonizables.get(b).getSimpleName(), e);
+					ionObj = ((Ionizable) customIonizables.get(mark).newInstance());
+				} catch (InstantiationException | IllegalAccessException e) {
+					throw new IOException("Cound not instantiate: " + Log.str(customIonizables.get(mark)), e);
 				}
-				ion.ionRead(in);
-				return ion;
+				
+				ionObj.loadFrom(in);
+				return ionObj;
 			}
 			
-			switch (b) {
-				case IonMarks.BOOLEAN:
-					return BinaryUtils.readBoolean(in);
-				case IonMarks.BYTE:
-					return BinaryUtils.readByte(in);
-				case IonMarks.CHAR:
-					return BinaryUtils.readChar(in);
-				case IonMarks.SHORT:
-					return BinaryUtils.readShort(in);
-				case IonMarks.INT:
-					return BinaryUtils.readInt(in);
-				case IonMarks.LONG:
-					return BinaryUtils.readLong(in);
-				case IonMarks.FLOAT:
-					return BinaryUtils.readFloat(in);
-				case IonMarks.DOUBLE:
-					return BinaryUtils.readDouble(in);
-				case IonMarks.STRING:
-					final String s = BinaryUtils.readString(in);
+			switch (mark) {
+				case Ion.NULL:
+					return null;
+					
+				case Ion.BOOLEAN:
+					return readBoolean(in);
+					
+				case Ion.BYTE:
+					return readByte(in);
+					
+				case Ion.CHAR:
+					return readChar(in);
+					
+				case Ion.SHORT:
+					return readShort(in);
+					
+				case Ion.INT:
+					return readInt(in);
+					
+				case Ion.LONG:
+					return readLong(in);
+					
+				case Ion.FLOAT:
+					return readFloat(in);
+					
+				case Ion.DOUBLE:
+					return readDouble(in);
+					
+				case Ion.STRING:
+					final String s = readString(in);
 					return s;
 				default:
-					throw new IonException("Invalid Ion mark " + Integer.toHexString(bi));
+					throw new IOException("Invalid Ion mark: " + mark);
 			}
 		} catch (final IOException e) {
-			throw new IonException("Error loading ION file: ", e);
+			throw new IOException("Error loading ION file: ", e);
 		}
+	}
+	
+	
+	public static void expect(InputStream in, short mark) throws IOException
+	{
+		if (readMark(in) != mark) throw new IOException("Unexpected mark in ION stream.");
+	}
+	
+	
+	public static short readMark(InputStream in) throws IOException
+	{
+		return readShort(in);
+	}
+	
+	
+	public static void writeMark(OutputStream out, short mark) throws IOException
+	{
+		writeShort(out, mark);
 	}
 	
 	
@@ -202,76 +275,302 @@ public class Ion {
 	 * 
 	 * @param out output stream
 	 * @param obj stored object
-	 * @throws IonException
+	 * @throws IOException
 	 */
-	public static void writeObject(OutputStream out, Object obj) throws IonException
+	public static void writeObject(OutputStream out, Object obj) throws IOException
 	{
 		try {
 			if (obj instanceof Ionizable) {
-				out.write(((Ionizable) obj).ionMark());
-				((Ionizable) obj).ionWrite(out);
+				writeMark(out, ((Ionizable) obj).getIonMark());
+				((Ionizable) obj).saveTo(out);
 				return;
 			}
 			
 			if (obj instanceof Boolean) {
-				out.write(IonMarks.BOOLEAN);
-				BinaryUtils.writeBoolean(out, (Boolean) obj);
+				writeMark(out, Ion.BOOLEAN);
+				writeBoolean(out, (Boolean) obj);
 				return;
 			}
 			
 			if (obj instanceof Byte) {
-				out.write(IonMarks.BYTE);
-				BinaryUtils.writeByte(out, (Byte) obj);
+				writeMark(out, Ion.BYTE);
+				writeByte(out, (Byte) obj);
 				return;
 			}
 			
 			if (obj instanceof Character) {
-				out.write(IonMarks.CHAR);
-				BinaryUtils.writeChar(out, (Character) obj);
+				writeMark(out, Ion.CHAR);
+				writeChar(out, (Character) obj);
 				return;
 			}
 			
 			if (obj instanceof Short) {
-				out.write(IonMarks.SHORT);
-				BinaryUtils.writeShort(out, (Short) obj);
+				writeMark(out, Ion.SHORT);
+				writeShort(out, (Short) obj);
 				return;
 			}
 			
 			if (obj instanceof Integer) {
-				out.write(IonMarks.INT);
-				BinaryUtils.writeInt(out, (Integer) obj);
+				writeMark(out, Ion.INT);
+				writeInt(out, (Integer) obj);
 				return;
 			}
 			
 			if (obj instanceof Long) {
-				out.write(IonMarks.LONG);
-				BinaryUtils.writeLong(out, (Long) obj);
+				writeMark(out, Ion.LONG);
+				writeLong(out, (Long) obj);
 				return;
 			}
 			
 			if (obj instanceof Float) {
-				out.write(IonMarks.FLOAT);
-				BinaryUtils.writeFloat(out, (Float) obj);
+				writeMark(out, Ion.FLOAT);
+				writeFloat(out, (Float) obj);
 				return;
 			}
 			
 			if (obj instanceof Double) {
-				out.write(IonMarks.DOUBLE);
-				BinaryUtils.writeDouble(out, (Double) obj);
+				writeMark(out, Ion.DOUBLE);
+				writeDouble(out, (Double) obj);
 				return;
 			}
 			
 			if (obj instanceof String) {
-				out.write(IonMarks.STRING);
-				BinaryUtils.writeString(out, (String) obj);
+				writeMark(out, Ion.STRING);
+				writeString(out, (String) obj);
 				return;
 			}
 			
-			throw new IonException(Calc.cname(obj) + " can't be stored in Ion storage.");
+			throw new IOException("Object " + Log.str(obj) + " could not be be ionized.");
 			
 		} catch (final IOException e) {
-			throw new IonException("Could not store " + obj, e);
+			throw new IOException("Could not store: " + obj, e);
 		}
+	}
+	
+	
+	private static byte[] getBytesBool(boolean bool)
+	{
+		return new byte[] { (byte) (bool ? 1 : 0) };
+	}
+	
+	
+	private static byte[] getBytesByte(byte num)
+	{
+		return new byte[] { num };
+	}
+	
+	
+	private static byte[] getBytesChar(char num)
+	{
+		synchronized (bc) {
+			bc.clear();
+			bc.putChar(num);
+			return bc.array();
+		}
+	}
+	
+	
+	private static byte[] getBytesShort(short num)
+	{
+		synchronized (bs) {
+			bs.clear();
+			bs.putShort(num);
+			return bs.array();
+		}
+	}
+	
+	
+	private static byte[] getBytesInt(int num)
+	{
+		synchronized (bi) {
+			bi.clear();
+			bi.putInt(num);
+			return bi.array();
+		}
+	}
+	
+	
+	private static byte[] getBytesLong(long num)
+	{
+		synchronized (bl) {
+			bl.clear();
+			bl.putLong(num);
+			return bl.array();
+		}
+	}
+	
+	
+	private static byte[] getBytesFloat(float num)
+	{
+		synchronized (bf) {
+			bf.clear();
+			bf.putFloat(num);
+			return bf.array();
+		}
+	}
+	
+	
+	private static byte[] getBytesDouble(double num)
+	{
+		synchronized (bd) {
+			bd.clear();
+			bd.putDouble(num);
+			return bd.array();
+		}
+	}
+	
+	
+	private static byte[] getBytesString(String str)
+	{
+		final char[] chars = str.toCharArray();
+		
+		final ByteBuffer bstr = ByteBuffer.allocate((Character.SIZE / 8) * chars.length + (Character.SIZE / 8));
+		for (final char c : chars) {
+			bstr.putChar(c);
+		}
+		
+		bstr.putChar((char) 0);
+		
+		return bstr.array();
+	}
+	
+	
+	public static void writeBoolean(OutputStream out, boolean bool) throws IOException
+	{
+		out.write(getBytesBool(bool));
+	}
+	
+	
+	public static void writeByte(OutputStream out, byte b) throws IOException
+	{
+		out.write(getBytesByte(b));
+	}
+	
+	
+	public static void writeChar(OutputStream out, char c) throws IOException
+	{
+		out.write(getBytesChar(c));
+	}
+	
+	
+	public static void writeShort(OutputStream out, short s) throws IOException
+	{
+		out.write(getBytesShort(s));
+	}
+	
+	
+	public static void writeInt(OutputStream out, int i) throws IOException
+	{
+		out.write(getBytesInt(i));
+	}
+	
+	
+	public static void writeLong(OutputStream out, long l) throws IOException
+	{
+		out.write(getBytesLong(l));
+	}
+	
+	
+	public static void writeFloat(OutputStream out, float f) throws IOException
+	{
+		out.write(getBytesFloat(f));
+	}
+	
+	
+	public static void writeDouble(OutputStream out, double d) throws IOException
+	{
+		out.write(getBytesDouble(d));
+	}
+	
+	
+	public static void writeString(OutputStream out, String str) throws IOException
+	{
+		out.write(getBytesString(str));
+	}
+	
+	
+	public static boolean readBoolean(InputStream in) throws IOException
+	{
+		return readByte(in) > 0;
+	}
+	
+	
+	public static byte readByte(InputStream in) throws IOException
+	{
+		int b = in.read();
+		if (-1 == b) throw new IOException("End of stream.");
+		return (byte) b;
+	}
+	
+	
+	public static char readChar(InputStream in) throws IOException
+	{
+		synchronized (ac) {
+			if (-1 == in.read(ac, 0, ac.length)) throw new IOException("End of stream.");
+			final ByteBuffer buf = ByteBuffer.wrap(ac);
+			return buf.getChar();
+		}
+	}
+	
+	
+	public static short readShort(InputStream in) throws IOException
+	{
+		synchronized (as) {
+			if (-1 == in.read(as, 0, as.length)) throw new IOException("End of stream.");
+			final ByteBuffer buf = ByteBuffer.wrap(as);
+			return buf.getShort();
+		}
+	}
+	
+	
+	public static long readLong(InputStream in) throws IOException
+	{
+		synchronized (al) {
+			if (-1 == in.read(al, 0, al.length)) throw new IOException("End of stream.");
+			final ByteBuffer buf = ByteBuffer.wrap(al);
+			return buf.getLong();
+		}
+	}
+	
+	
+	public static int readInt(InputStream in) throws IOException
+	{
+		synchronized (ai) {
+			if (-1 == in.read(ai, 0, ai.length)) throw new IOException("End of stream.");
+			final ByteBuffer buf = ByteBuffer.wrap(ai);
+			return buf.getInt();
+		}
+	}
+	
+	
+	public static float readFloat(InputStream in) throws IOException
+	{
+		synchronized (af) {
+			if (-1 == in.read(af, 0, af.length)) throw new IOException("End of stream.");
+			final ByteBuffer buf = ByteBuffer.wrap(af);
+			return buf.getFloat();
+		}
+	}
+	
+	
+	public static double readDouble(InputStream in) throws IOException
+	{
+		synchronized (ad) {
+			if (-1 == in.read(ad, 0, ad.length)) throw new IOException("End of stream.");
+			final ByteBuffer buf = ByteBuffer.wrap(ad);
+			return buf.getDouble();
+		}
+	}
+	
+	
+	public static String readString(InputStream in) throws IOException
+	{
+		String s = "";
+		char c;
+		while ((c = readChar(in)) > 0) {
+			s += c;
+		}
+		return s;
 	}
 	
 }

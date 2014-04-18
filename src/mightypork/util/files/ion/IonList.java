@@ -1,157 +1,80 @@
 package mightypork.util.files.ion;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+
+
 /**
  * Ionizable Arraylist
  * 
  * @author MightyPork
+ * @param <T>
  */
-public class IonList extends AbstractIonList<Object> {
+public abstract class IonList<T> extends ArrayList<T> implements Ionizable {
 	
-	public Ionizable getIonizable(int index) throws IonException
-	{
-		return (Ionizable) getCheckType(index, Ionizable.class);
-	}
-	
-	
-	public boolean getBoolean(int index) throws IonException
-	{
-		return (Boolean) getCheckType(index, Boolean.class);
-	}
-	
-	
-	public byte getByte(int index) throws IonException
-	{
-		return (Byte) getCheckType(index, Byte.class);
-	}
-	
-	
-	public char getChar(int index) throws IonException
-	{
-		return (Character) getCheckType(index, Character.class);
-	}
-	
-	
-	public short getShort(int index) throws IonException
-	{
-		return (Short) getCheckType(index, Short.class);
-	}
-	
-	
-	public int getInt(int index) throws IonException
-	{
-		return (Integer) getCheckType(index, Integer.class);
-	}
-	
-	
-	public long getLong(int index) throws IonException
-	{
-		return (Long) getCheckType(index, Long.class);
-	}
-	
-	
-	public float getFloat(int index) throws IonException
-	{
-		return (Float) getCheckType(index, Float.class);
-	}
-	
-	
-	public double getDouble(int index) throws IonException
-	{
-		return (Double) getCheckType(index, Double.class);
-	}
-	
-	
-	public String getString(int index) throws IonException
-	{
-		return (String) getCheckType(index, String.class);
-	}
-	
-	
-	public void addIonizable(Ionizable o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public void addBoolean(boolean o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public void addByte(byte o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public void addChar(char o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public void addShort(short o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public void addInt(int o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public void addLong(long o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public void addFloat(float o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public void addDouble(double o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public void addString(String o) throws IonException
-	{
-		assertNotNull(o);
-	}
-	
-	
-	public Object getCheckType(int index, Class<?> type) throws IonException
+	@Override
+	public void loadFrom(InputStream in) throws IOException
 	{
 		try {
-			final Object o = super.get(index);
-			if (o == null || !o.getClass().isAssignableFrom(type)) {
-				throw new IonException("Incorrect object type");
+			while (true) {
+				final short mark = Ion.readMark(in);
+				
+				if (mark == Ion.ENTRY) {
+					final T value = (T) Ion.readObject(in);
+					add(value);
+				} else if (mark == Ion.END) {
+					break;
+				} else {
+					throw new IOException("Unexpected mark in IonList: " + mark);
+				}
 			}
-			return o;
-		} catch (final IndexOutOfBoundsException e) {
-			throw new IonException("Out of bounds");
+			readCustomData(in);
+		} catch (final IOException e) {
+			throw new IOException("Error reading ion list", e);
 		}
 	}
 	
 	
-	private static void assertNotNull(Object o) throws IonException
+	@Override
+	public void saveTo(OutputStream out) throws IOException
 	{
-		if (o == null) throw new IonException("Cannot store null");
+		try {
+			for (final T entry : this) {
+				Ion.writeMark(out, Ion.ENTRY);
+				Ion.writeObject(out, entry);
+			}
+			Ion.writeMark(out, Ion.END);
+			writeCustomData(out);
+		} catch (final IOException e) {
+			throw new IOException("Error reading ion map", e);
+		}
+	}
+	
+	
+	/**
+	 * Read custom data of this AbstractIonList implementation
+	 * 
+	 * @param in input stream
+	 */
+	public void readCustomData(InputStream in)
+	{
+	}
+	
+	
+	/**
+	 * Write custom data of this AbstractIonList implementation
+	 * 
+	 * @param out output stream
+	 */
+	public void writeCustomData(OutputStream out)
+	{
 	}
 	
 	
 	@Override
-	public byte ionMark()
-	{
-		return IonMarks.LIST;
-	}
+	public abstract short getIonMark();
 	
 }
