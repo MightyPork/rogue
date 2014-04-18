@@ -97,19 +97,20 @@ public class Ion {
 	 * Indicates whether range checking should be performed when registering
 	 * marks.
 	 */
-	private static boolean safety;
+	private static boolean markRangeChecking;
 	
 	static {
-		// register default ionizables
-		safety = false;
+		markRangeChecking = false;
+		
 		registerIonizable(Ion.DATA_BUNDLE, IonDataBundle.class);
 		registerIonizable(Ion.DATA_LIST, IonDataList.class);
-		safety = true;
+		
+		markRangeChecking = true;
 	}
 	
 	
 	/**
-	 * Register new Ionizable for direct reconstructing.
+	 * Register new {@link Ionizable} for direct reconstructing.
 	 * 
 	 * @param mark mark to be used. Numbers 0..99 are reserved.
 	 * @param objClass class of the registered Ionizable
@@ -118,7 +119,7 @@ public class Ion {
 	{
 		// negative marks are allowed.
 		
-		if (safety && mark >= 0 && mark < 100) {
+		if (markRangeChecking && mark >= 0 && mark < 100) {
 			throw new RuntimeException("Marks 0..99 are reserved.");
 		}
 		
@@ -131,7 +132,7 @@ public class Ion {
 	
 	
 	/**
-	 * Load Ion object from file.
+	 * Load an object from file.
 	 * 
 	 * @param file file
 	 * @return the loaded object
@@ -151,7 +152,7 @@ public class Ion {
 	
 	
 	/**
-	 * Load Ion object from stream.
+	 * Load an object from stream.
 	 * 
 	 * @param in input stream
 	 * @return the loaded object
@@ -164,7 +165,7 @@ public class Ion {
 	
 	
 	/**
-	 * Write Ion object to a stream.
+	 * Write an object to a stream.
 	 * 
 	 * @param out output stream
 	 * @param obj written object
@@ -177,7 +178,7 @@ public class Ion {
 	
 	
 	/**
-	 * Store Ion object to file.
+	 * Store an object to file.
 	 * 
 	 * @param path file path
 	 * @param obj object to store
@@ -198,7 +199,10 @@ public class Ion {
 	
 	
 	/**
-	 * Read single object from input stream
+	 * Read single object from input stream, preceded by a mark. If a mark is
+	 * not present, the behavior is undefined - in case the read bytes happen to
+	 * match one of the registered marks, some garbage will be read. Otherwise
+	 * an exception will be be thrown.
 	 * 
 	 * @param in input stream
 	 * @return the loaded object
@@ -280,7 +284,7 @@ public class Ion {
 	
 	
 	/**
-	 * Write single ionizable or primitive object to output stream
+	 * Write a single object to output stream, with a mark.
 	 * 
 	 * @param out output stream
 	 * @param obj stored object
@@ -444,66 +448,143 @@ public class Ion {
 	}
 	
 	
-	public static void writeBoolean(OutputStream out, boolean bool) throws IOException
+	/**
+	 * Write a boolean (without a mark)
+	 * 
+	 * @param out output stream
+	 * @param b boolean to write
+	 * @throws IOException
+	 */
+	public static void writeBoolean(OutputStream out, boolean b) throws IOException
 	{
-		out.write(getBytesBool(bool));
+		out.write(getBytesBool(b));
 	}
 	
 	
+	/**
+	 * Write a byte (without a mark)
+	 * 
+	 * @param out output stream
+	 * @param b byte to write
+	 * @throws IOException
+	 */
 	public static void writeByte(OutputStream out, byte b) throws IOException
 	{
 		out.write(getBytesByte(b));
 	}
 	
 	
+	/**
+	 * Write a char (without a mark)
+	 * 
+	 * @param out output stream
+	 * @param c char to write
+	 * @throws IOException
+	 */
 	public static void writeChar(OutputStream out, char c) throws IOException
 	{
 		out.write(getBytesChar(c));
 	}
 	
 	
+	/**
+	 * Write a short (without a mark)
+	 * 
+	 * @param out output stream
+	 * @param s short to write
+	 * @throws IOException
+	 */
 	public static void writeShort(OutputStream out, short s) throws IOException
 	{
 		out.write(getBytesShort(s));
 	}
 	
 	
+	/**
+	 * Write an integer (without a mark)
+	 * 
+	 * @param out output stream
+	 * @param i integer to write
+	 * @throws IOException
+	 */
 	public static void writeInt(OutputStream out, int i) throws IOException
 	{
 		out.write(getBytesInt(i));
 	}
 	
 	
+	/**
+	 * Write a long (without a mark)
+	 * 
+	 * @param out output stream
+	 * @param l long to write
+	 * @throws IOException
+	 */
 	public static void writeLong(OutputStream out, long l) throws IOException
 	{
 		out.write(getBytesLong(l));
 	}
 	
 	
+	/**
+	 * Write a float (without a mark)
+	 * 
+	 * @param out output stream
+	 * @param f float to write
+	 * @throws IOException
+	 */
 	public static void writeFloat(OutputStream out, float f) throws IOException
 	{
 		out.write(getBytesFloat(f));
 	}
 	
 	
+	/**
+	 * Write a double (without a mark)
+	 * 
+	 * @param out output stream
+	 * @param d double to write
+	 * @throws IOException
+	 */
 	public static void writeDouble(OutputStream out, double d) throws IOException
 	{
 		out.write(getBytesDouble(d));
 	}
 	
 	
+	/**
+	 * Write a String (without a mark)
+	 * 
+	 * @param out output stream
+	 * @param str String to write
+	 * @throws IOException
+	 */
 	public static void writeString(OutputStream out, String str) throws IOException
 	{
 		out.write(getBytesString(str));
 	}
 	
 	
+	/**
+	 * Read a boolean (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return boolean read
+	 * @throws IOException
+	 */
 	public static boolean readBoolean(InputStream in) throws IOException
 	{
 		return readByte(in) > 0;
 	}
 	
 	
+	/**
+	 * Read a byte (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return byte read
+	 * @throws IOException
+	 */
 	public static byte readByte(InputStream in) throws IOException
 	{
 		int b = in.read();
@@ -512,6 +593,13 @@ public class Ion {
 	}
 	
 	
+	/**
+	 * Read a char (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return char read
+	 * @throws IOException
+	 */
 	public static char readChar(InputStream in) throws IOException
 	{
 		synchronized (ac) {
@@ -522,6 +610,13 @@ public class Ion {
 	}
 	
 	
+	/**
+	 * Read a short (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return short read
+	 * @throws IOException
+	 */
 	public static short readShort(InputStream in) throws IOException
 	{
 		synchronized (as) {
@@ -532,6 +627,13 @@ public class Ion {
 	}
 	
 	
+	/**
+	 * Read a long (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return long read
+	 * @throws IOException
+	 */
 	public static long readLong(InputStream in) throws IOException
 	{
 		synchronized (al) {
@@ -542,6 +644,13 @@ public class Ion {
 	}
 	
 	
+	/**
+	 * Read an integer (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return integer read
+	 * @throws IOException
+	 */
 	public static int readInt(InputStream in) throws IOException
 	{
 		synchronized (ai) {
@@ -552,6 +661,13 @@ public class Ion {
 	}
 	
 	
+	/**
+	 * Read a float (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return float read
+	 * @throws IOException
+	 */
 	public static float readFloat(InputStream in) throws IOException
 	{
 		synchronized (af) {
@@ -562,6 +678,13 @@ public class Ion {
 	}
 	
 	
+	/**
+	 * Read a double (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return double read
+	 * @throws IOException
+	 */
 	public static double readDouble(InputStream in) throws IOException
 	{
 		synchronized (ad) {
@@ -572,6 +695,13 @@ public class Ion {
 	}
 	
 	
+	/**
+	 * Read a string (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return string read
+	 * @throws IOException
+	 */
 	public static String readString(InputStream in) throws IOException
 	{
 		String s = "";
