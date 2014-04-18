@@ -17,12 +17,12 @@ import mightypork.util.logging.Log;
 public class Ion {
 	
 	/*
-	 *  0-29 ... primitive and Java built-in types 
-	 * 30-59 ... technical marks
-	 * 60-99 ... built-in ION types
+	 *  0-19 ... primitive and Java built-in types 
+	 * 20-39 ... technical marks
+	 * 40-99 ... built-in ION types
 	 */
 	
-	// primitives
+	// primitives 0..19
 	/** Null mark (for internal use) */
 	private static final short NULL = 0;
 	/** Boolean mark (for internal use) */
@@ -44,37 +44,37 @@ public class Ion {
 	/** String mark (for internal use) */
 	private static final short STRING = 9;
 	
-	// technical
+	// technical 20..39
 	
 	/**
 	 * Entry mark - general purpose, marks an entry in sequence of objects. Used
 	 * to indicate that the sequence continues wityh another element.
 	 */
-	public static final short ENTRY = 30;
+	public static final short ENTRY = 20;
 	
 	/**
 	 * Start mark - general purpose, marks start of a sequence of stored
 	 * objects.
 	 */
-	public static final short START = 31;
+	public static final short START = 21;
 	
 	/**
 	 * End mark - general purpose, marks end of sequence of stored objects.
 	 */
-	public static final short END = 32;
+	public static final short END = 22;
 	
 	/**
 	 * Length mark, indicating length of something (such as array) - general
 	 * purpose
 	 */
-	public static final short LENGTH = 33;
+	public static final short LENGTH = 23;
 	
-	// built in
+	// built in 40..99
 	/** Map mark (built-in data structure) */
-	static final short DATA_BUNDLE = 60;
+	static final short DATA_BUNDLE = 40;
 	
 	/** List mark (built-in data structure) */
-	static final short DATA_LIST = 61;
+	static final short DATA_LIST = 41;
 	
 	/** Ionizables<Mark, Class> */
 	private static Map<Short, Class<?>> customIonizables = new HashMap<>();
@@ -164,6 +164,19 @@ public class Ion {
 	
 	
 	/**
+	 * Write Ion object to a stream.
+	 * 
+	 * @param out output stream
+	 * @param obj written object
+	 * @throws IOException
+	 */
+	public static void toStream(OutputStream out, Object obj) throws IOException
+	{
+		writeObject(out, obj);
+	}
+	
+	
+	/**
 	 * Store Ion object to file.
 	 * 
 	 * @param path file path
@@ -173,10 +186,6 @@ public class Ion {
 	public static void toFile(File path, Object obj) throws IOException
 	{
 		try(OutputStream out = new FileOutputStream(path)) {
-			final String f = path.toString();
-			final File dir = new File(f.substring(0, f.lastIndexOf(File.separator)));
-			
-			if (!dir.mkdirs()) throw new IOException("Could not create file.");
 			
 			writeObject(out, obj);
 			
