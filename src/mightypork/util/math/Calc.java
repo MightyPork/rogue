@@ -12,7 +12,7 @@ import org.lwjgl.BufferUtils;
 
 
 /**
- * Math helper
+ * Math utils
  * 
  * @author MightyPork
  */
@@ -49,44 +49,6 @@ public class Calc {
 		return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
 	}
 	
-	
-	/**
-	 * Get longest side of a right-angled triangle
-	 * 
-	 * @param a side a (opposite)
-	 * @param b side b (adjacent)
-	 * @return longest side (hypotenuse)
-	 */
-	public static double pythC(double a, double b)
-	{
-		return Math.sqrt(square(a) + square(b));
-	}
-	
-	
-	/**
-	 * Get adjacent side of a right-angled triangle
-	 * 
-	 * @param a side a (opposite)
-	 * @param c side c (hypotenuse)
-	 * @return side b (adjacent)
-	 */
-	public static double pythB(double a, double c)
-	{
-		return Math.sqrt(square(c) - square(a));
-	}
-	
-	
-	/**
-	 * Get opposite side of a right-angled triangle
-	 * 
-	 * @param b side b (adjacent)
-	 * @param c side c (hypotenuse)
-	 * @return side a (opposite)
-	 */
-	public static double pythA(double b, double c)
-	{
-		return Math.sqrt(square(c) - square(b));
-	}
 	
 	private static class Angles {
 		
@@ -265,16 +227,16 @@ public class Calc {
 		 * Round angle to 0,45,90,135...
 		 * 
 		 * @param deg angle in deg. to round
-		 * @param x rounding increment (45 - round to 0,45,90...)
+		 * @param increment rounding increment (45 - round to 0,45,90...)
 		 * @return rounded
 		 */
-		public static int roundX(double deg, double x)
+		public static int roundToIncrement(double deg, double increment)
 		{
-			final double half = x / 2d;
+			final double half = increment / 2d;
 			deg += half;
 			deg = norm(deg);
-			final int times = (int) Math.floor(deg / x);
-			double a = times * x;
+			final int times = (int) Math.floor(deg / increment);
+			double a = times * increment;
 			if (a == 360) a = 0;
 			return (int) Math.round(a);
 		}
@@ -288,7 +250,7 @@ public class Calc {
 		 */
 		public static int round45(double deg)
 		{
-			return roundX(deg, 45);
+			return roundToIncrement(deg, 45);
 		}
 		
 		
@@ -300,7 +262,7 @@ public class Calc {
 		 */
 		public static int round90(double deg)
 		{
-			return roundX(deg, 90);
+			return roundToIncrement(deg, 90);
 		}
 		
 		
@@ -312,7 +274,7 @@ public class Calc {
 		 */
 		public static int round15(double deg)
 		{
-			return roundX(deg, 15);
+			return roundToIncrement(deg, 15);
 		}
 	}
 	
@@ -422,243 +384,75 @@ public class Calc {
 	}
 	
 	private static Random rand = new Random();
+
+	public static double sphereSurface(double radius)
+	{
+		return 4D * Math.PI * square(radius);
+	}
 	
 	
-	/**
-	 * Get volume of a sphere
-	 * 
-	 * @param radius sphere radius
-	 * @return volume in cubic units
-	 */
-	public static double sphereGetVolume(double radius)
+	public static double sphereVolume(double radius)
 	{
 		return (4D / 3D) * Math.PI * cube(radius);
 	}
 	
 	
-	/**
-	 * Get radius of a sphere
-	 * 
-	 * @param volume sphere volume
-	 * @return radius in units
-	 */
-	public static double sphereGetRadius(double volume)
+	public static double sphereRadius(double volume)
 	{
 		return Math.cbrt((3D * volume) / (4 * Math.PI));
 	}
 	
 	
-	/**
-	 * Get surface of a circle
-	 * 
-	 * @param radius circle radius
-	 * @return volume in square units
-	 */
-	public static double circleGetSurface(double radius)
+	public static double circleSurface(double radius)
 	{
 		return Math.PI * square(radius);
 	}
 	
 	
-	/**
-	 * Get radius of a circle
-	 * 
-	 * @param surface circle volume
-	 * @return radius in units
-	 */
-	public static double circleGetRadius(double surface)
+	public static double circleRadius(double surface)
 	{
 		return Math.sqrt(surface / Math.PI);
 	}
 	
 	
 	/**
-	 * Check if objects are equal (for equals function)
+	 * Safe equals that works with nulls
 	 * 
 	 * @param a
 	 * @param b
 	 * @return are equal
 	 */
-	public static boolean areObjectsEqual(Object a, Object b)
+	public static boolean areEqual(Object a, Object b)
 	{
 		return a == null ? b == null : a.equals(b);
 	}
 	
 	
 	/**
-	 * Private clamping helper.
+	 * Clamp integer
 	 * 
-	 * @param number number to be clamped
-	 * @param min min value
-	 * @param max max value
-	 * @return clamped double
-	 */
-	private static double clamp_double(Number number, Number min, Number max)
-	{
-		double n = number.doubleValue();
-		final double mind = min.doubleValue();
-		final double maxd = max.doubleValue();
-		if (n > maxd) n = maxd;
-		if (n < mind) n = mind;
-		if (Double.isNaN(n)) return mind;
-		return n;
-	}
-	
-	
-	/**
-	 * Private clamping helper.
-	 * 
-	 * @param number number to be clamped
-	 * @param min min value
-	 * @return clamped double
-	 */
-	private static double clamp_double(Number number, Number min)
-	{
-		double n = number.doubleValue();
-		final double mind = min.doubleValue();
-		if (n < mind) n = mind;
-		return n;
-	}
-	
-	
-	/**
-	 * Clamp number to min and max bounds, inclusive.<br>
-	 * DOUBLE version
-	 * 
-	 * @param number clamped number
-	 * @param min minimal allowed value
-	 * @param max maximal allowed value
+	 * @param number
+	 * @param min
+	 * @param max
 	 * @return result
 	 */
-	public static double clampd(Number number, Number min, Number max)
+	public static int clamp(int number, int min, int max)
 	{
-		return clamp_double(number, min, max);
+		return number < min ? min : number > max ? max : number;
 	}
 	
 	
 	/**
-	 * Clamp number to min and max bounds, inclusive.<br>
-	 * FLOAT version
+	 * Clamp double
 	 * 
-	 * @param number clamped number
-	 * @param min minimal allowed value
-	 * @param max maximal allowed value
+	 * @param number
+	 * @param min
+	 * @param max
 	 * @return result
 	 */
-	public static float clampf(Number number, Number min, Number max)
+	public static double clamp(double number, double min, double max)
 	{
-		return (float) clamp_double(number, min, max);
-	}
-	
-	
-	/**
-	 * Clamp number to min and max bounds, inclusive.<br>
-	 * INTEGER version
-	 * 
-	 * @param number clamped number
-	 * @param min minimal allowed value
-	 * @param max maximal allowed value
-	 * @return result
-	 */
-	public static int clampi(Number number, Number min, Number max)
-	{
-		return (int) Math.round(clamp_double(number, min, max));
-	}
-	
-	
-	/**
-	 * Clamp number to min and max bounds, inclusive.<br>
-	 * INTEGER version
-	 * 
-	 * @param number clamped number
-	 * @param range range
-	 * @return result
-	 */
-	public static int clampi(Number number, Range range)
-	{
-		return (int) Math.round(clamp_double(number, range.getMin(), range.getMax()));
-	}
-	
-	
-	/**
-	 * Clamp number to min and max bounds, inclusive.<br>
-	 * DOUBLE version
-	 * 
-	 * @param number clamped number
-	 * @param range range
-	 * @return result
-	 */
-	public static double clampd(Number number, Range range)
-	{
-		return clamp_double(number, range.getMin(), range.getMax());
-	}
-	
-	
-	/**
-	 * Clamp number to min and max bounds, inclusive.<br>
-	 * FLOAT version
-	 * 
-	 * @param number clamped number
-	 * @param range range
-	 * @return result
-	 */
-	public static float clampf(Number number, Range range)
-	{
-		return (float) clamp_double(number, range.getMin(), range.getMax());
-	}
-	
-	
-	/**
-	 * Clamp number to min and infinite bounds, inclusive.<br>
-	 * DOUBLE version
-	 * 
-	 * @param number clamped number
-	 * @param min minimal allowed value
-	 * @return result
-	 */
-	public static double clampd(Number number, Number min)
-	{
-		return clamp_double(number, min);
-	}
-	
-	
-	/**
-	 * Clamp number to min and infinite bounds, inclusive.<br>
-	 * FLOAT version
-	 * 
-	 * @param number clamped number
-	 * @param min minimal allowed value
-	 * @return result
-	 */
-	public static float clampf(Number number, Number min)
-	{
-		return (float) clamp_double(number, min);
-	}
-	
-	
-	/**
-	 * Clamp number to min and infinite bounds, inclusive.<br>
-	 * INTEGER version
-	 * 
-	 * @param number clamped number
-	 * @param min minimal allowed value
-	 * @return result
-	 */
-	public static int clampi(Number number, Number min)
-	{
-		return (int) Math.round(clamp_double(number, min));
-	}
-	
-	
-	/**
-	 * Cube a double
-	 * 
-	 * @param a squared double
-	 * @return square
-	 */
-	public static double cube(double a)
-	{
-		return a * a * a;
+		return number < min ? min : number > max ? max : number;
 	}
 	
 	
@@ -695,71 +489,63 @@ public class Calc {
 	}
 	
 	
-	/**
-	 * Check if number is in range
-	 * 
-	 * @param number checked
-	 * @param left lower end
-	 * @param right upper end
-	 * @return is in range
-	 */
 	public static boolean inRange(double number, double left, double right)
 	{
 		return number >= left && number <= right;
 	}
 	
 	
-	/**
-	 * Get number from A to B at delta time (tween A to B)
-	 * 
-	 * @param from last number
-	 * @param to new number
-	 * @param time time 0..1
-	 * @param easing easing function
-	 * @return current number to render
-	 */
-	public static double interpolate(double from, double to, double time, Easing easing)
+	public static boolean inRange(int number, int low, int high)
 	{
-		return from + (to - from) * easing.get(time);
+		return number >= low && number <= high;
+	}
+	
+	
+	/**
+	 * Get number from A to B at delta time (A -> B)
+	 * 
+	 * @param from
+	 * @param to
+	 * @param elapsed progress ratio 0..1
+	 * @param easing
+	 * @return result
+	 */
+	public static double interpolate(double from, double to, double elapsed, Easing easing)
+	{
+		return from + (to - from) * easing.get(elapsed);
 	}
 	
 	
 	/**
 	 * Get angle [degrees] from A to B at delta time (tween A to B)
 	 * 
-	 * @param from last angle
-	 * @param to new angle
-	 * @param time time 0..1
-	 * @param easing easing function
-	 * @return current angle to render
+	 * @param from
+	 * @param to
+	 * @param elapsed progress ratio 0..1
+	 * @param easing
+	 * @return result
 	 */
-	public static double interpolateDeg(double from, double to, double time, Easing easing)
+	public static double interpolateDeg(double from, double to, double elapsed, Easing easing)
 	{
-		return Deg.norm(from - Deg.delta(to, from) * easing.get(time));
+		return Deg.norm(from - Deg.delta(to, from) * easing.get(elapsed));
 	}
 	
 	
 	/**
 	 * Get angle [radians] from A to B at delta time (tween A to B)
 	 * 
-	 * @param from last angle
-	 * @param to new angle
-	 * @param time time 0..1
-	 * @param easing easing function
-	 * @return current angle to render
+	 * @param from
+	 * @param to
+	 * @param elapsed progress ratio 0..1
+	 * @param easing
+	 * @return result
 	 */
-	public static double interpolateRad(double from, double to, double time, Easing easing)
+	public static double interpolateRad(double from, double to, double elapsed, Easing easing)
 	{
-		return Rad.norm(from - Rad.delta(to, from) * easing.get(time));
+		return Rad.norm(from - Rad.delta(to, from) * easing.get(elapsed));
 	}
 	
 	
-	/**
-	 * Get highest number of a list
-	 * 
-	 * @param numbers numbers
-	 * @return lowest
-	 */
 	public static double max(double... numbers)
 	{
 		double highest = numbers[0];
@@ -770,28 +556,6 @@ public class Calc {
 	}
 	
 	
-	/**
-	 * Get highest number of a list
-	 * 
-	 * @param numbers numbers
-	 * @return lowest
-	 */
-	public static float max(float... numbers)
-	{
-		float highest = numbers[0];
-		for (final float num : numbers) {
-			if (num > highest) highest = num;
-		}
-		return highest;
-	}
-	
-	
-	/**
-	 * Get highest number of a list
-	 * 
-	 * @param numbers numbers
-	 * @return lowest
-	 */
 	public static int max(int... numbers)
 	{
 		int highest = numbers[0];
@@ -802,12 +566,6 @@ public class Calc {
 	}
 	
 	
-	/**
-	 * Get lowest number of a list
-	 * 
-	 * @param numbers numbers
-	 * @return lowest
-	 */
 	public static double min(double... numbers)
 	{
 		double lowest = numbers[0];
@@ -818,28 +576,6 @@ public class Calc {
 	}
 	
 	
-	/**
-	 * Get lowest number of a list
-	 * 
-	 * @param numbers numbers
-	 * @return lowest
-	 */
-	public static float min(float... numbers)
-	{
-		float lowest = numbers[0];
-		for (final float num : numbers) {
-			if (num < lowest) lowest = num;
-		}
-		return lowest;
-	}
-	
-	
-	/**
-	 * Get lowest number of a list
-	 * 
-	 * @param numbers numbers
-	 * @return lowest
-	 */
 	public static int min(int... numbers)
 	{
 		int lowest = numbers[0];
@@ -889,33 +625,39 @@ public class Calc {
 	}
 	
 	
-	/**
-	 * Square a double
-	 * 
-	 * @param a squared double
-	 * @return square
-	 */
 	public static double square(double a)
 	{
 		return a * a;
 	}
 	
 	
-	/**
-	 * Signum.
-	 * 
-	 * @param number
-	 * @return sign, -1,0,1
-	 */
-	public static int sgn(double number)
+	public static double cube(double a)
 	{
-		return number > 0 ? 1 : number < 0 ? -1 : 0;
+		return a * a * a;
 	}
 	
 	
+	/**
+	 * @param d number
+	 * @return fractional part
+	 */
 	public static double frag(double d)
 	{
 		return d - Math.floor(d);
 	}
 	
+	
+	/**
+	 * Make sure value is within array length.
+	 * 
+	 * @param index tested index
+	 * @param length array length
+	 * @throws IndexOutOfBoundsException if the index is not in range.
+	 */
+	public static void assertValidIndex(int index, int length)
+	{
+		if (!inRange(index, 0, length - 1)) {
+			throw new IndexOutOfBoundsException();
+		}
+	}
 }
