@@ -5,6 +5,8 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.events.ScreenRequestEvent;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.Overlay;
+import mightypork.rogue.events.ActionRequest;
+import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.util.constraints.num.mutable.NumAnimated;
 import mightypork.util.control.timing.TimedTask;
 import mightypork.util.math.Easing;
@@ -26,8 +28,11 @@ public class CrossfadeOverlay extends Overlay implements CrossfadeRequest.Listen
 		@Override
 		public void run()
 		{
-			if (requestedScreenName == null) shutdown();
-			getEventBus().send(new ScreenRequestEvent(requestedScreenName));
+			if (requestedScreenName == null) {
+				getEventBus().send(new ActionRequest(RequestType.SHUTDOWN));
+			} else {
+				getEventBus().send(new ScreenRequestEvent(requestedScreenName));
+			}
 		}
 	};
 	

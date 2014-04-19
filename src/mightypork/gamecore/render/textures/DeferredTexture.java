@@ -8,7 +8,6 @@ import mightypork.util.constraints.rect.Rect;
 import mightypork.util.logging.LogAlias;
 
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.opengl.Texture;
 
 
 /**
@@ -18,9 +17,9 @@ import org.newdawn.slick.opengl.Texture;
  */
 @MustLoadInMainThread
 @LogAlias(name = "Texture")
-public class DeferredTexture extends DeferredResource implements FilteredTexture {
+public class DeferredTexture extends DeferredResource implements GLTexture {
 	
-	private Texture backingTexture;
+	private org.newdawn.slick.opengl.Texture backingTexture;
 	private FilterMode filter = FilterMode.NEAREST;
 	private WrapMode wrap = WrapMode.CLAMP;
 	
@@ -36,12 +35,13 @@ public class DeferredTexture extends DeferredResource implements FilteredTexture
 	/**
 	 * Get a quad from this texture of given position/size
 	 * 
-	 * @param rect quad rect
+	 * @param uvs quad rect
 	 * @return the quad
 	 */
-	public TxQuad getQuad(Rect rect)
+	@Override
+	public TxQuad makeQuad(Rect uvs)
 	{
-		return new TxQuad(this, rect);
+		return new TxQuad(this, uvs);
 	}
 	
 	
@@ -64,6 +64,7 @@ public class DeferredTexture extends DeferredResource implements FilteredTexture
 	/**
 	 * Bind without adjusting parameters
 	 */
+	@Override
 	public void bindRaw()
 	{
 		if (!ensureLoaded()) return;
@@ -211,4 +212,9 @@ public class DeferredTexture extends DeferredResource implements FilteredTexture
 		this.wrap = wrapping;
 	}
 	
+	@Override
+	public QuadGrid grid(int x, int y)
+	{
+		return new QuadGrid(this, x, y);
+	}
 }

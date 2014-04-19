@@ -2,13 +2,13 @@ package mightypork.gamecore.render.textures;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
 import mightypork.gamecore.control.events.ResourceLoadRequest;
 import mightypork.util.constraints.rect.Rect;
-
-import org.newdawn.slick.opengl.Texture;
+import mightypork.util.error.KeyAlreadyExistsException;
 
 
 /**
@@ -25,80 +25,113 @@ public class TextureBank extends AppAdapter {
 		super(app);
 	}
 	
-	private final HashMap<String, DeferredTexture> textures = new HashMap<>();
+	private final Map<String, GLTexture> textures = new HashMap<>();
 	
-	private final HashMap<String, TxQuad> quads = new HashMap<>();
+	private final Map<String, TxQuad> quads = new HashMap<>();
 	
-	private DeferredTexture lastTx;
+	private final Map<String, TxSheet> sheets = new HashMap<>();
 	
 	
 	/**
-	 * Load a {@link Texture}
+	 * Load a texture from resource. A full-sized quad with the same key will be
+	 * automatically added.
 	 * 
 	 * @param key texture key
-	 * @param texture texture to load
+	 * @param resourcePath texture resource path
+	 * @param filter filter
+	 * @param wrap texture wrapping
+	 * @return the loaded texture.
+	 */
+	public GLTexture loadTexture(String key, String resourcePath, FilterMode filter, WrapMode wrap)
+	{
+		if (textures.containsKey(key)) throw new KeyAlreadyExistsException();
+		
+		final DeferredTexture texture = new DeferredTexture(resourcePath);
+		texture.setFilter(filter);
+		texture.setWrap(wrap);
+		
+		loadTexture(key, texture);
+		
+		return texture;
+	}
+	
+	
+	/**
+	 * Add an already initialized deferred texture to textures registry
+	 * 
+	 * @param key
+	 * @param texture
 	 */
 	public void loadTexture(String key, DeferredTexture texture)
 	{
 		getEventBus().send(new ResourceLoadRequest(texture));
 		
 		textures.put(key, texture);
-		lastTx = texture;
 		
-		makeQuad(key, Rect.ONE);
+		addQuad(key, texture.makeQuad(Rect.ONE));
 	}
 	
 	
 	/**
-	 * Load a {@link Texture} from resource
+	 * Make a quad from texture, and add it to quads registry.
 	 * 
-	 * @param key texture key
-	 * @param resourcePath texture resource path
-	 * @param filter filter
-	 * @param wrap texture wrapping
+	 * @param quadKey key
+	 * @param texture source texture
+	 * @param uvs rect
+	 * @return the created quad
 	 */
-	public void loadTexture(String key, String resourcePath, FilterMode filter, WrapMode wrap)
+	public TxQuad makeQuad(String quadKey, GLTexture texture, Rect uvs)
 	{
-		final DeferredTexture texture = new DeferredTexture(resourcePath);
-		texture.setFilter(filter);
-		texture.setWrap(wrap);
-		
-		loadTexture(key, texture);
+		TxQuad quad = texture.makeQuad(uvs);
+		addQuad(quadKey, quad);
+		return quad;
 	}
 	
 	
 	/**
-	 * Create a {@link TxQuad} in a texture
+	 * Add already created quad to the quad registry
 	 * 
-	 * @param quadKey quad key
-	 * @param textureKey texture key
-	 * @param quad quad rectangle (absolute pixel coordinates) *
+	 * @param quadKey key
+	 * @param quad quad to add
 	 */
-	public void makeQuad(String quadKey, String textureKey, Rect quad)
+	public void addQuad(String quadKey, TxQuad quad)
 	{
-		final DeferredTexture tx = textures.get(textureKey);
-		if (tx == null) throw new RuntimeException("Texture with key " + textureKey + " not defined!");
+		if (quads.containsKey(quadKey)) throw new KeyAlreadyExistsException();
 		
-		final TxQuad txquad = tx.getQuad(quad);
-		
-		quads.put(quadKey, txquad);
+		quads.put(quadKey, quad);
 	}
 	
 	
 	/**
-	 * Create a {@link TxQuad} in the last loaded texture
+	 * make a sprite sheet originating at given quad, spanning right and down.
 	 * 
-	 * @param quadKey quad key
-	 * @param quad quad rectangle (0-1)
+	 * @param sheetKey key
+	 * @param origin starting quad
+	 * @param width sheet width (multiplies of origin width)
+	 * @param height sheet height (multiplies of origin height)
+	 * @return the created sheet
 	 */
-	public void makeQuad(String quadKey, Rect quad)
+	public TxSheet makeSheet(String sheetKey, TxQuad origin, int width, int height)
 	{
-		final DeferredTexture tx = lastTx;
-		if (tx == null) throw new RuntimeException("There's no texture loaded yet, can't define quads!");
+		TxSheet sheet = origin.makeSheet(width, height);
 		
-		final TxQuad txquad = tx.getQuad(quad);
+		addSheet(sheetKey, sheet);
 		
-		quads.put(quadKey, txquad);
+		return sheet;
+	}
+	
+	
+	/**
+	 * Add an already created sheet
+	 * 
+	 * @param sheetKey key
+	 * @param sheet sheet to add
+	 */
+	public void addSheet(String sheetKey, TxSheet sheet)
+	{
+		if (sheets.containsKey(sheetKey)) throw new KeyAlreadyExistsException();
+		
+		sheets.put(sheetKey, sheet);
 	}
 	
 	
@@ -108,7 +141,7 @@ public class TextureBank extends AppAdapter {
 	 * @param key quad key
 	 * @return the quad
 	 */
-	public TxQuad getTxQuad(String key)
+	public TxQuad getQuad(String key)
 	{
 		final TxQuad q = quads.get(key);
 		
@@ -119,14 +152,14 @@ public class TextureBank extends AppAdapter {
 	
 	
 	/**
-	 * Get a loaded {@link Texture}
+	 * Get a loaded {@link GLTexture}
 	 * 
 	 * @param key texture key
 	 * @return the texture
 	 */
-	public Texture getTexture(String key)
+	public GLTexture getTexture(String key)
 	{
-		final Texture t = textures.get(key);
+		final GLTexture t = textures.get(key);
 		
 		if (t == null) throw new RuntimeException("There's no texture called " + key + "!");
 		

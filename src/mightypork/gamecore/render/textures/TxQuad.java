@@ -2,8 +2,7 @@ package mightypork.gamecore.render.textures;
 
 
 import mightypork.util.constraints.rect.Rect;
-
-import org.newdawn.slick.opengl.Texture;
+import mightypork.util.constraints.rect.RectConst;
 
 
 /**
@@ -14,9 +13,9 @@ import org.newdawn.slick.opengl.Texture;
 public class TxQuad {
 	
 	/** The texture */
-	public final Texture tx;
+	public final GLTexture tx;
 	/** Coords in texture (0-1) */
-	public final Rect uvs;
+	public final RectConst uvs;
 	
 	
 	/**
@@ -29,7 +28,7 @@ public class TxQuad {
 	 * @param heightPx area height (0-1)
 	 * @return new TxQuad
 	 */
-	public static TxQuad fromSizePx(Texture tx, double xPx, double yPx, double widthPx, double heightPx)
+	public static TxQuad fromSizePx(GLTexture tx, double xPx, double yPx, double widthPx, double heightPx)
 	{
 		final double w = tx.getImageWidth();
 		final double h = tx.getImageHeight();
@@ -48,7 +47,7 @@ public class TxQuad {
 	 * @param height area height (0-1)
 	 * @return new TxQuad
 	 */
-	public static TxQuad fromSize(Texture tx, double x1, double y1, double width, double height)
+	public static TxQuad fromSize(GLTexture tx, double x1, double y1, double width, double height)
 	{
 		return new TxQuad(tx, x1, y1, x1 + width, y1 + height);
 	}
@@ -63,18 +62,18 @@ public class TxQuad {
 	 * @param x2 right bottom X (0-1)
 	 * @param y2 right bottom Y (0-1)
 	 */
-	public TxQuad(Texture tx, double x1, double y1, double x2, double y2) {
+	public TxQuad(GLTexture tx, double x1, double y1, double x2, double y2) {
 		this(tx, Rect.make(x1, y1, x2, y2));
 	}
 	
 	
 	/**
 	 * @param tx Texture
-	 * @param uvs Rect of texture UVs (0-1); will be stored as is.
+	 * @param uvs Rect of texture UVs (0-1); will be frozen.
 	 */
-	public TxQuad(Texture tx, Rect uvs) {
+	public TxQuad(GLTexture tx, Rect uvs) {
 		this.tx = tx;
-		this.uvs = uvs;
+		this.uvs = uvs.freeze();
 	}
 	
 	
@@ -97,5 +96,18 @@ public class TxQuad {
 	public TxQuad copy()
 	{
 		return new TxQuad(this);
+	}
+	
+	
+	/**
+	 * Make a sheet starting with this quad, spannign to right and down.
+	 * 
+	 * @param width sheet width
+	 * @param height sheet height
+	 * @return sheet
+	 */
+	public TxSheet makeSheet(int width, int height)
+	{
+		return new TxSheet(this, width, height);
 	}
 }

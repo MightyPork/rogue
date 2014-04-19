@@ -132,7 +132,7 @@ public final class App extends BaseApp {
 		// this will work only with reusable events (such as requests)
 		bindToKey(new ActionRequest(RequestType.FULLSCREEN), Keys.F11);
 		bindToKey(new ActionRequest(RequestType.SCREENSHOT), Keys.F2);
-		bindToKey(new ActionRequest(RequestType.SHUTDOWN), Keys.L_CONTROL, Keys.Q);
+		bindToKey(new CrossfadeRequest(null), Keys.L_CONTROL, Keys.Q);
 		bindToKey(new CrossfadeRequest("main_menu"), Keys.L_CONTROL, Keys.M);
 	}
 	

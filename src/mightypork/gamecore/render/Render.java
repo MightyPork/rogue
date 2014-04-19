@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.io.IOException;
 
 import mightypork.gamecore.render.textures.FilterMode;
+import mightypork.gamecore.render.textures.GLTexture;
 import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.caching.RectDigest;
@@ -327,7 +328,7 @@ public class Render {
 	 * @param texture the texture
 	 * @throws RuntimeException if not loaded yet
 	 */
-	private static void bindTexture(Texture texture) throws RuntimeException
+	private static void bindTexture(GLTexture texture) throws RuntimeException
 	{
 		texture.bind();
 	}
@@ -486,7 +487,7 @@ public class Render {
 	 * @param texture texture instance
 	 * @param tint color tint
 	 */
-	public static void quadTextured(Rect quad, Rect uvs, Texture texture, Color tint)
+	public static void quadTextured(Rect quad, Rect uvs, GLTexture texture, Color tint)
 	{
 		bindTexture(texture);
 		setColor(tint);
@@ -502,7 +503,7 @@ public class Render {
 	 * @param uvs texture coords rectangle (px)
 	 * @param texture texture instance
 	 */
-	public static void quadTextured(Rect quad, Rect uvs, Texture texture)
+	public static void quadTextured(Rect quad, Rect uvs, GLTexture texture)
 	{
 		quadTextured(quad, uvs, texture, Color.WHITE);
 	}
@@ -514,7 +515,7 @@ public class Render {
 	 * @param quad rectangle (px)
 	 * @param texture texture instance
 	 */
-	public static void quadTextured(Rect quad, Texture texture)
+	public static void quadTextured(Rect quad, GLTexture texture)
 	{
 		quadTextured(quad, Rect.ONE, texture, Color.WHITE);
 	}
