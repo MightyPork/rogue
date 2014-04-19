@@ -11,7 +11,6 @@ import org.newdawn.slick.opengl.Texture;
  */
 public interface FilteredTexture extends Texture {
 	
-	
 	/**
 	 * Set filter for scaling
 	 * 

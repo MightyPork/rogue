@@ -22,6 +22,7 @@ import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
+import mightypork.rogue.world.WorldMap;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.control.eventbus.EventBus;
@@ -107,7 +108,9 @@ public final class App extends BaseApp {
 	{
 		Ion.registerIonizable(Tile.ION_MARK, Tile.class);
 		Ion.registerIonizable(Item.ION_MARK, Item.class);
+		Ion.registerIonizable(WorldMap.ION_MARK, WorldMap.class);
 	}
+	
 	
 	@Override
 	protected File getLockFile()

@@ -48,7 +48,7 @@ public class PerlinNoiseGenerator {
 	private final Random rand = new Random(DEFAULT_SEED);
 	
 	/** Permutation array for the improved noise function */
-	private int[] p_imp;
+	private final int[] p_imp;
 	
 	/** P array for perline 1 noise */
 	private int[] p;
@@ -103,39 +103,39 @@ public class PerlinNoiseGenerator {
 	public double improvedNoise(double x, double y, double z)
 	{
 		// Constraint the point to a unit cube
-		int uc_x = (int) Math.floor(x) & 255;
-		int uc_y = (int) Math.floor(y) & 255;
-		int uc_z = (int) Math.floor(z) & 255;
+		final int uc_x = (int) Math.floor(x) & 255;
+		final int uc_y = (int) Math.floor(y) & 255;
+		final int uc_z = (int) Math.floor(z) & 255;
 		
 		// Relative location of the point in the unit cube
-		double xo = x - Math.floor(x);
-		double yo = y - Math.floor(y);
-		double zo = z - Math.floor(z);
+		final double xo = x - Math.floor(x);
+		final double yo = y - Math.floor(y);
+		final double zo = z - Math.floor(z);
 		
 		// Fade curves for x, y and z
-		double u = fade(xo);
-		double v = fade(yo);
-		double w = fade(zo);
+		final double u = fade(xo);
+		final double v = fade(yo);
+		final double w = fade(zo);
 		
 		// Generate a hash for each coordinate to find out where in the cube
 		// it lies.
-		int a = p_imp[uc_x] + uc_y;
-		int aa = p_imp[a] + uc_z;
-		int ab = p_imp[a + 1] + uc_z;
+		final int a = p_imp[uc_x] + uc_y;
+		final int aa = p_imp[a] + uc_z;
+		final int ab = p_imp[a + 1] + uc_z;
 		
-		int b = p_imp[uc_x + 1] + uc_y;
-		int ba = p_imp[b] + uc_z;
-		int bb = p_imp[b + 1] + uc_z;
+		final int b = p_imp[uc_x + 1] + uc_y;
+		final int ba = p_imp[b] + uc_z;
+		final int bb = p_imp[b + 1] + uc_z;
 		
 		// blend results from the 8 corners based on the noise function
-		double c1 = grad(p_imp[aa], xo, yo, zo);
-		double c2 = grad(p_imp[ba], xo - 1, yo, zo);
-		double c3 = grad(p_imp[ab], xo, yo - 1, zo);
-		double c4 = grad(p_imp[bb], xo - 1, yo - 1, zo);
-		double c5 = grad(p_imp[aa + 1], xo, yo, zo - 1);
-		double c6 = grad(p_imp[ba + 1], xo - 1, yo, zo - 1);
-		double c7 = grad(p_imp[ab + 1], xo, yo - 1, zo - 1);
-		double c8 = grad(p_imp[bb + 1], xo - 1, yo - 1, zo - 1);
+		final double c1 = grad(p_imp[aa], xo, yo, zo);
+		final double c2 = grad(p_imp[ba], xo - 1, yo, zo);
+		final double c3 = grad(p_imp[ab], xo, yo - 1, zo);
+		final double c4 = grad(p_imp[bb], xo - 1, yo - 1, zo);
+		final double c5 = grad(p_imp[aa + 1], xo, yo, zo - 1);
+		final double c6 = grad(p_imp[ba + 1], xo - 1, yo, zo - 1);
+		final double c7 = grad(p_imp[ab + 1], xo, yo - 1, zo - 1);
+		final double c8 = grad(p_imp[bb + 1], xo - 1, yo - 1, zo - 1);
 		
 		return lerp(w, lerp(v, lerp(u, c1, c2), lerp(u, c3, c4)), lerp(v, lerp(u, c5, c6), lerp(u, c7, c8)));
 	}
@@ -149,16 +149,16 @@ public class PerlinNoiseGenerator {
 	 */
 	public double noise1(double x)
 	{
-		double t = x + N;
-		int bx0 = ((int) t) & BM;
-		int bx1 = (bx0 + 1) & BM;
-		double rx0 = t - (int) t;
-		double rx1 = rx0 - 1;
+		final double t = x + N;
+		final int bx0 = ((int) t) & BM;
+		final int bx1 = (bx0 + 1) & BM;
+		final double rx0 = t - (int) t;
+		final double rx1 = rx0 - 1;
 		
-		double sx = sCurve(rx0);
+		final double sx = sCurve(rx0);
 		
-		double u = rx0 * g1[p[bx0]];
-		double v = rx1 * g1[p[bx1]];
+		final double u = rx0 * g1[p[bx0]];
+		final double v = rx1 * g1[p[bx1]];
 		
 		return lerp(sx, u, v);
 	}
@@ -174,39 +174,39 @@ public class PerlinNoiseGenerator {
 	public double noise2(double x, double y)
 	{
 		double t = x + N;
-		int bx0 = ((int) t) & BM;
-		int bx1 = (bx0 + 1) & BM;
-		double rx0 = t - (int) t;
-		double rx1 = rx0 - 1;
+		final int bx0 = ((int) t) & BM;
+		final int bx1 = (bx0 + 1) & BM;
+		final double rx0 = t - (int) t;
+		final double rx1 = rx0 - 1;
 		
 		t = y + N;
-		int by0 = ((int) t) & BM;
-		int by1 = (by0 + 1) & BM;
-		double ry0 = t - (int) t;
-		double ry1 = ry0 - 1;
+		final int by0 = ((int) t) & BM;
+		final int by1 = (by0 + 1) & BM;
+		final double ry0 = t - (int) t;
+		final double ry1 = ry0 - 1;
 		
-		int i = p[bx0];
-		int j = p[bx1];
+		final int i = p[bx0];
+		final int j = p[bx1];
 		
-		int b00 = p[i + by0];
-		int b10 = p[j + by0];
-		int b01 = p[i + by1];
-		int b11 = p[j + by1];
+		final int b00 = p[i + by0];
+		final int b10 = p[j + by0];
+		final int b01 = p[i + by1];
+		final int b11 = p[j + by1];
 		
-		double sx = sCurve(rx0);
-		double sy = sCurve(ry0);
+		final double sx = sCurve(rx0);
+		final double sy = sCurve(ry0);
 		
 		double[] q = g2[b00];
 		double u = rx0 * q[0] + ry0 * q[1];
 		q = g2[b10];
 		double v = rx1 * q[0] + ry0 * q[1];
-		double a = lerp(sx, u, v);
+		final double a = lerp(sx, u, v);
 		
 		q = g2[b01];
 		u = rx0 * q[0] + ry1 * q[1];
 		q = g2[b11];
 		v = rx1 * q[0] + ry1 * q[1];
-		double b = lerp(sx, u, v);
+		final double b = lerp(sx, u, v);
 		
 		return lerp(sy, a, b);
 	}
@@ -223,34 +223,34 @@ public class PerlinNoiseGenerator {
 	public double noise3(double x, double y, double z)
 	{
 		double t = x + N;
-		int bx0 = ((int) t) & BM;
-		int bx1 = (bx0 + 1) & BM;
-		double rx0 = t - (int) t;
-		double rx1 = rx0 - 1;
+		final int bx0 = ((int) t) & BM;
+		final int bx1 = (bx0 + 1) & BM;
+		final double rx0 = t - (int) t;
+		final double rx1 = rx0 - 1;
 		
 		t = y + N;
-		int by0 = ((int) t) & BM;
-		int by1 = (by0 + 1) & BM;
-		double ry0 = t - (int) t;
-		double ry1 = ry0 - 1;
+		final int by0 = ((int) t) & BM;
+		final int by1 = (by0 + 1) & BM;
+		final double ry0 = t - (int) t;
+		final double ry1 = ry0 - 1;
 		
 		t = z + N;
-		int bz0 = ((int) t) & BM;
-		int bz1 = (bz0 + 1) & BM;
-		double rz0 = t - (int) t;
-		double rz1 = rz0 - 1;
+		final int bz0 = ((int) t) & BM;
+		final int bz1 = (bz0 + 1) & BM;
+		final double rz0 = t - (int) t;
+		final double rz1 = rz0 - 1;
 		
-		int i = p[bx0];
-		int j = p[bx1];
+		final int i = p[bx0];
+		final int j = p[bx1];
 		
-		int b00 = p[i + by0];
-		int b10 = p[j + by0];
-		int b01 = p[i + by1];
-		int b11 = p[j + by1];
+		final int b00 = p[i + by0];
+		final int b10 = p[j + by0];
+		final int b01 = p[i + by1];
+		final int b11 = p[j + by1];
 		
 		t = sCurve(rx0);
-		double sy = sCurve(ry0);
-		double sz = sCurve(rz0);
+		final double sy = sCurve(ry0);
+		final double sz = sCurve(rz0);
 		
 		double[] q = g3[b00 + bz0];
 		double u = (rx0 * q[0] + ry0 * q[1] + rz0 * q[2]);
@@ -264,7 +264,7 @@ public class PerlinNoiseGenerator {
 		v = (rx1 * q[0] + ry1 * q[1] + rz0 * q[2]);
 		double b = lerp(t, u, v);
 		
-		double c = lerp(sy, a, b);
+		final double c = lerp(sy, a, b);
 		
 		q = g3[b00 + bz1];
 		u = (rx0 * q[0] + ry0 * q[1] + rz1 * q[2]);
@@ -278,7 +278,7 @@ public class PerlinNoiseGenerator {
 		v = (rx1 * q[0] + ry1 * q[1] + rz1 * q[2]);
 		b = lerp(t, u, v);
 		
-		double d = lerp(sy, a, b);
+		final double d = lerp(sy, a, b);
 		
 		return lerp(sz, c, d);
 	}
@@ -491,9 +491,9 @@ public class PerlinNoiseGenerator {
 	private double grad(int hash, double x, double y, double z)
 	{
 		// Convert low 4 bits of hash code into 12 gradient directions.
-		int h = hash & 15;
-		double u = (h < 8 || h == 12 || h == 13) ? x : y;
-		double v = (h < 4 || h == 12 || h == 13) ? y : z;
+		final int h = hash & 15;
+		final double u = (h < 8 || h == 12 || h == 13) ? x : y;
+		final double v = (h < 4 || h == 12 || h == 13) ? y : z;
 		
 		return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
 	}
@@ -513,7 +513,7 @@ public class PerlinNoiseGenerator {
 	 */
 	private void normalize2(double[] v)
 	{
-		double s = 1 / Math.sqrt(v[0] * v[0] + v[1] * v[1]);
+		final double s = 1 / Math.sqrt(v[0] * v[0] + v[1] * v[1]);
 		v[0] *= s;
 		v[1] *= s;
 	}
@@ -524,7 +524,7 @@ public class PerlinNoiseGenerator {
 	 */
 	private void normalize3(double[] v)
 	{
-		double s = 1 / Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+		final double s = 1 / Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 		v[0] *= s;
 		v[1] *= s;
 		v[2] *= s;

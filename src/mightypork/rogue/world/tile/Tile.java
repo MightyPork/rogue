@@ -1,8 +1,6 @@
 package mightypork.rogue.world.tile;
 
 
-import java.util.Stack;
-
 import mightypork.rogue.world.Entity;
 import mightypork.rogue.world.item.Item;
 
@@ -15,12 +13,6 @@ import mightypork.rogue.world.item.Item;
 public final class Tile extends Entity<TileData, TileModel, TileRenderContext> {
 	
 	public static final short ION_MARK = 700;
-	
-	/** Items dropped onto this tile */
-	public final Stack<Item> items = new Stack<>();
-	
-	/** Whether the tile is occupied by an entity */
-	public boolean occupied;
 	
 	
 	public Tile() {
@@ -58,8 +50,8 @@ public final class Tile extends Entity<TileData, TileModel, TileRenderContext> {
 		super.render(context);
 		
 		// render laying-on-top item
-		if (!items.isEmpty()) {
-			Item item = items.peek();
+		if (!data.items.isEmpty()) {
+			final Item item = data.items.peek();
 			
 			item.render(context.getRect());
 		}
@@ -72,8 +64,8 @@ public final class Tile extends Entity<TileData, TileModel, TileRenderContext> {
 		super.update(delta);
 		
 		// update laying-on-top item
-		if (!items.isEmpty()) {
-			Item item = items.peek();
+		if (!data.items.isEmpty()) {
+			final Item item = data.items.peek();
 			item.update(delta);
 		}
 	}

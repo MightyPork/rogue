@@ -81,7 +81,7 @@ public class NoiseGen {
 	 */
 	public double[][] buildMap(int width, int height)
 	{
-		double[][] map = new double[height][width];
+		final double[][] map = new double[height][width];
 		
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {

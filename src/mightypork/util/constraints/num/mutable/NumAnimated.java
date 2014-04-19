@@ -60,7 +60,7 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 		this(value);
 		setEasing(easing);
 	}
-
+	
 	
 	/**
 	 * Create animator with easing
@@ -73,6 +73,7 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 		this(value);
 		setEasing(easingIn, easingOut);
 	}
+	
 	
 	/**
 	 * Create as copy of another

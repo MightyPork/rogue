@@ -1,7 +1,6 @@
 package mightypork.rogue.screens.main_menu;
 
 
-import mightypork.gamecore.control.events.ScreenRequestEvent;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
@@ -9,8 +8,6 @@ import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.BaseScreen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.rogue.Res;
-import mightypork.rogue.events.ActionRequest;
-import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.rogue.screens.CrossfadeRequest;
 import mightypork.util.constraints.num.Num;
 import mightypork.util.constraints.rect.Rect;
@@ -49,13 +46,18 @@ class MenuLayer extends ScreenLayer {
 		b3 = new MenuButton("Flying Cat", PAL16.PIGMEAT);
 		b4 = new MenuButton("Bye!", PAL16.BLOODRED);
 		
-		int r=0;
+		int r = 0;
 		
-		layout.put(tp, r, 0, 4, 1); r += 5;
-		layout.put(b0, r, 0, 2, 1); r += 3;
-		layout.put(b1, r, 0, 2, 1); r += 2;
-		layout.put(b2, r, 0, 2, 1); r += 2;
-		layout.put(b3, r, 0, 2, 1); r += 3;
+		layout.put(tp, r, 0, 4, 1);
+		r += 5;
+		layout.put(b0, r, 0, 2, 1);
+		r += 3;
+		layout.put(b1, r, 0, 2, 1);
+		r += 2;
+		layout.put(b2, r, 0, 2, 1);
+		r += 2;
+		layout.put(b3, r, 0, 2, 1);
+		r += 3;
 		layout.put(b4, r, 0, 2, 1);
 		
 		root.add(layout);

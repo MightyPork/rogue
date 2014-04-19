@@ -1,6 +1,7 @@
 package mightypork.rogue.world;
 
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -57,8 +58,9 @@ public abstract class EntityModel<D, R extends RectBound> {
 	 * 
 	 * @param data data to load
 	 * @param in input stream
+	 * @throws IOException
 	 */
-	public abstract void load(D data, InputStream in);
+	public abstract void load(D data, InputStream in) throws IOException;
 	
 	
 	/**
@@ -66,9 +68,10 @@ public abstract class EntityModel<D, R extends RectBound> {
 	 * 
 	 * @param data data to save
 	 * @param out output stream
+	 * @throws IOException
 	 */
 	@DefaultImpl
-	public abstract void save(D data, OutputStream out);
+	public abstract void save(D data, OutputStream out) throws IOException;
 	
 	
 	/**

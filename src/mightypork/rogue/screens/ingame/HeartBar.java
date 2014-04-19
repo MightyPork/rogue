@@ -12,10 +12,10 @@ import mightypork.util.constraints.rect.Rect;
 
 public class HeartBar extends VisualComponent {
 	
-	private TxQuad img_on;
-	private TxQuad img_off;
-	private int total;
-	private int active;
+	private final TxQuad img_on;
+	private final TxQuad img_off;
+	private final int total;
+	private final int active;
 	
 	NumVar index = new NumVar(0);
 	Rect heart;
@@ -26,7 +26,7 @@ public class HeartBar extends VisualComponent {
 	 * @param active
 	 * @param img_on
 	 * @param img_off
-	 * @param align 
+	 * @param align
 	 */
 	public HeartBar(int total, int active, TxQuad img_on, TxQuad img_off, AlignX align) {
 		super();
@@ -35,18 +35,18 @@ public class HeartBar extends VisualComponent {
 		this.img_on = img_on;
 		this.img_off = img_off;
 		
-		Num h = height();
-		Num w = width();
+		final Num h = height();
+		final Num w = width();
 		
 		switch (align) {
 			case LEFT:
 				heart = leftEdge().growRight(h).moveX(index.mul(h));
 				break;
 			case RIGHT:
-				heart = rightEdge().growLeft(h).moveX(h.mul(-total+1).add(index.mul(h)));
+				heart = rightEdge().growLeft(h).moveX(h.mul(-total + 1).add(index.mul(h)));
 				break;
 			case CENTER:
-				heart = leftEdge().moveX(w.half().add(h.mul(-total/2D))).growRight(h).moveX(index.mul(h));
+				heart = leftEdge().moveX(w.half().add(h.mul(-total / 2D))).growRight(h).moveX(index.mul(h));
 				break;
 		}
 		

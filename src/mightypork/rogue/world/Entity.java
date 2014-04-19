@@ -58,6 +58,15 @@ public abstract class Entity<D, M extends EntityModel<D, R>, R extends RectBound
 	
 	
 	/**
+	 * @return data
+	 */
+	public final D getData()
+	{
+		return data;
+	}
+	
+	
+	/**
 	 * @return entity model
 	 */
 	public final M getModel()

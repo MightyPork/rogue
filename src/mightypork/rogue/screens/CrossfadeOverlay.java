@@ -26,7 +26,7 @@ public class CrossfadeOverlay extends Overlay implements CrossfadeRequest.Listen
 		@Override
 		public void run()
 		{
-			if(requestedScreenName == null) shutdown();
+			if (requestedScreenName == null) shutdown();
 			getEventBus().send(new ScreenRequestEvent(requestedScreenName));
 		}
 	};
@@ -45,7 +45,7 @@ public class CrossfadeOverlay extends Overlay implements CrossfadeRequest.Listen
 	public CrossfadeOverlay(AppAccess app) {
 		super(app);
 		
-		QuadPainter qp = new QuadPainter(color);
+		final QuadPainter qp = new QuadPainter(color);
 		qp.setRect(root);
 		root.add(qp);
 		

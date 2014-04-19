@@ -5,8 +5,9 @@ import java.util.Stack;
 
 import mightypork.rogue.world.item.Item;
 
+
 /**
- * Tile data object. Can be extended for particular models' needs.
+ * Tile data object.
  * 
  * @author MightyPork
  */
@@ -14,5 +15,8 @@ public abstract class TileData {
 	
 	/** Items dropped onto this tile */
 	public final Stack<Item> items = new Stack<>();
+	
+	/** Whether the tile is occupied by an entity */
+	public boolean occupied;
 	
 }

@@ -2,7 +2,7 @@ package mightypork.rogue.world.item;
 
 
 /**
- * Item data object. Can be extended for particular models' needs.
+ * Item data object.
  * 
  * @author MightyPork
  */

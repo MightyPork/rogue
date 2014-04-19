@@ -9,7 +9,7 @@ import mightypork.util.control.eventbus.events.Event;
  */
 public class CrossfadeRequest implements Event<CrossfadeRequest.Listener> {
 	
-	private String screen;
+	private final String screen;
 	
 	
 	/**

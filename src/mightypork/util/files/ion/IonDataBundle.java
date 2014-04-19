@@ -1,7 +1,6 @@
 package mightypork.util.files.ion;
 
 
-
 /**
  * Ionizable HashMap<String, Object> with getters and setters for individual
  * supported types.
@@ -116,7 +115,6 @@ public class IonDataBundle extends IonMap<String, Object> {
 	{
 		super.put(key, num);
 	}
-
 	
 	
 	public Object getOfType(String key, Class<?> type)

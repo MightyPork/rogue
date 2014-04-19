@@ -1,8 +1,8 @@
 package mightypork.rogue.screens.ingame;
 
 
+import mightypork.gamecore.control.events.MouseMotionEvent;
 import mightypork.gamecore.gui.components.ClickableComponent;
-import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.rogue.Res;
@@ -13,15 +13,14 @@ import mightypork.util.constraints.rect.caching.RectCache;
 import mightypork.util.constraints.vect.Vect;
 import mightypork.util.control.timing.Updateable;
 import mightypork.util.math.Easing;
-import mightypork.gamecore.control.events.MouseMotionEvent;
 
 
 public class NavItemSlot extends ClickableComponent implements MouseMotionEvent.Listener, Updateable {
 	
-	private TxQuad image;
-	private TxQuad frame;
-	private RectCache paintBox;
-	private NumAnimated yOffset;
+	private final TxQuad image;
+	private final TxQuad frame;
+	private final RectCache paintBox;
+	private final NumAnimated yOffset;
 	private boolean wasInside = false;
 	
 	
@@ -29,11 +28,11 @@ public class NavItemSlot extends ClickableComponent implements MouseMotionEvent.
 		this.image = image;
 		this.frame = Res.getTxQuad("item_frame");
 		
-		Rect ref = shrink(height().perc(8));
+		final Rect ref = shrink(height().perc(8));
 		yOffset = new NumAnimated(0, Easing.LINEAR);
 		yOffset.setDefaultDuration(0.05);
 		
-		Num h = ref.width().min(ref.height());
+		final Num h = ref.width().min(ref.height());
 		this.paintBox = ref.bottomLeft().startRect().grow(Num.ZERO, h, h, Num.ZERO).moveY(yOffset.mul(h.perc(-5))).cached();
 	}
 	
@@ -61,7 +60,7 @@ public class NavItemSlot extends ClickableComponent implements MouseMotionEvent.
 	
 	@Override
 	public void receive(MouseMotionEvent event)
-	{		
+	{
 		if (event.getPos().isInside(this) != wasInside) {
 			if (wasInside) {
 				// left

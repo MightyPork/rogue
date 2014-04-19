@@ -71,15 +71,9 @@ public class Ion {
 	public static final short ENTRY = 60;
 	
 	/**
-	 * Start mark - general purpose, marks start of a sequence of stored
-	 * objects.
-	 */
-	public static final short START = 61;
-	
-	/**
 	 * End mark - general purpose, marks end of sequence of stored objects.
 	 */
-	public static final short END = 62;
+	public static final short END = 61;
 	
 	// built in 80..99
 	/** Map mark (built-in data structure) */
@@ -135,7 +129,7 @@ public class Ion {
 		if (mark > Short.MAX_VALUE) throw new IllegalArgumentException("Mark too high (max " + Short.MAX_VALUE + ").");
 		if (mark < Short.MIN_VALUE) throw new IllegalArgumentException("Mark too low (min " + Short.MIN_VALUE + ").");
 		
-		short m = (short) mark;
+		final short m = (short) mark;
 		
 		if (markRangeChecking && m >= 0 && m < 100) {
 			throw new IllegalArgumentException("Marks 0..99 are reserved.");
@@ -304,7 +298,7 @@ public class Ion {
 					
 				case BOOLEAN_ARRAY:
 					length = readInt(in);
-					boolean[] bools = new boolean[length];
+					final boolean[] bools = new boolean[length];
 					for (int i = 0; i < length; i++) {
 						bools[i] = readBoolean(in);
 					}
@@ -312,7 +306,7 @@ public class Ion {
 					
 				case BYTE_ARRAY:
 					length = readInt(in);
-					byte[] bytes = new byte[length];
+					final byte[] bytes = new byte[length];
 					for (int i = 0; i < length; i++) {
 						bytes[i] = readByte(in);
 					}
@@ -320,7 +314,7 @@ public class Ion {
 					
 				case CHAR_ARRAY:
 					length = readInt(in);
-					char[] chars = new char[length];
+					final char[] chars = new char[length];
 					for (int i = 0; i < length; i++) {
 						chars[i] = readChar(in);
 					}
@@ -328,7 +322,7 @@ public class Ion {
 					
 				case SHORT_ARRAY:
 					length = readInt(in);
-					short[] shorts = new short[length];
+					final short[] shorts = new short[length];
 					for (int i = 0; i < length; i++) {
 						shorts[i] = readShort(in);
 					}
@@ -336,7 +330,7 @@ public class Ion {
 					
 				case INT_ARRAY:
 					length = readInt(in);
-					int[] ints = new int[length];
+					final int[] ints = new int[length];
 					for (int i = 0; i < length; i++) {
 						ints[i] = readInt(in);
 					}
@@ -344,7 +338,7 @@ public class Ion {
 					
 				case LONG_ARRAY:
 					length = readInt(in);
-					long[] longs = new long[length];
+					final long[] longs = new long[length];
 					for (int i = 0; i < length; i++) {
 						longs[i] = readLong(in);
 					}
@@ -352,7 +346,7 @@ public class Ion {
 					
 				case FLOAT_ARRAY:
 					length = readInt(in);
-					float[] floats = new float[length];
+					final float[] floats = new float[length];
 					for (int i = 0; i < length; i++) {
 						floats[i] = readFloat(in);
 					}
@@ -360,7 +354,7 @@ public class Ion {
 					
 				case DOUBLE_ARRAY:
 					length = readInt(in);
-					double[] doubles = new double[length];
+					final double[] doubles = new double[length];
 					for (int i = 0; i < length; i++) {
 						doubles[i] = readDouble(in);
 					}
@@ -368,7 +362,7 @@ public class Ion {
 					
 				case STRING_ARRAY:
 					length = readInt(in);
-					String[] Strings = new String[length];
+					final String[] Strings = new String[length];
 					for (int i = 0; i < length; i++) {
 						Strings[i] = readString(in);
 					}
@@ -732,7 +726,7 @@ public class Ion {
 	public static void writeBooleanArray(OutputStream out, boolean[] arr) throws IOException
 	{
 		writeInt(out, arr.length);
-		for (boolean a : arr) {
+		for (final boolean a : arr) {
 			writeBoolean(out, a);
 		}
 	}
@@ -748,7 +742,7 @@ public class Ion {
 	public static void writeByteArray(OutputStream out, byte[] arr) throws IOException
 	{
 		writeInt(out, arr.length);
-		for (byte a : arr) {
+		for (final byte a : arr) {
 			writeByte(out, a);
 		}
 	}
@@ -764,7 +758,7 @@ public class Ion {
 	public static void writeCharArray(OutputStream out, char[] arr) throws IOException
 	{
 		writeInt(out, arr.length);
-		for (char a : arr) {
+		for (final char a : arr) {
 			writeChar(out, a);
 		}
 	}
@@ -780,7 +774,7 @@ public class Ion {
 	public static void writeShortArray(OutputStream out, short[] arr) throws IOException
 	{
 		writeInt(out, arr.length);
-		for (short a : arr) {
+		for (final short a : arr) {
 			writeShort(out, a);
 		}
 	}
@@ -796,7 +790,7 @@ public class Ion {
 	public static void writeIntArray(OutputStream out, int[] arr) throws IOException
 	{
 		writeInt(out, arr.length);
-		for (int a : arr) {
+		for (final int a : arr) {
 			writeInt(out, a);
 		}
 	}
@@ -812,7 +806,7 @@ public class Ion {
 	public static void writeLongArray(OutputStream out, long[] arr) throws IOException
 	{
 		writeInt(out, arr.length);
-		for (long a : arr) {
+		for (final long a : arr) {
 			writeLong(out, a);
 		}
 	}
@@ -828,7 +822,7 @@ public class Ion {
 	public static void writeFloatArray(OutputStream out, float[] arr) throws IOException
 	{
 		writeInt(out, arr.length);
-		for (float a : arr) {
+		for (final float a : arr) {
 			writeFloat(out, a);
 		}
 	}
@@ -844,7 +838,7 @@ public class Ion {
 	public static void writeDoubleArray(OutputStream out, double[] arr) throws IOException
 	{
 		writeInt(out, arr.length);
-		for (double a : arr) {
+		for (final double a : arr) {
 			writeDouble(out, a);
 		}
 	}
@@ -860,7 +854,7 @@ public class Ion {
 	public static void writeStringArray(OutputStream out, String[] arr) throws IOException
 	{
 		writeInt(out, arr.length);
-		for (String a : arr) {
+		for (final String a : arr) {
 			writeString(out, a);
 		}
 	}
@@ -888,7 +882,7 @@ public class Ion {
 	 */
 	public static byte readByte(InputStream in) throws IOException
 	{
-		int b = in.read();
+		final int b = in.read();
 		if (-1 == b) throw new IOException("End of stream.");
 		return (byte) b;
 	}
@@ -1018,8 +1012,8 @@ public class Ion {
 	 */
 	public static boolean[] readBooleanArray(InputStream in) throws IOException
 	{
-		int length = readInt(in);
-		boolean[] booleans = new boolean[length];
+		final int length = readInt(in);
+		final boolean[] booleans = new boolean[length];
 		for (int i = 0; i < length; i++) {
 			booleans[i] = readBoolean(in);
 		}
@@ -1036,8 +1030,8 @@ public class Ion {
 	 */
 	public static byte[] readByteArray(InputStream in) throws IOException
 	{
-		int length = readInt(in);
-		byte[] bytes = new byte[length];
+		final int length = readInt(in);
+		final byte[] bytes = new byte[length];
 		for (int i = 0; i < length; i++) {
 			bytes[i] = readByte(in);
 		}
@@ -1054,8 +1048,8 @@ public class Ion {
 	 */
 	public static char[] readCharArray(InputStream in) throws IOException
 	{
-		int length = readInt(in);
-		char[] chars = new char[length];
+		final int length = readInt(in);
+		final char[] chars = new char[length];
 		for (int i = 0; i < length; i++) {
 			chars[i] = readChar(in);
 		}
@@ -1072,8 +1066,8 @@ public class Ion {
 	 */
 	public static short[] readShortArray(InputStream in) throws IOException
 	{
-		int length = readInt(in);
-		short[] shorts = new short[length];
+		final int length = readInt(in);
+		final short[] shorts = new short[length];
 		for (int i = 0; i < length; i++) {
 			shorts[i] = readShort(in);
 		}
@@ -1090,8 +1084,8 @@ public class Ion {
 	 */
 	public static int[] readIntArray(InputStream in) throws IOException
 	{
-		int length = readInt(in);
-		int[] ints = new int[length];
+		final int length = readInt(in);
+		final int[] ints = new int[length];
 		for (int i = 0; i < length; i++) {
 			ints[i] = readInt(in);
 		}
@@ -1108,8 +1102,8 @@ public class Ion {
 	 */
 	public static long[] readLongArray(InputStream in) throws IOException
 	{
-		int length = readInt(in);
-		long[] longs = new long[length];
+		final int length = readInt(in);
+		final long[] longs = new long[length];
 		for (int i = 0; i < length; i++) {
 			longs[i] = readLong(in);
 		}
@@ -1126,8 +1120,8 @@ public class Ion {
 	 */
 	public static float[] readFloatArray(InputStream in) throws IOException
 	{
-		int length = readInt(in);
-		float[] floats = new float[length];
+		final int length = readInt(in);
+		final float[] floats = new float[length];
 		for (int i = 0; i < length; i++) {
 			floats[i] = readFloat(in);
 		}
@@ -1144,8 +1138,8 @@ public class Ion {
 	 */
 	public static double[] readDoubleArray(InputStream in) throws IOException
 	{
-		int length = readInt(in);
-		double[] doubles = new double[length];
+		final int length = readInt(in);
+		final double[] doubles = new double[length];
 		for (int i = 0; i < length; i++) {
 			doubles[i] = readDouble(in);
 		}
@@ -1162,8 +1156,8 @@ public class Ion {
 	 */
 	public static String[] readStringArray(InputStream in) throws IOException
 	{
-		int length = readInt(in);
-		String[] Strings = new String[length];
+		final int length = readInt(in);
+		final String[] Strings = new String[length];
 		for (int i = 0; i < length; i++) {
 			Strings[i] = readString(in);
 		}

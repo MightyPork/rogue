@@ -10,7 +10,7 @@ public final class Tiles {
 	private static final Map<Integer, TileModel> registered = new HashMap<>();
 	
 	
-	public static void register(int id, TileModel model)
+	static void register(int id, TileModel model)
 	{
 		if (registered.containsKey(id)) throw new IllegalArgumentException("Tile ID " + id + " already in use.");
 		registered.put(id, model);
