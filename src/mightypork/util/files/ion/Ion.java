@@ -17,32 +17,50 @@ import mightypork.util.logging.Log;
 public class Ion {
 	
 	/*
-	 *  0-19 ... primitive and Java built-in types 
-	 * 20-39 ... technical marks
-	 * 40-99 ... built-in ION types
+	 *  0-49 ... primitive and built-in types
+	 * 60-79 ... technical marks
+	 * 80-99 ... internal ION data types
 	 */
 	
 	// primitives 0..19
-	/** Null mark (for internal use) */
+	/** Null mark */
 	private static final short NULL = 0;
-	/** Boolean mark (for internal use) */
+	/** Boolean mark */
 	private static final short BOOLEAN = 1;
-	/** Byte mark (for internal use) */
+	/** Byte mark */
 	private static final short BYTE = 2;
-	/** Character mark (for internal use) */
+	/** Character mark */
 	private static final short CHAR = 3;
-	/** Short mark (for internal use) */
+	/** Short mark */
 	private static final short SHORT = 4;
-	/** Integer mark (for internal use) */
+	/** Integer mark */
 	private static final short INT = 5;
-	/** Long mark (for internal use) */
+	/** Long mark */
 	private static final short LONG = 6;
-	/** Float mark (for internal use) */
+	/** Float mark */
 	private static final short FLOAT = 7;
-	/** Double mark (for internal use) */
+	/** Double mark */
 	private static final short DOUBLE = 8;
-	/** String mark (for internal use) */
+	/** String mark */
 	private static final short STRING = 9;
+	/** Boolean array mark */
+	private static final short BOOLEAN_ARRAY = 10;
+	/** Byte array mark */
+	private static final short BYTE_ARRAY = 11;
+	/** Character array mark */
+	private static final short CHAR_ARRAY = 12;
+	/** Short array mark */
+	private static final short SHORT_ARRAY = 13;
+	/** Integer array mark */
+	private static final short INT_ARRAY = 14;
+	/** Long array mark */
+	private static final short LONG_ARRAY = 15;
+	/** Float array mark */
+	private static final short FLOAT_ARRAY = 16;
+	/** Double array mark */
+	private static final short DOUBLE_ARRAY = 17;
+	/** String array mark */
+	private static final short STRING_ARRAY = 18;
 	
 	// technical 20..39
 	
@@ -50,31 +68,25 @@ public class Ion {
 	 * Entry mark - general purpose, marks an entry in sequence of objects. Used
 	 * to indicate that the sequence continues wityh another element.
 	 */
-	public static final short ENTRY = 20;
+	public static final short ENTRY = 60;
 	
 	/**
 	 * Start mark - general purpose, marks start of a sequence of stored
 	 * objects.
 	 */
-	public static final short START = 21;
+	public static final short START = 61;
 	
 	/**
 	 * End mark - general purpose, marks end of sequence of stored objects.
 	 */
-	public static final short END = 22;
+	public static final short END = 62;
 	
-	/**
-	 * Length mark, indicating length of something (such as array) - general
-	 * purpose
-	 */
-	public static final short LENGTH = 23;
-	
-	// built in 40..99
+	// built in 80..99
 	/** Map mark (built-in data structure) */
-	static final short DATA_BUNDLE = 40;
+	static final short DATA_BUNDLE = 80;
 	
 	/** List mark (built-in data structure) */
-	static final short DATA_LIST = 41;
+	static final short DATA_LIST = 81;
 	
 	/** Ionizables<Mark, Class> */
 	private static Map<Short, Class<?>> customIonizables = new HashMap<>();
@@ -102,8 +114,8 @@ public class Ion {
 	static {
 		markRangeChecking = false;
 		
-		registerIonizable(Ion.DATA_BUNDLE, IonDataBundle.class);
-		registerIonizable(Ion.DATA_LIST, IonDataList.class);
+		registerIonizable(DATA_BUNDLE, IonDataBundle.class);
+		registerIonizable(DATA_LIST, IonDataList.class);
 		
 		markRangeChecking = true;
 	}
@@ -114,7 +126,7 @@ public class Ion {
 	 * 
 	 * @param mark mark to be used. Numbers 0..99 are reserved. Mark is of type
 	 *            Short, using values out of the short range will raise an
-	 *            exception.
+	 *            except
 	 * @param objClass class of the registered Ionizable
 	 */
 	public static void registerIonizable(int mark, Class<?> objClass)
@@ -140,6 +152,19 @@ public class Ion {
 	/**
 	 * Load an object from file.
 	 * 
+	 * @param path file path
+	 * @return the loaded object
+	 * @throws IOException on failure
+	 */
+	public static Object fromFile(String path) throws IOException
+	{
+		return fromFile(new File(path));
+	}
+	
+	
+	/**
+	 * Load an object from file.
+	 * 
 	 * @param file file
 	 * @return the loaded object
 	 * @throws IOException on failure
@@ -157,7 +182,6 @@ public class Ion {
 	}
 	
 	
-	
 	/**
 	 * Store an object to file.
 	 * 
@@ -165,9 +189,22 @@ public class Ion {
 	 * @param obj object to store
 	 * @throws IOException
 	 */
-	public static void toFile(File path, Object obj) throws IOException
+	public static void toFile(String path, Object obj) throws IOException
 	{
-		try(OutputStream out = new FileOutputStream(path)) {
+		toFile(new File(path), obj);
+	}
+	
+	
+	/**
+	 * Store an object to file.
+	 * 
+	 * @param file file
+	 * @param obj object to store
+	 * @throws IOException
+	 */
+	public static void toFile(File file, Object obj) throws IOException
+	{
+		try(OutputStream out = new FileOutputStream(file)) {
 			
 			writeObject(out, obj);
 			
@@ -177,6 +214,7 @@ public class Ion {
 			throw new IOException("Error writing to ION file.", e);
 		}
 	}
+	
 	
 	/**
 	 * Load an object from stream.
@@ -231,37 +269,111 @@ public class Ion {
 				return ionObj;
 			}
 			
+			int length;
+			
 			switch (mark) {
-				case Ion.NULL:
+				case NULL:
 					return null;
 					
-				case Ion.BOOLEAN:
+				case BOOLEAN:
 					return readBoolean(in);
 					
-				case Ion.BYTE:
+				case BYTE:
 					return readByte(in);
 					
-				case Ion.CHAR:
+				case CHAR:
 					return readChar(in);
 					
-				case Ion.SHORT:
+				case SHORT:
 					return readShort(in);
 					
-				case Ion.INT:
+				case INT:
 					return readInt(in);
 					
-				case Ion.LONG:
+				case LONG:
 					return readLong(in);
 					
-				case Ion.FLOAT:
+				case FLOAT:
 					return readFloat(in);
 					
-				case Ion.DOUBLE:
+				case DOUBLE:
 					return readDouble(in);
 					
-				case Ion.STRING:
-					final String s = readString(in);
-					return s;
+				case STRING:
+					return readString(in);
+					
+				case BOOLEAN_ARRAY:
+					length = readInt(in);
+					boolean[] bools = new boolean[length];
+					for (int i = 0; i < length; i++) {
+						bools[i] = readBoolean(in);
+					}
+					return bools;
+					
+				case BYTE_ARRAY:
+					length = readInt(in);
+					byte[] bytes = new byte[length];
+					for (int i = 0; i < length; i++) {
+						bytes[i] = readByte(in);
+					}
+					return bytes;
+					
+				case CHAR_ARRAY:
+					length = readInt(in);
+					char[] chars = new char[length];
+					for (int i = 0; i < length; i++) {
+						chars[i] = readChar(in);
+					}
+					return chars;
+					
+				case SHORT_ARRAY:
+					length = readInt(in);
+					short[] shorts = new short[length];
+					for (int i = 0; i < length; i++) {
+						shorts[i] = readShort(in);
+					}
+					return shorts;
+					
+				case INT_ARRAY:
+					length = readInt(in);
+					int[] ints = new int[length];
+					for (int i = 0; i < length; i++) {
+						ints[i] = readInt(in);
+					}
+					return ints;
+					
+				case LONG_ARRAY:
+					length = readInt(in);
+					long[] longs = new long[length];
+					for (int i = 0; i < length; i++) {
+						longs[i] = readLong(in);
+					}
+					return longs;
+					
+				case FLOAT_ARRAY:
+					length = readInt(in);
+					float[] floats = new float[length];
+					for (int i = 0; i < length; i++) {
+						floats[i] = readFloat(in);
+					}
+					return floats;
+					
+				case DOUBLE_ARRAY:
+					length = readInt(in);
+					double[] doubles = new double[length];
+					for (int i = 0; i < length; i++) {
+						doubles[i] = readDouble(in);
+					}
+					return doubles;
+					
+				case STRING_ARRAY:
+					length = readInt(in);
+					String[] Strings = new String[length];
+					for (int i = 0; i < length; i++) {
+						Strings[i] = readString(in);
+					}
+					return Strings;
+					
 				default:
 					throw new IOException("Invalid Ion mark: " + mark);
 			}
@@ -306,56 +418,110 @@ public class Ion {
 			}
 			
 			if (obj instanceof Boolean) {
-				writeMark(out, Ion.BOOLEAN);
+				writeMark(out, BOOLEAN);
 				writeBoolean(out, (Boolean) obj);
 				return;
 			}
 			
 			if (obj instanceof Byte) {
-				writeMark(out, Ion.BYTE);
+				writeMark(out, BYTE);
 				writeByte(out, (Byte) obj);
 				return;
 			}
 			
 			if (obj instanceof Character) {
-				writeMark(out, Ion.CHAR);
+				writeMark(out, CHAR);
 				writeChar(out, (Character) obj);
 				return;
 			}
 			
 			if (obj instanceof Short) {
-				writeMark(out, Ion.SHORT);
+				writeMark(out, SHORT);
 				writeShort(out, (Short) obj);
 				return;
 			}
 			
 			if (obj instanceof Integer) {
-				writeMark(out, Ion.INT);
+				writeMark(out, INT);
 				writeInt(out, (Integer) obj);
 				return;
 			}
 			
 			if (obj instanceof Long) {
-				writeMark(out, Ion.LONG);
+				writeMark(out, LONG);
 				writeLong(out, (Long) obj);
 				return;
 			}
 			
 			if (obj instanceof Float) {
-				writeMark(out, Ion.FLOAT);
+				writeMark(out, FLOAT);
 				writeFloat(out, (Float) obj);
 				return;
 			}
 			
 			if (obj instanceof Double) {
-				writeMark(out, Ion.DOUBLE);
+				writeMark(out, DOUBLE);
 				writeDouble(out, (Double) obj);
 				return;
 			}
 			
 			if (obj instanceof String) {
-				writeMark(out, Ion.STRING);
+				writeMark(out, STRING);
 				writeString(out, (String) obj);
+				return;
+			}
+			
+			if (obj instanceof boolean[]) {
+				writeMark(out, BOOLEAN_ARRAY);
+				writeBooleanArray(out, (boolean[]) obj);
+				return;
+			}
+			
+			if (obj instanceof byte[]) {
+				writeMark(out, BYTE_ARRAY);
+				writeByteArray(out, (byte[]) obj);
+				return;
+			}
+			
+			if (obj instanceof char[]) {
+				writeMark(out, CHAR_ARRAY);
+				writeCharArray(out, (char[]) obj);
+				return;
+			}
+			
+			if (obj instanceof short[]) {
+				writeMark(out, SHORT_ARRAY);
+				writeShortArray(out, (short[]) obj);
+				return;
+			}
+			
+			if (obj instanceof int[]) {
+				writeMark(out, INT_ARRAY);
+				writeIntArray(out, (int[]) obj);
+				return;
+			}
+			
+			if (obj instanceof long[]) {
+				writeMark(out, LONG_ARRAY);
+				writeLongArray(out, (long[]) obj);
+				return;
+			}
+			
+			if (obj instanceof float[]) {
+				writeMark(out, FLOAT_ARRAY);
+				writeFloatArray(out, (float[]) obj);
+				return;
+			}
+			
+			if (obj instanceof double[]) {
+				writeMark(out, DOUBLE_ARRAY);
+				writeDoubleArray(out, (double[]) obj);
+				return;
+			}
+			
+			if (obj instanceof String[]) {
+				writeMark(out, STRING_ARRAY);
+				writeStringArray(out, (String[]) obj);
 				return;
 			}
 			
@@ -436,21 +602,6 @@ public class Ion {
 			bd.putDouble(num);
 			return bd.array();
 		}
-	}
-	
-	
-	private static byte[] getBytesString(String str)
-	{
-		final char[] chars = str.toCharArray();
-		
-		final ByteBuffer bstr = ByteBuffer.allocate((Character.SIZE / 8) * chars.length + (Character.SIZE / 8));
-		for (final char c : chars) {
-			bstr.putChar(c);
-		}
-		
-		bstr.putChar((char) 0);
-		
-		return bstr.array();
 	}
 	
 	
@@ -567,7 +718,151 @@ public class Ion {
 	 */
 	public static void writeString(OutputStream out, String str) throws IOException
 	{
-		out.write(getBytesString(str));
+		writeCharArray(out, str.toCharArray());
+	}
+	
+	
+	/**
+	 * Write boolean array
+	 * 
+	 * @param out output stream
+	 * @param arr array to write
+	 * @throws IOException
+	 */
+	public static void writeBooleanArray(OutputStream out, boolean[] arr) throws IOException
+	{
+		writeInt(out, arr.length);
+		for (boolean a : arr) {
+			writeBoolean(out, a);
+		}
+	}
+	
+	
+	/**
+	 * Write byte array
+	 * 
+	 * @param out output stream
+	 * @param arr array to write
+	 * @throws IOException
+	 */
+	public static void writeByteArray(OutputStream out, byte[] arr) throws IOException
+	{
+		writeInt(out, arr.length);
+		for (byte a : arr) {
+			writeByte(out, a);
+		}
+	}
+	
+	
+	/**
+	 * Write char array
+	 * 
+	 * @param out output stream
+	 * @param arr array to write
+	 * @throws IOException
+	 */
+	public static void writeCharArray(OutputStream out, char[] arr) throws IOException
+	{
+		writeInt(out, arr.length);
+		for (char a : arr) {
+			writeChar(out, a);
+		}
+	}
+	
+	
+	/**
+	 * Write short array
+	 * 
+	 * @param out output stream
+	 * @param arr array to write
+	 * @throws IOException
+	 */
+	public static void writeShortArray(OutputStream out, short[] arr) throws IOException
+	{
+		writeInt(out, arr.length);
+		for (short a : arr) {
+			writeShort(out, a);
+		}
+	}
+	
+	
+	/**
+	 * Write int array
+	 * 
+	 * @param out output stream
+	 * @param arr array to write
+	 * @throws IOException
+	 */
+	public static void writeIntArray(OutputStream out, int[] arr) throws IOException
+	{
+		writeInt(out, arr.length);
+		for (int a : arr) {
+			writeInt(out, a);
+		}
+	}
+	
+	
+	/**
+	 * Write long array
+	 * 
+	 * @param out output stream
+	 * @param arr array to write
+	 * @throws IOException
+	 */
+	public static void writeLongArray(OutputStream out, long[] arr) throws IOException
+	{
+		writeInt(out, arr.length);
+		for (long a : arr) {
+			writeLong(out, a);
+		}
+	}
+	
+	
+	/**
+	 * Write float array
+	 * 
+	 * @param out output stream
+	 * @param arr array to write
+	 * @throws IOException
+	 */
+	public static void writeFloatArray(OutputStream out, float[] arr) throws IOException
+	{
+		writeInt(out, arr.length);
+		for (float a : arr) {
+			writeFloat(out, a);
+		}
+	}
+	
+	
+	/**
+	 * Write double array
+	 * 
+	 * @param out output stream
+	 * @param arr array to write
+	 * @throws IOException
+	 */
+	public static void writeDoubleArray(OutputStream out, double[] arr) throws IOException
+	{
+		writeInt(out, arr.length);
+		for (double a : arr) {
+			writeDouble(out, a);
+		}
+	}
+	
+	
+	/**
+	 * Write String array
+	 * 
+	 * @param out output stream
+	 * @param arr array to write
+	 * @throws IOException
+	 */
+	public static void writeStringArray(OutputStream out, String[] arr) throws IOException
+	{
+		writeInt(out, arr.length);
+		for (String a : arr) {
+			writeString(out, a);
+		}
 	}
 	
 	
@@ -710,12 +1005,169 @@ public class Ion {
 	 */
 	public static String readString(InputStream in) throws IOException
 	{
-		String s = "";
-		char c;
-		while ((c = readChar(in)) > 0) {
-			s += c;
+		return String.valueOf(readCharArray(in));
+	}
+	
+	
+	/**
+	 * Read a boolean array (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return boolean read
+	 * @throws IOException
+	 */
+	public static boolean[] readBooleanArray(InputStream in) throws IOException
+	{
+		int length = readInt(in);
+		boolean[] booleans = new boolean[length];
+		for (int i = 0; i < length; i++) {
+			booleans[i] = readBoolean(in);
 		}
-		return s;
+		return booleans;
+	}
+	
+	
+	/**
+	 * Read a byte array (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return byte read
+	 * @throws IOException
+	 */
+	public static byte[] readByteArray(InputStream in) throws IOException
+	{
+		int length = readInt(in);
+		byte[] bytes = new byte[length];
+		for (int i = 0; i < length; i++) {
+			bytes[i] = readByte(in);
+		}
+		return bytes;
+	}
+	
+	
+	/**
+	 * Read a char array (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return char read
+	 * @throws IOException
+	 */
+	public static char[] readCharArray(InputStream in) throws IOException
+	{
+		int length = readInt(in);
+		char[] chars = new char[length];
+		for (int i = 0; i < length; i++) {
+			chars[i] = readChar(in);
+		}
+		return chars;
+	}
+	
+	
+	/**
+	 * Read a short array (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return short read
+	 * @throws IOException
+	 */
+	public static short[] readShortArray(InputStream in) throws IOException
+	{
+		int length = readInt(in);
+		short[] shorts = new short[length];
+		for (int i = 0; i < length; i++) {
+			shorts[i] = readShort(in);
+		}
+		return shorts;
+	}
+	
+	
+	/**
+	 * Read a int array (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return int read
+	 * @throws IOException
+	 */
+	public static int[] readIntArray(InputStream in) throws IOException
+	{
+		int length = readInt(in);
+		int[] ints = new int[length];
+		for (int i = 0; i < length; i++) {
+			ints[i] = readInt(in);
+		}
+		return ints;
+	}
+	
+	
+	/**
+	 * Read a long array (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return long read
+	 * @throws IOException
+	 */
+	public static long[] readLongArray(InputStream in) throws IOException
+	{
+		int length = readInt(in);
+		long[] longs = new long[length];
+		for (int i = 0; i < length; i++) {
+			longs[i] = readLong(in);
+		}
+		return longs;
+	}
+	
+	
+	/**
+	 * Read a float array (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return float read
+	 * @throws IOException
+	 */
+	public static float[] readFloatArray(InputStream in) throws IOException
+	{
+		int length = readInt(in);
+		float[] floats = new float[length];
+		for (int i = 0; i < length; i++) {
+			floats[i] = readFloat(in);
+		}
+		return floats;
+	}
+	
+	
+	/**
+	 * Read a double array (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return double read
+	 * @throws IOException
+	 */
+	public static double[] readDoubleArray(InputStream in) throws IOException
+	{
+		int length = readInt(in);
+		double[] doubles = new double[length];
+		for (int i = 0; i < length; i++) {
+			doubles[i] = readDouble(in);
+		}
+		return doubles;
+	}
+	
+	
+	/**
+	 * Read a String array (without a mark)
+	 * 
+	 * @param in input stream
+	 * @return String read
+	 * @throws IOException
+	 */
+	public static String[] readStringArray(InputStream in) throws IOException
+	{
+		int length = readInt(in);
+		String[] Strings = new String[length];
+		for (int i = 0; i < length; i++) {
+			Strings[i] = readString(in);
+		}
+		return Strings;
 	}
 	
 }

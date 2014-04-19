@@ -4,6 +4,8 @@ package mightypork.util.objects;
 import java.util.ArrayList;
 import java.util.List;
 
+import mightypork.util.logging.Log;
+
 
 /**
  * Object utils class
@@ -21,15 +23,15 @@ public class ObjectUtils {
 	}
 	
 	
-	public static String arrayToString(Object[] arr)
+	public static <T> String arrayToString(T[] arr)
 	{
 		final StringBuilder sb = new StringBuilder();
 		
 		sb.append('[');
 		final boolean first = true;
-		for (final Object o : arr) {
+		for (final T o : arr) {
 			if (!first) sb.append(',');
-			sb.append(o.toString());
+			sb.append(Log.str(o));
 		}
 		sb.append(']');
 		
@@ -37,7 +39,7 @@ public class ObjectUtils {
 	}
 	
 	
-	public static <T extends Object> List<T> arrayToList(T[] objs)
+	public static <T> List<T> arrayToList(T[] objs)
 	{
 		final ArrayList<T> list = new ArrayList<>();
 		for (final T o : objs) {
