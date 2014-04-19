@@ -28,7 +28,8 @@ public class HorizontalFixedFlowLayout extends LayoutComponent {
 	 * @param elementWidth width of all elements
 	 * @param align component align. Legal values are LEFT and RIGHT.
 	 */
-	public HorizontalFixedFlowLayout(AppAccess app, RectBound context, Num elementWidth, AlignX align) {
+	public HorizontalFixedFlowLayout(AppAccess app, RectBound context, Num elementWidth, AlignX align)
+	{
 		super(app, context);
 		this.colWidth = elementWidth;
 		this.align = align;
@@ -47,7 +48,8 @@ public class HorizontalFixedFlowLayout extends LayoutComponent {
 	 * @param elementWidth width of all elements
 	 * @param align component align. Legal values are LEFT and RIGHT.
 	 */
-	public HorizontalFixedFlowLayout(AppAccess app, Num elementWidth, AlignX align) {
+	public HorizontalFixedFlowLayout(AppAccess app, Num elementWidth, AlignX align)
+	{
 		this(app, null, elementWidth, align);
 	}
 	

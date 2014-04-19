@@ -15,7 +15,8 @@ public class Volume extends Mutable<Double> {
 	/**
 	 * @param d initial value
 	 */
-	public Volume(Double d) {
+	public Volume(Double d)
+	{
 		super(d);
 	}
 	
@@ -23,7 +24,7 @@ public class Volume extends Mutable<Double> {
 	@Override
 	public void set(Double d)
 	{
-		super.set(Calc.clampd(d, 0, 1));
+		super.set(Calc.clamp(d, 0, 1));
 	}
 	
 }

@@ -28,7 +28,8 @@ public class VerticalFixedFlowLayout extends LayoutComponent {
 	 * @param elementHeight height of all elements
 	 * @param align component align. Legal values are TOP and BOTTOM.
 	 */
-	public VerticalFixedFlowLayout(AppAccess app, RectBound context, Num elementHeight, AlignY align) {
+	public VerticalFixedFlowLayout(AppAccess app, RectBound context, Num elementHeight, AlignY align)
+	{
 		super(app, context);
 		this.rowHeight = elementHeight;
 		this.align = align;
@@ -47,7 +48,8 @@ public class VerticalFixedFlowLayout extends LayoutComponent {
 	 * @param elementHeight height of all elements
 	 * @param align component align. Legal values are TOP and BOTTOM.
 	 */
-	public VerticalFixedFlowLayout(AppAccess app, Num elementHeight, AlignY align) {
+	public VerticalFixedFlowLayout(AppAccess app, Num elementHeight, AlignY align)
+	{
 		this(app, null, elementHeight, align);
 	}
 	

@@ -18,14 +18,16 @@ import mightypork.util.error.KeyAlreadyExistsException;
  */
 public class TextureBank extends AppAdapter {
 	
-	private final Map<String, GLTexture> textures = new HashMap<>();	
-	private final Map<String, TxQuad> quads = new HashMap<>();	
+	private final Map<String, GLTexture> textures = new HashMap<>();
+	private final Map<String, TxQuad> quads = new HashMap<>();
 	private final Map<String, TxSheet> sheets = new HashMap<>();
+	
 	
 	/**
 	 * @param app app access
 	 */
-	public TextureBank(AppAccess app) {
+	public TextureBank(AppAccess app)
+	{
 		super(app);
 	}
 	

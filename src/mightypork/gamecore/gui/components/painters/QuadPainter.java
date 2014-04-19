@@ -38,7 +38,8 @@ public class QuadPainter extends VisualComponent {
 	 * 
 	 * @param color
 	 */
-	public QuadPainter(Color color) {
+	public QuadPainter(Color color)
+	{
 		this.colorHMinVMin = color;
 		this.colorHMaxVMin = color;
 		this.colorHMaxVMax = color;
@@ -54,7 +55,8 @@ public class QuadPainter extends VisualComponent {
 	 * @param colorHMaxVMax
 	 * @param colorHMinVMax
 	 */
-	public QuadPainter(Color colorHMinVMin, Color colorHMaxVMin, Color colorHMaxVMax, Color colorHMinVMax) {
+	public QuadPainter(Color colorHMinVMin, Color colorHMaxVMin, Color colorHMaxVMax, Color colorHMinVMax)
+	{
 		this.colorHMinVMin = colorHMinVMin;
 		this.colorHMaxVMin = colorHMaxVMin;
 		this.colorHMaxVMax = colorHMaxVMax;

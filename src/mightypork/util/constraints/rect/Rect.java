@@ -1,5 +1,6 @@
 package mightypork.util.constraints.rect;
 
+
 import mightypork.util.annotations.FactoryMethod;
 import mightypork.util.constraints.DigestCache;
 import mightypork.util.constraints.Digestable;
@@ -952,7 +953,7 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 		return new TiledRect(this, 1, rows);
 	}
 	
-
+	
 	/**
 	 * Check for intersection
 	 * 
@@ -971,10 +972,10 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 			return false;
 		}
 		
-		double tx = this.origin().x();
-		double ty = this.origin().y();
-		double rx = other.origin().x();
-		double ry = other.origin().y();
+		final double tx = this.origin().x();
+		final double ty = this.origin().y();
+		final double rx = other.origin().x();
+		final double ry = other.origin().y();
 		
 		rw += rx;
 		rh += ry;

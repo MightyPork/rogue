@@ -16,7 +16,8 @@ public class ActionRequest implements Event<ActionRequest.Listener> {
 	private final RequestType type;
 	
 	
-	public ActionRequest(RequestType request) {
+	public ActionRequest(RequestType request)
+	{
 		type = request;
 	}
 	

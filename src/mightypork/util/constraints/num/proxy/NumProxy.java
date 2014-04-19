@@ -9,7 +9,8 @@ public class NumProxy extends NumAdapter {
 	private final Num source;
 	
 	
-	public NumProxy(Num source) {
+	public NumProxy(Num source)
+	{
 		this.source = source;
 	}
 	

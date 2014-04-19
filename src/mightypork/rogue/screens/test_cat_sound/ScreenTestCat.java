@@ -12,7 +12,8 @@ import mightypork.rogue.events.ActionRequest.RequestType;
 
 public class ScreenTestCat extends LayeredScreen {
 	
-	public ScreenTestCat(AppAccess app) {
+	public ScreenTestCat(AppAccess app)
+	{
 		super(app);
 		
 		addLayer(new LayerFlyingCat(this));

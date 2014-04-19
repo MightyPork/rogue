@@ -23,7 +23,8 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	private boolean visible = true;
 	
 	
-	public VisualComponent() {
+	public VisualComponent()
+	{
 		super();
 		enableCaching(false);
 	}

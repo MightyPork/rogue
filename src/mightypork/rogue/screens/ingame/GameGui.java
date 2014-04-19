@@ -16,7 +16,8 @@ import mightypork.util.math.color.PAL16;
 
 public class GameGui extends ScreenLayer {
 	
-	public GameGui(Screen screen) {
+	public GameGui(Screen screen)
+	{
 		super(screen);
 		
 		final Num h = root.height();

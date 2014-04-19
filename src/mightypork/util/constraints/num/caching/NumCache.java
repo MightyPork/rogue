@@ -15,7 +15,8 @@ public class NumCache extends AbstractNumCache {
 	private final Num source;
 	
 	
-	public NumCache(Num source) {
+	public NumCache(Num source)
+	{
 		this.source = source;
 	}
 	

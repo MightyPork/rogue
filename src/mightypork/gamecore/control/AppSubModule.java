@@ -25,7 +25,8 @@ public class AppSubModule extends BusNode implements AppAccess {
 	 * 
 	 * @param app access to app systems
 	 */
-	public AppSubModule(AppAccess app) {
+	public AppSubModule(AppAccess app)
+	{
 		super(app);
 		
 		this.app = app;

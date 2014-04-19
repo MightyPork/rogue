@@ -19,7 +19,8 @@ public class EffectPlayer extends BaseAudioPlayer {
 	 * @param baseGain base gain (volume multiplier)
 	 * @param volume volume control
 	 */
-	public EffectPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume) {
+	public EffectPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume)
+	{
 		super(track, (float) basePitch, (float) baseGain, volume);
 	}
 	

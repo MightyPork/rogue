@@ -17,7 +17,8 @@ public class NullAudio extends DeferredAudio implements NullResource {
 	/**
 	 * new null audio
 	 */
-	public NullAudio() {
+	public NullAudio()
+	{
 		super(null);
 	}
 }

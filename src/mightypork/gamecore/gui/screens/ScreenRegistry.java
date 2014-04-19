@@ -31,7 +31,8 @@ public class ScreenRegistry extends AppModule implements ScreenRequestEvent.List
 	/**
 	 * @param app app access
 	 */
-	public ScreenRegistry(AppAccess app) {
+	public ScreenRegistry(AppAccess app)
+	{
 		super(app);
 	}
 	

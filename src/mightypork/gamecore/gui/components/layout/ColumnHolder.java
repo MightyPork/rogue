@@ -24,7 +24,8 @@ public class ColumnHolder extends LayoutComponent {
 	 * @param context context
 	 * @param cols number of columns
 	 */
-	public ColumnHolder(AppAccess app, RectBound context, int cols) {
+	public ColumnHolder(AppAccess app, RectBound context, int cols)
+	{
 		super(app, context);
 		this.tiler = columns(cols);
 	}
@@ -37,7 +38,8 @@ public class ColumnHolder extends LayoutComponent {
 	 * @param app app access
 	 * @param cols number of columns
 	 */
-	public ColumnHolder(AppAccess app, int cols) {
+	public ColumnHolder(AppAccess app, int cols)
+	{
 		this(app, null, cols);
 	}
 	

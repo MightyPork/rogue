@@ -23,14 +23,16 @@ public abstract class LayoutComponent extends VisualComponent implements Enablea
 	final LinkedList<Component> components = new LinkedList<>();
 	
 	
-	public LayoutComponent(AppAccess app, RectBound context) {
+	public LayoutComponent(AppAccess app, RectBound context)
+	{
 		this.subModule = new AppSubModule(app);
 		setRect(context);
 		enableCaching(true); // layout is typically updated only when screen resizes.
 	}
 	
 	
-	public LayoutComponent(AppAccess app) {
+	public LayoutComponent(AppAccess app)
+	{
 		this(app, null);
 	}
 	

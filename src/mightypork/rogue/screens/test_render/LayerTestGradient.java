@@ -14,7 +14,8 @@ public class LayerTestGradient extends ScreenLayer {
 	private final RectBound pos2;
 	
 	
-	public LayerTestGradient(BaseScreen screen) {
+	public LayerTestGradient(BaseScreen screen)
+	{
 		super(screen);
 		
 		pos1 = root.topEdge().growDown(64);

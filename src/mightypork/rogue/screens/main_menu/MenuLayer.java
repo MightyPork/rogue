@@ -17,7 +17,8 @@ import mightypork.util.math.color.PAL16;
 
 class MenuLayer extends ScreenLayer {
 	
-	public MenuLayer(BaseScreen screen) {
+	public MenuLayer(BaseScreen screen)
+	{
 		super(screen);
 		
 		init();

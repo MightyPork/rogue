@@ -1,9 +1,9 @@
 package mightypork.gamecore.render.textures;
 
 
-import org.newdawn.slick.opengl.Texture;
-
 import mightypork.util.constraints.rect.Rect;
+
+import org.newdawn.slick.opengl.Texture;
 
 
 /**

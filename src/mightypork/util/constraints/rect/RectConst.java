@@ -46,7 +46,8 @@ public class RectConst extends Rect {
 	 * @param width
 	 * @param height
 	 */
-	RectConst(double x, double y, double width, double height) {
+	RectConst(double x, double y, double width, double height)
+	{
 		this.pos = Vect.make(x, y);
 		this.size = Vect.make(width, height);
 	}
@@ -58,7 +59,8 @@ public class RectConst extends Rect {
 	 * @param origin
 	 * @param size
 	 */
-	RectConst(Vect origin, Vect size) {
+	RectConst(Vect origin, Vect size)
+	{
 		this.pos = origin.freeze();
 		this.size = size.freeze();
 	}
@@ -69,7 +71,8 @@ public class RectConst extends Rect {
 	 * 
 	 * @param another other coord
 	 */
-	RectConst(Rect another) {
+	RectConst(Rect another)
+	{
 		this.pos = another.origin().freeze();
 		this.size = another.size().freeze();
 	}

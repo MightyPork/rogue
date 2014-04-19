@@ -15,7 +15,8 @@ public abstract class RootBusNode extends BusNode implements Destroyable {
 	/**
 	 * @param busAccess access to bus
 	 */
-	public RootBusNode(BusAccess busAccess) {
+	public RootBusNode(BusAccess busAccess)
+	{
 		super(busAccess);
 		
 		getEventBus().subscribe(this);

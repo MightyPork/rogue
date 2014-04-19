@@ -10,7 +10,8 @@ public class ScreenTestBouncy extends LayeredScreen {
 	private final LayerBouncyBoxes layer;
 	
 	
-	public ScreenTestBouncy(AppAccess app) {
+	public ScreenTestBouncy(AppAccess app)
+	{
 		super(app);
 		
 		layer = new LayerBouncyBoxes(this);

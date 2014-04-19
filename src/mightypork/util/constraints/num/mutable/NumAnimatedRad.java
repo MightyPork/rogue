@@ -13,17 +13,20 @@ import mightypork.util.math.Easing;
  */
 public class NumAnimatedRad extends NumAnimated {
 	
-	public NumAnimatedRad(NumAnimated other) {
+	public NumAnimatedRad(NumAnimated other)
+	{
 		super(other);
 	}
 	
 	
-	public NumAnimatedRad(double value) {
+	public NumAnimatedRad(double value)
+	{
 		super(value);
 	}
 	
 	
-	public NumAnimatedRad(double value, Easing easing) {
+	public NumAnimatedRad(double value, Easing easing)
+	{
 		super(value, easing);
 	}
 	

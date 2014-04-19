@@ -27,7 +27,8 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 	/**
 	 * @param resourcePath resource path
 	 */
-	public DeferredTexture(String resourcePath) {
+	public DeferredTexture(String resourcePath)
+	{
 		super(resourcePath);
 	}
 	
@@ -211,6 +212,7 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 	{
 		this.wrap = wrapping;
 	}
+	
 	
 	@Override
 	public QuadGrid grid(int x, int y)

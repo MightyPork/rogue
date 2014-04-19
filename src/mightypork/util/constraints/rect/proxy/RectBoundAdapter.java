@@ -14,11 +14,13 @@ public class RectBoundAdapter extends RectAdapter implements PluggableRectBound 
 	private RectBound backing = null;
 	
 	
-	public RectBoundAdapter() {
+	public RectBoundAdapter()
+	{
 	}
 	
 	
-	public RectBoundAdapter(RectBound bound) {
+	public RectBoundAdapter(RectBound bound)
+	{
 		backing = bound;
 	}
 	

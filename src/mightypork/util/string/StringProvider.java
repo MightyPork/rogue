@@ -20,7 +20,8 @@ public interface StringProvider {
 		private final String value;
 		
 		
-		public StringWrapper(String value) {
+		public StringWrapper(String value)
+		{
 			this.value = value;
 		}
 		

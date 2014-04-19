@@ -31,7 +31,8 @@ class MenuButton extends ClickableComponent {
 	private final NumVar alphaMulSh = Num.makeVar(SH_ALPHA_OFF);
 	
 	
-	public MenuButton(String text, Color color) {
+	public MenuButton(String text, Color color)
+	{
 		this.color = color.withAlpha(alphaMul);
 		
 		this.painter = new TextPainter(font, AlignX.CENTER, this.color, text);

@@ -1,51 +1,62 @@
 package mightypork.rogue.world.tile;
 
 
-import mightypork.rogue.world.EntityModel;
 import mightypork.util.annotations.DefaultImpl;
 
 
-public abstract class TileModel extends EntityModel<TileData, TileRenderContext> {
+/**
+ * Singleton-like tile implementation
+ * 
+ * @author MightyPork
+ */
+public abstract class TileModel {
 	
-	public TileModel(int id) {
-		super(id);
-		Tiles.register(id, this);
-	}
+	/** Model ID */
+	public final int id;
 	
-	@Override
-	public TileData createData()
+	
+	public TileModel(int id)
 	{
-		return null;
+		Tiles.register(id, this);
+		this.id = id;
 	}
 	
 	
 	/**
-	 * Test if this tile type is potentially walkable. Used during world
-	 * generation.
-	 * 
-	 * @return can be walked through (if discovered / open)
-	 */
-	public abstract boolean isWalkable();
-	
-	
-	/**
-	 * Try to reveal a secret.
-	 * 
-	 * @param data tile data
+	 * @return new tile with this model
 	 */
 	@DefaultImpl
-	public void search(TileData data)
+	public Tile create()
 	{
-		// do nothing.
+		return new Tile(this);
 	}
 	
 	
 	/**
-	 * Check if a mob can walk through.
+	 * Render the tile.
 	 * 
-	 * @param data tile data
-	 * @return is walkable
+	 * @param tile
+	 * @param context
 	 */
-	public abstract boolean isWalkable(TileData data);
+	public abstract void render(Tile tile, TileRenderContext context);
+	
+	
+	/**
+	 * @param tile
+	 * @return is walkable at the current conditions
+	 */
+	public abstract boolean isWalkable(Tile tile);
+	
+	
+	/**
+	 * @return true if the tile can be walkable at some conditions
+	 */
+	public abstract boolean isPotentiallyWalkable();
+	
+	
+	public boolean isNullTile()
+	{
+		return false;
+	}
 	
 }

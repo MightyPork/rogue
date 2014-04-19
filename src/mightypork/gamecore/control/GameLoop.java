@@ -28,7 +28,8 @@ public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.
 	/**
 	 * @param app {@link AppAccess} instance
 	 */
-	public GameLoop(AppAccess app) {
+	public GameLoop(AppAccess app)
+	{
 		super(app);
 	}
 	

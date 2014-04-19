@@ -18,7 +18,8 @@ public class RectDigest {
 	public final double bottom;
 	
 	
-	public RectDigest(Rect rect) {
+	public RectDigest(Rect rect)
+	{
 		
 		final RectConst frozen = rect.freeze();
 		

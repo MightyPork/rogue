@@ -14,7 +14,8 @@ import mightypork.util.control.eventbus.events.flags.ImmediateEvent;
 @ImmediateEvent
 public class LayoutChangeEvent implements Event<LayoutChangeEvent.Listener> {
 	
-	public LayoutChangeEvent() {
+	public LayoutChangeEvent()
+	{
 	}
 	
 	

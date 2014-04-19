@@ -19,7 +19,8 @@ public class MainLoopTaskRequest implements Event<MainLoopTaskRequest.Listener> 
 	/**
 	 * @param task task to run on main thread in rendering context
 	 */
-	public MainLoopTaskRequest(Runnable task) {
+	public MainLoopTaskRequest(Runnable task)
+	{
 		this.task = task;
 	}
 	

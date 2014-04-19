@@ -15,7 +15,8 @@ public class CrossfadeRequest implements Event<CrossfadeRequest.Listener> {
 	/**
 	 * @param screen screen key to show. Null = exit the app.
 	 */
-	public CrossfadeRequest(String screen) {
+	public CrossfadeRequest(String screen)
+	{
 		super();
 		this.screen = screen;
 	}

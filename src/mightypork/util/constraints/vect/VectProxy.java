@@ -9,7 +9,8 @@ public class VectProxy extends VectAdapter {
 	private final Vect source;
 	
 	
-	public VectProxy(Vect source) {
+	public VectProxy(Vect source)
+	{
 		this.source = source;
 	}
 	

@@ -7,7 +7,8 @@ import mightypork.gamecore.gui.screens.LayeredScreen;
 
 public class ScreenTestRender extends LayeredScreen {
 	
-	public ScreenTestRender(AppAccess app) {
+	public ScreenTestRender(AppAccess app)
+	{
 		super(app);
 		
 		addLayer(new LayerTestGradient(this));

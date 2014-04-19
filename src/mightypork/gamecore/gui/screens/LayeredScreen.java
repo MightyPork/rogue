@@ -20,7 +20,8 @@ public abstract class LayeredScreen extends BaseScreen {
 	/**
 	 * @param app app access
 	 */
-	public LayeredScreen(AppAccess app) {
+	public LayeredScreen(AppAccess app)
+	{
 		super(app);
 	}
 	

@@ -31,7 +31,8 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	 * @param down button pressed
 	 * @param wheeld wheel change
 	 */
-	public MouseButtonEvent(Vect pos, int button, boolean down, int wheeld) {
+	public MouseButtonEvent(Vect pos, int button, boolean down, int wheeld)
+	{
 		this.button = button;
 		this.down = down;
 		this.pos = pos;

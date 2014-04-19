@@ -22,7 +22,8 @@ public class UpdateEvent implements Event<Updateable> {
 	/**
 	 * @param deltaTime time since last update (sec)
 	 */
-	public UpdateEvent(double deltaTime) {
+	public UpdateEvent(double deltaTime)
+	{
 		this.deltaTime = deltaTime;
 	}
 	

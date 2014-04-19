@@ -23,7 +23,8 @@ public class KeyEvent implements Event<KeyEvent.Listener> {
 	 * @param c typed char (can be zero char)
 	 * @param down true = pressed, false = released.
 	 */
-	public KeyEvent(int key, char c, boolean down) {
+	public KeyEvent(int key, char c, boolean down)
+	{
 		this.key = key;
 		this.c = c;
 		this.down = down;

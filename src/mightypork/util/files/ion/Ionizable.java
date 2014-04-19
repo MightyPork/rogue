@@ -22,7 +22,7 @@ public interface Ionizable {
 	 * @param in input stream
 	 * @throws IOException
 	 */
-	void loadFrom(InputStream in) throws IOException;
+	void load(InputStream in) throws IOException;
 	
 	
 	/**
@@ -32,7 +32,7 @@ public interface Ionizable {
 	 * @param out Output stream
 	 * @throws IOException
 	 */
-	void saveTo(OutputStream out) throws IOException;
+	void save(OutputStream out) throws IOException;
 	
 	
 	/**

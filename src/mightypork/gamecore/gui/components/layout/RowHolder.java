@@ -26,7 +26,8 @@ public class RowHolder extends LayoutComponent {
 	 * @param app app access
 	 * @param rows number of rows
 	 */
-	public RowHolder(AppAccess app, int rows) {
+	public RowHolder(AppAccess app, int rows)
+	{
 		this(app, null, rows);
 	}
 	
@@ -36,7 +37,8 @@ public class RowHolder extends LayoutComponent {
 	 * @param context bounding context
 	 * @param rows number of rows
 	 */
-	public RowHolder(AppAccess app, RectBound context, int rows) {
+	public RowHolder(AppAccess app, RectBound context, int rows)
+	{
 		super(app, context);
 		this.tiler = rows(rows);
 	}

@@ -1,34 +1,87 @@
 package mightypork.rogue.world.item;
 
 
-import mightypork.rogue.world.Entity;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import mightypork.rogue.world.tile.TileRenderContext;
 import mightypork.util.constraints.rect.proxy.RectBound;
+import mightypork.util.control.timing.Animator;
+import mightypork.util.control.timing.AnimatorBounce;
+import mightypork.util.control.timing.Updateable;
+import mightypork.util.files.ion.Ion;
+import mightypork.util.files.ion.IonBundle;
+import mightypork.util.files.ion.IonConstructor;
+import mightypork.util.files.ion.Ionizable;
+import mightypork.util.math.Easing;
 
 
-public final class Item extends Entity<ItemData, ItemModel, RectBound> {
+public class Item implements Updateable, Ionizable {
 	
 	public static final short ION_MARK = 701;
 	
+	private transient ItemModel model;
+	public transient Object modelData;
+	public transient Animator anim;
 	
-	public Item() {
-		super();
+	public int id;
+	
+	public boolean[] flags;
+	public int[] numbers;
+	
+	
+	public Item(int id)
+	{
+		this(Items.get(id));
 	}
 	
 	
-	public Item(ItemModel model) {
-		super(model);
+	@IonConstructor
+	public Item()
+	{
 	}
 	
 	
-	public Item(int id) {
-		super(Items.get(id));
+	public Item(ItemModel model)
+	{
+		this.model = model;
+		this.id = model.id;
+		this.anim = new AnimatorBounce(2, Easing.SINE_BOTH);
+	}
+	
+	
+	public void render(RectBound context)
+	{
+		model.render(this, context);
 	}
 	
 	
 	@Override
-	protected ItemModel getModelForId(int id)
+	public void save(OutputStream out) throws IOException
 	{
-		return Items.get(id);
+		final IonBundle ib = new IonBundle();
+		
+		ib.put("id", id);
+		ib.put("flags", flags);
+		ib.put("numbers", numbers);
+		
+		Ion.writeObject(out, ib);
+	}
+	
+	
+	@Override
+	public void load(InputStream in) throws IOException
+	{
+		final IonBundle ib = (IonBundle) Ion.readObject(in);
+		
+		id = ib.get("id", id);
+		flags = ib.get("flags", flags);
+		numbers = ib.get("numbers", numbers);
+		
+		if (id != model.id) {
+			model = Items.get(id);
+		}
 	}
 	
 	
@@ -36,6 +89,22 @@ public final class Item extends Entity<ItemData, ItemModel, RectBound> {
 	public short getIonMark()
 	{
 		return ION_MARK;
+	}
+	
+	
+	@Override
+	public void update(double delta)
+	{
+		if (anim != null) {
+			anim.update(delta);
+			
+		}
+	}
+	
+	
+	public void renderOnTile(TileRenderContext context)
+	{
+		model.renderOnTile(this, context);
 	}
 	
 }

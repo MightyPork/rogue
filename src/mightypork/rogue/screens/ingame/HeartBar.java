@@ -28,7 +28,8 @@ public class HeartBar extends VisualComponent {
 	 * @param img_off
 	 * @param align
 	 */
-	public HeartBar(int total, int active, TxQuad img_on, TxQuad img_off, AlignX align) {
+	public HeartBar(int total, int active, TxQuad img_on, TxQuad img_off, AlignX align)
+	{
 		super();
 		this.total = total;
 		this.active = active;

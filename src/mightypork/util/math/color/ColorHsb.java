@@ -12,7 +12,8 @@ public class ColorHsb extends Color {
 	private final Num a;
 	
 	
-	public ColorHsb(Num h, Num s, Num b, Num a) {
+	public ColorHsb(Num h, Num s, Num b, Num a)
+	{
 		this.h = h;
 		this.s = s;
 		this.b = b;

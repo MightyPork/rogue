@@ -9,11 +9,13 @@ public class VectBoundAdapter extends VectAdapter implements PluggableVectBound 
 	private VectBound backing = null;
 	
 	
-	public VectBoundAdapter() {
+	public VectBoundAdapter()
+	{
 	}
 	
 	
-	public VectBoundAdapter(VectBound bound) {
+	public VectBoundAdapter(VectBound bound)
+	{
 		backing = bound;
 	}
 	

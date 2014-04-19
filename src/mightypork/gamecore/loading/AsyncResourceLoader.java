@@ -52,7 +52,8 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	/**
 	 * @param app app acceess
 	 */
-	public AsyncResourceLoader(BusAccess app) {
+	public AsyncResourceLoader(BusAccess app)
+	{
 		super("Deferred loader");
 		this.app = app;
 		app.getEventBus().subscribe(this);

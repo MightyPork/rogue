@@ -28,7 +28,8 @@ public abstract class BaseScreen extends AppSubModule implements Screen, KeyBind
 	/**
 	 * @param app app access
 	 */
-	public BaseScreen(AppAccess app) {
+	public BaseScreen(AppAccess app)
+	{
 		super(app);
 		
 		// disable events initially

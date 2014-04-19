@@ -19,7 +19,8 @@ public class ScreenRequestEvent implements Event<ScreenRequestEvent.Listener> {
 	/**
 	 * @param screenKey screen name
 	 */
-	public ScreenRequestEvent(String screenKey) {
+	public ScreenRequestEvent(String screenKey)
+	{
 		scrName = screenKey;
 	}
 	

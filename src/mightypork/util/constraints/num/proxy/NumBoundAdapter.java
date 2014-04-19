@@ -9,11 +9,13 @@ public class NumBoundAdapter extends NumAdapter implements PluggableNumBound {
 	private NumBound backing = null;
 	
 	
-	public NumBoundAdapter() {
+	public NumBoundAdapter()
+	{
 	}
 	
 	
-	public NumBoundAdapter(NumBound bound) {
+	public NumBoundAdapter(NumBound bound)
+	{
 		backing = bound;
 	}
 	

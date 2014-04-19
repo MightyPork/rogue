@@ -20,7 +20,8 @@ public class KeyBinding implements KeyEvent.Listener {
 	 * @param stroke trigger keystroke
 	 * @param handler action
 	 */
-	public KeyBinding(KeyStroke stroke, Runnable handler) {
+	public KeyBinding(KeyStroke stroke, Runnable handler)
+	{
 		this.keystroke = stroke;
 		this.handler = handler;
 		

@@ -48,7 +48,8 @@ public class SimpleLog implements LogWriter {
 	private final long started_ms;
 	
 	
-	public SimpleLog(String name, File file) {
+	public SimpleLog(String name, File file)
+	{
 		this.name = name;
 		this.file = file;
 		this.started_ms = System.currentTimeMillis();

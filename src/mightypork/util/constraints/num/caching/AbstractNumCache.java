@@ -25,7 +25,8 @@ public abstract class AbstractNumCache extends NumAdapter implements ConstraintC
 	private boolean cachingEnabled = true;
 	
 	
-	public AbstractNumCache() {
+	public AbstractNumCache()
+	{
 		enableDigestCaching(true); // it changes only on poll
 	}
 	

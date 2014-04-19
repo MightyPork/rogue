@@ -17,7 +17,8 @@ public abstract class ScreenLayer extends Overlay {
 	/**
 	 * @param screen parent screen
 	 */
-	public ScreenLayer(Screen screen) {
+	public ScreenLayer(Screen screen)
+	{
 		super(screen); // screen as AppAccess
 		
 		this.screen = screen;

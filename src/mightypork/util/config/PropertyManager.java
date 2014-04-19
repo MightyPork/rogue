@@ -33,7 +33,8 @@ public class PropertyManager {
 		public T defaultValue;
 		
 		
-		public Property(String key, T defaultValue, String comment) {
+		public Property(String key, T defaultValue, String comment)
+		{
 			super();
 			this.comment = comment;
 			this.key = key;
@@ -54,7 +55,8 @@ public class PropertyManager {
 	
 	private class BooleanProperty extends Property<Boolean> {
 		
-		public BooleanProperty(String key, Boolean defaultValue, String comment) {
+		public BooleanProperty(String key, Boolean defaultValue, String comment)
+		{
 			super(key, defaultValue, comment);
 		}
 		
@@ -68,7 +70,8 @@ public class PropertyManager {
 	
 	private class IntegerProperty extends Property<Integer> {
 		
-		public IntegerProperty(String key, Integer defaultValue, String comment) {
+		public IntegerProperty(String key, Integer defaultValue, String comment)
+		{
 			super(key, defaultValue, comment);
 		}
 		
@@ -82,7 +85,8 @@ public class PropertyManager {
 	
 	private class DoubleProperty extends Property<Double> {
 		
-		public DoubleProperty(String key, Double defaultValue, String comment) {
+		public DoubleProperty(String key, Double defaultValue, String comment)
+		{
 			super(key, defaultValue, comment);
 		}
 		
@@ -96,7 +100,8 @@ public class PropertyManager {
 	
 	private class StringProperty extends Property<String> {
 		
-		public StringProperty(String key, String defaultValue, String comment) {
+		public StringProperty(String key, String defaultValue, String comment)
+		{
 			super(key, defaultValue, comment);
 		}
 		
@@ -110,7 +115,8 @@ public class PropertyManager {
 	
 	private class RangeProperty extends Property<Range> {
 		
-		public RangeProperty(String key, Range defaultValue, String comment) {
+		public RangeProperty(String key, Range defaultValue, String comment)
+		{
 			super(key, defaultValue, comment);
 		}
 		
@@ -124,7 +130,8 @@ public class PropertyManager {
 	
 	private class CoordProperty extends Property<Vect> {
 		
-		public CoordProperty(String key, Vect defaultValue, String comment) {
+		public CoordProperty(String key, Vect defaultValue, String comment)
+		{
 			super(key, defaultValue, comment);
 		}
 		
@@ -158,7 +165,8 @@ public class PropertyManager {
 	 * @param file file with the props
 	 * @param comment the initial comment. Use \n in it if you want.
 	 */
-	public PropertyManager(File file, String comment) {
+	public PropertyManager(File file, String comment)
+	{
 		this.file = file;
 		this.entries = new TreeMap<>();
 		this.overrideValues = new TreeMap<>();

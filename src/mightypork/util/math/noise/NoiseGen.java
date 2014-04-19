@@ -27,7 +27,8 @@ public class NoiseGen {
 	 * @param middle middle bound ("surface")
 	 * @param high high bound ("hill")
 	 */
-	public NoiseGen(double density, double low, double middle, double high) {
+	public NoiseGen(double density, double low, double middle, double high)
+	{
 		this(density, low, middle, high, Double.doubleToLongBits(Math.random()));
 	}
 	
@@ -41,7 +42,8 @@ public class NoiseGen {
 	 * @param high high bound ("hill")
 	 * @param seed random seed to use
 	 */
-	public NoiseGen(double density, double low, double middle, double high, long seed) {
+	public NoiseGen(double density, double low, double middle, double high, long seed)
+	{
 		if (low > middle || middle > high) throw new IllegalArgumentException("Invalid value range.");
 		
 		this.density = density;

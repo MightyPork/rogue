@@ -32,7 +32,8 @@ public class DeferredFont extends DeferredResource implements GLFont {
 		int numval;
 		
 		
-		private FontStyle(int style) {
+		private FontStyle(int style)
+		{
 			this.numval = style;
 		}
 	}
@@ -53,7 +54,8 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	 * @param chars chars to load; null to load basic chars only
 	 * @param size size (px)
 	 */
-	public DeferredFont(String resourcePath, String chars, double size) {
+	public DeferredFont(String resourcePath, String chars, double size)
+	{
 		this(resourcePath, chars, size, FontStyle.PLAIN, false, FilterMode.NEAREST);
 	}
 	
@@ -68,7 +70,8 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	 * @param antialias use antialiasing for caching texture
 	 * @param filter gl filtering mode
 	 */
-	public DeferredFont(String resourcePath, String chars, double size, FontStyle style, boolean antialias, FilterMode filter) {
+	public DeferredFont(String resourcePath, String chars, double size, FontStyle style, boolean antialias, FilterMode filter)
+	{
 		super(resourcePath);
 		this.size = size;
 		this.style = style;

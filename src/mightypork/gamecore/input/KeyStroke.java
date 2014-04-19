@@ -25,7 +25,8 @@ public class KeyStroke {
 	 * @param fallingEdge true for falling edge, up for rising edge
 	 * @param keys keys that must be pressed
 	 */
-	public KeyStroke(boolean fallingEdge, int... keys) {
+	public KeyStroke(boolean fallingEdge, int... keys)
+	{
 		this.fallingEdge = fallingEdge;
 		for (final int k : keys) {
 			this.keys.add(k);
@@ -38,7 +39,8 @@ public class KeyStroke {
 	 * 
 	 * @param keys
 	 */
-	public KeyStroke(int... keys) {
+	public KeyStroke(int... keys)
+	{
 		fallingEdge = false;
 		for (final int k : keys) {
 			this.keys.add(k);

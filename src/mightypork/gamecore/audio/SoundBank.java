@@ -29,7 +29,8 @@ public class SoundBank extends AppAdapter {
 	/**
 	 * @param app app access
 	 */
-	public SoundBank(AppAccess app) {
+	public SoundBank(AppAccess app)
+	{
 		super(app);
 		if (getSoundSystem() == null) throw new NullPointerException("SoundSystem cannot be null.");
 	}

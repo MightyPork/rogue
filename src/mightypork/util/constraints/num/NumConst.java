@@ -17,12 +17,14 @@ public class NumConst extends Num {
 	private NumDigest digest;
 	
 	
-	NumConst(Num copied) {
+	NumConst(Num copied)
+	{
 		this.value = copied.value();
 	}
 	
 	
-	NumConst(double value) {
+	NumConst(double value)
+	{
 		this.value = value;
 	}
 	

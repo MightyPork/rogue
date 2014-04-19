@@ -9,7 +9,8 @@ import java.lang.annotation.Target;
 
 
 /**
- * Marks a static factory method
+ * Marks a static factory method. This is a description annotation and has no
+ * other function.
  * 
  * @author MightyPork
  */

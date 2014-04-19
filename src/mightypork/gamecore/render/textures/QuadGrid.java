@@ -12,12 +12,14 @@ import mightypork.util.constraints.rect.Rect;
 public class QuadGrid {
 	
 	private final GLTexture tx;
-	private int txHeight;
-	private int txWidth;
-	private double tileW;
-	private double tileH;
+	private final int txHeight;
+	private final int txWidth;
+	private final double tileW;
+	private final double tileH;
 	
-	public QuadGrid(GLTexture tx, int tilesX, int tilesY) {
+	
+	public QuadGrid(GLTexture tx, int tilesX, int tilesY)
+	{
 		this.tx = tx;
 		this.txWidth = tilesX;
 		this.txHeight = tilesY;

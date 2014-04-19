@@ -21,7 +21,8 @@ public class FontBank extends AppAdapter {
 	/**
 	 * @param app app access
 	 */
-	public FontBank(AppAccess app) {
+	public FontBank(AppAccess app)
+	{
 		super(app);
 	}
 	

@@ -31,7 +31,8 @@ public class Pair<T1, T2> {
 	 * @param first 1st object
 	 * @param second 2nd object
 	 */
-	public Pair(T1 first, T2 second) {
+	public Pair(T1 first, T2 second)
+	{
 		this.first = first;
 		this.second = second;
 	}
@@ -68,7 +69,7 @@ public class Pair<T1, T2> {
 		
 		final Pair<?, ?> t = (Pair<?, ?>) obj;
 		
-		return Calc.areObjectsEqual(first, t.first) && Calc.areObjectsEqual(second, t.second);
+		return Calc.areEqual(first, t.first) && Calc.areEqual(second, t.second);
 		
 	}
 	

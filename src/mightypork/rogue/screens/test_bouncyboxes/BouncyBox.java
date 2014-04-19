@@ -23,7 +23,8 @@ public class BouncyBox extends VisualComponent implements Updateable {
 	private final NumAnimated pos = new NumAnimated(0, Easing.BOUNCE_OUT);
 	
 	
-	public BouncyBox() {
+	public BouncyBox()
+	{
 		super();
 		enableCaching(true);
 		

@@ -16,7 +16,8 @@ public final class TileRenderContext implements RectBound {
 	public int x, y;
 	
 	
-	public TileRenderContext(TileGrid map, Rect drawArea, long renderNoiseSeed) {
+	public TileRenderContext(TileGrid map, Rect drawArea, long renderNoiseSeed)
+	{
 		this.map = map;
 		this.tiler = drawArea.tiles(map.getWidth(), map.getHeight());
 		this.noise = new NoiseGen(0.2, 0, 0.5, 1, renderNoiseSeed);
@@ -45,7 +46,7 @@ public final class TileRenderContext implements RectBound {
 	/**
 	 * @return per-coord noise value 0..1
 	 */
-	public double getNoise()
+	public double getTileNoise()
 	{
 		return noise.valueAt(x, y);
 	}
@@ -55,5 +56,11 @@ public final class TileRenderContext implements RectBound {
 	{
 		this.x = x;
 		this.y = y;
+	}
+	
+	
+	public void renderTile(Tile t)
+	{
+		t.render(this);
 	}
 }

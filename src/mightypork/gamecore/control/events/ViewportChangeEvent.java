@@ -22,7 +22,8 @@ public class ViewportChangeEvent implements Event<ViewportChangeEvent.Listener> 
 	 * @param fullscreen is now fullscreen
 	 * @param size new screen size
 	 */
-	public ViewportChangeEvent(boolean fsChanged, boolean fullscreen, Vect size) {
+	public ViewportChangeEvent(boolean fsChanged, boolean fullscreen, Vect size)
+	{
 		this.fullscreen = fullscreen;
 		this.screenSize = size;
 		this.fsChanged = fsChanged;

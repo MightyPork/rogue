@@ -47,7 +47,8 @@ public class CrossfadeOverlay extends Overlay implements CrossfadeRequest.Listen
 	};
 	
 	
-	public CrossfadeOverlay(AppAccess app) {
+	public CrossfadeOverlay(AppAccess app)
+	{
 		super(app);
 		
 		final QuadPainter qp = new QuadPainter(color);

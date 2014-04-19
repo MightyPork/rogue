@@ -49,7 +49,6 @@ public class Calc {
 		return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
 	}
 	
-	
 	private static class Angles {
 		
 		public static double delta(double alpha, double beta, double a360)
@@ -384,7 +383,8 @@ public class Calc {
 	}
 	
 	private static Random rand = new Random();
-
+	
+	
 	public static double sphereSurface(double radius)
 	{
 		return 4D * Math.PI * square(radius);

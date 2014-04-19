@@ -130,7 +130,8 @@ public class FileTreeDiff {
 	
 	private class NotEqualException extends Exception {
 		
-		public NotEqualException(String msg) {
+		public NotEqualException(String msg)
+		{
 			super(msg);
 		}
 		
@@ -142,7 +143,8 @@ public class FileTreeDiff {
 		public T b;
 		
 		
-		public Tuple(T a, T b) {
+		public Tuple(T a, T b)
+		{
 			this.a = a;
 			this.b = b;
 		}

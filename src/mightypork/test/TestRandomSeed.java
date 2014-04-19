@@ -10,8 +10,8 @@ public class TestRandomSeed {
 	{
 		
 		{
-			Random rand = new Random();
-			long begin = System.currentTimeMillis();
+			final Random rand = new Random();
+			final long begin = System.currentTimeMillis();
 			
 			for (int i = 0; i < 1000000; i++) {
 				rand.setSeed(1000);
@@ -21,10 +21,10 @@ public class TestRandomSeed {
 		}
 		
 		{
-			long begin = System.currentTimeMillis();
+			final long begin = System.currentTimeMillis();
 			
 			for (int i = 0; i < 1000000; i++) {
-				Random rand = new Random();
+				final Random rand = new Random();
 				rand.setSeed(1000);
 			}
 			

@@ -20,7 +20,8 @@ public class AppAdapter implements AppAccess {
 	/**
 	 * @param app app access
 	 */
-	public AppAdapter(AppAccess app) {
+	public AppAdapter(AppAccess app)
+	{
 		if (app == null) throw new NullPointerException("AppAccess instance cannot be null.");
 		
 		this.app = app;

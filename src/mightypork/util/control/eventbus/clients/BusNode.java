@@ -27,7 +27,8 @@ public abstract class BusNode implements BusAccess, ClientHub {
 	/**
 	 * @param busAccess access to bus
 	 */
-	public BusNode(BusAccess busAccess) {
+	public BusNode(BusAccess busAccess)
+	{
 		this.busAccess = busAccess;
 	}
 	

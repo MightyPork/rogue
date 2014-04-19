@@ -23,7 +23,8 @@ public class MouseMotionEvent implements Event<MouseMotionEvent.Listener> {
 	 * @param pos end pos
 	 * @param move move vector
 	 */
-	public MouseMotionEvent(Vect pos, Vect move) {
+	public MouseMotionEvent(Vect pos, Vect move)
+	{
 		this.move = move.freeze();
 		this.pos = pos.freeze();
 	}

@@ -24,7 +24,8 @@ public class BufferedHashSet<E> extends HashSet<E> {
 	/**
 	 * make empty
 	 */
-	public BufferedHashSet() {
+	public BufferedHashSet()
+	{
 		super();
 	}
 	
@@ -34,7 +35,8 @@ public class BufferedHashSet<E> extends HashSet<E> {
 	 * 
 	 * @param c
 	 */
-	public BufferedHashSet(Collection<? extends E> c) {
+	public BufferedHashSet(Collection<? extends E> c)
+	{
 		super(c);
 	}
 	
@@ -45,7 +47,8 @@ public class BufferedHashSet<E> extends HashSet<E> {
 	 * @param initialCapacity
 	 * @param loadFactor
 	 */
-	public BufferedHashSet(int initialCapacity, float loadFactor) {
+	public BufferedHashSet(int initialCapacity, float loadFactor)
+	{
 		super(initialCapacity, loadFactor);
 	}
 	
@@ -55,7 +58,8 @@ public class BufferedHashSet<E> extends HashSet<E> {
 	 * 
 	 * @param initialCapacity
 	 */
-	public BufferedHashSet(int initialCapacity) {
+	public BufferedHashSet(int initialCapacity)
+	{
 		super(initialCapacity);
 	}
 	

@@ -3,8 +3,8 @@ package mightypork.util.files.ion;
 
 import java.io.*;
 import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.Map.Entry;
 
 import mightypork.util.logging.Log;
 
@@ -108,8 +108,7 @@ public class Ion {
 	static {
 		markRangeChecking = false;
 		
-		registerIonizable(DATA_BUNDLE, IonDataBundle.class);
-		registerIonizable(DATA_LIST, IonDataList.class);
+		registerIonizable(DATA_BUNDLE, IonBundle.class);
 		
 		markRangeChecking = true;
 	}
@@ -248,131 +247,130 @@ public class Ion {
 	 */
 	public static Object readObject(InputStream in) throws IOException
 	{
-		try {
-			final short mark = readMark(in);
-			if (customIonizables.containsKey(mark)) {
-				Ionizable ionObj;
+		final short mark = readMark(in);
+		if (customIonizables.containsKey(mark)) {
+			Ionizable loaded;
+			
+			try {
 				
-				try {
-					ionObj = ((Ionizable) customIonizables.get(mark).newInstance());
-				} catch (InstantiationException | IllegalAccessException e) {
-					throw new IOException("Cound not instantiate: " + Log.str(customIonizables.get(mark)), e);
+				final Class<?> clz = customIonizables.get(mark);
+				loaded = ((Ionizable) clz.newInstance());
+				
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new IOException("Cound not instantiate: " + Log.str(customIonizables.get(mark)), e);
+			}
+			
+			loaded.load(in);
+			return loaded;
+		}
+		
+		int length;
+		
+		switch (mark) {
+			case NULL:
+				return null;
+				
+			case BOOLEAN:
+				return readBoolean(in);
+				
+			case BYTE:
+				return readByte(in);
+				
+			case CHAR:
+				return readChar(in);
+				
+			case SHORT:
+				return readShort(in);
+				
+			case INT:
+				return readInt(in);
+				
+			case LONG:
+				return readLong(in);
+				
+			case FLOAT:
+				return readFloat(in);
+				
+			case DOUBLE:
+				return readDouble(in);
+				
+			case STRING:
+				return readString(in);
+				
+			case BOOLEAN_ARRAY:
+				length = readInt(in);
+				final boolean[] bools = new boolean[length];
+				for (int i = 0; i < length; i++) {
+					bools[i] = readBoolean(in);
 				}
+				return bools;
 				
-				ionObj.loadFrom(in);
-				return ionObj;
-			}
-			
-			int length;
-			
-			switch (mark) {
-				case NULL:
-					return null;
-					
-				case BOOLEAN:
-					return readBoolean(in);
-					
-				case BYTE:
-					return readByte(in);
-					
-				case CHAR:
-					return readChar(in);
-					
-				case SHORT:
-					return readShort(in);
-					
-				case INT:
-					return readInt(in);
-					
-				case LONG:
-					return readLong(in);
-					
-				case FLOAT:
-					return readFloat(in);
-					
-				case DOUBLE:
-					return readDouble(in);
-					
-				case STRING:
-					return readString(in);
-					
-				case BOOLEAN_ARRAY:
-					length = readInt(in);
-					final boolean[] bools = new boolean[length];
-					for (int i = 0; i < length; i++) {
-						bools[i] = readBoolean(in);
-					}
-					return bools;
-					
-				case BYTE_ARRAY:
-					length = readInt(in);
-					final byte[] bytes = new byte[length];
-					for (int i = 0; i < length; i++) {
-						bytes[i] = readByte(in);
-					}
-					return bytes;
-					
-				case CHAR_ARRAY:
-					length = readInt(in);
-					final char[] chars = new char[length];
-					for (int i = 0; i < length; i++) {
-						chars[i] = readChar(in);
-					}
-					return chars;
-					
-				case SHORT_ARRAY:
-					length = readInt(in);
-					final short[] shorts = new short[length];
-					for (int i = 0; i < length; i++) {
-						shorts[i] = readShort(in);
-					}
-					return shorts;
-					
-				case INT_ARRAY:
-					length = readInt(in);
-					final int[] ints = new int[length];
-					for (int i = 0; i < length; i++) {
-						ints[i] = readInt(in);
-					}
-					return ints;
-					
-				case LONG_ARRAY:
-					length = readInt(in);
-					final long[] longs = new long[length];
-					for (int i = 0; i < length; i++) {
-						longs[i] = readLong(in);
-					}
-					return longs;
-					
-				case FLOAT_ARRAY:
-					length = readInt(in);
-					final float[] floats = new float[length];
-					for (int i = 0; i < length; i++) {
-						floats[i] = readFloat(in);
-					}
-					return floats;
-					
-				case DOUBLE_ARRAY:
-					length = readInt(in);
-					final double[] doubles = new double[length];
-					for (int i = 0; i < length; i++) {
-						doubles[i] = readDouble(in);
-					}
-					return doubles;
-					
-				case STRING_ARRAY:
-					length = readInt(in);
-					final String[] Strings = new String[length];
-					for (int i = 0; i < length; i++) {
-						Strings[i] = readString(in);
-					}
-					return Strings;
-					
-				default:
-					throw new IOException("Invalid Ion mark: " + mark);
-			}
-		} catch (final IOException e) {
-			throw new IOException("Error loading ION file: ", e);
+			case BYTE_ARRAY:
+				length = readInt(in);
+				final byte[] bytes = new byte[length];
+				for (int i = 0; i < length; i++) {
+					bytes[i] = readByte(in);
+				}
+				return bytes;
+				
+			case CHAR_ARRAY:
+				length = readInt(in);
+				final char[] chars = new char[length];
+				for (int i = 0; i < length; i++) {
+					chars[i] = readChar(in);
+				}
+				return chars;
+				
+			case SHORT_ARRAY:
+				length = readInt(in);
+				final short[] shorts = new short[length];
+				for (int i = 0; i < length; i++) {
+					shorts[i] = readShort(in);
+				}
+				return shorts;
+				
+			case INT_ARRAY:
+				length = readInt(in);
+				final int[] ints = new int[length];
+				for (int i = 0; i < length; i++) {
+					ints[i] = readInt(in);
+				}
+				return ints;
+				
+			case LONG_ARRAY:
+				length = readInt(in);
+				final long[] longs = new long[length];
+				for (int i = 0; i < length; i++) {
+					longs[i] = readLong(in);
+				}
+				return longs;
+				
+			case FLOAT_ARRAY:
+				length = readInt(in);
+				final float[] floats = new float[length];
+				for (int i = 0; i < length; i++) {
+					floats[i] = readFloat(in);
+				}
+				return floats;
+				
+			case DOUBLE_ARRAY:
+				length = readInt(in);
+				final double[] doubles = new double[length];
+				for (int i = 0; i < length; i++) {
+					doubles[i] = readDouble(in);
+				}
+				return doubles;
+				
+			case STRING_ARRAY:
+				length = readInt(in);
+				final String[] Strings = new String[length];
+				for (int i = 0; i < length; i++) {
+					Strings[i] = readString(in);
+				}
+				return Strings;
+				
+			default:
+				throw new IOException("Invalid Ion mark: " + mark);
 		}
 	}
 	
@@ -404,126 +402,121 @@ public class Ion {
 	 */
 	public static void writeObject(OutputStream out, Object obj) throws IOException
 	{
-		try {
-			if (obj instanceof Ionizable) {
-				writeMark(out, ((Ionizable) obj).getIonMark());
-				((Ionizable) obj).saveTo(out);
-				return;
-			}
-			
-			if (obj instanceof Boolean) {
-				writeMark(out, BOOLEAN);
-				writeBoolean(out, (Boolean) obj);
-				return;
-			}
-			
-			if (obj instanceof Byte) {
-				writeMark(out, BYTE);
-				writeByte(out, (Byte) obj);
-				return;
-			}
-			
-			if (obj instanceof Character) {
-				writeMark(out, CHAR);
-				writeChar(out, (Character) obj);
-				return;
-			}
-			
-			if (obj instanceof Short) {
-				writeMark(out, SHORT);
-				writeShort(out, (Short) obj);
-				return;
-			}
-			
-			if (obj instanceof Integer) {
-				writeMark(out, INT);
-				writeInt(out, (Integer) obj);
-				return;
-			}
-			
-			if (obj instanceof Long) {
-				writeMark(out, LONG);
-				writeLong(out, (Long) obj);
-				return;
-			}
-			
-			if (obj instanceof Float) {
-				writeMark(out, FLOAT);
-				writeFloat(out, (Float) obj);
-				return;
-			}
-			
-			if (obj instanceof Double) {
-				writeMark(out, DOUBLE);
-				writeDouble(out, (Double) obj);
-				return;
-			}
-			
-			if (obj instanceof String) {
-				writeMark(out, STRING);
-				writeString(out, (String) obj);
-				return;
-			}
-			
-			if (obj instanceof boolean[]) {
-				writeMark(out, BOOLEAN_ARRAY);
-				writeBooleanArray(out, (boolean[]) obj);
-				return;
-			}
-			
-			if (obj instanceof byte[]) {
-				writeMark(out, BYTE_ARRAY);
-				writeByteArray(out, (byte[]) obj);
-				return;
-			}
-			
-			if (obj instanceof char[]) {
-				writeMark(out, CHAR_ARRAY);
-				writeCharArray(out, (char[]) obj);
-				return;
-			}
-			
-			if (obj instanceof short[]) {
-				writeMark(out, SHORT_ARRAY);
-				writeShortArray(out, (short[]) obj);
-				return;
-			}
-			
-			if (obj instanceof int[]) {
-				writeMark(out, INT_ARRAY);
-				writeIntArray(out, (int[]) obj);
-				return;
-			}
-			
-			if (obj instanceof long[]) {
-				writeMark(out, LONG_ARRAY);
-				writeLongArray(out, (long[]) obj);
-				return;
-			}
-			
-			if (obj instanceof float[]) {
-				writeMark(out, FLOAT_ARRAY);
-				writeFloatArray(out, (float[]) obj);
-				return;
-			}
-			
-			if (obj instanceof double[]) {
-				writeMark(out, DOUBLE_ARRAY);
-				writeDoubleArray(out, (double[]) obj);
-				return;
-			}
-			
-			if (obj instanceof String[]) {
-				writeMark(out, STRING_ARRAY);
-				writeStringArray(out, (String[]) obj);
-				return;
-			}
-			
-			throw new IOException("Object " + Log.str(obj) + " could not be be ionized.");
-			
-		} catch (final IOException e) {
-			throw new IOException("Could not store: " + obj, e);
+		if (obj instanceof Ionizable) {
+			writeMark(out, ((Ionizable) obj).getIonMark());
+			((Ionizable) obj).save(out);
+			return;
 		}
+		
+		if (obj instanceof Boolean) {
+			writeMark(out, BOOLEAN);
+			writeBoolean(out, (Boolean) obj);
+			return;
+		}
+		
+		if (obj instanceof Byte) {
+			writeMark(out, BYTE);
+			writeByte(out, (Byte) obj);
+			return;
+		}
+		
+		if (obj instanceof Character) {
+			writeMark(out, CHAR);
+			writeChar(out, (Character) obj);
+			return;
+		}
+		
+		if (obj instanceof Short) {
+			writeMark(out, SHORT);
+			writeShort(out, (Short) obj);
+			return;
+		}
+		
+		if (obj instanceof Integer) {
+			writeMark(out, INT);
+			writeInt(out, (Integer) obj);
+			return;
+		}
+		
+		if (obj instanceof Long) {
+			writeMark(out, LONG);
+			writeLong(out, (Long) obj);
+			return;
+		}
+		
+		if (obj instanceof Float) {
+			writeMark(out, FLOAT);
+			writeFloat(out, (Float) obj);
+			return;
+		}
+		
+		if (obj instanceof Double) {
+			writeMark(out, DOUBLE);
+			writeDouble(out, (Double) obj);
+			return;
+		}
+		
+		if (obj instanceof String) {
+			writeMark(out, STRING);
+			writeString(out, (String) obj);
+			return;
+		}
+		
+		if (obj instanceof boolean[]) {
+			writeMark(out, BOOLEAN_ARRAY);
+			writeBooleanArray(out, (boolean[]) obj);
+			return;
+		}
+		
+		if (obj instanceof byte[]) {
+			writeMark(out, BYTE_ARRAY);
+			writeByteArray(out, (byte[]) obj);
+			return;
+		}
+		
+		if (obj instanceof char[]) {
+			writeMark(out, CHAR_ARRAY);
+			writeCharArray(out, (char[]) obj);
+			return;
+		}
+		
+		if (obj instanceof short[]) {
+			writeMark(out, SHORT_ARRAY);
+			writeShortArray(out, (short[]) obj);
+			return;
+		}
+		
+		if (obj instanceof int[]) {
+			writeMark(out, INT_ARRAY);
+			writeIntArray(out, (int[]) obj);
+			return;
+		}
+		
+		if (obj instanceof long[]) {
+			writeMark(out, LONG_ARRAY);
+			writeLongArray(out, (long[]) obj);
+			return;
+		}
+		
+		if (obj instanceof float[]) {
+			writeMark(out, FLOAT_ARRAY);
+			writeFloatArray(out, (float[]) obj);
+			return;
+		}
+		
+		if (obj instanceof double[]) {
+			writeMark(out, DOUBLE_ARRAY);
+			writeDoubleArray(out, (double[]) obj);
+			return;
+		}
+		
+		if (obj instanceof String[]) {
+			writeMark(out, STRING_ARRAY);
+			writeStringArray(out, (String[]) obj);
+			return;
+		}
+		
+		throw new IOException("Object " + Log.str(obj) + " could not be be ionized.");
 	}
 	
 	
@@ -1162,6 +1155,132 @@ public class Ion {
 			Strings[i] = readString(in);
 		}
 		return Strings;
+	}
+	
+	
+	/**
+	 * Reads mark and returns true if the mark is ENTRY, false if the mark is
+	 * END. Throws an exception otherwise.
+	 * 
+	 * @param in input stream
+	 * @return mark was ENTRY
+	 * @throws IOException when the mark is neither ENTRY or END.
+	 */
+	public static boolean hasNextEntry(InputStream in) throws IOException
+	{
+		final short mark = readMark(in);
+		if (mark == ENTRY) return true;
+		if (mark == END) return false;
+		
+		throw new IOException("Unexpected mark encountered while reading sequence.");
+	}
+	
+	
+	/**
+	 * Read a sequence of elements
+	 * 
+	 * @param in input stream
+	 * @return the collection
+	 * @throws IOException
+	 */
+	public static <T> Collection<T> readSequence(InputStream in) throws IOException
+	{
+		return readSequence(in, new LinkedList<T>());
+	}
+	
+	
+	/**
+	 * Load entries into a collection
+	 * 
+	 * @param in input stream
+	 * @param filled collection to populate
+	 * @return the collection
+	 * @throws IOException
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> Collection<T> readSequence(InputStream in, Collection<T> filled) throws IOException
+	{
+		try {
+			while (hasNextEntry(in)) {
+				filled.add((T) readObject(in));
+			}
+			return filled;
+		} catch (final ClassCastException e) {
+			throw new IOException("Unexpected element type.");
+		}
+	}
+	
+	
+	/**
+	 * Write collection entries to a stream
+	 * 
+	 * @param out output stream
+	 * @param sequence written collection
+	 * @throws IOException
+	 */
+	public static <T> void writeSequence(OutputStream out, Collection<T> sequence) throws IOException
+	{
+		for (final T element : sequence) {
+			writeMark(out, ENTRY);
+			writeObject(out, element);
+		}
+		writeMark(out, END);
+	}
+	
+	
+	/**
+	 * Read a map of elements
+	 * 
+	 * @param in input stream
+	 * @return the map
+	 * @throws IOException
+	 */
+	public static <K, V> Map<K, V> readMap(InputStream in) throws IOException
+	{
+		return readMap(in, new LinkedHashMap<K, V>());
+	}
+	
+	
+	/**
+	 * Load data into a map
+	 * 
+	 * @param in input stream
+	 * @param filled filled map
+	 * @return the map
+	 * @throws IOException
+	 */
+	@SuppressWarnings("unchecked")
+	public static <K, V> Map<K, V> readMap(InputStream in, Map<K, V> filled) throws IOException
+	{
+		try {
+			while (hasNextEntry(in)) {
+				final K key = (K) readObject(in);
+				final V value = (V) readObject(in);
+				
+				filled.put(key, value);
+			}
+			return filled;
+		} catch (final ClassCastException e) {
+			throw new IOException("Unexpected element type.");
+		}
+	}
+	
+	
+	/**
+	 * Write a map
+	 * 
+	 * @param out output stream
+	 * @param map map to write
+	 * @throws IOException
+	 */
+	public static <K, V> void writeMap(OutputStream out, Map<K, V> map) throws IOException
+	{
+		for (final Entry<K, V> e : map.entrySet()) {
+			writeMark(out, ENTRY);
+			writeObject(out, e.getKey());
+			writeObject(out, e.getValue());
+		}
+		writeMark(out, END);
 	}
 	
 }

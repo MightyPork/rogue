@@ -42,7 +42,8 @@ public abstract class Overlay extends AppSubModule implements Updateable, Compar
 	protected final Collection<Updateable> updated = new LinkedHashSet<>();
 	
 	
-	public Overlay(AppAccess app) {
+	public Overlay(AppAccess app)
+	{
 		super(app);
 		
 		this.mouse = getInput().getMousePos();

@@ -17,10 +17,11 @@ public class TxSheet {
 	
 	private final Random rand = new Random();
 	private final Random randForSeed = new Random();
-	private int count;
+	private final int count;
 	
 	
-	public TxSheet(TxQuad tx, int width, int height) {
+	public TxSheet(TxQuad tx, int width, int height)
+	{
 		this.original = tx;
 		this.width = width;
 		this.count = width * height;

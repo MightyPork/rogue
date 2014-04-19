@@ -23,7 +23,8 @@ public class LayerBouncyBoxes extends ScreenLayer {
 	private RowHolder layout;
 	
 	
-	public LayerBouncyBoxes(BaseScreen screen) {
+	public LayerBouncyBoxes(BaseScreen screen)
+	{
 		super(screen);
 		
 		bindKey(new KeyStroke(true, Keys.RIGHT), new Runnable() {

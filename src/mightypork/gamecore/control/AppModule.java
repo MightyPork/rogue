@@ -23,7 +23,8 @@ public abstract class AppModule extends RootBusNode implements AppAccess {
 	 * 
 	 * @param app access to app systems
 	 */
-	public AppModule(AppAccess app) {
+	public AppModule(AppAccess app)
+	{
 		super(app);
 		
 		this.app = app;

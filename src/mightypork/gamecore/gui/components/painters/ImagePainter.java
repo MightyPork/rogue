@@ -19,7 +19,8 @@ public class ImagePainter extends VisualComponent {
 	/**
 	 * @param texture drawn image
 	 */
-	public ImagePainter(TxQuad texture) {
+	public ImagePainter(TxQuad texture)
+	{
 		this.texture = texture;
 	}
 	

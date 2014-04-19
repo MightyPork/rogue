@@ -24,7 +24,8 @@ public class NavItemSlot extends ClickableComponent implements MouseMotionEvent.
 	private boolean wasInside = false;
 	
 	
-	public NavItemSlot(TxQuad image) {
+	public NavItemSlot(TxQuad image)
+	{
 		this.image = image;
 		this.frame = Res.getTxQuad("item_frame");
 		

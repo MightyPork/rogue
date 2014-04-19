@@ -29,7 +29,8 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 	private final Random rand = new Random();
 	
 	
-	public LayerFlyingCat(BaseScreen screen) {
+	public LayerFlyingCat(BaseScreen screen)
+	{
 		super(screen);
 		
 		// timing

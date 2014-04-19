@@ -55,7 +55,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	/**
 	 * @param app app access
 	 */
-	public InputSystem(AppAccess app) {
+	public InputSystem(AppAccess app)
+	{
 		super(app);
 		
 		initDevices();

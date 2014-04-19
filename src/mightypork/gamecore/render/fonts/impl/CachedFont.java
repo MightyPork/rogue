@@ -85,7 +85,8 @@ public class CachedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars) {
+	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars)
+	{
 		this(font, antialias, filter, chars.toCharArray());
 	}
 	
@@ -98,7 +99,8 @@ public class CachedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars) {
+	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars)
+	{
 		GLUtils.checkGLContext();
 		
 		this.font = font;
@@ -158,7 +160,8 @@ public class CachedFont implements GLFont {
 				public int height;
 				
 				
-				public LoadedGlyph(char c, BufferedImage image) {
+				public LoadedGlyph(char c, BufferedImage image)
+				{
 					this.image = image;
 					this.c = c;
 					this.width = image.getWidth();

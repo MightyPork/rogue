@@ -20,7 +20,8 @@ public class ResourceLoadRequest implements Event<ResourceLoadRequest.Listener> 
 	/**
 	 * @param resource resource to load
 	 */
-	public ResourceLoadRequest(Deferred resource) {
+	public ResourceLoadRequest(Deferred resource)
+	{
 		this.resource = resource;
 	}
 	

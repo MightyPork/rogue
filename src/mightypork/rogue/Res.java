@@ -67,7 +67,7 @@ public final class Res {
 		texture = textures.loadTexture("test.kitten", "/res/img/kitten.png", FilterMode.LINEAR, WrapMode.CLAMP);
 		
 		texture = textures.loadTexture("gui1", "/res/img/gui1.png", FilterMode.NEAREST, WrapMode.CLAMP);
-		QuadGrid gui = texture.grid(4, 4);
+		final QuadGrid gui = texture.grid(4, 4);
 		textures.addQuad("item_frame", gui.makeQuad(0, 0));
 		textures.addQuad("sword", gui.makeQuad(1, 0));
 		textures.addQuad("meat", gui.makeQuad(2, 0));
@@ -78,7 +78,7 @@ public final class Res {
 		textures.addQuad("panel", gui.makeQuad(0, 3.75, 4, .25));
 		
 		texture = textures.loadTexture("tiles", "/res/img/map_tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
-		QuadGrid tiles = texture.grid(32, 32);
+		final QuadGrid tiles = texture.grid(32, 32);
 		
 		textures.addSheet("tile.mossy_bricks.wall", tiles.makeSheet(4, 0, 7, 1));
 		textures.addSheet("tile.mossy_bricks.floor", tiles.makeSheet(16, 5, 7, 1));

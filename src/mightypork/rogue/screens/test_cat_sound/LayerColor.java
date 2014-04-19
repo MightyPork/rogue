@@ -9,7 +9,8 @@ import mightypork.util.math.color.Color;
 
 public class LayerColor extends ScreenLayer {
 	
-	public LayerColor(BaseScreen screen, Color color) {
+	public LayerColor(BaseScreen screen, Color color)
+	{
 		super(screen);
 		
 		root.add(new QuadPainter(color));

@@ -77,7 +77,8 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	/**
 	 * @param app app access
 	 */
-	public SoundSystem(AppAccess app) {
+	public SoundSystem(AppAccess app)
+	{
 		super(app);
 		
 		if (!soundSystemInited) {

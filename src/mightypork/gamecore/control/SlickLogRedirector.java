@@ -21,7 +21,8 @@ public class SlickLogRedirector implements LogSystem {
 	/**
 	 * @param log log to redirect into
 	 */
-	public SlickLogRedirector(LogWriter log) {
+	public SlickLogRedirector(LogWriter log)
+	{
 		this.l = log;
 	}
 	

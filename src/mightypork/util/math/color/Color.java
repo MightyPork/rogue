@@ -137,13 +137,13 @@ public abstract class Color {
 	
 	protected static final double clamp(Num n)
 	{
-		return Calc.clampd(n.value(), 0, 1);
+		return Calc.clamp(n.value(), 0, 1);
 	}
 	
 	
 	protected static final double clamp(double n)
 	{
-		return Calc.clampd(n, 0, 1);
+		return Calc.clamp(n, 0, 1);
 	}
 	
 	

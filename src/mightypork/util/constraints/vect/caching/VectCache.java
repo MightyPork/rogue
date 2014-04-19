@@ -15,7 +15,8 @@ public class VectCache extends AbstractVectCache {
 	private final Vect source;
 	
 	
-	public VectCache(Vect source) {
+	public VectCache(Vect source)
+	{
 		this.source = source;
 		enableDigestCaching(true);
 	}

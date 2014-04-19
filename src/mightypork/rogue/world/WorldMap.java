@@ -7,7 +7,9 @@ import java.io.OutputStream;
 
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileGrid;
+import mightypork.rogue.world.tile.Tiles;
 import mightypork.util.files.ion.Ion;
+import mightypork.util.files.ion.IonConstructor;
 import mightypork.util.files.ion.Ionizable;
 
 
@@ -21,12 +23,14 @@ public class WorldMap implements TileGrid, Ionizable {
 	private Tile[][] tiles;
 	
 	
-	public WorldMap() {
-		// constructor for ION
+	@IonConstructor
+	public WorldMap()
+	{
 	}
 	
 	
-	public WorldMap(int width, int height) {
+	public WorldMap(int width, int height)
+	{
 		this.width = width;
 		this.height = height;
 		buildArray();
@@ -36,6 +40,12 @@ public class WorldMap implements TileGrid, Ionizable {
 	private void buildArray()
 	{
 		this.tiles = new Tile[height][width];
+		
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				tiles[y][x] = Tiles.NONE.create();
+			}
+		}
 	}
 	
 	
@@ -73,35 +83,27 @@ public class WorldMap implements TileGrid, Ionizable {
 	
 	
 	@Override
-	public void loadFrom(InputStream in) throws IOException
+	public void load(InputStream in) throws IOException
 	{
 		width = Ion.readInt(in);
 		height = Ion.readInt(in);
 		
 		buildArray();
 		
-		while (true) {
-			final short mark = Ion.readMark(in);
-			if (mark == Ion.END) {
-				break;
-			} else if (mark == Ion.ENTRY) {
-				
-				final int x = Ion.readInt(in);
-				final int y = Ion.readInt(in);
-				
-				final Tile tile = (Tile) Ion.readObject(in);
-				
-				setTile(tile, x, y);
-				
-			} else {
-				throw new IOException("Invalid mark encountered while reading tile map.");
-			}
+		while (Ion.hasNextEntry(in)) {
+			
+			final int x = Ion.readInt(in);
+			final int y = Ion.readInt(in);
+			
+			final Tile tile = (Tile) Ion.readObject(in);
+			
+			setTile(tile, x, y);
 		}
 	}
 	
 	
 	@Override
-	public void saveTo(OutputStream out) throws IOException
+	public void save(OutputStream out) throws IOException
 	{
 		Ion.writeInt(out, width);
 		Ion.writeInt(out, height);
@@ -109,7 +111,8 @@ public class WorldMap implements TileGrid, Ionizable {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				final Tile t = getTile(x, y);
-				if (t != null) {
+				// skip null tiles
+				if (!t.getModel().isNullTile()) {
 					Ion.writeMark(out, Ion.ENTRY);
 					Ion.writeInt(out, x);
 					Ion.writeInt(out, y);
@@ -118,6 +121,7 @@ public class WorldMap implements TileGrid, Ionizable {
 			}
 		}
 		
+		// end of sequence
 		Ion.writeMark(out, Ion.END);
 	}
 	

@@ -40,7 +40,8 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	 * @param baseGain base gain (volume multiplier)
 	 * @param volume volume control
 	 */
-	public LoopPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume) {
+	public LoopPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume)
+	{
 		super(track, (float) basePitch, (float) baseGain, volume);
 		
 		paused = true;

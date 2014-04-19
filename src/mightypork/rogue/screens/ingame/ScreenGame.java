@@ -7,7 +7,8 @@ import mightypork.gamecore.gui.screens.LayeredScreen;
 
 public class ScreenGame extends LayeredScreen {
 	
-	public ScreenGame(AppAccess app) {
+	public ScreenGame(AppAccess app)
+	{
 		super(app);
 		
 		addLayer(new GameGui(this));

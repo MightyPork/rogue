@@ -54,7 +54,8 @@ public class DisplaySystem extends AppModule implements RectBound {
 	/**
 	 * @param app app access
 	 */
-	public DisplaySystem(AppAccess app) {
+	public DisplaySystem(AppAccess app)
+	{
 		super(app);
 	}
 	

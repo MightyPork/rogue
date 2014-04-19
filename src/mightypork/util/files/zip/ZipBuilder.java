@@ -29,7 +29,8 @@ public class ZipBuilder {
 	 * @param target target zip file
 	 * @throws IOException if the file is directory or cannot be created
 	 */
-	public ZipBuilder(File target) throws IOException {
+	public ZipBuilder(File target) throws IOException
+	{
 		
 		if (!target.getParentFile().mkdirs()) throw new IOException("Could not create output directory.");
 		

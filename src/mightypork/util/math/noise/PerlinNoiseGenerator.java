@@ -60,7 +60,8 @@ public class PerlinNoiseGenerator {
 	/**
 	 * Create a new noise creator with the default seed value
 	 */
-	public PerlinNoiseGenerator() {
+	public PerlinNoiseGenerator()
+	{
 		this(DEFAULT_SEED);
 	}
 	
@@ -70,7 +71,8 @@ public class PerlinNoiseGenerator {
 	 * 
 	 * @param seed The seed value to use
 	 */
-	public PerlinNoiseGenerator(long seed) {
+	public PerlinNoiseGenerator(long seed)
+	{
 		p_imp = new int[DEFAULT_SAMPLE_SIZE << 1];
 		
 		int i, j, k;

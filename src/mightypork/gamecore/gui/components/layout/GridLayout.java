@@ -24,7 +24,8 @@ public class GridLayout extends LayoutComponent {
 	 * @param rows number of rows
 	 * @param cols number of columns
 	 */
-	public GridLayout(AppAccess app, RectBound context, int rows, int cols) {
+	public GridLayout(AppAccess app, RectBound context, int rows, int cols)
+	{
 		super(app, context);
 		this.tiler = tiles(cols, rows);
 	}
@@ -38,7 +39,8 @@ public class GridLayout extends LayoutComponent {
 	 * @param rows number of rows
 	 * @param cols number of columns
 	 */
-	public GridLayout(AppAccess app, int rows, int cols) {
+	public GridLayout(AppAccess app, int rows, int cols)
+	{
 		this(app, null, rows, cols);
 	}
 	

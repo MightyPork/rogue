@@ -19,7 +19,8 @@ import mightypork.util.logging.Log;
 
 public final class MainLoop extends GameLoop implements ActionRequest.Listener {
 	
-	public MainLoop(BaseApp app) {
+	public MainLoop(BaseApp app)
+	{
 		super(app);
 	}
 	
@@ -83,7 +84,8 @@ public final class MainLoop extends GameLoop implements ActionRequest.Listener {
 		private final Screenshot scr;
 		
 		
-		public TaskTakeScreenshot() {
+		public TaskTakeScreenshot()
+		{
 			scr = getDisplay().takeScreenshot();
 		}
 		

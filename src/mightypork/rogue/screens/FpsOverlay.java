@@ -22,7 +22,8 @@ public class FpsOverlay extends Overlay {
 	TextPainter tp;
 	
 	
-	public FpsOverlay(AppAccess screen) {
+	public FpsOverlay(AppAccess screen)
+	{
 		super(screen);
 		
 		/*

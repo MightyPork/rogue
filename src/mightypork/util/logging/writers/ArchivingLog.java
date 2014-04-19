@@ -31,7 +31,8 @@ public class ArchivingLog extends SimpleLog {
 	 * @param file log file (in log directory)
 	 * @param oldLogCount number of old log files to keep: -1 all, 0 none.
 	 */
-	public ArchivingLog(String name, File file, int oldLogCount) {
+	public ArchivingLog(String name, File file, int oldLogCount)
+	{
 		super(name, file);
 		this.logs_to_keep = oldLogCount;
 	}
@@ -43,7 +44,8 @@ public class ArchivingLog extends SimpleLog {
 	 * @param name log name
 	 * @param file log file (in log directory)
 	 */
-	public ArchivingLog(String name, File file) {
+	public ArchivingLog(String name, File file)
+	{
 		super(name, file);
 		this.logs_to_keep = 5;
 	}

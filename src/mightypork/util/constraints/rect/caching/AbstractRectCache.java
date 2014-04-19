@@ -25,7 +25,8 @@ public abstract class AbstractRectCache extends RectAdapter implements Constrain
 	private boolean cachingEnabled = true;
 	
 	
-	public AbstractRectCache() {
+	public AbstractRectCache()
+	{
 		enableDigestCaching(true); // it changes only on poll
 	}
 	

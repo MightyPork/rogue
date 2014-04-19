@@ -1,42 +1,94 @@
 package mightypork.rogue.world.tile;
 
 
-import mightypork.rogue.world.Entity;
-import mightypork.rogue.world.item.Item;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import mightypork.util.control.timing.Animator;
+import mightypork.util.control.timing.Updateable;
+import mightypork.util.files.ion.Ion;
+import mightypork.util.files.ion.IonBundle;
+import mightypork.util.files.ion.IonConstructor;
+import mightypork.util.files.ion.Ionizable;
 
 
-/**
- * Concrete tile in the world.
- * 
- * @author MightyPork
- */
-public final class Tile extends Entity<TileData, TileModel, TileRenderContext> {
+public final class Tile implements Ionizable, Updateable {
 	
 	public static final short ION_MARK = 700;
 	
-	/** Whether the tile is occupied by an entity */
-	private transient boolean occupied;
+	private transient TileModel model;
+	public transient Object modelData;
+	public transient Animator anim;
+	
+	public int id;
+	
+	public TileItems items;
+	
+	public boolean[] flags;
+	public int[] numbers;
 	
 	
-	public Tile() {
-		super();
+	public Tile(int id)
+	{
+		this(Tiles.get(id));
 	}
 	
 	
-	public Tile(TileModel model) {
-		super(model);
+	@IonConstructor
+	public Tile()
+	{
 	}
 	
 	
-	public Tile(int id) {
-		super(Tiles.get(id));
+	public Tile(TileModel model)
+	{
+		this.model = model;
+		this.id = model.id;
+		this.items = new TileItems();
+	}
+	
+	
+	public void render(TileRenderContext context)
+	{
+		model.render(this, context);
+		
+		if (!items.isEmpty()) {
+			items.peek().renderOnTile(context);
+		}
 	}
 	
 	
 	@Override
-	protected TileModel getModelForId(int id)
+	public void save(OutputStream out) throws IOException
 	{
-		return Tiles.get(id);
+		if (model.isNullTile()) throw new RuntimeException("Cannot save null tile.");
+		
+		final IonBundle ib = new IonBundle();
+		
+		ib.put("id", id);
+		ib.put("flags", flags);
+		ib.put("numbers", numbers);
+		ib.put("items", items);
+		
+		Ion.writeObject(out, ib);
+	}
+	
+	
+	@Override
+	public void load(InputStream in) throws IOException
+	{
+		final IonBundle ib = (IonBundle) Ion.readObject(in);
+		
+		id = ib.get("id", id);
+		flags = ib.get("flags", flags);
+		numbers = ib.get("numbers", numbers);
+		items = ib.get("items", items);
+		
+		// renew model
+		if (model == null || id != model.id) {
+			model = Tiles.get(id);
+		}
 	}
 	
 	
@@ -48,71 +100,17 @@ public final class Tile extends Entity<TileData, TileModel, TileRenderContext> {
 	
 	
 	@Override
-	public void render(TileRenderContext context)
-	{
-		super.render(context);
-		
-		// render laying-on-top item
-		if (!data.items.isEmpty()) {
-			final Item item = data.items.peek();
-			
-			item.render(context.getRect());
-		}
-	}
-	
-	
-	@Override
 	public void update(double delta)
 	{
-		super.update(delta);
-		
-		// update laying-on-top item
-		if (!data.items.isEmpty()) {
-			final Item item = data.items.peek();
-			item.update(delta);
+		if (!items.isEmpty()) {
+			items.peek().update(delta);
 		}
 	}
 	
 	
-	/**
-	 * Try to reveal secrets of this tile
-	 */
-	public void search()
+	public TileModel getModel()
 	{
-		model.search(data);
+		return model;
 	}
 	
-	
-	/**
-	 * @return true if a mob can walk through
-	 */
-	public boolean isWalkable()
-	{
-		return model.isWalkable(data);
-	}
-	
-	
-	public boolean hasItem()
-	{
-		return !data.items.isEmpty();
-	}
-	
-	
-	public Item removeItem()
-	{
-		if(!hasItem()) return null;
-		return data.items.pop();
-	}
-	
-	
-	public boolean isOccupied()
-	{
-		return occupied;
-	}
-	
-	
-	public void setOccupied(boolean occupied)
-	{
-		this.occupied = occupied;
-	}
 }

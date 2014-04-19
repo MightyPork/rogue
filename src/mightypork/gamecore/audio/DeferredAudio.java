@@ -42,7 +42,8 @@ public class DeferredAudio extends DeferredResource {
 	 * 
 	 * @param resourceName resource to load when needed
 	 */
-	public DeferredAudio(String resourceName) {
+	public DeferredAudio(String resourceName)
+	{
 		super(resourceName);
 	}
 	

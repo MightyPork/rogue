@@ -25,7 +25,8 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 	 * @param resource resource path / name; this string is later used in
 	 *            loadResource()
 	 */
-	public DeferredResource(String resource) {
+	public DeferredResource(String resource)
+	{
 		this.resource = resource;
 	}
 	

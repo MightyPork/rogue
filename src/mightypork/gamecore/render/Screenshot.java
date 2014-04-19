@@ -30,7 +30,8 @@ public class Screenshot {
 	 * @param bpp bits per pixel (typically 4)
 	 * @param buffer
 	 */
-	public Screenshot(int width, int height, int bpp, ByteBuffer buffer) {
+	public Screenshot(int width, int height, int bpp, ByteBuffer buffer)
+	{
 		this.width = width;
 		this.height = height;
 		this.bpp = bpp;

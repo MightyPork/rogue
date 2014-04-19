@@ -45,7 +45,8 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	 * 
 	 * @param value initial value
 	 */
-	public NumAnimated(double value) {
+	public NumAnimated(double value)
+	{
 		setTo(value);
 	}
 	
@@ -56,7 +57,8 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	 * @param value initial value
 	 * @param easing easing function
 	 */
-	public NumAnimated(double value, Easing easing) {
+	public NumAnimated(double value, Easing easing)
+	{
 		this(value);
 		setEasing(easing);
 	}
@@ -69,7 +71,8 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	 * @param easingIn easing function (fade in)
 	 * @param easingOut easing function (fade out)
 	 */
-	public NumAnimated(double value, Easing easingIn, Easing easingOut) {
+	public NumAnimated(double value, Easing easingIn, Easing easingOut)
+	{
 		this(value);
 		setEasing(easingIn, easingOut);
 	}
@@ -80,7 +83,8 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	 * 
 	 * @param other other animator
 	 */
-	public NumAnimated(NumAnimated other) {
+	public NumAnimated(NumAnimated other)
+	{
 		setTo(other);
 	}
 	
@@ -194,7 +198,7 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	{
 		if (paused || isFinished()) return;
 		
-		elapsedTime = Calc.clampd(elapsedTime + delta, 0, duration);
+		elapsedTime = Calc.clamp(elapsedTime + delta, 0, duration);
 		if (isFinished()) {
 			duration = 0;
 			elapsedTime = 0;
