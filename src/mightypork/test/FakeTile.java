@@ -26,7 +26,7 @@ public class FakeTile extends TileModel {
 	
 	
 	@Override
-	public boolean isPotentiallyWalkable()
+	public boolean isWalkable()
 	{
 		return true;
 	}

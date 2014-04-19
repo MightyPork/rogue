@@ -70,17 +70,18 @@ public final class Res {
 		QuadGrid gui = texture.grid(4, 4);
 		textures.addQuad("item_frame", gui.makeQuad(0, 0));
 		textures.addQuad("sword", gui.makeQuad(1, 0));
-		textures.addQuad("meat", gui.makeQuad(2, 0));		
+		textures.addQuad("meat", gui.makeQuad(2, 0));
 		textures.addQuad("heart_on", gui.makeQuad(.0, 1, .5, .5));
-		textures.addQuad("heart_off", gui.makeQuad(.5, 1, .5, .5));		
+		textures.addQuad("heart_off", gui.makeQuad(.5, 1, .5, .5));
 		textures.addQuad("xp_on", gui.makeQuad(0, 1.5, .5, .5));
-		textures.addQuad("xp_off", gui.makeQuad(.5, 1.5, .5, .5));		
+		textures.addQuad("xp_off", gui.makeQuad(.5, 1.5, .5, .5));
 		textures.addQuad("panel", gui.makeQuad(0, 3.75, 4, .25));
-
+		
 		texture = textures.loadTexture("tiles", "/res/img/map_tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		QuadGrid tiles = texture.grid(32, 32);
 		
-		
+		textures.addSheet("tile.mossy_bricks.wall", tiles.makeSheet(4, 0, 7, 1));
+		textures.addSheet("tile.mossy_bricks.floor", tiles.makeSheet(16, 5, 7, 1));
 	}
 	
 	
@@ -101,6 +102,12 @@ public final class Res {
 	public static Texture getTexture(String key)
 	{
 		return textures.getTexture(key);
+	}
+	
+	
+	public static TxSheet getTxSheet(String key)
+	{
+		return textures.getSheet(key);
 	}
 	
 	

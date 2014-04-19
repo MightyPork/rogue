@@ -20,6 +20,19 @@ public class NoiseGen {
 	
 	
 	/**
+	 * make a new noise generator with a random seed
+	 * 
+	 * @param density noise density (0..1). Lower density means larger "spots".
+	 * @param low low bound ("valley")
+	 * @param middle middle bound ("surface")
+	 * @param high high bound ("hill")
+	 */
+	public NoiseGen(double density, double low, double middle, double high) {
+		this(density, low, middle, high, Double.doubleToLongBits(Math.random()));
+	}
+	
+	
+	/**
 	 * make a new noise generator
 	 * 
 	 * @param density noise density (0..1). Lower density means larger "spots".

@@ -4,18 +4,22 @@ package mightypork.rogue.world.tile;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.builders.TiledRect;
 import mightypork.util.constraints.rect.proxy.RectBound;
+import mightypork.util.math.noise.NoiseGen;
 
 
 public final class TileRenderContext implements RectBound {
 	
-	private final TileHolder map;
+	private final TileGrid map;
 	private final TiledRect tiler;
-	private int x, y;
+	private final NoiseGen noise;
+	
+	public int x, y;
 	
 	
-	public TileRenderContext(TileHolder map, Rect mapArea) {
+	public TileRenderContext(TileGrid map, Rect drawArea, long renderNoiseSeed) {
 		this.map = map;
-		this.tiler = mapArea.tiles(map.getWidth(), map.getHeight());
+		this.tiler = drawArea.tiles(map.getWidth(), map.getHeight());
+		this.noise = new NoiseGen(0.2, 0, 0.5, 1, renderNoiseSeed);
 	}
 	
 	
@@ -35,5 +39,21 @@ public final class TileRenderContext implements RectBound {
 	public Rect getRect()
 	{
 		return tiler.tile(x, y);
+	}
+	
+	
+	/**
+	 * @return per-coord noise value 0..1
+	 */
+	public double getNoise()
+	{
+		return noise.valueAt(x, y);
+	}
+	
+	
+	public void setCoord(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
 	}
 }

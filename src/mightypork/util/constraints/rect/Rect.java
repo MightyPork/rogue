@@ -1,6 +1,5 @@
 package mightypork.util.constraints.rect;
 
-
 import mightypork.util.annotations.FactoryMethod;
 import mightypork.util.constraints.DigestCache;
 import mightypork.util.constraints.Digestable;
@@ -951,5 +950,38 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	public TiledRect rows(int rows)
 	{
 		return new TiledRect(this, 1, rows);
+	}
+	
+
+	/**
+	 * Check for intersection
+	 * 
+	 * @param other other rect
+	 * @return true if they intersect
+	 * @see org.lwjgl.util.Rectangle
+	 */
+	public boolean intersectsWith(Rect other)
+	{
+		double tw = this.size().x();
+		double th = this.size().y();
+		double rw = other.size().x();
+		double rh = other.size().y();
+		
+		if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+			return false;
+		}
+		
+		double tx = this.origin().x();
+		double ty = this.origin().y();
+		double rx = other.origin().x();
+		double ry = other.origin().y();
+		
+		rw += rx;
+		rh += ry;
+		tw += tx;
+		th += ty;
+		
+		//      overflow || intersect
+		return ((rw < rx || rw > tx) && (rh < ry || rh > ty) && (tw < tx || tw > rx) && (th < ty || th > ry));
 	}
 }

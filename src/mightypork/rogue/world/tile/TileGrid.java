@@ -1,7 +1,7 @@
 package mightypork.rogue.world.tile;
 
 
-public interface TileHolder {
+public interface TileGrid {
 	
 	Tile getTile(int x, int y);
 	

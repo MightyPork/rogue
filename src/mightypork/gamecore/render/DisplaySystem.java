@@ -32,7 +32,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	private FpsMeter fpsMeter;
 	
 	/** Current screen size */
-	private final Vect screenSize = new Vect() {
+	private static final Vect screenSize = new Vect() {
 		
 		@Override
 		public double y()
@@ -48,7 +48,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 		}
 	};
 	
-	private final Rect rect = Rect.make(screenSize);
+	private static final Rect rect = Rect.make(screenSize);
 	
 	
 	/**
@@ -168,7 +168,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	/**
 	 * @return true if close was requested (i.e. click on cross)
 	 */
-	public boolean isCloseRequested()
+	public static boolean isCloseRequested()
 	{
 		return Display.isCloseRequested();
 	}
@@ -179,7 +179,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	 * 
 	 * @return is fullscreen
 	 */
-	public boolean isFullscreen()
+	public static boolean isFullscreen()
 	{
 		return Display.isFullscreen();
 	}
@@ -190,16 +190,27 @@ public class DisplaySystem extends AppModule implements RectBound {
 	 * 
 	 * @return size
 	 */
-	public Vect getSize()
+	public static Vect getSize()
 	{
 		return screenSize;
 	}
 	
 	
 	/**
+	 * Get screen rect. Static version of getRect().
+	 * 
+	 * @return size
+	 */
+	public static Rect getBounds()
+	{
+		return rect;
+	}
+	
+	
+	/**
 	 * @return screen width
 	 */
-	public int getWidth()
+	public static int getWidth()
 	{
 		return screenSize.xi();
 	}
@@ -208,7 +219,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	/**
 	 * @return screen height
 	 */
-	public int getHeight()
+	public static int getHeight()
 	{
 		return screenSize.yi();
 	}
@@ -246,7 +257,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	@Override
 	public Rect getRect()
 	{
-		return rect;
+		return getBounds();
 	}
 	
 	
@@ -264,7 +275,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	 * 
 	 * @return screen center.
 	 */
-	public Vect getCenter()
+	public static Vect getCenter()
 	{
 		return rect.center();
 	}

@@ -25,7 +25,7 @@ public abstract class TileModel extends EntityModel<TileData, TileRenderContext>
 	 * 
 	 * @return can be walked through (if discovered / open)
 	 */
-	public abstract boolean isPotentiallyWalkable();
+	public abstract boolean isWalkable();
 	
 	
 	/**

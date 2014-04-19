@@ -6,6 +6,8 @@ package mightypork.rogue.world.item;
  * 
  * @author MightyPork
  */
-public abstract class ItemData {
+public final class ItemData {
+
+	public static final int ION_MARK = 704;	
 	
 }

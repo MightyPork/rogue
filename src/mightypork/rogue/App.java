@@ -24,7 +24,9 @@ import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
 import mightypork.rogue.world.WorldMap;
 import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.item.ItemData;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.rogue.world.tile.TileData;
 import mightypork.util.control.eventbus.EventBus;
 import mightypork.util.control.eventbus.events.Event;
 import mightypork.util.files.ion.Ion;
@@ -106,9 +108,11 @@ public final class App extends BaseApp {
 	@Override
 	protected void preInit()
 	{
-		Ion.registerIonizable(Tile.ION_MARK, Tile.class);
-		Ion.registerIonizable(Item.ION_MARK, Item.class);
-		Ion.registerIonizable(WorldMap.ION_MARK, WorldMap.class);
+		Ion.registerIonizable(Tile.ION_MARK, Tile.class); // 700
+		Ion.registerIonizable(Item.ION_MARK, Item.class); // 701
+		Ion.registerIonizable(WorldMap.ION_MARK, WorldMap.class); // 702
+		Ion.registerIonizable(TileData.ION_MARK, TileData.class); // 703
+		Ion.registerIonizable(ItemData.ION_MARK, ItemData.class); // 704
 	}
 	
 	

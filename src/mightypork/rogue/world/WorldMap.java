@@ -6,12 +6,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import mightypork.rogue.world.tile.Tile;
-import mightypork.rogue.world.tile.TileHolder;
+import mightypork.rogue.world.tile.TileGrid;
 import mightypork.util.files.ion.Ion;
 import mightypork.util.files.ion.Ionizable;
 
 
-public class WorldMap implements TileHolder, Ionizable {
+public class WorldMap implements TileGrid, Ionizable {
 	
 	public static final int ION_MARK = 702;
 	
