@@ -16,7 +16,4 @@ public abstract class TileData {
 	/** Items dropped onto this tile */
 	public final Stack<Item> items = new Stack<>();
 	
-	/** Whether the tile is occupied by an entity */
-	public boolean occupied;
-	
 }

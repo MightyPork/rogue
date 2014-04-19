@@ -14,6 +14,9 @@ public final class Tile extends Entity<TileData, TileModel, TileRenderContext> {
 	
 	public static final short ION_MARK = 700;
 	
+	/** Whether the tile is occupied by an entity */
+	private transient boolean occupied;
+	
 	
 	public Tile() {
 		super();
@@ -86,5 +89,30 @@ public final class Tile extends Entity<TileData, TileModel, TileRenderContext> {
 	public boolean isWalkable()
 	{
 		return model.isWalkable(data);
+	}
+	
+	
+	public boolean hasItem()
+	{
+		return !data.items.isEmpty();
+	}
+	
+	
+	public Item removeItem()
+	{
+		if(!hasItem()) return null;
+		return data.items.pop();
+	}
+	
+	
+	public boolean isOccupied()
+	{
+		return occupied;
+	}
+	
+	
+	public void setOccupied(boolean occupied)
+	{
+		this.occupied = occupied;
 	}
 }

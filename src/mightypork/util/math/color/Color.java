@@ -1,6 +1,7 @@
 package mightypork.util.math.color;
 
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 import mightypork.util.annotations.FactoryMethod;
@@ -216,7 +217,7 @@ public abstract class Color {
 	 * Remove a pushed alpha multiplier from the stack. If there's no remaining
 	 * multiplier on the stack, an exception is raised.
 	 * 
-	 * @throws IllegalStateException if the stack is empty
+	 * @throws EmptyStackException if the stack is empty
 	 */
 	public static void popAlpha()
 	{
@@ -225,7 +226,7 @@ public abstract class Color {
 		}
 		
 		if (alphaStack.isEmpty()) {
-			throw new IllegalStateException("Global alpha stack underflow.");
+			throw new EmptyStackException();
 		}
 		
 		alphaStack.pop();

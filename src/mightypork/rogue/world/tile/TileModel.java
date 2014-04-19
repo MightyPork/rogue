@@ -12,6 +12,12 @@ public abstract class TileModel extends EntityModel<TileData, TileRenderContext>
 		Tiles.register(id, this);
 	}
 	
+	@Override
+	public TileData createData()
+	{
+		return null;
+	}
+	
 	
 	/**
 	 * Test if this tile type is potentially walkable. Used during world

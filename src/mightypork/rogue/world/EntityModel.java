@@ -46,7 +46,8 @@ public abstract class EntityModel<D, R extends RectBound> {
 	
 	
 	/**
-	 * Create a data object and populate it with default values.
+	 * Create a data object and populate it with default values.<br>
+	 * It's allowed to return null for no data.
 	 * 
 	 * @return data object
 	 */
