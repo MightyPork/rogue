@@ -4,14 +4,12 @@ package mightypork.rogue;
 import mightypork.gamecore.audio.SoundBank;
 import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
-import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.BaseApp;
 import mightypork.gamecore.render.fonts.FontBank;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.gamecore.render.fonts.Glyphs;
 import mightypork.gamecore.render.fonts.impl.DeferredFont;
 import mightypork.gamecore.render.textures.*;
-import mightypork.util.constraints.rect.Rect;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -31,7 +29,7 @@ public final class Res {
 	
 	
 	/**
-	 * Load on behalf of given {@link AppAccess}
+	 * Load on behalf of given base app
 	 * 
 	 * @param app app access
 	 */
@@ -52,14 +50,10 @@ public final class Res {
 	
 	private static void loadFonts()
 	{
-		DeferredFont font;
+		fonts.loadFont("polygon_pixel", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16));
+		fonts.loadFont("press_start", new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
 		
-		font = new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16);
-		fonts.loadFont("polygon_pixel", font);
-		
-		font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16);
-		fonts.loadFont("press_start", font);
-		
+		// aliases based on concrete usage
 		fonts.addAlias("default", "polygon_pixel");
 		fonts.addAlias("main_menu_button", "press_start");
 		fonts.addAlias("main_menu_title", "press_start");
@@ -68,32 +62,20 @@ public final class Res {
 	
 	private static void loadTextures()
 	{
-		DeferredTexture texture;
+		GLTexture texture;
 		
-		texture = new DeferredTexture("/res/img/kitten.png");
-		texture.setFilter(FilterMode.LINEAR);
-		texture.setWrap(WrapMode.CLAMP);
-		textures.loadTexture("test.kitten", texture);
+		texture = textures.loadTexture("test.kitten", "/res/img/kitten.png", FilterMode.LINEAR, WrapMode.CLAMP);
 		
-		texture = new DeferredTexture("/res/img/gui1.png");
-		texture.setFilter(FilterMode.NEAREST);
-		texture.setWrap(WrapMode.CLAMP);
-		textures.loadTexture("gui1", texture);
-		QuadGrid guiGrid = texture.grid(4, 4);
-		
-		//@formatter:off
-		textures.addQuad("item_frame", guiGrid.makeQuad(0, 0));
-		textures.addQuad("sword", guiGrid.makeQuad(1, 0));
-		textures.addQuad("meat", guiGrid.makeQuad(2, 0));
-		
-		textures.addQuad("heart_on", guiGrid.makeQuad(.0, 1, .5, .5));
-		textures.addQuad("heart_off", guiGrid.makeQuad(.5, 1, .5, .5));
-		
-		textures.addQuad("xp_on", guiGrid.makeQuad(0, 1.5, .5, .5));
-		textures.addQuad("xp_off", guiGrid.makeQuad(.5, 1.5, .5, .5));
-		
-		textures.addQuad("panel", guiGrid.makeQuad(0, 3.75, 4, .25));
-		//@formatter:off
+		texture = textures.loadTexture("gui1", "/res/img/gui1.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		QuadGrid gui = texture.grid(4, 4);
+		textures.addQuad("item_frame", gui.makeQuad(0, 0));
+		textures.addQuad("sword", gui.makeQuad(1, 0));
+		textures.addQuad("meat", gui.makeQuad(2, 0));		
+		textures.addQuad("heart_on", gui.makeQuad(.0, 1, .5, .5));
+		textures.addQuad("heart_off", gui.makeQuad(.5, 1, .5, .5));		
+		textures.addQuad("xp_on", gui.makeQuad(0, 1.5, .5, .5));
+		textures.addQuad("xp_off", gui.makeQuad(.5, 1.5, .5, .5));		
+		textures.addQuad("panel", gui.makeQuad(0, 3.75, 4, .25));
 	}
 	
 	

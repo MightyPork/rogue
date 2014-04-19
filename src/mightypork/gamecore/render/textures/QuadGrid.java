@@ -17,7 +17,6 @@ public class QuadGrid {
 	private double tileW;
 	private double tileH;
 	
-	
 	public QuadGrid(GLTexture tx, int tilesX, int tilesY) {
 		this.tx = tx;
 		this.txWidth = tilesX;

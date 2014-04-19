@@ -87,4 +87,17 @@ public class TxSheet {
 		randForSeed.setSeed(seed);
 		return getQuad(randForSeed.nextInt(count));
 	}
+	
+	
+	/**
+	 * Get random TxQuad from this sheet
+	 * 
+	 * @param seed random number generator seed (double will be converted to
+	 *            long)
+	 * @return the picked quad
+	 */
+	public TxQuad getRandomQuad(double seed)
+	{
+		return getRandomQuad(Double.doubleToLongBits(seed));
+	}
 }

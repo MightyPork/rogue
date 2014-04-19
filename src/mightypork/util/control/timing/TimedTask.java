@@ -4,6 +4,11 @@ package mightypork.util.control.timing;
 import mightypork.util.constraints.num.mutable.NumAnimated;
 
 
+/**
+ * Delayed runnable controlled by delta timing.
+ * 
+ * @author MightyPork
+ */
 public abstract class TimedTask implements Runnable, Updateable {
 	
 	private final NumAnimated timer = new NumAnimated(0);
