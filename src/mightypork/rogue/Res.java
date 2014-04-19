@@ -76,6 +76,11 @@ public final class Res {
 		textures.addQuad("xp_on", gui.makeQuad(0, 1.5, .5, .5));
 		textures.addQuad("xp_off", gui.makeQuad(.5, 1.5, .5, .5));		
 		textures.addQuad("panel", gui.makeQuad(0, 3.75, 4, .25));
+
+		texture = textures.loadTexture("tiles", "/res/img/map_tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		QuadGrid tiles = texture.grid(32, 32);
+		
+		
 	}
 	
 	
