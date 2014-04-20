@@ -8,7 +8,6 @@ import mightypork.rogue.world.World;
 import mightypork.util.constraints.num.Num;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.control.timing.Updateable;
-import mightypork.util.math.color.PAL16;
 import mightypork.util.math.color.RGB;
 
 
@@ -28,9 +27,9 @@ public class WorldRenderer extends InputComponent implements Updateable {
 		final Num h = height();
 		final Num w = width();
 		final Num minWH = w.min(h).max(700);
-				
-		Num grX = w.perc(30);
-		Num grY = h.perc(20);
+		
+		final Num grX = w.perc(30);
+		final Num grY = h.perc(20);
 		
 		leftShadow = leftEdge().growRight(grX);
 		rightShadow = rightEdge().growLeft(grX);
@@ -48,7 +47,7 @@ public class WorldRenderer extends InputComponent implements Updateable {
 	
 	@Override
 	protected void renderComponent()
-	{		
+	{
 		world.render(this, 8, 6, 64);
 		
 		Render.quadGradH(leftShadow, RGB.BLACK, RGB.NONE);

@@ -13,7 +13,6 @@ import mightypork.rogue.world.tile.Tiles;
 import mightypork.util.files.ion.Ion;
 import mightypork.util.files.ion.IonConstructor;
 import mightypork.util.files.ion.Ionizable;
-import mightypork.util.logging.Log;
 
 
 /**
@@ -21,7 +20,7 @@ import mightypork.util.logging.Log;
  * 
  * @author MightyPork
  */
-public class LevelMap implements MapAccess, Ionizable {
+public class Level implements MapAccess, Ionizable {
 	
 	public static final int ION_MARK = 702;
 	
@@ -35,12 +34,12 @@ public class LevelMap implements MapAccess, Ionizable {
 	
 	
 	@IonConstructor
-	public LevelMap()
+	public Level()
 	{
 	}
 	
 	
-	public LevelMap(int width, int height)
+	public Level(int width, int height)
 	{
 		this.width = width;
 		this.height = height;
@@ -56,7 +55,7 @@ public class LevelMap implements MapAccess, Ionizable {
 	}
 	
 	
-	public void fill(int id)
+	public void fill(short id)
 	{
 		fill(Tiles.get(id));
 	}
@@ -131,19 +130,17 @@ public class LevelMap implements MapAccess, Ionizable {
 	@Override
 	public void load(InputStream in) throws IOException
 	{
+		seed = Ion.readLong(in);
 		width = Ion.readInt(in);
 		height = Ion.readInt(in);
 		
 		buildArray();
 		
-		while (Ion.hasNextEntry(in)) {
-			
-			final int x = Ion.readInt(in);
-			final int y = Ion.readInt(in);
-			
-			final Tile tile = (Tile) Ion.readObject(in);
-			
-			setTile(tile, x, y);
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				tiles[y][x] = new Tile();
+				tiles[y][x].load(in);
+			}
 		}
 	}
 	
@@ -151,24 +148,15 @@ public class LevelMap implements MapAccess, Ionizable {
 	@Override
 	public void save(OutputStream out) throws IOException
 	{
+		Ion.writeLong(out, seed);
 		Ion.writeInt(out, width);
 		Ion.writeInt(out, height);
 		
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				final Tile t = getTile(x, y);
-				// skip null tiles
-				if (!t.getModel().isNullTile()) {
-					Ion.writeMark(out, Ion.ENTRY);
-					Ion.writeInt(out, x);
-					Ion.writeInt(out, y);
-					Ion.writeObject(out, t);
-				}
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				tiles[y][x].save(out);
 			}
 		}
-		
-		// end of sequence
-		Ion.writeMark(out, Ion.END);
 	}
 	
 	
@@ -181,8 +169,8 @@ public class LevelMap implements MapAccess, Ionizable {
 	
 	public void update(MapObserver observer, double delta)
 	{
-		int viewRange = observer.getViewRange();
-		WorldPos position = observer.getPosition();
+		final int viewRange = observer.getViewRange();
+		final WorldPos position = observer.getPosition();
 		
 		int x1 = position.x - viewRange;
 		int y1 = position.y - viewRange;

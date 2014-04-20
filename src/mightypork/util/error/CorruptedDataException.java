@@ -1,5 +1,6 @@
 package mightypork.util.error;
 
+
 import java.io.IOException;
 
 

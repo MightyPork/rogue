@@ -3,9 +3,13 @@ package mightypork.util.files.ion;
 
 import java.io.*;
 import java.nio.ByteBuffer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
+import mightypork.rogue.world.tile.Tile;
 import mightypork.util.error.CorruptedDataException;
 import mightypork.util.logging.Log;
 
@@ -403,11 +407,17 @@ public class Ion {
 	 */
 	public static void writeObject(OutputStream out, Object obj) throws IOException
 	{
+		if (obj instanceof Tile) throw new IllegalAccessError();
+		if (obj == null) {
+			writeMark(out, NULL);
+			return;
+		}
+		
 		if (obj instanceof Ionizable) {
 			
-			short mark = ((Ionizable) obj).getIonMark();
+			final short mark = ((Ionizable) obj).getIonMark();
 			
-			Class<? extends Ionizable> clzRegistered = customIonizables.get(mark);
+			final Class<? extends Ionizable> clzRegistered = customIonizables.get(mark);
 			
 			if (clzRegistered == null) {
 				throw new IOException("Ionizable object not registered: " + Log.str(obj.getClass()));
@@ -1292,6 +1302,10 @@ public class Ion {
 	public static <K, V> void writeMap(OutputStream out, Map<K, V> map) throws IOException
 	{
 		for (final Entry<K, V> e : map.entrySet()) {
+			if (e.getValue() == null) {
+				continue;
+			}
+			
 			writeMark(out, ENTRY);
 			writeObject(out, e.getKey());
 			writeObject(out, e.getValue());

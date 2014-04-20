@@ -1,5 +1,6 @@
 package mightypork.util.files.ion;
 
+
 import mightypork.util.files.ion.templates.IonizableHashMap;
 
 

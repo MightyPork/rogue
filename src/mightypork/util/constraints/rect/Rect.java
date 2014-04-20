@@ -725,7 +725,6 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 			
 		};
 	}
-
 	
 	
 	/**
@@ -756,7 +755,6 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 			
 		};
 	}
-
 	
 	
 	/**
@@ -787,7 +785,6 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 			
 		};
 	}
-	
 	
 	
 	public Num x()
@@ -1048,5 +1045,5 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 		//      overflow || intersect
 		return ((rw < rx || rw > tx) && (rh < ry || rh > ty) && (tw < tx || tw > rx) && (th < ty || th > ry));
 	}
-
+	
 }

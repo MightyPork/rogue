@@ -337,6 +337,8 @@ public class Log {
 	public static String str(Object o)
 	{
 		
+		if (o == null) return "<null>";
+		
 		boolean hasToString = false;
 		
 		try {

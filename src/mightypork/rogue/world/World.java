@@ -7,21 +7,18 @@ import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import mightypork.gamecore.render.Render;
-import mightypork.rogue.world.map.LevelMap;
+import mightypork.rogue.world.map.Level;
 import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.rogue.world.structs.LevelList;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.RectConst;
 import mightypork.util.constraints.rect.proxy.RectBound;
-import mightypork.util.constraints.vect.Vect;
 import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.control.timing.Updateable;
 import mightypork.util.error.CorruptedDataException;
 import mightypork.util.files.ion.Ion;
 import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.Ionizable;
-import mightypork.util.math.color.RGB;
 
 
 public class World implements Ionizable, Updateable {
@@ -30,10 +27,11 @@ public class World implements Ionizable, Updateable {
 	
 	private LevelList levels = new LevelList();
 	
-	private LocalPlayer player = new LocalPlayer();
+	private PlayerInfo player = new PlayerInfo();
 	
 	private transient final Set<MapObserver> observers = new HashSet<>();
 	
+	/** This seed can be used to re-create identical world. */
 	private long seed;
 	
 	
@@ -41,10 +39,10 @@ public class World implements Ionizable, Updateable {
 	public void load(InputStream in) throws IOException
 	{
 		// world data
-		IonBundle ib = (IonBundle) Ion.readObject(in);
+		final IonBundle ib = (IonBundle) Ion.readObject(in);
 		player = ib.get("player", player);
-		levels = ib.get("levels", levels);
 		seed = ib.get("seed", seed);
+		levels = ib.get("levels", levels);
 		
 		// levels
 		Ion.readSequence(in, levels);
@@ -56,14 +54,15 @@ public class World implements Ionizable, Updateable {
 	@Override
 	public void save(OutputStream out) throws IOException
 	{
-		IonBundle ib = new IonBundle();
+		final IonBundle ib = new IonBundle();
 		ib.put("player", player);
-		ib.put("levels", levels);
 		ib.put("seed", seed);
+		ib.put("levels", levels);
+		Ion.writeObject(out, ib);
 	}
 	
 	
-	public void setPlayer(LocalPlayer player)
+	public void setPlayer(PlayerInfo player)
 	{
 		removeObserver(this.player);
 		
@@ -85,7 +84,7 @@ public class World implements Ionizable, Updateable {
 	}
 	
 	
-	public void addLevel(LevelMap level)
+	public void addLevel(Level level)
 	{
 		levels.add(level);
 	}
@@ -102,7 +101,7 @@ public class World implements Ionizable, Updateable {
 	public void update(double delta)
 	{
 		for (int level = 0; level < levels.size(); level++) {
-			for (MapObserver observer : observers) {
+			for (final MapObserver observer : observers) {
 				if (observer.getPosition().floor == level) {
 					levels.get(level).update(observer, delta);
 				}
@@ -111,7 +110,7 @@ public class World implements Ionizable, Updateable {
 	}
 	
 	
-	public LevelMap getLevelForObserver(MapObserver observer)
+	public Level getLevelForObserver(MapObserver observer)
 	{
 		return levels.get(observer.getPosition().floor);
 	}
@@ -127,28 +126,28 @@ public class World implements Ionizable, Updateable {
 	 */
 	public void render(final RectBound viewport, final int yTiles, final int xTiles, final int minSize)
 	{
-		LevelMap floor = getLevelForObserver(player); // TODO fractional movement
+		final Level floor = getLevelForObserver(player); // TODO fractional movement
 		
-		Rect r = viewport.getRect();
-		double vpH = r.height().value();
-		double vpW = r.width().value();
+		final Rect r = viewport.getRect();
+		final double vpH = r.height().value();
+		final double vpW = r.width().value();
 		
 		// adjust tile size to fit desired amount of tiles
 		
-		double allowedSizeW = vpW / xTiles;
-		double allowedSizeH = vpH / yTiles;
+		final double allowedSizeW = vpW / xTiles;
+		final double allowedSizeH = vpH / yTiles;
 		int tileSize = (int) Math.round(Math.max(Math.min(allowedSizeH, allowedSizeW), minSize));
 		
 		tileSize -= tileSize % 16;
 		
-		VectConst vpCenter = r.center().sub(tileSize * 0.5, tileSize).freeze(); // 0.5 to center, 1 to move up (down is teh navbar)
+		final VectConst vpCenter = r.center().sub(tileSize * 0.5, tileSize).freeze(); // 0.5 to center, 1 to move up (down is teh navbar)
 		
-		int playerX = player.getPosition().x;
-		int playerY = player.getPosition().y;
+		final int playerX = player.getPosition().x;
+		final int playerY = player.getPosition().y;
 		
 		// total map area
 		//@formatter:off
-		RectConst mapRect = vpCenter.startRect().grow(
+		final RectConst mapRect = vpCenter.startRect().grow(
 				playerX*tileSize,
 				playerY*tileSize,//
 				(floor.getWidth() - playerX) * tileSize,
@@ -157,12 +156,12 @@ public class World implements Ionizable, Updateable {
 		//@formatter:on
 		
 		// tiles to render
-		int x1 = (int) Math.floor(playerX - (vpW / tileSize));
-		int y1 = (int) Math.floor(playerY - (vpH / tileSize));
-		int x2 = (int) Math.ceil(playerX + (vpW / tileSize));
-		int y2 = (int) Math.ceil(playerY + (vpH / tileSize));
+		final int x1 = (int) Math.floor(playerX - (vpW / tileSize));
+		final int y1 = (int) Math.floor(playerY - (vpH / tileSize));
+		final int x2 = (int) Math.ceil(playerX + (vpW / tileSize));
+		final int y2 = (int) Math.ceil(playerY + (vpH / tileSize));
 		
-		TileRenderContext trc = new TileRenderContext(floor, mapRect); //-tileSize*0.5
+		final TileRenderContext trc = new TileRenderContext(floor, mapRect); //-tileSize*0.5
 		for (trc.y = y1; trc.y <= y2; trc.y++) {
 			for (trc.x = x1; trc.x <= x2; trc.x++) {
 				trc.render();

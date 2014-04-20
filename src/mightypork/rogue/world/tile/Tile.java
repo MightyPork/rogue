@@ -4,14 +4,12 @@ package mightypork.rogue.world.tile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Stack;
 
-import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.map.TileRenderContext;
+import mightypork.rogue.world.structs.ItemStack;
 import mightypork.util.control.timing.Animator;
 import mightypork.util.control.timing.Updateable;
 import mightypork.util.files.ion.Ion;
-import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.IonConstructor;
 import mightypork.util.files.ion.Ionizable;
 
@@ -26,7 +24,7 @@ public final class Tile implements Ionizable, Updateable {
 	
 	public int id;
 	
-	public Stack<Item> items = new Stack<>();
+	public ItemStack items = new ItemStack();
 	
 	public boolean[] flags;
 	public int[] numbers;
@@ -66,30 +64,30 @@ public final class Tile implements Ionizable, Updateable {
 	{
 		if (model.isNullTile()) throw new RuntimeException("Cannot save null tile.");
 		
-		final IonBundle ib = new IonBundle();
+		Ion.writeShort(out, (short) id);
 		
-		ib.put("id", id);
-		ib.put("flags", flags);
-		ib.put("numbers", numbers);
+		byte written = 0;
+		if (flags != null) written |= 1;
+		if (numbers != null) written |= 2;
+		if (items != null && !items.isEmpty()) written |= 4;
+		Ion.writeByte(out, written);
 		
-		Ion.writeSequence(out, items);
-		
-		Ion.writeObject(out, ib);
+		if ((written & 1) != 0) Ion.writeBooleanArray(out, flags);
+		if ((written & 2) != 0) Ion.writeIntArray(out, numbers);
+		if ((written & 4) != 0) Ion.writeObject(out, items);
 	}
 	
 	
 	@Override
 	public void load(InputStream in) throws IOException
 	{
-		// bundle of data
-		final IonBundle ib = (IonBundle) Ion.readObject(in);
-		id = ib.get("id", id);
-		flags = ib.get("flags", flags);
-		numbers = ib.get("numbers", numbers);
+		id = Ion.readShort(in);
 		
-		// stored items
-		items.clear();
-		Ion.readSequence(in, items);
+		final byte written = Ion.readByte(in);
+		
+		if ((written & 1) != 0) flags = Ion.readBooleanArray(in);
+		if ((written & 2) != 0) numbers = Ion.readIntArray(in);
+		if ((written & 4) != 0) items = (ItemStack) Ion.readObject(in);
 		
 		// renew model
 		if (model == null || id != model.id) {

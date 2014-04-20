@@ -1,7 +1,6 @@
 package mightypork.rogue.world.tile.models;
 
 
-import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxSheet;
 import mightypork.rogue.Res;
@@ -9,8 +8,6 @@ import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.math.color.RGB;
 
 
 public abstract class SimpleTile extends TileModel {
@@ -30,6 +27,7 @@ public abstract class SimpleTile extends TileModel {
 	{
 		Render.quadTextured(context.getRect(), sheet.getRandomQuad(context.getTileNoise()));
 	}
+	
 	
 	@Override
 	@DefaultImpl

@@ -16,7 +16,7 @@ import mightypork.util.files.ion.Ionizable;
  * 
  * @author MightyPork
  */
-public class LocalPlayer implements Ionizable, MapObserver {
+public class PlayerInfo implements Ionizable, MapObserver {
 	
 	public static final short ION_MARK = 708;
 	
@@ -24,18 +24,18 @@ public class LocalPlayer implements Ionizable, MapObserver {
 	
 	
 	@IonConstructor
-	public LocalPlayer()
+	public PlayerInfo()
 	{
 	}
 	
 	
-	public LocalPlayer(int x, int y, int floor)
+	public PlayerInfo(int x, int y, int floor)
 	{
 		this.position.setTo(x, y, floor);
 	}
 	
 	
-	public LocalPlayer(WorldPos pos)
+	public PlayerInfo(WorldPos pos)
 	{
 		this.position = pos;
 	}
@@ -44,7 +44,7 @@ public class LocalPlayer implements Ionizable, MapObserver {
 	@Override
 	public void load(InputStream in) throws IOException
 	{
-		IonBundle ib = (IonBundle) Ion.readObject(in);
+		final IonBundle ib = (IonBundle) Ion.readObject(in);
 		
 		position = ib.get("pos", position);
 	}
@@ -53,7 +53,7 @@ public class LocalPlayer implements Ionizable, MapObserver {
 	@Override
 	public void save(OutputStream out) throws IOException
 	{
-		IonBundle ib = new IonBundle();
+		final IonBundle ib = new IonBundle();
 		
 		ib.put("pos", position);
 		
