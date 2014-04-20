@@ -8,14 +8,17 @@ import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.render.Render;
 import mightypork.rogue.Res;
 import mightypork.util.constraints.num.Num;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.math.color.PAL16;
+import mightypork.util.math.color.RGB;
 
 
 public class GameGui extends ScreenLayer {
 	
+
 	public GameGui(Screen screen)
 	{
 		super(screen);
@@ -23,11 +26,7 @@ public class GameGui extends ScreenLayer {
 		final Num h = root.height();
 		final Num w = root.width();
 		final Num minWH = w.min(h).max(700); // avoid too small shrinking
-		
-		final Component qp = new QuadPainter(PAL16.VOID);
-		qp.setRect(root);
-		root.add(qp);
-		
+				
 		final ImagePainter nav = new ImagePainter(Res.getTxQuad("panel"));
 		nav.setRect(root.bottomEdge().growUp(minWH.perc(7)));
 		root.add(nav);
@@ -58,6 +57,14 @@ public class GameGui extends ScreenLayer {
 	public int getPriority()
 	{
 		return 100;
+	}
+	
+	@Override
+	public void render()
+	{
+		
+		
+		super.render();
 	}
 	
 }

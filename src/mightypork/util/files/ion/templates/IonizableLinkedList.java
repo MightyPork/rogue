@@ -1,20 +1,16 @@
-package mightypork.rogue.world.tile;
+package mightypork.util.files.ion.templates;
 
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Stack;
+import java.util.LinkedList;
 
-import mightypork.rogue.world.item.Item;
 import mightypork.util.files.ion.Ion;
 import mightypork.util.files.ion.Ionizable;
 
 
-public class TileItems extends Stack<Item> implements Ionizable {
-	
-	public static final short ION_MARK = 703;
-	
+public abstract class IonizableLinkedList<E> extends LinkedList<E> implements Ionizable {
 	
 	@Override
 	public void load(InputStream in) throws IOException
@@ -27,13 +23,6 @@ public class TileItems extends Stack<Item> implements Ionizable {
 	public void save(OutputStream out) throws IOException
 	{
 		Ion.writeSequence(out, this);
-	}
-	
-	
-	@Override
-	public short getIonMark()
-	{
-		return ION_MARK;
 	}
 	
 }

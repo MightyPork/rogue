@@ -23,4 +23,6 @@ public interface RGB {
 	
 	Color PINK = Color.fromHex(0xFF3FFC);
 	Color ORANGE = Color.fromHex(0xFC4800);
+	
+	Color NONE = Color.NONE;
 }

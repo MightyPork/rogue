@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.Map.Entry;
 
+import mightypork.util.error.CorruptedDataException;
 import mightypork.util.logging.Log;
 
 
@@ -83,7 +84,7 @@ public class Ion {
 	static final short DATA_LIST = 81;
 	
 	/** Ionizables<Mark, Class> */
-	private static Map<Short, Class<?>> customIonizables = new HashMap<>();
+	private static Map<Short, Class<? extends Ionizable>> customIonizables = new HashMap<>();
 	
 	// buffers and helper arrays for storing to streams.
 	private static ByteBuffer bi = ByteBuffer.allocate(Integer.SIZE / 8);
@@ -122,7 +123,7 @@ public class Ion {
 	 *            except
 	 * @param objClass class of the registered Ionizable
 	 */
-	public static void registerIonizable(int mark, Class<?> objClass)
+	public static void registerIonizable(int mark, Class<? extends Ionizable> objClass)
 	{
 		// negative marks are allowed.
 		if (mark > Short.MAX_VALUE) throw new IllegalArgumentException("Mark too high (max " + Short.MAX_VALUE + ").");
@@ -147,9 +148,9 @@ public class Ion {
 	 * 
 	 * @param path file path
 	 * @return the loaded object
-	 * @throws IOException on failure
+	 * @throws CorruptedDataException
 	 */
-	public static Object fromFile(String path) throws IOException
+	public static Object fromFile(String path) throws CorruptedDataException
 	{
 		return fromFile(new File(path));
 	}
@@ -160,9 +161,9 @@ public class Ion {
 	 * 
 	 * @param file file
 	 * @return the loaded object
-	 * @throws IOException on failure
+	 * @throws CorruptedDataException
 	 */
-	public static Object fromFile(File file) throws IOException
+	public static Object fromFile(File file) throws CorruptedDataException
 	{
 		try(InputStream in = new FileInputStream(file)) {
 			
@@ -170,7 +171,7 @@ public class Ion {
 			return obj;
 			
 		} catch (final IOException e) {
-			throw new IOException("Error loading ION file.", e);
+			throw new CorruptedDataException("Error loading ION file.", e);
 		}
 	}
 	
@@ -257,7 +258,7 @@ public class Ion {
 				loaded = ((Ionizable) clz.newInstance());
 				
 			} catch (InstantiationException | IllegalAccessException e) {
-				throw new IOException("Cound not instantiate: " + Log.str(customIonizables.get(mark)), e);
+				throw new RuntimeException("Cound not instantiate: " + Log.str(customIonizables.get(mark)), e);
 			}
 			
 			loaded.load(in);
@@ -370,14 +371,14 @@ public class Ion {
 				return Strings;
 				
 			default:
-				throw new IOException("Invalid Ion mark: " + mark);
+				throw new CorruptedDataException("Invalid Ion mark: " + mark);
 		}
 	}
 	
 	
 	public static void expect(InputStream in, short mark) throws IOException
 	{
-		if (readMark(in) != mark) throw new IOException("Unexpected mark in ION stream.");
+		if (readMark(in) != mark) throw new CorruptedDataException("Unexpected mark in ION stream.");
 	}
 	
 	
@@ -403,7 +404,20 @@ public class Ion {
 	public static void writeObject(OutputStream out, Object obj) throws IOException
 	{
 		if (obj instanceof Ionizable) {
-			writeMark(out, ((Ionizable) obj).getIonMark());
+			
+			short mark = ((Ionizable) obj).getIonMark();
+			
+			Class<? extends Ionizable> clzRegistered = customIonizables.get(mark);
+			
+			if (clzRegistered == null) {
+				throw new IOException("Ionizable object not registered: " + Log.str(obj.getClass()));
+			}
+			
+			if (clzRegistered != obj.getClass()) {
+				throw new IOException("Registered class does not match actual one for " + Log.str(obj.getClass()));
+			}
+			
+			writeMark(out, mark);
 			((Ionizable) obj).save(out);
 			return;
 		}
@@ -1172,12 +1186,12 @@ public class Ion {
 		if (mark == ENTRY) return true;
 		if (mark == END) return false;
 		
-		throw new IOException("Unexpected mark encountered while reading sequence.");
+		throw new CorruptedDataException("Unexpected mark " + mark + " encountered in sequence, expected " + ENTRY + " or " + END);
 	}
 	
 	
 	/**
-	 * Read a sequence of elements
+	 * Read a sequence of elements into an ArrayList
 	 * 
 	 * @param in input stream
 	 * @return the collection
@@ -1185,12 +1199,12 @@ public class Ion {
 	 */
 	public static <T> Collection<T> readSequence(InputStream in) throws IOException
 	{
-		return readSequence(in, new LinkedList<T>());
+		return readSequence(in, new ArrayList<T>());
 	}
 	
 	
 	/**
-	 * Load entries into a collection
+	 * Load entries into a collection. The collection is cleaned first.
 	 * 
 	 * @param in input stream
 	 * @param filled collection to populate
@@ -1201,12 +1215,13 @@ public class Ion {
 	public static <T> Collection<T> readSequence(InputStream in, Collection<T> filled) throws IOException
 	{
 		try {
+			filled.clear();
 			while (hasNextEntry(in)) {
 				filled.add((T) readObject(in));
 			}
 			return filled;
 		} catch (final ClassCastException e) {
-			throw new IOException("Unexpected element type.");
+			throw new CorruptedDataException("Unexpected element type.", e);
 		}
 	}
 	
@@ -1229,7 +1244,7 @@ public class Ion {
 	
 	
 	/**
-	 * Read a map of elements
+	 * Read element pairs into a HashMap
 	 * 
 	 * @param in input stream
 	 * @return the map
@@ -1237,12 +1252,12 @@ public class Ion {
 	 */
 	public static <K, V> Map<K, V> readMap(InputStream in) throws IOException
 	{
-		return readMap(in, new LinkedHashMap<K, V>());
+		return readMap(in, new HashMap<K, V>());
 	}
 	
 	
 	/**
-	 * Load data into a map
+	 * Load data into a map. The map is cleaned first.
 	 * 
 	 * @param in input stream
 	 * @param filled filled map
@@ -1253,6 +1268,7 @@ public class Ion {
 	public static <K, V> Map<K, V> readMap(InputStream in, Map<K, V> filled) throws IOException
 	{
 		try {
+			filled.clear();
 			while (hasNextEntry(in)) {
 				final K key = (K) readObject(in);
 				final V value = (V) readObject(in);
@@ -1261,7 +1277,7 @@ public class Ion {
 			}
 			return filled;
 		} catch (final ClassCastException e) {
-			throw new IOException("Unexpected element type.");
+			throw new CorruptedDataException("Unexpected element type.", e);
 		}
 	}
 	

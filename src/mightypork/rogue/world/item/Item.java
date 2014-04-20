@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import mightypork.rogue.world.tile.TileRenderContext;
+import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.control.timing.Animator;
 import mightypork.util.control.timing.AnimatorBounce;
@@ -75,9 +75,9 @@ public class Item implements Updateable, Ionizable {
 	{
 		final IonBundle ib = (IonBundle) Ion.readObject(in);
 		
-		id = ib.get("id", id);
-		flags = ib.get("flags", flags);
-		numbers = ib.get("numbers", numbers);
+		id = ib.get("id", 0);
+		flags = ib.get("flags", null);
+		numbers = ib.get("numbers", null);
 		
 		if (id != model.id) {
 			model = Items.get(id);

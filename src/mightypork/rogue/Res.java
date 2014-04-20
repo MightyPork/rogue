@@ -80,8 +80,16 @@ public final class Res {
 		texture = textures.loadTexture("tiles", "/res/img/map_tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		final QuadGrid tiles = texture.grid(32, 32);
 		
-		textures.addSheet("tile.mossy_bricks.wall", tiles.makeSheet(4, 0, 7, 1));
-		textures.addSheet("tile.mossy_bricks.floor", tiles.makeSheet(16, 5, 7, 1));
+		textures.addSheet("tile.wall.mossy_bricks", tiles.makeSheet(4, 0, 7, 1));
+		textures.addSheet("tile.wall.small_bricks", tiles.makeSheet(0, 0, 4, 1));
+		textures.addSheet("tile.floor.mossy_bricks", tiles.makeSheet(16, 5, 7, 1));
+		textures.addSheet("tile.floor.rect_bricks", tiles.makeSheet(23, 5, 4, 1));
+		textures.addSheet("tile.wall.sandstone", tiles.makeSheet(0, 3, 10, 1));
+		textures.addSheet("tile.floor.sandstone", tiles.makeSheet(0, 6, 10, 1));
+		textures.addSheet("tile.wall.brown_cobble", tiles.makeSheet(0, 8, 8, 1));
+		textures.addSheet("tile.floor.brown_cobble", tiles.makeSheet(0, 11, 9, 1));
+		textures.addSheet("tile.floor.crystal", tiles.makeSheet(4, 5, 6, 1));
+		textures.addSheet("tile.wall.crystal", tiles.makeSheet(12, 2, 14, 1));
 	}
 	
 	

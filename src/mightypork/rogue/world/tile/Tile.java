@@ -4,7 +4,10 @@ package mightypork.rogue.world.tile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Stack;
 
+import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.util.control.timing.Animator;
 import mightypork.util.control.timing.Updateable;
 import mightypork.util.files.ion.Ion;
@@ -23,7 +26,7 @@ public final class Tile implements Ionizable, Updateable {
 	
 	public int id;
 	
-	public TileItems items;
+	public Stack<Item> items = new Stack<>();
 	
 	public boolean[] flags;
 	public int[] numbers;
@@ -45,13 +48,12 @@ public final class Tile implements Ionizable, Updateable {
 	{
 		this.model = model;
 		this.id = model.id;
-		this.items = new TileItems();
 	}
 	
 	
 	public void render(TileRenderContext context)
 	{
-		model.render(this, context);
+		model.render(context);
 		
 		if (!items.isEmpty()) {
 			items.peek().renderOnTile(context);
@@ -69,7 +71,8 @@ public final class Tile implements Ionizable, Updateable {
 		ib.put("id", id);
 		ib.put("flags", flags);
 		ib.put("numbers", numbers);
-		ib.put("items", items);
+		
+		Ion.writeSequence(out, items);
 		
 		Ion.writeObject(out, ib);
 	}
@@ -78,12 +81,15 @@ public final class Tile implements Ionizable, Updateable {
 	@Override
 	public void load(InputStream in) throws IOException
 	{
+		// bundle of data
 		final IonBundle ib = (IonBundle) Ion.readObject(in);
-		
 		id = ib.get("id", id);
 		flags = ib.get("flags", flags);
 		numbers = ib.get("numbers", numbers);
-		items = ib.get("items", items);
+		
+		// stored items
+		items.clear();
+		Ion.readSequence(in, items);
 		
 		// renew model
 		if (model == null || id != model.id) {
@@ -102,6 +108,7 @@ public final class Tile implements Ionizable, Updateable {
 	@Override
 	public void update(double delta)
 	{
+		model.update(this, delta);
 		if (!items.isEmpty()) {
 			items.peek().update(delta);
 		}

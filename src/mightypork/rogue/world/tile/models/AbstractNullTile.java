@@ -1,24 +1,35 @@
 package mightypork.rogue.world.tile.models;
 
 
+import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
-import mightypork.rogue.world.tile.TileRenderContext;
 
 
-public class NullTile extends TileModel {
+/**
+ * Null tile
+ * 
+ * @author MightyPork
+ */
+public abstract class AbstractNullTile extends TileModel {
 	
 	private Tile inst;
 	
 	
-	public NullTile(int id)
+	public AbstractNullTile(int id)
 	{
 		super(id);
 	}
 	
 	
 	@Override
-	public void render(Tile tile, TileRenderContext context)
+	public void render(TileRenderContext context)
+	{
+	}
+	
+	
+	@Override
+	public void update(Tile tile, double delta)
 	{
 	}
 	
@@ -26,14 +37,7 @@ public class NullTile extends TileModel {
 	@Override
 	public boolean isWalkable(Tile tile)
 	{
-		return false;
-	}
-	
-	
-	@Override
-	public boolean isPotentiallyWalkable()
-	{
-		return true;
+		return isPotentiallyWalkable();
 	}
 	
 	
@@ -45,7 +49,7 @@ public class NullTile extends TileModel {
 	
 	
 	@Override
-	public Tile create()
+	public Tile createTile()
 	{
 		if (inst == null) {
 			inst = new Tile(this);

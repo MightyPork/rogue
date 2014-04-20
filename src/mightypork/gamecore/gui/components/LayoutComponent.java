@@ -13,6 +13,7 @@ import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.control.Enableable;
 import mightypork.util.control.eventbus.EventBus;
 import mightypork.util.control.eventbus.clients.ClientHub;
+import mightypork.util.logging.Log;
 
 
 public abstract class LayoutComponent extends VisualComponent implements Enableable, ClientHub, AppAccess {
@@ -131,6 +132,7 @@ public abstract class LayoutComponent extends VisualComponent implements Enablea
 	public final void attach(Component component)
 	{
 		if (component == null) return;
+		if (component == this) throw new IllegalArgumentException("Uruboros. (infinite recursion evaded)");
 		
 		components.add(component);
 		addChildClient(component);

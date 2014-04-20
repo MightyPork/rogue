@@ -77,6 +77,7 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	@Override
 	public final void onLayoutChanged()
 	{
+		if (source == null) throw new NullPointerException("Component is missing a bounding rect.");
 		poll();
 	}
 	

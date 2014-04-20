@@ -22,10 +22,12 @@ import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
-import mightypork.rogue.world.WorldMap;
+import mightypork.rogue.world.LocalPlayer;
+import mightypork.rogue.world.World;
+import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.map.LevelMap;
 import mightypork.rogue.world.tile.Tile;
-import mightypork.rogue.world.tile.TileItems;
 import mightypork.util.control.eventbus.EventBus;
 import mightypork.util.control.eventbus.events.Event;
 import mightypork.util.files.ion.Ion;
@@ -107,10 +109,12 @@ public final class App extends BaseApp {
 	@Override
 	protected void preInit()
 	{
-		Ion.registerIonizable(Tile.ION_MARK, Tile.class);
 		Ion.registerIonizable(Item.ION_MARK, Item.class);
-		Ion.registerIonizable(WorldMap.ION_MARK, WorldMap.class);
-		Ion.registerIonizable(TileItems.ION_MARK, TileItems.class); // used by tile to store contained items
+		Ion.registerIonizable(LevelMap.ION_MARK, LevelMap.class);
+		Ion.registerIonizable(LocalPlayer.ION_MARK, LocalPlayer.class);
+		Ion.registerIonizable(Tile.ION_MARK, Tile.class);
+		Ion.registerIonizable(World.ION_MARK, World.class);
+		Ion.registerIonizable(WorldPos.ION_MARK, WorldPos.class);
 	}
 	
 	

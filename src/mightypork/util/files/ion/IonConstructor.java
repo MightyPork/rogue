@@ -9,8 +9,17 @@ import java.lang.annotation.Target;
 
 
 /**
+ * <p>
  * Implicit constructor marked like this is intended to be solely used for ION
- * de-serialization. This is a description annotation and has no other function.
+ * de-serialization.
+ * </p>
+ * <p>
+ * Constructors marked like this should create a functional instance with
+ * default values.
+ * </p>
+ * <p>
+ * This is a descriptive annotation and has no other function.
+ * </p>
  * 
  * @author MightyPork
  */

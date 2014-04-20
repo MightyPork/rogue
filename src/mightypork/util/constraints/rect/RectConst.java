@@ -36,6 +36,8 @@ public class RectConst extends Rect {
 	private RectConst v_edge_t;
 	private RectConst v_edge_b;
 	private RectDigest digest;
+	private RectConst v_floor;
+	private RectConst v_ceil;
 	
 	
 	/**
@@ -149,6 +151,20 @@ public class RectConst extends Rect {
 	public RectConst round()
 	{
 		return (v_round != null) ? v_round : (v_round = Rect.make(pos.round(), size.round()));
+	}
+	
+	
+	@Override
+	public RectConst floor()
+	{
+		return (v_floor != null) ? v_floor : (v_floor = Rect.make(pos.floor(), size.floor()));
+	}
+	
+	
+	@Override
+	public RectConst ceil()
+	{
+		return (v_ceil != null) ? v_ceil : (v_ceil = Rect.make(pos.ceil(), size.ceil()));
 	}
 	
 	

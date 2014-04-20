@@ -1,18 +1,21 @@
 package mightypork.util.files.ion;
 
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.LinkedHashMap;
+import mightypork.util.files.ion.templates.IonizableHashMap;
 
 
 /**
+ * <p>
  * Data bundle.
+ * </p>
+ * <p>
+ * Storing data in a bundle guarantees that future versions will be compatible
+ * with the older format. Reading using default values ensures that you will get
+ * some value even if it was not saved in the file.
+ * </p>
  * 
  * @author MightyPork
  */
-public class IonBundle extends LinkedHashMap<String, Object> implements Ionizable {
+public class IonBundle extends IonizableHashMap<String, Object> {
 	
 	/**
 	 * Get an object. If not found, fallback is returned.
@@ -49,21 +52,6 @@ public class IonBundle extends LinkedHashMap<String, Object> implements Ionizabl
 	public short getIonMark()
 	{
 		return Ion.DATA_BUNDLE;
-	}
-	
-	
-	@Override
-	public void load(InputStream in) throws IOException
-	{
-		clear();
-		Ion.readMap(in, this);
-	}
-	
-	
-	@Override
-	public void save(OutputStream out) throws IOException
-	{
-		Ion.writeMap(out, this);
 	}
 	
 }

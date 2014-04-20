@@ -725,6 +725,69 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 			
 		};
 	}
+
+	
+	
+	/**
+	 * Round coords down
+	 * 
+	 * @return result
+	 */
+	public Rect floor()
+	{
+		
+		return new Rect() {
+			
+			private final Rect t = Rect.this;
+			
+			
+			@Override
+			public Vect size()
+			{
+				return t.size().floor();
+			}
+			
+			
+			@Override
+			public Vect origin()
+			{
+				return t.origin().floor();
+			}
+			
+		};
+	}
+
+	
+	
+	/**
+	 * Round coords up
+	 * 
+	 * @return result
+	 */
+	public Rect ceil()
+	{
+		
+		return new Rect() {
+			
+			private final Rect t = Rect.this;
+			
+			
+			@Override
+			public Vect size()
+			{
+				return t.size().ceil();
+			}
+			
+			
+			@Override
+			public Vect origin()
+			{
+				return t.origin().ceil();
+			}
+			
+		};
+	}
+	
 	
 	
 	public Num x()
@@ -985,4 +1048,5 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 		//      overflow || intersect
 		return ((rw < rx || rw > tx) && (rh < ry || rh > ty) && (tw < tx || tw > rx) && (th < ty || th > ry));
 	}
+
 }

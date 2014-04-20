@@ -1,7 +1,7 @@
 package mightypork.rogue.world.item;
 
 
-import mightypork.rogue.world.tile.TileRenderContext;
+import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.constraints.num.proxy.NumBoundAdapter;
 import mightypork.util.constraints.rect.Rect;

@@ -10,7 +10,8 @@ public class ScreenGame extends LayeredScreen {
 	public ScreenGame(AppAccess app)
 	{
 		super(app);
-		
+
+		addLayer(new WorldLayer(this)); //TODO with provided world
 		addLayer(new GameGui(this));
 	}
 	

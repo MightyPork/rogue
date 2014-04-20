@@ -434,6 +434,12 @@ public class Render {
 	}
 	
 	
+	public static void quadColor(Rect quad, Color color)
+	{
+		quadColor(quad, color, color, color, color);
+	}
+	
+	
 	/**
 	 * Draw quad with coloured vertices.
 	 * 
