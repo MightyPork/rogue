@@ -21,7 +21,7 @@ public class TiledRect extends RectProxy {
 	final private Num perCol;
 	
 	/** Left top tile */
-	final private Rect aTile;
+	private Rect aTile;
 	
 	
 	public TiledRect(Rect source, int horizontal, int vertical)
@@ -34,6 +34,17 @@ public class TiledRect extends RectProxy {
 		this.perCol = width().div(horizontal);
 		
 		this.aTile = Rect.make(origin(), perCol, perRow);
+	}
+	
+	
+	/**
+	 * Set tile overlap. Applies only to tile, not span.
+	 * 
+	 * @param overlap how far to overlap to neighbouring tiles on all sides
+	 */
+	public void setOverlap(double overlap)
+	{
+		aTile = aTile.grow(overlap);
 	}
 	
 	

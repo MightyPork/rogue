@@ -40,5 +40,8 @@ public interface MapAccess {
 	long getSeed();
 
 
+	/**
+	 * @return level-specific noise generator
+	 */
 	NoiseGen getNoiseGen();
 }

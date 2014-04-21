@@ -27,6 +27,9 @@ public final class TileRenderContext implements RectBound {
 	{
 		this.map = map;
 		this.tiler = drawArea.tiles(map.getWidth(), map.getHeight());
+		
+		this.tiler.setOverlap(0.001);		
+		
 		this.noise = map.getNoiseGen();
 	}
 	
@@ -59,7 +62,7 @@ public final class TileRenderContext implements RectBound {
 	@Override
 	public Rect getRect()
 	{
-		return tiler.tile(x, y).grow(0.01); // important to avoid gaps b/w tiles when scaled.
+		return tiler.tile(x, y);
 	}
 	
 	
