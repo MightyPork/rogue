@@ -7,9 +7,7 @@ import mightypork.util.logging.LogAlias;
 
 
 /**
- * Deferred resource abstraction.<br>
- * Resources implementing {@link NullResource} will be treated as fake and not
- * attempted to load.
+ * Deferred resource abstraction.
  * 
  * @author MightyPork
  */
@@ -42,8 +40,6 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 		
 		loadFailed = false;
 		
-		if (this instanceof NullResource) return; // don't even try
-			
 		try {
 			if (resource == null) {
 				throw new NullPointerException("Resource string cannot be null for non-null resource.");

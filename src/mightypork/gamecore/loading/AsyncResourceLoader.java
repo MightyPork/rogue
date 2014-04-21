@@ -64,7 +64,6 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 	public void loadResource(final Deferred resource)
 	{
 		if (resource.isLoaded()) return;
-		if (resource instanceof NullResource) return;
 		
 		// textures & fonts needs to be loaded in main thread
 		if (resource.getClass().isAnnotationPresent(MustLoadInMainThread.class)) {

@@ -8,7 +8,6 @@ import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
-import mightypork.util.logging.Log;
 
 
 /**
@@ -17,10 +16,6 @@ import mightypork.util.logging.Log;
  * @author MightyPork
  */
 public class SoundBank extends AppAdapter {
-	
-	private static final DeferredAudio NO_SOUND = new NullAudio();
-	private static final LoopPlayer NULL_LOOP = new LoopPlayer(NO_SOUND, 0, 0, null);
-	private static final EffectPlayer NULL_EFFECT = new EffectPlayer(NO_SOUND, 0, 0, null);
 	
 	private final Map<String, EffectPlayer> effects = new HashMap<>();
 	private final Map<String, LoopPlayer> loops = new HashMap<>();
@@ -76,8 +71,7 @@ public class SoundBank extends AppAdapter {
 	{
 		final LoopPlayer p = loops.get(key);
 		if (p == null) {
-			Log.w("Requesting unknown sound loop \"" + key + "\".");
-			return NULL_LOOP;
+			throw new RuntimeException("Unknown sound loop \"" + key + "\".");
 		}
 		return p;
 	}
@@ -93,8 +87,7 @@ public class SoundBank extends AppAdapter {
 	{
 		final EffectPlayer p = effects.get(key);
 		if (p == null) {
-			Log.w("Requesting unknown sound effect \"" + key + "\".");
-			return NULL_EFFECT;
+			throw new RuntimeException("Unknown sound effect \"" + key + "\".");
 		}
 		return p;
 	}
