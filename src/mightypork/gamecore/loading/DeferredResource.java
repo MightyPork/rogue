@@ -42,7 +42,8 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 		
 		loadFailed = false;
 		
-		if (isNull()) return;
+		if (this instanceof NullResource) return; // don't even try
+			
 		try {
 			if (resource == null) {
 				throw new NullPointerException("Resource string cannot be null for non-null resource.");
@@ -61,8 +62,6 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 	@Override
 	public synchronized final boolean isLoaded()
 	{
-		if (isNull()) return false;
-		
 		return loadAttempted && !loadFailed;
 	}
 	
@@ -74,8 +73,6 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 	 */
 	public synchronized final boolean ensureLoaded()
 	{
-		if (isNull()) return false;
-		
 		if (isLoaded()) {
 			return true;
 		} else {
@@ -131,11 +128,5 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 			if (other.resource != null) return false;
 		} else if (!resource.equals(other.resource)) return false;
 		return true;
-	}
-	
-	
-	private boolean isNull()
-	{
-		return this instanceof NullResource;
 	}
 }

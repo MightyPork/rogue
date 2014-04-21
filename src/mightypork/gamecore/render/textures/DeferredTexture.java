@@ -15,13 +15,15 @@ import org.lwjgl.opengl.GL11;
  * 
  * @author MightyPork
  */
-@MustLoadInMainThread
 @LogAlias(name = "Texture")
+@MustLoadInMainThread
 public class DeferredTexture extends DeferredResource implements GLTexture {
 	
 	private org.newdawn.slick.opengl.Texture backingTexture;
 	private FilterMode filter = FilterMode.NEAREST;
 	private WrapMode wrap = WrapMode.CLAMP;
+	private boolean alpha;
+	private boolean alphal;
 	
 	
 	/**
@@ -33,12 +35,6 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 	}
 	
 	
-	/**
-	 * Get a quad from this texture of given position/size
-	 * 
-	 * @param uvs quad rect
-	 * @return the quad
-	 */
 	@Override
 	public TxQuad makeQuad(Rect uvs)
 	{
@@ -49,7 +45,7 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 	@Override
 	protected synchronized void loadResource(String path)
 	{
-		backingTexture = Render.loadTexture(path, filter);
+		backingTexture = Render.loadSlickTexture(path, filter);
 	}
 	
 	
@@ -58,29 +54,21 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 	{
 		if (!ensureLoaded()) return false;
 		
-		return backingTexture.hasAlpha();
-	}
-	
-	
-	/**
-	 * Bind without adjusting parameters
-	 */
-	@Override
-	public void bindRaw()
-	{
-		if (!ensureLoaded()) return;
+		if (!alphal) {
+			alphal = true;
+			alpha = backingTexture.hasAlpha();			
+		}
 		
-		backingTexture.bind();
+		return alpha;
 	}
 	
 	
-	/**
-	 * Bind and adjust parameters (filter, wrap)
-	 */
 	@Override
 	public void bind()
 	{
 		if (!ensureLoaded()) return;
+		
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		
 		GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 		
@@ -90,7 +78,7 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filter.num);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filter.num);
 		
-		bindRaw();
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, getTextureID());
 	}
 	
 	
@@ -113,16 +101,7 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 	
 	
 	@Override
-	public String getTextureRef()
-	{
-		if (!ensureLoaded()) return null;
-		
-		return backingTexture.getTextureRef();
-	}
-	
-	
-	@Override
-	public float getHeight()
+	public float getHeight01()
 	{
 		if (!ensureLoaded()) return 0;
 		
@@ -131,7 +110,7 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 	
 	
 	@Override
-	public float getWidth()
+	public float getWidth01()
 	{
 		if (!ensureLoaded()) return 0;
 		
@@ -140,25 +119,7 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 	
 	
 	@Override
-	public int getTextureHeight()
-	{
-		if (!ensureLoaded()) return 0;
-		
-		return backingTexture.getTextureHeight();
-	}
-	
-	
-	@Override
-	public int getTextureWidth()
-	{
-		if (!ensureLoaded()) return 0;
-		
-		return backingTexture.getTextureWidth();
-	}
-	
-	
-	@Override
-	public void release()
+	public void destroy()
 	{
 		if (!isLoaded()) return;
 		
@@ -172,31 +133,6 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 		if (!ensureLoaded()) return -1;
 		
 		return backingTexture.getTextureID();
-	}
-	
-	
-	@Override
-	public byte[] getTextureData()
-	{
-		if (!ensureLoaded()) return null;
-		
-		return backingTexture.getTextureData();
-	}
-	
-	
-	@Override
-	public void setTextureFilter(int textureFilter)
-	{
-		if (!ensureLoaded()) return;
-		
-		backingTexture.setTextureFilter(textureFilter);
-	}
-	
-	
-	@Override
-	public void destroy()
-	{
-		release();
 	}
 	
 	

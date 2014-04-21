@@ -42,7 +42,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 		cat_position.setTo(getDisplay().getCenter());
 		cat_position.setDefaultDuration(3);
 		
-		final ImagePainter cat = new ImagePainter(Res.getTxQuad("test.kitten"));
+		final ImagePainter cat = new ImagePainter(Res.getTxQuad("test.kitten2"));
 		cat.setRect(Rect.make(size).centerTo(cat_position));
 		cat.enableCaching(false);
 		

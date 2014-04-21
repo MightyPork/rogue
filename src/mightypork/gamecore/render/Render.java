@@ -18,7 +18,6 @@ import mightypork.util.math.color.Color;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureImpl;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -299,7 +298,7 @@ public class Render {
 	 * @param filtering filtering mode to use while loading.
 	 * @return the loaded texture
 	 */
-	public synchronized static Texture loadTexture(String resourcePath, FilterMode filtering)
+	public synchronized static Texture loadSlickTexture(String resourcePath, FilterMode filtering)
 	{
 		
 		try {
@@ -319,29 +318,6 @@ public class Render {
 			throw new RuntimeException("Could not load texture " + resourcePath + ".", e);
 		}
 		
-	}
-	
-	
-	/**
-	 * Bind texture
-	 * 
-	 * @param texture the texture
-	 * @throws RuntimeException if not loaded yet
-	 */
-	private static void bindTexture(GLTexture texture) throws RuntimeException
-	{
-		texture.bind();
-	}
-	
-	
-	/**
-	 * Unbind all
-	 */
-	private static void unbindTexture()
-	{
-		if (TextureImpl.getLastBind() != null) {
-			TextureImpl.bindNone();
-		}
 	}
 	
 	
@@ -368,7 +344,7 @@ public class Render {
 		final RectDigest q = quad.digest();
 		
 		// draw with color
-
+		
 		glDisable(GL_TEXTURE_2D);
 		
 		// quad
@@ -378,47 +354,6 @@ public class Render {
 		glVertex2d(q.right, q.top);
 		glVertex2d(q.left, q.top);
 		glEnd();
-	}
-	
-	
-	/**
-	 * Render textured rect (texture must be binded already)
-	 * 
-	 * @param quad rectangle (px)
-	 * @param uvs texture coords (0-1)
-	 */
-	public static void quadUV(Rect quad, Rect uvs)
-	{
-		glBegin(GL_QUADS);
-		quadUV_nobound(quad, uvs);
-		glEnd();
-	}
-	
-	
-	/**
-	 * Draw quad without glBegin and glEnd.
-	 * 
-	 * @param quad rectangle (px)
-	 * @param uvs texture coords (0-1)
-	 */
-	public static void quadUV_nobound(Rect quad, Rect uvs)
-	{
-		final RectDigest q = quad.digest();
-		
-		final RectDigest u = uvs.digest();
-		
-		// quad with texture
-		glTexCoord2d(u.left, u.bottom);
-		glVertex2d(q.left, q.bottom);
-		
-		glTexCoord2d(u.right, u.bottom);
-		glVertex2d(q.right, q.bottom);
-		
-		glTexCoord2d(u.right, u.top);
-		glVertex2d(q.right, q.top);
-		
-		glTexCoord2d(u.left, u.top);
-		glVertex2d(q.left, q.top);
 	}
 	
 	
@@ -455,7 +390,7 @@ public class Render {
 		final RectDigest r = quad.digest();
 		
 		// draw with color
-
+		
 		glDisable(GL_TEXTURE_2D);
 		
 		glBegin(GL_QUADS);
@@ -498,10 +433,32 @@ public class Render {
 	public static void quadTextured(Rect quad, Rect uvs, GLTexture texture, Color tint)
 	{
 		glEnable(GL_TEXTURE_2D);
-		bindTexture(texture);
+		
+		texture.bind();
+		
 		setColor(tint);
-		quadUV(quad, uvs);
-		unbindTexture();
+		
+		glBegin(GL_QUADS);
+		
+		final RectDigest q = quad.digest();
+		final RectDigest u = uvs.digest();
+		
+		final double w = texture.getWidth01();
+		final double h = texture.getHeight01();
+		
+		// quad with texture
+		glTexCoord2d(u.x * w, u.bottom * h);
+		glVertex2d(q.left, q.bottom);
+		
+		glTexCoord2d(u.right * w, u.bottom * h);
+		glVertex2d(q.right, q.bottom);
+		
+		glTexCoord2d(u.right * w, u.top * h);
+		glVertex2d(q.right, q.top);
+		
+		glTexCoord2d(u.left * w, u.top * h);
+		glVertex2d(q.left, q.top);
+		glEnd();
 	}
 	
 	

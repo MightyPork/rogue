@@ -11,8 +11,6 @@ import mightypork.gamecore.render.fonts.Glyphs;
 import mightypork.gamecore.render.fonts.impl.DeferredFont;
 import mightypork.gamecore.render.textures.*;
 
-import org.newdawn.slick.opengl.Texture;
-
 
 /**
  * Static resource repository
@@ -65,6 +63,7 @@ public final class Res {
 		GLTexture texture;
 		
 		texture = textures.loadTexture("test.kitten", "/res/img/kitten.png", FilterMode.LINEAR, WrapMode.CLAMP);
+		texture = textures.loadTexture("test.kitten2", "/res/img/kitten_npot.png", FilterMode.LINEAR, WrapMode.CLAMP);
 		
 		texture = textures.loadTexture("gui1", "/res/img/gui1.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		final QuadGrid gui = texture.grid(4, 4);
@@ -107,7 +106,7 @@ public final class Res {
 	}
 	
 	
-	public static Texture getTexture(String key)
+	public static GLTexture getTexture(String key)
 	{
 		return textures.getTexture(key);
 	}

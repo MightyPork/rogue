@@ -334,30 +334,6 @@ public class CachedFont implements GLFont {
 	}
 	
 	
-	private void drawQuad(float xmin, float ymin, float xmax, float ymax, float txmin, float tymin, float txmax, float tymax)
-	{
-		final float draw_width = xmax - xmin;
-		final float draw_height = ymax - ymin;
-		
-		final float txmin01 = txmin / textureWidth;
-		final float tymin01 = tymin / textureHeight;
-		final float twidth01 = ((txmax - txmin) / textureWidth);
-		final float theight01 = ((tymax - tymin) / textureHeight);
-		
-		glTexCoord2f(txmin01, tymin01);
-		glVertex2f(xmin, ymin);
-		
-		glTexCoord2f(txmin01, tymin01 + theight01);
-		glVertex2f(xmin, ymin + draw_height);
-		
-		glTexCoord2f(txmin01 + twidth01, tymin01 + theight01);
-		glVertex2f(xmin + draw_width, ymin + draw_height);
-		
-		glTexCoord2f(txmin01 + twidth01, tymin01);
-		glVertex2f(xmin + draw_width, ymin);
-	}
-	
-	
 	/**
 	 * Get size needed to draw given string
 	 * 
@@ -398,31 +374,57 @@ public class CachedFont implements GLFont {
 	{
 		GLUtils.checkGLContext();
 		
+		// PUSH
 		glPushAttrib(GL_ENABLE_BIT);
+		
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		glColor4d(color.red(), color.green(), color.blue(), color.alpha());
+		
 		glBegin(GL_QUADS);
 		
 		CharTile chtx = null;
 		char charCurrent;
+		int minx = 0;
 		
-		glBegin(GL_QUADS);
-		
-		int totalwidth = 0;
 		for (int i = 0; i < text.length(); i++) {
 			charCurrent = text.charAt(i);
 			
 			chtx = chars.get(charCurrent);
 			
 			if (chtx != null) {
-				drawQuad((totalwidth), 0, (totalwidth + chtx.width), (chtx.height), chtx.texPosX, chtx.texPosY, chtx.texPosX + chtx.width, chtx.texPosY
-						+ chtx.height);
-				totalwidth += chtx.width;
+				
+				// draw quad
+				
+				float txmin = chtx.texPosX;
+				float tymin = chtx.texPosY;
+				final float draw_width = minx + chtx.width - minx;
+				final float draw_height = (float) (chtx.height) - (float) 0;
+				
+				final float txmin01 = txmin / textureWidth;
+				final float tymin01 = tymin / textureHeight;
+				final float twidth01 = ((chtx.texPosX + chtx.width - txmin) / textureWidth);
+				final float theight01 = ((chtx.texPosY + chtx.height - tymin) / textureHeight);
+				
+				glTexCoord2f(txmin01, tymin01);
+				glVertex2f(minx, 0);
+				
+				glTexCoord2f(txmin01, tymin01 + theight01);
+				glVertex2f(minx, 0 + draw_height);
+				
+				glTexCoord2f(txmin01 + twidth01, tymin01 + theight01);
+				glVertex2f(minx + draw_width, 0 + draw_height);
+				
+				glTexCoord2f(txmin01 + twidth01, tymin01);
+				glVertex2f(minx + draw_width, 0);
+				minx += chtx.width;
+				
 			}
 		}
 		
 		glEnd();
+		
+		// POP
 		glPopAttrib();
 	}
 	

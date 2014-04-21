@@ -2,8 +2,7 @@ package mightypork.gamecore.render.textures;
 
 
 import mightypork.util.constraints.rect.Rect;
-
-import org.newdawn.slick.opengl.Texture;
+import mightypork.util.control.Destroyable;
 
 
 /**
@@ -11,7 +10,7 @@ import org.newdawn.slick.opengl.Texture;
  * 
  * @author MightyPork
  */
-public interface GLTexture extends Texture {
+public interface GLTexture extends Destroyable {
 	
 	/**
 	 * Set filter for scaling
@@ -37,12 +36,6 @@ public interface GLTexture extends Texture {
 	
 	
 	/**
-	 * Bind without adjusting parameters
-	 */
-	void bindRaw();
-	
-	
-	/**
 	 * Get a grid for given number of tiles
 	 * 
 	 * @param x horizontal tile count
@@ -50,4 +43,50 @@ public interface GLTexture extends Texture {
 	 * @return grid
 	 */
 	QuadGrid grid(int x, int y);
+	
+	
+	/**
+	 * @return OpenGL texture ID
+	 */
+	int getTextureID();
+	
+	
+	/**
+	 * Get the height of the texture, 0..1.<br>
+	 * 
+	 * @return height 0..1
+	 */
+	float getHeight01();
+	
+	
+	/**
+	 * Get the width of the texture, 0..1.<br>
+	 * 
+	 * @return width 0..1
+	 */
+	float getWidth01();
+	
+	
+	/**
+	 * @return source image width (corresponding to width01)
+	 */
+	int getImageWidth();
+	
+	
+	/**
+	 * @return source image height (corresponding to height01)
+	 */
+	int getImageHeight();
+	
+	
+	/**
+	 * Bind to GL context, applying the filters prescribed.
+	 */
+	void bind();
+
+
+	/**
+	 * @return true if the image is RGBA
+	 */
+	boolean hasAlpha();
 }

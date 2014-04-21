@@ -2,7 +2,6 @@ package mightypork.util.constraints.rect.caching;
 
 
 import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.RectConst;
 
 
 public class RectDigest {
@@ -19,20 +18,17 @@ public class RectDigest {
 	
 	
 	public RectDigest(Rect rect)
-	{
+	{		
+		this.x = rect.origin().x();
+		this.y = rect.origin().y();
 		
-		final RectConst frozen = rect.freeze();
+		this.width = rect.size().x();
+		this.height = rect.size().y();
 		
-		this.x = frozen.x().value();
-		this.y = frozen.y().value();
-		
-		this.width = frozen.width().value();
-		this.height = frozen.height().value();
-		
-		this.left = frozen.left().value();
-		this.right = frozen.right().value();
-		this.top = frozen.top().value();
-		this.bottom = frozen.bottom().value();
+		this.left = x;
+		this.right = x + width;
+		this.top = y;
+		this.bottom = y + height;
 	}
 	
 	
