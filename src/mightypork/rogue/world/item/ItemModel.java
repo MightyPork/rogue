@@ -13,11 +13,6 @@ public abstract class ItemModel {
 	
 	public final int id;
 	
-	private final RectBoundAdapter tileRect = new RectBoundAdapter();
-	private final NumBoundAdapter yOffset = new NumBoundAdapter();
-	
-	private final Rect itemRect = tileRect.shrink(tileRect.height().perc(10)).moveY(yOffset.neg());
-	
 	
 	public ItemModel(int id)
 	{
@@ -37,14 +32,5 @@ public abstract class ItemModel {
 	
 	
 	public abstract void render(Item item, RectBound context);
-	
-	
-	public void renderOnTile(Item item, TileRenderContext context)
-	{
-		tileRect.setRect(context.getRect());
-		yOffset.setNum(item.anim);
-		
-		render(item, itemRect);
-	}
 	
 }

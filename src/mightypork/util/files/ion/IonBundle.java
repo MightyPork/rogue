@@ -1,7 +1,7 @@
 package mightypork.util.files.ion;
 
 
-import mightypork.util.files.ion.templates.IonizableHashMap;
+import mightypork.util.files.ion.templates.StreamableHashMap;
 
 
 /**
@@ -16,7 +16,7 @@ import mightypork.util.files.ion.templates.IonizableHashMap;
  * 
  * @author MightyPork
  */
-public class IonBundle extends IonizableHashMap<String, Object> {
+public class IonBundle extends StreamableHashMap<String, Object> implements Ionizable {
 	
 	/**
 	 * Get an object. If not found, fallback is returned.

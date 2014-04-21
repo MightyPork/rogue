@@ -28,7 +28,7 @@ public final class TileRenderContext implements RectBound {
 		this.map = map;
 		this.tiler = drawArea.tiles(map.getWidth(), map.getHeight());
 		
-		this.tiler.setOverlap(0.001);		
+		this.tiler.setOverlap(0.001); // avoid gaps (rounding error?)	
 		
 		this.noise = map.getNoiseGen();
 	}

@@ -18,7 +18,7 @@ public class RectDigest {
 	
 	
 	public RectDigest(Rect rect)
-	{		
+	{
 		this.x = rect.origin().x();
 		this.y = rect.origin().y();
 		

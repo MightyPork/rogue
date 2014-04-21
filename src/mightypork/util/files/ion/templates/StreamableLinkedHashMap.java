@@ -4,25 +4,25 @@ package mightypork.util.files.ion.templates;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Stack;
+import java.util.LinkedHashMap;
 
 import mightypork.util.files.ion.Ion;
-import mightypork.util.files.ion.Ionizable;
+import mightypork.util.files.ion.Streamable;
 
 
-public abstract class IonizableStack<E> extends Stack<E> implements Ionizable {
+public class StreamableLinkedHashMap<K, V> extends LinkedHashMap<K, V> implements Streamable {
 	
 	@Override
 	public void load(InputStream in) throws IOException
 	{
-		Ion.readSequence(in, this);
+		Ion.readMap(in, this);
 	}
 	
 	
 	@Override
 	public void save(OutputStream out) throws IOException
 	{
-		Ion.writeSequence(out, this);
+		Ion.writeMap(out, this);
 	}
 	
 }

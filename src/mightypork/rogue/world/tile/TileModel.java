@@ -3,6 +3,7 @@ package mightypork.rogue.world.tile;
 
 import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.util.annotations.DefaultImpl;
+import mightypork.util.files.ion.IonBundle;
 
 
 /**
@@ -76,4 +77,31 @@ public abstract class TileModel {
 	 */
 	public abstract void update(Tile tile, double delta);
 	
+	
+	/**
+	 * Store tile metadata (door lock state etc)
+	 * 
+	 * @param tile stored tile
+	 * @param ib written data bundle
+	 */
+	public abstract void saveMetadata(Tile tile, IonBundle ib);
+	
+	
+	/**
+	 * Load from an IonBundle. The bundle is guaranteed to not be null, but
+	 * could be empty.
+	 * 
+	 * @param tile loaded tile
+	 * @param ib item data bundle
+	 */
+	public abstract void loadMetadata(Tile tile, IonBundle ib);
+	
+	
+	/**
+	 * True if this tile's data should be saved/loaded.<br>
+	 * Must be a constant value.
+	 * 
+	 * @return has data
+	 */
+	public abstract boolean hasMetadata();
 }

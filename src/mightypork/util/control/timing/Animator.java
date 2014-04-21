@@ -4,11 +4,10 @@ package mightypork.util.control.timing;
 import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.constraints.num.Num;
 import mightypork.util.constraints.num.mutable.NumAnimated;
-import mightypork.util.constraints.num.proxy.NumBound;
 import mightypork.util.math.Easing;
 
 
-public abstract class Animator implements Updateable, Pauseable, NumBound {
+public abstract class Animator extends Num implements Updateable, Pauseable {
 	
 	private final NumAnimated animator;
 	private final Num num;
@@ -81,12 +80,6 @@ public abstract class Animator implements Updateable, Pauseable, NumBound {
 	
 	
 	@Override
-	public final Num getNum()
-	{
-		return num;
-	}
-	
-	
 	public final double value()
 	{
 		return num.value();

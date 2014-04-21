@@ -27,7 +27,6 @@ import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.map.Level;
-import mightypork.rogue.world.structs.LevelList;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.control.eventbus.EventBus;
 import mightypork.util.control.eventbus.events.Event;
@@ -112,7 +111,6 @@ public final class App extends BaseApp {
 	{
 		Ion.registerIonizable(Item.ION_MARK, Item.class);
 		Ion.registerIonizable(Level.ION_MARK, Level.class);
-		Ion.registerIonizable(LevelList.ION_MARK, LevelList.class);
 		Ion.registerIonizable(PlayerInfo.ION_MARK, PlayerInfo.class);
 		Ion.registerIonizable(Tile.ION_MARK, Tile.class);
 		Ion.registerIonizable(World.ION_MARK, World.class);

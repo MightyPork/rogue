@@ -83,8 +83,8 @@ public interface GLTexture extends Destroyable {
 	 * Bind to GL context, applying the filters prescribed.
 	 */
 	void bind();
-
-
+	
+	
 	/**
 	 * @return true if the image is RGBA
 	 */

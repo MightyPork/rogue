@@ -9,23 +9,22 @@ import java.util.Set;
 
 import mightypork.rogue.world.map.Level;
 import mightypork.rogue.world.map.TileRenderContext;
-import mightypork.rogue.world.structs.LevelList;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.RectConst;
 import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.control.timing.Updateable;
-import mightypork.util.error.CorruptedDataException;
 import mightypork.util.files.ion.Ion;
 import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.Ionizable;
+import mightypork.util.files.ion.templates.StreamableArrayList;
 
 
 public class World implements Ionizable, Updateable {
 	
 	public static final short ION_MARK = 706;
 	
-	private LevelList levels = new LevelList();
+	private StreamableArrayList<Level> levels = new StreamableArrayList<>();
 	
 	private PlayerInfo player = new PlayerInfo();
 	
@@ -42,12 +41,8 @@ public class World implements Ionizable, Updateable {
 		final IonBundle ib = (IonBundle) Ion.readObject(in);
 		player = ib.get("player", player);
 		seed = ib.get("seed", seed);
-		levels = ib.get("levels", levels);
 		
-		// levels
 		Ion.readSequence(in, levels);
-		
-		if (player == null) throw new CorruptedDataException("Null player in world.");
 	}
 	
 	
@@ -57,8 +52,9 @@ public class World implements Ionizable, Updateable {
 		final IonBundle ib = new IonBundle();
 		ib.put("player", player);
 		ib.put("seed", seed);
-		ib.put("levels", levels);
 		Ion.writeObject(out, ib);
+		
+		Ion.writeSequence(out, levels);
 	}
 	
 	

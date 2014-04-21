@@ -32,7 +32,7 @@ public class Level implements MapAccess, Ionizable {
 	
 	/** Level seed (used for generation and tile variation) */
 	public long seed;
-
+	
 	private NoiseGen noiseGen;
 	
 	
@@ -192,6 +192,7 @@ public class Level implements MapAccess, Ionizable {
 			}
 		}
 	}
+	
 	
 	@Override
 	public NoiseGen getNoiseGen()

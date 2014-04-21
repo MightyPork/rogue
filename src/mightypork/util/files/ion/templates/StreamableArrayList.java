@@ -7,10 +7,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import mightypork.util.files.ion.Ion;
-import mightypork.util.files.ion.Ionizable;
+import mightypork.util.files.ion.Streamable;
 
 
-public abstract class IonizableArrayList<E> extends ArrayList<E> implements Ionizable {
+public class StreamableArrayList<E> extends ArrayList<E> implements Streamable {
 	
 	@Override
 	public void load(InputStream in) throws IOException

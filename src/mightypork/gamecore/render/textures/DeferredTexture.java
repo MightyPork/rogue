@@ -56,7 +56,7 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 		
 		if (!alphal) {
 			alphal = true;
-			alpha = backingTexture.hasAlpha();			
+			alpha = backingTexture.hasAlpha();
 		}
 		
 		return alpha;

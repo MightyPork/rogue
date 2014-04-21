@@ -97,7 +97,7 @@ public class TiledRect extends RectProxy {
 			Log.w("Y coordinate(s) out of range.", new IllegalAccessException());
 		}
 		
-		Vect orig = origin().add(perCol.mul(x), perRow.mul(y));
+		final Vect orig = origin().add(perCol.mul(x), perRow.mul(y));
 		
 		return Rect.make(orig, perCol.mul(size_x), perRow.mul(size_y));
 	}

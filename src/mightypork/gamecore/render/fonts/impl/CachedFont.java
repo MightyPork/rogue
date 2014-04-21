@@ -396,8 +396,8 @@ public class CachedFont implements GLFont {
 				
 				// draw quad
 				
-				float txmin = chtx.texPosX;
-				float tymin = chtx.texPosY;
+				final float txmin = chtx.texPosX;
+				final float tymin = chtx.texPosY;
 				final float draw_width = minx + chtx.width - minx;
 				final float draw_height = (float) (chtx.height) - (float) 0;
 				
