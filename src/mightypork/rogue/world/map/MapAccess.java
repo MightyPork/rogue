@@ -2,6 +2,7 @@ package mightypork.rogue.world.map;
 
 
 import mightypork.rogue.world.tile.Tile;
+import mightypork.util.math.noise.NoiseGen;
 
 
 /**
@@ -37,4 +38,7 @@ public interface MapAccess {
 	 * @return map seed
 	 */
 	long getSeed();
+
+
+	NoiseGen getNoiseGen();
 }

@@ -339,9 +339,9 @@ public class Render {
 	 */
 	private static void unbindTexture()
 	{
-		//if (TextureImpl.getLastBind() != null) {
-		TextureImpl.bindNone();
-		//}
+		if (TextureImpl.getLastBind() != null) {
+			TextureImpl.bindNone();
+		}
 	}
 	
 	
@@ -368,7 +368,8 @@ public class Render {
 		final RectDigest q = quad.digest();
 		
 		// draw with color
-		unbindTexture();
+
+		glDisable(GL_TEXTURE_2D);
 		
 		// quad
 		glBegin(GL_QUADS);
@@ -454,7 +455,8 @@ public class Render {
 		final RectDigest r = quad.digest();
 		
 		// draw with color
-		unbindTexture();
+
+		glDisable(GL_TEXTURE_2D);
 		
 		glBegin(GL_QUADS);
 		setColor(colorHMinVMax);
@@ -495,6 +497,7 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, Rect uvs, GLTexture texture, Color tint)
 	{
+		glEnable(GL_TEXTURE_2D);
 		bindTexture(texture);
 		setColor(tint);
 		quadUV(quad, uvs);

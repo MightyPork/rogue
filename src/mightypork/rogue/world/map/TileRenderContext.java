@@ -27,7 +27,7 @@ public final class TileRenderContext implements RectBound {
 	{
 		this.map = map;
 		this.tiler = drawArea.tiles(map.getWidth(), map.getHeight());
-		this.noise = new NoiseGen(0.2, 0, 0.5, 1, map.getSeed());
+		this.noise = map.getNoiseGen();
 	}
 	
 	

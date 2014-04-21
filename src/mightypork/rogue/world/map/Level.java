@@ -13,6 +13,7 @@ import mightypork.rogue.world.tile.Tiles;
 import mightypork.util.files.ion.Ion;
 import mightypork.util.files.ion.IonConstructor;
 import mightypork.util.files.ion.Ionizable;
+import mightypork.util.math.noise.NoiseGen;
 
 
 /**
@@ -31,6 +32,8 @@ public class Level implements MapAccess, Ionizable {
 	
 	/** Level seed (used for generation and tile variation) */
 	public long seed;
+
+	private NoiseGen noiseGen;
 	
 	
 	@IonConstructor
@@ -190,4 +193,13 @@ public class Level implements MapAccess, Ionizable {
 		}
 	}
 	
+	@Override
+	public NoiseGen getNoiseGen()
+	{
+		if (noiseGen == null) {
+			noiseGen = new NoiseGen(0.2, 0, 0.5, 1, seed);
+		}
+		
+		return noiseGen;
+	}
 }
