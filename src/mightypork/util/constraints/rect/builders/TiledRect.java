@@ -4,6 +4,7 @@ package mightypork.util.constraints.rect.builders;
 import mightypork.util.constraints.num.Num;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.proxy.RectProxy;
+import mightypork.util.constraints.vect.Vect;
 import mightypork.util.logging.Log;
 
 
@@ -19,6 +20,9 @@ public class TiledRect extends RectProxy {
 	final private Num perRow;
 	final private Num perCol;
 	
+	/** Left top tile */
+	final private Rect aTile;
+	
 	
 	public TiledRect(Rect source, int horizontal, int vertical)
 	{
@@ -28,6 +32,8 @@ public class TiledRect extends RectProxy {
 		
 		this.perRow = height().div(vertical);
 		this.perCol = width().div(horizontal);
+		
+		this.aTile = Rect.make(origin(), perCol, perRow);
 	}
 	
 	
@@ -49,44 +55,40 @@ public class TiledRect extends RectProxy {
 			throw new IndexOutOfBoundsException("Y coordinate out of range.");
 		}
 		
-		final Num leftMove = left().add(perCol.mul(x));
-		final Num topMove = top().add(perRow.mul(y));
-		
-		return Rect.make(perCol, perRow).move(leftMove, topMove);
+		return aTile.move(perCol.mul(x), perRow.mul(y));
 	}
 	
 	
 	/**
 	 * Get a span (tile spanning across multiple cells)
 	 * 
-	 * @param x_from x start position
-	 * @param y_from y start position
+	 * @param x x start position
+	 * @param y y start position
 	 * @param size_x horizontal size (columns)
 	 * @param size_y vertical size (rows)
 	 * @return tile the tile
 	 * @throws IndexOutOfBoundsException when invalid index is specified.
 	 */
-	public Rect span(int x_from, int y_from, int size_x, int size_y)
+	public Rect span(int x, int y, int size_x, int size_y)
 	{
-		final int x_to = x_from + size_x - 1;
-		final int y_to = y_from + size_y - 1;
+		final int x_to = x + size_x - 1;
+		final int y_to = y + size_y - 1;
 		
 		if (size_x <= 0 || size_y <= 0) {
 			Log.w("Size must be > 0.", new IllegalAccessException());
 		}
 		
-		if (x_from >= tilesX || x_from < 0 || x_to >= tilesX || x_to < 0) {
+		if (x >= tilesX || x < 0 || x_to >= tilesX || x_to < 0) {
 			Log.w("X coordinate(s) out of range.", new IllegalAccessException());
 		}
 		
-		if (y_from >= tilesY || y_from < 0 || y_to >= tilesY || y_to < 0) {
+		if (y >= tilesY || y < 0 || y_to >= tilesY || y_to < 0) {
 			Log.w("Y coordinate(s) out of range.", new IllegalAccessException());
 		}
 		
-		final Num leftMove = left().add(perCol.mul(x_from));
-		final Num topMove = top().add(perRow.mul(y_from));
+		Vect orig = origin().add(perCol.mul(x), perRow.mul(y));
 		
-		return Rect.make(perCol.mul(size_x), perRow.mul(size_y)).move(leftMove, topMove);
+		return Rect.make(orig, perCol.mul(size_x), perRow.mul(size_y));
 	}
 	
 	
