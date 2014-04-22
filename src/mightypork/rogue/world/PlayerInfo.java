@@ -16,16 +16,16 @@ public class PlayerInfo implements IonBundled {
 	@Override
 	public void load(IonBundle bundle) throws IOException
 	{
-		eid = bundle.get("attached_eid", 0);
-		level = bundle.get("current_level", 0);
+		eid = bundle.get("eid", 0);
+		level = bundle.get("floor", 0);
 	}
 	
 	
 	@Override
 	public void save(IonBundle bundle) throws IOException
 	{
-		bundle.put("attached_eid", eid);
-		bundle.put("current_level", level);
+		bundle.put("eid", eid);
+		bundle.put("floor", level);
 	}
 	
 	

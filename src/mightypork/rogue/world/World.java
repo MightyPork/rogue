@@ -38,6 +38,8 @@ public class World implements IonBundled, Updateable {
 		eid = in.get("next_eid", 0);
 		in.loadSequence("levels", levels);
 		in.loadBundled("player", player);
+		
+		playerEntity = levels.get(player.getLevel()).getEntity(player.getEID());
 	}
 	
 	

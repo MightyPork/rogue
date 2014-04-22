@@ -29,10 +29,11 @@ public class WorldLayer extends ScreenLayer {
 		// FIXME just temporary test here
 		
 		final Random rand = new Random();
+		final File f = new File(Paths.WORKDIR, "test-world.ion");
 		final World w = MapGenerator.createWorld(rand.nextLong());
 		
 		try {
-			Ion.toFile(new File(Paths.WORKDIR, "test-world.ion"), w);
+			Ion.toFile(f, w);
 		} catch (final IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -42,7 +43,7 @@ public class WorldLayer extends ScreenLayer {
 //		final World w;
 //		
 //		try {
-//			w = Ion.fromFile("amap.ion", World.class);
+//			w = Ion.fromFile(f, World.class);
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //			System.exit(1);
@@ -88,6 +89,19 @@ public class WorldLayer extends ScreenLayer {
 			public void run()
 			{
 				c.walkSouth();
+			}
+		});
+		
+		bindKey(new KeyStroke(Keys.L_CONTROL, Keys.S), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				try {
+					Ion.toFile(f, w);
+				} catch (final IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		

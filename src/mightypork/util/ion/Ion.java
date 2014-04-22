@@ -212,7 +212,7 @@ public class Ion {
 	 */
 	public static <T extends IonBundled> T fromStream(InputStream in, Class<? extends T> objClass) throws IOException
 	{
-		return unwrap(new IonInput(in).readBundle(), objClass);
+		return unwrap((IonBundle)new IonInput(in).readObject(), objClass);
 	}
 	
 	
