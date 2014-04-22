@@ -3,9 +3,9 @@ package mightypork.rogue.world;
 
 import java.util.Random;
 
-import mightypork.rogue.world.map.Level;
-import mightypork.rogue.world.tile.TileModel;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tiles;
+import mightypork.rogue.world.tile.models.TileModel;
 
 
 public class MapGenerator {
@@ -13,19 +13,19 @@ public class MapGenerator {
 	public static final Random rand = new Random();
 	
 	
-	public static ServerWorld createWorld(long seed)
+	public static World createWorld(long seed)
 	{
 		synchronized (rand) {
 			rand.setSeed(seed);
 			
-			final ServerWorld w = new ServerWorld();
+			final World w = new World();
 			w.setSeed(seed);
 			
 			w.addLevel(createLevel(rand.nextLong(), Tiles.CRYSTAL_FLOOR, Tiles.CRYSTAL_WALL));
 			w.addLevel(createLevel(rand.nextLong(), Tiles.BRCOBBLE_FLOOR, Tiles.BRCOBBLE_WALL));
 			
 			// TODO place on start position
-			w.addPlayer("local", new PlayerEntity(10, 10, 0));			
+			w.createPlayer(10, 10, 0);
 			return w;
 		}
 	}

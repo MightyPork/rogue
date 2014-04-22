@@ -90,7 +90,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 	{
 		if (!event.isDown()) return;
 		
-		cat_position.setTo(event.getPos());
+		cat_position.animate(event.getPos());
 		
 		final double newSize = root.height().perc(10 + rand.nextInt(40)).value();
 		

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import mightypork.gamecore.render.fonts.GLFont;
+import mightypork.gamecore.render.textures.DeferredTexture;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.util.constraints.vect.Vect;
 import mightypork.util.constraints.vect.VectConst;
@@ -373,6 +374,8 @@ public class CachedFont implements GLFont {
 	public void draw(String text, Color color)
 	{
 		GLUtils.checkGLContext();
+		
+		DeferredTexture.lastBind = null; // needs rebind.
 		
 		// PUSH
 		glPushAttrib(GL_ENABLE_BIT);

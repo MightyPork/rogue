@@ -2,12 +2,11 @@ package mightypork.rogue.world.tile;
 
 
 import mightypork.rogue.world.item.Item;
-import mightypork.rogue.world.map.TileRenderContext;
+import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.proxy.RectBoundAdapter;
 import mightypork.util.control.timing.Animator;
 import mightypork.util.control.timing.AnimatorBounce;
-import mightypork.util.control.timing.Updateable;
 import mightypork.util.math.Easing;
 
 

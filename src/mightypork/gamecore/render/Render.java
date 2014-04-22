@@ -5,9 +5,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
 
+import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.gamecore.render.textures.GLTexture;
 import mightypork.gamecore.render.textures.TxQuad;
+import mightypork.rogue.Res;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.caching.RectDigest;
 import mightypork.util.constraints.vect.Vect;
@@ -230,6 +232,8 @@ public class Render {
 	}
 	
 	private static int pushed = 0;
+	/** Can be used to avoid texture binding and glBegin/glEnd in textured quads */
+	public static boolean batchTexturedQuadMode;
 	
 	
 	/**
@@ -432,13 +436,13 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, Rect uvs, GLTexture texture, Color tint)
 	{
-		glEnable(GL_TEXTURE_2D);
-		
-		texture.bind();
+		if (!batchTexturedQuadMode) {
+			glEnable(GL_TEXTURE_2D);
+			texture.bind();
+			glBegin(GL_QUADS);
+		}
 		
 		setColor(tint);
-		
-		glBegin(GL_QUADS);
 		
 		final RectDigest q = quad.digest();
 		final RectDigest u = uvs.digest();
@@ -458,7 +462,8 @@ public class Render {
 		
 		glTexCoord2d(u.left * w, u.top * h);
 		glVertex2d(q.left, q.top);
-		glEnd();
+		
+		if (!batchTexturedQuadMode) glEnd();
 	}
 	
 	
@@ -544,4 +549,18 @@ public class Render {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	
+	
+	public static void enterBatchTexturedQuadMode(GLTexture texture)
+	{
+		texture.bind();
+		GL11.glBegin(GL11.GL_QUADS);
+		batchTexturedQuadMode = true;
+	}
+	
+	
+	public static void leaveBatchTexturedQuadMode()
+	{
+		GL11.glEnd();
+		batchTexturedQuadMode = false;
+	}
 }

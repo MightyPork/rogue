@@ -42,6 +42,29 @@ public class IonBundle implements IonBinary {
 	}
 	
 	
+	public void loadBundle(String key, IonBundle bundle)
+	{
+		if (!containsKey(key)) return;
+		
+		final IonBundle ib = get(key, null);
+		
+		bundle.clear();
+		bundle.putAll(ib);
+	}
+	
+	
+	public boolean containsKey(Object key)
+	{
+		return backingMap.containsKey(key);
+	}
+	
+	
+	public boolean containsValue(Object value)
+	{
+		return backingMap.containsValue(value);
+	}
+	
+	
 	public <K, V> Map<K, V> getMap(String key)
 	{
 		final Map<K, V> m = new HashMap<>();
@@ -50,12 +73,12 @@ public class IonBundle implements IonBinary {
 	}
 	
 	
-	public <K, V> void loadMap(String key, Map<K, V> map)
+	public <K, V> void loadMap(String key, Map<K, V> filled)
 	{
 		final IonMapWrapper imw = get(key, null);
 		if (imw == null) return;
-		map.clear();
-		imw.fill(map);
+		filled.clear();
+		imw.fill(filled);
 	}
 	
 	
@@ -67,12 +90,12 @@ public class IonBundle implements IonBinary {
 	}
 	
 	
-	public <E> void loadSequence(String key, Collection<E> sequence)
+	public <E> void loadSequence(String key, Collection<E> filled)
 	{
 		final IonSequenceWrapper isw = get(key, null);
 		if (isw == null) return;
-		sequence.clear();
-		isw.fill(sequence);
+		filled.clear();
+		isw.fill(filled);
 	}
 	
 	
@@ -259,6 +282,12 @@ public class IonBundle implements IonBinary {
 	public Object remove(Object key)
 	{
 		return backingMap.remove(key);
+	}
+	
+	
+	public void putAll(IonBundle otherBundle)
+	{
+		backingMap.putAll(otherBundle.backingMap);
 	}
 	
 	

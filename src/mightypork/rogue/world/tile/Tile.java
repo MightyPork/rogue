@@ -4,11 +4,11 @@ package mightypork.rogue.world.tile;
 import java.io.IOException;
 import java.util.Stack;
 
-import mightypork.rogue.world.WorldAccess;
 import mightypork.rogue.world.item.Item;
-import mightypork.rogue.world.map.Level;
-import mightypork.rogue.world.map.TileRenderContext;
-import mightypork.util.control.timing.Animator;
+import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.level.render.TileRenderContext;
+import mightypork.rogue.world.tile.models.TileModel;
+import mightypork.rogue.world.tile.renderers.TileRenderer;
 import mightypork.util.ion.IonBinary;
 import mightypork.util.ion.IonBundle;
 import mightypork.util.ion.IonInput;
@@ -27,15 +27,12 @@ public final class Tile implements IonBinary {
 	private TileModel model;
 	private TileRenderer renderer;
 	
-	public int id;
+	private int id;
 	
 	private final Stack<Item> items = new Stack<>();
 	
 	/** persistent field for model, reflected by renderer */
 	public final IonBundle metadata = new IonBundle();
-	
-	/** non-persistent data field for model */
-	public Object tmpdata;
 	
 	
 	public Tile(int id)
@@ -63,7 +60,10 @@ public final class Tile implements IonBinary {
 	}
 	
 	
-	public void render(TileRenderContext context)
+	/**
+	 * Render the tile alone (must not use other than the main map texture)
+	 */
+	public void renderTile(TileRenderContext context)
 	{
 		renderer.render(context);
 		
@@ -71,6 +71,19 @@ public final class Tile implements IonBinary {
 			renderer.renderItemOnTile(items.peek(), context);
 		}
 	}
+	
+	
+	/**
+	 * Render items
+	 * @param context
+	 */
+	public void renderItems(TileRenderContext context)
+	{
+		if (hasItems()) {
+			renderer.renderItemOnTile(items.peek(), context);
+		}
+	}
+	
 	
 	
 	@Override
@@ -82,7 +95,7 @@ public final class Tile implements IonBinary {
 			out.writeSequence(items);
 		}
 		
-		if (model.hasPersistentMetadata()) {
+		if (model.hasMetadata()) {
 			out.writeBundle(metadata);
 		}
 	}
@@ -102,7 +115,7 @@ public final class Tile implements IonBinary {
 			in.readSequence(items);
 		}
 		
-		if (model.hasPersistentMetadata()) {
+		if (model.hasMetadata()) {
 			in.readBundle(metadata);
 		}
 	}
@@ -111,18 +124,12 @@ public final class Tile implements IonBinary {
 	/**
 	 * Update tile logic state (on server)
 	 * 
-	 * @param world the world
+	 * @param level the level
 	 * @param delta delta time
 	 */
-	public void updateLogic(WorldAccess world, Level level, double delta)
+	public void update(Level level, double delta)
 	{
-		model.updateLogic(this, world, level, delta);
-	}
-
-
-	public void updateVisual(WorldAccess world, Level level, double delta)
-	{
-		model.updateVisual(this, world, level, delta);
+		model.update(this, level, delta);
 	}
 	
 	

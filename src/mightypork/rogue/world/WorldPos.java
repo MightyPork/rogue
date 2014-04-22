@@ -18,19 +18,20 @@ import mightypork.util.math.Easing;
  */
 public class WorldPos implements IonBundled, Updateable {
 	
-	public int x, y, floor;
+	public int x, y;
 	private final VectAnimated walkOffset = new VectAnimated(Vect.ZERO, Easing.LINEAR);
 	
 	
-	public WorldPos(int x, int y, int floor) {
+	public WorldPos(int x, int y)
+	{
 		super();
 		this.x = x;
 		this.y = y;
-		this.floor = floor;
 	}
 	
 	
-	public WorldPos() {
+	public WorldPos()
+	{
 	}
 	
 	
@@ -45,7 +46,6 @@ public class WorldPos implements IonBundled, Updateable {
 	{
 		x = in.get("x", 0);
 		y = in.get("y", 0);
-		floor = in.get("z", 0);
 		walkOffset.reset();
 	}
 	
@@ -55,7 +55,6 @@ public class WorldPos implements IonBundled, Updateable {
 	{
 		out.put("x", x);
 		out.put("y", y);
-		out.put("z", floor);
 	}
 	
 	
@@ -68,12 +67,6 @@ public class WorldPos implements IonBundled, Updateable {
 	public double getY()
 	{
 		return y;
-	}
-	
-	
-	public double getFloor()
-	{
-		return floor;
 	}
 	
 	
@@ -97,18 +90,9 @@ public class WorldPos implements IonBundled, Updateable {
 	}
 	
 	
-	public void setTo(int x, int y, int floor)
-	{
-		this.x = x;
-		this.y = y;
-		this.floor = floor;
-		walkOffset.reset();
-	}
-	
-	
 	public void setTo(WorldPos other)
 	{
-		setTo(other.x, other.y, other.floor);
+		setTo(other.x, other.y);
 	}
 	
 	
@@ -117,7 +101,6 @@ public class WorldPos implements IonBundled, Updateable {
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + floor;
 		result = prime * result + x;
 		result = prime * result + y;
 		return result;
@@ -131,7 +114,6 @@ public class WorldPos implements IonBundled, Updateable {
 		if (obj == null) return false;
 		if (!(obj instanceof WorldPos)) return false;
 		final WorldPos other = (WorldPos) obj;
-		if (floor != other.floor) return false;
 		if (x != other.x) return false;
 		if (y != other.y) return false;
 		return true;

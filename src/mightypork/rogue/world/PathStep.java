@@ -16,7 +16,8 @@ public class PathStep implements IonBinary {
 	public int y;
 	
 	
-	public PathStep(int x, int y) {
+	public PathStep(int x, int y)
+	{
 		this.x = x < 1 ? -1 : x > 0 ? 1 : 0;
 		this.y = y < 1 ? -1 : y > 0 ? 1 : 0;
 		

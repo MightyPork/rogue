@@ -1,6 +1,7 @@
-package mightypork.rogue.world.map;
+package mightypork.rogue.world.level.render;
 
 
+import mightypork.rogue.world.level.MapAccess;
 import mightypork.util.constraints.rect.Rect;
 
 

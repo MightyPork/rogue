@@ -4,13 +4,12 @@ package mightypork.rogue.world.tile.renderers;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxSheet;
 import mightypork.rogue.Res;
-import mightypork.rogue.world.map.TileRenderContext;
-import mightypork.rogue.world.tile.TileRenderer;
+import mightypork.rogue.world.level.render.TileRenderContext;
 
 
 public class BasicTileRenderer extends TileRenderer {
 	
-	private TxSheet sheet;
+	private final TxSheet sheet;
 	
 	
 	public BasicTileRenderer(String sheetKey)

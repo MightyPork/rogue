@@ -13,7 +13,7 @@ public class Item implements IonBinary {
 	
 	public static final short ION_MARK = 51;
 	
-	private transient ItemModel model;
+	private ItemModel model;
 	
 	public int id;
 	

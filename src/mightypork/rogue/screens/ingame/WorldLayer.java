@@ -7,9 +7,6 @@ import java.util.Random;
 
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Paths;
 import mightypork.rogue.world.MapGenerator;
 import mightypork.rogue.world.World;
@@ -28,7 +25,7 @@ public class WorldLayer extends ScreenLayer {
 		final World w = MapGenerator.createWorld(rand.nextLong());
 		
 		try {
-			Ion.toFile(new File(Paths.WORKDIR,"test-world.ion"), w);
+			Ion.toFile(new File(Paths.WORKDIR, "test-world.ion"), w);
 		} catch (final IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -49,63 +46,63 @@ public class WorldLayer extends ScreenLayer {
 		wr.setRect(root);
 		root.add(wr);
 		
-		bindKey(new KeyStroke(true, Keys.LEFT), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				w.getPlayer().walk(-1, 0);
-			}
-		});
-		bindKey(new KeyStroke(true, Keys.RIGHT), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				w.getPlayer().walk(1, 0);
-			}
-		});
-		bindKey(new KeyStroke(true, Keys.UP), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				w.getPlayer().walk(0, -1);
-			}
-		});
-		bindKey(new KeyStroke(true, Keys.DOWN), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				w.getPlayer().walk(0, 1);
-			}
-		});
-		bindKey(new KeyStroke(true, Keys.SPACE), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				w.getPlayer().walk(5, 5);
-			}
-		});
-		
-		w.getPlayer().setMoveListener(new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				if (InputSystem.isKeyDown(Keys.LEFT)) {
-					w.getPlayer().walk(-1, 0);
-				} else if (InputSystem.isKeyDown(Keys.RIGHT)) {
-					w.getPlayer().walk(1, 0);
-				} else if (InputSystem.isKeyDown(Keys.UP)) {
-					w.getPlayer().walk(0, -1);
-				} else if (InputSystem.isKeyDown(Keys.DOWN)) {
-					w.getPlayer().walk(0, 1);
-				}
-			}
-		});
+//		bindKey(new KeyStroke(true, Keys.LEFT), new Runnable() {
+//			
+//			@Override
+//			public void run()
+//			{
+//				w.getPlayer().walk(-1, 0);
+//			}
+//		});
+//		bindKey(new KeyStroke(true, Keys.RIGHT), new Runnable() {
+//			
+//			@Override
+//			public void run()
+//			{
+//				w.getPlayer().walk(1, 0);
+//			}
+//		});
+//		bindKey(new KeyStroke(true, Keys.UP), new Runnable() {
+//			
+//			@Override
+//			public void run()
+//			{
+//				w.getPlayer().walk(0, -1);
+//			}
+//		});
+//		bindKey(new KeyStroke(true, Keys.DOWN), new Runnable() {
+//			
+//			@Override
+//			public void run()
+//			{
+//				w.getPlayer().walk(0, 1);
+//			}
+//		});
+//		bindKey(new KeyStroke(true, Keys.SPACE), new Runnable() {
+//			
+//			@Override
+//			public void run()
+//			{
+//				w.getPlayer().walk(5, 5);
+//			}
+//		});
+//		
+//		w.getPlayer().setMoveListener(new Runnable() {
+//			
+//			@Override
+//			public void run()
+//			{
+//				if (InputSystem.isKeyDown(Keys.LEFT)) {
+//					w.getPlayer().walk(-1, 0);
+//				} else if (InputSystem.isKeyDown(Keys.RIGHT)) {
+//					w.getPlayer().walk(1, 0);
+//				} else if (InputSystem.isKeyDown(Keys.UP)) {
+//					w.getPlayer().walk(0, -1);
+//				} else if (InputSystem.isKeyDown(Keys.DOWN)) {
+//					w.getPlayer().walk(0, 1);
+//				}
+//			}
+//		});
 	}
 	
 	

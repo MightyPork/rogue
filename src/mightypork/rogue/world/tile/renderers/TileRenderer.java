@@ -1,9 +1,9 @@
-package mightypork.rogue.world.tile;
+package mightypork.rogue.world.tile.renderers;
 
 
 import mightypork.rogue.world.item.Item;
-import mightypork.rogue.world.map.TileRenderContext;
-import mightypork.rogue.world.tile.renderers.NullTileRenderer;
+import mightypork.rogue.world.level.render.TileRenderContext;
+import mightypork.rogue.world.tile.DroppedItemRenderer;
 
 
 /**

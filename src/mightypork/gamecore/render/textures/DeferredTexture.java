@@ -19,6 +19,8 @@ import org.lwjgl.opengl.GL11;
 @MustLoadInMainThread
 public class DeferredTexture extends DeferredResource implements GLTexture {
 	
+	public static DeferredTexture lastBind = null;
+	
 	private org.newdawn.slick.opengl.Texture backingTexture;
 	private FilterMode filter = FilterMode.NEAREST;
 	private WrapMode wrap = WrapMode.CLAMP;
@@ -70,15 +72,19 @@ public class DeferredTexture extends DeferredResource implements GLTexture {
 		
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		
-		GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
-		
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, wrap.num);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, wrap.num);
-		
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filter.num);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filter.num);
-		
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, getTextureID());
+		if (lastBind != this) {
+			lastBind = this;
+			
+			GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
+			
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, wrap.num);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, wrap.num);
+			
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filter.num);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filter.num);
+			
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, getTextureID());
+		}
 	}
 	
 	

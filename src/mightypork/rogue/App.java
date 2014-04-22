@@ -22,9 +22,9 @@ import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
-import mightypork.rogue.world.PlayerEntity;
+import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
-import mightypork.rogue.world.map.Level;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.control.eventbus.EventBus;
 import mightypork.util.control.eventbus.events.Event;
@@ -110,7 +110,7 @@ public final class App extends BaseApp {
 		Ion.registerBinary(Tile.ION_MARK, Tile.class);
 		Ion.registerBinary(Item.ION_MARK, Item.class);
 		Ion.registerBinary(Level.ION_MARK, Level.class);
-		Ion.registerBinary(Level.ION_MARK, PlayerEntity.class);
+		Ion.registerBinary(Entity.ION_MARK, Entity.class);
 	}
 	
 	

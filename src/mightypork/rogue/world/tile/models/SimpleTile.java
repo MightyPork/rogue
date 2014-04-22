@@ -1,10 +1,8 @@
 package mightypork.rogue.world.tile.models;
 
 
-import mightypork.rogue.world.WorldAccess;
-import mightypork.rogue.world.map.Level;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
-import mightypork.rogue.world.tile.TileModel;
 import mightypork.util.annotations.DefaultImpl;
 
 
@@ -33,7 +31,7 @@ public abstract class SimpleTile extends TileModel {
 	
 	
 	@Override
-	public boolean hasPersistentMetadata()
+	public boolean hasMetadata()
 	{
 		return false;
 	}
@@ -41,13 +39,7 @@ public abstract class SimpleTile extends TileModel {
 	
 	@Override
 	@DefaultImpl
-	public void updateLogic(Tile tile, WorldAccess world, Level level, double delta)
-	{
-	}
-	
-	@Override
-	@DefaultImpl
-	public void updateVisual(Tile tile, WorldAccess world, Level level, double delta)
+	public void update(Tile tile, Level level, double delta)
 	{
 	}
 }

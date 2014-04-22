@@ -1,4 +1,4 @@
-package mightypork.rogue.world.map;
+package mightypork.rogue.world.level;
 
 
 import mightypork.rogue.world.tile.Tile;

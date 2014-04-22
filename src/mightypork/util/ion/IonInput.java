@@ -224,7 +224,7 @@ public class IonInput {
 	 */
 	public IonBundle readBundle() throws IOException
 	{
-		IonBundle ib = new IonBundle();
+		final IonBundle ib = new IonBundle();
 		ib.load(this);
 		return ib;
 	}

@@ -1,9 +1,11 @@
-package mightypork.rogue.world.tile;
+package mightypork.rogue.world.tile.models;
 
 
-import mightypork.rogue.world.WorldAccess;
-import mightypork.rogue.world.map.Level;
+import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.tile.Tile;
+import mightypork.rogue.world.tile.Tiles;
 import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
+import mightypork.rogue.world.tile.renderers.TileRenderer;
 
 
 /**
@@ -68,21 +70,15 @@ public abstract class TileModel {
 	
 	
 	/**
-	 * Update tile in world, called by server
+	 * Update tile in world
 	 */
-	public abstract void updateLogic(Tile tile, WorldAccess world, Level level, double delta);
-	
-	
-	/**
-	 * Update tile visuals (particles / update for renderer)
-	 */
-	public abstract void updateVisual(Tile tile, WorldAccess world, Level level, double delta);
+	public abstract void update(Tile tile, Level level, double delta);
 	
 	
 	/**
 	 * @return true if this item type has metadata worth saving
 	 */
-	public abstract boolean hasPersistentMetadata();
+	public abstract boolean hasMetadata();
 	
 	
 	/**

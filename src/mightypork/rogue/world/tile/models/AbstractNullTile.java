@@ -39,7 +39,7 @@ public abstract class AbstractNullTile extends SimpleTile {
 	
 	
 	@Override
-	public boolean hasPersistentMetadata()
+	public boolean hasMetadata()
 	{
 		return false;
 	}

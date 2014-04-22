@@ -4,6 +4,7 @@ package mightypork.rogue.world.tile;
 import mightypork.rogue.world.tile.models.Floor;
 import mightypork.rogue.world.tile.models.NullFloor;
 import mightypork.rogue.world.tile.models.NullWall;
+import mightypork.rogue.world.tile.models.TileModel;
 import mightypork.rogue.world.tile.models.Wall;
 
 
@@ -35,7 +36,7 @@ public final class Tiles {
 	public static final TileModel CRYSTAL_WALL = new Wall(11).setTexture("tile.wall.crystal");
 	
 	
-	static void register(int id, TileModel model)
+	public static void register(int id, TileModel model)
 	{
 		if (id < 0 || id >= tiles.length) {
 			throw new IllegalArgumentException("Tile ID " + id + " is out of range.");
