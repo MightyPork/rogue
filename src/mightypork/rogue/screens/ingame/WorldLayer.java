@@ -1,6 +1,7 @@
 package mightypork.rogue.screens.ingame;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
@@ -9,6 +10,7 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.rogue.Paths;
 import mightypork.rogue.world.MapGenerator;
 import mightypork.rogue.world.World;
 import mightypork.util.ion.Ion;
@@ -26,7 +28,7 @@ public class WorldLayer extends ScreenLayer {
 		final World w = MapGenerator.createWorld(rand.nextLong());
 		
 		try {
-			Ion.toFile("amap.ion", w);
+			Ion.toFile(new File(Paths.WORKDIR,"test-world.ion"), w);
 		} catch (final IOException e) {
 			e.printStackTrace();
 			System.exit(1);

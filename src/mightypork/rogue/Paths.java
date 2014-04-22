@@ -3,14 +3,10 @@ package mightypork.rogue;
 
 import java.io.File;
 
-import mightypork.util.files.OsUtils;
-
 
 public final class Paths {
 	
-	private static final String APPDIR_NAME = "rogue";
-	
-	public static final File WORKDIR = OsUtils.getWorkDir(APPDIR_NAME);
+	public static final File WORKDIR = new File("./.rogue-save");//OsUtils.getWorkDir(APPDIR_NAME);
 	
 	public static final File LOG_FILE = new File(WORKDIR, "runtime.log");
 	
