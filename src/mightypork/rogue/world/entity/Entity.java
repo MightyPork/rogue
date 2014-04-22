@@ -42,15 +42,14 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	
 	private final Queue<PathStep> path = new LinkedList<>(); // saved
 	private EntityModel model;
-	public final IonBundle metadata = new IonBundle(); // saved	
-	public final IonBundle tmpdata = new IonBundle(); // NOT saved
+	public final IonBundle metadata = new IonBundle(); // saved
 	
-	// used for rendering "facing" sprite
-	public int lastXMove = 1;
-	public int lastYMove = 1;
+	/** Some infos for/by the renderer, not saved */
+	public final EntityRenderData renderData = new EntityRenderData();
 	
 	private final List<EntityMoveListener> moveListeners = new ArrayList<>();
 	
+	// tmp flag
 	private boolean walking = false;
 	
 	
@@ -200,8 +199,8 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 			} else {
 				
 				// tmp for renderer
-				if (step.x != 0) lastXMove = step.x;
-				if (step.y != 0) lastYMove = step.y;
+				if (step.x != 0) renderData.lastXDir = step.x;
+				if (step.y != 0) renderData.lastYDir = step.y;
 				
 				position.walk(step.x, step.y, getStepTime());
 				level.occupyTile(projX, projY);

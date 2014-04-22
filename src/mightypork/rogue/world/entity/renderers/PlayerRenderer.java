@@ -19,7 +19,7 @@ public class PlayerRenderer extends EntityRenderer {
 	
 	public PlayerRenderer(String sheetKey)
 	{
-		this.sheet = Res.getTxSheet(sheetKey); // expects 1x4
+		this.sheet = Res.getTxSheet(sheetKey);
 	}
 	
 	
@@ -28,14 +28,14 @@ public class PlayerRenderer extends EntityRenderer {
 	{
 		TxQuad q = sheet.getQuad(Calc.frag(entity.getPosition().getProgress()));
 		
-		if (entity.lastXMove == -1) q = q.flipX();
+		if (entity.renderData.lastXDir == -1) q = q.flipX();
 		
 		final WorldPos pos = entity.getPosition();
 		
 		final Rect tileRect = context.getRectForTile(pos.x, pos.y);
 		final double w = tileRect.width().value();
 		
-		Rect spriteRect = tileRect.move(pos.getVisualXOffset() * w, pos.getVisualYOffset() * w + w * 0.1);
+		Rect spriteRect = tileRect.move(pos.getVisualXOffset() * w, pos.getVisualYOffset() * w);
 		spriteRect = spriteRect.shrink(w * 0.1);
 		
 		Render.quadTextured(spriteRect, q);
