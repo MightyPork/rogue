@@ -88,7 +88,7 @@ public class WorldLayer extends ScreenLayer {
 			}
 		});
 		
-		w.getPlayer().setTargetListener(new Runnable() {
+		w.getPlayer().setMoveListener(new Runnable() {
 			
 			@Override
 			public void run()

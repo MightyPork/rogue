@@ -3,8 +3,12 @@ package mightypork.rogue.world;
 
 import java.io.IOException;
 
+import mightypork.util.constraints.vect.Vect;
+import mightypork.util.constraints.vect.mutable.VectAnimated;
+import mightypork.util.control.timing.Updateable;
 import mightypork.util.ion.IonBundle;
 import mightypork.util.ion.IonBundled;
+import mightypork.util.math.Easing;
 
 
 /**
@@ -12,9 +16,11 @@ import mightypork.util.ion.IonBundled;
  * 
  * @author MightyPork
  */
-public class WorldPos implements IonBundled {
+public class WorldPos implements IonBundled, Updateable {
 	
 	public int x, y, floor;
+	private final VectAnimated walkOffset = new VectAnimated(Vect.ZERO, Easing.LINEAR);
+	private Runnable moveListener;
 	
 	
 	public WorldPos(int x, int y, int floor)
@@ -37,6 +43,7 @@ public class WorldPos implements IonBundled {
 		x = in.get("x", 0);
 		y = in.get("y", 0);
 		floor = in.get("z", 0);
+		walkOffset.reset();
 	}
 	
 	
@@ -49,19 +56,56 @@ public class WorldPos implements IonBundled {
 	}
 	
 	
+	public double getX()
+	{
+		return x;
+	}
+	
+	
+	public double getY()
+	{
+		return y;
+	}
+	
+	
+	public double getFloor()
+	{
+		return floor;
+	}
+	
+	
+	public double getXVisual()
+	{
+		return x + walkOffset.x();
+	}
+	
+	
+	public double getYVisual()
+	{
+		return y + walkOffset.y();
+	}
+	
+	
+	public void setTo(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
+		walkOffset.reset();
+	}
+	
+	
 	public void setTo(int x, int y, int floor)
 	{
 		this.x = x;
 		this.y = y;
 		this.floor = floor;
+		walkOffset.reset();
 	}
 	
 	
 	public void setTo(WorldPos other)
 	{
-		this.x = other.x;
-		this.y = other.y;
-		this.floor = other.floor;
+		setTo(other.x, other.y, other.floor);
 	}
 	
 	
@@ -91,9 +135,34 @@ public class WorldPos implements IonBundled {
 	}
 	
 	
-	public void add(int x, int y, int floor)
+	public void add(int x, int y)
 	{
-		setTo(this.x + x, this.y + y, this.floor + floor);
+		setTo(this.x + x, this.y + y);
+	}
+	
+	
+	public void walk(int x, int y, double secs)
+	{
+		setTo(this.x + x, this.y + y);
+		walkOffset.setTo(-x, -y);
+		walkOffset.animate(0, 0, 0, secs);
+	}
+	
+	
+	@Override
+	public void update(double delta)
+	{
+		if (!walkOffset.isFinished()) {
+			walkOffset.update(delta);
+		}
+		
+		if (walkOffset.isFinished()) moveListener.run();
+	}
+	
+	
+	public void setMoveListener(Runnable listener)
+	{
+		this.moveListener = listener;
 	}
 	
 }

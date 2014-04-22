@@ -72,7 +72,7 @@ public class World implements IonBundled, Updateable {
 		
 		for (int level = 0; level < levels.size(); level++) {
 			for (final MapObserver observer : observers) {
-				if (observer.getLogicalPosition().floor == level) {
+				if (observer.getPosition().floor == level) {
 					levels.get(level).update(observer, delta);
 				}
 			}
@@ -82,7 +82,7 @@ public class World implements IonBundled, Updateable {
 	
 	public Level getLevelForObserver(MapObserver observer)
 	{
-		return levels.get(observer.getLogicalPosition().floor);
+		return levels.get(observer.getPosition().floor);
 	}
 	
 	
@@ -112,8 +112,8 @@ public class World implements IonBundled, Updateable {
 		
 		final VectConst vpCenter = r.center().sub(tileSize * 0.5, tileSize).freeze(); // 0.5 to center, 1 to move up (down is teh navbar)
 		
-		final double playerX = player.getLogicalPosition().x + player.getVisualOffset().x();
-		final double playerY = player.getLogicalPosition().y + player.getVisualOffset().y();
+		final double playerX = player.getPosition().getXVisual();
+		final double playerY = player.getPosition().getYVisual();
 		
 		// total map area
 		//@formatter:off

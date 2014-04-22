@@ -6,8 +6,5 @@ import mightypork.util.constraints.vect.Vect;
 
 public interface WorldEntity {
 	
-	WorldPos getLogicalPosition();
-	
-	
-	Vect getVisualOffset();
+	WorldPos getPosition();
 }

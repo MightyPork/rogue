@@ -180,7 +180,7 @@ public class Level implements MapAccess, IonBinary {
 	public void update(MapObserver observer, double delta)
 	{
 		final int viewRange = observer.getViewRange();
-		final WorldPos position = observer.getLogicalPosition();
+		final WorldPos position = observer.getPosition();
 		
 		int x1 = position.x - viewRange;
 		int y1 = position.y - viewRange;
