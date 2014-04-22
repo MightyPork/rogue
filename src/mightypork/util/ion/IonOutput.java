@@ -181,9 +181,12 @@ public class IonOutput {
 	}
 	
 	
+	/**
+	 * Write a bundle without a mark
+	 */
 	public void writeBundle(IonBundle bundle) throws IOException
 	{
-		writeObject(bundle);
+		bundle.save(this);
 	}
 	
 	

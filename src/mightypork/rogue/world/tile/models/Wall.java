@@ -8,14 +8,14 @@ package mightypork.rogue.world.tile.models;
  */
 public class Wall extends SimpleTile {
 	
-	public Wall(int id, String sheetKey)
+	public Wall(int id)
 	{
-		super(id, sheetKey);
+		super(id);
 	}
 	
 	
 	@Override
-	public boolean isPotentiallyWalkable()
+	public boolean isWalkable()
 	{
 		return false;
 	}

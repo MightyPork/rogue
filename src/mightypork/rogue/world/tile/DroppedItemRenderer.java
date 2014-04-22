@@ -37,7 +37,7 @@ public class DroppedItemRenderer {
 	}
 	
 	
-	public void updateVisual(double delta)
+	public void update(double delta)
 	{
 		itemAnim.update(delta);
 	}

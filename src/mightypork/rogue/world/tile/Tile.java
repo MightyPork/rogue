@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import mightypork.rogue.world.WorldAccess;
 import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.map.Level;
 import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.util.control.timing.Animator;
 import mightypork.util.ion.IonBinary;
@@ -14,24 +15,27 @@ import mightypork.util.ion.IonInput;
 import mightypork.util.ion.IonOutput;
 
 
+/**
+ * Tile data bundle. Client only renders.
+ * 
+ * @author MightyPork
+ */
 public final class Tile implements IonBinary {
 	
 	public static final short ION_MARK = 50;
 	
-	private transient TileModel model;
-	
-	/**
-	 * Temporary storage for the model (unlocked door state, lever switched etc)
-	 */
-	public transient Object modelData;
-	
-	/** Animator field for the model to use, if needed */
-	public transient Animator anim;
-	
-	private transient DroppedItemRenderer itemRenderer; // lazy
+	private TileModel model;
+	private TileRenderer renderer;
 	
 	public int id;
+	
 	private final Stack<Item> items = new Stack<>();
+	
+	/** persistent field for model, reflected by renderer */
+	public final IonBundle metadata = new IonBundle();
+	
+	/** non-persistent data field for model */
+	public Object tmpdata;
 	
 	
 	public Tile(int id)
@@ -42,8 +46,7 @@ public final class Tile implements IonBinary {
 	
 	public Tile(TileModel model)
 	{
-		this.model = model;
-		this.id = model.id;
+		setModel(model);
 	}
 	
 	
@@ -52,12 +55,20 @@ public final class Tile implements IonBinary {
 	}
 	
 	
+	private void setModel(TileModel model)
+	{
+		this.model = model;
+		this.id = model.id;
+		this.renderer = model.renderer;
+	}
+	
+	
 	public void render(TileRenderContext context)
 	{
-		model.render(context);
+		renderer.render(context);
 		
 		if (hasItems()) {
-			getItemRenderer().render(items.peek(), context);
+			renderer.renderItemOnTile(items.peek(), context);
 		}
 	}
 	
@@ -71,10 +82,8 @@ public final class Tile implements IonBinary {
 			out.writeSequence(items);
 		}
 		
-		if (model.hasMetadata()) {
-			final IonBundle ib = new IonBundle();
-			model.saveMetadata(this, ib);
-			out.writeBundle(ib);
+		if (model.hasPersistentMetadata()) {
+			out.writeBundle(metadata);
 		}
 	}
 	
@@ -84,41 +93,42 @@ public final class Tile implements IonBinary {
 	{
 		id = in.readIntByte();
 		
-		// check model
+		// if model changed
 		if (model == null || id != model.id) {
-			model = Tiles.get(id);
+			setModel(Tiles.get(id));
 		}
 		
 		if (model.hasDroppedItems()) {
 			in.readSequence(items);
 		}
 		
-		if (model.hasMetadata()) {
-			model.loadMetadata(this, in.readBundle());
+		if (model.hasPersistentMetadata()) {
+			in.readBundle(metadata);
 		}
 	}
 	
 	
-	public void updateLogic(WorldAccess world, double delta)
+	/**
+	 * Update tile logic state (on server)
+	 * 
+	 * @param world the world
+	 * @param delta delta time
+	 */
+	public void updateLogic(WorldAccess world, Level level, double delta)
 	{
-		model.updateLogic(this, world, delta);
+		model.updateLogic(this, world, level, delta);
 	}
 
-	public void updateVisual(WorldAccess world, double delta)
+
+	public void updateVisual(WorldAccess world, Level level, double delta)
 	{
-		model.updateVisual(this, world,  delta);
-		if (hasItems()) {
-			getItemRenderer().updateVisual(delta);
-		}
+		model.updateVisual(this, world, level, delta);
 	}
 	
-	private DroppedItemRenderer getItemRenderer()
+	
+	public boolean isWalkable()
 	{
-		if (itemRenderer == null) {
-			itemRenderer = new DroppedItemRenderer();
-		}
-		
-		return itemRenderer;
+		return model.isWalkable(this);
 	}
 	
 	

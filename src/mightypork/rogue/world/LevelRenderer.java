@@ -7,24 +7,9 @@ import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.RectConst;
 import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.constraints.vect.VectConst;
-import mightypork.util.control.timing.Updateable;
 
 
-public class ClientWorld implements Updateable, WorldAccess {
-	
-	private Level level = null;
-	
-	private final PlayerEntity player = null;
-		
-	
-	@Override
-	public void update(double delta)
-	{
-		player.update(delta);
-		
-		level.updateVisual(player, delta);
-	}
-	
+public class LevelRenderer {
 	
 	/**
 	 * Draw on screen
@@ -34,8 +19,8 @@ public class ClientWorld implements Updateable, WorldAccess {
 	 * @param yTiles Desired nr of tiles vertically
 	 * @param minSize minimum tile size
 	 */
-	public void render(final RectBound viewport, final int yTiles, final int xTiles, final int minSize)
-	{		
+	public static void render(Level level, PlayerEntity player, RectBound viewport, final int yTiles, final int xTiles, final int minSize)
+	{
 		final Rect r = viewport.getRect();
 		final double vpH = r.height().value();
 		final double vpW = r.width().value();
@@ -76,19 +61,4 @@ public class ClientWorld implements Updateable, WorldAccess {
 			}
 		}
 	}
-	
-	
-	public PlayerEntity getPlayer()
-	{
-		return player;
-	}
-
-
-	@Override
-	public boolean isServer()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
 }

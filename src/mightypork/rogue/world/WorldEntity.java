@@ -20,7 +20,7 @@ public abstract class WorldEntity implements IonBundled {
 	
 	
 	public WorldEntity(ServerWorld world, WorldPos pos) {
-		this.serial_id = world.genEid();
+		this.serial_id = world.generateEntityId();
 		this.position.setTo(pos);
 	}
 	

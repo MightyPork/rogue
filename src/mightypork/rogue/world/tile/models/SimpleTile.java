@@ -1,79 +1,53 @@
 package mightypork.rogue.world.tile.models;
 
 
-import mightypork.gamecore.render.Render;
-import mightypork.gamecore.render.textures.TxSheet;
-import mightypork.rogue.Res;
-import mightypork.rogue.world.map.TileRenderContext;
+import mightypork.rogue.world.WorldAccess;
+import mightypork.rogue.world.map.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.ion.IonBundle;
 
 
 /**
- * Basic implementation of a tile with coord-random texture and no animation.
+ * Basic implementation of a tile.
  * 
  * @author MightyPork
  */
 public abstract class SimpleTile extends TileModel {
 	
-	protected final TxSheet sheet;
-	
-	
-	public SimpleTile(int id, String sheetKey)
+	public SimpleTile(int id)
 	{
 		super(id);
-		this.sheet = Res.getTxSheet(sheetKey);
 	}
 	
 	
-	@Override
-	public void render(TileRenderContext context)
-	{
-		Render.quadTextured(context.getRect(), sheet.getRandomQuad(context.getTileNoise()));
-	}
-	
-	
-	@Override
-	@DefaultImpl
-	public void updateLogic(Tile tile, double delta)
-	{
-	}
-	
-	
-	/*
-	 * Items can override this if their walkability changes based on something
-	 */
 	@Override
 	public boolean isWalkable(Tile tile)
 	{
-		return isPotentiallyWalkable();
+		return isWalkable();
 	}
 	
 	
 	@Override
-	public abstract boolean isPotentiallyWalkable();
+	public abstract boolean isWalkable();
 	
 	
 	@Override
-	@DefaultImpl
-	public boolean hasMetadata()
+	public boolean hasPersistentMetadata()
 	{
-		return false; // it's a SIMPLE tile
+		return false;
 	}
 	
 	
 	@Override
 	@DefaultImpl
-	public void loadMetadata(Tile tile, IonBundle ib)
+	public void updateLogic(Tile tile, WorldAccess world, Level level, double delta)
 	{
 	}
 	
-	
 	@Override
 	@DefaultImpl
-	public void saveMetadata(Tile tile, IonBundle ib)
+	public void updateVisual(Tile tile, WorldAccess world, Level level, double delta)
 	{
 	}
 }

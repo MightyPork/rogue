@@ -2,13 +2,12 @@ package mightypork.rogue.world.tile;
 
 
 import mightypork.rogue.world.WorldAccess;
-import mightypork.rogue.world.map.TileRenderContext;
-import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.ion.IonBundle;
+import mightypork.rogue.world.map.Level;
+import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
 
 
 /**
- * Singleton-like tile implementation
+ * Tile model (logic of a tile)
  * 
  * @author MightyPork
  */
@@ -16,22 +15,33 @@ public abstract class TileModel {
 	
 	/** Model ID */
 	public final int id;
+	public TileRenderer renderer = TileRenderer.NONE;
 	
 	
-	public TileModel(int id) {
+	public TileModel(int id)
+	{
 		Tiles.register(id, this);
 		this.id = id;
 	}
 	
 	
+	public TileModel setRenderer(TileRenderer renderer)
+	{
+		this.renderer = renderer;
+		return this;
+	}
+	
+	
+	public TileModel setTexture(String sheetKey)
+	{
+		this.renderer = new BasicTileRenderer(sheetKey);
+		return this;
+	}
+	
+	
 	/**
-	 * Create a tile. In case of null tiles / tiles with absolutely no
-	 * variability, the same instance can be returned over and over (created ie.
-	 * using lazy load)
-	 * 
-	 * @return new tile with this model
+	 * @return new tile of this type; if 100% invariant, can return cached one.
 	 */
-	@DefaultImpl
 	public Tile createTile()
 	{
 		return new Tile(this);
@@ -39,28 +49,16 @@ public abstract class TileModel {
 	
 	
 	/**
-	 * Render the tile.
-	 * 
-	 * @param context
-	 */
-	public abstract void render(TileRenderContext context);
-	
-	
-	/**
 	 * @param tile
-	 * @return is walkable at the current conditions
+	 * @return true if walkable right now
 	 */
 	public abstract boolean isWalkable(Tile tile);
 	
 	
 	/**
-	 * Check if the tile is walkable at some conditions. Used for world
-	 * generation to distinguish between doors etc and regular walls.<br>
-	 * Null tile should return true, if it can be replaced by a regular floor.
-	 * 
-	 * @return if it's potentially walkable
+	 * @return true if walkable at some conditions
 	 */
-	public abstract boolean isPotentiallyWalkable();
+	public abstract boolean isWalkable();
 	
 	
 	public boolean isNullTile()
@@ -70,58 +68,26 @@ public abstract class TileModel {
 	
 	
 	/**
-	 * Update tile state etc
-	 * 
-	 * @param tile tile
-	 * @param world
-	 * @param delta delta time
+	 * Update tile in world, called by server
 	 */
-	public abstract void updateLogic(Tile tile, WorldAccess world, double delta);
+	public abstract void updateLogic(Tile tile, WorldAccess world, Level level, double delta);
 	
 	
 	/**
-	 * Update tile effects
-	 * 
-	 * @param tile tile
-	 * @param world
-	 * @param delta delta time
+	 * Update tile visuals (particles / update for renderer)
 	 */
-	public abstract void updateVisual(Tile tile, WorldAccess world, double delta);
+	public abstract void updateVisual(Tile tile, WorldAccess world, Level level, double delta);
 	
 	
 	/**
-	 * Store tile metadata (door lock state etc)
-	 * 
-	 * @param tile stored tile
-	 * @param ib written data bundle
+	 * @return true if this item type has metadata worth saving
 	 */
-	public abstract void saveMetadata(Tile tile, IonBundle ib);
+	public abstract boolean hasPersistentMetadata();
 	
 	
 	/**
-	 * Load from an IonBundle. The bundle is guaranteed to not be null, but
-	 * could be empty.
-	 * 
-	 * @param tile loaded tile
-	 * @param ib item data bundle
-	 */
-	public abstract void loadMetadata(Tile tile, IonBundle ib);
-	
-	
-	/**
-	 * True if this tile's data should be saved/loaded.<br>
-	 * Must be a constant value.
-	 * 
-	 * @return has data
-	 */
-	public abstract boolean hasMetadata();
-	
-	
-	/**
-	 * Check if the tile can hold dropped items. Walls and such can return false
-	 * to save disk space (no need to write empty list).
-	 * 
-	 * @return true
+	 * @return true if this item can have dropped items
 	 */
 	public abstract boolean hasDroppedItems();
+	
 }

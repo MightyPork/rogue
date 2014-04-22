@@ -41,11 +41,13 @@ public class Level implements MapAccess, IonBinary {
 	private transient NoiseGen noiseGen;
 	
 	
-	public Level() {
+	public Level()
+	{
 	}
 	
 	
-	public Level(int width, int height) {
+	public Level(int width, int height)
+	{
 		this.width = width;
 		this.height = height;
 		buildArray();
@@ -148,9 +150,8 @@ public class Level implements MapAccess, IonBinary {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				// no mark
-				final Tile t = new Tile();
-				t.load(in);
-				tiles[y][x] = t;
+				tiles[y][x] = new Tile();
+				tiles[y][x].load(in);
 			}
 		}
 	}
@@ -184,22 +185,36 @@ public class Level implements MapAccess, IonBinary {
 	}
 	
 	
-	public void updateLogic(WorldAccess world, MapObserver observer, double delta)
+	public void updateLogic(WorldAccess world, double delta)
 	{
-		updateForObserver(world, observer, delta, true, false);
+		if (!world.isServer()) {
+			throw new RuntimeException("Not allowed for client.");
+		}
+		
+		// just update them all
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				getTile(x, y).updateLogic(world, this, delta);
+			}
+		}
 	}
 	
 	
+	/**
+	 * Update visuals for player (particle effects etc)
+	 * 
+	 * @param world
+	 * @param player
+	 * @param delta
+	 */
 	public void updateVisual(WorldAccess world, PlayerEntity player, double delta)
 	{
-		updateForObserver(world, player, delta, false, true);
-	}
-	
-	
-	private void updateForObserver(WorldAccess world, MapObserver observer, double delta, boolean logic, boolean visual)
-	{
-		final int viewRange = observer.getViewRange();
-		final WorldPos eyepos = observer.getViewPosition();
+		if (world.isServer()) {
+			throw new RuntimeException("Not allowed for server.");
+		}
+		
+		final int viewRange = player.getViewRange();
+		final WorldPos eyepos = player.getViewPosition();
 		
 		int x1 = eyepos.x - viewRange;
 		int y1 = eyepos.y - viewRange;
@@ -214,8 +229,7 @@ public class Level implements MapAccess, IonBinary {
 		
 		for (int y = y1; y <= y2; y++) {
 			for (int x = x1; x <= x2; x++) {
-				if (logic) getTile(x, y).updateLogic(world, delta);
-				if (visual) getTile(x, y).updateVisual(world, delta);
+				getTile(x, y).updateVisual(world, this, delta);
 			}
 		}
 	}

@@ -1,10 +1,7 @@
 package mightypork.rogue.world.tile.models;
 
 
-import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
-import mightypork.rogue.world.tile.TileModel;
-import mightypork.util.ion.IonBundle;
 
 
 /**
@@ -12,7 +9,7 @@ import mightypork.util.ion.IonBundle;
  * 
  * @author MightyPork
  */
-public abstract class AbstractNullTile extends TileModel {
+public abstract class AbstractNullTile extends SimpleTile {
 	
 	private Tile inst;
 	
@@ -20,25 +17,6 @@ public abstract class AbstractNullTile extends TileModel {
 	public AbstractNullTile(int id)
 	{
 		super(id);
-	}
-	
-	
-	@Override
-	public void render(TileRenderContext context)
-	{
-	}
-	
-	
-	@Override
-	public void updateLogic(Tile tile, double delta)
-	{
-	}
-	
-	
-	@Override
-	public boolean isWalkable(Tile tile)
-	{
-		return isPotentiallyWalkable();
 	}
 	
 	
@@ -61,21 +39,9 @@ public abstract class AbstractNullTile extends TileModel {
 	
 	
 	@Override
-	public boolean hasMetadata()
+	public boolean hasPersistentMetadata()
 	{
 		return false;
-	}
-	
-	
-	@Override
-	public void loadMetadata(Tile tile, IonBundle ib)
-	{
-	}
-	
-	
-	@Override
-	public void saveMetadata(Tile tile, IonBundle ib)
-	{
 	}
 	
 	
@@ -84,5 +50,9 @@ public abstract class AbstractNullTile extends TileModel {
 	{
 		return false;
 	}
+	
+	
+	@Override
+	public abstract boolean isWalkable();
 	
 }

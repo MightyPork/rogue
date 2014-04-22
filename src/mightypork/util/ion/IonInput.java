@@ -219,9 +219,24 @@ public class IonInput {
 	}
 	
 	
+	/**
+	 * Read bundle without a mark
+	 */
 	public IonBundle readBundle() throws IOException
 	{
-		return (IonBundle) readObject();
+		IonBundle ib = new IonBundle();
+		ib.load(this);
+		return ib;
+	}
+	
+	
+	/**
+	 * Read bundle without a mark, load into a provided one
+	 */
+	public void readBundle(IonBundle filled) throws IOException
+	{
+		filled.clear();
+		filled.load(this);
 	}
 	
 	

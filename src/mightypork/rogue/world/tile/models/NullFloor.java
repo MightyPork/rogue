@@ -10,7 +10,7 @@ public class NullFloor extends AbstractNullTile {
 	
 	
 	@Override
-	public boolean isPotentiallyWalkable()
+	public boolean isWalkable()
 	{
 		return true;
 	}

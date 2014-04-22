@@ -2,9 +2,8 @@ package mightypork.rogue.world;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 import mightypork.rogue.world.map.Level;
 import mightypork.util.control.timing.Updateable;
 import mightypork.util.ion.IonBundle;
@@ -67,20 +66,18 @@ public class ServerWorld implements IonBundled, Updateable, WorldAccess {
 	@Override
 	public void update(double delta)
 	{
+		Set<Integer> occupiedLevels = new HashSet<>();
+		
 		// food meters and such
 		for (final PlayerEntity pl : players.values()) {
-			if(pl.isConnected()) pl.updateLogic(this, delta);
+			if(pl.isConnected()) {
+				pl.updateLogic(this, delta);
+				occupiedLevels.add(pl.getPosition().floor);
+			}
 		}
 		
-		for (int level = 0; level < levels.size(); level++) {
-			
-			// more than 1 player can be on floor, update for all of them
-			for (final PlayerEntity pl : players.values()) {
-				if (pl.getPosition().floor == level) {
-					levels.get(level).updateLogic(this, pl, delta);
-				}
-			}
-			
+		for(int i : occupiedLevels) {
+			levels.get(i).updateLogic(this, delta);
 		}
 	}
 	
@@ -97,7 +94,7 @@ public class ServerWorld implements IonBundled, Updateable, WorldAccess {
 	}
 
 
-	public long genEid()
+	public long generateEntityId()
 	{
 		return eid++;
 	}
