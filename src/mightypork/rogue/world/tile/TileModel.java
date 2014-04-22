@@ -70,12 +70,21 @@ public abstract class TileModel {
 	
 	
 	/**
-	 * Update a tile
+	 * Update tile state etc
 	 * 
 	 * @param tile tile
 	 * @param delta delta time
 	 */
-	public abstract void update(Tile tile, double delta);
+	public abstract void updateLogic(Tile tile, double delta);
+	
+	
+	/**
+	 * Update tile effects
+	 * 
+	 * @param tile tile
+	 * @param delta delta time
+	 */
+	public abstract void updateVisual(Tile tile, double delta);
 	
 	
 	/**

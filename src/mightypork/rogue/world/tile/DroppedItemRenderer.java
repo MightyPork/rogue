@@ -11,7 +11,7 @@ import mightypork.util.control.timing.Updateable;
 import mightypork.util.math.Easing;
 
 
-public class DroppedItemRenderer implements Updateable {
+public class DroppedItemRenderer {
 	
 	private Animator itemAnim = new AnimatorBounce(2, Easing.SINE_BOTH);
 	
@@ -37,8 +37,7 @@ public class DroppedItemRenderer implements Updateable {
 	}
 	
 	
-	@Override
-	public void update(double delta)
+	public void updateVisual(double delta)
 	{
 		itemAnim.update(delta);
 	}

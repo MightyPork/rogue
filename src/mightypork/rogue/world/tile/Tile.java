@@ -14,7 +14,7 @@ import mightypork.util.ion.IonInput;
 import mightypork.util.ion.IonOutput;
 
 
-public final class Tile implements IonBinary, Updateable {
+public final class Tile implements IonBinary {
 	
 	public static final short ION_MARK = 50;
 	
@@ -99,15 +99,18 @@ public final class Tile implements IonBinary, Updateable {
 	}
 	
 	
-	@Override
-	public void update(double delta)
+	public void updateLogic(double delta)
 	{
-		model.update(this, delta);
+		model.updateLogic(this, delta);
+	}
+
+	public void updateVisual(double delta)
+	{
+		model.updateVisual(this, delta);
 		if (hasItems()) {
-			getItemRenderer().update(delta);
+			getItemRenderer().updateVisual(delta);
 		}
 	}
-	
 	
 	private DroppedItemRenderer getItemRenderer()
 	{

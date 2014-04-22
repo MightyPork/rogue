@@ -37,7 +37,7 @@ public abstract class SimpleTile extends TileModel {
 	
 	@Override
 	@DefaultImpl
-	public void update(Tile tile, double delta)
+	public void updateLogic(Tile tile, double delta)
 	{
 	}
 	

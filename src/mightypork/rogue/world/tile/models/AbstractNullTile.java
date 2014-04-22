@@ -30,7 +30,7 @@ public abstract class AbstractNullTile extends TileModel {
 	
 	
 	@Override
-	public void update(Tile tile, double delta)
+	public void updateLogic(Tile tile, double delta)
 	{
 	}
 	

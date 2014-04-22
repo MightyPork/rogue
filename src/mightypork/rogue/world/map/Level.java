@@ -4,6 +4,7 @@ package mightypork.rogue.world.map;
 import java.io.IOException;
 
 import mightypork.rogue.world.MapObserver;
+import mightypork.rogue.world.Player;
 import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
@@ -22,7 +23,7 @@ import mightypork.util.math.noise.NoiseGen;
  */
 public class Level implements MapAccess, IonBinary {
 	
-	public static final int ION_MARK = 52;
+	public static final int ION_MARK = 53;
 	
 	private int width, height;
 	
@@ -177,7 +178,19 @@ public class Level implements MapAccess, IonBinary {
 	}
 	
 	
-	public void update(MapObserver observer, double delta)
+	public void updateLogic(MapObserver observer, double delta)
+	{
+		updateForObserver(observer, delta, true, false);
+	}
+	
+	
+	public void updateVisual(Player player, double delta)
+	{
+		updateForObserver(player, delta, false, true);
+	}
+	
+	
+	private void updateForObserver(MapObserver observer, double delta, boolean logic, boolean visual)
 	{
 		final int viewRange = observer.getViewRange();
 		final WorldPos position = observer.getPosition();
@@ -195,7 +208,8 @@ public class Level implements MapAccess, IonBinary {
 		
 		for (int y = y1; y <= y2; y++) {
 			for (int x = x1; x <= x2; x++) {
-				getTile(x, y).update(delta);
+				if (logic) getTile(x, y).updateLogic(delta);
+				if (visual) getTile(x, y).updateVisual(delta);
 			}
 		}
 	}
@@ -210,4 +224,5 @@ public class Level implements MapAccess, IonBinary {
 		
 		return noiseGen;
 	}
+	
 }

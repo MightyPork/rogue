@@ -3,12 +3,10 @@ package mightypork.rogue.world;
 
 import java.io.IOException;
 
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.constraints.vect.mutable.VectAnimated;
-import mightypork.util.control.timing.Updateable;
+import mightypork.util.ion.IonBinary;
 import mightypork.util.ion.IonBundle;
-import mightypork.util.ion.IonBundled;
-import mightypork.util.math.Easing;
+import mightypork.util.ion.IonInput;
+import mightypork.util.ion.IonOutput;
 
 
 /**
@@ -16,7 +14,9 @@ import mightypork.util.math.Easing;
  * 
  * @author MightyPork
  */
-public class Player implements IonBundled, MapObserver, Updateable {
+public class Player implements IonBinary, MapObserver {
+	
+	public static final short ION_MARK = 0;
 	
 	private final double walktime = 0.3; // possibly make changeable for speed potion
 	
@@ -71,18 +71,26 @@ public class Player implements IonBundled, MapObserver, Updateable {
 	
 	
 	@Override
-	public void load(IonBundle in) throws IOException
+	public void load(IonInput in) throws IOException
 	{
-		in.loadBundled("pos", position);
-		in.loadBundled("target", target);
+		IonBundle ib = in.readBundle();
+		ib.loadBundled("pos", position);
 	}
 	
 	
 	@Override
-	public void save(IonBundle out) throws IOException
+	public void save(IonOutput out) throws IOException
 	{
-		out.putBundled("pos", position);
-		out.putBundled("target", target);
+		IonBundle ib = new IonBundle();
+		ib.putBundled("target", target);
+		out.writeBundle(ib);
+	}
+	
+	
+	@Override
+	public short getIonMark()
+	{
+		return ION_MARK;
 	}
 	
 	
@@ -113,15 +121,20 @@ public class Player implements IonBundled, MapObserver, Updateable {
 	}
 	
 	
-	@Override
-	public void update(double delta)
+	public void setMoveListener(Runnable r)
+	{
+		this.moveListenerCustom = r;
+	}
+	
+	
+	public void updateVisual(double delta)
 	{
 		position.update(delta);
 	}
 	
 	
-	public void setMoveListener(Runnable r)
+	public void updateLogic(double delta)
 	{
-		this.moveListenerCustom = r;
+		// server stuffs (sleep timer etc)
 	}
 }
