@@ -20,4 +20,11 @@ public class Floor extends SimpleTile {
 		return true;
 	}
 	
+	
+	@Override
+	public boolean hasDroppedItems()
+	{
+		return true;
+	}
+	
 }

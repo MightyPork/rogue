@@ -2,18 +2,16 @@ package mightypork.rogue.world.item;
 
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import mightypork.util.constraints.rect.proxy.RectBound;
-import mightypork.util.files.ion.Ion;
-import mightypork.util.files.ion.IonConstructor;
-import mightypork.util.files.ion.Ionizable;
+import mightypork.util.ion.IonBinary;
+import mightypork.util.ion.IonInput;
+import mightypork.util.ion.IonOutput;
 
 
-public class Item implements Ionizable {
+public class Item implements IonBinary {
 	
-	public static final short ION_MARK = 701;
+	public static final short ION_MARK = 51;
 	
 	private transient ItemModel model;
 	
@@ -26,7 +24,6 @@ public class Item implements Ionizable {
 	}
 	
 	
-	@IonConstructor
 	public Item()
 	{
 	}
@@ -46,16 +43,16 @@ public class Item implements Ionizable {
 	
 	
 	@Override
-	public void save(OutputStream out) throws IOException
+	public void save(IonOutput out) throws IOException
 	{
-		Ion.writeShort(out, (short) id);
+		out.writeIntByte(id);
 	}
 	
 	
 	@Override
-	public void load(InputStream in) throws IOException
+	public void load(IonInput in) throws IOException
 	{
-		id = Ion.readShort(in);
+		id = in.readIntByte();
 		
 		// if id changed, get new model
 		if (model == null || id != model.id) model = Items.get(id);

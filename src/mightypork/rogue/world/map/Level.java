@@ -2,17 +2,16 @@ package mightypork.rogue.world.map;
 
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import mightypork.rogue.world.MapObserver;
 import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
-import mightypork.util.files.ion.Ion;
-import mightypork.util.files.ion.IonConstructor;
-import mightypork.util.files.ion.Ionizable;
+import mightypork.util.ion.IonBinary;
+import mightypork.util.ion.IonBundle;
+import mightypork.util.ion.IonInput;
+import mightypork.util.ion.IonOutput;
 import mightypork.util.math.noise.NoiseGen;
 
 
@@ -21,9 +20,9 @@ import mightypork.util.math.noise.NoiseGen;
  * 
  * @author MightyPork
  */
-public class Level implements MapAccess, Ionizable {
+public class Level implements MapAccess, IonBinary {
 	
-	public static final int ION_MARK = 702;
+	public static final int ION_MARK = 52;
 	
 	private int width, height;
 	
@@ -33,10 +32,9 @@ public class Level implements MapAccess, Ionizable {
 	/** Level seed (used for generation and tile variation) */
 	public long seed;
 	
-	private NoiseGen noiseGen;
+	private transient NoiseGen noiseGen;
 	
 	
-	@IonConstructor
 	public Level()
 	{
 	}
@@ -53,8 +51,6 @@ public class Level implements MapAccess, Ionizable {
 	private void buildArray()
 	{
 		this.tiles = new Tile[height][width];
-		
-		fill(Tiles.NULL_EMPTY);
 	}
 	
 	
@@ -131,32 +127,43 @@ public class Level implements MapAccess, Ionizable {
 	
 	
 	@Override
-	public void load(InputStream in) throws IOException
+	public void load(IonInput in) throws IOException
 	{
-		seed = Ion.readLong(in);
-		width = Ion.readInt(in);
-		height = Ion.readInt(in);
+		// metadata
+		final IonBundle ib = in.readBundle();
+		seed = ib.get("seed", 0L);
+		width = ib.get("w", 0);
+		height = ib.get("h", 0);
 		
+		// init array of size
 		buildArray();
 		
+		// load tiles
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				tiles[y][x] = new Tile();
-				tiles[y][x].load(in);
+				// no mark
+				final Tile t = new Tile();
+				t.load(in);
+				tiles[y][x] = t;
 			}
 		}
 	}
 	
 	
 	@Override
-	public void save(OutputStream out) throws IOException
+	public void save(IonOutput out) throws IOException
 	{
-		Ion.writeLong(out, seed);
-		Ion.writeInt(out, width);
-		Ion.writeInt(out, height);
+		// metadata
+		final IonBundle ib = new IonBundle();
+		ib.put("seed", seed);
+		ib.put("w", width);
+		ib.put("h", height);
+		out.writeBundle(ib);
 		
+		// tiles (writing this way to save space)
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
+				// no mark to save space
 				tiles[y][x].save(out);
 			}
 		}
@@ -173,7 +180,7 @@ public class Level implements MapAccess, Ionizable {
 	public void update(MapObserver observer, double delta)
 	{
 		final int viewRange = observer.getViewRange();
-		final WorldPos position = observer.getPosition();
+		final WorldPos position = observer.getLogicalPosition();
 		
 		int x1 = position.x - viewRange;
 		int y1 = position.y - viewRange;

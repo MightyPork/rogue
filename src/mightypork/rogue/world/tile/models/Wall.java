@@ -20,4 +20,11 @@ public class Wall extends SimpleTile {
 		return false;
 	}
 	
+	
+	@Override
+	public boolean hasDroppedItems()
+	{
+		return false;
+	}
+	
 }

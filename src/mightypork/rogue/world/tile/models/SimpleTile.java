@@ -8,7 +8,7 @@ import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.files.ion.IonBundle;
+import mightypork.util.ion.IonBundle;
 
 
 /**

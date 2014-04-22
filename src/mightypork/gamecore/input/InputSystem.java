@@ -204,4 +204,10 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	{
 		Mouse.setGrabbed(grab);
 	}
+	
+	
+	public static boolean isKeyDown(int key)
+	{
+		return Keyboard.isKeyDown(key);
+	}
 }

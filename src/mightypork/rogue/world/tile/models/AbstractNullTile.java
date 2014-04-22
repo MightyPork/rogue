@@ -4,7 +4,7 @@ package mightypork.rogue.world.tile.models;
 import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
-import mightypork.util.files.ion.IonBundle;
+import mightypork.util.ion.IonBundle;
 
 
 /**
@@ -59,20 +59,30 @@ public abstract class AbstractNullTile extends TileModel {
 		return inst;
 	}
 	
+	
 	@Override
 	public boolean hasMetadata()
 	{
 		return false;
 	}
 	
+	
 	@Override
 	public void loadMetadata(Tile tile, IonBundle ib)
 	{
 	}
 	
+	
 	@Override
 	public void saveMetadata(Tile tile, IonBundle ib)
 	{
+	}
+	
+	
+	@Override
+	public boolean hasDroppedItems()
+	{
+		return false;
 	}
 	
 }

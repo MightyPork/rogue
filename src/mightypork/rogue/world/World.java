@@ -2,8 +2,7 @@ package mightypork.rogue.world;
 
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,19 +13,15 @@ import mightypork.util.constraints.rect.RectConst;
 import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.control.timing.Updateable;
-import mightypork.util.files.ion.Ion;
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.Ionizable;
-import mightypork.util.files.ion.templates.StreamableArrayList;
+import mightypork.util.ion.IonBundle;
+import mightypork.util.ion.IonBundled;
 
 
-public class World implements Ionizable, Updateable {
+public class World implements IonBundled, Updateable {
 	
-	public static final short ION_MARK = 706;
+	private final ArrayList<Level> levels = new ArrayList<>();
 	
-	private StreamableArrayList<Level> levels = new StreamableArrayList<>();
-	
-	private PlayerInfo player = new PlayerInfo();
+	private final Player player = new Player();
 	
 	private transient final Set<MapObserver> observers = new HashSet<>();
 	
@@ -35,36 +30,20 @@ public class World implements Ionizable, Updateable {
 	
 	
 	@Override
-	public void load(InputStream in) throws IOException
+	public void load(IonBundle in) throws IOException
 	{
-		// world data
-		final IonBundle ib = (IonBundle) Ion.readObject(in);
-		player = ib.get("player", player);
-		seed = ib.get("seed", seed);
-		
-		Ion.readSequence(in, levels);
+		in.loadBundled("player", player);
+		seed = in.get("seed", 0L);
+		in.loadSequence("levels", levels);
 	}
 	
 	
 	@Override
-	public void save(OutputStream out) throws IOException
+	public void save(IonBundle out) throws IOException
 	{
-		final IonBundle ib = new IonBundle();
-		ib.put("player", player);
-		ib.put("seed", seed);
-		Ion.writeObject(out, ib);
-		
-		Ion.writeSequence(out, levels);
-	}
-	
-	
-	public void setPlayer(PlayerInfo player)
-	{
-		removeObserver(this.player);
-		
-		this.player = player;
-		
-		addObserver(player);
+		out.putBundled("player", player);
+		out.put("seed", seed);
+		out.putSequence("levels", levels);
 	}
 	
 	
@@ -87,18 +66,13 @@ public class World implements Ionizable, Updateable {
 	
 	
 	@Override
-	public short getIonMark()
-	{
-		return ION_MARK;
-	}
-	
-	
-	@Override
 	public void update(double delta)
 	{
+		player.update(delta);
+		
 		for (int level = 0; level < levels.size(); level++) {
 			for (final MapObserver observer : observers) {
-				if (observer.getPosition().floor == level) {
+				if (observer.getLogicalPosition().floor == level) {
 					levels.get(level).update(observer, delta);
 				}
 			}
@@ -108,7 +82,7 @@ public class World implements Ionizable, Updateable {
 	
 	public Level getLevelForObserver(MapObserver observer)
 	{
-		return levels.get(observer.getPosition().floor);
+		return levels.get(observer.getLogicalPosition().floor);
 	}
 	
 	
@@ -138,18 +112,21 @@ public class World implements Ionizable, Updateable {
 		
 		final VectConst vpCenter = r.center().sub(tileSize * 0.5, tileSize).freeze(); // 0.5 to center, 1 to move up (down is teh navbar)
 		
-		final int playerX = player.getPosition().x;
-		final int playerY = player.getPosition().y;
+		final double playerX = player.getLogicalPosition().x + player.getVisualOffset().x();
+		final double playerY = player.getLogicalPosition().y + player.getVisualOffset().y();
 		
 		// total map area
 		//@formatter:off
 		final RectConst mapRect = vpCenter.startRect().grow(
 				playerX*tileSize,
-				playerY*tileSize,//
 				(floor.getWidth() - playerX) * tileSize,
+				playerY*tileSize,
 				(floor.getHeight() - playerY) * tileSize
 		).freeze();
 		//@formatter:on
+		
+		System.out.println(playerX + "," + playerY + " : " + mapRect);
+		System.out.println(floor.getWidth() + "," + floor.getHeight());
 		
 		// tiles to render
 		final int x1 = (int) Math.floor(playerX - (vpW / tileSize));
@@ -175,6 +152,12 @@ public class World implements Ionizable, Updateable {
 	public long getSeed()
 	{
 		return seed;
+	}
+	
+	
+	public Player getPlayer()
+	{
+		return player;
 	}
 	
 }

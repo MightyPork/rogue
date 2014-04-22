@@ -2,24 +2,21 @@ package mightypork.rogue.world.tile;
 
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Stack;
 
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.util.control.timing.Animator;
 import mightypork.util.control.timing.Updateable;
-import mightypork.util.files.ion.Ion;
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.IonConstructor;
-import mightypork.util.files.ion.Ionizable;
-import mightypork.util.files.ion.Streamable;
+import mightypork.util.ion.IonBinary;
+import mightypork.util.ion.IonBundle;
+import mightypork.util.ion.IonInput;
+import mightypork.util.ion.IonOutput;
 
 
-public final class Tile implements Ionizable, Updateable {
+public final class Tile implements IonBinary, Updateable {
 	
-	public static final short ION_MARK = 700;
+	public static final short ION_MARK = 50;
 	
 	private transient TileModel model;
 	
@@ -50,7 +47,6 @@ public final class Tile implements Ionizable, Updateable {
 	}
 	
 	
-	@IonConstructor
 	public Tile()
 	{
 	}
@@ -60,45 +56,45 @@ public final class Tile implements Ionizable, Updateable {
 	{
 		model.render(context);
 		
-		if (!items.isEmpty()) {
+		if (hasItems()) {
 			getItemRenderer().render(items.peek(), context);
 		}
 	}
 	
 	
 	@Override
-	public void save(OutputStream out) throws IOException
+	public void save(IonOutput out) throws IOException
 	{
-		if (model.isNullTile()) throw new RuntimeException("Cannot save null tile.");
+		out.writeIntByte(id);
 		
-		Ion.writeShort(out, (short) id); // tile ID
-		Ion.writeSequence(out, items); // if empty, writes single END mark
+		if (model.hasDroppedItems()) {
+			out.writeSequence(items);
+		}
 		
-		// models with metadata can save their stuff
 		if (model.hasMetadata()) {
-			IonBundle ib = new IonBundle();
+			final IonBundle ib = new IonBundle();
 			model.saveMetadata(this, ib);
-			Ion.writeObject(out, ib);
+			out.writeBundle(ib);
 		}
 	}
 	
 	
 	@Override
-	public void load(InputStream in) throws IOException
+	public void load(IonInput in) throws IOException
 	{
-		id = Ion.readShort(in);
+		id = in.readIntByte();
 		
-		// check if model is changed (can happen)
+		// check model
 		if (model == null || id != model.id) {
 			model = Tiles.get(id);
 		}
 		
-		Ion.readSequence(in, items); // if END is found, nothing is read.
+		if (model.hasDroppedItems()) {
+			in.readSequence(items);
+		}
 		
-		// load model's stuff
 		if (model.hasMetadata()) {
-			IonBundle ib = (IonBundle) Ion.readObject(in);
-			model.loadMetadata(this, ib);
+			model.loadMetadata(this, in.readBundle());
 		}
 	}
 	
@@ -107,7 +103,7 @@ public final class Tile implements Ionizable, Updateable {
 	public void update(double delta)
 	{
 		model.update(this, delta);
-		if (!items.isEmpty()) {
+		if (hasItems()) {
 			getItemRenderer().update(delta);
 		}
 	}
@@ -131,7 +127,7 @@ public final class Tile implements Ionizable, Updateable {
 	
 	public boolean hasItems()
 	{
-		return !items.isEmpty();
+		return model.hasDroppedItems() && !items.isEmpty();
 	}
 	
 	

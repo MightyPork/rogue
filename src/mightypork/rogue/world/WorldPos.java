@@ -2,12 +2,9 @@ package mightypork.rogue.world;
 
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-import mightypork.util.files.ion.Ion;
-import mightypork.util.files.ion.IonConstructor;
-import mightypork.util.files.ion.Ionizable;
+import mightypork.util.ion.IonBundle;
+import mightypork.util.ion.IonBundled;
 
 
 /**
@@ -15,57 +12,88 @@ import mightypork.util.files.ion.Ionizable;
  * 
  * @author MightyPork
  */
-public class WorldPos implements Ionizable {
-	
-	public static final short ION_MARK = 707;
+public class WorldPos implements IonBundled {
 	
 	public int x, y, floor;
 	
 	
-	public WorldPos(int x, int y, int z)
+	public WorldPos(int x, int y, int floor)
 	{
 		super();
 		this.x = x;
 		this.y = y;
-		this.floor = z;
+		this.floor = floor;
 	}
 	
 	
-	@IonConstructor
 	public WorldPos()
 	{
 	}
 	
 	
 	@Override
-	public void load(InputStream in) throws IOException
+	public void load(IonBundle in) throws IOException
 	{
-		x = Ion.readInt(in);
-		y = Ion.readInt(in);
-		floor = Ion.readInt(in);
+		x = in.get("x", 0);
+		y = in.get("y", 0);
+		floor = in.get("z", 0);
 	}
 	
 	
 	@Override
-	public void save(OutputStream out) throws IOException
+	public void save(IonBundle out) throws IOException
 	{
-		Ion.writeInt(out, x);
-		Ion.writeInt(out, y);
-		Ion.writeInt(out, floor);
+		out.put("x", x);
+		out.put("y", y);
+		out.put("z", floor);
 	}
 	
 	
-	@Override
-	public short getIonMark()
-	{
-		return ION_MARK;
-	}
-	
-	
-	public void setTo(int x, int y, int z)
+	public void setTo(int x, int y, int floor)
 	{
 		this.x = x;
 		this.y = y;
-		this.floor = z;
+		this.floor = floor;
 	}
+	
+	
+	public void setTo(WorldPos other)
+	{
+		this.x = other.x;
+		this.y = other.y;
+		this.floor = other.floor;
+	}
+	
+	
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + floor;
+		result = prime * result + x;
+		result = prime * result + y;
+		return result;
+	}
+	
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (!(obj instanceof WorldPos)) return false;
+		final WorldPos other = (WorldPos) obj;
+		if (floor != other.floor) return false;
+		if (x != other.x) return false;
+		if (y != other.y) return false;
+		return true;
+	}
+	
+	
+	public void add(int x, int y, int floor)
+	{
+		setTo(this.x + x, this.y + y, this.floor + floor);
+	}
+	
 }

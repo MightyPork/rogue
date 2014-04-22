@@ -3,7 +3,7 @@ package mightypork.rogue.world.tile;
 
 import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.files.ion.IonBundle;
+import mightypork.util.ion.IonBundle;
 
 
 /**
@@ -104,4 +104,13 @@ public abstract class TileModel {
 	 * @return has data
 	 */
 	public abstract boolean hasMetadata();
+	
+	
+	/**
+	 * Check if the tile can hold dropped items. Walls and such can return false
+	 * to save disk space (no need to write empty list).
+	 * 
+	 * @return true
+	 */
+	public abstract boolean hasDroppedItems();
 }

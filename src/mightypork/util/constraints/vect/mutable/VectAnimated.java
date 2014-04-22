@@ -17,7 +17,7 @@ import mightypork.util.math.Easing;
 public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	
 	private final NumAnimated x, y, z;
-	private double defaultDuration = 0;
+	private double defaultDuration = 0.5;
 	
 	
 	/**
@@ -83,45 +83,30 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	@Override
 	public void setX(double x)
 	{
-		this.x.animate(x, defaultDuration);
+		this.x.setTo(x);
 	}
 	
 	
 	@Override
 	public void setY(double y)
 	{
-		this.y.animate(y, defaultDuration);
+		this.y.setTo(y);
 	}
 	
 	
 	@Override
 	public void setZ(double z)
 	{
-		this.z.animate(z, defaultDuration);
+		this.z.setTo(z);
 	}
 	
 	
-	/**
-	 * Add offset with animation
-	 * 
-	 * @param offset added offset
-	 * @param duration animation time (seconds)
-	 */
 	public void add(Vect offset, double duration)
 	{
 		animate(this.add(offset), duration);
 	}
 	
 	
-	/**
-	 * Animate to given coordinates in given amount of time
-	 * 
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param duration animation time (seconds)
-	 * @return this
-	 */
 	public VectAnimated animate(double x, double y, double z, double duration)
 	{
 		this.x.animate(x, duration);
@@ -131,16 +116,25 @@ public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	}
 	
 	
-	/**
-	 * Animate to given vec in given amount of time.
-	 * 
-	 * @param target target (only it's current value will be used)
-	 * @param duration animation time (seconds)
-	 * @return this
-	 */
 	public VectAnimated animate(Vect target, double duration)
 	{
 		animate(target.x(), target.y(), target.z(), duration);
+		return this;
+	}
+	
+	
+	public VectAnimated animate(double x, double y, double z)
+	{
+		this.x.animate(x, defaultDuration);
+		this.y.animate(y, defaultDuration);
+		this.z.animate(z, defaultDuration);
+		return this;
+	}
+	
+	
+	public VectAnimated animate(Vect target)
+	{
+		animate(target.x(), target.y(), target.z());
 		return this;
 	}
 	

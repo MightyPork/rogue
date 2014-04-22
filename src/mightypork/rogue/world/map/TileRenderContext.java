@@ -3,32 +3,27 @@ package mightypork.rogue.world.map;
 
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.builders.TiledRect;
 import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.math.noise.NoiseGen;
 
 
 /**
- * Context for tile rendering. Provides tile rect, surrounding tiles, rendered
- * tile and random noise values for position-static tile variation.
+ * Context for tile rendering.
  * 
  * @author MightyPork
  */
-public final class TileRenderContext implements RectBound {
+public final class TileRenderContext extends MapRenderContext implements RectBound {
 	
-	private final MapAccess map;
-	private final TiledRect tiler;
+	public int x;
+	public int y;
 	private final NoiseGen noise;
-	
-	public int x, y;
 	
 	
 	public TileRenderContext(MapAccess map, Rect drawArea)
 	{
-		this.map = map;
-		this.tiler = drawArea.tiles(map.getWidth(), map.getHeight());
+		super(map, drawArea);
 		
-		this.tiler.setOverlap(0.001); // avoid gaps (rounding error?)	
+		this.tiler.setOverlap(0.01); // avoid gaps (rounding error?)	
 		
 		this.noise = map.getNoiseGen();
 	}
@@ -57,16 +52,6 @@ public final class TileRenderContext implements RectBound {
 	
 	
 	/**
-	 * Rect of the current tile to draw
-	 */
-	@Override
-	public Rect getRect()
-	{
-		return tiler.tile(x, y);
-	}
-	
-	
-	/**
 	 * @return per-coord noise value 0..1
 	 */
 	public double getTileNoise()
@@ -78,5 +63,15 @@ public final class TileRenderContext implements RectBound {
 	public void render()
 	{
 		map.getTile(x, y).render(this);
+	}
+	
+	
+	/**
+	 * Rect of the current tile to draw
+	 */
+	@Override
+	public Rect getRect()
+	{
+		return getRectForTile(x, y);
 	}
 }

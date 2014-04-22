@@ -6,9 +6,12 @@ import java.util.Random;
 
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.input.InputSystem;
+import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.Keys;
 import mightypork.rogue.world.MapGenerator;
 import mightypork.rogue.world.World;
-import mightypork.util.files.ion.Ion;
+import mightypork.util.ion.Ion;
 
 
 public class WorldLayer extends ScreenLayer {
@@ -17,17 +20,82 @@ public class WorldLayer extends ScreenLayer {
 	{
 		super(screen);
 		
+		// FIXME just temporary test here
+		
 		final Random rand = new Random();
 		final World w = MapGenerator.createWorld(rand.nextLong());
+		
 		try {
 			Ion.toFile("amap.ion", w);
 		} catch (final IOException e) {
 			e.printStackTrace();
+			System.exit(1);
+			return;
 		}
+		
+//		final World w;
+//		
+//		try {
+//			w = Ion.fromFile("amap.ion", World.class);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			System.exit(1);
+//			return;
+//		}
 		
 		final WorldRenderer wr = new WorldRenderer(w);
 		wr.setRect(root);
 		root.add(wr);
+		
+		bindKey(new KeyStroke(true, Keys.LEFT), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				w.getPlayer().walk(-1, 0);
+			}
+		});
+		bindKey(new KeyStroke(true, Keys.RIGHT), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				w.getPlayer().walk(1, 0);
+			}
+		});
+		bindKey(new KeyStroke(true, Keys.UP), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				w.getPlayer().walk(0, -1);
+			}
+		});
+		bindKey(new KeyStroke(true, Keys.DOWN), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				w.getPlayer().walk(0, 1);
+			}
+		});
+		
+		w.getPlayer().setTargetListener(new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				if (InputSystem.isKeyDown(Keys.LEFT)) {
+					w.getPlayer().walk(-1, 0);
+				} else if (InputSystem.isKeyDown(Keys.RIGHT)) {
+					w.getPlayer().walk(1, 0);
+				} else if (InputSystem.isKeyDown(Keys.UP)) {
+					w.getPlayer().walk(0, -1);
+				} else if (InputSystem.isKeyDown(Keys.DOWN)) {
+					w.getPlayer().walk(0, 1);
+				}
+			}
+		});
 	}
 	
 	

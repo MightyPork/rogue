@@ -6,13 +6,7 @@ package mightypork.rogue.world;
  * 
  * @author MightyPork
  */
-public interface MapObserver {
-	
-	/**
-	 * @return observer's position
-	 */
-	public WorldPos getPosition();
-	
+public interface MapObserver extends WorldEntity {
 	
 	/**
 	 * @return observed range (in tiles)
