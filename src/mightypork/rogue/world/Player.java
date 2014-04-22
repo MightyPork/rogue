@@ -109,9 +109,14 @@ public class Player implements IonBundled, MapObserver, Updateable {
 		if (walkOffset.isFinished() && !target.equals(position)) {
 			
 			int x = (target.x - position.x);
+			int y = (target.y - position.y);
+			
+			if (Math.abs(x) >= Math.abs(y)) y = 0;
+			if (Math.abs(y) > Math.abs(x)) x = 0;
+			
 			if (x > 0) x = 1;
 			if (x < 0) x = -1;
-			int y = (target.y - position.y);
+			
 			if (y > 0) y = 1;
 			if (y < 0) y = -1;
 			

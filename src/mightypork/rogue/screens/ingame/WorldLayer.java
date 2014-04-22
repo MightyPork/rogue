@@ -79,6 +79,14 @@ public class WorldLayer extends ScreenLayer {
 				w.getPlayer().walk(0, 1);
 			}
 		});
+		bindKey(new KeyStroke(true, Keys.SPACE), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				w.getPlayer().walk(5, 5);
+			}
+		});
 		
 		w.getPlayer().setTargetListener(new Runnable() {
 			
