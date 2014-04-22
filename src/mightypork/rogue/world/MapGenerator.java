@@ -13,19 +13,19 @@ public class MapGenerator {
 	public static final Random rand = new Random();
 	
 	
-	public static WorldServer createWorld(long seed)
+	public static ServerWorld createWorld(long seed)
 	{
 		synchronized (rand) {
 			rand.setSeed(seed);
 			
-			final WorldServer w = new WorldServer();
+			final ServerWorld w = new ServerWorld();
 			w.setSeed(seed);
 			
 			w.addLevel(createLevel(rand.nextLong(), Tiles.CRYSTAL_FLOOR, Tiles.CRYSTAL_WALL));
 			w.addLevel(createLevel(rand.nextLong(), Tiles.BRCOBBLE_FLOOR, Tiles.BRCOBBLE_WALL));
 			
 			// TODO place on start position
-			w.addPlayer("local", new Player(10, 10, 0));			
+			w.addPlayer("local", new PlayerEntity(10, 10, 0));			
 			return w;
 		}
 	}

@@ -1,6 +1,7 @@
 package mightypork.rogue.world.tile;
 
 
+import mightypork.rogue.world.WorldAccess;
 import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.ion.IonBundle;
@@ -17,8 +18,7 @@ public abstract class TileModel {
 	public final int id;
 	
 	
-	public TileModel(int id)
-	{
+	public TileModel(int id) {
 		Tiles.register(id, this);
 		this.id = id;
 	}
@@ -73,18 +73,20 @@ public abstract class TileModel {
 	 * Update tile state etc
 	 * 
 	 * @param tile tile
+	 * @param world
 	 * @param delta delta time
 	 */
-	public abstract void updateLogic(Tile tile, double delta);
+	public abstract void updateLogic(Tile tile, WorldAccess world, double delta);
 	
 	
 	/**
 	 * Update tile effects
 	 * 
 	 * @param tile tile
+	 * @param world
 	 * @param delta delta time
 	 */
-	public abstract void updateVisual(Tile tile, double delta);
+	public abstract void updateVisual(Tile tile, WorldAccess world, double delta);
 	
 	
 	/**

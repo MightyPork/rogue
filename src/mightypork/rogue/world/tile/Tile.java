@@ -4,10 +4,10 @@ package mightypork.rogue.world.tile;
 import java.io.IOException;
 import java.util.Stack;
 
+import mightypork.rogue.world.WorldAccess;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.map.TileRenderContext;
 import mightypork.util.control.timing.Animator;
-import mightypork.util.control.timing.Updateable;
 import mightypork.util.ion.IonBinary;
 import mightypork.util.ion.IonBundle;
 import mightypork.util.ion.IonInput;
@@ -99,14 +99,14 @@ public final class Tile implements IonBinary {
 	}
 	
 	
-	public void updateLogic(double delta)
+	public void updateLogic(WorldAccess world, double delta)
 	{
-		model.updateLogic(this, delta);
+		model.updateLogic(this, world, delta);
 	}
 
-	public void updateVisual(double delta)
+	public void updateVisual(WorldAccess world, double delta)
 	{
-		model.updateVisual(this, delta);
+		model.updateVisual(this, world,  delta);
 		if (hasItems()) {
 			getItemRenderer().updateVisual(delta);
 		}

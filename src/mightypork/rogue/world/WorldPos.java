@@ -20,11 +20,9 @@ public class WorldPos implements IonBundled, Updateable {
 	
 	public int x, y, floor;
 	private final VectAnimated walkOffset = new VectAnimated(Vect.ZERO, Easing.LINEAR);
-	private Runnable moveListener;
 	
 	
-	public WorldPos(int x, int y, int floor)
-	{
+	public WorldPos(int x, int y, int floor) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -32,8 +30,13 @@ public class WorldPos implements IonBundled, Updateable {
 	}
 	
 	
-	public WorldPos()
+	public WorldPos() {
+	}
+	
+	
+	public double getProgress()
 	{
+		return walkOffset.getProgress();
 	}
 	
 	
@@ -74,13 +77,13 @@ public class WorldPos implements IonBundled, Updateable {
 	}
 	
 	
-	public double getXVisual()
+	public double getVisualX()
 	{
 		return x + walkOffset.x();
 	}
 	
 	
-	public double getYVisual()
+	public double getVisualY()
 	{
 		return y + walkOffset.y();
 	}
@@ -135,12 +138,6 @@ public class WorldPos implements IonBundled, Updateable {
 	}
 	
 	
-	public void add(int x, int y)
-	{
-		setTo(this.x + x, this.y + y);
-	}
-	
-	
 	public void walk(int x, int y, double secs)
 	{
 		setTo(this.x + x, this.y + y);
@@ -152,17 +149,13 @@ public class WorldPos implements IonBundled, Updateable {
 	@Override
 	public void update(double delta)
 	{
-		if (!walkOffset.isFinished()) {
-			walkOffset.update(delta);
-		}
-		
-		if (walkOffset.isFinished()) moveListener.run();
+		walkOffset.update(delta);
 	}
 	
 	
-	public void setMoveListener(Runnable listener)
+	public boolean isFinished()
 	{
-		this.moveListener = listener;
+		return walkOffset.isFinished();
 	}
 	
 }

@@ -2,9 +2,12 @@ package mightypork.rogue.world.map;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import mightypork.rogue.world.MapObserver;
-import mightypork.rogue.world.Player;
+import mightypork.rogue.world.PlayerEntity;
+import mightypork.rogue.world.WorldAccess;
+import mightypork.rogue.world.WorldEntity;
 import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
@@ -30,19 +33,19 @@ public class Level implements MapAccess, IonBinary {
 	/** Array of tiles [y][x] */
 	private Tile[][] tiles;
 	
+	private final List<WorldEntity> entities = new ArrayList<>();
+	
 	/** Level seed (used for generation and tile variation) */
 	public long seed;
 	
 	private transient NoiseGen noiseGen;
 	
 	
-	public Level()
-	{
+	public Level() {
 	}
 	
 	
-	public Level(int width, int height)
-	{
+	public Level(int width, int height) {
 		this.width = width;
 		this.height = height;
 		buildArray();
@@ -136,6 +139,8 @@ public class Level implements MapAccess, IonBinary {
 		width = ib.get("w", 0);
 		height = ib.get("h", 0);
 		
+		ib.loadSequence("entities", entities);
+		
 		// init array of size
 		buildArray();
 		
@@ -159,6 +164,7 @@ public class Level implements MapAccess, IonBinary {
 		ib.put("seed", seed);
 		ib.put("w", width);
 		ib.put("h", height);
+		ib.putSequence("entities", entities);
 		out.writeBundle(ib);
 		
 		// tiles (writing this way to save space)
@@ -178,25 +184,25 @@ public class Level implements MapAccess, IonBinary {
 	}
 	
 	
-	public void updateLogic(MapObserver observer, double delta)
+	public void updateLogic(WorldAccess world, MapObserver observer, double delta)
 	{
-		updateForObserver(observer, delta, true, false);
+		updateForObserver(world, observer, delta, true, false);
 	}
 	
 	
-	public void updateVisual(Player player, double delta)
+	public void updateVisual(WorldAccess world, PlayerEntity player, double delta)
 	{
-		updateForObserver(player, delta, false, true);
+		updateForObserver(world, player, delta, false, true);
 	}
 	
 	
-	private void updateForObserver(MapObserver observer, double delta, boolean logic, boolean visual)
+	private void updateForObserver(WorldAccess world, MapObserver observer, double delta, boolean logic, boolean visual)
 	{
 		final int viewRange = observer.getViewRange();
-		final WorldPos position = observer.getPosition();
+		final WorldPos eyepos = observer.getViewPosition();
 		
-		int x1 = position.x - viewRange;
-		int y1 = position.y - viewRange;
+		int x1 = eyepos.x - viewRange;
+		int y1 = eyepos.y - viewRange;
 		
 		int x2 = x1 + viewRange * 2;
 		int y2 = y1 + viewRange * 2;
@@ -208,8 +214,8 @@ public class Level implements MapAccess, IonBinary {
 		
 		for (int y = y1; y <= y2; y++) {
 			for (int x = x1; x <= x2; x++) {
-				if (logic) getTile(x, y).updateLogic(delta);
-				if (visual) getTile(x, y).updateVisual(delta);
+				if (logic) getTile(x, y).updateLogic(world, delta);
+				if (visual) getTile(x, y).updateVisual(world, delta);
 			}
 		}
 	}

@@ -10,11 +10,11 @@ import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.control.timing.Updateable;
 
 
-public class WorldClient implements Updateable {
+public class ClientWorld implements Updateable, WorldAccess {
 	
 	private Level level = null;
 	
-	private final Player player = null;
+	private final PlayerEntity player = null;
 		
 	
 	@Override
@@ -50,8 +50,8 @@ public class WorldClient implements Updateable {
 		
 		final VectConst vpCenter = r.center().sub(tileSize * 0.5, tileSize).freeze(); // 0.5 to center, 1 to move up (down is teh navbar)
 		
-		final double playerX = player.getPosition().getXVisual();
-		final double playerY = player.getPosition().getYVisual();
+		final double playerX = player.getPosition().getVisualX();
+		final double playerY = player.getPosition().getVisualY();
 		
 		// total map area
 		//@formatter:off
@@ -62,9 +62,6 @@ public class WorldClient implements Updateable {
 				(level.getHeight() - playerY) * tileSize
 		).freeze();
 		//@formatter:on
-		
-		System.out.println(playerX + "," + playerY + " : " + mapRect);
-		System.out.println(level.getWidth() + "," + level.getHeight());
 		
 		// tiles to render
 		final int x1 = (int) Math.floor(playerX - (vpW / tileSize));
@@ -81,9 +78,17 @@ public class WorldClient implements Updateable {
 	}
 	
 	
-	public Player getPlayer()
+	public PlayerEntity getPlayer()
 	{
 		return player;
+	}
+
+
+	@Override
+	public boolean isServer()
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

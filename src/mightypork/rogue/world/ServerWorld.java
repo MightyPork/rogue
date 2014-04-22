@@ -12,24 +12,28 @@ import mightypork.util.ion.IonBundled;
 
 
 /**
- * World server. To a server, all players and levels are equal.
+ * World on a server. To a server, all players and levels are equal.
  * 
  * @author MightyPork
  */
-public class WorldServer implements IonBundled, Updateable {
+public class ServerWorld implements IonBundled, Updateable, WorldAccess {
 	
 	private final ArrayList<Level> levels = new ArrayList<>();
 	
-	private final Map<String, Player> players = new HashMap<>();
+	private final Map<String, PlayerEntity> players = new HashMap<>();
 	
 	/** This seed can be used to re-create identical world. */
 	private long seed;
+
+	/** Next spawned entity ID */
+	private long eid;
 	
 	
 	@Override
 	public void load(IonBundle in) throws IOException
 	{
 		seed = in.get("seed", 0L);
+		eid = in.get("eid", 0L);
 		in.loadSequence("levels", levels);
 		in.loadMap("players", players);
 	}
@@ -39,6 +43,7 @@ public class WorldServer implements IonBundled, Updateable {
 	public void save(IonBundle out) throws IOException
 	{
 		out.put("seed", seed);
+		out.put("eid", eid);
 		out.putSequence("levels", levels);
 		out.putMap("players", players);
 	}
@@ -49,7 +54,7 @@ public class WorldServer implements IonBundled, Updateable {
 		levels.add(level);
 	}
 	
-	public void addPlayer(String name, Player player)
+	public void addPlayer(String name, PlayerEntity player)
 	{
 		players.put(name, player);
 	}
@@ -63,16 +68,16 @@ public class WorldServer implements IonBundled, Updateable {
 	public void update(double delta)
 	{
 		// food meters and such
-		for (final Player pl : players.values()) {
-			pl.updateLogic(delta);
+		for (final PlayerEntity pl : players.values()) {
+			if(pl.isConnected()) pl.updateLogic(this, delta);
 		}
 		
 		for (int level = 0; level < levels.size(); level++) {
 			
 			// more than 1 player can be on floor, update for all of them
-			for (final Player pl : players.values()) {
+			for (final PlayerEntity pl : players.values()) {
 				if (pl.getPosition().floor == level) {
-					levels.get(level).updateLogic(pl, delta);
+					levels.get(level).updateLogic(this, pl, delta);
 				}
 			}
 			
@@ -89,5 +94,17 @@ public class WorldServer implements IonBundled, Updateable {
 	public long getSeed()
 	{
 		return seed;
+	}
+
+
+	public long genEid()
+	{
+		return eid++;
+	}
+	
+	@Override
+	public boolean isServer()
+	{
+		return true;
 	}
 }
