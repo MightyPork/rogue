@@ -7,9 +7,16 @@ import java.util.Random;
 
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.input.InputSystem;
+import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Paths;
 import mightypork.rogue.world.MapGenerator;
+import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.World;
+import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.models.EntityMoveListener;
+import mightypork.rogue.world.level.Level;
 import mightypork.util.ion.Ion;
 
 
@@ -46,63 +53,81 @@ public class WorldLayer extends ScreenLayer {
 		wr.setRect(root);
 		root.add(wr);
 		
-//		bindKey(new KeyStroke(true, Keys.LEFT), new Runnable() {
-//			
-//			@Override
-//			public void run()
-//			{
-//				w.getPlayer().walk(-1, 0);
-//			}
-//		});
-//		bindKey(new KeyStroke(true, Keys.RIGHT), new Runnable() {
-//			
-//			@Override
-//			public void run()
-//			{
-//				w.getPlayer().walk(1, 0);
-//			}
-//		});
-//		bindKey(new KeyStroke(true, Keys.UP), new Runnable() {
-//			
-//			@Override
-//			public void run()
-//			{
-//				w.getPlayer().walk(0, -1);
-//			}
-//		});
-//		bindKey(new KeyStroke(true, Keys.DOWN), new Runnable() {
-//			
-//			@Override
-//			public void run()
-//			{
-//				w.getPlayer().walk(0, 1);
-//			}
-//		});
-//		bindKey(new KeyStroke(true, Keys.SPACE), new Runnable() {
-//			
-//			@Override
-//			public void run()
-//			{
-//				w.getPlayer().walk(5, 5);
-//			}
-//		});
-//		
-//		w.getPlayer().setMoveListener(new Runnable() {
-//			
-//			@Override
-//			public void run()
-//			{
-//				if (InputSystem.isKeyDown(Keys.LEFT)) {
-//					w.getPlayer().walk(-1, 0);
-//				} else if (InputSystem.isKeyDown(Keys.RIGHT)) {
-//					w.getPlayer().walk(1, 0);
-//				} else if (InputSystem.isKeyDown(Keys.UP)) {
-//					w.getPlayer().walk(0, -1);
-//				} else if (InputSystem.isKeyDown(Keys.DOWN)) {
-//					w.getPlayer().walk(0, 1);
-//				}
-//			}
-//		});
+		final PlayerControl c = w.getPlayerControl();
+		
+		bindKey(new KeyStroke(true, Keys.LEFT), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				c.walkWest();
+			}
+		});
+		
+		bindKey(new KeyStroke(true, Keys.RIGHT), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				c.walkEast();
+			}
+		});
+		
+		bindKey(new KeyStroke(true, Keys.UP), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				c.walkNorth();
+			}
+		});
+		
+		bindKey(new KeyStroke(true, Keys.DOWN), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				c.walkSouth();
+			}
+		});
+		
+		c.addMoveListener(new EntityMoveListener() {
+			
+			private void tryGo(Entity entity)
+			{
+				if (InputSystem.isKeyDown(Keys.LEFT)) {
+					c.walkWest();
+				} else if (InputSystem.isKeyDown(Keys.RIGHT)) {
+					c.walkEast();
+				} else if (InputSystem.isKeyDown(Keys.UP)) {
+					c.walkNorth();
+				} else if (InputSystem.isKeyDown(Keys.DOWN)) {
+					c.walkSouth();
+				}
+			}
+			
+			
+			@Override
+			public void onStepFinished(Entity entity, World world, Level level)
+			{
+				entity.cancelPath(); // halt
+				tryGo(entity);
+			}
+			
+			
+			@Override
+			public void onPathFinished(Entity entity, World world, Level level)
+			{
+				entity.cancelPath(); // halt
+				tryGo(entity);
+			}
+			
+			
+			@Override
+			public void onPathAborted(Entity entity, World world, Level level)
+			{
+			}
+		});
 	}
 	
 	

@@ -27,4 +27,11 @@ public class Wall extends SimpleTile {
 		return false;
 	}
 	
+	
+	@Override
+	public boolean doesCastShadow()
+	{
+		return true;
+	}
+	
 }

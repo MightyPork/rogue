@@ -63,6 +63,9 @@ public abstract class TileModel {
 	public abstract boolean isWalkable();
 	
 	
+	public abstract boolean doesCastShadow();
+	
+	
 	public boolean isNullTile()
 	{
 		return false;

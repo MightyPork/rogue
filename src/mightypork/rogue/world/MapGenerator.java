@@ -21,8 +21,8 @@ public class MapGenerator {
 			final World w = new World();
 			w.setSeed(seed);
 			
-			w.addLevel(createLevel(rand.nextLong(), Tiles.CRYSTAL_FLOOR, Tiles.CRYSTAL_WALL));
-			w.addLevel(createLevel(rand.nextLong(), Tiles.BRCOBBLE_FLOOR, Tiles.BRCOBBLE_WALL));
+			w.addLevel(createLevel(rand.nextLong(), Tiles.FLOOR_DARK, Tiles.WALL_BRICK));
+			//w.addLevel(createLevel(rand.nextLong(), Tiles.BRCOBBLE_FLOOR, Tiles.BRCOBBLE_WALL));
 			
 			// TODO place on start position
 			w.createPlayer(10, 10, 0);

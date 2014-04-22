@@ -14,7 +14,7 @@ import mightypork.rogue.world.level.Level;
  * 
  * @author MightyPork
  */
-public abstract class EntityModel {
+public abstract class EntityModel implements EntityMoveListener {
 	
 	/** Model ID */
 	public final int id;
@@ -45,7 +45,7 @@ public abstract class EntityModel {
 	
 	
 	/**
-	 * Update entity
+	 * Entity is idle, waiting for action.
 	 */
 	public abstract void update(Entity entity, Level level, double delta);
 	
@@ -57,15 +57,20 @@ public abstract class EntityModel {
 	
 	
 	/**
-	 * @param entity the value is valid for
-	 * @return step time (seconds)
+	 * Get one path step duration (in seconds)
 	 */
 	public abstract double getStepTime(Entity entity);
 	
 	
+	@Override
 	public abstract void onStepFinished(Entity entity, World world, Level level);
 	
 	
+	@Override
 	public abstract void onPathFinished(Entity entity, World world, Level level);
+	
+	
+	@Override
+	public abstract void onPathAborted(Entity entity, World world, Level level);
 	
 }

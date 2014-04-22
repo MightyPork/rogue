@@ -48,7 +48,7 @@ public class WorldRenderer extends InputComponent implements Updateable {
 	@Override
 	protected void renderComponent()
 	{
-		world.render(this, 8, 6, 64);
+		world.render(this, 8, 6, 110);
 		
 		Render.quadGradH(leftShadow, RGB.BLACK, RGB.NONE);
 		Render.quadGradH(rightShadow, RGB.NONE, RGB.BLACK);

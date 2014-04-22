@@ -65,11 +65,13 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	{
 		map.getTile(x, y).renderTile(this);
 	}
-
+	
+	
 	public void renderItems()
 	{
 		map.getTile(x, y).renderItems(this);
 	}
+	
 	
 	/**
 	 * Rect of the current tile to draw

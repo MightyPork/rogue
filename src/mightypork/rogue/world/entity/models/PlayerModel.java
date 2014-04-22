@@ -4,6 +4,7 @@ package mightypork.rogue.world.entity.models;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.renderers.PlayerRenderer;
 import mightypork.rogue.world.level.Level;
 
 
@@ -20,6 +21,7 @@ public class PlayerModel extends EntityModel {
 	public PlayerModel(int id)
 	{
 		super(id);
+		setRenderer(new PlayerRenderer("player"));
 	}
 	
 	
@@ -62,6 +64,12 @@ public class PlayerModel extends EntityModel {
 	
 	@Override
 	public void onPathFinished(Entity entity, World world, Level level)
+	{
+	}
+	
+	
+	@Override
+	public void onPathAborted(Entity entity, World world, Level level)
 	{
 	}
 }

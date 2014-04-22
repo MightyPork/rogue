@@ -75,6 +75,7 @@ public class Screenshot {
 	 */
 	public void save(File file) throws IOException
 	{
+		file.getParentFile().mkdirs();
 		ImageIO.write(getImage(), "PNG", file);
 	}
 }

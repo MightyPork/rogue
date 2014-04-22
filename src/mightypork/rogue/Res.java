@@ -61,10 +61,13 @@ public final class Res {
 	private static void loadTextures()
 	{
 		GLTexture texture;
+		QuadGrid tiles;
 		
+		// tests
 		texture = textures.loadTexture("test.kitten", "/res/img/kitten.png", FilterMode.LINEAR, WrapMode.CLAMP);
 		texture = textures.loadTexture("test.kitten2", "/res/img/kitten_npot.png", FilterMode.LINEAR, WrapMode.CLAMP);
 		
+		// gui
 		texture = textures.loadTexture("gui1", "/res/img/gui1.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		final QuadGrid gui = texture.grid(4, 4);
 		textures.addQuad("item_frame", gui.makeQuad(0, 0));
@@ -76,19 +79,41 @@ public final class Res {
 		textures.addQuad("xp_off", gui.makeQuad(.5, 1.5, .5, .5));
 		textures.addQuad("panel", gui.makeQuad(0, 3.75, 4, .25));
 		
-		texture = textures.loadTexture("tiles", "/res/img/tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
-		final QuadGrid tiles = texture.grid(32, 32);
+		// huge sheet
+//		texture = textures.loadTexture("tiles", "/res/img/tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
+//		tiles = texture.grid(32, 32);		
+//		textures.addSheet("tile.wall.mossy_bricks", tiles.makeSheet(4, 0, 7, 1));
+//		textures.addSheet("tile.wall.small_bricks", tiles.makeSheet(0, 0, 4, 1));
+//		textures.addSheet("tile.floor.mossy_bricks", tiles.makeSheet(16, 5, 7, 1));
+//		textures.addSheet("tile.floor.rect_bricks", tiles.makeSheet(23, 5, 4, 1));
+//		textures.addSheet("tile.wall.sandstone", tiles.makeSheet(0, 3, 10, 1));
+//		textures.addSheet("tile.floor.sandstone", tiles.makeSheet(0, 6, 10, 1));
+//		textures.addSheet("tile.wall.brown_cobble", tiles.makeSheet(0, 8, 8, 1));
+//		textures.addSheet("tile.floor.brown_cobble", tiles.makeSheet(0, 11, 9, 1));
+//		textures.addSheet("tile.floor.crystal", tiles.makeSheet(4, 5, 6, 1));
+//		textures.addSheet("tile.wall.crystal", tiles.makeSheet(12, 2, 14, 1));
 		
-		textures.addSheet("tile.wall.mossy_bricks", tiles.makeSheet(4, 0, 7, 1));
-		textures.addSheet("tile.wall.small_bricks", tiles.makeSheet(0, 0, 4, 1));
-		textures.addSheet("tile.floor.mossy_bricks", tiles.makeSheet(16, 5, 7, 1));
-		textures.addSheet("tile.floor.rect_bricks", tiles.makeSheet(23, 5, 4, 1));
-		textures.addSheet("tile.wall.sandstone", tiles.makeSheet(0, 3, 10, 1));
-		textures.addSheet("tile.floor.sandstone", tiles.makeSheet(0, 6, 10, 1));
-		textures.addSheet("tile.wall.brown_cobble", tiles.makeSheet(0, 8, 8, 1));
-		textures.addSheet("tile.floor.brown_cobble", tiles.makeSheet(0, 11, 9, 1));
-		textures.addSheet("tile.floor.crystal", tiles.makeSheet(4, 5, 6, 1));
-		textures.addSheet("tile.wall.crystal", tiles.makeSheet(12, 2, 14, 1));
+		// sprites
+		texture = textures.loadTexture("mob", "/res/img/dudes.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		tiles = texture.grid(8, 8);
+		textures.addSheet("player", tiles.makeSheet(0, 0, 4, 1));
+		
+		// small sheet
+		texture = textures.loadTexture("tiles16", "/res/img/tiles16.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		tiles = texture.grid(8, 8);
+		
+		textures.addSheet("tile16.floor.dark", tiles.makeSheet(0, 1, 5, 1));
+		textures.addSheet("tile16.wall.brick", tiles.makeSheet(0, 0, 5, 1));
+		
+		textures.addQuad("tile16.shadow.n", tiles.makeQuad(0, 7));
+		textures.addQuad("tile16.shadow.s", tiles.makeQuad(0, 7).flipY());
+		textures.addQuad("tile16.shadow.w", tiles.makeQuad(2, 7));
+		textures.addQuad("tile16.shadow.e", tiles.makeQuad(2, 7).flipX());
+		
+		textures.addQuad("tile16.shadow.nw", tiles.makeQuad(1, 7));
+		textures.addQuad("tile16.shadow.ne", tiles.makeQuad(1, 7).flipX());
+		textures.addQuad("tile16.shadow.sw", tiles.makeQuad(1, 7).flipY());
+		textures.addQuad("tile16.shadow.se", tiles.makeQuad(1, 7).flipY().flipX());
 	}
 	
 	

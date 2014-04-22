@@ -20,21 +20,24 @@ public final class Tiles {
 	public static final TileModel NULL_SOLID = new NullWall(0);
 	public static final TileModel NULL_EMPTY = new NullFloor(1);
 	
-	public static final TileModel BRICK_FLOOR_VINES = new Floor(2).setTexture("tile.floor.mossy_bricks");
-	public static final TileModel BRICK_WALL_VINES = new Wall(3).setTexture("tile.wall.mossy_bricks");
+	public static final TileModel FLOOR_DARK = new Floor(2).setTexture("tile16.floor.dark");
+	public static final TileModel WALL_BRICK = new Wall(3).setTexture("tile16.wall.brick");
 	
-	public static final TileModel BRICK_FLOOR_RECT = new Floor(4).setTexture("tile.floor.rect_bricks");
-	public static final TileModel BRICK_WALL_SMALL = new Wall(5).setTexture("tile.wall.small_bricks");
 	
-	public static final TileModel SANDSTONE_FLOOR = new Floor(6).setTexture("tile.floor.sandstone");
-	public static final TileModel SANDSTONE_WALL = new Wall(7).setTexture("tile.wall.sandstone");
-	
-	public static final TileModel BRCOBBLE_FLOOR = new Floor(8).setTexture("tile.floor.brown_cobble");
-	public static final TileModel BRCOBBLE_WALL = new Wall(9).setTexture("tile.wall.brown_cobble");
-	
-	public static final TileModel CRYSTAL_FLOOR = new Floor(10).setTexture("tile.floor.crystal");
-	public static final TileModel CRYSTAL_WALL = new Wall(11).setTexture("tile.wall.crystal");
-	
+//	public static final TileModel BRICK_FLOOR_VINES = new Floor(2).setTexture("tile.floor.mossy_bricks");
+//	public static final TileModel BRICK_WALL_VINES = new Wall(3).setTexture("tile.wall.mossy_bricks");
+//	
+//	public static final TileModel BRICK_FLOOR_RECT = new Floor(4).setTexture("tile.floor.rect_bricks");
+//	public static final TileModel BRICK_WALL_SMALL = new Wall(5).setTexture("tile.wall.small_bricks");
+//	
+//	public static final TileModel SANDSTONE_FLOOR = new Floor(6).setTexture("tile.floor.sandstone");
+//	public static final TileModel SANDSTONE_WALL = new Wall(7).setTexture("tile.wall.sandstone");
+//	
+//	public static final TileModel BRCOBBLE_FLOOR = new Floor(8).setTexture("tile.floor.brown_cobble");
+//	public static final TileModel BRCOBBLE_WALL = new Wall(9).setTexture("tile.wall.brown_cobble");
+//	
+//	public static final TileModel CRYSTAL_FLOOR = new Floor(10).setTexture("tile.floor.crystal");
+//	public static final TileModel CRYSTAL_WALL = new Wall(11).setTexture("tile.wall.crystal");
 	
 	public static void register(int id, TileModel model)
 	{

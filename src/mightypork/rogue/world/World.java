@@ -22,7 +22,10 @@ public class World implements IonBundled, Updateable {
 	
 	private final ArrayList<Level> levels = new ArrayList<>();
 	
-	private final PlayerInfo player = new PlayerInfo();
+	final PlayerInfo player = new PlayerInfo();
+	Entity playerEntity;
+	
+	private final PlayerControl control = new PlayerControl(this);
 	
 	private long seed;	// world seed
 	private int eid; // next entity ID
@@ -57,7 +60,7 @@ public class World implements IonBundled, Updateable {
 	@Override
 	public void update(double delta)
 	{
-		getCurrentLevel().update(delta);
+		getCurrentLevel().update(this, delta);
 	}
 	
 	
@@ -89,14 +92,14 @@ public class World implements IonBundled, Updateable {
 		}
 		
 		// make entity
-		int playerEid = getNewEID();
+		final int playerEid = getNewEID();
 		
-		final Entity entity = Entities.PLAYER.createEntity(playerEid, new WorldPos(x, y));
+		playerEntity = Entities.PLAYER.createEntity(playerEid, new WorldPos(x, y));
 		
 		player.setLevel(level);
 		player.setEID(playerEid);
 		
-		levels.get(level).addEntity(entity);
+		levels.get(level).addEntity(playerEntity);
 	}
 	
 	
@@ -108,14 +111,20 @@ public class World implements IonBundled, Updateable {
 	 * @param yTiles Desired nr of tiles vertically
 	 * @param minSize minimum tile size
 	 */
-	public void render(RectBound viewport, final int yTiles, final int xTiles, final int minSize)
+	public void render(RectBound viewport, final int xTiles, final int yTiles, final int minSize)
 	{
-		getCurrentLevel().render(player, viewport, yTiles, xTiles, minSize);
+		getCurrentLevel().render(playerEntity.getPosition(), viewport, xTiles, yTiles, minSize);
 	}
 	
 	
 	public Level getCurrentLevel()
 	{
 		return levels.get(player.getLevel());
+	}
+	
+	
+	public PlayerControl getPlayerControl()
+	{
+		return control;
 	}
 }

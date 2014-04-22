@@ -3,6 +3,8 @@ package mightypork.gamecore.render.textures;
 
 import java.util.Random;
 
+import mightypork.util.logging.Log;
+
 
 /**
  * Basic sprite sheet
@@ -40,6 +42,18 @@ public class TxSheet {
 	
 	
 	/**
+	 * Get a quad based on ratio 0-1 (0: first, 1: last)
+	 * 
+	 * @param ratio ratio
+	 * @return quad
+	 */
+	public TxQuad getQuad(double ratio)
+	{
+		return getQuad((int) Math.round((count - 1) * ratio));
+	}
+	
+	
+	/**
 	 * Get quad of index
 	 * 
 	 * @param index index
@@ -47,8 +61,9 @@ public class TxSheet {
 	 */
 	public TxQuad getQuad(int index)
 	{
-		if (index < 0 || index > count) {
-			throw new IndexOutOfBoundsException("Index out of bounds: " + index + ", allowed: 0.." + count);
+		if (index < 0 || index >= count) {
+			Log.w("Index out of bounds: " + index + ", allowed: 0.." + count);
+			index = index % count;
 		}
 		
 		// lazy - init only when needed

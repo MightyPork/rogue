@@ -17,6 +17,9 @@ public class TxQuad {
 	/** Coords in texture (0-1) */
 	public final RectConst uvs;
 	
+	private boolean flipX;
+	private boolean flipY;
+	
 	
 	/**
 	 * TxQuad from origin and size in pixels
@@ -88,6 +91,8 @@ public class TxQuad {
 	{
 		this.tx = txQuad.tx;
 		this.uvs = txQuad.uvs;
+		this.flipX = txQuad.flipX;
+		this.flipY = txQuad.flipY;
 	}
 	
 	
@@ -112,5 +117,39 @@ public class TxQuad {
 	public TxSheet makeSheet(int width, int height)
 	{
 		return new TxSheet(this, width, height);
+	}
+	
+	
+	/**
+	 * @return copy flipped X
+	 */
+	public TxQuad flipX()
+	{
+		final TxQuad copy = new TxQuad(this);
+		copy.flipX ^= true;
+		return copy;
+	}
+	
+	
+	/**
+	 * @return copy flipped Y
+	 */
+	public TxQuad flipY()
+	{
+		final TxQuad copy = new TxQuad(this);
+		copy.flipY ^= true;
+		return copy;
+	}
+	
+	
+	public boolean isFlippedY()
+	{
+		return flipY;
+	}
+	
+	
+	public boolean isFlippedX()
+	{
+		return flipX;
 	}
 }

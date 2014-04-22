@@ -82,6 +82,18 @@ public class WorldPos implements IonBundled, Updateable {
 	}
 	
 	
+	public double getVisualXOffset()
+	{
+		return walkOffset.x();
+	}
+	
+	
+	public double getVisualYOffset()
+	{
+		return walkOffset.y();
+	}
+	
+	
 	public void setTo(int x, int y)
 	{
 		this.x = x;

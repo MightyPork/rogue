@@ -7,13 +7,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.lwjgl.opengl.GL11;
-
 import mightypork.gamecore.render.Render;
 import mightypork.rogue.Res;
-import mightypork.rogue.world.PlayerInfo;
+import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.level.render.EntityRenderContext;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.Tiles;
@@ -170,6 +169,11 @@ public class Level implements MapAccess, IonBinary {
 				tiles[y][x].load(in);
 			}
 		}
+		
+		// mark tiles as occupied
+		for (final Entity e : entity_set) {
+			occupyTile(e.getPosition().x, e.getPosition().y);
+		}
 	}
 	
 	
@@ -201,13 +205,17 @@ public class Level implements MapAccess, IonBinary {
 	}
 	
 	
-	public void update(double delta)
+	public void update(World w, double delta)
 	{
 		// just update them all
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				getTile(x, y).update(this, delta);
 			}
+		}
+		
+		for (final Entity e : entity_set) {
+			e.update(w, this, delta);
 		}
 	}
 	
@@ -232,16 +240,8 @@ public class Level implements MapAccess, IonBinary {
 	 * @param yTiles Desired nr of tiles vertically
 	 * @param minSize minimum tile size
 	 */
-	public void render(PlayerInfo playerInfo, RectBound viewport, final int yTiles, final int xTiles, final int minSize)
+	public void render(WorldPos pos, RectBound viewport, final int xTiles, final int yTiles, final int minSize)
 	{
-		final WorldPos pos;
-		
-		try {
-			pos = getEntity(playerInfo.getEID()).getPosition();
-		} catch (NullPointerException e) {
-			throw new RuntimeException("Player entity not found in level.", e);
-		}
-		
 		final Rect r = viewport.getRect();
 		final double vpH = r.height().value();
 		final double vpW = r.width().value();
@@ -250,9 +250,9 @@ public class Level implements MapAccess, IonBinary {
 		
 		final double allowedSizeW = vpW / xTiles;
 		final double allowedSizeH = vpH / yTiles;
-		int tileSize = (int) Math.round(Math.max(Math.min(allowedSizeH, allowedSizeW), minSize));
+		final int tileSize = (int) Math.round(Math.max(Math.min(allowedSizeH, allowedSizeW), minSize));
 		
-		tileSize -= tileSize % 16;
+		//tileSize -= tileSize % 8;
 		
 		final VectConst vpCenter = r.center().sub(tileSize * 0.5, tileSize).freeze(); // 0.5 to center, 1 to move up (down is teh navbar)
 		
@@ -280,7 +280,7 @@ public class Level implements MapAccess, IonBinary {
 		
 		// batch rendering of the tiles
 		if (USE_BATCH_RENDERING) {
-			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles"));
+			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles16"));
 		}
 		
 		for (trc.y = y1; trc.y <= y2; trc.y++) {
@@ -298,6 +298,12 @@ public class Level implements MapAccess, IonBinary {
 			for (trc.x = x1; trc.x <= x2; trc.x++) {
 				trc.renderItems();
 			}
+		}
+		
+		// render entities
+		final EntityRenderContext erc = new EntityRenderContext(this, mapRect);
+		for (final Entity e : entity_set) {
+			e.render(erc);
 		}
 	}
 	
@@ -326,5 +332,31 @@ public class Level implements MapAccess, IonBinary {
 	{
 		final Entity removed = entity_map.remove(eid);
 		entity_set.remove(removed);
+	}
+	
+	
+	public boolean canWalkInto(int x, int y)
+	{
+		final Tile t = getTile(x, y);
+		
+		return t.isWalkable() && !t.isOccupied();
+	}
+	
+	
+	/**
+	 * Mark tile as occupied by an entity
+	 */
+	public void occupyTile(int x, int y)
+	{
+		getTile(x, y).setOccupied(true);
+	}
+	
+	
+	/**
+	 * Mark tile as free (no longet occupied)
+	 */
+	public void freeTile(int x, int y)
+	{
+		getTile(x, y).setOccupied(false);
 	}
 }

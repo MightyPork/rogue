@@ -2,14 +2,18 @@ package mightypork.rogue.world.entity;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import mightypork.rogue.world.PathStep;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.models.EntityModel;
+import mightypork.rogue.world.entity.models.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.level.render.EntityRenderContext;
 import mightypork.util.ion.IonBinary;
 import mightypork.util.ion.IonBundle;
 import mightypork.util.ion.IonBundled;
@@ -22,23 +26,32 @@ import mightypork.util.ion.IonOutput;
  * 
  * @author MightyPork
  */
-public final class Entity implements IonBinary, IonBundled {
+public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	
 // binary & bundled - binary stores via a bundle
 	
 	public static final int ION_MARK = 52;
 	
-	private final WorldPos position = new WorldPos();
+	private final WorldPos position = new WorldPos(); // saved
 	
 	/** Entity ID */
-	private int eid = 0;
+	private int eid = 0; // saved
 	
 	/** Model ID */
-	private int id;
+	private int id; // saved
 	
-	private final Queue<PathStep> path = new LinkedList<>();
+	private final Queue<PathStep> path = new LinkedList<>(); // saved
 	private EntityModel model;
-	private final IonBundle metadata = new IonBundle();
+	public final IonBundle metadata = new IonBundle(); // saved	
+	public final IonBundle tmpdata = new IonBundle(); // NOT saved
+	
+	// used for rendering "facing" sprite
+	public int lastXMove = 1;
+	public int lastYMove = 1;
+	
+	private final List<EntityMoveListener> moveListeners = new ArrayList<>();
+	
+	private boolean walking = false;
 	
 	
 	public Entity(int eid, WorldPos pos, EntityModel entityModel)
@@ -52,6 +65,10 @@ public final class Entity implements IonBinary, IonBundled {
 	
 	private void setModel(EntityModel entityModel)
 	{
+		// replace listener
+		if (model != null) moveListeners.remove(model);
+		moveListeners.add(entityModel);
+		
 		this.id = entityModel.id;
 		this.model = entityModel;
 	}
@@ -93,7 +110,10 @@ public final class Entity implements IonBinary, IonBundled {
 		bundle.putBundled("pos", position);
 		bundle.putSequence("steps", path);
 		bundle.put("eid", eid);
-		bundle.put("metadata", metadata);
+		
+		if (model.hasMetadata()) {
+			bundle.put("metadata", metadata);
+		}
 	}
 	
 	
@@ -110,11 +130,16 @@ public final class Entity implements IonBinary, IonBundled {
 		bundle.loadSequence("path", path);
 		eid = bundle.get("eid", eid);
 		
-		metadata.clear();
-		bundle.loadBundle("metadata", metadata);
+		if (model.hasMetadata()) {
+			metadata.clear();
+			bundle.loadBundle("metadata", metadata);
+		}
 	}
 	
 	
+	/**
+	 * @return unique entity id
+	 */
 	public int getEID()
 	{
 		return eid;
@@ -150,19 +175,49 @@ public final class Entity implements IonBinary, IonBundled {
 			position.update(delta);
 		}
 		
-		if (position.isFinished()) {
+		if (walking && position.isFinished()) {
+			walking = false;
 			
-			model.onStepFinished(this, world, level);
+			onStepFinished(this, world, level);
 			
-			if (!path.isEmpty()) {
-				// get next step to walk
-				final PathStep step = path.poll();
-				position.walk(step.x, step.y, getStepTime());
-			} else {
-				// notify AI or whatever
-				model.onPathFinished(this, world, level);
+			if (path.isEmpty()) {
+				onPathFinished(this, world, level);
 			}
 		}
+		
+		if (!walking && !path.isEmpty()) {
+			
+			walking = true;
+			
+			final PathStep step = path.poll();
+			
+			final int projX = position.x + step.x, projY = position.y + step.y;
+			
+			if (!level.canWalkInto(projX, projY)) {
+				cancelPath();
+				onPathAborted(this, world, level);
+				walking = false;
+			} else {
+				
+				// tmp for renderer
+				if (step.x != 0) lastXMove = step.x;
+				if (step.y != 0) lastYMove = step.y;
+				
+				position.walk(step.x, step.y, getStepTime());
+				level.occupyTile(projX, projY);
+				level.freeTile(position.x, position.y);
+			}
+		}
+		
+		if (!walking) {
+			model.update(this, level, delta);
+		}
+	}
+	
+	
+	public void render(EntityRenderContext context)
+	{
+		model.renderer.render(this, context);
 	}
 	
 	
@@ -189,4 +244,36 @@ public final class Entity implements IonBinary, IonBundled {
 		return model.getStepTime(this);
 	}
 	
+	
+	@Override
+	public void onStepFinished(Entity entity, World world, Level level)
+	{
+		for (final EntityMoveListener l : moveListeners) {
+			l.onStepFinished(entity, world, level);
+		}
+	}
+	
+	
+	@Override
+	public void onPathFinished(Entity entity, World world, Level level)
+	{
+		for (final EntityMoveListener l : moveListeners) {
+			l.onStepFinished(entity, world, level);
+		}
+	}
+	
+	
+	@Override
+	public void onPathAborted(Entity entity, World world, Level level)
+	{
+		for (final EntityMoveListener l : moveListeners) {
+			l.onPathAborted(entity, world, level);
+		}
+	}
+	
+	
+	public void addMoveListener(EntityMoveListener listener)
+	{
+		moveListeners.add(listener);
+	}
 }

@@ -5,11 +5,9 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
 
-import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.gamecore.render.textures.GLTexture;
 import mightypork.gamecore.render.textures.TxQuad;
-import mightypork.rogue.Res;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.caching.RectDigest;
 import mightypork.util.constraints.vect.Vect;
@@ -430,72 +428,6 @@ public class Render {
 	 * Render textured rect
 	 * 
 	 * @param quad rectangle (px)
-	 * @param uvs texture coords rectangle (0-1)
-	 * @param texture texture instance
-	 * @param tint color tint
-	 */
-	public static void quadTextured(Rect quad, Rect uvs, GLTexture texture, Color tint)
-	{
-		if (!batchTexturedQuadMode) {
-			glEnable(GL_TEXTURE_2D);
-			texture.bind();
-			glBegin(GL_QUADS);
-		}
-		
-		setColor(tint);
-		
-		final RectDigest q = quad.digest();
-		final RectDigest u = uvs.digest();
-		
-		final double w = texture.getWidth01();
-		final double h = texture.getHeight01();
-		
-		// quad with texture
-		glTexCoord2d(u.x * w, u.bottom * h);
-		glVertex2d(q.left, q.bottom);
-		
-		glTexCoord2d(u.right * w, u.bottom * h);
-		glVertex2d(q.right, q.bottom);
-		
-		glTexCoord2d(u.right * w, u.top * h);
-		glVertex2d(q.right, q.top);
-		
-		glTexCoord2d(u.left * w, u.top * h);
-		glVertex2d(q.left, q.top);
-		
-		if (!batchTexturedQuadMode) glEnd();
-	}
-	
-	
-	/**
-	 * Render textured rect
-	 * 
-	 * @param quad rectangle (px)
-	 * @param uvs texture coords rectangle (px)
-	 * @param texture texture instance
-	 */
-	public static void quadTextured(Rect quad, Rect uvs, GLTexture texture)
-	{
-		quadTextured(quad, uvs, texture, Color.WHITE);
-	}
-	
-	
-	/**
-	 * Render textured rect
-	 * 
-	 * @param quad rectangle (px)
-	 * @param texture texture instance
-	 */
-	public static void quadTextured(Rect quad, GLTexture texture)
-	{
-		quadTextured(quad, Rect.ONE, texture, Color.WHITE);
-	}
-	
-	
-	/**
-	 * Render textured rect
-	 * 
-	 * @param quad rectangle (px)
 	 * @param txquad texture quad
 	 */
 	public static void quadTextured(Rect quad, TxQuad txquad)
@@ -513,7 +445,49 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, TxQuad txquad, Color tint)
 	{
-		quadTextured(quad, txquad.uvs, txquad.tx, tint);
+		if (!batchTexturedQuadMode) {
+			glEnable(GL_TEXTURE_2D);
+			txquad.tx.bind();
+			glBegin(GL_QUADS);
+		}
+		
+		setColor(tint);
+		
+		final RectDigest q = quad.digest();
+		final RectDigest u = txquad.uvs.digest();
+		
+		double tL = u.left, tR = u.right, tT = u.top, tB = u.bottom;
+		
+		// handle flip
+		if (txquad.isFlippedY()) {
+			final double swap = tT;
+			tT = tB;
+			tB = swap;
+		}
+		
+		if (txquad.isFlippedX()) {
+			final double swap = tL;
+			tL = tR;
+			tR = swap;
+		}
+		
+		final double w = txquad.tx.getWidth01();
+		final double h = txquad.tx.getHeight01();
+		
+		// quad with texture
+		glTexCoord2d(tL * w, tB * h);
+		glVertex2d(q.left, q.bottom);
+		
+		glTexCoord2d(tR * w, tB * h);
+		glVertex2d(q.right, q.bottom);
+		
+		glTexCoord2d(tR * w, tT * h);
+		glVertex2d(q.right, q.top);
+		
+		glTexCoord2d(tL * w, tT * h);
+		glVertex2d(q.left, q.top);
+		
+		if (!batchTexturedQuadMode) glEnd();
 	}
 	
 	
