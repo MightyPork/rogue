@@ -41,15 +41,15 @@ public class RectVar extends RectMutable {
 	
 	
 	@Override
-	public void setOrigin(Vect origin)
+	public void setOrigin(double x, double y)
 	{
-		this.pos.setTo(origin);
+		this.pos.setTo(x,y);
 	}
 	
 	
 	@Override
-	public void setSize(Vect size)
+	public void setSize(double x, double y)
 	{
-		this.size.setTo(size);
+		this.size.setTo(x,y);
 	}
 }

@@ -449,9 +449,9 @@ public class Render {
 			glEnable(GL_TEXTURE_2D);
 			txquad.tx.bind();
 			glBegin(GL_QUADS);
+			setColor(tint);
 		}
 		
-		setColor(tint);
 		
 		final RectDigest q = quad.digest();
 		final RectDigest u = txquad.uvs.digest();

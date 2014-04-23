@@ -82,7 +82,7 @@ public class WorldRenderer extends RectProxy implements Pollable {
 	}
 	
 	
-	private int[] getOffset()
+	private Vect getOffset()
 	{
 		WorldPos pos = player.getPosition();
 		final double playerX = pos.getVisualX();
@@ -90,29 +90,26 @@ public class WorldRenderer extends RectProxy implements Pollable {
 		
 		double ts = tileSize.value();
 		
-		return new int[]{(int) (-ts * playerX), (int) (-ts * playerY)};
+		return Vect.make((-ts * playerX), (-ts * playerY));
 	}
 	
 	
 	public void render()
-	{
-		int[] off = getOffset();
-		System.out.println(trc.getRectForTile(10, 10));
-		
+	{		
 		Render.pushMatrix();
-		Render.translate(off[0], off[1]);
+		Render.setColor(RGB.WHITE);
+		Render.translate(getOffset());
 		
 		// tiles to render
 		final WorldPos pos = player.getPosition();
 		final double w = width().value();
 		final double h = height().value();
 		final double ts = tileSize.value();
-		final double tsh = ts / 2;
 		
-		final int x1 = (int) Math.floor(pos.x - (w / tsh));
-		final int y1 = (int) Math.floor(pos.y - (h / tsh));
-		final int x2 = (int) Math.ceil(pos.x + (w / tsh));
-		final int y2 = (int) Math.ceil(pos.y + (h / tsh));
+		final int x1 = (int) Math.floor(pos.x - (w / (ts*2)));
+		final int y1 = (int) Math.floor(pos.y - (h / (ts*2)));
+		final int x2 = (int) Math.ceil(pos.x + (w / (ts*2)));
+		final int y2 = (int) Math.ceil(pos.y + (h / (ts*2)))+1;
 		
 		// === TILES ===
 		
@@ -121,11 +118,16 @@ public class WorldRenderer extends RectProxy implements Pollable {
 			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles16"));
 		}
 		
+		Render.setColor(RGB.WHITE);
+		
+		int c = 0;
 		for (trc.y = y1; trc.y <= y2; trc.y++) {
 			for (trc.x = x1; trc.x <= x2; trc.x++) {
 				trc.renderTile();
+				c++;
 			}
 		}
+		System.out.println(c);
 		
 		if (USE_BATCH_RENDERING) {
 			Render.leaveBatchTexturedQuadMode();
@@ -167,8 +169,7 @@ public class WorldRenderer extends RectProxy implements Pollable {
 	
 	public WorldPos getClickedTile(Vect clickPos)
 	{
-		int[] off = getOffset();
-		Vect v = clickPos.sub(mapRect.origin().add(off[0], off[1]));
+		Vect v = clickPos.sub(mapRect.origin().add(getOffset()));
 		int ts = (int) tileSize.value();
 		return new WorldPos(v.xi() / ts, v.yi() / ts);
 	}

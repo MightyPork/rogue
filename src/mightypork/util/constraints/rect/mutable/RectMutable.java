@@ -71,20 +71,17 @@ public abstract class RectMutable extends Rect {
 		setTo(Vect.ZERO, Vect.ZERO);
 	}
 	
+	public abstract void setOrigin(double x, double y);
 	
-	/**
-	 * Set new origin
-	 * 
-	 * @param origin new origin
-	 */
-	public abstract void setOrigin(Vect origin);
+	public void setOrigin(Vect origin) {
+		setOrigin(origin.x(), origin.y());		
+	}
 	
 	
-	/**
-	 * Set new size
-	 * 
-	 * @param size new size
-	 */
-	public abstract void setSize(Vect size);
+	public void setSize(Vect size) {
+		setSize(size.x(), size.y());
+	}
+
 	
+	public abstract void setSize(double x, double y);
 }
