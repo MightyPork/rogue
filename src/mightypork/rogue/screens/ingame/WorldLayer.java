@@ -17,6 +17,7 @@ import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
+import mightypork.util.constraints.num.Num;
 import mightypork.util.ion.Ion;
 
 
@@ -49,9 +50,11 @@ public class WorldLayer extends ScreenLayer {
 //			System.exit(1);
 //			return;
 //		}
+
+		final Num minWH = root.width().min(root.height()).max(700); // avoid too small shrinking
 		
 		final WorldRenderer wr = new WorldRenderer(w);
-		wr.setRect(root);
+		wr.setRect(root.shrinkBottom(minWH.perc(7)));
 		root.add(wr);
 		
 		final PlayerControl c = w.getPlayerControl();

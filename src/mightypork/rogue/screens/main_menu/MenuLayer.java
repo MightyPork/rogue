@@ -12,6 +12,7 @@ import mightypork.rogue.screens.CrossfadeRequest;
 import mightypork.util.constraints.num.Num;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.control.Action;
+import mightypork.util.math.color.COMMODORE;
 import mightypork.util.math.color.PAL16;
 
 
@@ -40,16 +41,16 @@ class MenuLayer extends ScreenLayer {
 		
 		TextPainter tp;
 		MenuButton b0, b1, b2, b3, b4;
-		tp = new TextPainter(Res.getFont("main_menu_title"), AlignX.CENTER, PAL16.ZORNSKIN, "Rogue!");
-		b0 = new MenuButton("Ingame", PAL16.SLIMEGREEN);
+		tp = new TextPainter(Res.getFont("main_menu_title"), AlignX.CENTER, COMMODORE.PURPLE, "Rogue!");
+		b0 = new MenuButton("World Test", PAL16.SLIMEGREEN);
 		b1 = new MenuButton("Gradientz", PAL16.BLAZE);
-		b2 = new MenuButton("Bouncy Cubes", PAL16.NEWPOOP);
+		b2 = new MenuButton("Bouncy Cubes", PAL16.CLOUDBLUE);
 		b3 = new MenuButton("Flying Cat", PAL16.PIGMEAT);
 		b4 = new MenuButton("Bye!", PAL16.BLOODRED);
 		
 		int r = 0;
 		
-		layout.put(tp, r, 0, 4, 1);
+		layout.put(tp, r, 0, 3, 1);
 		r += 5;
 		layout.put(b0, r, 0, 2, 1);
 		r += 3;

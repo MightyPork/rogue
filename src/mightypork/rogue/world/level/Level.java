@@ -254,7 +254,7 @@ public class Level implements MapAccess, IonBinary {
 		
 		//tileSize -= tileSize % 8;
 		
-		final VectConst vpCenter = r.center().sub(tileSize * 0.5, tileSize).freeze(); // 0.5 to center, 1 to move up (down is teh navbar)
+		final VectConst vpCenter = r.center().sub(tileSize * 0.5, tileSize * 0.5).freeze(); // 0.5 to center, 1 to move up (down is teh navbar)
 		
 		final double playerX = pos.getVisualX();
 		final double playerY = pos.getVisualY();

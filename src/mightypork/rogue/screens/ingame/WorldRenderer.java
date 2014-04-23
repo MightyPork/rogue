@@ -34,7 +34,7 @@ public class WorldRenderer extends InputComponent implements Updateable {
 		leftShadow = leftEdge().growRight(grX);
 		rightShadow = rightEdge().growLeft(grX);
 		topShadow = topEdge().growDown(grY);
-		bottomShadow = bottomEdge().growUp(grY).moveY(minWH.perc(-6));
+		bottomShadow = bottomEdge().growUp(grY); //.moveY(minWH.perc(-6))
 	}
 	
 	
@@ -48,7 +48,7 @@ public class WorldRenderer extends InputComponent implements Updateable {
 	@Override
 	protected void renderComponent()
 	{
-		world.render(this, 8, 6, 110);
+		world.render(this, 8, 7, 100);
 		
 		Render.quadGradH(leftShadow, RGB.BLACK, RGB.NONE);
 		Render.quadGradH(rightShadow, RGB.NONE, RGB.BLACK);
