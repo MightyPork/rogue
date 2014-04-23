@@ -22,28 +22,28 @@ public class ColorRgb extends Color {
 	
 	
 	@Override
-	public double red()
+	public double r()
 	{
 		return clamp(r);
 	}
 	
 	
 	@Override
-	public double green()
+	public double g()
 	{
 		return clamp(g);
 	}
 	
 	
 	@Override
-	public double blue()
+	public double b()
 	{
 		return clamp(b);
 	}
 	
 	
 	@Override
-	public double rawAlpha()
+	protected double rawAlpha()
 	{
 		return clamp(a);
 	}

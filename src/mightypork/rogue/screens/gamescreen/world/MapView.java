@@ -95,10 +95,8 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	{
 		if (!event.isOver(this)) return;
 		
-		if (!event.isUp()) return; // only btn-release evt
-			
 		for (final MapInteractionPlugin p : plugins) {
-			p.onClick(this, pc, event.getPos());
+			p.onClick(this, pc, event.getPos(), event.isDown());
 		}
 		
 		event.consume(); // only our clicks.
@@ -108,10 +106,8 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	@Override
 	public void receive(KeyEvent event)
 	{
-		if (!event.isDown()) return;
-		
 		for (final MapInteractionPlugin p : plugins) {
-			p.onKey(this, pc, event.getKey());
+			p.onKey(this, pc, event.getKey(), event.isDown());
 		}
 		
 		// don't consume key events, can be useful for others.

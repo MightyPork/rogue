@@ -41,7 +41,7 @@ public class Render {
 	 */
 	public static void setColor(Color color)
 	{
-		if (color != null) glColor4d(color.red(), color.green(), color.blue(), color.alpha());
+		if (color != null) glColor4d(color.r(), color.g(), color.b(), color.a());
 	}
 	
 	
@@ -53,7 +53,7 @@ public class Render {
 	 */
 	public static void setColor(Color color, double alpha)
 	{
-		if (color != null) glColor4d(color.red(), color.green(), color.blue(), color.alpha() * alpha);
+		if (color != null) glColor4d(color.r(), color.g(), color.b(), color.a() * alpha);
 	}
 	
 	

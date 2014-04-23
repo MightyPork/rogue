@@ -33,28 +33,28 @@ public class ColorHsb extends Color {
 	
 	
 	@Override
-	public double red()
+	public double r()
 	{
 		return asRgb()[0];
 	}
 	
 	
 	@Override
-	public double green()
+	public double g()
 	{
 		return asRgb()[1];
 	}
 	
 	
 	@Override
-	public double blue()
+	public double b()
 	{
 		return asRgb()[2];
 	}
 	
 	
 	@Override
-	public double rawAlpha()
+	protected double rawAlpha()
 	{
 		return asRgb()[3];
 	}

@@ -18,23 +18,23 @@ public class ColorAlphaAdjuster extends Color {
 	
 	
 	@Override
-	public double red()
+	public double r()
 	{
-		return source.red();
+		return source.r();
 	}
 	
 	
 	@Override
-	public double green()
+	public double g()
 	{
-		return source.green();
+		return source.g();
 	}
 	
 	
 	@Override
-	public double blue()
+	public double b()
 	{
-		return source.blue();
+		return source.b();
 	}
 	
 	

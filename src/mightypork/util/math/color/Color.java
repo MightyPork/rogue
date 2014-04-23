@@ -150,25 +150,25 @@ public abstract class Color {
 	/**
 	 * @return red 0-1
 	 */
-	public abstract double red();
+	public abstract double r();
 	
 	
 	/**
 	 * @return green 0-1
 	 */
-	public abstract double green();
+	public abstract double g();
 	
 	
 	/**
 	 * @return blue 0-1
 	 */
-	public abstract double blue();
+	public abstract double b();
 	
 	
 	/**
 	 * @return alpha 0-1
 	 */
-	public final double alpha()
+	public final double a()
 	{
 		double alpha = rawAlpha();
 		

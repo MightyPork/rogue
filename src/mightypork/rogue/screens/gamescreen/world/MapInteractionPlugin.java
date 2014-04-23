@@ -10,9 +10,9 @@ public interface MapInteractionPlugin {
 	void onStepEnd(MapView wv, PlayerControl player);
 	
 	
-	void onClick(MapView wv, PlayerControl player, Vect mouse);
+	void onClick(MapView wv, PlayerControl player, Vect mouse, boolean down);
 	
 	
-	void onKey(MapView wv, PlayerControl player, int key);
+	void onKey(MapView wv, PlayerControl player, int key, boolean down);
 	
 }

@@ -382,7 +382,7 @@ public class CachedFont implements GLFont {
 		
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, textureID);
-		glColor4d(color.red(), color.green(), color.blue(), color.alpha());
+		glColor4d(color.r(), color.g(), color.b(), color.a());
 		
 		glBegin(GL_QUADS);
 		

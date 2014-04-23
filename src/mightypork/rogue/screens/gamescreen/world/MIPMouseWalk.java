@@ -16,14 +16,16 @@ public class MIPMouseWalk implements MapInteractionPlugin {
 	{
 		if (InputSystem.isMouseButtonDown(0)) {
 			// walk by holding btn
-			onClick(wv, player, InputSystem.getMousePos());
+			onClick(wv, player, InputSystem.getMousePos(), true);
 		}
 	}
 	
 	
 	@Override
-	public void onClick(MapView wv, PlayerControl player, Vect mouse)
+	public void onClick(MapView wv, PlayerControl player, Vect mouse, boolean down)
 	{
+		if(!down) return;
+		
 		final WorldPos plpos = player.getPos();
 		final WorldPos clicked = wv.toWorldPos(mouse);
 		
@@ -52,7 +54,7 @@ public class MIPMouseWalk implements MapInteractionPlugin {
 	
 	
 	@Override
-	public void onKey(MapView wv, PlayerControl player, int key)
+	public void onKey(MapView wv, PlayerControl player, int key, boolean down)
 	{
 	}
 	
