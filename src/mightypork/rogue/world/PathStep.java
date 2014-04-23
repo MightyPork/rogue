@@ -14,10 +14,6 @@ public class PathStep implements IonBinary {
 	public static final PathStep SOUTH = new PathStep(0, 1);
 	public static final PathStep EAST = new PathStep(1, 0);
 	public static final PathStep WEST = new PathStep(-1, 0);
-	public static final PathStep NORTH_EAST = new PathStep(1, -1);
-	public static final PathStep NORTH_WEST = new PathStep(-1, -1);
-	public static final PathStep SOUTH_EAST = new PathStep(1, 1);
-	public static final PathStep SOUTH_WEST = new PathStep(-1, 1);
 	public static final PathStep NONE = new PathStep(0, 0);
 	
 	
@@ -26,19 +22,12 @@ public class PathStep implements IonBinary {
 		x = x < 0 ? -1 : x > 0 ? 1 : 0;
 		y = y < 0 ? -1 : y > 0 ? 1 : 0;
 		
-		if (x == 0 && y == -1) return NORTH;
-		if (x == 0 && y == 1) return SOUTH;
-		if (x == -1 && y == 0) return WEST;
-		if (x == 1 && y == 0) return EAST;
+		if (y == -1) return NORTH;
+		if (y == 1) return SOUTH;
+		if (x == -1) return WEST;
+		if (x == 1) return EAST;
 		
-		if (x == -1 && y == -1) return NORTH_WEST;
-		if (x == 1 && y == -1) return NORTH_EAST;
-		if (x == -1 && y == 1) return SOUTH_WEST;
-		if (x == 1 && y == 1) return SOUTH_EAST;
-		
-		if (x == 0 && y == 0) return NONE;
-		
-		return new PathStep(x, y);
+		return NONE;
 	}
 	
 	public static final int ION_MARK = 0;

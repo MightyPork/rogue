@@ -17,7 +17,7 @@ import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.rogue.screens.CrossfadeOverlay;
 import mightypork.rogue.screens.CrossfadeRequest;
 import mightypork.rogue.screens.FpsOverlay;
-import mightypork.rogue.screens.ingame.ScreenGame;
+import mightypork.rogue.screens.gamescreen.ScreenGame;
 import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;

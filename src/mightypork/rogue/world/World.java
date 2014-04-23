@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
-import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.control.timing.Updateable;
 import mightypork.util.ion.IonBundle;
 import mightypork.util.ion.IonBundled;
@@ -105,20 +104,6 @@ public class World implements IonBundled, Updateable {
 	}
 	
 	
-	/**
-	 * Draw on screen
-	 * 
-	 * @param viewport rendering area on screen
-	 * @param xTiles Desired nr of tiles horizontally
-	 * @param yTiles Desired nr of tiles vertically
-	 * @param minSize minimum tile size
-	 */
-	public void render(RectBound viewport, final int xTiles, final int yTiles, final int minSize)
-	{
-		getCurrentLevel().render(playerEntity.getPosition(), viewport, xTiles, yTiles, minSize);
-	}
-	
-	
 	public Level getCurrentLevel()
 	{
 		return levels.get(player.getLevel());
@@ -128,5 +113,11 @@ public class World implements IonBundled, Updateable {
 	public PlayerControl getPlayerControl()
 	{
 		return control;
+	}
+
+
+	public Entity getPlayerEntity()
+	{
+		return playerEntity;
 	}
 }

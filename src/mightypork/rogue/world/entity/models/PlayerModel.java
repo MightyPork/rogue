@@ -69,7 +69,7 @@ public class PlayerModel extends EntityModel {
 	
 	
 	@Override
-	public void onPathAborted(Entity entity, World world, Level level)
+	public void onPathInterrupted(Entity entity, World world, Level level)
 	{
 	}
 }

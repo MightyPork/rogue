@@ -2,11 +2,27 @@ package mightypork.gamecore.gui.components;
 
 
 import mightypork.gamecore.control.events.MouseButtonEvent;
+import mightypork.util.control.Action;
+import mightypork.util.control.ActionTrigger;
 
 
-public abstract class ClickableComponent extends InputComponent {
+public abstract class ClickableComponent extends InputComponent implements ActionTrigger, MouseButtonEvent.Listener {
 	
 	private boolean btnDownOver;
+	private Action action;
+	
+	
+	@Override
+	public void setAction(Action action)
+	{
+		this.action = action;
+	}
+	
+	
+	protected void triggerAction()
+	{
+		if (action != null && isEnabled()) action.run();
+	}
 	
 	
 	@Override

@@ -13,7 +13,7 @@ import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.models.EntityModel;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
-import mightypork.rogue.world.level.render.EntityRenderContext;
+import mightypork.rogue.world.level.render.MapRenderContext;
 import mightypork.util.ion.IonBinary;
 import mightypork.util.ion.IonBundle;
 import mightypork.util.ion.IonBundled;
@@ -188,13 +188,13 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 			
 			walking = true;
 			
-			final PathStep step = path.poll();
+			PathStep step = path.poll();
 			
 			final int projX = position.x + step.x, projY = position.y + step.y;
 			
 			if (!level.canWalkInto(projX, projY)) {
 				cancelPath();
-				onPathAborted(this, world, level);
+				onPathInterrupted(this, world, level);
 				walking = false;
 			} else {
 				
@@ -214,7 +214,7 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	}
 	
 	
-	public void render(EntityRenderContext context)
+	public void render(MapRenderContext context)
 	{
 		model.renderer.render(this, context);
 	}
@@ -263,10 +263,10 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	
 	
 	@Override
-	public void onPathAborted(Entity entity, World world, Level level)
+	public void onPathInterrupted(Entity entity, World world, Level level)
 	{
 		for (final EntityMoveListener l : moveListeners) {
-			l.onPathAborted(entity, world, level);
+			l.onPathInterrupted(entity, world, level);
 		}
 	}
 	

@@ -210,4 +210,10 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	{
 		return Keyboard.isKeyDown(key);
 	}
+
+
+	public static boolean isMouseButtonDown(int button)
+	{
+		return Mouse.isButtonDown(button);
+	}
 }

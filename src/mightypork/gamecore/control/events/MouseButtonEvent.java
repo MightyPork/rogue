@@ -3,6 +3,7 @@ package mightypork.gamecore.control.events;
 
 import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.constraints.vect.Vect;
+import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.control.eventbus.events.Event;
 
 
@@ -19,7 +20,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	
 	private final int button;
 	private final int wheeld;
-	private final Vect pos;
+	private final VectConst pos;
 	private final boolean down;
 	
 	
@@ -35,7 +36,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	{
 		this.button = button;
 		this.down = down;
-		this.pos = pos;
+		this.pos = pos.freeze();
 		this.wheeld = wheeld;
 	}
 	
@@ -79,7 +80,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	/**
 	 * @return mouse position when the event occurred
 	 */
-	public Vect getPos()
+	public VectConst getPos()
 	{
 		return pos;
 	}

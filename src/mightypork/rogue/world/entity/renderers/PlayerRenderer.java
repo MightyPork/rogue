@@ -7,7 +7,7 @@ import mightypork.gamecore.render.textures.TxSheet;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.level.render.EntityRenderContext;
+import mightypork.rogue.world.level.render.MapRenderContext;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.math.Calc;
 
@@ -24,7 +24,7 @@ public class PlayerRenderer extends EntityRenderer {
 	
 	
 	@Override
-	public void render(Entity entity, EntityRenderContext context)
+	public void render(Entity entity, MapRenderContext context)
 	{
 		TxQuad q = sheet.getQuad(Calc.frag(entity.getPosition().getProgress()));
 		

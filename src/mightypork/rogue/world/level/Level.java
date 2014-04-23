@@ -2,25 +2,17 @@ package mightypork.rogue.world.level;
 
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import mightypork.gamecore.render.Render;
-import mightypork.rogue.Res;
 import mightypork.rogue.world.World;
-import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.level.render.EntityRenderContext;
-import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.Tiles;
 import mightypork.rogue.world.tile.models.TileModel;
-import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.RectConst;
-import mightypork.util.constraints.rect.proxy.RectBound;
-import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.ion.IonBinary;
 import mightypork.util.ion.IonBundle;
 import mightypork.util.ion.IonInput;
@@ -37,8 +29,6 @@ public class Level implements MapAccess, IonBinary {
 	
 	public static final int ION_MARK = 53;
 	
-	private static final boolean USE_BATCH_RENDERING = true;
-	
 	private int width, height;
 	
 	/** Array of tiles [y][x] */
@@ -53,13 +43,11 @@ public class Level implements MapAccess, IonBinary {
 	private transient NoiseGen noiseGen;
 	
 	
-	public Level()
-	{
+	public Level() {
 	}
 	
 	
-	public Level(int width, int height)
-	{
+	public Level(int width, int height) {
 		this.width = width;
 		this.height = height;
 		buildArray();
@@ -231,83 +219,6 @@ public class Level implements MapAccess, IonBinary {
 	}
 	
 	
-	/**
-	 * Draw on screen
-	 * 
-	 * @param playerInfo layer
-	 * @param viewport rendering area on screen
-	 * @param xTiles Desired nr of tiles horizontally
-	 * @param yTiles Desired nr of tiles vertically
-	 * @param minSize minimum tile size
-	 */
-	public void render(WorldPos pos, RectBound viewport, final int xTiles, final int yTiles, final int minSize)
-	{
-		final Rect r = viewport.getRect();
-		final double vpH = r.height().value();
-		final double vpW = r.width().value();
-		
-		// adjust tile size to fit desired amount of tiles
-		
-		final double allowedSizeW = vpW / xTiles;
-		final double allowedSizeH = vpH / yTiles;
-		final int tileSize = (int) Math.round(Math.max(Math.min(allowedSizeH, allowedSizeW), minSize));
-		
-		//tileSize -= tileSize % 8;
-		
-		final VectConst vpCenter = r.center().sub(tileSize * 0.5, tileSize * 0.5).freeze(); // 0.5 to center, 1 to move up (down is teh navbar)
-		
-		final double playerX = pos.getVisualX();
-		final double playerY = pos.getVisualY();
-		
-		// total map area
-		//@formatter:off
-		final RectConst mapRect = vpCenter.startRect().grow(
-				playerX*tileSize,
-				(getWidth() - playerX) * tileSize,
-				playerY*tileSize,
-				(getHeight() - playerY) * tileSize
-		).freeze();
-		//@formatter:on
-		
-		// tiles to render
-		final int x1 = (int) Math.floor(playerX - (vpW / tileSize / 2));
-		
-		final int y1 = (int) Math.floor(playerY - (vpH / tileSize / 2));
-		final int x2 = (int) Math.ceil(playerX + (vpW / tileSize / 2));
-		final int y2 = (int) Math.ceil(playerY + (vpH / tileSize / 2));
-		
-		final TileRenderContext trc = new TileRenderContext(this, mapRect); //-tileSize*0.5
-		
-		// batch rendering of the tiles
-		if (USE_BATCH_RENDERING) {
-			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles16"));
-		}
-		
-		for (trc.y = y1; trc.y <= y2; trc.y++) {
-			for (trc.x = x1; trc.x <= x2; trc.x++) {
-				trc.renderTile();
-			}
-		}
-		
-		if (USE_BATCH_RENDERING) {
-			Render.leaveBatchTexturedQuadMode();
-		}
-		
-		// render extras
-		for (trc.y = y1; trc.y <= y2; trc.y++) {
-			for (trc.x = x1; trc.x <= x2; trc.x++) {
-				trc.renderItems();
-			}
-		}
-		
-		// render entities
-		final EntityRenderContext erc = new EntityRenderContext(this, mapRect);
-		for (final Entity e : entity_set) {
-			e.render(erc);
-		}
-	}
-	
-	
 	public Entity getEntity(int eid)
 	{
 		return entity_map.get(eid);
@@ -358,5 +269,11 @@ public class Level implements MapAccess, IonBinary {
 	public void freeTile(int x, int y)
 	{
 		getTile(x, y).setOccupied(false);
+	}
+	
+	
+	public Collection<Entity> getEntities()
+	{
+		return entity_set;
 	}
 }

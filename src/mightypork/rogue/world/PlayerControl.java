@@ -43,4 +43,16 @@ public class PlayerControl {
 	{
 		world.playerEntity.addMoveListener(eml);
 	}
+
+
+	public WorldPos getPos()
+	{
+		return world.playerEntity.getPosition();
+	}
+
+
+	public void walk(PathStep step)
+	{
+		world.playerEntity.addStep(step);
+	}
 }

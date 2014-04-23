@@ -21,8 +21,8 @@ public interface EntityMoveListener {
 	
 	
 	/**
-	 * Path was aborted (bumped into a wall or entity)
+	 * Path was interrupted (bumped into a wall or entity)
 	 */
-	void onPathAborted(Entity entity, World world, Level level);
+	void onPathInterrupted(Entity entity, World world, Level level);
 	
 }

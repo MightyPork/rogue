@@ -71,6 +71,6 @@ public abstract class EntityModel implements EntityMoveListener {
 	
 	
 	@Override
-	public abstract void onPathAborted(Entity entity, World world, Level level);
+	public abstract void onPathInterrupted(Entity entity, World world, Level level);
 	
 }
