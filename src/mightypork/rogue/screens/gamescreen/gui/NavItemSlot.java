@@ -1,7 +1,8 @@
-package mightypork.rogue.screens.gamescreen;
+package mightypork.rogue.screens.gamescreen.gui;
 
 
-import mightypork.gamecore.control.events.MouseMotionEvent;
+import mightypork.gamecore.control.events.input.MouseMotionEvent;
+import mightypork.gamecore.control.events.input.MouseMotionListener;
 import mightypork.gamecore.gui.components.ClickableComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
@@ -15,7 +16,7 @@ import mightypork.util.control.timing.Updateable;
 import mightypork.util.math.Easing;
 
 
-public class NavItemSlot extends ClickableComponent implements MouseMotionEvent.Listener, Updateable {
+public class NavItemSlot extends ClickableComponent implements MouseMotionListener, Updateable {
 	
 	private final TxQuad image;
 	private final TxQuad frame;

@@ -2,9 +2,9 @@ package mightypork.gamecore.input;
 
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.events.KeyEvent;
-import mightypork.gamecore.control.events.MouseButtonEvent;
-import mightypork.gamecore.control.events.MouseMotionEvent;
+import mightypork.gamecore.control.events.input.KeyEvent;
+import mightypork.gamecore.control.events.input.MouseButtonEvent;
+import mightypork.gamecore.control.events.input.MouseMotionEvent;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.util.constraints.vect.Vect;

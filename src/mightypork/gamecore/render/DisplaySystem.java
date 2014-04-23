@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppModule;
-import mightypork.gamecore.control.events.ViewportChangeEvent;
+import mightypork.gamecore.control.events.gui.ViewportChangeEvent;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.constraints.vect.Vect;

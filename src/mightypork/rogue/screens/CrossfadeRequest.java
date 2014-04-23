@@ -1,13 +1,13 @@
 package mightypork.rogue.screens;
 
 
-import mightypork.util.control.eventbus.events.Event;
+import mightypork.util.control.eventbus.BusEvent;
 
 
 /**
  * @author MightyPork
  */
-public class CrossfadeRequest implements Event<CrossfadeRequest.Listener> {
+public class CrossfadeRequest extends BusEvent<CrossfadeRequest.Listener> {
 	
 	private final String screen;
 	

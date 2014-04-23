@@ -21,8 +21,8 @@ public class World implements IonBundled, Updateable {
 	
 	private final ArrayList<Level> levels = new ArrayList<>();
 	
-	final PlayerInfo player = new PlayerInfo();
-	Entity playerEntity;
+	private final PlayerInfo playerInfo = new PlayerInfo();
+	private Entity playerEntity;
 	
 	private final PlayerControl control = new PlayerControl(this);
 	
@@ -36,9 +36,9 @@ public class World implements IonBundled, Updateable {
 		seed = in.get("seed", 0L);
 		eid = in.get("next_eid", 0);
 		in.loadSequence("levels", levels);
-		in.loadBundled("player", player);
+		in.loadBundled("player", playerInfo);
 		
-		playerEntity = levels.get(player.getLevel()).getEntity(player.getEID());
+		playerEntity = levels.get(playerInfo.getLevel()).getEntity(playerInfo.getEID());
 	}
 	
 	
@@ -48,7 +48,7 @@ public class World implements IonBundled, Updateable {
 		out.put("seed", seed);
 		out.put("next_eid", eid);
 		out.putSequence("levels", levels);
-		out.putBundled("player", player);
+		out.putBundled("player", playerInfo);
 	}
 	
 	
@@ -88,7 +88,7 @@ public class World implements IonBundled, Updateable {
 	
 	public void createPlayer(int x, int y, int level)
 	{
-		if (player.isInitialized()) {
+		if (playerInfo.isInitialized()) {
 			throw new RuntimeException("Player already created.");
 		}
 		
@@ -97,8 +97,8 @@ public class World implements IonBundled, Updateable {
 		
 		playerEntity = Entities.PLAYER.createEntity(playerEid, new WorldPos(x, y));
 		
-		player.setLevel(level);
-		player.setEID(playerEid);
+		playerInfo.setLevel(level);
+		playerInfo.setEID(playerEid);
 		
 		levels.get(level).addEntity(playerEntity);
 	}
@@ -106,7 +106,7 @@ public class World implements IonBundled, Updateable {
 	
 	public Level getCurrentLevel()
 	{
-		return levels.get(player.getLevel());
+		return levels.get(playerInfo.getLevel());
 	}
 	
 	

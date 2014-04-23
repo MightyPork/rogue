@@ -1,7 +1,7 @@
-package mightypork.gamecore.control.events;
+package mightypork.gamecore.control.events.input;
 
 
-import mightypork.util.control.eventbus.events.Event;
+import mightypork.util.control.eventbus.BusEvent;
 
 import org.lwjgl.input.Keyboard;
 
@@ -11,7 +11,7 @@ import org.lwjgl.input.Keyboard;
  * 
  * @author MightyPork
  */
-public class KeyEvent implements Event<KeyEvent.Listener> {
+public class KeyEvent extends BusEvent<KeyListener> {
 	
 	private final int key;
 	private final boolean down;
@@ -23,8 +23,7 @@ public class KeyEvent implements Event<KeyEvent.Listener> {
 	 * @param c typed char (can be zero char)
 	 * @param down true = pressed, false = released.
 	 */
-	public KeyEvent(int key, char c, boolean down)
-	{
+	public KeyEvent(int key, char c, boolean down) {
 		this.key = key;
 		this.c = c;
 		this.down = down;
@@ -68,26 +67,10 @@ public class KeyEvent implements Event<KeyEvent.Listener> {
 	
 	
 	@Override
-	public void handleBy(Listener keh)
+	public void handleBy(KeyListener keh)
 	{
 		keh.receive(this);
 	}
-	
-	/**
-	 * {@link KeyEvent} listener
-	 * 
-	 * @author MightyPork
-	 */
-	public interface Listener {
-		
-		/**
-		 * Handle an event
-		 * 
-		 * @param event event
-		 */
-		void receive(KeyEvent event);
-	}
-	
 	
 	@Override
 	public String toString()

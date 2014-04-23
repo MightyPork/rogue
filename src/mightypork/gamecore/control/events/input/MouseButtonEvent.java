@@ -1,10 +1,10 @@
-package mightypork.gamecore.control.events;
+package mightypork.gamecore.control.events.input;
 
 
 import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.constraints.vect.Vect;
 import mightypork.util.constraints.vect.VectConst;
-import mightypork.util.control.eventbus.events.Event;
+import mightypork.util.control.eventbus.BusEvent;
 
 
 /**
@@ -12,7 +12,7 @@ import mightypork.util.control.eventbus.events.Event;
  * 
  * @author MightyPork
  */
-public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
+public class MouseButtonEvent extends BusEvent<MouseButtonListener> {
 	
 	public static final int BUTTON_LEFT = 0;
 	public static final int BUTTON_MIDDLE = 1;
@@ -32,8 +32,7 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	 * @param down button pressed
 	 * @param wheeld wheel change
 	 */
-	public MouseButtonEvent(Vect pos, int button, boolean down, int wheeld)
-	{
+	public MouseButtonEvent(Vect pos, int button, boolean down, int wheeld) {
 		this.button = button;
 		this.down = down;
 		this.pos = pos.freeze();
@@ -117,23 +116,8 @@ public class MouseButtonEvent implements Event<MouseButtonEvent.Listener> {
 	
 	
 	@Override
-	public void handleBy(Listener handler)
+	public void handleBy(MouseButtonListener handler)
 	{
 		handler.receive(this);
-	}
-	
-	/**
-	 * {@link MouseButtonEvent} listener
-	 * 
-	 * @author MightyPork
-	 */
-	public interface Listener {
-		
-		/**
-		 * Handle an event
-		 * 
-		 * @param event event
-		 */
-		void receive(MouseButtonEvent event);
 	}
 }

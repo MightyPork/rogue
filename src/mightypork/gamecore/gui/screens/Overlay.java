@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
-import mightypork.gamecore.control.events.LayoutChangeEvent;
+import mightypork.gamecore.control.events.gui.LayoutChangeListener;
 import mightypork.gamecore.gui.Hideable;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.input.KeyBinder;
@@ -24,7 +24,7 @@ import mightypork.util.control.timing.Updateable;
  * 
  * @author MightyPork
  */
-public abstract class Overlay extends AppSubModule implements Updateable, Comparable<Overlay>, Renderable, KeyBinder, Hideable, LayoutChangeEvent.Listener {
+public abstract class Overlay extends AppSubModule implements Comparable<Overlay>, Updateable, Renderable, KeyBinder, Hideable, LayoutChangeListener {
 	
 	private boolean visible = true;
 	private final KeyBindingPool keybindings = new KeyBindingPool();
@@ -42,8 +42,7 @@ public abstract class Overlay extends AppSubModule implements Updateable, Compar
 	protected final Collection<Updateable> updated = new LinkedHashSet<>();
 	
 	
-	public Overlay(AppAccess app)
-	{
+	public Overlay(AppAccess app) {
 		super(app);
 		
 		this.mouse = getInput().getMousePos();
@@ -84,20 +83,24 @@ public abstract class Overlay extends AppSubModule implements Updateable, Compar
 	}
 	
 	
-	@Override
-	public final int compareTo(Overlay o)
-	{
-		return getPriority() - o.getPriority();
-	}
-	
-	
 	/**
-	 * Get rendering priority
+	 * Get rendering layer
 	 * 
 	 * @return higher = on top.
 	 */
 	@DefaultImpl
-	public abstract int getPriority();
+	public abstract int getZIndex();
+	
+	
+	/**
+	 * Get event bus listening priority - useful to block incoming events.
+	 * 
+	 * @return higher = first.
+	 */
+	public int getEventPriority()
+	{
+		return getZIndex();
+	}
 	
 	
 	/**
@@ -118,6 +121,12 @@ public abstract class Overlay extends AppSubModule implements Updateable, Compar
 		for (final Updateable u : updated) {
 			u.update(delta);
 		}
+	}
+	
+	@Override
+	public int compareTo(Overlay o)
+	{
+		return o.getEventPriority() - getEventPriority();
 	}
 	
 	

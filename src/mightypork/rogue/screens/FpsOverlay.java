@@ -60,7 +60,7 @@ public class FpsOverlay extends Overlay {
 	
 	
 	@Override
-	public int getPriority()
+	public int getZIndex()
 	{
 		return Integer.MAX_VALUE;
 	}

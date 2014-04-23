@@ -33,7 +33,7 @@ public class LayerTestGradient extends ScreenLayer {
 	
 	
 	@Override
-	public int getPriority()
+	public int getZIndex()
 	{
 		return 0;
 	}

@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
-import mightypork.gamecore.control.events.ResourceLoadRequest;
+import mightypork.gamecore.control.events.requests.ResourceLoadRequest;
 import mightypork.gamecore.render.fonts.impl.DeferredFont;
 
 import org.newdawn.slick.opengl.Texture;

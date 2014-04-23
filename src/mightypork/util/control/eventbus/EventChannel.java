@@ -6,7 +6,6 @@ import java.util.HashSet;
 
 import mightypork.util.control.eventbus.clients.DelegatingClient;
 import mightypork.util.control.eventbus.clients.ToggleableClient;
-import mightypork.util.control.eventbus.events.Event;
 import mightypork.util.control.eventbus.events.flags.SingleReceiverEvent;
 import mightypork.util.logging.Log;
 
@@ -18,7 +17,7 @@ import mightypork.util.logging.Log;
  * @param <EVENT> event type
  * @param <CLIENT> client (subscriber) type
  */
-class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
+class EventChannel<EVENT extends BusEvent<CLIENT>, CLIENT> {
 	
 	private final Class<CLIENT> clientClass;
 	private final Class<EVENT> eventClass;
@@ -48,13 +47,12 @@ class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 * 
 	 * @param event a event to be sent
 	 * @param clients collection of clients
-	 * @return true if event was sent
 	 */
-	public boolean broadcast(Event<?> event, Collection<Object> clients)
+	public void broadcast(BusEvent<?> event, Collection<Object> clients)
 	{
-		if (!canBroadcast(event)) return false;
+		if (!canBroadcast(event)) return;
 		
-		return doBroadcast(eventClass.cast(event), clients, new HashSet<>());
+		doBroadcast(eventClass.cast(event), clients, new HashSet<>());
 	}
 	
 	
@@ -64,13 +62,9 @@ class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 * @param event sent event
 	 * @param clients subscribing clients
 	 * @param processed clients already processed
-	 * @return success
 	 */
-	private boolean doBroadcast(final EVENT event, final Collection<Object> clients, final Collection<Object> processed)
+	private void doBroadcast(final EVENT event, final Collection<Object> clients, final Collection<Object> processed)
 	{
-		boolean sent = false;
-		final boolean singular = event.getClass().isAnnotationPresent(SingleReceiverEvent.class);
-		
 		for (final Object client : clients) {
 			
 			// exclude obvious non-clients
@@ -90,10 +84,9 @@ class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 				if (!((ToggleableClient) client).isListening()) continue;
 			}
 			
-			sent |= sendTo(client, event);
+			sendTo(client, event);
 			
-			// singular event ain't no whore, handled once only.
-			if (sent && singular) return true;
+			if (event.isConsumed()) return;
 			
 			// pass on to delegated clients
 			if (client instanceof DelegatingClient) {
@@ -102,14 +95,12 @@ class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 					final Collection<Object> children = ((DelegatingClient) client).getChildClients();
 					
 					if (children != null && children.size() > 0) {
-						sent |= doBroadcast(event, children, processed);
+						doBroadcast(event, children, processed);
 					}
 					
 				}
 			}
 		}
-		
-		return sent;
 	}
 	
 	
@@ -118,16 +109,13 @@ class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 * 
 	 * @param client target client
 	 * @param event event to send
-	 * @return success
 	 */
 	@SuppressWarnings("unchecked")
-	private boolean sendTo(Object client, EVENT event)
+	private void sendTo(Object client, EVENT event)
 	{
-		if (isClientOfType(client)) {
-			((Event<CLIENT>) event).handleBy((CLIENT) client);
-			return true;
+		if (isClientOfChannelType(client)) {
+			((BusEvent<CLIENT>) event).deliverTo((CLIENT) client);
 		}
-		return false;
 	}
 	
 	
@@ -137,7 +125,7 @@ class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 * @param event event object
 	 * @return can be broadcasted
 	 */
-	public boolean canBroadcast(Event<?> event)
+	public boolean canBroadcast(BusEvent<?> event)
 	{
 		return event != null && eventClass.isInstance(event);
 	}
@@ -150,7 +138,7 @@ class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 * @param clientClass client class
 	 * @return the broadcaster
 	 */
-	public static <F_EVENT extends Event<F_CLIENT>, F_CLIENT> EventChannel<F_EVENT, F_CLIENT> create(Class<F_EVENT> eventClass, Class<F_CLIENT> clientClass)
+	public static <F_EVENT extends BusEvent<F_CLIENT>, F_CLIENT> EventChannel<F_EVENT, F_CLIENT> create(Class<F_EVENT> eventClass, Class<F_CLIENT> clientClass)
 	{
 		return new EventChannel<>(eventClass, clientClass);
 	}
@@ -162,7 +150,7 @@ class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 * @param client client
 	 * @return is of type
 	 */
-	private boolean isClientOfType(Object client)
+	private boolean isClientOfChannelType(Object client)
 	{
 		return clientClass.isInstance(client);
 	}
@@ -176,7 +164,7 @@ class EventChannel<EVENT extends Event<CLIENT>, CLIENT> {
 	 */
 	public boolean isClientValid(Object client)
 	{
-		return isClientOfType(client) || (client instanceof DelegatingClient);
+		return isClientOfChannelType(client) || (client instanceof DelegatingClient);
 	}
 	
 	

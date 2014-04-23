@@ -3,7 +3,8 @@ package mightypork.gamecore.gui.screens;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
-import mightypork.gamecore.control.events.LayoutChangeEvent;
+import mightypork.gamecore.control.events.gui.LayoutChangeEvent;
+import mightypork.gamecore.control.events.gui.LayoutChangeListener;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
@@ -17,7 +18,7 @@ import mightypork.util.constraints.rect.Rect;
  * 
  * @author MightyPork
  */
-public abstract class BaseScreen extends AppSubModule implements Screen, KeyBinder, LayoutChangeEvent.Listener {
+public abstract class BaseScreen extends AppSubModule implements Screen, KeyBinder, LayoutChangeListener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	

@@ -34,21 +34,21 @@ public abstract class BusNode implements BusAccess, ClientHub {
 	
 	
 	@Override
-	public final Collection<Object> getChildClients()
+	public Collection<Object> getChildClients()
 	{
 		return clients;
 	}
 	
 	
 	@Override
-	public final boolean doesDelegate()
+	public boolean doesDelegate()
 	{
 		return delegating;
 	}
 	
 	
 	@Override
-	public final boolean isListening()
+	public boolean isListening()
 	{
 		return listening;
 	}
@@ -60,7 +60,7 @@ public abstract class BusNode implements BusAccess, ClientHub {
 	 * @param client
 	 */
 	@Override
-	public final void addChildClient(Object client)
+	public void addChildClient(Object client)
 	{
 		if (client instanceof RootBusNode) {
 			throw new IllegalArgumentException("Cannot nest RootBusNode.");
@@ -76,7 +76,7 @@ public abstract class BusNode implements BusAccess, ClientHub {
 	 * @param client subscriber to remove
 	 */
 	@Override
-	public final void removeChildClient(Object client)
+	public void removeChildClient(Object client)
 	{
 		if (client != null) {
 			clients.remove(client);
@@ -89,7 +89,7 @@ public abstract class BusNode implements BusAccess, ClientHub {
 	 * 
 	 * @param listening receive events
 	 */
-	public final void setListening(boolean listening)
+	public void setListening(boolean listening)
 	{
 		this.listening = listening;
 	}
@@ -100,14 +100,14 @@ public abstract class BusNode implements BusAccess, ClientHub {
 	 * 
 	 * @param delegating
 	 */
-	public final void setDelegating(boolean delegating)
+	public void setDelegating(boolean delegating)
 	{
 		this.delegating = delegating;
 	}
 	
 	
 	@Override
-	public final EventBus getEventBus()
+	public EventBus getEventBus()
 	{
 		return busAccess.getEventBus();
 	}

@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import mightypork.gamecore.control.events.KeyEvent;
+import mightypork.gamecore.control.events.input.KeyEvent;
+import mightypork.gamecore.control.events.input.KeyListener;
 import mightypork.util.logging.Log;
 
 
@@ -14,7 +15,7 @@ import mightypork.util.logging.Log;
  * 
  * @author MightyPork
  */
-public class KeyBindingPool implements KeyBinder, KeyEvent.Listener {
+public class KeyBindingPool implements KeyBinder, KeyListener {
 	
 	private final Set<KeyBinding> bindings = new HashSet<>();
 	

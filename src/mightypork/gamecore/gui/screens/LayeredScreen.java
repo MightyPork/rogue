@@ -2,9 +2,12 @@ package mightypork.gamecore.gui.screens;
 
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
+import mightypork.util.control.eventbus.clients.DelegatingClient;
+import mightypork.util.control.eventbus.clients.RootBusNode;
 
 
 /**
@@ -14,22 +17,59 @@ import mightypork.gamecore.control.AppAccess;
  */
 public abstract class LayeredScreen extends BaseScreen {
 	
-	private final Collection<ScreenLayer> layers = new TreeSet<>();
+	private class LayersClient implements DelegatingClient {
+
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@Override
+		public Collection getChildClients()
+		{
+			return layersByEventPriority;
+		}
+
+		@Override
+		public boolean doesDelegate()
+		{
+			return true;
+		}
+		
+	}
+	
+	private final Collection<ScreenLayer> layersByZIndex = new TreeSet<>(new Comparator<Overlay>() {
+		
+		@Override
+		public int compare(Overlay o1, Overlay o2)
+		{
+			return o1.getZIndex() - o2.getZIndex();
+		}
+		
+	});
+	
+	private final Collection<ScreenLayer> layersByEventPriority = new TreeSet<>(new Comparator<Overlay>() {
+		
+		@Override
+		public int compare(Overlay o1, Overlay o2)
+		{
+			return o2.getEventPriority() - o1.getEventPriority();
+		}
+		
+	});
+	
+	private final LayersClient layersClient = new LayersClient();
 	
 	
 	/**
 	 * @param app app access
 	 */
-	public LayeredScreen(AppAccess app)
-	{
+	public LayeredScreen(AppAccess app) {
 		super(app);
+		addChildClient(layersClient);
 	}
 	
 	
 	@Override
 	protected void renderScreen()
 	{
-		for (final ScreenLayer layer : layers) {
+		for (final ScreenLayer layer : layersByZIndex) {
 			if (layer.isVisible()) layer.render();
 		}
 	}
@@ -42,15 +82,15 @@ public abstract class LayeredScreen extends BaseScreen {
 	 */
 	protected void addLayer(ScreenLayer layer)
 	{
-		this.layers.add(layer);
-		addChildClient(layer);
+		this.layersByZIndex.add(layer);
+		this.layersByEventPriority.add(layer);
 	}
 	
 	
 	@Override
 	protected void onScreenEnter()
 	{
-		for (final ScreenLayer layer : layers) {
+		for (final ScreenLayer layer : layersByEventPriority) {
 			layer.onScreenEnter();
 		}
 	}
@@ -59,7 +99,7 @@ public abstract class LayeredScreen extends BaseScreen {
 	@Override
 	protected void onScreenLeave()
 	{
-		for (final ScreenLayer layer : layers) {
+		for (final ScreenLayer layer : layersByEventPriority) {
 			layer.onScreenLeave();
 		}
 	}

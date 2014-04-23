@@ -1,7 +1,8 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.control.events.KeyEvent;
+import mightypork.gamecore.control.events.input.KeyEvent;
+import mightypork.gamecore.control.events.input.KeyListener;
 
 
 /**
@@ -9,7 +10,7 @@ import mightypork.gamecore.control.events.KeyEvent;
  * 
  * @author MightyPork
  */
-public class KeyBinding implements KeyEvent.Listener {
+public class KeyBinding implements KeyListener {
 	
 	private final KeyStroke keystroke;
 	private Runnable handler;

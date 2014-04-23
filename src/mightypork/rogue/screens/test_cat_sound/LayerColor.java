@@ -18,7 +18,7 @@ public class LayerColor extends ScreenLayer {
 	
 	
 	@Override
-	public int getPriority()
+	public int getZIndex()
 	{
 		return Integer.MIN_VALUE;
 	}

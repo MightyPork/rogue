@@ -26,8 +26,8 @@ import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.util.control.eventbus.BusEvent;
 import mightypork.util.control.eventbus.EventBus;
-import mightypork.util.control.eventbus.events.Event;
 import mightypork.util.ion.Ion;
 import mightypork.util.logging.Log;
 import mightypork.util.logging.writers.LogWriter;
@@ -139,7 +139,7 @@ public final class App extends BaseApp {
 	}
 	
 	
-	private void bindToKey(final Event<?> event, int... keys)
+	private void bindToKey(final BusEvent<?> event, int... keys)
 	{
 		getInput().bindKey(new KeyStroke(keys), new Runnable() {
 			

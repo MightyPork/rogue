@@ -3,7 +3,8 @@ package mightypork.rogue.screens.test_cat_sound;
 
 import java.util.Random;
 
-import mightypork.gamecore.control.events.MouseButtonEvent;
+import mightypork.gamecore.control.events.input.MouseButtonEvent;
+import mightypork.gamecore.control.events.input.MouseButtonListener;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
@@ -21,7 +22,7 @@ import mightypork.util.math.Easing;
 import mightypork.util.math.color.Color;
 
 
-public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.Listener {
+public class LayerFlyingCat extends ScreenLayer implements MouseButtonListener {
 	
 	private final NumAnimated size = new NumAnimated(300, Easing.SINE_BOTH);
 	private final VectAnimated cat_position = VectAnimated.makeVar(Easing.ELASTIC_OUT);
@@ -99,7 +100,7 @@ public class LayerFlyingCat extends ScreenLayer implements MouseButtonEvent.List
 	
 	
 	@Override
-	public int getPriority()
+	public int getZIndex()
 	{
 		return 10;
 	}

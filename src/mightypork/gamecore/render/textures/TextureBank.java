@@ -6,7 +6,7 @@ import java.util.Map;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppAdapter;
-import mightypork.gamecore.control.events.ResourceLoadRequest;
+import mightypork.gamecore.control.events.requests.ResourceLoadRequest;
 import mightypork.util.constraints.rect.Rect;
 import mightypork.util.error.KeyAlreadyExistsException;
 

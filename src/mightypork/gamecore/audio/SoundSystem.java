@@ -8,7 +8,7 @@ import java.util.Set;
 import mightypork.gamecore.audio.players.EffectPlayer;
 import mightypork.gamecore.audio.players.LoopPlayer;
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.events.ResourceLoadRequest;
+import mightypork.gamecore.control.events.requests.ResourceLoadRequest;
 import mightypork.util.constraints.vect.Vect;
 import mightypork.util.constraints.vect.mutable.VectVar;
 import mightypork.util.control.eventbus.clients.RootBusNode;

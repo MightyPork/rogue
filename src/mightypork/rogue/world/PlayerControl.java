@@ -2,6 +2,7 @@ package mightypork.rogue.world;
 
 
 import mightypork.rogue.world.entity.models.EntityMoveListener;
+import mightypork.rogue.world.level.Level;
 
 
 public class PlayerControl {
@@ -9,50 +10,55 @@ public class PlayerControl {
 	private final World world;
 	
 	
-	public PlayerControl(World w)
-	{
+	public PlayerControl(World w) {
 		this.world = w;
 	}
 	
 	
-	public void walkNorth()
+	public void goNorth()
 	{
-		world.playerEntity.addStep(PathStep.NORTH);
+		world.getPlayerEntity().addStep(PathStep.NORTH);
 	}
 	
 	
-	public void walkSouth()
+	public void goSouth()
 	{
-		world.playerEntity.addStep(PathStep.SOUTH);
+		world.getPlayerEntity().addStep(PathStep.SOUTH);
 	}
 	
 	
-	public void walkEast()
+	public void goEast()
 	{
-		world.playerEntity.addStep(PathStep.EAST);
+		world.getPlayerEntity().addStep(PathStep.EAST);
 	}
 	
 	
-	public void walkWest()
+	public void goWest()
 	{
-		world.playerEntity.addStep(PathStep.WEST);
+		world.getPlayerEntity().addStep(PathStep.WEST);
 	}
 	
 	
 	public void addMoveListener(EntityMoveListener eml)
 	{
-		world.playerEntity.addMoveListener(eml);
+		world.getPlayerEntity().addMoveListener(eml);
 	}
-
-
+	
+	
 	public WorldPos getPos()
 	{
-		return world.playerEntity.getPosition();
+		return world.getPlayerEntity().getPosition();
 	}
-
-
-	public void walk(PathStep step)
+	
+	
+	public World getWorld()
 	{
-		world.playerEntity.addStep(step);
+		return world;
+	}
+	
+	
+	public Level getLevel()
+	{
+		return world.getCurrentLevel();
 	}
 }

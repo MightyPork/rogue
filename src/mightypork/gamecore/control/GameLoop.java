@@ -4,8 +4,8 @@ package mightypork.gamecore.control;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import mightypork.gamecore.control.events.MainLoopTaskRequest;
-import mightypork.gamecore.control.events.UpdateEvent;
+import mightypork.gamecore.control.events.core.UpdateEvent;
+import mightypork.gamecore.control.events.requests.MainLoopRequestListener;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.render.Renderable;
 import mightypork.util.annotations.DefaultImpl;
@@ -17,7 +17,7 @@ import mightypork.util.control.timing.TimerDelta;
  * 
  * @author MightyPork
  */
-public abstract class GameLoop extends AppModule implements MainLoopTaskRequest.Listener {
+public abstract class GameLoop extends AppModule implements MainLoopRequestListener {
 	
 	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<>();
 	private TimerDelta timer;

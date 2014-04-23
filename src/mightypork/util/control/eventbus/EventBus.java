@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import mightypork.util.control.Destroyable;
 import mightypork.util.control.eventbus.clients.DelegatingClient;
-import mightypork.util.control.eventbus.events.Event;
 import mightypork.util.control.eventbus.events.flags.DelayedEvent;
 import mightypork.util.control.eventbus.events.flags.ImmediateEvent;
 import mightypork.util.control.eventbus.events.flags.SingleReceiverEvent;
@@ -32,10 +31,10 @@ final public class EventBus implements Destroyable {
 	private class DelayQueueEntry implements Delayed {
 		
 		private final long due;
-		private final Event<?> evt;
+		private final BusEvent<?> evt;
 		
 		
-		public DelayQueueEntry(double seconds, Event<?> event)
+		public DelayQueueEntry(double seconds, BusEvent<?> event)
 		{
 			super();
 			this.due = System.currentTimeMillis() + (long) (seconds * 1000);
@@ -57,7 +56,7 @@ final public class EventBus implements Destroyable {
 		}
 		
 		
-		public Event<?> getEvent()
+		public BusEvent<?> getEvent()
 		{
 			return evt;
 		}
@@ -103,17 +102,17 @@ final public class EventBus implements Destroyable {
 	static final String logMark = "<BUS> ";
 	
 	
-	private static Class<?> getEventListenerClass(Event<?> event)
+	private static Class<?> getEventListenerClass(BusEvent<?> event)
 	{
 		// BEHOLD, MAGIC!
-		final Type[] interfaces = event.getClass().getGenericInterfaces();
-		for (final Type interf : interfaces) {
-			if (interf instanceof ParameterizedType) {
-				if (((ParameterizedType) interf).getRawType() == Event.class) {
-					final Type[] types = ((ParameterizedType) interf).getActualTypeArguments();
-					for (final Type genericType : types) {
-						return (Class<?>) genericType;
-					}
+		
+		final Type evtc = event.getClass().getGenericSuperclass();
+
+		if (evtc instanceof ParameterizedType) {
+			if (((ParameterizedType) evtc).getRawType() == BusEvent.class) {
+				final Type[] types = ((ParameterizedType) evtc).getActualTypeArguments();
+				for (final Type genericType : types) {
+					return (Class<?>) genericType;
 				}
 			}
 		}
@@ -169,7 +168,7 @@ final public class EventBus implements Destroyable {
 	 * 
 	 * @param event event
 	 */
-	public void send(Event<?> event)
+	public void send(BusEvent<?> event)
 	{
 		assertLive();
 		
@@ -193,7 +192,7 @@ final public class EventBus implements Destroyable {
 	 * 
 	 * @param event event
 	 */
-	public void sendQueued(Event<?> event)
+	public void sendQueued(BusEvent<?> event)
 	{
 		assertLive();
 		
@@ -207,7 +206,7 @@ final public class EventBus implements Destroyable {
 	 * @param event event
 	 * @param delay delay before event is dispatched
 	 */
-	public void sendDelayed(Event<?> event, double delay)
+	public void sendDelayed(BusEvent<?> event, double delay)
 	{
 		assertLive();
 		
@@ -228,7 +227,7 @@ final public class EventBus implements Destroyable {
 	 * 
 	 * @param event event
 	 */
-	public void sendDirect(Event<?> event)
+	public void sendDirect(BusEvent<?> event)
 	{
 		assertLive();
 		
@@ -238,7 +237,7 @@ final public class EventBus implements Destroyable {
 	}
 	
 	
-	public void sendDirectToChildren(DelegatingClient delegatingClient, Event<?> event)
+	public void sendDirectToChildren(DelegatingClient delegatingClient, BusEvent<?> event)
 	{
 		assertLive();
 		
@@ -282,7 +281,7 @@ final public class EventBus implements Destroyable {
 	
 	
 	@SuppressWarnings("unchecked")
-	private boolean addChannelForEvent(Event<?> event)
+	private boolean addChannelForEvent(BusEvent<?> event)
 	{
 		try {
 			if (detailedLogging) {
@@ -298,7 +297,7 @@ final public class EventBus implements Destroyable {
 				//channels.flush();
 				
 				if (detailedLogging) {
-					Log.f2("<bus> Created new channel: " + Log.str(event.getClass()) + " -> " + Log.str(listener));
+					Log.f2(logMark + "Created new channel: " + Log.str(event.getClass()) + " -> " + Log.str(listener));
 				}
 				
 				return true;
@@ -333,7 +332,7 @@ final public class EventBus implements Destroyable {
 	 * 
 	 * @param event event
 	 */
-	private synchronized void dispatch(Event<?> event)
+	private synchronized void dispatch(BusEvent<?> event)
 	{
 		assertLive();
 		
@@ -349,12 +348,11 @@ final public class EventBus implements Destroyable {
 	 * @param clients clients
 	 * @param event event
 	 */
-	private synchronized void doDispatch(Collection<Object> clients, Event<?> event)
+	private synchronized void doDispatch(Collection<Object> clients, BusEvent<?> event)
 	{
-		boolean sent = false;
 		boolean accepted = false;
 		
-		final boolean singular = event.getClass().isAnnotationPresent(SingleReceiverEvent.class);
+		event.clearFlags();
 		
 		for (int i = 0; i < 2; i++) { // two tries.
 		
@@ -362,10 +360,10 @@ final public class EventBus implements Destroyable {
 			for (final EventChannel<?, ?> b : channels) {
 				if (b.canBroadcast(event)) {
 					accepted = true;
-					sent |= b.broadcast(event, clients);
+					b.broadcast(event, clients);
 				}
 				
-				if (sent && singular) break;
+				if (event.isConsumed()) break;
 			}
 			channels.setBuffering(false);
 			
@@ -375,11 +373,11 @@ final public class EventBus implements Destroyable {
 		}
 		
 		if (!accepted) Log.e(logMark + "Not accepted by any channel: " + Log.str(event));
-		if (!sent && shallLog(event)) Log.w(logMark + "Not delivered: " + Log.str(event));
+		if (!event.wasServed() && shallLog(event)) Log.w(logMark + "Not delivered: " + Log.str(event));
 	}
 	
 	
-	private boolean shallLog(Event<?> event)
+	private boolean shallLog(BusEvent<?> event)
 	{
 		if (!detailedLogging) return false;
 		if (event.getClass().isAnnotationPresent(UnloggedEvent.class)) return false;

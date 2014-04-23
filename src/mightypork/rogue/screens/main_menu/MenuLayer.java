@@ -112,7 +112,7 @@ class MenuLayer extends ScreenLayer {
 	
 	
 	@Override
-	public int getPriority()
+	public int getZIndex()
 	{
 		return 2;
 	}

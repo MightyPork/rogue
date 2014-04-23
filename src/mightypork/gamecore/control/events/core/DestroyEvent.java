@@ -1,9 +1,10 @@
-package mightypork.gamecore.control.events;
+package mightypork.gamecore.control.events.core;
 
 
 import mightypork.util.control.Destroyable;
-import mightypork.util.control.eventbus.events.Event;
+import mightypork.util.control.eventbus.BusEvent;
 import mightypork.util.control.eventbus.events.flags.ImmediateEvent;
+import mightypork.util.control.eventbus.events.flags.NonConsumableEvent;
 
 
 /**
@@ -12,7 +13,8 @@ import mightypork.util.control.eventbus.events.flags.ImmediateEvent;
  * @author MightyPork
  */
 @ImmediateEvent
-public class DestroyEvent implements Event<Destroyable> {
+@NonConsumableEvent
+public class DestroyEvent extends BusEvent<Destroyable> {
 	
 	@Override
 	public void handleBy(Destroyable handler)

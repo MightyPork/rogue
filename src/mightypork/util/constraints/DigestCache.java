@@ -10,7 +10,7 @@ package mightypork.util.constraints;
 public abstract class DigestCache<D> implements Digestable<D> {
 	
 	private D last_digest;
-	private boolean caching_enabled;
+	private boolean caching_enabled = false;
 	private boolean dirty = true;
 	
 	

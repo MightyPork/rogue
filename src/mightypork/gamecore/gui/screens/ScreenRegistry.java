@@ -8,9 +8,10 @@ import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppModule;
-import mightypork.gamecore.control.events.LayoutChangeEvent;
-import mightypork.gamecore.control.events.ScreenRequestEvent;
-import mightypork.gamecore.control.events.ViewportChangeEvent;
+import mightypork.gamecore.control.events.gui.LayoutChangeEvent;
+import mightypork.gamecore.control.events.gui.ViewportChangeEvent;
+import mightypork.gamecore.control.events.gui.ViewportChangeListener;
+import mightypork.gamecore.control.events.requests.ScreenRequestListener;
 import mightypork.gamecore.render.Renderable;
 import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.logging.Log;
@@ -21,7 +22,7 @@ import mightypork.util.logging.Log;
  * 
  * @author MightyPork
  */
-public class ScreenRegistry extends AppModule implements ScreenRequestEvent.Listener, ViewportChangeEvent.Listener, Renderable {
+public class ScreenRegistry extends AppModule implements ScreenRequestListener, ViewportChangeListener, Renderable {
 	
 	private final Map<String, Screen> screens = new HashMap<>();
 	private final Collection<Overlay> overlays = new TreeSet<>();

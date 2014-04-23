@@ -2,7 +2,7 @@ package mightypork.rogue.screens;
 
 
 import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.events.ScreenRequestEvent;
+import mightypork.gamecore.control.events.requests.ScreenRequestEvent;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.Overlay;
 import mightypork.rogue.events.ActionRequest;
@@ -62,7 +62,7 @@ public class CrossfadeOverlay extends Overlay implements CrossfadeRequest.Listen
 	
 	
 	@Override
-	public int getPriority()
+	public int getZIndex()
 	{
 		return Integer.MAX_VALUE - 1; // let FPS go on top
 	}

@@ -5,8 +5,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import mightypork.gamecore.control.events.MainLoopTaskRequest;
-import mightypork.gamecore.control.events.ResourceLoadRequest;
+import mightypork.gamecore.control.events.requests.MainLoopRequest;
+import mightypork.gamecore.control.events.requests.ResourceLoadRequestListener;
 import mightypork.util.annotations.FactoryMethod;
 import mightypork.util.control.Destroyable;
 import mightypork.util.control.eventbus.BusAccess;
@@ -18,7 +18,7 @@ import mightypork.util.logging.Log;
  * 
  * @author MightyPork
  */
-public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.Listener, Destroyable {
+public class AsyncResourceLoader extends Thread implements ResourceLoadRequestListener, Destroyable {
 	
 	/**
 	 * Start a new loader thread.
@@ -73,7 +73,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequest.L
 			} else {
 				Log.f3("<LOADER> Delegating to main thread:\n    " + Log.str(resource));
 				
-				app.getEventBus().send(new MainLoopTaskRequest(new Runnable() {
+				app.getEventBus().send(new MainLoopRequest(new Runnable() {
 					
 					@Override
 					public void run()

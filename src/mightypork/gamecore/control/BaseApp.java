@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
 import mightypork.gamecore.audio.SoundSystem;
-import mightypork.gamecore.control.events.DestroyEvent;
+import mightypork.gamecore.control.events.core.DestroyEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;

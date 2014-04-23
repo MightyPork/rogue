@@ -1,7 +1,8 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.gamecore.control.events.LayoutChangeEvent;
+import mightypork.gamecore.control.events.gui.LayoutChangeEvent;
+import mightypork.gamecore.control.events.gui.LayoutChangeListener;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.Renderable;
 import mightypork.util.annotations.DefaultImpl;
@@ -17,7 +18,7 @@ import mightypork.util.constraints.rect.proxy.RectBoundAdapter;
  * 
  * @author MightyPork
  */
-public abstract class VisualComponent extends AbstractRectCache implements Component, LayoutChangeEvent.Listener {
+public abstract class VisualComponent extends AbstractRectCache implements Component, LayoutChangeListener {
 	
 	private Rect source;
 	private boolean visible = true;

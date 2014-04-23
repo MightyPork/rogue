@@ -1,8 +1,9 @@
-package mightypork.gamecore.control.events;
+package mightypork.gamecore.control.events.core;
 
 
-import mightypork.util.control.eventbus.events.Event;
+import mightypork.util.control.eventbus.BusEvent;
 import mightypork.util.control.eventbus.events.flags.ImmediateEvent;
+import mightypork.util.control.eventbus.events.flags.NonConsumableEvent;
 import mightypork.util.control.eventbus.events.flags.UnloggedEvent;
 import mightypork.util.control.timing.Updateable;
 
@@ -14,7 +15,8 @@ import mightypork.util.control.timing.Updateable;
  */
 @UnloggedEvent
 @ImmediateEvent
-public class UpdateEvent implements Event<Updateable> {
+@NonConsumableEvent
+public class UpdateEvent extends BusEvent<Updateable> {
 	
 	private final double deltaTime;
 	
@@ -22,8 +24,7 @@ public class UpdateEvent implements Event<Updateable> {
 	/**
 	 * @param deltaTime time since last update (sec)
 	 */
-	public UpdateEvent(double deltaTime)
-	{
+	public UpdateEvent(double deltaTime) {
 		this.deltaTime = deltaTime;
 	}
 	

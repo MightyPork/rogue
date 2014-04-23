@@ -7,13 +7,15 @@ import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.rogue.Res;
+import mightypork.rogue.screens.gamescreen.gui.HeartBar;
+import mightypork.rogue.screens.gamescreen.gui.NavItemSlot;
 import mightypork.util.constraints.num.Num;
 import mightypork.util.constraints.rect.Rect;
 
 
-public class GameGui extends ScreenLayer {
+public class HudLayer extends ScreenLayer {
 	
-	public GameGui(Screen screen)
+	public HudLayer(Screen screen)
 	{
 		super(screen);
 		
@@ -48,7 +50,7 @@ public class GameGui extends ScreenLayer {
 	
 	
 	@Override
-	public int getPriority()
+	public int getZIndex()
 	{
 		return 100;
 	}
