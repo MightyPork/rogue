@@ -3,11 +3,11 @@ package mightypork.rogue.world.tile;
 
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.render.TileRenderContext;
-import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.proxy.RectBoundAdapter;
-import mightypork.util.control.timing.Animator;
-import mightypork.util.control.timing.AnimatorBounce;
 import mightypork.util.math.Easing;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.rect.proxy.RectBoundAdapter;
+import mightypork.util.timing.Animator;
+import mightypork.util.timing.AnimatorBounce;
 
 
 public class DroppedItemRenderer {

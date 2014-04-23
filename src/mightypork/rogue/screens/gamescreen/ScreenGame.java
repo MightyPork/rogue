@@ -10,12 +10,13 @@ import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.rogue.Paths;
 import mightypork.rogue.world.MapGenerator;
 import mightypork.rogue.world.World;
-import mightypork.util.ion.Ion;
+import mightypork.util.files.ion.Ion;
 
 
 public class ScreenGame extends LayeredScreen {
 	
-	public ScreenGame(AppAccess app) {
+	public ScreenGame(AppAccess app)
+	{
 		super(app);
 		
 		addLayer(new WorldLayer(this, obtainWorld())); //TODO with provided world
@@ -33,7 +34,7 @@ public class ScreenGame extends LayeredScreen {
 		
 		// SAVE
 		
-		World world = MapGenerator.createWorld(rand.nextLong());
+		final World world = MapGenerator.createWorld(rand.nextLong());
 		addChildClient(world);
 		
 		try {

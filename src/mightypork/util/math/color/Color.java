@@ -5,8 +5,8 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 import mightypork.util.annotations.FactoryMethod;
-import mightypork.util.constraints.num.Num;
 import mightypork.util.math.Calc;
+import mightypork.util.math.constraints.num.Num;
 
 
 /**

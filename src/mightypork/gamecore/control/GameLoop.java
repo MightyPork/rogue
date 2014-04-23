@@ -9,7 +9,7 @@ import mightypork.gamecore.control.events.requests.MainLoopRequestListener;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.render.Renderable;
 import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.control.timing.TimerDelta;
+import mightypork.util.timing.TimerDelta;
 
 
 /**

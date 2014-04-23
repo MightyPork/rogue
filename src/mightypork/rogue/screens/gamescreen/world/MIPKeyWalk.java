@@ -4,7 +4,7 @@ package mightypork.rogue.screens.gamescreen.world;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.world.PlayerControl;
-import mightypork.util.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 public class MIPKeyWalk implements MapInteractionPlugin {

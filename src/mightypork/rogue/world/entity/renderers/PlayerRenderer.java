@@ -8,8 +8,8 @@ import mightypork.rogue.Res;
 import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.render.MapRenderContext;
-import mightypork.util.constraints.rect.Rect;
 import mightypork.util.math.Calc;
+import mightypork.util.math.constraints.rect.Rect;
 
 
 public class PlayerRenderer extends EntityRenderer {

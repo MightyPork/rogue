@@ -13,10 +13,10 @@ import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.Tiles;
 import mightypork.rogue.world.tile.models.TileModel;
-import mightypork.util.ion.IonBinary;
-import mightypork.util.ion.IonBundle;
-import mightypork.util.ion.IonInput;
-import mightypork.util.ion.IonOutput;
+import mightypork.util.files.ion.IonBinary;
+import mightypork.util.files.ion.IonBundle;
+import mightypork.util.files.ion.IonInput;
+import mightypork.util.files.ion.IonOutput;
 import mightypork.util.math.noise.NoiseGen;
 
 
@@ -43,11 +43,13 @@ public class Level implements MapAccess, IonBinary {
 	private transient NoiseGen noiseGen;
 	
 	
-	public Level() {
+	public Level()
+	{
 	}
 	
 	
-	public Level(int width, int height) {
+	public Level(int width, int height)
+	{
 		this.width = width;
 		this.height = height;
 		buildArray();

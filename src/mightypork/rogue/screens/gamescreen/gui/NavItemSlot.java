@@ -7,13 +7,13 @@ import mightypork.gamecore.gui.components.ClickableComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.rogue.Res;
-import mightypork.util.constraints.num.Num;
-import mightypork.util.constraints.num.mutable.NumAnimated;
-import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.caching.RectCache;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.control.timing.Updateable;
 import mightypork.util.math.Easing;
+import mightypork.util.math.constraints.num.Num;
+import mightypork.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.rect.caching.RectCache;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.timing.Updateable;
 
 
 public class NavItemSlot extends ClickableComponent implements MouseMotionListener, Updateable {

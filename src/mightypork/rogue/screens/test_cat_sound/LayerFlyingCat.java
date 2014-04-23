@@ -14,12 +14,12 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Res;
-import mightypork.util.constraints.num.mutable.NumAnimated;
-import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.constraints.vect.mutable.VectAnimated;
 import mightypork.util.math.Easing;
 import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.mutable.VectAnimated;
 
 
 public class LayerFlyingCat extends ScreenLayer implements MouseButtonListener {

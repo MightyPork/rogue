@@ -2,7 +2,7 @@ package mightypork.rogue.events;
 
 
 import mightypork.util.control.eventbus.BusEvent;
-import mightypork.util.control.eventbus.events.flags.SingleReceiverEvent;
+import mightypork.util.control.eventbus.event_flags.SingleReceiverEvent;
 
 
 /**

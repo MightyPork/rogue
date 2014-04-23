@@ -1,8 +1,8 @@
 package mightypork.gamecore.render.textures;
 
 
-import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.RectConst;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.rect.RectConst;
 
 
 /**

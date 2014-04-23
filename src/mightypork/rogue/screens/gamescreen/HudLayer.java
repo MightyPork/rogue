@@ -9,8 +9,8 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.rogue.Res;
 import mightypork.rogue.screens.gamescreen.gui.HeartBar;
 import mightypork.rogue.screens.gamescreen.gui.NavItemSlot;
-import mightypork.util.constraints.num.Num;
-import mightypork.util.constraints.rect.Rect;
+import mightypork.util.math.constraints.num.Num;
+import mightypork.util.math.constraints.rect.Rect;
 
 
 public class HudLayer extends ScreenLayer {

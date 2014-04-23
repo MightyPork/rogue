@@ -1,11 +1,11 @@
 package mightypork.util.control.eventbus;
 
 
-import mightypork.util.control.eventbus.events.flags.DelayedEvent;
-import mightypork.util.control.eventbus.events.flags.ImmediateEvent;
-import mightypork.util.control.eventbus.events.flags.NonConsumableEvent;
-import mightypork.util.control.eventbus.events.flags.SingleReceiverEvent;
-import mightypork.util.control.eventbus.events.flags.UnloggedEvent;
+import mightypork.util.control.eventbus.event_flags.DelayedEvent;
+import mightypork.util.control.eventbus.event_flags.ImmediateEvent;
+import mightypork.util.control.eventbus.event_flags.NonConsumableEvent;
+import mightypork.util.control.eventbus.event_flags.SingleReceiverEvent;
+import mightypork.util.control.eventbus.event_flags.UnloggedEvent;
 
 
 /**
@@ -52,7 +52,6 @@ public abstract class BusEvent<HANDLER> {
 	 */
 	public final void consume()
 	{
-		System.out.println("consume "+getClass());
 		if (consumed) throw new IllegalStateException("Already consumed.");
 		
 		if (getClass().isAnnotationPresent(NonConsumableEvent.class)) {

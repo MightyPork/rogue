@@ -1,10 +1,10 @@
 package mightypork.gamecore.control.events.input;
 
 
-import mightypork.util.constraints.rect.proxy.RectBound;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.control.eventbus.BusEvent;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.VectConst;
 
 
 /**
@@ -32,7 +32,8 @@ public class MouseButtonEvent extends BusEvent<MouseButtonListener> {
 	 * @param down button pressed
 	 * @param wheeld wheel change
 	 */
-	public MouseButtonEvent(Vect pos, int button, boolean down, int wheeld) {
+	public MouseButtonEvent(Vect pos, int button, boolean down, int wheeld)
+	{
 		this.button = button;
 		this.down = down;
 		this.pos = pos.freeze();

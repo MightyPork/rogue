@@ -3,8 +3,8 @@ package mightypork.rogue.world.level.render;
 
 import mightypork.rogue.world.level.MapAccess;
 import mightypork.rogue.world.tile.Tile;
-import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.proxy.RectBound;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
 import mightypork.util.math.noise.NoiseGen;
 
 

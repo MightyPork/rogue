@@ -3,8 +3,8 @@ package mightypork.gamecore.control.events.core;
 
 import mightypork.util.control.Destroyable;
 import mightypork.util.control.eventbus.BusEvent;
-import mightypork.util.control.eventbus.events.flags.ImmediateEvent;
-import mightypork.util.control.eventbus.events.flags.NonConsumableEvent;
+import mightypork.util.control.eventbus.event_flags.ImmediateEvent;
+import mightypork.util.control.eventbus.event_flags.NonConsumableEvent;
 
 
 /**

@@ -28,7 +28,7 @@ import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.control.eventbus.BusEvent;
 import mightypork.util.control.eventbus.EventBus;
-import mightypork.util.ion.Ion;
+import mightypork.util.files.ion.Ion;
 import mightypork.util.logging.Log;
 import mightypork.util.logging.writers.LogWriter;
 

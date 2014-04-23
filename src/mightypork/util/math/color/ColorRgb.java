@@ -1,7 +1,7 @@
 package mightypork.util.math.color;
 
 
-import mightypork.util.constraints.num.Num;
+import mightypork.util.math.constraints.num.Num;
 
 
 public class ColorRgb extends Color {

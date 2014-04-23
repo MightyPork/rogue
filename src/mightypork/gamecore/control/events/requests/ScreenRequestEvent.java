@@ -2,7 +2,7 @@ package mightypork.gamecore.control.events.requests;
 
 
 import mightypork.util.control.eventbus.BusEvent;
-import mightypork.util.control.eventbus.events.flags.SingleReceiverEvent;
+import mightypork.util.control.eventbus.event_flags.SingleReceiverEvent;
 
 
 /**
@@ -19,7 +19,8 @@ public class ScreenRequestEvent extends BusEvent<ScreenRequestListener> {
 	/**
 	 * @param screenKey screen name
 	 */
-	public ScreenRequestEvent(String screenKey) {
+	public ScreenRequestEvent(String screenKey)
+	{
 		scrName = screenKey;
 	}
 	

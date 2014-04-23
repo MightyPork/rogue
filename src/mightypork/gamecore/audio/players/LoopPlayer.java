@@ -3,9 +3,9 @@ package mightypork.gamecore.audio.players;
 
 import mightypork.gamecore.audio.DeferredAudio;
 import mightypork.gamecore.audio.Volume;
-import mightypork.util.constraints.num.mutable.NumAnimated;
-import mightypork.util.control.timing.Pauseable;
-import mightypork.util.control.timing.Updateable;
+import mightypork.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.util.timing.Pauseable;
+import mightypork.util.timing.Updateable;
 
 import org.lwjgl.openal.AL10;
 

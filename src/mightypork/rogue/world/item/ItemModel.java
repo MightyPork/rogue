@@ -2,7 +2,7 @@ package mightypork.rogue.world.item;
 
 
 import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.constraints.rect.proxy.RectBound;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
 
 
 public abstract class ItemModel {

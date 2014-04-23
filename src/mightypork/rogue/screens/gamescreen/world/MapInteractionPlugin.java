@@ -2,7 +2,7 @@ package mightypork.rogue.screens.gamescreen.world;
 
 
 import mightypork.rogue.world.PlayerControl;
-import mightypork.util.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 public interface MapInteractionPlugin {

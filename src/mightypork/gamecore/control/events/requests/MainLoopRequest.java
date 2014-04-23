@@ -2,7 +2,7 @@ package mightypork.gamecore.control.events.requests;
 
 
 import mightypork.util.control.eventbus.BusEvent;
-import mightypork.util.control.eventbus.events.flags.SingleReceiverEvent;
+import mightypork.util.control.eventbus.event_flags.SingleReceiverEvent;
 
 
 /**
@@ -19,7 +19,8 @@ public class MainLoopRequest extends BusEvent<MainLoopRequestListener> {
 	/**
 	 * @param task task to run on main thread in rendering context
 	 */
-	public MainLoopRequest(Runnable task) {
+	public MainLoopRequest(Runnable task)
+	{
 		this.task = task;
 	}
 	

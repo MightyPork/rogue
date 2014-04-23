@@ -5,9 +5,9 @@ import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
-import mightypork.util.constraints.num.Num;
-import mightypork.util.constraints.num.mutable.NumVar;
-import mightypork.util.constraints.rect.Rect;
+import mightypork.util.math.constraints.num.Num;
+import mightypork.util.math.constraints.num.mutable.NumVar;
+import mightypork.util.math.constraints.rect.Rect;
 
 
 public class HeartBar extends VisualComponent {

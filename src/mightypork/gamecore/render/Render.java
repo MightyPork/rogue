@@ -8,13 +8,13 @@ import java.io.IOException;
 import mightypork.gamecore.render.textures.FilterMode;
 import mightypork.gamecore.render.textures.GLTexture;
 import mightypork.gamecore.render.textures.TxQuad;
-import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.caching.RectDigest;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.files.FileUtils;
 import mightypork.util.logging.Log;
 import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.rect.caching.RectDigest;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.VectConst;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
@@ -451,7 +451,6 @@ public class Render {
 			glBegin(GL_QUADS);
 			setColor(tint);
 		}
-		
 		
 		final RectDigest q = quad.digest();
 		final RectDigest u = txquad.uvs.digest();

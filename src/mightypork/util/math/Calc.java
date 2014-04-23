@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import mightypork.util.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.Vect;
 
 import org.lwjgl.BufferUtils;
 

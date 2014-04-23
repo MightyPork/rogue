@@ -10,7 +10,8 @@ public class PlayerControl {
 	private final World world;
 	
 	
-	public PlayerControl(World w) {
+	public PlayerControl(World w)
+	{
 		this.world = w;
 	}
 	

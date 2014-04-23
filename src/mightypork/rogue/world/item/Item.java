@@ -3,10 +3,10 @@ package mightypork.rogue.world.item;
 
 import java.io.IOException;
 
-import mightypork.util.constraints.rect.proxy.RectBound;
-import mightypork.util.ion.IonBinary;
-import mightypork.util.ion.IonInput;
-import mightypork.util.ion.IonOutput;
+import mightypork.util.files.ion.IonBinary;
+import mightypork.util.files.ion.IonInput;
+import mightypork.util.files.ion.IonOutput;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
 
 
 public class Item implements IonBinary {

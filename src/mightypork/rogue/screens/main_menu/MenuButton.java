@@ -6,10 +6,10 @@ import mightypork.gamecore.gui.components.ClickableComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.rogue.Res;
-import mightypork.util.constraints.num.Num;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.constraints.vect.mutable.VectVar;
 import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.num.Num;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.mutable.VectVar;
 
 
 class MenuButton extends ClickableComponent {

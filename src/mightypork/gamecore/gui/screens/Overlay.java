@@ -14,8 +14,8 @@ import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.render.Renderable;
 import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.control.timing.Updateable;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.timing.Updateable;
 
 
 /**
@@ -42,7 +42,8 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	protected final Collection<Updateable> updated = new LinkedHashSet<>();
 	
 	
-	public Overlay(AppAccess app) {
+	public Overlay(AppAccess app)
+	{
 		super(app);
 		
 		this.mouse = getInput().getMousePos();
@@ -122,6 +123,7 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 			u.update(delta);
 		}
 	}
+	
 	
 	@Override
 	public int compareTo(Overlay o)

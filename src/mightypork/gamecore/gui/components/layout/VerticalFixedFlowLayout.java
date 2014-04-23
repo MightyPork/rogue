@@ -5,9 +5,9 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.AlignY;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.gamecore.gui.components.LayoutComponent;
-import mightypork.util.constraints.num.Num;
-import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.proxy.RectBound;
+import mightypork.util.math.constraints.num.Num;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
 
 
 /**

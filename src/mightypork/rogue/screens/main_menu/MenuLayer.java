@@ -9,11 +9,11 @@ import mightypork.gamecore.gui.screens.BaseScreen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.rogue.Res;
 import mightypork.rogue.screens.CrossfadeRequest;
-import mightypork.util.constraints.num.Num;
-import mightypork.util.constraints.rect.Rect;
 import mightypork.util.control.Action;
 import mightypork.util.math.color.COMMODORE;
 import mightypork.util.math.color.PAL16;
+import mightypork.util.math.constraints.num.Num;
+import mightypork.util.math.constraints.rect.Rect;
 
 
 class MenuLayer extends ScreenLayer {

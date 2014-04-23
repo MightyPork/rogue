@@ -10,10 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 import mightypork.util.control.Destroyable;
 import mightypork.util.control.eventbus.clients.DelegatingClient;
-import mightypork.util.control.eventbus.events.flags.DelayedEvent;
-import mightypork.util.control.eventbus.events.flags.ImmediateEvent;
-import mightypork.util.control.eventbus.events.flags.SingleReceiverEvent;
-import mightypork.util.control.eventbus.events.flags.UnloggedEvent;
+import mightypork.util.control.eventbus.event_flags.DelayedEvent;
+import mightypork.util.control.eventbus.event_flags.ImmediateEvent;
+import mightypork.util.control.eventbus.event_flags.UnloggedEvent;
 import mightypork.util.logging.Log;
 
 
@@ -107,7 +106,7 @@ final public class EventBus implements Destroyable {
 		// BEHOLD, MAGIC!
 		
 		final Type evtc = event.getClass().getGenericSuperclass();
-
+		
 		if (evtc instanceof ParameterizedType) {
 			if (((ParameterizedType) evtc).getRawType() == BusEvent.class) {
 				final Type[] types = ((ParameterizedType) evtc).getActualTypeArguments();

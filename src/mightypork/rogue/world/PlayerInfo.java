@@ -3,8 +3,8 @@ package mightypork.rogue.world;
 
 import java.io.IOException;
 
-import mightypork.util.ion.IonBundle;
-import mightypork.util.ion.IonBundled;
+import mightypork.util.files.ion.IonBundle;
+import mightypork.util.files.ion.IonBundled;
 
 
 public class PlayerInfo implements IonBundled {

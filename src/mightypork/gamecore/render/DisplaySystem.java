@@ -8,11 +8,11 @@ import java.nio.ByteBuffer;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppModule;
 import mightypork.gamecore.control.events.gui.ViewportChangeEvent;
-import mightypork.util.constraints.rect.Rect;
-import mightypork.util.constraints.rect.proxy.RectBound;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.control.timing.FpsMeter;
 import mightypork.util.logging.Log;
+import mightypork.util.math.constraints.rect.Rect;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.timing.FpsMeter;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;

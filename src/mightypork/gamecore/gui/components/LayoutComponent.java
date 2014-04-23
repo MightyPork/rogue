@@ -9,10 +9,10 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.control.AppSubModule;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.util.constraints.rect.proxy.RectBound;
 import mightypork.util.control.Enableable;
 import mightypork.util.control.eventbus.EventBus;
 import mightypork.util.control.eventbus.clients.ClientHub;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
 
 
 public abstract class LayoutComponent extends VisualComponent implements Enableable, ClientHub, AppAccess {

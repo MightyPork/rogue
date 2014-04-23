@@ -4,9 +4,9 @@ package mightypork.gamecore.audio;
 import java.io.IOException;
 
 import mightypork.gamecore.loading.DeferredResource;
-import mightypork.util.constraints.vect.Vect;
 import mightypork.util.files.FileUtils;
 import mightypork.util.logging.LogAlias;
+import mightypork.util.math.constraints.vect.Vect;
 
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;

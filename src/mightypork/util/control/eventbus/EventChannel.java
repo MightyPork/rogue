@@ -6,7 +6,6 @@ import java.util.HashSet;
 
 import mightypork.util.control.eventbus.clients.DelegatingClient;
 import mightypork.util.control.eventbus.clients.ToggleableClient;
-import mightypork.util.control.eventbus.events.flags.SingleReceiverEvent;
 import mightypork.util.logging.Log;
 
 

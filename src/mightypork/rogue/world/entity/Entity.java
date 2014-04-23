@@ -14,11 +14,11 @@ import mightypork.rogue.world.entity.models.EntityModel;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
-import mightypork.util.ion.IonBinary;
-import mightypork.util.ion.IonBundle;
-import mightypork.util.ion.IonBundled;
-import mightypork.util.ion.IonInput;
-import mightypork.util.ion.IonOutput;
+import mightypork.util.files.ion.IonBinary;
+import mightypork.util.files.ion.IonBundle;
+import mightypork.util.files.ion.IonBundled;
+import mightypork.util.files.ion.IonInput;
+import mightypork.util.files.ion.IonOutput;
 
 
 /**
@@ -188,7 +188,7 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 			
 			walking = true;
 			
-			PathStep step = path.poll();
+			final PathStep step = path.poll();
 			
 			final int projX = position.x + step.x, projY = position.y + step.y;
 			

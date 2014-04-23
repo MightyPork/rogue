@@ -7,10 +7,10 @@ import mightypork.gamecore.control.events.input.MouseButtonEvent;
 import mightypork.gamecore.control.events.input.MouseMotionEvent;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.constraints.vect.mutable.VectVar;
 import mightypork.util.control.eventbus.clients.RootBusNode;
-import mightypork.util.control.timing.Updateable;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.mutable.VectVar;
+import mightypork.util.timing.Updateable;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -210,8 +210,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	{
 		return Keyboard.isKeyDown(key);
 	}
-
-
+	
+	
 	public static boolean isMouseButtonDown(int button)
 	{
 		return Mouse.isButtonDown(button);

@@ -7,16 +7,17 @@ import mightypork.rogue.screens.gamescreen.world.MIPKeyWalk;
 import mightypork.rogue.screens.gamescreen.world.MIPMouseWalk;
 import mightypork.rogue.screens.gamescreen.world.MapView;
 import mightypork.rogue.world.World;
-import mightypork.util.constraints.num.Num;
+import mightypork.util.math.constraints.num.Num;
 
 
 public class WorldLayer extends ScreenLayer {
 	
-	private MapView worldView;
+	private final MapView worldView;
 	
 	
-	public WorldLayer(Screen screen, World world) {
-		super(screen);	
+	public WorldLayer(Screen screen, World world)
+	{
+		super(screen);
 		
 		// render component
 		
@@ -25,7 +26,6 @@ public class WorldLayer extends ScreenLayer {
 		// map input plugins
 		worldView.addPlugin(new MIPKeyWalk());
 		worldView.addPlugin(new MIPMouseWalk());
-		
 		
 		// size of lower navbar
 		final Num lownav = root.width().min(root.height()).max(700).perc(7);

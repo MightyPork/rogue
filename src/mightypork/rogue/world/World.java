@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
-import mightypork.util.control.timing.Updateable;
-import mightypork.util.ion.IonBundle;
-import mightypork.util.ion.IonBundled;
+import mightypork.util.files.ion.IonBundle;
+import mightypork.util.files.ion.IonBundled;
+import mightypork.util.timing.Updateable;
 
 
 /**
@@ -114,8 +114,8 @@ public class World implements IonBundled, Updateable {
 	{
 		return control;
 	}
-
-
+	
+	
 	public Entity getPlayerEntity()
 	{
 		return playerEntity;

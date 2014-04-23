@@ -9,11 +9,11 @@ import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.render.fonts.GLFont;
 import mightypork.rogue.Res;
-import mightypork.util.constraints.num.Num;
-import mightypork.util.constraints.rect.proxy.RectBound;
-import mightypork.util.constraints.vect.Vect;
 import mightypork.util.control.Action;
 import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.num.Num;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
+import mightypork.util.math.constraints.vect.Vect;
 import mightypork.util.string.StringProvider;
 
 

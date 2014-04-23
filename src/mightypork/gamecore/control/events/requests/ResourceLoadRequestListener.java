@@ -1,6 +1,8 @@
 package mightypork.gamecore.control.events.requests;
 
+
 import mightypork.gamecore.loading.Deferred;
+
 
 /**
  * {@link ResourceLoadRequest} listener

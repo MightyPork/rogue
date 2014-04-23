@@ -4,8 +4,8 @@ package mightypork.gamecore.render.textures;
 import mightypork.gamecore.loading.DeferredResource;
 import mightypork.gamecore.loading.MustLoadInMainThread;
 import mightypork.gamecore.render.Render;
-import mightypork.util.constraints.rect.Rect;
 import mightypork.util.logging.LogAlias;
+import mightypork.util.math.constraints.rect.Rect;
 
 import org.lwjgl.opengl.GL11;
 

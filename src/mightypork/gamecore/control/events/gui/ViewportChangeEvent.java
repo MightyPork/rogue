@@ -1,9 +1,9 @@
 package mightypork.gamecore.control.events.gui;
 
 
-import mightypork.util.constraints.vect.Vect;
 import mightypork.util.control.eventbus.BusEvent;
-import mightypork.util.control.eventbus.events.flags.NonConsumableEvent;
+import mightypork.util.control.eventbus.event_flags.NonConsumableEvent;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 /**
@@ -24,7 +24,8 @@ public class ViewportChangeEvent extends BusEvent<ViewportChangeListener> {
 	 * @param fullscreen is now fullscreen
 	 * @param size new screen size
 	 */
-	public ViewportChangeEvent(boolean fsChanged, boolean fullscreen, Vect size) {
+	public ViewportChangeEvent(boolean fsChanged, boolean fullscreen, Vect size)
+	{
 		this.fullscreen = fullscreen;
 		this.screenSize = size;
 		this.fsChanged = fsChanged;

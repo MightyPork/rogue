@@ -7,10 +7,10 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.Overlay;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.util.constraints.num.mutable.NumAnimated;
-import mightypork.util.control.timing.TimedTask;
 import mightypork.util.math.Easing;
 import mightypork.util.math.color.Color;
+import mightypork.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.util.timing.TimedTask;
 
 
 public class CrossfadeOverlay extends Overlay implements CrossfadeRequest.Listener {

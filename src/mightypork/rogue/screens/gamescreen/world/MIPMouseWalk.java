@@ -4,9 +4,9 @@ package mightypork.rogue.screens.gamescreen.world;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.WorldPos;
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.math.Polar;
 import mightypork.util.math.Calc.Deg;
+import mightypork.util.math.Polar;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 public class MIPMouseWalk implements MapInteractionPlugin {
@@ -24,12 +24,12 @@ public class MIPMouseWalk implements MapInteractionPlugin {
 	@Override
 	public void onClick(MapView wv, PlayerControl player, Vect mouse)
 	{
-		WorldPos plpos = player.getPos();
-		WorldPos clicked = wv.toWorldPos(mouse);
+		final WorldPos plpos = player.getPos();
+		final WorldPos clicked = wv.toWorldPos(mouse);
 		
-		Polar p = Polar.fromCoord(clicked.x - plpos.x, clicked.y - plpos.y);
+		final Polar p = Polar.fromCoord(clicked.x - plpos.x, clicked.y - plpos.y);
 		
-		int dir = Deg.round90(p.getAngleDeg()) / 90;
+		final int dir = Deg.round90(p.getAngleDeg()) / 90;
 		
 		switch (dir) {
 			case 0:

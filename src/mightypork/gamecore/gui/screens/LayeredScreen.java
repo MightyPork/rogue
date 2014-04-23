@@ -7,7 +7,6 @@ import java.util.TreeSet;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.util.control.eventbus.clients.DelegatingClient;
-import mightypork.util.control.eventbus.clients.RootBusNode;
 
 
 /**
@@ -18,14 +17,15 @@ import mightypork.util.control.eventbus.clients.RootBusNode;
 public abstract class LayeredScreen extends BaseScreen {
 	
 	private class LayersClient implements DelegatingClient {
-
+		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public Collection getChildClients()
 		{
 			return layersByEventPriority;
 		}
-
+		
+		
 		@Override
 		public boolean doesDelegate()
 		{
@@ -60,7 +60,8 @@ public abstract class LayeredScreen extends BaseScreen {
 	/**
 	 * @param app app access
 	 */
-	public LayeredScreen(AppAccess app) {
+	public LayeredScreen(AppAccess app)
+	{
 		super(app);
 		addChildClient(layersClient);
 	}

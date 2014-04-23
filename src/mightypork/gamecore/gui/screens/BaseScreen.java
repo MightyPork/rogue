@@ -10,7 +10,7 @@ import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.render.Render;
 import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.constraints.rect.Rect;
+import mightypork.util.math.constraints.rect.Rect;
 
 
 /**

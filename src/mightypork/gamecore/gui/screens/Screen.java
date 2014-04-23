@@ -3,7 +3,7 @@ package mightypork.gamecore.gui.screens;
 
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.render.Renderable;
-import mightypork.util.constraints.rect.proxy.RectBound;
+import mightypork.util.math.constraints.rect.proxy.RectBound;
 
 
 /**

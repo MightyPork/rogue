@@ -1,10 +1,10 @@
 package mightypork.gamecore.control.events.input;
 
 
-import mightypork.util.constraints.vect.Vect;
-import mightypork.util.constraints.vect.VectConst;
 import mightypork.util.control.eventbus.BusEvent;
-import mightypork.util.control.eventbus.events.flags.UnloggedEvent;
+import mightypork.util.control.eventbus.event_flags.UnloggedEvent;
+import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.VectConst;
 
 
 /**
@@ -23,7 +23,8 @@ public class MouseMotionEvent extends BusEvent<MouseMotionListener> {
 	 * @param pos end pos
 	 * @param move move vector
 	 */
-	public MouseMotionEvent(Vect pos, Vect move) {
+	public MouseMotionEvent(Vect pos, Vect move)
+	{
 		this.move = move.freeze();
 		this.pos = pos.freeze();
 	}

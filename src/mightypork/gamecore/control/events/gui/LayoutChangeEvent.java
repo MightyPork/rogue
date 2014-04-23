@@ -2,8 +2,8 @@ package mightypork.gamecore.control.events.gui;
 
 
 import mightypork.util.control.eventbus.BusEvent;
-import mightypork.util.control.eventbus.events.flags.ImmediateEvent;
-import mightypork.util.control.eventbus.events.flags.NonConsumableEvent;
+import mightypork.util.control.eventbus.event_flags.ImmediateEvent;
+import mightypork.util.control.eventbus.event_flags.NonConsumableEvent;
 
 
 /**
@@ -16,7 +16,8 @@ import mightypork.util.control.eventbus.events.flags.NonConsumableEvent;
 @NonConsumableEvent
 public class LayoutChangeEvent extends BusEvent<LayoutChangeListener> {
 	
-	public LayoutChangeEvent() {
+	public LayoutChangeEvent()
+	{
 	}
 	
 	

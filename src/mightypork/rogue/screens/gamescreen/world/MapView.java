@@ -16,7 +16,7 @@ import mightypork.rogue.world.WorldRenderer;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
-import mightypork.util.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.Vect;
 
 
 public class MapView extends InputComponent implements KeyListener, MouseButtonListener, EntityMoveListener {
@@ -28,7 +28,8 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	private final Set<MapInteractionPlugin> plugins = new HashSet<>();
 	
 	
-	public MapView(World world) {
+	public MapView(World world)
+	{
 		this.world = world;
 		this.worldRenderer = new WorldRenderer(world, this, 8, 6, 72);
 		pc = world.getPlayerControl();
@@ -65,7 +66,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	@Override
 	public void onStepFinished(Entity entity, World world, Level level)
 	{
-		for (MapInteractionPlugin p : plugins) {
+		for (final MapInteractionPlugin p : plugins) {
 			p.onStepEnd(this, pc);
 		}
 	}
@@ -74,7 +75,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	@Override
 	public void onPathFinished(Entity entity, World world, Level level)
 	{
-		for (MapInteractionPlugin p : plugins) {
+		for (final MapInteractionPlugin p : plugins) {
 			p.onStepEnd(this, pc);
 		}
 	}
@@ -83,7 +84,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	@Override
 	public void onPathInterrupted(Entity entity, World world, Level level)
 	{
-		for (MapInteractionPlugin p : plugins) {
+		for (final MapInteractionPlugin p : plugins) {
 			p.onStepEnd(this, pc);
 		}
 	}
@@ -96,7 +97,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 		
 		if (!event.isUp()) return; // only btn-release evt
 			
-		for (MapInteractionPlugin p : plugins) {
+		for (final MapInteractionPlugin p : plugins) {
 			p.onClick(this, pc, event.getPos());
 		}
 		
@@ -109,7 +110,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	{
 		if (!event.isDown()) return;
 		
-		for (MapInteractionPlugin p : plugins) {
+		for (final MapInteractionPlugin p : plugins) {
 			p.onKey(this, pc, event.getKey());
 		}
 		
