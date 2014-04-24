@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import mightypork.rogue.world.World;
+import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.Tiles;
@@ -30,6 +31,8 @@ public class Level implements MapAccess, IonBinary {
 	public static final int ION_MARK = 53;
 	
 	private int width, height;
+	
+	private WorldPos enterPoint;
 	
 	/** Array of tiles [y][x] */
 	private Tile[][] tiles;
@@ -277,5 +280,17 @@ public class Level implements MapAccess, IonBinary {
 	public Collection<Entity> getEntities()
 	{
 		return entity_set;
+	}
+	
+	
+	public void setEnterPoint(WorldPos enterPoint)
+	{
+		this.enterPoint = enterPoint;
+	}
+	
+	
+	public WorldPos getEnterPoint()
+	{
+		return enterPoint;
 	}
 }

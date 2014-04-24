@@ -3,6 +3,7 @@ package mightypork.rogue.world;
 
 import java.util.Random;
 
+import mightypork.rogue.world.gen.LevelGenerator;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tiles;
 import mightypork.rogue.world.tile.models.TileModel;
@@ -21,33 +22,15 @@ public class MapGenerator {
 			final World w = new World();
 			w.setSeed(seed);
 			
-			w.addLevel(createLevel(rand.nextLong(), Tiles.FLOOR_DARK, Tiles.WALL_BRICK));
-			//w.addLevel(createLevel(rand.nextLong(), Tiles.BRCOBBLE_FLOOR, Tiles.BRCOBBLE_WALL));
+			Level l;
 			
-			// TODO place on start position
-			w.createPlayer(10, 10, 0);
+			// first level
+			l = LevelGenerator.build(rand.nextLong(), LevelGenerator.DUNGEON_THEME);
+			w.addLevel(l);
+			w.createPlayer(l.getEnterPoint(), 0);
+			
 			return w;
 		}
-	}
-	
-	
-	private static Level createLevel(long seed, TileModel floor, TileModel wall)
-	{
-		// TODO
-		
-		final Level lm = new Level(20, 20);
-		lm.setSeed(seed);
-		
-		lm.fill(floor);
-		
-		final Random rand = new Random();
-		rand.setSeed(seed);
-		
-		for (int i = 0; i < 150; i++) {
-			lm.setTile(wall, rand.nextInt(20), rand.nextInt(20));
-		}
-		
-		return lm;
 	}
 	
 }

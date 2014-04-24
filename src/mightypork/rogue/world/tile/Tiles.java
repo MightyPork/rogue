@@ -19,9 +19,10 @@ public final class Tiles {
 	
 	public static final TileModel NULL_SOLID = new NullWall(0);
 	public static final TileModel NULL_EMPTY = new NullFloor(1);
+	public static final TileModel NULL_EMPTY_RESERVED = new NullFloor(2);
 	
-	public static final TileModel FLOOR_DARK = new Floor(2).setTexture("tile16.floor.dark");
-	public static final TileModel WALL_BRICK = new Wall(3).setTexture("tile16.wall.brick");
+	public static final TileModel FLOOR_DARK = new Floor(10).setTexture("tile16.floor.dark");
+	public static final TileModel WALL_BRICK = new Wall(11).setTexture("tile16.wall.brick");
 	
 	
 //	public static final TileModel BRICK_FLOOR_VINES = new Floor(2).setTexture("tile.floor.mossy_bricks");

@@ -31,7 +31,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public MapView(World world)
 	{
 		this.world = world;
-		this.worldRenderer = new WorldRenderer(world, this, 8, 6, 72);
+		this.worldRenderer = new WorldRenderer(world, this, 8, 8, 64);
 		pc = world.getPlayerControl();
 		pc.addMoveListener(this);
 	}

@@ -107,6 +107,11 @@ public class WorldPos implements IonBundled, Updateable {
 		setTo(other.x, other.y);
 	}
 	
+	@Override
+	public String toString()
+	{
+		return "WorldPos("+x+","+y+")";
+	}
 	
 	@Override
 	public int hashCode()

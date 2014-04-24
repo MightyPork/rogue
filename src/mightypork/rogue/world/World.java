@@ -84,7 +84,12 @@ public class World implements IonBundled, Updateable {
 	{
 		return eid++;
 	}
-	
+
+
+	public void createPlayer(WorldPos pos, int level)
+	{
+		createPlayer(pos.x, pos.y, level);
+	}
 	
 	public void createPlayer(int x, int y, int level)
 	{
@@ -120,4 +125,5 @@ public class World implements IonBundled, Updateable {
 	{
 		return playerEntity;
 	}
+
 }
