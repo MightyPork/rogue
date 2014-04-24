@@ -5,7 +5,6 @@ import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
-import mightypork.rogue.Res;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 
@@ -34,14 +33,14 @@ public class ScreenTestCat extends LayeredScreen {
 	protected void onScreenEnter()
 	{
 		getSoundSystem().fadeOutAllLoops();
-		Res.getLoop("test.wilderness").fadeIn();
+		//Res.getLoop("test.wilderness").fadeIn();
 	}
 	
 	
 	@Override
 	protected void onScreenLeave()
 	{
-		Res.getLoop("test.wilderness").fadeOut();
+		//Res.getLoop("test.wilderness").fadeOut();
 	}
 	
 	

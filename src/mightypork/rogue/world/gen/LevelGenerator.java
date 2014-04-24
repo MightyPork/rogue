@@ -4,6 +4,7 @@ package mightypork.rogue.world.gen;
 import java.util.Random;
 
 import mightypork.rogue.world.Coord;
+import mightypork.rogue.world.gen.rooms.DeadEndRoom;
 import mightypork.rogue.world.gen.rooms.SimpleRectRoom;
 import mightypork.rogue.world.gen.themes.ThemeDungeon;
 import mightypork.rogue.world.level.Level;
@@ -14,6 +15,7 @@ public class LevelGenerator {
 	public static final Theme DUNGEON_THEME = new ThemeDungeon();
 	
 	public static final RoomBuilder ROOM_SQUARE = new SimpleRectRoom();
+	private static final RoomBuilder DEAD_END = new DeadEndRoom();
 	
 	
 	public static Level build(long seed, Theme theme)
@@ -27,8 +29,12 @@ public class LevelGenerator {
 		// start
 		map.addRoom(ROOM_SQUARE);
 		
-		for (int i = 0; i < 6 + rand.nextInt(6); i++) {
+		for (int i = 0; i < 5 + rand.nextInt(8); i++) {
 			map.addRoom(ROOM_SQUARE);
+		}
+		
+		for (int i = 0; i < 5 + rand.nextInt(6); i++) {
+			map.addRoom(DEAD_END);
 		}
 		
 		map.buildCorridors();

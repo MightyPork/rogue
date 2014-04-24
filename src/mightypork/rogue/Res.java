@@ -110,7 +110,7 @@ public final class Res {
 	{
 		sounds.addEffect("gui.shutter", "/res/audio/shutter.ogg", 1, 1);
 		
-		sounds.addLoop("test.wilderness", "/res/audio/wilderness.ogg", 1, 1, 3, 3);
+		//sounds.addLoop("test.wilderness", "/res/audio/wilderness.ogg", 1, 1, 3, 3);
 	}
 	
 	

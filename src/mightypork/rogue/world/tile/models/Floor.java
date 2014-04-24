@@ -1,15 +1,7 @@
 package mightypork.rogue.world.tile.models;
 
 
-import mightypork.rogue.world.tile.Tile;
-
-
-/**
- * Template for floor tiles with no metadata
- * 
- * @author MightyPork
- */
-public class Floor extends SimpleTile {
+public class Floor extends AbstractTile {
 	
 	public Floor(int id)
 	{
@@ -18,7 +10,7 @@ public class Floor extends SimpleTile {
 	
 	
 	@Override
-	public boolean isWalkable(Tile tile)
+	public boolean isPotentiallyWalkable()
 	{
 		return true;
 	}
@@ -35,5 +27,12 @@ public class Floor extends SimpleTile {
 	public boolean doesCastShadow()
 	{
 		return false;
+	}
+	
+	
+	@Override
+	public boolean isFloor()
+	{
+		return true;
 	}
 }

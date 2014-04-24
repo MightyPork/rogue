@@ -1,7 +1,7 @@
 package mightypork.rogue.world.gen;
 
 
-import mightypork.rogue.world.tile.models.TileModel;
+import mightypork.rogue.world.tile.TileModel;
 
 
 /**

@@ -5,12 +5,7 @@ import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.renderers.DoorRenderer;
 
 
-/**
- * Template for floor tiles with no metadata
- * 
- * @author MightyPork
- */
-public class SimpleDoor extends Wall {
+public class SimpleDoor extends AbstractTile {
 	
 	public SimpleDoor(int id)
 	{
@@ -20,9 +15,22 @@ public class SimpleDoor extends Wall {
 	
 	
 	@Override
-	public boolean isWalkable(Tile tile)
+	public boolean isPotentiallyWalkable()
 	{
 		return true;
+	}
+	
+	
+	@Override
+	public boolean isWalkable(Tile tile)
+	{
+		return !isLocked(tile);
+	}
+	
+	
+	protected boolean isLocked(Tile tile)
+	{
+		return false;
 	}
 	
 	
@@ -30,5 +38,19 @@ public class SimpleDoor extends Wall {
 	public boolean isDoor()
 	{
 		return true;
+	}
+	
+	
+	@Override
+	public boolean doesCastShadow()
+	{
+		return true;
+	}
+	
+	
+	@Override
+	public boolean hasDroppedItems()
+	{
+		return false;
 	}
 }

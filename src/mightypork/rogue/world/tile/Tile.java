@@ -7,8 +7,6 @@ import java.util.Stack;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
-import mightypork.rogue.world.tile.models.TileModel;
-import mightypork.rogue.world.tile.renderers.TileRenderer;
 import mightypork.util.files.ion.IonBinary;
 import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.IonInput;
@@ -144,6 +142,18 @@ public final class Tile implements IonBinary {
 	}
 	
 	
+	public boolean isDoor()
+	{
+		return model.isDoor();
+	}
+	
+	
+	public boolean isNull()
+	{
+		return model.isNullTile();
+	}
+	
+	
 	public TileModel getModel()
 	{
 		return model;
@@ -153,6 +163,12 @@ public final class Tile implements IonBinary {
 	public boolean hasItems()
 	{
 		return model.hasDroppedItems() && !items.isEmpty();
+	}
+	
+	
+	public boolean doesCastShadow()
+	{
+		return model.doesCastShadow();
 	}
 	
 	
@@ -173,4 +189,23 @@ public final class Tile implements IonBinary {
 	{
 		this.occupied = occupied;
 	}
+	
+	
+	public boolean isWall()
+	{
+		return model.isWall();
+	}
+	
+	
+	public boolean isFloor()
+	{
+		return model.isFloor();
+	}
+	
+	
+	public boolean isPotentiallyWalkable()
+	{
+		return model.isPotentiallyWalkable();
+	}
+	
 }

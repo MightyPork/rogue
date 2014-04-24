@@ -9,7 +9,7 @@ import mightypork.rogue.world.tile.Tile;
  * 
  * @author MightyPork
  */
-public abstract class AbstractNullTile extends SimpleTile {
+public abstract class AbstractNullTile extends AbstractTile {
 	
 	private Tile inst;
 	

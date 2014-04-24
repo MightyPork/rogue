@@ -54,7 +54,7 @@ public class FloorRenderer extends BasicTileRenderer {
 					
 					final Tile t2 = context.getAdjacentTile(x, y);
 					
-					if (t2.getModel().doesCastShadow()) {
+					if (t2.doesCastShadow()) {
 						trd.shadows |= 1 << move;
 					}
 					

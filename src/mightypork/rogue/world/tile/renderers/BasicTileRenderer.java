@@ -5,6 +5,7 @@ import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxSheet;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.level.render.TileRenderContext;
+import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.util.math.constraints.rect.Rect;
 
 

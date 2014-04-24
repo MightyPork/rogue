@@ -1,10 +1,7 @@
-package mightypork.rogue.world.tile.models;
+package mightypork.rogue.world.tile;
 
 
 import mightypork.rogue.world.level.Level;
-import mightypork.rogue.world.tile.Tile;
-import mightypork.rogue.world.tile.Tiles;
-import mightypork.rogue.world.tile.renderers.TileRenderer;
 
 
 /**
@@ -48,6 +45,12 @@ public abstract class TileModel {
 	public abstract boolean isDoor();
 	
 	
+	public abstract boolean isWall();
+	
+	
+	public abstract boolean isFloor();
+	
+	
 	public abstract boolean doesCastShadow();
 	
 	
@@ -73,5 +76,12 @@ public abstract class TileModel {
 	 * @return true if this item can have dropped items
 	 */
 	public abstract boolean hasDroppedItems();
+	
+	
+	/**
+	 * @return true if walkable at some conditions (ie. floor, hidden door,
+	 *         locked door etc)
+	 */
+	public abstract boolean isPotentiallyWalkable();
 	
 }

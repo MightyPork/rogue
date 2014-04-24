@@ -83,7 +83,7 @@ public final class App extends BaseApp {
 		screens.addOverlay(new FpsOverlay(this));
 		screens.addOverlay(new CrossfadeOverlay(this));
 		
-		screens.showScreen("main_menu");
+		screens.showScreen("game_screen");//main_menu
 	}
 	
 	

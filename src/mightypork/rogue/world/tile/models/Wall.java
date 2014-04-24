@@ -1,15 +1,12 @@
 package mightypork.rogue.world.tile.models;
 
 
-import mightypork.rogue.world.tile.Tile;
-
-
 /**
  * Template for wall tiles with no metadata
  * 
  * @author MightyPork
  */
-public class Wall extends SimpleTile {
+public class Wall extends AbstractTile {
 	
 	public Wall(int id)
 	{
@@ -18,23 +15,30 @@ public class Wall extends SimpleTile {
 	
 	
 	@Override
-	public boolean isWalkable(Tile tile)
+	public final boolean hasDroppedItems()
 	{
 		return false;
 	}
 	
 	
 	@Override
-	public boolean hasDroppedItems()
-	{
-		return false;
-	}
-	
-	
-	@Override
-	public boolean doesCastShadow()
+	public final boolean doesCastShadow()
 	{
 		return true;
+	}
+	
+	
+	@Override
+	public final boolean isWall()
+	{
+		return true;
+	}
+	
+	
+	@Override
+	public final boolean isPotentiallyWalkable()
+	{
+		return false;
 	}
 	
 }

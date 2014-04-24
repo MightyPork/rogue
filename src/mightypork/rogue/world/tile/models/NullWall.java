@@ -1,9 +1,6 @@
 package mightypork.rogue.world.tile.models;
 
 
-import mightypork.rogue.world.tile.Tile;
-
-
 public class NullWall extends AbstractNullTile {
 	
 	public NullWall(int id)
@@ -13,8 +10,15 @@ public class NullWall extends AbstractNullTile {
 	
 	
 	@Override
-	public boolean isWalkable(Tile tile)
+	public boolean isPotentiallyWalkable()
 	{
 		return false;
+	}
+	
+	
+	@Override
+	public boolean isWall()
+	{
+		return true;
 	}
 }

@@ -3,6 +3,7 @@ package mightypork.rogue.world.tile.models;
 
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.rogue.world.tile.TileModel;
 import mightypork.util.annotations.DefaultImpl;
 
 
@@ -11,20 +12,37 @@ import mightypork.util.annotations.DefaultImpl;
  * 
  * @author MightyPork
  */
-public abstract class SimpleTile extends TileModel {
+public abstract class AbstractTile extends TileModel {
 	
-	public SimpleTile(int id)
+	public AbstractTile(int id)
 	{
 		super(id);
 	}
 	
 	
 	@Override
-	public abstract boolean isWalkable(Tile tile);
+	public boolean isWalkable(Tile tile)
+	{
+		return isPotentiallyWalkable();
+	}
 	
 	
 	@Override
 	public boolean isDoor()
+	{
+		return false;
+	}
+	
+	
+	@Override
+	public boolean isWall()
+	{
+		return false;
+	}
+	
+	
+	@Override
+	public boolean isFloor()
 	{
 		return false;
 	}

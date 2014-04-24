@@ -63,8 +63,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	@Override
 	protected void deinit()
 	{
-		// causes weird visual glitch
-//		Display.destroy();
+		Display.destroy();
 	}
 	
 	
@@ -155,8 +154,8 @@ public class DisplaySystem extends AppModule implements RectBound {
 	public Screenshot takeScreenshot()
 	{
 		glReadBuffer(GL_FRONT);
-		final int width = Display.getDisplayMode().getWidth();
-		final int height = Display.getDisplayMode().getHeight();
+		final int width = Display.getWidth();
+		final int height = Display.getHeight();
 		final int bpp = 4;
 		final ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
 		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);

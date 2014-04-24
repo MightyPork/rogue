@@ -33,6 +33,7 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	public static final int ION_MARK = 52;
 	
 	private final WorldPos position = new WorldPos(); // saved
+	private final WorldPos lastPosition = new WorldPos();
 	
 	/** Entity ID */
 	private int eid = 0; // saved
@@ -56,13 +57,13 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	public Entity(int eid, WorldPos pos, EntityModel entityModel)
 	{
 		this.eid = eid;
-		this.position.setTo(pos);
+		setPosition(pos);
 		
 		setModel(entityModel);
 	}
 	
 	
-	private void setModel(EntityModel entityModel)
+	protected final void setModel(EntityModel entityModel)
 	{
 		// replace listener
 		if (model != null) moveListeners.remove(model);
@@ -151,15 +152,16 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	}
 	
 	
-	public void setPosition(WorldPos pos)
+	public final void setPosition(WorldPos pos)
 	{
-		position.setTo(pos);
+		setPosition(pos.x, pos.y);
 	}
 	
 	
 	public void setPosition(int x, int y)
 	{
 		position.setTo(x, y);
+		lastPosition.setTo(x, y);
 		cancelPath(); // discard remaining steps
 	}
 	
@@ -176,6 +178,7 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 		
 		if (walking && position.isFinished()) {
 			walking = false;
+			level.freeTile(lastPosition.x, lastPosition.y);
 			
 			onStepFinished(this, world, level);
 			
@@ -202,9 +205,9 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 				if (step.x != 0) renderData.lastXDir = step.x;
 				if (step.y != 0) renderData.lastYDir = step.y;
 				
+				lastPosition.setTo(position);
 				position.walk(step.x, step.y, getStepTime());
 				level.occupyTile(projX, projY);
-				level.freeTile(position.x, position.y);
 			}
 		}
 		
