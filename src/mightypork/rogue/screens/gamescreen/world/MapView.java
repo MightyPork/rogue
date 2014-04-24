@@ -31,7 +31,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public MapView(World world)
 	{
 		this.world = world;
-		this.worldRenderer = new WorldRenderer(world, this, 8, 8, 64);
+		this.worldRenderer = new WorldRenderer(world, this, 12, 8, 40);//8, 8, 64
 		pc = world.getPlayerControl();
 		pc.addMoveListener(this);
 	}
@@ -96,7 +96,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 		if (!event.isOver(this)) return;
 		
 		for (final MapInteractionPlugin p : plugins) {
-			p.onClick(this, pc, event.getPos(), event.isDown());
+			p.onClick(this, pc, event.getPos(), event.getButton(), event.isDown());
 		}
 		
 		event.consume(); // only our clicks.

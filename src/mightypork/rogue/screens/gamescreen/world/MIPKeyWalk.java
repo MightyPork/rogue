@@ -17,7 +17,7 @@ public class MIPKeyWalk implements MapInteractionPlugin {
 	
 	
 	@Override
-	public void onClick(MapView wv, PlayerControl player, Vect mouse, boolean down)
+	public void onClick(MapView wv, PlayerControl player, Vect mouse, int button, boolean down)
 	{
 	}
 	
@@ -25,7 +25,7 @@ public class MIPKeyWalk implements MapInteractionPlugin {
 	@Override
 	public void onKey(MapView wv, PlayerControl player, int key, boolean down)
 	{
-		if(down) walkByKey(player);
+		if (down) walkByKey(player);
 	}
 	
 	

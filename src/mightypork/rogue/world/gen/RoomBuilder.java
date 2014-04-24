@@ -1,12 +1,17 @@
 package mightypork.rogue.world.gen;
 
-import java.util.List;
+
 import java.util.Random;
 
-import mightypork.rogue.world.tile.Tile;
+import mightypork.rogue.world.Coord;
 
-// room builder interface
-public interface RoomBuilder {	
+
+/**
+ * Room model
+ * 
+ * @author MightyPork
+ */
+public interface RoomBuilder {
 	
 	RoomDesc buildToFit(ScratchMap map, Theme theme, Random rand, Coord center);
 }

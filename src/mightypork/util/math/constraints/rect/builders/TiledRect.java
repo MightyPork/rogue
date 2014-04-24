@@ -59,11 +59,11 @@ public class TiledRect extends RectProxy {
 	public Rect tile(int x, int y)
 	{
 		if (x >= tilesX || x < 0) {
-			throw new IndexOutOfBoundsException("X coordinate out fo range: "+x);
+			throw new IndexOutOfBoundsException("X coordinate out fo range: " + x);
 		}
 		
 		if (y >= tilesY || y < 0) {
-			throw new IndexOutOfBoundsException("Y coordinate out of range: "+y);
+			throw new IndexOutOfBoundsException("Y coordinate out of range: " + y);
 		}
 		
 		return aTile.move(perCol.mul(x), perRow.mul(y));

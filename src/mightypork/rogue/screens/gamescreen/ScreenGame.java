@@ -8,8 +8,8 @@ import java.util.Random;
 import mightypork.gamecore.control.AppAccess;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.rogue.Paths;
-import mightypork.rogue.world.MapGenerator;
 import mightypork.rogue.world.World;
+import mightypork.rogue.world.WorldCreator;
 import mightypork.util.files.ion.Ion;
 
 
@@ -34,7 +34,7 @@ public class ScreenGame extends LayeredScreen {
 		
 		// SAVE
 		
-		final World world = MapGenerator.createWorld(rand.nextLong());
+		final World world = WorldCreator.createWorld(rand.nextLong());
 		addChildClient(world);
 		
 		try {

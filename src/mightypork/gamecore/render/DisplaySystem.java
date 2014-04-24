@@ -63,7 +63,8 @@ public class DisplaySystem extends AppModule implements RectBound {
 	@Override
 	protected void deinit()
 	{
-		Display.destroy();
+		// causes weird visual glitch
+//		Display.destroy();
 	}
 	
 	

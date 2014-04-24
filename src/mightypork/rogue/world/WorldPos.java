@@ -107,11 +107,13 @@ public class WorldPos implements IonBundled, Updateable {
 		setTo(other.x, other.y);
 	}
 	
+	
 	@Override
 	public String toString()
 	{
-		return "WorldPos("+x+","+y+")";
+		return "WorldPos(" + x + "," + y + ")";
 	}
+	
 	
 	@Override
 	public int hashCode()
@@ -155,6 +157,12 @@ public class WorldPos implements IonBundled, Updateable {
 	public boolean isFinished()
 	{
 		return walkOffset.isFinished();
+	}
+	
+	
+	public Coord toCoord()
+	{
+		return new Coord(x, y);
 	}
 	
 }

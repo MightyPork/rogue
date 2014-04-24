@@ -1,25 +1,25 @@
 package mightypork.rogue.world.gen;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import mightypork.rogue.world.Coord;
 
 
-// room info
+/**
+ * Room description
+ * 
+ * @author MightyPork
+ */
 public class RoomDesc {
 	
-	final List<Coord> doors = new ArrayList<>();
 	final Coord min;
 	final Coord max;
 	
 	
-	public RoomDesc(Coord min, Coord max, List<Coord> doors)
+	public RoomDesc(Coord min, Coord max)
 	{
 		super();
 		this.min = min;
 		this.max = max;
-		
-		this.doors.addAll(doors);
 	}
 	
 	

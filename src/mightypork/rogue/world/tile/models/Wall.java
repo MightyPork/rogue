@@ -1,6 +1,9 @@
 package mightypork.rogue.world.tile.models;
 
 
+import mightypork.rogue.world.tile.Tile;
+
+
 /**
  * Template for wall tiles with no metadata
  * 
@@ -15,7 +18,7 @@ public class Wall extends SimpleTile {
 	
 	
 	@Override
-	public boolean isWalkable()
+	public boolean isWalkable(Tile tile)
 	{
 		return false;
 	}

@@ -20,14 +20,14 @@ public abstract class SimpleTile extends TileModel {
 	
 	
 	@Override
-	public boolean isWalkable(Tile tile)
-	{
-		return isWalkable();
-	}
+	public abstract boolean isWalkable(Tile tile);
 	
 	
 	@Override
-	public abstract boolean isWalkable();
+	public boolean isDoor()
+	{
+		return false;
+	}
 	
 	
 	@Override

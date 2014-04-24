@@ -65,4 +65,11 @@ public class PathStep implements IonBinary {
 		return ION_MARK;
 	}
 	
+	
+	@Override
+	public String toString()
+	{
+		return "(" + x + "|" + y + ")";
+	}
+	
 }

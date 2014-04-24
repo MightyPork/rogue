@@ -1,11 +1,9 @@
 package mightypork.rogue.world.tile;
 
 
-import mightypork.rogue.world.tile.models.Floor;
-import mightypork.rogue.world.tile.models.NullFloor;
-import mightypork.rogue.world.tile.models.NullWall;
-import mightypork.rogue.world.tile.models.TileModel;
-import mightypork.rogue.world.tile.models.Wall;
+import mightypork.rogue.world.tile.models.*;
+import mightypork.rogue.world.tile.renderers.FloorRenderer;
+import mightypork.rogue.world.tile.renderers.WallRenderer;
 
 
 /**
@@ -21,8 +19,10 @@ public final class Tiles {
 	public static final TileModel NULL_EMPTY = new NullFloor(1);
 	public static final TileModel NULL_EMPTY_RESERVED = new NullFloor(2);
 	
-	public static final TileModel FLOOR_DARK = new Floor(10).setTexture("tile16.floor.dark");
-	public static final TileModel WALL_BRICK = new Wall(11).setTexture("tile16.wall.brick");
+	public static final TileModel FLOOR_DARK = new Floor(10).setRenderer(new FloorRenderer("tile.floor.dark"));
+	public static final TileModel WALL_BRICK = new Wall(11).setRenderer(new WallRenderer("tile.wall.brick"));
+	
+	public static final TileModel DOOR = new SimpleDoor(12);
 	
 	
 //	public static final TileModel BRICK_FLOOR_VINES = new Floor(2).setTexture("tile.floor.mossy_bricks");

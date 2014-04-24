@@ -53,10 +53,6 @@ public abstract class AbstractNullTile extends SimpleTile {
 	
 	
 	@Override
-	public abstract boolean isWalkable();
-	
-	
-	@Override
 	public boolean doesCastShadow()
 	{
 		return false;

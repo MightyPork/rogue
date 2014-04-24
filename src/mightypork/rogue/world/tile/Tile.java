@@ -34,12 +34,10 @@ public final class Tile implements IonBinary {
 	/** persistent field for model, reflected by renderer */
 	public final IonBundle metadata = new IonBundle();
 	
+	public final TileRenderData renderData = new TileRenderData();
+	
 	// temporary flag for map.
 	private boolean occupied;
-	
-	// for renderer of AO shadows
-	public byte shadows;
-	public boolean shadowsComputed;
 	
 	
 	public Tile(int id)

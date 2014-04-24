@@ -4,7 +4,6 @@ package mightypork.rogue.world.tile.models;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.Tiles;
-import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
 import mightypork.rogue.world.tile.renderers.TileRenderer;
 
 
@@ -34,13 +33,6 @@ public abstract class TileModel {
 	}
 	
 	
-	public TileModel setTexture(String sheetKey)
-	{
-		this.renderer = new BasicTileRenderer(sheetKey);
-		return this;
-	}
-	
-	
 	/**
 	 * @return new tile of this type; if 100% invariant, can return cached one.
 	 */
@@ -50,17 +42,10 @@ public abstract class TileModel {
 	}
 	
 	
-	/**
-	 * @param tile
-	 * @return true if walkable right now
-	 */
 	public abstract boolean isWalkable(Tile tile);
 	
 	
-	/**
-	 * @return true if walkable at some conditions
-	 */
-	public abstract boolean isWalkable();
+	public abstract boolean isDoor();
 	
 	
 	public abstract boolean doesCastShadow();

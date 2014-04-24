@@ -2,6 +2,7 @@ package mightypork.rogue.world.tile.models;
 
 
 import mightypork.rogue.world.tile.Tile;
+import mightypork.rogue.world.tile.renderers.DoorRenderer;
 
 
 /**
@@ -9,11 +10,12 @@ import mightypork.rogue.world.tile.Tile;
  * 
  * @author MightyPork
  */
-public class Floor extends SimpleTile {
+public class SimpleDoor extends Wall {
 	
-	public Floor(int id)
+	public SimpleDoor(int id)
 	{
 		super(id);
+		setRenderer(new DoorRenderer("tile.door.closed", "tile.door.open"));
 	}
 	
 	
@@ -25,15 +27,8 @@ public class Floor extends SimpleTile {
 	
 	
 	@Override
-	public boolean hasDroppedItems()
+	public boolean isDoor()
 	{
 		return true;
-	}
-	
-	
-	@Override
-	public boolean doesCastShadow()
-	{
-		return false;
 	}
 }

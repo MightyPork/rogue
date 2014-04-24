@@ -275,4 +275,10 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	{
 		moveListeners.add(listener);
 	}
+	
+	
+	public void addSteps(List<PathStep> path)
+	{
+		this.path.addAll(path);
+	}
 }
