@@ -8,6 +8,12 @@ import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
 
 
+/**
+ * Path step.<br>
+ * Must be binary in order to be saveable in lists.
+ * 
+ * @author MightyPork
+ */
 public class PathStep implements IonBinary {
 	
 	public static final PathStep NORTH = new PathStep(0, -1);
@@ -59,6 +65,12 @@ public class PathStep implements IonBinary {
 	}
 	
 	
+	public Coord toCoord()
+	{
+		return Coord.make(x, y);
+	}
+	
+	
 	@Override
 	public short getIonMark()
 	{
@@ -69,7 +81,7 @@ public class PathStep implements IonBinary {
 	@Override
 	public String toString()
 	{
-		return "(" + x + "|" + y + ")";
+		return "(" + x + ";" + y + ")";
 	}
 	
 }

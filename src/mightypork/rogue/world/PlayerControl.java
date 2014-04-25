@@ -1,42 +1,14 @@
 package mightypork.rogue.world;
 
 
-import java.util.List;
-
+import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
-import mightypork.rogue.world.pathfinding.PathCostProvider;
-import mightypork.rogue.world.pathfinding.PathFinder;
 
 
 public class PlayerControl {
 	
 	private final World world;
-	
-	PathCostProvider costProvider = new PathCostProvider() {
-		
-		@Override
-		public boolean isAccessible(Coord pos)
-		{
-			return getLevel().canWalkInto(pos.x, pos.y);
-		}
-		
-		
-		@Override
-		public int getMinCost()
-		{
-			return 10;
-		}
-		
-		
-		@Override
-		public int getCost(Coord from, Coord to)
-		{
-			return 10;
-		}
-	};
-	
-	private final PathFinder pf = new PathFinder(costProvider, PathFinder.CORNER_HEURISTIC);
 	
 	
 	public PlayerControl(World w)
@@ -45,56 +17,55 @@ public class PlayerControl {
 	}
 	
 	
+	public Entity getEntity()
+	{
+		return world.getPlayerEntity();
+	}
+	
+	
 	public void goNorth()
 	{
-		world.getPlayerEntity().cancelPath();
-		world.getPlayerEntity().addStep(PathStep.NORTH);
+		getEntity().cancelPath();
+		getEntity().addStep(PathStep.NORTH);
 	}
 	
 	
 	public void goSouth()
 	{
-		world.getPlayerEntity().cancelPath();
-		world.getPlayerEntity().addStep(PathStep.SOUTH);
+		getEntity().cancelPath();
+		getEntity().addStep(PathStep.SOUTH);
 	}
 	
 	
 	public void goEast()
 	{
-		world.getPlayerEntity().cancelPath();
-		world.getPlayerEntity().addStep(PathStep.EAST);
+		getEntity().cancelPath();
+		getEntity().addStep(PathStep.EAST);
 	}
 	
 	
 	public void goWest()
 	{
-		world.getPlayerEntity().cancelPath();
-		world.getPlayerEntity().addStep(PathStep.WEST);
+		getEntity().cancelPath();
+		getEntity().addStep(PathStep.WEST);
 	}
 	
 	
-	public void navigateTo(WorldPos where)
+	public void navigateTo(Coord pos)
 	{
-		final Coord start = world.getPlayerEntity().getPosition().toCoord();
-		final Coord end = where.toCoord();
-		final List<PathStep> path = pf.findPathRelative(start, end);
-		
-		if (path == null) return;
-		
-		world.getPlayerEntity().cancelPath();
-		world.getPlayerEntity().addSteps(path);
+		getEntity().navigateTo(pos);
 	}
 	
 	
 	public void addMoveListener(EntityMoveListener eml)
 	{
-		world.getPlayerEntity().addMoveListener(eml);
+		getEntity().addMoveListener(eml);
 	}
 	
 	
-	public WorldPos getPos()
+	public EntityPos getPos()
 	{
-		return world.getPlayerEntity().getPosition();
+		return getEntity().getPosition();
 	}
 	
 	
@@ -107,5 +78,11 @@ public class PlayerControl {
 	public Level getLevel()
 	{
 		return world.getCurrentLevel();
+	}
+	
+	
+	public Coord getCoord()
+	{
+		return getEntity().getCoord();
 	}
 }

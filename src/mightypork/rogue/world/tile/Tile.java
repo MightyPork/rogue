@@ -33,6 +33,7 @@ public final class Tile implements IonBinary {
 	public final IonBundle metadata = new IonBundle();
 	
 	public final TileRenderData renderData = new TileRenderData();
+	public final TileGenData genData = new TileGenData();
 	
 	// temporary flag for map.
 	private boolean occupied;

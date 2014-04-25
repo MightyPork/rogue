@@ -83,9 +83,9 @@ public class WorldRenderer extends RectProxy implements Pollable {
 	
 	private Vect getOffset()
 	{
-		final WorldPos pos = player.getPosition();
-		final double playerX = pos.getVisualX();
-		final double playerY = pos.getVisualY();
+		final EntityPos pos = player.getPosition();
+		final double playerX = pos.visualX();
+		final double playerY = pos.visualY();
 		
 		final double ts = tileSize.value();
 		
@@ -100,7 +100,7 @@ public class WorldRenderer extends RectProxy implements Pollable {
 		Render.translate(getOffset());
 		
 		// tiles to render
-		final WorldPos pos = player.getPosition();
+		final EntityPos pos = player.getPosition();
 		final double w = width().value();
 		final double h = height().value();
 		final double ts = tileSize.value();
@@ -108,10 +108,10 @@ public class WorldRenderer extends RectProxy implements Pollable {
 		final int xtilesh = (int) (w / (ts * 2)) + 1;
 		final int ytilesh = (int) (h / (ts * 2)) + 1;
 		
-		final int x1 = pos.x - xtilesh;
-		final int y1 = pos.y - ytilesh;
-		final int x2 = pos.x + xtilesh;
-		final int y2 = pos.y + ytilesh;
+		final int x1 = pos.x() - xtilesh;
+		final int y1 = pos.y() - ytilesh;
+		final int x2 = pos.x() + xtilesh;
+		final int y2 = pos.y() + ytilesh;
 		
 		// === TILES ===
 		
@@ -120,8 +120,8 @@ public class WorldRenderer extends RectProxy implements Pollable {
 			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles16"));
 		}
 		
-		for (trc.y = y1; trc.y <= y2; trc.y++) {
-			for (trc.x = x1; trc.x <= x2; trc.x++) {
+		for (trc.pos.x = x1; trc.pos.x <= x2; trc.pos.x++) {
+			for (trc.pos.y = y1; trc.pos.y <= y2; trc.pos.y++) {
 				trc.renderTile();
 			}
 		}
@@ -132,8 +132,8 @@ public class WorldRenderer extends RectProxy implements Pollable {
 		
 		// === ITEMS ON TILES ===
 		
-		for (trc.y = y1; trc.y <= y2; trc.y++) {
-			for (trc.x = x1; trc.x <= x2; trc.x++) {
+		for (trc.pos.x = x1; trc.pos.x <= x2; trc.pos.x++) {
+			for (trc.pos.y = y1; trc.pos.y <= y2; trc.pos.y++) {
 				trc.renderItems();
 			}
 		}
@@ -143,8 +143,8 @@ public class WorldRenderer extends RectProxy implements Pollable {
 		for (final Entity e : activeLevel.getEntities()) {
 			
 			// avoid entities out of view rect
-			final int x = (int) Math.round(e.getPosition().getVisualX());
-			final int y = (int) Math.round(e.getPosition().getVisualY());
+			final int x = (int) Math.round(e.getPosition().visualX());
+			final int y = (int) Math.round(e.getPosition().visualY());
 			
 			if (x < x1 - ts || x > x2 + ts) continue;
 			if (y < y1 - ts || y > y2 + ts) continue;
@@ -164,11 +164,11 @@ public class WorldRenderer extends RectProxy implements Pollable {
 	}
 	
 	
-	public WorldPos getClickedTile(Vect clickPos)
+	public Coord getClickedTile(Vect clickPos)
 	{
 		final Vect v = clickPos.sub(mapRect.origin().add(getOffset()));
 		final int ts = (int) tileSize.value();
-		return new WorldPos(v.xi() / ts, v.yi() / ts);
+		return new Coord(v.xi() / ts, v.yi() / ts);
 	}
 	
 	

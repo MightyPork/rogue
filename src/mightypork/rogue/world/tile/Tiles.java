@@ -2,8 +2,7 @@ package mightypork.rogue.world.tile;
 
 
 import mightypork.rogue.world.tile.models.Floor;
-import mightypork.rogue.world.tile.models.NullFloor;
-import mightypork.rogue.world.tile.models.NullWall;
+import mightypork.rogue.world.tile.models.NullTile;
 import mightypork.rogue.world.tile.models.SimpleDoor;
 import mightypork.rogue.world.tile.models.Wall;
 import mightypork.rogue.world.tile.renderers.FloorRenderer;
@@ -19,8 +18,7 @@ public final class Tiles {
 	
 	private static final TileModel[] tiles = new TileModel[256];
 	
-	public static final TileModel NULL_SOLID = new NullWall(0);
-	public static final TileModel NULL_EMPTY = new NullFloor(1);
+	public static final TileModel NULL = new NullTile(0);
 	
 	public static final TileModel FLOOR_DARK = new Floor(10).setRenderer(new FloorRenderer("tile.floor.dark"));
 	public static final TileModel WALL_BRICK = new Wall(11).setRenderer(new WallRenderer("tile.wall.brick"));
@@ -45,13 +43,9 @@ public final class Tiles {
 	
 	public static void register(int id, TileModel model)
 	{
-		if (id < 0 || id >= tiles.length) {
-			throw new IllegalArgumentException("Tile ID " + id + " is out of range.");
-		}
+		if (id < 0 || id >= tiles.length) { throw new IllegalArgumentException("Tile ID " + id + " is out of range."); }
 		
-		if (tiles[id] != null) {
-			throw new IllegalArgumentException("Tile ID " + id + " already in use.");
-		}
+		if (tiles[id] != null) { throw new IllegalArgumentException("Tile ID " + id + " already in use."); }
 		
 		tiles[id] = model;
 	}
@@ -61,9 +55,7 @@ public final class Tiles {
 	{
 		final TileModel m = tiles[id];
 		
-		if (m == null) {
-			throw new IllegalArgumentException("No tile with ID " + id + ".");
-		}
+		if (m == null) { throw new IllegalArgumentException("No tile with ID " + id + "."); }
 		
 		return m;
 	}

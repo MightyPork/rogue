@@ -9,13 +9,12 @@ import mightypork.gamecore.control.events.input.KeyListener;
 import mightypork.gamecore.control.events.input.MouseButtonEvent;
 import mightypork.gamecore.control.events.input.MouseButtonListener;
 import mightypork.gamecore.gui.components.InputComponent;
+import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.World;
-import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.WorldRenderer;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
-import mightypork.rogue.world.level.Level;
 import mightypork.util.math.constraints.vect.Vect;
 
 
@@ -31,7 +30,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public MapView(World world)
 	{
 		this.world = world;
-		this.worldRenderer = new WorldRenderer(world, this, 12, 8, 40);//8, 8, 64
+		this.worldRenderer = new WorldRenderer(world, this, 12, 8, 32);//8, 8, 64
 		pc = world.getPlayerControl();
 		pc.addMoveListener(this);
 	}
@@ -57,14 +56,14 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	 * @param pos position on screen (px)
 	 * @return position on map (tiles)
 	 */
-	public WorldPos toWorldPos(Vect pos)
+	public Coord toWorldPos(Vect pos)
 	{
 		return worldRenderer.getClickedTile(pos);
 	}
 	
 	
 	@Override
-	public void onStepFinished(Entity entity, World world, Level level)
+	public void onStepFinished(Entity entity)
 	{
 		for (final MapInteractionPlugin p : plugins) {
 			p.onStepEnd(this, pc);
@@ -73,7 +72,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	
 	
 	@Override
-	public void onPathFinished(Entity entity, World world, Level level)
+	public void onPathFinished(Entity entity)
 	{
 		for (final MapInteractionPlugin p : plugins) {
 			p.onStepEnd(this, pc);
@@ -82,7 +81,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	
 	
 	@Override
-	public void onPathInterrupted(Entity entity, World world, Level level)
+	public void onPathInterrupted(Entity entity)
 	{
 		for (final MapInteractionPlugin p : plugins) {
 			p.onStepEnd(this, pc);

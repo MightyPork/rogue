@@ -1,11 +1,19 @@
 package mightypork.rogue.world;
 
 
+import java.io.IOException;
+
 import mightypork.util.annotations.FactoryMethod;
+import mightypork.util.files.ion.IonBundle;
+import mightypork.util.files.ion.IonBundled;
 
 
-// coord
-public class Coord {
+/**
+ * Coordinate
+ * 
+ * @author MightyPork
+ */
+public class Coord implements IonBundled {
 	
 	public int x;
 	public int y;
@@ -22,6 +30,13 @@ public class Coord {
 	public static Coord make(Coord other)
 	{
 		return new Coord(other);
+	}
+	
+	
+	@FactoryMethod
+	public static Coord zero()
+	{
+		return make(0, 0);
 	}
 	
 	
@@ -58,6 +73,44 @@ public class Coord {
 	}
 	
 	
+	public void setTo(int x, int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+	
+	
+	public void setTo(Coord pos)
+	{
+		setTo(pos.x, pos.y);
+	}
+	
+	
+	/**
+	 * Check if coord is in a range (inclusive)
+	 */
+	public boolean isInRange(int x0, int y0, int x1, int y1)
+	{
+		return !(x < x0 || x > x1 || y < y0 || y > y1);
+	}
+	
+	
+	@Override
+	public void load(IonBundle bundle) throws IOException
+	{
+		x = bundle.get("x", 0);
+		y = bundle.get("y", 0);
+	}
+	
+	
+	@Override
+	public void save(IonBundle bundle) throws IOException
+	{
+		bundle.put("x", x);
+		bundle.put("y", y);
+	}
+	
+	
 	@Override
 	public String toString()
 	{
@@ -87,5 +140,4 @@ public class Coord {
 		if (y != other.y) return false;
 		return true;
 	}
-	
 }

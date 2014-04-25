@@ -54,9 +54,7 @@ public abstract class BusEvent<HANDLER> {
 	{
 		if (consumed) throw new IllegalStateException("Already consumed.");
 		
-		if (getClass().isAnnotationPresent(NonConsumableEvent.class)) {
-			throw new UnsupportedOperationException("Not consumable.");
-		}
+		if (getClass().isAnnotationPresent(NonConsumableEvent.class)) { throw new UnsupportedOperationException("Not consumable."); }
 		
 		consumed = true;
 	}

@@ -3,20 +3,21 @@ package mightypork.rogue.world.entity;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
+import mightypork.rogue.world.Coord;
+import mightypork.rogue.world.EntityPos;
 import mightypork.rogue.world.PathStep;
 import mightypork.rogue.world.World;
-import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.models.EntityModel;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
+import mightypork.rogue.world.pathfinding.Heuristic;
+import mightypork.rogue.world.pathfinding.PathFinder;
+import mightypork.rogue.world.pathfinding.PathFindingContext;
 import mightypork.util.files.ion.IonBinary;
 import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.IonBundled;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
 
@@ -26,57 +27,98 @@ import mightypork.util.files.ion.IonOutput;
  * 
  * @author MightyPork
  */
-public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
-	
-// binary & bundled - binary stores via a bundle
+public final class Entity implements IonBinary, EntityMoveListener {
 	
 	public static final int ION_MARK = 52;
 	
-	private final WorldPos position = new WorldPos(); // saved
-	private final WorldPos lastPosition = new WorldPos();
+	/** Last pos, will be freed upon finishing move */
+	private final EntityPos lastPosition = new EntityPos();
+	private boolean walking = false;
+	
+	private Level level;
+	private EntityModel model;
 	
 	/** Entity ID */
-	private int eid = 0; // saved
+	private int entityId = -1;
 	
 	/** Model ID */
-	private int id; // saved
+	private int modelId = -1;
 	
-	private final Queue<PathStep> path = new LinkedList<>(); // saved
-	private EntityModel model;
-	public final IonBundle metadata = new IonBundle(); // saved
+	/** Entity data holder */
+	private final EntityData data = new EntityData();
 	
-	/** Some infos for/by the renderer, not saved */
+	/** Temporary renderer's data */
 	public final EntityRenderData renderData = new EntityRenderData();
 	
 	private final List<EntityMoveListener> moveListeners = new ArrayList<>();
 	
-	// tmp flag
-	private boolean walking = false;
-	
-	
-	public Entity(int eid, WorldPos pos, EntityModel entityModel)
-	{
-		this.eid = eid;
-		setPosition(pos);
+	private final PathFindingContext pfc = new PathFindingContext() {
 		
+		@Override
+		public boolean isAccessible(Coord pos)
+		{
+			return model.canWalkInto(Entity.this, pos);
+		}
+		
+		
+		@Override
+		public int getMinCost()
+		{
+			return model.getPathMinCost();
+		}
+		
+		
+		@Override
+		public Heuristic getHeuristic()
+		{
+			return model.getPathHeuristic();
+		}
+		
+		
+		@Override
+		public int getCost(Coord from, Coord to)
+		{
+			return model.getPathCost(Entity.this, from, to);
+		}
+	};
+	
+	
+	public Entity(int eid, EntityModel entityModel)
+	{
+		this.entityId = eid;
 		setModel(entityModel);
-	}
-	
-	
-	protected final void setModel(EntityModel entityModel)
-	{
-		// replace listener
-		if (model != null) moveListeners.remove(model);
-		moveListeners.add(entityModel);
 		
-		this.id = entityModel.id;
-		this.model = entityModel;
+		model.initMetadata(data);
 	}
 	
 	
 	public Entity()
 	{
 		// for ion
+	}
+	
+	
+	private void setModel(EntityModel entityModel)
+	{
+		// replace listener
+		if (model != null) moveListeners.remove(model);
+		moveListeners.add(entityModel);
+		
+		this.modelId = entityModel.id;
+		this.model = entityModel;
+	}
+	
+	
+	public Level getLevel()
+	{
+		if (level == null) throw new IllegalStateException("Entity has no level assigned.");
+		return level;
+	}
+	
+	
+	public World getWorld()
+	{
+		return getLevel().getWorld();
 	}
 	
 	
@@ -90,114 +132,81 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	@Override
 	public void save(IonOutput out) throws IOException
 	{
-		final IonBundle ib = new IonBundle();
-		save(ib);
-		out.writeBundle(ib);
+		final IonBundle bundle = new IonBundle();
+		bundle.put("model", modelId);
+		bundle.put("id", entityId);
+		bundle.putBundled("data", data);
+		
+		out.writeBundle(bundle);
 	}
 	
 	
 	@Override
 	public void load(IonInput in) throws IOException
 	{
-		load(in.readBundle());
-	}
-	
-	
-	@Override
-	public void save(IonBundle bundle) throws IOException
-	{
-		bundle.put("id", id);
-		bundle.putBundled("pos", position);
-		bundle.putSequence("steps", path);
-		bundle.put("eid", eid);
+		final IonBundle bundle = in.readBundle();
+		modelId = bundle.get("model", 0);
+		entityId = bundle.get("id", entityId);
+		bundle.loadBundled("data", data);
 		
-		if (model.hasMetadata()) {
-			bundle.put("metadata", metadata);
-		}
-	}
-	
-	
-	@Override
-	public void load(IonBundle bundle) throws IOException
-	{
-		id = bundle.get("id", 0);
-		
-		if (model == null || id != model.id) {
-			setModel(Entities.get(id));
-		}
-		
-		bundle.loadBundled("pos", position);
-		bundle.loadSequence("path", path);
-		eid = bundle.get("eid", eid);
-		
-		if (model.hasMetadata()) {
-			metadata.clear();
-			bundle.loadBundle("metadata", metadata);
-		}
+		setModel(Entities.get(modelId));
 	}
 	
 	
 	/**
 	 * @return unique entity id
 	 */
-	public int getEID()
+	public int getEntityId()
 	{
-		return eid;
+		return entityId;
 	}
 	
 	
-	public WorldPos getPosition()
+	public EntityPos getPosition()
 	{
-		return position;
+		return data.position;
 	}
 	
 	
-	public final void setPosition(WorldPos pos)
+	public void setPosition(Coord coord)
 	{
-		setPosition(pos.x, pos.y);
-	}
-	
-	
-	public void setPosition(int x, int y)
-	{
-		position.setTo(x, y);
-		lastPosition.setTo(x, y);
+		data.position.setTo(coord);
+		lastPosition.setTo(coord);
 		cancelPath(); // discard remaining steps
 	}
 	
 	
 	/**
-	 * @param world the world
 	 * @param delta delta time
 	 */
-	public void update(World world, Level level, double delta)
+	public void update(double delta)
 	{
-		if (!position.isFinished()) {
-			position.update(delta);
+		if (!data.position.isFinished()) {
+			data.position.update(delta);
 		}
 		
-		if (walking && position.isFinished()) {
+		if (walking && data.position.isFinished()) {
 			walking = false;
-			level.freeTile(lastPosition.x, lastPosition.y);
+			level.freeTile(lastPosition.getCoord());
 			
-			onStepFinished(this, world, level);
+			onStepFinished(this);
 			
-			if (path.isEmpty()) {
-				onPathFinished(this, world, level);
+			if (data.path.isEmpty()) {
+				onPathFinished(this);
 			}
 		}
 		
-		if (!walking && !path.isEmpty()) {
+		if (!walking && !data.path.isEmpty()) {
 			
 			walking = true;
 			
-			final PathStep step = path.poll();
+			final PathStep step = data.path.poll();
 			
-			final int projX = position.x + step.x, projY = position.y + step.y;
+			final Coord planned = data.position.getCoord().add(step.toCoord());
 			
-			if (!level.canWalkInto(projX, projY)) {
+			if (!level.canWalkInto(planned)) {
 				cancelPath();
-				onPathInterrupted(this, world, level);
+				onPathInterrupted(this);
 				walking = false;
 			} else {
 				
@@ -205,14 +214,14 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 				if (step.x != 0) renderData.lastXDir = step.x;
 				if (step.y != 0) renderData.lastYDir = step.y;
 				
-				lastPosition.setTo(position);
-				position.walk(step.x, step.y, getStepTime());
-				level.occupyTile(projX, projY);
+				lastPosition.setTo(data.position);
+				data.position.walk(step, model.getStepTime(this));
+				level.occupyTile(planned);
 			}
 		}
 		
 		if (!walking) {
-			model.update(this, level, delta);
+			model.update(this, delta);
 		}
 	}
 	
@@ -225,51 +234,57 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	
 	public boolean isPathFinished()
 	{
-		return position.isFinished() && path.isEmpty();
+		return data.position.isFinished() && data.path.isEmpty();
 	}
 	
 	
 	public void addStep(PathStep step)
 	{
-		path.add(step);
+		data.path.add(step);
 	}
 	
 	
 	public void cancelPath()
 	{
-		path.clear();
+		data.path.clear();
 	}
 	
 	
-	protected double getStepTime()
+	public boolean navigateTo(Coord pos)
 	{
-		return model.getStepTime(this);
+		final List<PathStep> path = PathFinder.findPathRelative(pfc, getPosition().getCoord(), pos);
+		
+		if (path == null) return false;
+		
+		this.cancelPath();
+		this.addSteps(path);
+		return true;
 	}
 	
 	
 	@Override
-	public void onStepFinished(Entity entity, World world, Level level)
+	public void onStepFinished(Entity entity)
 	{
 		for (final EntityMoveListener l : moveListeners) {
-			l.onStepFinished(entity, world, level);
+			l.onStepFinished(entity);
 		}
 	}
 	
 	
 	@Override
-	public void onPathFinished(Entity entity, World world, Level level)
+	public void onPathFinished(Entity entity)
 	{
 		for (final EntityMoveListener l : moveListeners) {
-			l.onStepFinished(entity, world, level);
+			l.onStepFinished(entity);
 		}
 	}
 	
 	
 	@Override
-	public void onPathInterrupted(Entity entity, World world, Level level)
+	public void onPathInterrupted(Entity entity)
 	{
 		for (final EntityMoveListener l : moveListeners) {
-			l.onPathInterrupted(entity, world, level);
+			l.onPathInterrupted(entity);
 		}
 	}
 	
@@ -282,6 +297,18 @@ public final class Entity implements IonBinary, IonBundled, EntityMoveListener {
 	
 	public void addSteps(List<PathStep> path)
 	{
-		this.path.addAll(path);
+		data.path.addAll(path);
+	}
+	
+	
+	public void setLevel(Level level)
+	{
+		this.level = level;
+	}
+	
+	
+	public Coord getCoord()
+	{
+		return data.position.getCoord();
 	}
 }

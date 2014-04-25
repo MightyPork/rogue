@@ -15,14 +15,11 @@ public class DeadEndRoom implements RoomBuilder {
 	@Override
 	public RoomDesc buildToFit(ScratchMap map, Theme theme, Random rand, Coord center)
 	{
-		final Coord min = new Coord(center.x - 1, center.y - 1);
-		final Coord max = new Coord(center.x + 1, center.y + 1);
 		
-		if (!map.isClear(min, max)) return null;
+		if (!map.isClear(center, center)) return null;
 		
-		map.fill(min, max, theme.floor());
-		map.border(min, max, theme.wall());
+		map.set(center, theme.floor());
 		
-		return new RoomDesc(min, max);
+		return new RoomDesc(center, center);
 	}
 }

@@ -63,7 +63,7 @@ public class ArchivingLog extends SimpleLog {
 	private void cleanLoggingDirectory()
 	{
 		if (logs_to_keep == 0) return; // overwrite
-			
+		
 		final File log_file = getFile();
 		final File log_dir = log_file.getParentFile();
 		final String fname = FileUtils.getBasename(log_file.toString());
@@ -86,7 +86,7 @@ public class ArchivingLog extends SimpleLog {
 		}
 		
 		if (logs_to_keep == -1) return; // keep all
-			
+		
 		final List<File> oldLogs = FileUtils.listDirectory(log_dir, new FileFilter() {
 			
 			@Override
@@ -112,9 +112,7 @@ public class ArchivingLog extends SimpleLog {
 		
 		// playing with fireee
 		for (int i = 0; i < oldLogs.size() - logs_to_keep; i++) {
-			if (!oldLogs.get(i).delete()) {
-				throw new RuntimeException("Could not delete old log file.");
-			}
+			if (!oldLogs.get(i).delete()) { throw new RuntimeException("Could not delete old log file."); }
 		}
 	}
 	

@@ -295,9 +295,7 @@ public class Log {
 		
 		final String nl = System.getProperty("line.separator");
 		
-		if (message.equals("\n")) {
-			return nl;
-		}
+		if (message.equals("\n")) { return nl; }
 		
 		if (message.charAt(0) == '\n') {
 			message = nl + message.substring(1);
@@ -359,9 +357,7 @@ public class Log {
 	public static String str(Class<?> cls)
 	{
 		final LogAlias ln = cls.getAnnotation(LogAlias.class);
-		if (ln != null) {
-			return ln.name();
-		}
+		if (ln != null) { return ln.name(); }
 		
 		String name = cls.getName();
 		

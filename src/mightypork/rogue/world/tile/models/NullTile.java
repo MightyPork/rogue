@@ -1,9 +1,9 @@
 package mightypork.rogue.world.tile.models;
 
 
-public class NullWall extends AbstractNullTile {
+public class NullTile extends AbstractNullTile {
 	
-	public NullWall(int id)
+	public NullTile(int id)
 	{
 		super(id);
 	}
@@ -15,10 +15,4 @@ public class NullWall extends AbstractNullTile {
 		return false;
 	}
 	
-	
-	@Override
-	public boolean isWall()
-	{
-		return true;
-	}
 }

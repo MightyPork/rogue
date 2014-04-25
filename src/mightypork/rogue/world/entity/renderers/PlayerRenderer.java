@@ -5,7 +5,7 @@ import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.gamecore.render.textures.TxSheet;
 import mightypork.rogue.Res;
-import mightypork.rogue.world.WorldPos;
+import mightypork.rogue.world.EntityPos;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.render.MapRenderContext;
 import mightypork.util.math.Calc;
@@ -30,12 +30,12 @@ public class PlayerRenderer extends EntityRenderer {
 		
 		if (entity.renderData.lastXDir == -1) q = q.flipX();
 		
-		final WorldPos pos = entity.getPosition();
+		final EntityPos pos = entity.getPosition();
 		
-		final Rect tileRect = context.getRectForTile(pos.x, pos.y);
+		final Rect tileRect = context.getRectForTile(pos.getCoord());
 		final double w = tileRect.width().value();
 		
-		Rect spriteRect = tileRect.move(pos.getVisualXOffset() * w, pos.getVisualYOffset() * w);
+		Rect spriteRect = tileRect.move(pos.visualXOffset() * w, pos.visualYOffset() * w);
 		spriteRect = spriteRect.shrink(w * 0.1);
 		
 		Render.quadTextured(spriteRect, q);

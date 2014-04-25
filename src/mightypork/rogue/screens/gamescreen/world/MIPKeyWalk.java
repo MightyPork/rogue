@@ -10,20 +10,20 @@ import mightypork.util.math.constraints.vect.Vect;
 public class MIPKeyWalk implements MapInteractionPlugin {
 	
 	@Override
-	public void onStepEnd(MapView wv, PlayerControl player)
+	public void onStepEnd(MapView view, PlayerControl player)
 	{
 		walkByKey(player);
 	}
 	
 	
 	@Override
-	public void onClick(MapView wv, PlayerControl player, Vect mouse, int button, boolean down)
+	public void onClick(MapView view, PlayerControl player, Vect mouse, int button, boolean down)
 	{
 	}
 	
 	
 	@Override
-	public void onKey(MapView wv, PlayerControl player, int key, boolean down)
+	public void onKey(MapView view, PlayerControl player, int key, boolean down)
 	{
 		if (down) walkByKey(player);
 	}

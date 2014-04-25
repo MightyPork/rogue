@@ -1,6 +1,7 @@
 package mightypork.rogue.world.level.render;
 
 
+import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.level.MapAccess;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.math.constraints.rect.Rect;
@@ -15,8 +16,7 @@ import mightypork.util.math.noise.NoiseGen;
  */
 public final class TileRenderContext extends MapRenderContext implements RectBound {
 	
-	public int x;
-	public int y;
+	public final Coord pos = Coord.zero();
 	private final NoiseGen noise;
 	
 	
@@ -35,7 +35,7 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	 */
 	public Tile getTile()
 	{
-		return map.getTile(x, y);
+		return map.getTile(pos);
 	}
 	
 	
@@ -48,7 +48,7 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	 */
 	public Tile getAdjacentTile(int offsetX, int offsetY)
 	{
-		return map.getTile(x + offsetX, y + offsetY);
+		return map.getTile(pos.add(offsetX, offsetY));
 	}
 	
 	
@@ -57,19 +57,19 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	 */
 	public double getTileNoise()
 	{
-		return noise.valueAt(x, y);
+		return noise.valueAt(pos.x, pos.y);
 	}
 	
 	
 	public void renderTile()
 	{
-		map.getTile(x, y).renderTile(this);
+		map.getTile(pos).renderTile(this);
 	}
 	
 	
 	public void renderItems()
 	{
-		map.getTile(x, y).renderItems(this);
+		map.getTile(pos).renderItems(this);
 	}
 	
 	
@@ -79,6 +79,6 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	@Override
 	public Rect getRect()
 	{
-		return getRectForTile(x, y);
+		return getRectForTile(pos);
 	}
 }

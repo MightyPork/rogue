@@ -37,9 +37,7 @@ public class QuadGrid {
 	 */
 	public TxQuad makeQuad(int x, int y)
 	{
-		if (x < 0 || x >= txWidth || y < 0 || y >= txHeight) {
-			throw new IndexOutOfBoundsException("Requested invalid txquad coordinates.");
-		}
+		if (x < 0 || x >= txWidth || y < 0 || y >= txHeight) { throw new IndexOutOfBoundsException("Requested invalid txquad coordinates."); }
 		
 		return makeQuad(x, y, 1, 1);
 	}
@@ -57,13 +55,9 @@ public class QuadGrid {
 	 */
 	public TxQuad makeQuad(double x, double y, double width, double height)
 	{
-		if (x < 0 || x >= txWidth || y < 0 || y >= txHeight) {
-			throw new IndexOutOfBoundsException("Requested invalid txquad coordinates.");
-		}
+		if (x < 0 || x >= txWidth || y < 0 || y >= txHeight) { throw new IndexOutOfBoundsException("Requested invalid txquad coordinates."); }
 		
-		if (x + width > txWidth || y + height > txHeight) {
-			throw new IndexOutOfBoundsException("Requested invalid txquad size (would go beyond texture size).");
-		}
+		if (x + width > txWidth || y + height > txHeight) { throw new IndexOutOfBoundsException("Requested invalid txquad size (would go beyond texture size)."); }
 		
 		return tx.makeQuad(Rect.make(tileW * x, tileH * y, tileW * width, tileH * height));
 	}
@@ -80,13 +74,10 @@ public class QuadGrid {
 	 */
 	public TxSheet makeSheet(int x, int y, int width, int height)
 	{
-		if (x < 0 || x >= txWidth || y < 0 || y >= txHeight) {
-			throw new IndexOutOfBoundsException("Requested invalid txquad coordinates.");
-		}
+		if (x < 0 || x >= txWidth || y < 0 || y >= txHeight) { throw new IndexOutOfBoundsException("Requested invalid txquad coordinates."); }
 		
-		if (x + width > txWidth || y + height > txHeight) {
-			throw new IndexOutOfBoundsException("Requested invalid txsheet size (would go beyond texture size).");
-		}
+		if (x + width > txWidth || y + height > txHeight) { throw new IndexOutOfBoundsException(
+				"Requested invalid txsheet size (would go beyond texture size)."); }
 		
 		return makeQuad(x, y).makeSheet(width, height);
 	}

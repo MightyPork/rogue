@@ -18,22 +18,22 @@ public class LevelGenerator {
 	private static final RoomBuilder DEAD_END = new DeadEndRoom();
 	
 	
-	public static Level build(long seed, Theme theme)
+	public static Level build(long seed, int complexity, Theme theme)
 	{
 		final Random rand = new Random(seed + 13);
 		
-		final int max_size = 512;
+		final int max_size = 256;
 		
 		final ScratchMap map = new ScratchMap(max_size, theme, rand);
 		
 		// start
 		map.addRoom(ROOM_SQUARE);
 		
-		for (int i = 0; i < 5 + rand.nextInt(8); i++) {
+		for (int i = 0; i < 2 + rand.nextInt(1 + complexity + (int) Math.pow(complexity, 1.6)); i++) {
 			map.addRoom(ROOM_SQUARE);
 		}
 		
-		for (int i = 0; i < 5 + rand.nextInt(6); i++) {
+		for (int i = 0; i < 2 + rand.nextInt(1 + complexity / 3 + (int) Math.pow(complexity, 1.2)); i++) {
 			map.addRoom(DEAD_END);
 		}
 		

@@ -1,12 +1,13 @@
 package mightypork.rogue.world.entity.models;
 
 
-import mightypork.rogue.world.World;
-import mightypork.rogue.world.WorldPos;
+import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityData;
 import mightypork.rogue.world.entity.renderers.EntityRenderer;
-import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.pathfinding.Heuristic;
+import mightypork.rogue.world.pathfinding.PathFinder;
 
 
 /**
@@ -38,22 +39,16 @@ public abstract class EntityModel implements EntityMoveListener {
 	/**
 	 * @return new tile of this type; if 100% invariant, can return cached one.
 	 */
-	public Entity createEntity(int eid, WorldPos pos)
+	public Entity createEntity(int eid)
 	{
-		return new Entity(eid, pos, this);
+		return new Entity(eid, this);
 	}
 	
 	
 	/**
 	 * Entity is idle, waiting for action.
 	 */
-	public abstract void update(Entity entity, Level level, double delta);
-	
-	
-	/**
-	 * @return true if this entity type has metadata worth saving
-	 */
-	public abstract boolean hasMetadata();
+	public abstract void update(Entity entity, double delta);
 	
 	
 	/**
@@ -63,14 +58,41 @@ public abstract class EntityModel implements EntityMoveListener {
 	
 	
 	@Override
-	public abstract void onStepFinished(Entity entity, World world, Level level);
+	public abstract void onStepFinished(Entity entity);
 	
 	
 	@Override
-	public abstract void onPathFinished(Entity entity, World world, Level level);
+	public abstract void onPathFinished(Entity entity);
 	
 	
 	@Override
-	public abstract void onPathInterrupted(Entity entity, World world, Level level);
+	public abstract void onPathInterrupted(Entity entity);
+	
+	
+	public boolean canWalkInto(Entity entity, Coord pos)
+	{
+		return entity.getLevel().canWalkInto(pos);
+	}
+	
+	
+	public int getPathMinCost()
+	{
+		return 10;
+	}
+	
+	
+	public Heuristic getPathHeuristic()
+	{
+		return PathFinder.DIAGONAL_HEURISTIC;
+	}
+	
+	
+	public int getPathCost(Entity entity, Coord from, Coord to)
+	{
+		return 10;
+	}
+	
+	
+	public abstract void initMetadata(EntityData metadata);
 	
 }

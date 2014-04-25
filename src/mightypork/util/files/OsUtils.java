@@ -56,9 +56,7 @@ public class OsUtils {
 		final File f = new File(getWorkDir(dirname), subfolderName);
 		
 		if (!f.exists() && create) {
-			if (!f.mkdirs()) {
-				throw new RuntimeException("Could not create.");
-			}
+			if (!f.mkdirs()) { throw new RuntimeException("Could not create."); }
 		}
 		
 		return f;
@@ -137,9 +135,7 @@ public class OsUtils {
 		
 		if (!file.exists() || !file.isDirectory()) {
 			if (create) {
-				if (!file.mkdirs()) {
-					throw new RuntimeException("Could not create working directory.");
-				}
+				if (!file.mkdirs()) { throw new RuntimeException("Could not create working directory."); }
 			}
 		}
 		

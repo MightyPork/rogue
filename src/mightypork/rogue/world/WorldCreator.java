@@ -23,9 +23,10 @@ public class WorldCreator {
 			Level l;
 			
 			// first level
-			l = LevelGenerator.build(rand.nextLong(), LevelGenerator.DUNGEON_THEME);
+			l = LevelGenerator.build(rand.nextLong(), 2, LevelGenerator.DUNGEON_THEME); //
 			w.addLevel(l);
-			w.createPlayer(l.getEnterPoint(), 0);
+			
+			w.createPlayer(0);
 			
 			return w;
 		}

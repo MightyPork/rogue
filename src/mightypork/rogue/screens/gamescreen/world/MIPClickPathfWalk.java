@@ -2,36 +2,39 @@ package mightypork.rogue.screens.gamescreen.world;
 
 
 import mightypork.gamecore.input.InputSystem;
+import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.PlayerControl;
-import mightypork.rogue.world.WorldPos;
 import mightypork.util.math.constraints.vect.Vect;
 
 
 public class MIPClickPathfWalk implements MapInteractionPlugin {
 	
+	private static final int BTN = 1; // right
+	
+	
 	@Override
-	public void onStepEnd(MapView wv, PlayerControl player)
+	public void onStepEnd(MapView view, PlayerControl player)
 	{
-		if (InputSystem.isMouseButtonDown(0)) {
-			final WorldPos clicked = wv.toWorldPos(InputSystem.getMousePos());
+		if (InputSystem.isMouseButtonDown(BTN)) {
+			final Coord clicked = view.toWorldPos(InputSystem.getMousePos());
 			player.navigateTo(clicked);
 		}
 	}
 	
 	
 	@Override
-	public void onClick(MapView wv, PlayerControl player, Vect mouse, int button, boolean down)
+	public void onClick(MapView view, PlayerControl player, Vect mouse, int button, boolean down)
 	{
-		if (!down) return;
+		if (!down || button != BTN) return;
 		
-		final WorldPos clicked = wv.toWorldPos(mouse);
+		final Coord clicked = view.toWorldPos(mouse);
 		
 		player.navigateTo(clicked);
 	}
 	
 	
 	@Override
-	public void onKey(MapView wv, PlayerControl player, int key, boolean down)
+	public void onKey(MapView view, PlayerControl player, int key, boolean down)
 	{
 	}
 	

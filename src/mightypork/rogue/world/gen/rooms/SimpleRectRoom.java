@@ -26,29 +26,32 @@ public class SimpleRectRoom implements RoomBuilder {
 		
 		map.fill(min, max, theme.floor());
 		map.border(min, max, theme.wall());
+		map.protect(min, max);
 		
-		for (int i = 0; i < 2 + rand.nextInt(4); i++) {
-			final Coord d = min.copy();
+		for (int i = 0; i <= 2 + rand.nextInt(4); i++) {
+			final Coord door = min.copy();
 			switch (rand.nextInt(4)) {
 				case 0:
-					d.y = min.y;
-					d.x += 1 + rand.nextInt((width - 1) * 2);
+					door.y = min.y;
+					door.x += 1 + rand.nextInt((width - 1) * 2);
 					break;
 				case 1:
-					d.y = max.y;
-					d.x += 1 + rand.nextInt((width - 1) * 2);
+					door.y = max.y;
+					door.x += 1 + rand.nextInt((width - 1) * 2);
 					break;
 				case 2:
-					d.x = min.x;
-					d.y += 1 + rand.nextInt((height - 1) * 2);
+					door.x = min.x;
+					door.y += 1 + rand.nextInt((height - 1) * 2);
 					break;
 				case 3:
-					d.x = max.x;
-					d.y += 1 + rand.nextInt((height - 1) * 2);
+					door.x = max.x;
+					door.y += 1 + rand.nextInt((height - 1) * 2);
 					break;
 			}
 			
-			map.set(d, theme.door());
+			if ((map.findDoors(door) & map.CARDINAL) == 0) {
+				map.set(door, theme.door());
+			}
 		}
 		
 		return new RoomDesc(min.add(-1, -1), max);

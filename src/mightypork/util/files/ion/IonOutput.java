@@ -269,9 +269,7 @@ public class IonOutput {
 			return;
 		}
 		
-		if (obj instanceof IonBundled) {
-			throw new IOException("Bundled objects cannot be written to ION stream directly at " + obj);
-		}
+		if (obj instanceof IonBundled) { throw new IOException("Bundled objects cannot be written to ION stream directly at " + obj); }
 		
 		if (obj instanceof Boolean) {
 			writeMark(Ion.BOOLEAN);

@@ -182,9 +182,7 @@ public class PropertyManager {
 	{
 		boolean needsSave = false;
 		if (!file.getParentFile().mkdirs()) {
-			if (!file.getParentFile().exists()) {
-				throw new RuntimeException("Cound not create config file.");
-			}
+			if (!file.getParentFile().exists()) { throw new RuntimeException("Cound not create config file."); }
 		}
 		
 		try(FileInputStream fis = new FileInputStream(file)) {

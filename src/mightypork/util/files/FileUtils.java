@@ -39,9 +39,7 @@ public class FileUtils {
 		if (!source.exists()) return;
 		
 		if (source.isDirectory()) {
-			if (!target.exists() && !target.mkdir()) {
-				throw new IOException("Could not open destination directory.");
-			}
+			if (!target.exists() && !target.mkdir()) { throw new IOException("Could not open destination directory."); }
 			
 			final String[] children = source.list();
 			for (final String element : children) {
@@ -49,9 +47,7 @@ public class FileUtils {
 			}
 			
 		} else {
-			if (filter != null && !filter.accept(source)) {
-				return;
-			}
+			if (filter != null && !filter.accept(source)) { return; }
 			
 			if (filesCopied != null) filesCopied.add(target);
 			copyFile(source, target);
@@ -76,9 +72,7 @@ public class FileUtils {
 			}
 			
 		} else {
-			if (filter != null && !filter.accept(source.getAbsolutePath())) {
-				return;
-			}
+			if (filter != null && !filter.accept(source.getAbsolutePath())) { return; }
 			
 			files.add(source);
 		}
@@ -112,13 +106,9 @@ public class FileUtils {
 	 */
 	public static void copyStream(InputStream in, OutputStream out) throws IOException
 	{
-		if (in == null) {
-			throw new NullPointerException("Input stream is null");
-		}
+		if (in == null) { throw new NullPointerException("Input stream is null"); }
 		
-		if (out == null) {
-			throw new NullPointerException("Output stream is null");
-		}
+		if (out == null) { throw new NullPointerException("Output stream is null"); }
 		
 		final byte[] buf = new byte[2048];
 		int len;
@@ -137,9 +127,7 @@ public class FileUtils {
 	 */
 	public static boolean delete(File path, boolean recursive)
 	{
-		if (!path.exists()) {
-			return true;
-		}
+		if (!path.exists()) { return true; }
 		
 		if (!recursive || !path.isDirectory()) return path.delete();
 		

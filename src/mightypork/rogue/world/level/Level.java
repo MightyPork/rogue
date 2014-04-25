@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.World;
-import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
@@ -18,6 +18,7 @@ import mightypork.util.files.ion.IonBinary;
 import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
+import mightypork.util.logging.Log;
 import mightypork.util.math.noise.NoiseGen;
 
 
@@ -30,15 +31,16 @@ public class Level implements MapAccess, IonBinary {
 	
 	public static final int ION_MARK = 53;
 	
-	private int width, height;
+	private final Coord size = Coord.zero();
+	private World world;
 	
-	private WorldPos enterPoint;
+	private final Coord enterPoint = Coord.zero();
 	
 	/** Array of tiles [y][x] */
 	private Tile[][] tiles;
 	
-	private final Map<Integer, Entity> entity_map = new HashMap<>();
-	private final Set<Entity> entity_set = new HashSet<>();
+	private final Map<Integer, Entity> entityMap = new HashMap<>();
+	private final Set<Entity> entitySet = new HashSet<>();
 	
 	/** Level seed (used for generation and tile variation) */
 	public long seed;
@@ -53,15 +55,14 @@ public class Level implements MapAccess, IonBinary {
 	
 	public Level(int width, int height)
 	{
-		this.width = width;
-		this.height = height;
+		size.setTo(width, height);
 		buildArray();
 	}
 	
 	
 	private void buildArray()
 	{
-		this.tiles = new Tile[height][width];
+		this.tiles = new Tile[size.y][size.x];
 	}
 	
 	
@@ -73,54 +74,57 @@ public class Level implements MapAccess, IonBinary {
 	
 	public void fill(TileModel model)
 	{
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				tiles[y][x] = model.createTile();
+		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
+			for (c.y = 0; c.y < size.y; c.y++) {
+				setTile(c, model.createTile());
 			}
 		}
 	}
 	
 	
 	@Override
-	public final Tile getTile(int x, int y)
+	public final Tile getTile(Coord pos)
 	{
-		if (x < 0 || x >= width || y < 0 || y >= height) return Tiles.NULL_SOLID.createTile(); // out of range
-			
-		return tiles[y][x];
+		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) return Tiles.NULL.createTile(); // out of range
+		
+		return tiles[pos.y][pos.x];
 	}
 	
 	
-	public final void setTile(TileModel model, int x, int y)
+	public final void setTile(Coord pos, TileModel model)
 	{
-		setTile(model.createTile(), x, y);
+		setTile(pos, model.createTile());
 	}
 	
 	
-	public final void setTile(int tileId, int x, int y)
+	public final void setTile(Coord pos, int tileId)
 	{
-		setTile(new Tile(tileId), x, y);
+		setTile(pos, new Tile(tileId));
 	}
 	
 	
-	public final void setTile(Tile tile, int x, int y)
+	public final void setTile(Coord pos, Tile tile)
 	{
-		if (x < 0 || x > width || y < 0 || y >= height) return; // out of range
-			
-		tiles[y][x] = tile;
+		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) {
+			Log.w("Invalid tile coord to set: " + pos + ", map size: " + size);
+			return; // out of range
+		}
+		
+		tiles[pos.y][pos.x] = tile;
 	}
 	
 	
 	@Override
 	public final int getWidth()
 	{
-		return width;
+		return size.x;
 	}
 	
 	
 	@Override
 	public final int getHeight()
 	{
-		return height;
+		return size.y;
 	}
 	
 	
@@ -143,29 +147,31 @@ public class Level implements MapAccess, IonBinary {
 		// metadata
 		final IonBundle ib = in.readBundle();
 		seed = ib.get("seed", 0L);
-		width = ib.get("w", 0);
-		height = ib.get("h", 0);
+		ib.loadBundled("size", size);
+		ib.loadBundled("enter_point", enterPoint);
 		
-		ib.loadSequence("entities", entity_set);
-		for (final Entity ent : entity_set) {
-			entity_map.put(ent.getEID(), ent);
+		ib.loadSequence("entities", entitySet);
+		for (final Entity ent : entitySet) {
+			ent.setLevel(this);
+			entityMap.put(ent.getEntityId(), ent);
 		}
 		
 		// init array of size
 		buildArray();
 		
 		// load tiles
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
+		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
+			for (c.y = 0; c.y < size.y; c.y++) {
 				// no mark
-				tiles[y][x] = new Tile();
-				tiles[y][x].load(in);
+				final Tile tile = new Tile();
+				tile.load(in);
+				setTile(c, tile);
 			}
 		}
 		
 		// mark tiles as occupied
-		for (final Entity e : entity_set) {
-			occupyTile(e.getPosition().x, e.getPosition().y);
+		for (final Entity e : entitySet) {
+			occupyTile(e.getPosition().getCoord());
 		}
 	}
 	
@@ -176,16 +182,17 @@ public class Level implements MapAccess, IonBinary {
 		// metadata
 		final IonBundle ib = new IonBundle();
 		ib.put("seed", seed);
-		ib.put("w", width);
-		ib.put("h", height);
-		ib.putSequence("entities", entity_set);
+		ib.putBundled("size", size);
+		ib.putBundled("enter_point", enterPoint);
+		ib.putSequence("entities", entitySet);
 		out.writeBundle(ib);
 		
 		// tiles (writing this way to save space)
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
+		
+		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
+			for (c.y = 0; c.y < size.y; c.y++) {
 				// no mark to save space
-				tiles[y][x].save(out);
+				getTile(c).save(out);
 			}
 		}
 	}
@@ -198,17 +205,17 @@ public class Level implements MapAccess, IonBinary {
 	}
 	
 	
-	public void update(World w, double delta)
+	public void update(double delta)
 	{
 		// just update them all
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				getTile(x, y).update(this, delta);
+		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
+			for (c.y = 0; c.y < size.y; c.y++) {
+				getTile(c).update(this, delta);
 			}
 		}
 		
-		for (final Entity e : entity_set) {
-			e.update(w, this, delta);
+		for (final Entity e : entitySet) {
+			e.update(delta);
 		}
 	}
 	
@@ -226,34 +233,42 @@ public class Level implements MapAccess, IonBinary {
 	
 	public Entity getEntity(int eid)
 	{
-		return entity_map.get(eid);
+		return entityMap.get(eid);
 	}
 	
 	
 	public void addEntity(Entity entity)
 	{
-		entity_map.put(entity.getEID(), entity);
-		entity_set.add(entity);
+		if (entityMap.containsKey(entity.getEntityId())) {
+			Log.w("Entity already in level.");
+			return;
+		}
+		
+		entityMap.put(entity.getEntityId(), entity);
+		entitySet.add(entity);
+		
+		// join to level & world
+		entity.setLevel(this);
 	}
 	
 	
 	public void removeEntity(Entity entity)
 	{
-		entity_map.remove(entity.getEID());
-		entity_set.remove(entity);
+		entityMap.remove(entity.getEntityId());
+		entitySet.remove(entity);
 	}
 	
 	
 	public void removeEntity(int eid)
 	{
-		final Entity removed = entity_map.remove(eid);
-		entity_set.remove(removed);
+		final Entity removed = entityMap.remove(eid);
+		entitySet.remove(removed);
 	}
 	
 	
-	public boolean canWalkInto(int x, int y)
+	public boolean canWalkInto(Coord pos)
 	{
-		final Tile t = getTile(x, y);
+		final Tile t = getTile(pos);
 		
 		return t.isWalkable() && !t.isOccupied();
 	}
@@ -262,35 +277,47 @@ public class Level implements MapAccess, IonBinary {
 	/**
 	 * Mark tile as occupied by an entity
 	 */
-	public void occupyTile(int x, int y)
+	public void occupyTile(Coord pos)
 	{
-		getTile(x, y).setOccupied(true);
+		getTile(pos).setOccupied(true);
 	}
 	
 	
 	/**
 	 * Mark tile as free (no longet occupied)
 	 */
-	public void freeTile(int x, int y)
+	public void freeTile(Coord pos)
 	{
-		getTile(x, y).setOccupied(false);
+		getTile(pos).setOccupied(false);
 	}
 	
 	
 	public Collection<Entity> getEntities()
 	{
-		return entity_set;
+		return entitySet;
 	}
 	
 	
-	public void setEnterPoint(WorldPos enterPoint)
+	public void setEnterPoint(Coord pos)
 	{
-		this.enterPoint = enterPoint;
+		this.enterPoint.setTo(pos);
 	}
 	
 	
-	public WorldPos getEnterPoint()
+	public Coord getEnterPoint()
 	{
 		return enterPoint;
+	}
+	
+	
+	public World getWorld()
+	{
+		return world;
+	}
+	
+	
+	public void setWorld(World world)
+	{
+		this.world = world;
 	}
 }

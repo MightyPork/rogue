@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.WorldPos;
 import mightypork.rogue.world.level.Level;
-import mightypork.rogue.world.pathfinding.PathCostProvider;
+import mightypork.rogue.world.pathfinding.Heuristic;
 import mightypork.rogue.world.pathfinding.PathFinder;
+import mightypork.rogue.world.pathfinding.PathFindingContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
@@ -18,14 +18,27 @@ import mightypork.util.logging.Log;
 
 public class ScratchMap {
 	
-	private final Tile[][] map;
+	//@formatter:off
+	public static final Coord[] MOVES = {
+		Coord.make(-1, 0),
+		Coord.make(-1, -1), 
+		Coord.make(0, -1),
+		Coord.make(1, -1),
+		Coord.make(1, 0),
+		Coord.make(1, 1),
+		Coord.make(0, 1),
+		Coord.make(-1, 1)
+	};
+	//@formatter:on
+	
+	private Tile[][] map;
 	private final int width;
 	private final int height;
 	
 	private final List<RoomDesc> rooms = new ArrayList<>();
 	private final List<Coord> nodes = new ArrayList<>(); // points to connect with corridors
 	
-	private final PathCostProvider pcp = new PathCostProvider() {
+	private final PathFindingContext pfc = new PathFindingContext() {
 		
 		@Override
 		public boolean isAccessible(Coord pos)
@@ -39,12 +52,14 @@ public class ScratchMap {
 		{
 			final Tile t = get(pos);
 			
-			if (t.isNull()) return 15;
+			if (t.isNull()) return 60;
 			
 			if (t.isDoor()) return 10; // door
 			if (t.isFloor()) return 20; // floor
-				
-			return 400; // wall
+			
+			if (t.isWall() && t.genData.isProtected) return 1000;
+			
+			return 100; // wall
 		}
 		
 		
@@ -54,15 +69,26 @@ public class ScratchMap {
 			return 10;
 		}
 		
+		
+		@Override
+		public Heuristic getHeuristic()
+		{
+			return PathFinder.CORNER_HEURISTIC;
+		}
+		
 	};
-	
-	private final PathFinder pathFinder = new PathFinder(pcp, PathFinder.CORNER_HEURISTIC);
 	
 	Coord genMin;
 	Coord genMax;
+	
 	private final Theme theme;
 	private final Random rand;
 	private Coord enterPoint;
+	
+	public static final byte CARDINAL = (byte) 0b10101010;
+	public static final byte DIAGONAL = (byte) 0b01010101;
+	
+	private static final boolean FIX_GLITCHES = true;
 	
 	
 	public ScratchMap(int max_size, Theme theme, Random rand)
@@ -77,7 +103,7 @@ public class ScratchMap {
 		this.rand = rand;
 		this.theme = theme;
 		
-		fill(Coord.make(0, 0), Coord.make(width - 1, height - 1), Tiles.NULL_EMPTY);
+		fill(Coord.make(0, 0), Coord.make(width - 1, height - 1), Tiles.NULL);
 	}
 	
 	
@@ -148,9 +174,7 @@ public class ScratchMap {
 	
 	public Tile get(Coord pos)
 	{
-		if (!isIn(pos)) {
-			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
-		}
+		if (!isIn(pos)) { throw new IndexOutOfBoundsException("Tile not in map: " + pos); }
 		
 		return map[pos.y][pos.x];
 	}
@@ -164,9 +188,7 @@ public class ScratchMap {
 	
 	public boolean set(Coord pos, Tile tile)
 	{
-		if (!isIn(pos)) {
-			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
-		}
+		if (!isIn(pos)) { throw new IndexOutOfBoundsException("Tile not in map: " + pos); }
 		
 		map[pos.y][pos.x] = tile;
 		return true;
@@ -181,6 +203,17 @@ public class ScratchMap {
 		}
 		
 		return true;
+	}
+	
+	
+	public void protect(Coord min, Coord max)
+	{
+		if (!isIn(min) || !isIn(max)) throw new IndexOutOfBoundsException("Tile(s) not in map: " + min + " , " + max);
+		
+		final Coord c = Coord.make(0, 0);
+		for (c.x = min.x; c.x <= max.x; c.x++)
+			for (c.y = min.y; c.y <= max.y; c.y++)
+				get(c).genData.isProtected = true;
 	}
 	
 	
@@ -200,14 +233,23 @@ public class ScratchMap {
 		if (!isIn(min) || !isIn(max)) throw new IndexOutOfBoundsException("Tile(s) not in map: " + min + " , " + max);
 		
 		final Coord c = Coord.make(0, 0);
-		for (c.x = min.x; c.x <= max.x; c.x++) {
-			for (c.y = min.y; c.y <= max.y; c.y++) {
-				
-				if (c.y > min.y && c.y < max.y && c.x > min.x && c.x < max.x) continue;
-				
-				set(c, tm.createTile());
-			}
-		}
+		
+		// top
+		for (c.x = min.x, c.y = min.y; c.x <= max.x; c.x++)
+			set(c, tm.createTile());
+		
+		//bottom
+		for (c.x = min.x, c.y = max.y; c.x <= max.x; c.x++)
+			set(c, tm.createTile());
+		
+		//left
+		for (c.x = min.x, c.y = min.y + 1; c.y < max.y; c.y++)
+			set(c, tm.createTile());
+		
+		//right
+		for (c.x = max.x, c.y = min.y + 1; c.y < max.y; c.y++)
+			set(c, tm.createTile());
+		
 	}
 	
 	
@@ -225,7 +267,7 @@ public class ScratchMap {
 	private void buildCorridor(Coord node1, Coord node2)
 	{
 		//Log.f3("Finding path " + node1 + " -> " + node2);
-		final List<Coord> steps = pathFinder.findPath(node1, node2);
+		final List<Coord> steps = PathFinder.findPath(pfc, node1, node2);
 		
 		if (steps == null) {
 			Log.w("Could not build corridor " + node1 + "->" + node2);
@@ -254,10 +296,11 @@ public class ScratchMap {
 				
 				final Tile current = get(c);
 				if (!current.isNull() && (current.isPotentiallyWalkable())) continue; // floor already, let it be
-					
+				
 				if (i == 0 && j == 0) {
 					set(c, theme.floor());
 				} else {
+					if (current.isWall()) continue;
 					set(c, theme.wall());
 				}
 			}
@@ -271,7 +314,7 @@ public class ScratchMap {
 	}
 	
 	
-	private int countBits(byte b)
+	public int countBits(byte b)
 	{
 		int c = 0;
 		for (int i = 0; i < 8; i++) {
@@ -281,129 +324,158 @@ public class ScratchMap {
 	}
 	
 	
+	public byte findWalls(Coord pos)
+	{
+		byte walls = 0;
+		for (int i = 0; i <= 7; i++) {
+			final Coord cc = pos.add(MOVES[i]);
+			if (!isIn(cc)) continue;
+			
+			if (get(cc).isWall()) {
+				walls |= 1 << (7 - i);
+			}
+		}
+		return walls;
+	}
+	
+	
+	public byte findFloors(Coord pos)
+	{
+		byte floors = 0;
+		for (int i = 0; i <= 7; i++) {
+			final Coord cc = pos.add(MOVES[i]);
+			if (!isIn(cc)) continue;
+			
+			if (get(cc).isFloor()) {
+				floors |= 1 << (7 - i);
+			}
+		}
+		return floors;
+	}
+	
+	
+	public byte findDoors(Coord pos)
+	{
+		byte doors = 0;
+		for (int i = 0; i <= 7; i++) {
+			final Coord cc = pos.add(MOVES[i]);
+			if (!isIn(cc)) continue;
+			
+			if (get(cc).isDoor()) {
+				doors |= 1 << (7 - i);
+			}
+		}
+		return doors;
+	}
+	
+	
+	public byte findNils(Coord pos)
+	{
+		byte nils = 0;
+		for (int i = 0; i <= 7; i++) {
+			final Coord cc = pos.add(MOVES[i]);
+			
+			if (!isIn(cc) || get(cc).isNull()) {
+				nils |= 1 << (7 - i);
+			}
+		}
+		return nils;
+	}
+	
+	
 	public void writeToLevel(Level level)
 	{
-		//@formatter:off
-		final Coord[] moves = {
-				Coord.make(-1, 0),
-				Coord.make(-1, -1),
-				Coord.make(0, -1), 
-				Coord.make(1, -1), 
-				Coord.make(1, 0), 
-				Coord.make(1, 1),
-				Coord.make(0, 1),
-				Coord.make(-1, 1)
-		};
-		//@formatter:on
-		
-		final byte cardinal = (byte) 0b10101010;
-		final byte diagonal = (byte) 0b01010101;
-		
 		// make sure no walkable are at edges.
 		final Coord c = Coord.make(0, 0);
 		final Coord c1 = Coord.make(0, 0);
-		for (c.x = 0; c.x < width; c.x++) {
-			for (c.y = 0; c.y < height; c.y++) {
-				
-				final Tile t = get(c);
-				final boolean isNull = t.isNull();
-				
-				final boolean isDoor = !isNull && t.isDoor();
-				final boolean isFloor = !isNull && t.isFloor();
-				final boolean isWall = !isNull && t.isWall();
-				
-				// bitmasks
-				byte walls = 0;
-				byte nils = 0;
-				byte doors = 0;
-				byte floors = 0;
-				
-				// gather info
-				for (int i = 0; i <= 7; i++) {
-					final Coord cc = c.add(moves[i]);
+		
+		if (FIX_GLITCHES) {
+			
+			final Tile[][] out = new Tile[height][width];
+			
+			for (c.x = 0; c.x < width; c.x++) {
+				for (c.y = 0; c.y < height; c.y++) {
 					
-					if (!isIn(cc)) {
-						nils |= 1 << (7 - i);
-						continue;
-					}
+					final Tile t = get(c);
+					final boolean isNull = t.isNull();
 					
-					final Tile t2 = get(cc);
+					final boolean isDoor = !isNull && t.isDoor();
+					final boolean isFloor = !isNull && t.isFloor();
+					final boolean isWall = !isNull && t.isWall();
 					
-					if (t2.isNull()) {
-						nils |= 1 << (7 - i);
-						continue;
-					}
+					// bitmasks
+					final byte walls = findWalls(c);
+					final byte nils = findNils(c);
+					final byte floors = findFloors(c);
 					
-					if (t2.isDoor()) {
-						doors |= 1 << (7 - i);
-						continue;
-					}
+					boolean toWall = false;
+					boolean toFloor = false;
+					boolean toNull = false;
 					
-					if (t2.isWall()) {
-						walls |= 1 << (7 - i);
-						continue;
-					}
-					
-					floors |= 1 << (7 - i);
-				}
-				
-				boolean toWall = false;
-				boolean toFloor = false;
-				boolean toNull = false;
-				
-				if (isFloor && (nils & cardinal) != 0) {
-					toWall = true; // floor with adjacent cardinal null
-				}
-				
-				if (isNull && (floors & diagonal) != 0) {
-					toWall = true; // null with adjacent diagonal floor
-				}
-				
-				if (isWall && floors == 0) {
-					toNull = true;
-				}
-				
-				if (isDoor) {
 					do {
-						if (countBits((byte) (floors & cardinal)) < 2) {
-							toWall = true;
+						if (isWall && floors == 0) {
+							toNull = true;
 							break;
 						}
 						
-						if (countBits((byte) (walls & cardinal)) > 2) {
-							toWall = true;
+						if (isFloor && (nils & CARDINAL) != 0) {
+							toWall = true; // floor with adjacent cardinal null
 							break;
 						}
 						
-						if (countBits((byte) (floors & cardinal)) > 2) {
-							toFloor = true;
+						if (isNull && (floors & DIAGONAL) != 0) {
+							System.out.println(c);
+							toWall = true; // null with adjacent diagonal floor
 							break;
 						}
 						
-						if ((floors & 0b11100000) == 0b11100000) toWall = true;
-						if ((floors & 0b00111000) == 0b00111000) toWall = true;
-						if ((floors & 0b00001110) == 0b00001110) toWall = true;
-						if ((floors & 0b10000011) == 0b10000011) toWall = true;
+						if (isDoor) {
+							
+							if (countBits((byte) (floors & CARDINAL)) < 2) {
+								toWall = true;
+								break;
+							}
+							
+							if (countBits((byte) (walls & CARDINAL)) > 2) {
+								toWall = true;
+								break;
+							}
+							
+							if (countBits((byte) (floors & CARDINAL)) > 2) {
+								toFloor = true;
+								break;
+							}
+							
+							if ((floors & 0b11100000) == 0b11100000) toWall = true;
+							if ((floors & 0b00111000) == 0b00111000) toWall = true;
+							if ((floors & 0b00001110) == 0b00001110) toWall = true;
+							if ((floors & 0b10000011) == 0b10000011) toWall = true;
+							
+						}
 					} while (false);
-				}
-				
-				if (toWall) {
-					set(c, theme.wall());
-				} else if (toFloor) {
-					set(c, theme.floor());
-				} else if (toNull) {
-					set(c, Tiles.NULL_EMPTY);
+					
+					if (toNull) {
+						out[c.y][c.x] = Tiles.NULL.createTile();
+					} else if (toWall) {
+						out[c.y][c.x] = theme.wall().createTile();
+					} else if (toFloor) {
+						out[c.y][c.x] = theme.floor().createTile();
+					} else {
+						out[c.y][c.x] = map[c.y][c.x];
+					}
 				}
 			}
+			
+			map = out;
 		}
 		
 		for (c.x = genMin.x, c1.x = 0; c.x <= genMax.x; c.x++, c1.x++) {
 			for (c.y = genMin.y, c1.y = 0; c.y <= genMax.y; c.y++, c1.y++) {
-				level.setTile(get(c), c1.x, c1.y);
+				level.setTile(c1, get(c));
 			}
 		}
 		
-		final WorldPos p = new WorldPos(enterPoint.x - genMin.x, enterPoint.y - genMin.y);
-		level.setEnterPoint(p);
+		final Coord entrance = new Coord(enterPoint.x - genMin.x, enterPoint.y - genMin.y);
+		level.setEnterPoint(entrance);
 	}
 }

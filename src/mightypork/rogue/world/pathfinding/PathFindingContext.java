@@ -4,7 +4,7 @@ package mightypork.rogue.world.pathfinding;
 import mightypork.rogue.world.Coord;
 
 
-public interface PathCostProvider {
+public interface PathFindingContext {
 	
 	/**
 	 * @param pos tile pos
@@ -27,4 +27,10 @@ public interface PathCostProvider {
 	 * @return lowest cost. Used to multiply heuristics.
 	 */
 	int getMinCost();
+	
+	
+	/**
+	 * @return used heuristic
+	 */
+	Heuristic getHeuristic();
 }

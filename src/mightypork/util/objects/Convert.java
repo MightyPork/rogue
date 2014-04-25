@@ -137,9 +137,7 @@ public class Convert {
 			return String.format("{%f|%f}", c.getMin(), c.getMax());
 		}
 		
-		if (o instanceof Class<?>) {
-			return Log.str(o);
-		}
+		if (o instanceof Class<?>) { return Log.str(o); }
 		
 		return o.toString();
 	}
@@ -179,9 +177,7 @@ public class Convert {
 					final double x = Double.parseDouble(parts[0].trim());
 					final double y = Double.parseDouble(parts[1].trim());
 					
-					if (parts.length == 2) {
-						return Vect.make(x, y);
-					}
+					if (parts.length == 2) { return Vect.make(x, y); }
 					
 					final double z = Double.parseDouble(parts[2].trim());
 					

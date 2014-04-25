@@ -1,6 +1,7 @@
 package mightypork.rogue.world.level;
 
 
+import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.math.noise.NoiseGen;
 
@@ -15,11 +16,10 @@ public interface MapAccess {
 	/**
 	 * Ge tile at X,Y
 	 * 
-	 * @param x
-	 * @param y
+	 * @param pos
 	 * @return tile
 	 */
-	Tile getTile(int x, int y);
+	Tile getTile(Coord pos);
 	
 	
 	/**

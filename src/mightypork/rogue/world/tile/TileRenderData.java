@@ -2,7 +2,7 @@ package mightypork.rogue.world.tile;
 
 
 /**
- * Data storage for renderer / entity.
+ * Data storage for tile renderer
  * 
  * @author MightyPork
  */

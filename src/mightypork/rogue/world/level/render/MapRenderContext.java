@@ -1,6 +1,7 @@
 package mightypork.rogue.world.level.render;
 
 
+import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.level.MapAccess;
 import mightypork.util.math.constraints.rect.Rect;
 import mightypork.util.math.constraints.rect.builders.TiledRect;
@@ -22,9 +23,9 @@ public abstract class MapRenderContext {
 	}
 	
 	
-	public Rect getRectForTile(int x, int y)
+	public Rect getRectForTile(Coord pos)
 	{
-		return tiler.tile(x, y);
+		return tiler.tile(pos.x, pos.y);
 	}
 	
 	

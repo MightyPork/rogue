@@ -19,13 +19,9 @@ public final class Entities {
 	
 	public static void register(int id, EntityModel model)
 	{
-		if (id < 0 || id >= entities.length) {
-			throw new IllegalArgumentException("Entity model ID " + id + " is out of range.");
-		}
+		if (id < 0 || id >= entities.length) { throw new IllegalArgumentException("Entity model ID " + id + " is out of range."); }
 		
-		if (entities[id] != null) {
-			throw new IllegalArgumentException("Entity model ID " + id + " already in use.");
-		}
+		if (entities[id] != null) { throw new IllegalArgumentException("Entity model ID " + id + " already in use."); }
 		
 		entities[id] = model;
 	}
@@ -35,9 +31,7 @@ public final class Entities {
 	{
 		final EntityModel e = entities[id];
 		
-		if (e == null) {
-			throw new IllegalArgumentException("No entity model with ID " + id + ".");
-		}
+		if (e == null) { throw new IllegalArgumentException("No entity model with ID " + id + "."); }
 		
 		return e;
 	}

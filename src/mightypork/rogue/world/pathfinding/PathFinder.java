@@ -19,28 +19,19 @@ import mightypork.rogue.world.PathStep;
 public class PathFinder {
 	
 	private static final FComparator F_COMPARATOR = new FComparator();
+	
 	public static final Heuristic CORNER_HEURISTIC = new ManhattanHeuristic();
 	public static final Heuristic DIAGONAL_HEURISTIC = new DiagonalHeuristic();
 	
-	private final PathCostProvider costProvider;
-	private final Heuristic heuristic;
 	
-	
-	public PathFinder(PathCostProvider costProvider, Heuristic heuristic)
+	public static List<PathStep> findPathRelative(PathFindingContext context, Coord start, Coord end)
 	{
-		this.costProvider = costProvider;
-		this.heuristic = heuristic;
-	}
-	
-	
-	public List<PathStep> findPathRelative(Coord start, Coord end)
-	{
-		final List<Coord> path = findPath(start, end);
+		final List<Coord> path = findPath(context, start, end);
 		if (path == null) return null;
 		
 		final List<PathStep> out = new ArrayList<>();
 		
-		final Coord current = start;
+		final Coord current = start.copy();
 		for (final Coord c : path) {
 			if (c.equals(current)) continue;
 			out.add(PathStep.make(c.x - current.x, c.y - current.y));
@@ -52,15 +43,17 @@ public class PathFinder {
 	}
 	
 	
-	public List<Coord> findPath(Coord start, Coord end)
+	public static List<Coord> findPath(PathFindingContext context, Coord start, Coord end)
 	{
 		final LinkedList<Node> open = new LinkedList<>();
 		final LinkedList<Node> closed = new LinkedList<>();
 		
+		final Heuristic heuristic = context.getHeuristic();
+		
 		// add first node
 		{
 			final Node n = new Node(start);
-			n.h_cost = (int) (heuristic.getCost(start, end) * costProvider.getMinCost());
+			n.h_cost = (int) (heuristic.getCost(start, end) * context.getMinCost());
 			n.g_cost = 0;
 			open.add(n);
 		}
@@ -92,13 +85,13 @@ public class PathFinder {
 			for (final Coord go : walkDirs) {
 				
 				final Coord c = current.pos.add(go);
-				if (!costProvider.isAccessible(c)) continue;
+				if (!context.isAccessible(c)) continue;
 				final Node a = new Node(c);
-				a.g_cost = current.g_cost + costProvider.getCost(c, a.pos);
-				a.h_cost = (int) (heuristic.getCost(a.pos, end) * costProvider.getMinCost());
+				a.g_cost = current.g_cost + context.getCost(c, a.pos);
+				a.h_cost = (int) (heuristic.getCost(a.pos, end) * context.getMinCost());
 				a.parent = current;
 				
-				if (costProvider.isAccessible(a.pos)) {
+				if (context.isAccessible(a.pos)) {
 					if (!closed.contains(a)) {
 						
 						if (open.contains(a)) {
@@ -128,8 +121,7 @@ public class PathFinder {
 			
 		}
 		
-		if (current == null) {
-			return null; // no path found
+		if (current == null) { return null; // no path found
 		}
 		
 		final LinkedList<Coord> path = new LinkedList<>();
