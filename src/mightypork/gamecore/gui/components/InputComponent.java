@@ -20,7 +20,7 @@ public abstract class InputComponent extends VisualComponent implements Enableab
 	@Override
 	public boolean isEnabled()
 	{
-		return enabled;
+		return enabled && isVisible();
 	}
 	
 	

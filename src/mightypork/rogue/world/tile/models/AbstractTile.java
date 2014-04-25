@@ -49,13 +49,6 @@ public abstract class AbstractTile extends TileModel {
 	
 	
 	@Override
-	public boolean hasMetadata()
-	{
-		return false;
-	}
-	
-	
-	@Override
 	@DefaultImpl
 	public void update(Tile tile, Level level, double delta)
 	{

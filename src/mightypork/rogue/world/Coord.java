@@ -6,6 +6,7 @@ import java.io.IOException;
 import mightypork.util.annotations.FactoryMethod;
 import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.IonBundled;
+import mightypork.util.math.Calc;
 
 
 /**
@@ -139,5 +140,11 @@ public class Coord implements IonBundled {
 		if (x != other.x) return false;
 		if (y != other.y) return false;
 		return true;
+	}
+	
+	
+	public double dist(Coord coord)
+	{
+		return Calc.dist(x, y, coord.x, coord.y);
 	}
 }

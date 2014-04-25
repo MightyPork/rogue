@@ -6,16 +6,20 @@ import mightypork.gamecore.gui.components.layout.HorizontalFixedFlowLayout;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Res;
 import mightypork.rogue.screens.gamescreen.gui.HeartBar;
 import mightypork.rogue.screens.gamescreen.gui.NavItemSlot;
+import mightypork.rogue.screens.gamescreen.world.Minimap;
+import mightypork.rogue.world.World;
 import mightypork.util.math.constraints.num.Num;
 import mightypork.util.math.constraints.rect.Rect;
 
 
 public class HudLayer extends ScreenLayer {
 	
-	public HudLayer(Screen screen)
+	public HudLayer(Screen screen, World world)
 	{
 		super(screen);
 		
@@ -46,6 +50,20 @@ public class HudLayer extends ScreenLayer {
 		final Rect xp_box = shrunk.topRight().startRect().growDown(displays_height);
 		experience.setRect(xp_box);
 		root.add(experience);
+		
+		
+		final Minimap mm = new Minimap(world);
+		mm.setRect(root.shrink(root.width().perc(5), root.height().perc(15)));
+		root.add(mm);
+		
+		bindKey(new KeyStroke(Keys.M), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				mm.setVisible(!mm.isVisible());
+			}
+		});
 	}
 	
 	
@@ -61,6 +79,13 @@ public class HudLayer extends ScreenLayer {
 	{
 		
 		super.render();
+	}
+	
+	
+	@Override
+	public int getEventPriority()
+	{
+		return 100;
 	}
 	
 }

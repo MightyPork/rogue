@@ -39,13 +39,6 @@ public abstract class AbstractNullTile extends AbstractTile {
 	
 	
 	@Override
-	public boolean hasMetadata()
-	{
-		return false;
-	}
-	
-	
-	@Override
 	public boolean hasDroppedItems()
 	{
 		return false;

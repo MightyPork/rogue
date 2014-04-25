@@ -3,6 +3,8 @@ package mightypork.rogue.world.tile.models;
 
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.renderers.DoorRenderer;
+import mightypork.util.math.color.COMMODORE;
+import mightypork.util.math.color.Color;
 
 
 public class SimpleDoor extends AbstractTile {
@@ -52,5 +54,12 @@ public class SimpleDoor extends AbstractTile {
 	public boolean hasDroppedItems()
 	{
 		return false;
+	}
+	
+	
+	@Override
+	public Color getMapColor(Tile tile)
+	{
+		return COMMODORE.BROWN;
 	}
 }

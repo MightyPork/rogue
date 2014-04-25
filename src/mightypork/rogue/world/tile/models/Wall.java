@@ -1,6 +1,11 @@
 package mightypork.rogue.world.tile.models;
 
 
+import mightypork.rogue.world.tile.Tile;
+import mightypork.util.math.color.COMMODORE;
+import mightypork.util.math.color.Color;
+
+
 /**
  * Template for wall tiles with no metadata
  * 
@@ -41,4 +46,10 @@ public class Wall extends AbstractTile {
 		return false;
 	}
 	
+	
+	@Override
+	public Color getMapColor(Tile tile)
+	{
+		return COMMODORE.GRAY_LIGHT;
+	}
 }

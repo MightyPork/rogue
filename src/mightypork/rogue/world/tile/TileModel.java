@@ -2,6 +2,7 @@ package mightypork.rogue.world.tile;
 
 
 import mightypork.rogue.world.level.Level;
+import mightypork.util.math.color.Color;
 
 
 /**
@@ -67,12 +68,6 @@ public abstract class TileModel {
 	
 	
 	/**
-	 * @return true if this item type has metadata worth saving
-	 */
-	public abstract boolean hasMetadata();
-	
-	
-	/**
 	 * @return true if this item can have dropped items
 	 */
 	public abstract boolean hasDroppedItems();
@@ -83,5 +78,8 @@ public abstract class TileModel {
 	 *         locked door etc)
 	 */
 	public abstract boolean isPotentiallyWalkable();
+	
+	
+	public abstract Color getMapColor(Tile tile);
 	
 }

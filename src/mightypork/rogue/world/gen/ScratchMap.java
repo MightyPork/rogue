@@ -123,16 +123,16 @@ public class ScratchMap {
 			
 			switch (rand.nextInt(4)) {
 				case 0:
-					center.x += 1 + rand.nextInt(5);
+					center.x += 2 + rand.nextInt(6);
 					break;
 				case 1:
-					center.x -= 1 + rand.nextInt(5);
+					center.x -= 2 + rand.nextInt(6);
 					break;
 				case 2:
-					center.y += 1 + rand.nextInt(5);
+					center.y += 2 + rand.nextInt(6);
 					break;
 				case 3:
-					center.y -= 1 + rand.nextInt(5);
+					center.y -= 2 + rand.nextInt(6);
 			}
 			
 			final RoomDesc rd = rb.buildToFit(this, theme, rand, center);

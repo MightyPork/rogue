@@ -64,6 +64,7 @@ public class World implements IonBundled, Updateable {
 	public void addLevel(Level level)
 	{
 		levels.add(level);
+		level.setWorld(this);
 	}
 	
 	

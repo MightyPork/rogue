@@ -8,9 +8,9 @@ import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.util.files.ion.IonBinary;
-import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
+import mightypork.util.math.color.Color;
 
 
 /**
@@ -30,7 +30,7 @@ public final class Tile implements IonBinary {
 	private final Stack<Item> items = new Stack<>();
 	
 	/** persistent field for model, reflected by renderer */
-	public final IonBundle metadata = new IonBundle();
+	public final TileData data = new TileData();
 	
 	public final TileRenderData renderData = new TileRenderData();
 	public final TileGenData genData = new TileGenData();
@@ -99,9 +99,7 @@ public final class Tile implements IonBinary {
 			out.writeSequence(items);
 		}
 		
-		if (model.hasMetadata()) {
-			out.writeBundle(metadata);
-		}
+		data.save(out);
 	}
 	
 	
@@ -119,9 +117,7 @@ public final class Tile implements IonBinary {
 			in.readSequence(items);
 		}
 		
-		if (model.hasMetadata()) {
-			in.readBundle(metadata);
-		}
+		data.load(in);
 	}
 	
 	
@@ -209,4 +205,9 @@ public final class Tile implements IonBinary {
 		return model.isPotentiallyWalkable();
 	}
 	
+	
+	public Color getMapColor()
+	{
+		return model.getMapColor(this);
+	}
 }

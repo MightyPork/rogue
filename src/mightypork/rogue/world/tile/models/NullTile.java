@@ -1,6 +1,11 @@
 package mightypork.rogue.world.tile.models;
 
 
+import mightypork.rogue.world.tile.Tile;
+import mightypork.util.math.color.Color;
+import mightypork.util.math.color.RGB;
+
+
 public class NullTile extends AbstractNullTile {
 	
 	public NullTile(int id)
@@ -15,4 +20,10 @@ public class NullTile extends AbstractNullTile {
 		return false;
 	}
 	
+	
+	@Override
+	public Color getMapColor(Tile tile)
+	{
+		return RGB.NONE;
+	}
 }

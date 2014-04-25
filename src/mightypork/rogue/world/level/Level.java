@@ -19,6 +19,7 @@ import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
 import mightypork.util.logging.Log;
+import mightypork.util.math.Calc;
 import mightypork.util.math.noise.NoiseGen;
 
 
@@ -319,5 +320,23 @@ public class Level implements MapAccess, IonBinary {
 	public void setWorld(World world)
 	{
 		this.world = world;
+	}
+	
+	
+	public void markExplored(Coord coord, double radius)
+	{
+		final int cr = (int) Math.ceil(radius);
+		
+		final Coord c = Coord.zero();
+		for (c.y = coord.y - cr; c.y <= coord.y + cr; c.y++) {
+			for (c.x = coord.x - cr; c.x <= coord.x + cr; c.x++) {
+				if (Calc.dist(coord.x, coord.y, c.x, c.y) > radius) continue;
+				final Tile t = getTile(c);
+				if (!t.isNull()) {
+					t.data.explored = true;
+				}
+			}
+		}
+		
 	}
 }

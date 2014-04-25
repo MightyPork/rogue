@@ -42,4 +42,11 @@ public class WorldLayer extends ScreenLayer {
 		return -1; // stay down
 	}
 	
+	
+	@Override
+	public int getEventPriority()
+	{
+		return 0;
+	}
+	
 }

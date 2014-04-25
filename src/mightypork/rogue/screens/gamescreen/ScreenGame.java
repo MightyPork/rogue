@@ -15,12 +15,17 @@ import mightypork.util.files.ion.Ion;
 
 public class ScreenGame extends LayeredScreen {
 	
+	private final World world;
+	
+	
 	public ScreenGame(AppAccess app)
 	{
 		super(app);
 		
-		addLayer(new WorldLayer(this, obtainWorld())); //TODO with provided world
-		addLayer(new HudLayer(this));
+		this.world = obtainWorld();
+		
+		addLayer(new WorldLayer(this, world));
+		addLayer(new HudLayer(this, world));
 	}
 	
 	

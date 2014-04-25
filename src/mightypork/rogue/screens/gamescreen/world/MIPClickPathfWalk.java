@@ -9,7 +9,7 @@ import mightypork.util.math.constraints.vect.Vect;
 
 public class MIPClickPathfWalk implements MapInteractionPlugin {
 	
-	private static final int BTN = 1; // right
+	private static final int BTN = 0; // left
 	
 	
 	@Override

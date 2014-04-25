@@ -1,6 +1,11 @@
 package mightypork.rogue.world.tile.models;
 
 
+import mightypork.rogue.world.tile.Tile;
+import mightypork.util.math.color.COMMODORE;
+import mightypork.util.math.color.Color;
+
+
 public class Floor extends AbstractTile {
 	
 	public Floor(int id)
@@ -34,5 +39,12 @@ public class Floor extends AbstractTile {
 	public boolean isFloor()
 	{
 		return true;
+	}
+	
+	
+	@Override
+	public Color getMapColor(Tile tile)
+	{
+		return COMMODORE.GRAY_DARK;
 	}
 }
