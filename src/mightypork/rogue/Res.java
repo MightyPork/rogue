@@ -80,7 +80,7 @@ public final class Res {
 		textures.addQuad("panel", gui.makeQuad(0, 3.75, 4, .25));
 		
 		// sprites
-		texture = textures.loadTexture("mob", "/res/img/dudes.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.loadTexture("mob", "/res/img/dudes-b.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		tiles = texture.grid(8, 8);
 		textures.addSheet("player", tiles.makeSheet(0, 0, 4, 1));
 		
@@ -96,13 +96,24 @@ public final class Res {
 		
 		textures.addQuad("tile.shadow.n", tiles.makeQuad(0, 7));
 		textures.addQuad("tile.shadow.s", tiles.makeQuad(0, 7).flipY());
-		textures.addQuad("tile.shadow.w", tiles.makeQuad(2, 7));
-		textures.addQuad("tile.shadow.e", tiles.makeQuad(2, 7).flipX());
+		textures.addQuad("tile.shadow.w", tiles.makeQuad(1, 7));
+		textures.addQuad("tile.shadow.e", tiles.makeQuad(1, 7).flipX());
 		
-		textures.addQuad("tile.shadow.nw", tiles.makeQuad(1, 7));
-		textures.addQuad("tile.shadow.ne", tiles.makeQuad(1, 7).flipX());
-		textures.addQuad("tile.shadow.sw", tiles.makeQuad(1, 7).flipY());
-		textures.addQuad("tile.shadow.se", tiles.makeQuad(1, 7).flipY().flipX());
+		textures.addQuad("tile.shadow.nw", tiles.makeQuad(2, 7));
+		textures.addQuad("tile.shadow.ne", tiles.makeQuad(2, 7).flipX());
+		textures.addQuad("tile.shadow.sw", tiles.makeQuad(2, 7).flipY());
+		textures.addQuad("tile.shadow.se", tiles.makeQuad(2, 7).flipY().flipX());
+		
+		// unexplored fog
+		textures.addQuad("tile.ufog.n", tiles.makeQuad(3, 7));
+		textures.addQuad("tile.ufog.s", tiles.makeQuad(3, 7).flipY());
+		textures.addQuad("tile.ufog.w", tiles.makeQuad(4, 7));
+		textures.addQuad("tile.ufog.e", tiles.makeQuad(4, 7).flipX());
+		
+		textures.addQuad("tile.ufog.nw", tiles.makeQuad(5, 7));
+		textures.addQuad("tile.ufog.ne", tiles.makeQuad(5, 7).flipX());
+		textures.addQuad("tile.ufog.sw", tiles.makeQuad(5, 7).flipY());
+		textures.addQuad("tile.ufog.se", tiles.makeQuad(5, 7).flipY().flipX());
 	}
 	
 	

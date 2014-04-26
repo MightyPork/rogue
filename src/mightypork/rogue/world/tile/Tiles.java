@@ -5,9 +5,7 @@ import mightypork.rogue.world.tile.models.Floor;
 import mightypork.rogue.world.tile.models.NullTile;
 import mightypork.rogue.world.tile.models.SimpleDoor;
 import mightypork.rogue.world.tile.models.Wall;
-import mightypork.rogue.world.tile.renderers.FloorRenderer;
-import mightypork.rogue.world.tile.renderers.WallRenderer;
-
+import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
 
 /**
  * Tile registry
@@ -20,8 +18,8 @@ public final class Tiles {
 	
 	public static final TileModel NULL = new NullTile(0);
 	
-	public static final TileModel FLOOR_DARK = new Floor(10).setRenderer(new FloorRenderer("tile.floor.dark"));
-	public static final TileModel WALL_BRICK = new Wall(11).setRenderer(new WallRenderer("tile.wall.brick"));
+	public static final TileModel FLOOR_DARK = new Floor(10).setRenderer(new BasicTileRenderer("tile.floor.dark"));
+	public static final TileModel WALL_BRICK = new Wall(11).setRenderer(new BasicTileRenderer("tile.wall.brick"));
 	
 	public static final TileModel DOOR = new SimpleDoor(12);
 	

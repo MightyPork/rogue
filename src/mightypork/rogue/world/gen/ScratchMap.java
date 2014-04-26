@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Set;
 
 import mightypork.rogue.world.Coord;
+import mightypork.rogue.world.Sides;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.pathfinding.Heuristic;
 import mightypork.rogue.world.pathfinding.PathFinder;
@@ -20,19 +21,6 @@ import mightypork.util.math.Calc;
 
 
 public class ScratchMap {
-	
-	//@formatter:off
-	public static final Coord[] MOVES = {
-		Coord.make(-1, 0),
-		Coord.make(-1, -1), 
-		Coord.make(0, -1),
-		Coord.make(1, -1),
-		Coord.make(1, 0),
-		Coord.make(1, 1),
-		Coord.make(0, 1),
-		Coord.make(-1, 1)
-	};
-	//@formatter:on
 	
 	private Tile[][] map;
 	private final int width;
@@ -87,9 +75,6 @@ public class ScratchMap {
 	private final Theme theme;
 	private final Random rand;
 	private Coord enterPoint;
-	
-	public static final byte CARDINAL = (byte) 0b10101010;
-	public static final byte DIAGONAL = (byte) 0b01010101;
 	
 	private static final boolean FIX_GLITCHES = true;
 	
@@ -341,12 +326,12 @@ public class ScratchMap {
 	public byte findWalls(Coord pos)
 	{
 		byte walls = 0;
-		for (int i = 0; i <= 7; i++) {
-			final Coord cc = pos.add(MOVES[i]);
+		for (int i = 0; i < 8; i++) {
+			final Coord cc = pos.add(Sides.get(i));
 			if (!isIn(cc)) continue;
 			
 			if (get(cc).isWall()) {
-				walls |= 1 << (7 - i);
+				walls |= Sides.bit(i);
 			}
 		}
 		return walls;
@@ -357,11 +342,11 @@ public class ScratchMap {
 	{
 		byte floors = 0;
 		for (int i = 0; i <= 7; i++) {
-			final Coord cc = pos.add(MOVES[i]);
+			final Coord cc = pos.add(Sides.get(i));
 			if (!isIn(cc)) continue;
 			
 			if (get(cc).isFloor()) {
-				floors |= 1 << (7 - i);
+				floors |= Sides.bit(i);
 			}
 		}
 		return floors;
@@ -372,11 +357,11 @@ public class ScratchMap {
 	{
 		byte doors = 0;
 		for (int i = 0; i <= 7; i++) {
-			final Coord cc = pos.add(MOVES[i]);
+			final Coord cc = pos.add(Sides.get(i));
 			if (!isIn(cc)) continue;
 			
 			if (get(cc).isDoor()) {
-				doors |= 1 << (7 - i);
+				doors |= Sides.bit(i);
 			}
 		}
 		return doors;
@@ -387,10 +372,10 @@ public class ScratchMap {
 	{
 		byte nils = 0;
 		for (int i = 0; i <= 7; i++) {
-			final Coord cc = pos.add(MOVES[i]);
+			final Coord cc = pos.add(Sides.get(i));
 			
 			if (!isIn(cc) || get(cc).isNull()) {
-				nils |= 1 << (7 - i);
+				nils |= Sides.bit(i);
 			}
 		}
 		return nils;
@@ -432,12 +417,12 @@ public class ScratchMap {
 							break;
 						}
 						
-						if (isFloor && (nils & CARDINAL) != 0) {
+						if (isFloor && (nils & Sides.CARDINAL) != 0) {
 							toWall = true; // floor with adjacent cardinal null
 							break;
 						}
 						
-						if (isNull && (floors & DIAGONAL) != 0) {
+						if (isNull && (floors & Sides.DIAGONAL) != 0) {
 							System.out.println(c);
 							toWall = true; // null with adjacent diagonal floor
 							break;
@@ -445,25 +430,25 @@ public class ScratchMap {
 						
 						if (isDoor) {
 							
-							if (countBits((byte) (floors & CARDINAL)) < 2) {
+							if (countBits((byte) (floors & Sides.CARDINAL)) < 2) {
 								toWall = true;
 								break;
 							}
 							
-							if (countBits((byte) (walls & CARDINAL)) > 2) {
+							if (countBits((byte) (walls & Sides.CARDINAL)) > 2) {
 								toWall = true;
 								break;
 							}
 							
-							if (countBits((byte) (floors & CARDINAL)) > 2) {
+							if (countBits((byte) (floors & Sides.CARDINAL)) > 2) {
 								toFloor = true;
 								break;
 							}
 							
-							if ((floors & 0b11100000) == 0b11100000) toWall = true;
-							if ((floors & 0b00111000) == 0b00111000) toWall = true;
-							if ((floors & 0b00001110) == 0b00001110) toWall = true;
-							if ((floors & 0b10000011) == 0b10000011) toWall = true;
+							if ((floors & Sides.NW_CORNER) == Sides.NW_CORNER) toWall = true;
+							if ((floors & Sides.NE_CORNER) == Sides.NE_CORNER) toWall = true;
+							if ((floors & Sides.SW_CORNER) == Sides.SW_CORNER) toWall = true;
+							if ((floors & Sides.SE_CORNER) == Sides.SE_CORNER) toWall = true;
 							
 						}
 					} while (false);

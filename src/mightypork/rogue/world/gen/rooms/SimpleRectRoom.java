@@ -4,6 +4,7 @@ package mightypork.rogue.world.gen.rooms;
 import java.util.Random;
 
 import mightypork.rogue.world.Coord;
+import mightypork.rogue.world.Sides;
 import mightypork.rogue.world.gen.RoomBuilder;
 import mightypork.rogue.world.gen.RoomDesc;
 import mightypork.rogue.world.gen.ScratchMap;
@@ -49,7 +50,7 @@ public class SimpleRectRoom implements RoomBuilder {
 					break;
 			}
 			
-			if ((map.findDoors(door) & map.CARDINAL) == 0) {
+			if ((map.findDoors(door) & Sides.CARDINAL) == 0) {
 				map.set(door, theme.door());
 			}
 		}

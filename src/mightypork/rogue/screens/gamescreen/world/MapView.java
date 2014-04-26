@@ -9,28 +9,36 @@ import mightypork.gamecore.control.events.input.KeyListener;
 import mightypork.gamecore.control.events.input.MouseButtonEvent;
 import mightypork.gamecore.control.events.input.MouseButtonListener;
 import mightypork.gamecore.gui.components.InputComponent;
+import mightypork.gamecore.input.Keys;
 import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldRenderer;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
+import mightypork.util.math.Easing;
+import mightypork.util.math.constraints.num.Num;
+import mightypork.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.timing.Updateable;
 
 
-public class MapView extends InputComponent implements KeyListener, MouseButtonListener, EntityMoveListener {
+public class MapView extends InputComponent implements KeyListener, MouseButtonListener, EntityMoveListener, Updateable {
 	
 	protected final WorldRenderer worldRenderer;
 	protected final World world;
 	private final PlayerControl pc;
 	
 	private final Set<MapInteractionPlugin> plugins = new HashSet<>();
+	private Num tileSize;
+	private final NumAnimated zoom = new NumAnimated(0, Easing.SINE_BOTH);
 	
 	
 	public MapView(World world)
 	{
 		this.world = world;
-		this.worldRenderer = new WorldRenderer(world, this, 12, 8, 32);//8, 8, 64
+		this.tileSize = height().min(width()).div(8).max(32).mul(Num.make(1).sub(zoom.mul(0.66)));
+		this.worldRenderer = new WorldRenderer(world, this, tileSize);
 		pc = world.getPlayerControl();
 		pc.addMoveListener(this);
 	}
@@ -109,6 +117,16 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 			p.onKey(this, pc, event.getKey(), event.isDown());
 		}
 		
+		if(event.getKey() == Keys.Z) {
+			if(event.isDown()) {
+				zoom.fadeIn(1);
+			} else {
+				zoom.fadeOut(1);
+			}
+			
+			
+		}
+		
 		// don't consume key events, can be useful for others.
 	}
 	
@@ -116,5 +134,12 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void addPlugin(MapInteractionPlugin plugin)
 	{
 		plugins.add(plugin);
+	}
+
+
+	@Override
+	public void update(double delta)
+	{
+		zoom.update(delta);
 	}
 }

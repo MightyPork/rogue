@@ -24,7 +24,7 @@ public class DoorRenderer extends TileRenderer {
 	
 	
 	@Override
-	public void render(TileRenderContext context)
+	public void renderTile(TileRenderContext context)
 	{
 		final Tile t = context.getTile();
 		final Rect rect = context.getRect();

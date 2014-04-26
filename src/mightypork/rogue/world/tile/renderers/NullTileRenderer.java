@@ -8,9 +8,8 @@ import mightypork.rogue.world.tile.TileRenderer;
 public class NullTileRenderer extends TileRenderer {
 	
 	@Override
-	public void render(TileRenderContext context)
+	protected void renderTile(TileRenderContext context)
 	{
-		// nope
 	}
 	
 }

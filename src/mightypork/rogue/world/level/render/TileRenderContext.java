@@ -42,13 +42,12 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	/**
 	 * Get a neighbor tile
 	 * 
-	 * @param offsetX x offset (left-right)
-	 * @param offsetY y offset (up-down)
+	 * @param offset offsets
 	 * @return the tile at that position
 	 */
-	public Tile getAdjacentTile(int offsetX, int offsetY)
+	public Tile getAdjacentTile(Coord offset)
 	{
-		return map.getTile(pos.add(offsetX, offsetY));
+		return map.getTile(pos.add(offset));
 	}
 	
 	
@@ -63,6 +62,7 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	
 	public void renderTile()
 	{
+		if(!map.getTile(pos).isExplored()) return;
 		map.getTile(pos).renderTile(this);
 	}
 	

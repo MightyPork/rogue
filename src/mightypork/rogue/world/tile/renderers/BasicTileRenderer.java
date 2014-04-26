@@ -21,7 +21,7 @@ public class BasicTileRenderer extends TileRenderer {
 	
 	
 	@Override
-	public void render(TileRenderContext context)
+	public void renderTile(TileRenderContext context)
 	{
 		final Rect rect = context.getRect();
 		Render.quadTextured(rect, sheet.getRandomQuad(context.getTileNoise()));

@@ -219,4 +219,10 @@ public final class Tile implements IonBinary {
 	{
 		data.explored = true;
 	}
+
+
+	public boolean doesReceiveShadow()
+	{
+		return model.doesReceiveShadow();
+	}
 }

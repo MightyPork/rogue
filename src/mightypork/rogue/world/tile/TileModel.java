@@ -53,6 +53,9 @@ public abstract class TileModel {
 	
 	
 	public abstract boolean doesCastShadow();
+
+
+	public abstract boolean doesReceiveShadow();
 	
 	
 	public boolean isNullTile()

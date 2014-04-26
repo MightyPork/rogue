@@ -10,12 +10,11 @@ import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.util.math.color.RGB;
 import mightypork.util.math.constraints.Pollable;
 import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.num.caching.NumCache;
 import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.rect.caching.RectCache;
+import mightypork.util.math.constraints.rect.RectConst;
 import mightypork.util.math.constraints.rect.proxy.RectProxy;
 import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.math.constraints.vect.caching.VectCache;
+import mightypork.util.math.constraints.vect.VectConst;
 
 
 /**
@@ -27,14 +26,13 @@ public class WorldRenderer extends RectProxy implements Pollable {
 	
 	private static final boolean USE_BATCH_RENDERING = true;
 	
-	private final VectCache vpCenter;
-	private final NumCache tileSize;
+	private final Num tileSize;
 	
 	private final World world;
 	private final Entity player;
 	
 	// can be changed
-	private RectCache mapRect;
+	private RectConst mapRect;
 	private Level activeLevel;
 	
 	private final Rect rightShadow;
@@ -45,17 +43,13 @@ public class WorldRenderer extends RectProxy implements Pollable {
 	private TileRenderContext trc;
 	
 	
-	public WorldRenderer(World world, Rect viewport, int xTiles, int yTiles, int minTileSize)
-	{
+	public WorldRenderer(World world, Rect viewport, Num tileSize) {
 		super(viewport);
 		
 		this.world = world;
 		this.player = world.getPlayerEntity();
 		
-		tileSize = width().div(xTiles).min(height().div(yTiles)).max(minTileSize).cached();
-		
-		final Num th = tileSize.half();
-		vpCenter = center().sub(th, th).cached();
+		this.tileSize = tileSize;
 		
 		final Num grX = width().perc(30);
 		leftShadow = leftEdge().growRight(grX);
@@ -76,21 +70,18 @@ public class WorldRenderer extends RectProxy implements Pollable {
 		if (activeLevel == level) return;
 		activeLevel = level;
 		
-		mapRect = Rect.make(vpCenter, tileSize.mul(level.getWidth()), tileSize.mul(level.getHeight())).cached();
+		mapRect = Rect.make(0, 0, level.getWidth(), level.getHeight());
 		
 		trc = new TileRenderContext(activeLevel, mapRect);
 	}
 	
 	
-	private Vect getOffset()
+	private VectConst getOffset()
 	{
 		final EntityPos pos = player.getPosition();
 		final double playerX = pos.visualX();
-		final double playerY = pos.visualY();
-		
-		final double ts = tileSize.value();
-		
-		return Vect.make((-ts * playerX), (-ts * playerY));
+		final double playerY = pos.visualY();		
+		return Vect.make(-playerX-0.5, -playerY-0.5);
 	}
 	
 	
@@ -98,12 +89,16 @@ public class WorldRenderer extends RectProxy implements Pollable {
 	{
 		Render.pushMatrix();
 		Render.setColor(RGB.WHITE);
+		Render.translate(center());
+		Render.scaleXY(tileSize.value());
 		Render.translate(getOffset());
+		
 		
 		// tiles to render
 		final EntityPos pos = player.getPosition();
 		final double w = width().value();
 		final double h = height().value();
+		
 		final double ts = tileSize.value();
 		
 		final int xtilesh = (int) (w / (ts * 2)) + 1;
@@ -167,8 +162,8 @@ public class WorldRenderer extends RectProxy implements Pollable {
 	
 	public Coord getClickedTile(Vect clickPos)
 	{
-		final Vect v = clickPos.sub(mapRect.origin().add(getOffset()));
 		final int ts = (int) tileSize.value();
+		final Vect v = clickPos.sub(center().add(getOffset().mul(ts)));
 		return new Coord(v.xi() / ts, v.yi() / ts);
 	}
 	
@@ -176,12 +171,6 @@ public class WorldRenderer extends RectProxy implements Pollable {
 	@Override
 	public void poll()
 	{
-		// in order of dependency
-		vpCenter.poll();
-		tileSize.poll();
-		
-		mapRect.poll();
-		
 		rebuildTiles();
 	}
 	

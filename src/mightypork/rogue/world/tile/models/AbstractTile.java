@@ -47,6 +47,12 @@ public abstract class AbstractTile extends TileModel {
 		return false;
 	}
 	
+	@Override
+	public boolean doesReceiveShadow()
+	{
+		return isFloor();
+	}
+	
 	
 	@Override
 	@DefaultImpl
