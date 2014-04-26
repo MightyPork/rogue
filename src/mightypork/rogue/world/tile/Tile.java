@@ -39,20 +39,17 @@ public final class Tile implements IonBinary {
 	private boolean occupied;
 	
 	
-	public Tile(int id)
-	{
+	public Tile(int id) {
 		this(Tiles.get(id));
 	}
 	
 	
-	public Tile(TileModel model)
-	{
+	public Tile(TileModel model) {
 		setModel(model);
 	}
 	
 	
-	public Tile()
-	{
+	public Tile() {
 	}
 	
 	
@@ -209,5 +206,17 @@ public final class Tile implements IonBinary {
 	public Color getMapColor()
 	{
 		return model.getMapColor(this);
+	}
+	
+	
+	public boolean isExplored()
+	{
+		return data.explored;
+	}
+	
+	
+	public void explore()
+	{
+		data.explored = true;
 	}
 }

@@ -4,6 +4,7 @@ package mightypork.rogue.world.tile.models;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.math.color.COMMODORE;
 import mightypork.util.math.color.Color;
+import mightypork.util.math.color.RGB;
 
 
 /**
@@ -50,6 +51,6 @@ public class Wall extends AbstractTile {
 	@Override
 	public Color getMapColor(Tile tile)
 	{
-		return COMMODORE.GRAY_LIGHT;
+		return RGB.GRAY_LIGHT;
 	}
 }

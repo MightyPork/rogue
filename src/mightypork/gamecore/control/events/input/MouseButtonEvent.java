@@ -2,6 +2,7 @@ package mightypork.gamecore.control.events.input;
 
 
 import mightypork.util.control.eventbus.BusEvent;
+import mightypork.util.control.eventbus.event_flags.UnloggedEvent;
 import mightypork.util.math.constraints.rect.proxy.RectBound;
 import mightypork.util.math.constraints.vect.Vect;
 import mightypork.util.math.constraints.vect.VectConst;
@@ -12,6 +13,7 @@ import mightypork.util.math.constraints.vect.VectConst;
  * 
  * @author MightyPork
  */
+@UnloggedEvent
 public class MouseButtonEvent extends BusEvent<MouseButtonListener> {
 	
 	public static final int BUTTON_LEFT = 0;

@@ -616,7 +616,7 @@ public class Calc {
 	 * @param list list of choices
 	 * @return picked element
 	 */
-	public static Object pick(List<?> list)
+	public static <T> T pick(List<T> list)
 	{
 		if (list.size() == 0) return null;
 		return list.get(rand.nextInt(list.size()));

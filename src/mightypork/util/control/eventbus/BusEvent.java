@@ -85,7 +85,7 @@ public abstract class BusEvent<HANDLER> {
 	 * 
 	 * @return true if consumed
 	 */
-	final boolean isConsumed()
+	public final boolean isConsumed()
 	{
 		return consumed;
 	}

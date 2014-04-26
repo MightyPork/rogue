@@ -1,8 +1,9 @@
-package mightypork.rogue.world;
+package mightypork.rogue.world.entity;
 
 
 import java.io.IOException;
 
+import mightypork.rogue.world.Coord;
 import mightypork.util.files.ion.IonBinary;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;

@@ -8,6 +8,7 @@ import mightypork.rogue.world.entity.EntityData;
 import mightypork.rogue.world.entity.renderers.EntityRenderer;
 import mightypork.rogue.world.pathfinding.Heuristic;
 import mightypork.rogue.world.pathfinding.PathFinder;
+import mightypork.util.annotations.DefaultImpl;
 
 
 /**
@@ -22,8 +23,7 @@ public abstract class EntityModel implements EntityMoveListener {
 	public EntityRenderer renderer = EntityRenderer.NONE;
 	
 	
-	public EntityModel(int id)
-	{
+	public EntityModel(int id) {
 		Entities.register(id, this);
 		this.id = id;
 	}
@@ -69,24 +69,28 @@ public abstract class EntityModel implements EntityMoveListener {
 	public abstract void onPathInterrupted(Entity entity);
 	
 	
+	@DefaultImpl
 	public boolean canWalkInto(Entity entity, Coord pos)
 	{
 		return entity.getLevel().canWalkInto(pos);
 	}
 	
 	
+	@DefaultImpl
 	public int getPathMinCost()
 	{
 		return 10;
 	}
 	
 	
+	@DefaultImpl
 	public Heuristic getPathHeuristic()
 	{
 		return PathFinder.DIAGONAL_HEURISTIC;
 	}
 	
 	
+	@DefaultImpl
 	public int getPathCost(Entity entity, Coord from, Coord to)
 	{
 		return 10;
@@ -94,5 +98,11 @@ public abstract class EntityModel implements EntityMoveListener {
 	
 	
 	public abstract void initMetadata(EntityData metadata);
+	
+	
+	@DefaultImpl
+	public void onEnteredLevel(Entity entity)
+	{
+	}
 	
 }

@@ -19,8 +19,7 @@ public class PlayerModel extends EntityModel {
 	private static final double STEP_TIME = 0.25;
 	
 	
-	public PlayerModel(int id)
-	{
+	public PlayerModel(int id) {
 		super(id);
 		setRenderer(new PlayerRenderer("player"));
 	}
@@ -42,9 +41,20 @@ public class PlayerModel extends EntityModel {
 	@Override
 	public void onStepFinished(Entity entity)
 	{
-		final Level l = entity.getLevel();
-		
-		l.markExplored(entity.getCoord(), 4.5);
+		exploreSurroundings(entity);
+	}
+	
+	
+	private void exploreSurroundings(Entity entity)
+	{
+		entity.getLevel().markExplored(entity.getCoord(), 4.5);
+	}
+	
+	
+	@Override
+	public void onEnteredLevel(Entity entity)
+	{
+		exploreSurroundings(entity);
 	}
 	
 	
@@ -70,6 +80,17 @@ public class PlayerModel extends EntityModel {
 	public boolean canWalkInto(Entity entity, Coord pos)
 	{
 		final Tile t = entity.getLevel().getTile(pos);
-		return (t.data.explored || pos.dist(entity.getCoord()) < 6) && t.isWalkable();
+		return t.isWalkable();
+	}
+	
+	
+	@Override
+	public int getPathCost(Entity entity, Coord from, Coord to)
+	{
+		if (!entity.getLevel().getTile(entity.getCoord()).data.explored) {
+			return 1000;
+		}
+		
+		return super.getPathCost(entity, from, to);
 	}
 }

@@ -22,18 +22,18 @@ public class LevelGenerator {
 	{
 		final Random rand = new Random(seed + 13);
 		
-		final int max_size = 256;
+		final int max_size = 128;
 		
 		final ScratchMap map = new ScratchMap(max_size, theme, rand);
 		
 		// start
 		map.addRoom(ROOM_SQUARE);
 		
-		for (int i = 0; i < 2 + rand.nextInt(1 + complexity + (int) Math.pow(complexity, 1.6)); i++) {
+		for (int i = 0; i < 1+complexity/4 + rand.nextInt(3 + complexity); i++) {
 			map.addRoom(ROOM_SQUARE);
 		}
 		
-		for (int i = 0; i < 2 + rand.nextInt(1 + complexity / 3 + (int) Math.pow(complexity, 1.2)); i++) {
+		for (int i = 0; i < 1 + complexity/8 + rand.nextInt(1 + complexity); i++) {
 			map.addRoom(DEAD_END);
 		}
 		

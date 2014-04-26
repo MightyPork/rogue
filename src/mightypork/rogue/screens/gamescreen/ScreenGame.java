@@ -24,8 +24,8 @@ public class ScreenGame extends LayeredScreen {
 		
 		this.world = obtainWorld();
 		
-		addLayer(new WorldLayer(this, world));
 		addLayer(new HudLayer(this, world));
+		addLayer(new WorldLayer(this, world));
 	}
 	
 	

@@ -2,8 +2,10 @@ package mightypork.rogue.world.gen;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.level.Level;
@@ -14,6 +16,7 @@ import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
 import mightypork.util.logging.Log;
+import mightypork.util.math.Calc;
 
 
 public class ScratchMap {
@@ -56,7 +59,7 @@ public class ScratchMap {
 			
 			if (t.isDoor()) return 10; // door
 			if (t.isFloor()) return 20; // floor
-			
+				
 			if (t.isWall() && t.genData.isProtected) return 1000;
 			
 			return 100; // wall
@@ -91,8 +94,7 @@ public class ScratchMap {
 	private static final boolean FIX_GLITCHES = true;
 	
 	
-	public ScratchMap(int max_size, Theme theme, Random rand)
-	{
+	public ScratchMap(int max_size, Theme theme, Random rand) {
 		map = new Tile[max_size][max_size];
 		
 		genMin = Coord.make((max_size / 2) - 1, (max_size / 2) - 1);
@@ -174,7 +176,9 @@ public class ScratchMap {
 	
 	public Tile get(Coord pos)
 	{
-		if (!isIn(pos)) { throw new IndexOutOfBoundsException("Tile not in map: " + pos); }
+		if (!isIn(pos)) {
+			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
+		}
 		
 		return map[pos.y][pos.x];
 	}
@@ -188,7 +192,9 @@ public class ScratchMap {
 	
 	public boolean set(Coord pos, Tile tile)
 	{
-		if (!isIn(pos)) { throw new IndexOutOfBoundsException("Tile not in map: " + pos); }
+		if (!isIn(pos)) {
+			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
+		}
 		
 		map[pos.y][pos.x] = tile;
 		return true;
@@ -256,17 +262,25 @@ public class ScratchMap {
 	public void buildCorridors()
 	{
 		Log.f3("Building corridors.");
-		for (int i = 0; i < nodes.size(); i++) {
-			for (int j = i + 1; j < nodes.size(); j++) {
-				buildCorridor(nodes.get(i), nodes.get(j));
+		
+		Coord start = nodes.get(0);
+		Set<Coord> starts = new HashSet<>();
+		
+		for (int i = 0; i < 1+rooms.size()/8; i++) {
+			if (!starts.contains(start)) {
+				for (int j = 0; j < nodes.size(); j++) {
+					buildCorridor(start, nodes.get(j));
+				}
 			}
+			starts.add(start);
+			start = Calc.pick(nodes);
 		}
 	}
 	
 	
 	private void buildCorridor(Coord node1, Coord node2)
 	{
-		//Log.f3("Finding path " + node1 + " -> " + node2);
+		Log.f3("Building corridor " + node1 + " -> " + node2);
 		final List<Coord> steps = PathFinder.findPath(pfc, node1, node2);
 		
 		if (steps == null) {
@@ -296,7 +310,7 @@ public class ScratchMap {
 				
 				final Tile current = get(c);
 				if (!current.isNull() && (current.isPotentiallyWalkable())) continue; // floor already, let it be
-				
+					
 				if (i == 0 && j == 0) {
 					set(c, theme.floor());
 				} else {

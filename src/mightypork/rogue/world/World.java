@@ -104,8 +104,8 @@ public class World implements IonBundled, Updateable {
 		final int playerEid = getNewEID();
 		
 		playerEntity = Entities.PLAYER.createEntity(playerEid);
-		levels.get(level).addEntity(playerEntity);
 		playerEntity.setPosition(levels.get(level).getEnterPoint());
+		levels.get(level).addEntity(playerEntity);
 		
 		playerInfo.setLevel(level);
 		playerInfo.setEID(playerEid);

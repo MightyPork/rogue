@@ -2,6 +2,8 @@ package mightypork.rogue.world;
 
 
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityPos;
+import mightypork.rogue.world.entity.PathStep;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
 

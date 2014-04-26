@@ -39,7 +39,7 @@ public class WorldLayer extends ScreenLayer {
 	@Override
 	public int getZIndex()
 	{
-		return -1; // stay down
+		return 0; // stay down
 	}
 	
 	

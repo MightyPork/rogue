@@ -5,6 +5,8 @@ import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.renderers.DoorRenderer;
 import mightypork.util.math.color.COMMODORE;
 import mightypork.util.math.color.Color;
+import mightypork.util.math.color.PAL16;
+import mightypork.util.math.color.RGB;
 
 
 public class SimpleDoor extends AbstractTile {
@@ -60,6 +62,6 @@ public class SimpleDoor extends AbstractTile {
 	@Override
 	public Color getMapColor(Tile tile)
 	{
-		return COMMODORE.BROWN;
+		return PAL16.NEWPOOP;
 	}
 }

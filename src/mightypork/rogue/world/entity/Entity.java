@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.EntityPos;
-import mightypork.rogue.world.PathStep;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.models.EntityModel;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
@@ -27,7 +25,7 @@ import mightypork.util.files.ion.IonOutput;
  * 
  * @author MightyPork
  */
-public final class Entity implements IonBinary, EntityMoveListener {
+public final class Entity implements IonBinary {
 	
 	public static final int ION_MARK = 52;
 	
@@ -188,11 +186,15 @@ public final class Entity implements IonBinary, EntityMoveListener {
 		if (walking && data.position.isFinished()) {
 			walking = false;
 			level.freeTile(lastPosition.getCoord());
-			
-			onStepFinished(this);
+	
+			for (final EntityMoveListener l : moveListeners) {
+				l.onStepFinished(this);
+			}
 			
 			if (data.path.isEmpty()) {
-				onPathFinished(this);
+				for (final EntityMoveListener l : moveListeners) {
+					l.onPathFinished(this);
+				}
 			}
 		}
 		
@@ -206,7 +208,11 @@ public final class Entity implements IonBinary, EntityMoveListener {
 			
 			if (!level.canWalkInto(planned)) {
 				cancelPath();
-				onPathInterrupted(this);
+				
+				for (final EntityMoveListener l : moveListeners) {
+					l.onPathInterrupted(this);
+				}
+				
 				walking = false;
 			} else {
 				
@@ -252,6 +258,8 @@ public final class Entity implements IonBinary, EntityMoveListener {
 	
 	public boolean navigateTo(Coord pos)
 	{
+		if(pos.equals(getCoord())) return true;
+		
 		final List<PathStep> path = PathFinder.findPathRelative(pfc, getPosition().getCoord(), pos);
 		
 		if (path == null) return false;
@@ -259,33 +267,6 @@ public final class Entity implements IonBinary, EntityMoveListener {
 		this.cancelPath();
 		this.addSteps(path);
 		return true;
-	}
-	
-	
-	@Override
-	public void onStepFinished(Entity entity)
-	{
-		for (final EntityMoveListener l : moveListeners) {
-			l.onStepFinished(entity);
-		}
-	}
-	
-	
-	@Override
-	public void onPathFinished(Entity entity)
-	{
-		for (final EntityMoveListener l : moveListeners) {
-			l.onStepFinished(entity);
-		}
-	}
-	
-	
-	@Override
-	public void onPathInterrupted(Entity entity)
-	{
-		for (final EntityMoveListener l : moveListeners) {
-			l.onPathInterrupted(entity);
-		}
 	}
 	
 	
@@ -304,11 +285,18 @@ public final class Entity implements IonBinary, EntityMoveListener {
 	public void setLevel(Level level)
 	{
 		this.level = level;
+		model.onEnteredLevel(this);
 	}
 	
 	
 	public Coord getCoord()
 	{
 		return data.position.getCoord();
+	}
+	
+	
+	public EntityModel getModel()
+	{
+		return model;
 	}
 }

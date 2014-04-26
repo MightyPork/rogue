@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import mightypork.rogue.world.EntityPos;
-import mightypork.rogue.world.PathStep;
 import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.IonBundled;
 

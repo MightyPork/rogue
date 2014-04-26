@@ -6,12 +6,14 @@ import mightypork.gamecore.control.events.input.MouseButtonListener;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.EntityPos;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityPos;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.math.color.Color;
+import mightypork.util.math.color.RGB;
+import mightypork.util.math.constraints.num.Num;
 import mightypork.util.math.constraints.rect.Rect;
 import mightypork.util.math.constraints.rect.mutable.RectMutable;
 import mightypork.util.math.constraints.vect.Vect;
@@ -24,12 +26,11 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 	private final World world;
 	private final RectMutable bounds = Rect.makeVar();
 	private int unit = 0;
-	private final Color back = Color.rgba(0, 0.2, 0.2, 0.4);
-	private final Color back2 = Color.rgba(0, 0.5, 0.5, 0.5);
+	private final Num translucency = Num.make(0.8);
+	private final Color playerColor = RGB.RED;
 	
 	
-	public Minimap(World w)
-	{
+	public Minimap(World w) {
 		this.world = w;
 	}
 	
@@ -37,9 +38,10 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 	@Override
 	protected void renderComponent()
 	{
+		Color.pushAlpha(translucency);
 		
 		final Level lvl = world.getCurrentLevel();
-		unit = (int) Math.min(Math.max(2, Math.ceil(height().value() / (lvl.getHeight() + 2))), 8);
+		unit = (int) Math.min(Math.max(2, Math.ceil((height().value()/2) / (lvl.getHeight() + 2))), 6);
 		
 		final World w = lvl.getWorld();
 		final Entity e = w.getPlayerEntity();
@@ -52,12 +54,12 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 		
 		bounds.setTo(tl, unit * lw, unit * lh);
 		
-		Render.quad(bounds.grow(unit * 0.5), back);
-		Render.quad(bounds, back2);
-		
 		final Coord point = new Coord(tl.xi(), tl.yi());
+		
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		
 		GL11.glBegin(GL11.GL_QUADS);
+		
 		for (final Coord pos = Coord.zero(); pos.y < lh; pos.y++, point.y += unit) {
 			for (pos.x = 0, point.x = tl.xi(); pos.x < lw; pos.x++, point.x += unit) {
 				
@@ -66,7 +68,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 				
 				final Color clr = t.getMapColor();
 				
-				GL11.glColor4d(clr.r(), clr.g(), clr.b(), clr.a() * 0.9);
+				Render.setColor(clr);
 				
 				GL11.glVertex2i(point.x, point.y);
 				GL11.glVertex2i(point.x + unit, point.y);
@@ -76,7 +78,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 		}
 		
 		// player
-		GL11.glColor3d(1, 0, 0);
+		Render.setColor(playerColor);
 		
 		final double plx = tl.xi() + plCoord.visualX() * unit;
 		final double ply = tl.yi() + plCoord.visualY() * unit;
@@ -87,19 +89,25 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 		GL11.glVertex2d(plx, ply + unit);
 		
 		GL11.glEnd();
+		
+		Color.popAlpha();
 	}
 	
 	
 	@Override
 	public void receive(MouseButtonEvent event)
 	{
-		if (event.isOver(bounds) && event.isUp()) {
-			final Vect relative = event.getPos().sub(bounds.origin());
-			final Coord actual = Coord.make(relative.xi() / unit, relative.yi() / unit);
+		if (event.isOver(bounds)) {
+			if (event.isUp()) {
+				final Vect relative = event.getPos().sub(bounds.origin());
+				final Coord actual = Coord.make(relative.xi() / unit, relative.yi() / unit);
+				final Entity player = world.getPlayerEntity();
+				
+				if (player.getLevel().getTile(actual).isExplored()) {
+					player.navigateTo(actual);
+				}
+			}
 			
-			if (!world.getCurrentLevel().getTile(actual).data.explored) return; // unexplored
-			
-			world.getPlayerEntity().navigateTo(actual);
 			event.consume();
 		}
 	}

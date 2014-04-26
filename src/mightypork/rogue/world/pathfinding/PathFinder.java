@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.PathStep;
+import mightypork.rogue.world.entity.PathStep;
 
 
 /**

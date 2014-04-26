@@ -4,6 +4,7 @@ package mightypork.rogue.world;
 import mightypork.gamecore.render.Render;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityPos;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.util.math.color.RGB;
