@@ -3,10 +3,8 @@ package mightypork.rogue.world.tile.models;
 
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.renderers.DoorRenderer;
-import mightypork.util.math.color.COMMODORE;
 import mightypork.util.math.color.Color;
 import mightypork.util.math.color.PAL16;
-import mightypork.util.math.color.RGB;
 
 
 public class SimpleDoor extends AbstractTile {

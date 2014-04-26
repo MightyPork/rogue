@@ -29,12 +29,9 @@ public class LevelGenerator {
 		// start
 		map.addRoom(ROOM_SQUARE);
 		
-		for (int i = 0; i < 1+complexity/4 + rand.nextInt(3 + complexity); i++) {
+		for (int i = 0; i < 1+complexity/2 + rand.nextInt((int) (3 + complexity*1.5)); i++) {
 			map.addRoom(ROOM_SQUARE);
-		}
-		
-		for (int i = 0; i < 1 + complexity/8 + rand.nextInt(1 + complexity); i++) {
-			map.addRoom(DEAD_END);
+			if(rand.nextInt(4)>0) map.addRoom(DEAD_END);
 		}
 		
 		map.buildCorridors();

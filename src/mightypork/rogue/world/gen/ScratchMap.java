@@ -125,16 +125,16 @@ public class ScratchMap {
 			
 			switch (rand.nextInt(4)) {
 				case 0:
-					center.x += 2 + rand.nextInt(6);
+					center.x += 1 + rand.nextInt(4);
 					break;
 				case 1:
-					center.x -= 2 + rand.nextInt(6);
+					center.x -= 1 + rand.nextInt(4);
 					break;
 				case 2:
-					center.y += 2 + rand.nextInt(6);
+					center.y += 1 + rand.nextInt(4);
 					break;
 				case 3:
-					center.y -= 2 + rand.nextInt(6);
+					center.y -= 1 + rand.nextInt(4);
 			}
 			
 			final RoomDesc rd = rb.buildToFit(this, theme, rand, center);
@@ -266,7 +266,7 @@ public class ScratchMap {
 		Coord start = nodes.get(0);
 		Set<Coord> starts = new HashSet<>();
 		
-		for (int i = 0; i < 1+rooms.size()/8; i++) {
+		for (int i = 0; i < 2 + rooms.size() / 5; i++) {
 			if (!starts.contains(start)) {
 				for (int j = 0; j < nodes.size(); j++) {
 					buildCorridor(start, nodes.get(j));

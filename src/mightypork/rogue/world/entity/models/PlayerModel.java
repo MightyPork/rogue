@@ -5,7 +5,6 @@ import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityData;
 import mightypork.rogue.world.entity.renderers.PlayerRenderer;
-import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 
 
