@@ -24,8 +24,6 @@ public class World implements IonBundled, Updateable {
 	private final PlayerInfo playerInfo = new PlayerInfo();
 	private Entity playerEntity;
 	
-	private final PlayerControl control = new PlayerControl(this);
-	
 	/** World seed */
 	private long seed;
 	
@@ -48,6 +46,7 @@ public class World implements IonBundled, Updateable {
 		in.loadBundled("player", playerInfo);
 		
 		playerEntity = levels.get(playerInfo.getLevel()).getEntity(playerInfo.getEID());
+		if(playerEntity == null) throw new RuntimeException("Player entity not found in the world.");
 	}
 	
 	
@@ -104,7 +103,7 @@ public class World implements IonBundled, Updateable {
 		final int playerEid = getNewEID();
 		
 		playerEntity = Entities.PLAYER.createEntity(playerEid);
-		playerEntity.setPosition(levels.get(level).getEnterPoint());
+		playerEntity.pos.setPosition(levels.get(level).getEnterPoint());
 		levels.get(level).addEntity(playerEntity);
 		
 		playerInfo.setLevel(level);
@@ -115,12 +114,6 @@ public class World implements IonBundled, Updateable {
 	public Level getCurrentLevel()
 	{
 		return levels.get(playerInfo.getLevel());
-	}
-	
-	
-	public PlayerControl getPlayerControl()
-	{
-		return control;
 	}
 	
 	

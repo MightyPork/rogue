@@ -19,7 +19,7 @@ import mightypork.util.math.constraints.rect.Rect;
 
 public class HudLayer extends ScreenLayer {
 	
-	public HudLayer(Screen screen, World world)
+	public HudLayer(Screen screen)
 	{
 		super(screen);
 		
@@ -52,7 +52,7 @@ public class HudLayer extends ScreenLayer {
 		root.add(experience);
 		
 		
-		final Minimap mm = new Minimap(world);
+		final Minimap mm = new Minimap();
 		mm.setRect(root.shrink(root.width().perc(5), root.height().perc(15)));
 		root.add(mm);
 		

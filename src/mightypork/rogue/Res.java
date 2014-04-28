@@ -82,7 +82,7 @@ public final class Res {
 		// sprites
 		texture = textures.loadTexture("mob", "/res/img/dudes-b.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		tiles = texture.grid(8, 8);
-		textures.addSheet("player", tiles.makeSheet(0, 0, 4, 1));
+		textures.addSheet("sprite.player", tiles.makeSheet(0, 0, 4, 1));
 		
 		// small sheet
 		texture = textures.loadTexture("tiles16", "/res/img/tiles16.png", FilterMode.NEAREST, WrapMode.CLAMP);

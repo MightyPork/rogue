@@ -1,7 +1,8 @@
-package mightypork.rogue.world.entity.models;
-
+package mightypork.rogue.world.entity.modules;
 
 import mightypork.rogue.world.entity.Entity;
+
+
 
 
 public interface EntityMoveListener {

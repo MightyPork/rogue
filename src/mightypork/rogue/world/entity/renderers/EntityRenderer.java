@@ -7,9 +7,14 @@ import mightypork.rogue.world.level.render.MapRenderContext;
 
 public abstract class EntityRenderer {
 	
-	public static final EntityRenderer NONE = new NullEntityRenderer();
+	protected final Entity entity;
 	
 	
-	public abstract void render(Entity entity, MapRenderContext context);
+	public EntityRenderer(Entity entity) {
+		this.entity = entity;
+	}
+	
+	
+	public abstract void render(MapRenderContext context);
 	
 }

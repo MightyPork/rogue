@@ -209,10 +209,10 @@ public class IonOutput {
 	public <T> void writeSequence(Collection<T> sequence) throws IOException
 	{
 		for (final T element : sequence) {
-			writeMark(Ion.ENTRY);
+			startEntry();
 			writeObject(element);
 		}
-		writeMark(Ion.END);
+		endSequence();
 	}
 	
 	
@@ -223,11 +223,23 @@ public class IonOutput {
 				continue;
 			}
 			
-			writeMark(Ion.ENTRY);
+			startEntry();
 			writeObject(e.getKey());
 			writeObject(e.getValue());
 		}
+		endSequence();
+	}
+
+
+	public void endSequence() throws IOException
+	{
 		writeMark(Ion.END);
+	}
+
+
+	public void startEntry() throws IOException
+	{
+		writeMark(Ion.ENTRY);
 	}
 	
 	

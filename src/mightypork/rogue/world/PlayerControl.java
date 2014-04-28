@@ -1,90 +1,102 @@
 package mightypork.rogue.world;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.EntityPos;
 import mightypork.rogue.world.entity.PathStep;
-import mightypork.rogue.world.entity.models.EntityMoveListener;
+import mightypork.rogue.world.entity.modules.EntityMoveListener;
+import mightypork.rogue.world.entity.modules.EntityPos;
 import mightypork.rogue.world.level.Level;
 
 
-public class PlayerControl {
+public abstract class PlayerControl {
 	
-	private final World world;
+	protected Set<EntityMoveListener> playerMoveListeners = new HashSet<>();
+	
+	private World lastWorld;
 	
 	
-	public PlayerControl(World w)
+	protected abstract World getWorld();
+	
+	
+	private World getWorld2()
+	{		
+		World newWorld = getWorld();
+		
+		if (newWorld != lastWorld) {
+			for (EntityMoveListener eml : playerMoveListeners) {
+				newWorld.getPlayerEntity().pos.addMoveListener(eml);
+			}
+		}
+		
+		lastWorld = newWorld;
+		
+		return newWorld;
+		
+	};
+	
+	
+	private Entity getPlayerEntity()
 	{
-		this.world = w;
-	}
-	
-	
-	public Entity getEntity()
-	{
-		return world.getPlayerEntity();
+		if(getWorld2() == null) return null;
+		
+		return getWorld2().getPlayerEntity();
 	}
 	
 	
 	public void goNorth()
 	{
-		getEntity().cancelPath();
-		getEntity().addStep(PathStep.NORTH);
+		getPlayerEntity().pos.cancelPath();
+		getPlayerEntity().pos.addStep(PathStep.NORTH);
 	}
 	
 	
 	public void goSouth()
 	{
-		getEntity().cancelPath();
-		getEntity().addStep(PathStep.SOUTH);
+		getPlayerEntity().pos.cancelPath();
+		getPlayerEntity().pos.addStep(PathStep.SOUTH);
 	}
 	
 	
 	public void goEast()
 	{
-		getEntity().cancelPath();
-		getEntity().addStep(PathStep.EAST);
+		getPlayerEntity().pos.cancelPath();
+		getPlayerEntity().pos.addStep(PathStep.EAST);
 	}
 	
 	
 	public void goWest()
 	{
-		getEntity().cancelPath();
-		getEntity().addStep(PathStep.WEST);
+		getPlayerEntity().pos.cancelPath();
+		getPlayerEntity().pos.addStep(PathStep.WEST);
 	}
 	
 	
 	public void navigateTo(Coord pos)
 	{
-		getEntity().navigateTo(pos);
+		getPlayerEntity().pos.navigateTo(pos);
 	}
 	
 	
 	public void addMoveListener(EntityMoveListener eml)
 	{
-		getEntity().addMoveListener(eml);
-	}
-	
-	
-	public EntityPos getPos()
-	{
-		return getEntity().getPosition();
-	}
-	
-	
-	public World getWorld()
-	{
-		return world;
+		playerMoveListeners.add(eml);
+		if(getPlayerEntity() != null) {
+			getPlayerEntity().pos.addMoveListener(eml);
+		}
 	}
 	
 	
 	public Level getLevel()
 	{
-		return world.getCurrentLevel();
+		return getWorld2().getCurrentLevel();
 	}
 	
 	
 	public Coord getCoord()
 	{
-		return getEntity().getCoord();
+		return getPlayerEntity().pos.getCoord();
 	}
 }

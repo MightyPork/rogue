@@ -13,9 +13,10 @@ import mightypork.gamecore.input.Keys;
 import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.World;
+import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.WorldRenderer;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.models.EntityMoveListener;
+import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.util.math.Easing;
 import mightypork.util.math.constraints.num.Num;
 import mightypork.util.math.constraints.num.mutable.NumAnimated;
@@ -26,20 +27,19 @@ import mightypork.util.timing.Updateable;
 public class MapView extends InputComponent implements KeyListener, MouseButtonListener, EntityMoveListener, Updateable {
 	
 	protected final WorldRenderer worldRenderer;
-	protected final World world;
 	private final PlayerControl pc;
 	
 	private final Set<MapInteractionPlugin> plugins = new HashSet<>();
-	private Num tileSize;
 	private final NumAnimated zoom = new NumAnimated(0, Easing.SINE_BOTH);
 	
+	private final Num tileSize;
 	
-	public MapView(World world)
+	
+	public MapView()
 	{
-		this.world = world;
 		this.tileSize = height().min(width()).div(8).max(32).mul(Num.make(1).sub(zoom.mul(0.66)));
-		this.worldRenderer = new WorldRenderer(world, this, tileSize);
-		pc = world.getPlayerControl();
+		this.worldRenderer = new WorldRenderer(this, tileSize);
+		pc = WorldProvider.get().getPlayerControl();
 		pc.addMoveListener(this);
 	}
 	
@@ -48,13 +48,6 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	protected void renderComponent()
 	{
 		worldRenderer.render();
-	}
-	
-	
-	@Override
-	public void updateLayout()
-	{
-		worldRenderer.poll(); // update sizing
 	}
 	
 	

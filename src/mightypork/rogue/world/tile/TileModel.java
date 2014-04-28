@@ -35,7 +35,7 @@ public final class TileModel {
 	public Tile createTile()
 	{
 		try {
-			return tileClass.getConstructor(int.class, TileRenderer.class).newInstance(id, renderer);
+			return tileClass.getConstructor(TileModel.class, TileRenderer.class).newInstance(this, renderer);
 		} catch (Exception e) {
 			throw new RuntimeException("Could not instantiate a tile.", e);
 		}

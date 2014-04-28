@@ -22,6 +22,7 @@ import mightypork.rogue.screens.main_menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
+import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
@@ -73,6 +74,9 @@ public final class App extends BaseApp {
 	@Override
 	protected void initScreens(ScreenRegistry screens)
 	{
+		// world provider instance is referenced by screens
+		WorldProvider.init(this);
+		
 		screens.addScreen(new ScreenTestBouncy(this));
 		screens.addScreen(new ScreenTestCat(this));
 		screens.addScreen(new ScreenTestRender(this));
@@ -108,7 +112,13 @@ public final class App extends BaseApp {
 	{
 		Ion.registerBinary(Item.ION_MARK, Item.class);
 		Ion.registerBinary(Level.ION_MARK, Level.class);
-		Ion.registerBinary(Entity.ION_MARK, Entity.class);
+	}
+	
+	@Override
+	protected void postInit()
+	{
+		// TODO tmp
+		WorldProvider.get().createWorld(37);
 	}
 	
 	

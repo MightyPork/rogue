@@ -11,6 +11,7 @@ import java.util.Set;
 import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.Sides;
 import mightypork.rogue.world.World;
+import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.pathfinding.FillContext;
 import mightypork.rogue.world.pathfinding.FloodFill;
@@ -146,31 +147,33 @@ public class Level implements MapAccess, IonBinary {
 	@Override
 	public void load(IonInput in) throws IOException
 	{
-		// metadata
+		// -- metadata --
 		final IonBundle ib = in.readBundle();
 		seed = ib.get("seed", 0L);
 		ib.loadBundled("size", size);
 		ib.loadBundled("enter_point", enterPoint);
 		
-		ib.loadSequence("entities", entitySet);
-		for (final Entity ent : entitySet) {
-			ent.setLevel(this);
-			entityMap.put(ent.getEntityId(), ent);
-		}
 		
-		// init array of size
-		buildArray();
+		// -- binary data --
 		
 		// load tiles
+		buildArray();
+		
 		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
 			for (c.y = 0; c.y < size.y; c.y++) {
 				setTile(c, Tiles.loadTile(in));
 			}
 		}
+
 		
-		// mark tiles as occupied
-		for (final Entity e : entitySet) {
-			occupyTile(e.getPosition().getCoord());
+		// load entities
+		Entities.loadEntities(in, entitySet);
+		
+		// prepare entities
+		for (final Entity ent : entitySet) {
+			ent.setLevel(this);
+			occupyTile(ent.pos.getCoord());
+			entityMap.put(ent.getEntityId(), ent);
 		}
 	}
 	
@@ -178,21 +181,23 @@ public class Level implements MapAccess, IonBinary {
 	@Override
 	public void save(IonOutput out) throws IOException
 	{
-		// metadata
+		// -- metadata --
 		final IonBundle ib = new IonBundle();
 		ib.put("seed", seed);
 		ib.putBundled("size", size);
 		ib.putBundled("enter_point", enterPoint);
-		ib.putSequence("entities", entitySet);
 		out.writeBundle(ib);
 		
-		// tiles (writing this way to save space)
+		// -- binary data --
 		
+		// tiles
 		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
 			for (c.y = 0; c.y < size.y; c.y++) {
 				Tiles.saveTile(out, getTile(c));
 			}
 		}
+		
+		Entities.saveEntities(out, entitySet);
 	}
 	
 	
@@ -264,7 +269,7 @@ public class Level implements MapAccess, IonBinary {
 	}
 	
 	
-	public boolean canWalkInto(Coord pos)
+	public boolean isWalkable(Coord pos)
 	{
 		final Tile t = getTile(pos);
 		
@@ -362,8 +367,10 @@ public class Level implements MapAccess, IonBinary {
 			return !t.isNull();
 		}
 		
+		
 		@Override
-		public boolean forceSpreadStart() {
+		public boolean forceSpreadStart()
+		{
 			return true;
 		}
 	};

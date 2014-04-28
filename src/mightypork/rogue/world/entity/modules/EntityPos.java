@@ -1,13 +1,15 @@
-package mightypork.rogue.world.entity;
+package mightypork.rogue.world.entity.modules;
 
 
 import java.io.IOException;
 
 import mightypork.rogue.world.Coord;
+import mightypork.rogue.world.entity.PathStep;
 import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.IonBundled;
 import mightypork.util.math.Easing;
 import mightypork.util.math.constraints.vect.Vect;
+import mightypork.util.math.constraints.vect.VectConst;
 import mightypork.util.math.constraints.vect.mutable.VectAnimated;
 import mightypork.util.timing.Updateable;
 
@@ -175,5 +177,10 @@ public class EntityPos implements IonBundled, Updateable {
 		} else if (!coord.equals(other.coord)) return false;
 		return true;
 	}
-	
+
+
+	public VectConst getVisualPos()
+	{
+		return Vect.make(walkOffset.x()+coord.x, walkOffset.y()+coord.y);
+	}
 }

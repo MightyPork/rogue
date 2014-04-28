@@ -15,13 +15,13 @@ public class WorldLayer extends ScreenLayer {
 	private final MapView worldView;
 	
 	
-	public WorldLayer(Screen screen, World world)
+	public WorldLayer(Screen screen)
 	{
 		super(screen);
 		
 		// render component
 		
-		worldView = new MapView(world);
+		worldView = new MapView();
 		
 		// map input plugins
 		worldView.addPlugin(new MIPKeyWalk());

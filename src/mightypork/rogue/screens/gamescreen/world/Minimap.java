@@ -7,8 +7,9 @@ import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.World;
+import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.EntityPos;
+import mightypork.rogue.world.entity.modules.EntityPos;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.math.color.Color;
@@ -23,16 +24,11 @@ import org.lwjgl.opengl.GL11;
 
 public class Minimap extends InputComponent implements MouseButtonListener {
 	
-	private final World world;
 	private final RectMutable bounds = Rect.makeVar();
 	private int unit = 0;
 	private final Num translucency = Num.make(0.8);
 	private final Color playerColor = RGB.RED;
 	
-	
-	public Minimap(World w) {
-		this.world = w;
-	}
 	
 	
 	@Override
@@ -40,12 +36,12 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 	{
 		Color.pushAlpha(translucency);
 		
-		final Level lvl = world.getCurrentLevel();
+		final Level lvl = WorldProvider.get().getCurrentLevel();
 		unit = (int) Math.min(Math.max(2, Math.ceil((height().value()/2) / (lvl.getHeight() + 2))), 6);
 		
 		final World w = lvl.getWorld();
 		final Entity e = w.getPlayerEntity();
-		final EntityPos plCoord = e.getPosition();
+		final Vect plCoord = e.pos.getVisualPos();
 		
 		final int lw = lvl.getWidth();
 		final int lh = lvl.getHeight();
@@ -80,8 +76,8 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 		// player
 		Render.setColor(playerColor);
 		
-		final double plx = tl.xi() + plCoord.visualX() * unit;
-		final double ply = tl.yi() + plCoord.visualY() * unit;
+		final double plx = tl.xi() + plCoord.x() * unit;
+		final double ply = tl.yi() + plCoord.y() * unit;
 		
 		GL11.glVertex2d(plx, ply);
 		GL11.glVertex2d(plx + unit, ply);
@@ -101,10 +97,10 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 			if (event.isUp()) {
 				final Vect relative = event.getPos().sub(bounds.origin());
 				final Coord actual = Coord.make(relative.xi() / unit, relative.yi() / unit);
-				final Entity player = world.getPlayerEntity();
+				final Entity player = WorldProvider.get().getPlayerEntity();
 				
 				if (player.getLevel().getTile(actual).isExplored()) {
-					player.navigateTo(actual);
+					player.pos.navigateTo(actual);
 				}
 			}
 			
