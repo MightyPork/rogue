@@ -322,11 +322,6 @@ public class Level implements MapAccess, IonBinary {
 	
 	public void explore(Coord center)
 	{
-		// fully explored == explored & limit was not reached;
-		// -> optimization for closed rooms.
-		
-		Tile t = getTile(center);
-		
 		Collection<Coord> filled = new HashSet<>();
 		
 		FloodFill.fill(center, exploreFc, filled);
