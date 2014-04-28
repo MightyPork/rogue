@@ -8,6 +8,7 @@ import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.util.files.ion.IonBinary;
+import mightypork.util.files.ion.IonBinaryHeadless;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
 import mightypork.util.math.color.Color;
@@ -18,211 +19,129 @@ import mightypork.util.math.color.Color;
  * 
  * @author MightyPork
  */
-public final class Tile implements IonBinary {
+public abstract class Tile implements IonBinaryHeadless {
 	
-	public static final short ION_MARK = 50;
-	
-	private TileModel model;
-	private TileRenderer renderer;
-	
-	private int id;
-	
-	private final Stack<Item> items = new Stack<>();
-	
-	/** persistent field for model, reflected by renderer */
-	public final TileData data = new TileData();
-	
+	// tmp extras
 	public final TileRenderData renderData = new TileRenderData();
 	public final TileGenData genData = new TileGenData();
 	
+	protected final TileRenderer renderer;
+	
+	public final int id;
+	
+	protected final Stack<Item> items = new Stack<>();
+	
+	
 	// temporary flag for map.
-	private boolean occupied;
+	protected boolean occupied;
+	protected boolean explored;
 	
 	
-	public Tile(int id) {
-		this(Tiles.get(id));
-	}
-	
-	
-	public Tile(TileModel model) {
-		setModel(model);
-	}
-	
-	
-	public Tile() {
-	}
-	
-	
-	private void setModel(TileModel model)
+	public Tile(int id, TileRenderer renderer)
 	{
-		this.model = model;
-		this.id = model.id;
-		this.renderer = model.renderer;
+		this.id = id;
+		this.renderer = renderer;
 	}
 	
 	
 	/**
-	 * Render the tile alone (must not use other than the main map texture)
+	 * Render the tile, using the main texture sheet.
 	 */
-	public void renderTile(TileRenderContext context)
-	{
-		renderer.render(context);
-		
-		if (hasItems()) {
-			renderer.renderItemOnTile(items.peek(), context);
-		}
-	}
+	public abstract void renderTile(TileRenderContext context);
 	
 	
 	/**
-	 * Render items
+	 * Render extra stuff (ie. dropped items).<br>
+	 * Called after the whole map is rendered using renderTile.
 	 * 
 	 * @param context
 	 */
-	public void renderItems(TileRenderContext context)
-	{
-		if (hasItems()) {
-			renderer.renderItemOnTile(items.peek(), context);
-		}
-	}
+	public abstract void renderExtra(TileRenderContext context);
 	
 	
 	@Override
 	public void save(IonOutput out) throws IOException
 	{
-		out.writeIntByte(id);
-		
-		if (model.hasDroppedItems()) {
-			out.writeSequence(items);
-		}
-		
-		data.save(out);
+		out.writeBoolean(explored);
 	}
 	
 	
 	@Override
 	public void load(IonInput in) throws IOException
 	{
-		id = in.readIntByte();
-		
-		// if model changed
-		if (model == null || id != model.id) {
-			setModel(Tiles.get(id));
-		}
-		
-		if (model.hasDroppedItems()) {
-			in.readSequence(items);
-		}
-		
-		data.load(in);
+		explored = in.readBoolean();
 	}
 	
 	
-	/**
-	 * Update tile logic state (on server)
-	 * 
-	 * @param level the level
-	 * @param delta delta time
-	 */
-	public void update(Level level, double delta)
-	{
-		model.update(this, level, delta);
-	}
-	
-	
-	public boolean isWalkable()
-	{
-		return model.isWalkable(this);
-	}
-	
-	
-	public boolean isDoor()
-	{
-		return model.isDoor();
-	}
-	
-	
-	public boolean isNull()
-	{
-		return model.isNullTile();
-	}
-	
-	
-	public TileModel getModel()
-	{
-		return model;
-	}
-	
-	
-	public boolean hasItems()
-	{
-		return model.hasDroppedItems() && !items.isEmpty();
-	}
-	
-	
-	public boolean doesCastShadow()
-	{
-		return model.doesCastShadow();
-	}
-	
-	
-	@Override
-	public short getIonMark()
-	{
-		return ION_MARK;
-	}
-	
-	
-	public boolean isOccupied()
+	public final boolean isOccupied()
 	{
 		return occupied;
 	}
 	
 	
-	public void setOccupied(boolean occupied)
+	public final void setOccupied(boolean occupied)
 	{
 		this.occupied = occupied;
 	}
 	
 	
-	public boolean isWall()
+	public final boolean isExplored()
 	{
-		return model.isWall();
+		return explored;
 	}
 	
 	
-	public boolean isFloor()
+	public void setExplored()
 	{
-		return model.isFloor();
+		explored = true;
 	}
 	
 	
-	public boolean isPotentiallyWalkable()
+	public final boolean isNull()
 	{
-		return model.isPotentiallyWalkable();
+		return getType() == TileType.NULL;
 	}
 	
 	
-	public Color getMapColor()
+	public final boolean isWall()
 	{
-		return model.getMapColor(this);
+		return getType() == TileType.WALL;
 	}
 	
 	
-	public boolean isExplored()
+	public final boolean isFloor()
 	{
-		return data.explored;
+		return getType() == TileType.FLOOR;
 	}
 	
 	
-	public void explore()
+	public final boolean isDoor()
 	{
-		data.explored = true;
+		return getType() == TileType.DOOR;
 	}
-
-
-	public boolean doesReceiveShadow()
-	{
-		return model.doesReceiveShadow();
-	}
+	
+	
+	public abstract void update(Level level, double delta);
+	
+	
+	public abstract boolean isWalkable();
+	
+	
+	public abstract boolean isPotentiallyWalkable();
+	
+	
+	public abstract TileType getType();
+	
+	
+	public abstract boolean canHaveItems();
+	
+	
+	public abstract boolean doesCastShadow();
+	
+	
+	public abstract boolean doesReceiveShadow();
+	
+	
+	public abstract Color getMapColor();
+	
 }

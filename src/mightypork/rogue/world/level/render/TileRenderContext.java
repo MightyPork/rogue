@@ -24,7 +24,7 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	{
 		super(map, drawArea);
 		
-		this.tiler.setOverlap(0.01); // avoid gaps (rounding error?)	
+		//this.tiler.setOverlap(0.02); // avoid gaps (rounding error?)	
 		
 		this.noise = map.getNoiseGen();
 	}
@@ -69,7 +69,7 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	
 	public void renderItems()
 	{
-		map.getTile(pos).renderItems(this);
+		map.getTile(pos).renderExtra(this);
 	}
 	
 	

@@ -64,7 +64,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 			for (pos.x = 0, point.x = tl.xi(); pos.x < lw; pos.x++, point.x += unit) {
 				
 				final Tile t = lvl.getTile(pos);
-				if (t.isNull() || !t.data.explored) continue;
+				if (t.isNull() || !t.isExplored()) continue;
 				
 				final Color clr = t.getMapColor();
 				

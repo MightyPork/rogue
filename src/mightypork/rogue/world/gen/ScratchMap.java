@@ -15,6 +15,7 @@ import mightypork.rogue.world.pathfinding.PathFinder;
 import mightypork.rogue.world.pathfinding.PathFindingContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
+import mightypork.rogue.world.tile.TileType;
 import mightypork.rogue.world.tile.Tiles;
 import mightypork.util.logging.Log;
 import mightypork.util.math.Calc;
@@ -43,14 +44,24 @@ public class ScratchMap {
 		{
 			final Tile t = get(pos);
 			
-			if (t.isNull()) return 60;
-			
-			if (t.isDoor()) return 10; // door
-			if (t.isFloor()) return 20; // floor
-				
-			if (t.isWall() && t.genData.isProtected) return 1000;
-			
-			return 100; // wall
+			switch (t.getType()) {
+				case NULL:
+					return 60;
+					
+				case DOOR:
+					return 10;
+					
+				case FLOOR:
+					return 20;
+					
+				case WALL:
+					if (t.genData.isProtected) return 1000;
+					
+					return 100;
+					
+				default:
+					throw new RuntimeException("Unknown tile type: " + t.getType());
+			}
 		}
 		
 		
@@ -79,7 +90,8 @@ public class ScratchMap {
 	private static final boolean FIX_GLITCHES = true;
 	
 	
-	public ScratchMap(int max_size, Theme theme, Random rand) {
+	public ScratchMap(int max_size, Theme theme, Random rand)
+	{
 		map = new Tile[max_size][max_size];
 		
 		genMin = Coord.make((max_size / 2) - 1, (max_size / 2) - 1);
@@ -161,9 +173,7 @@ public class ScratchMap {
 	
 	public Tile get(Coord pos)
 	{
-		if (!isIn(pos)) {
-			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
-		}
+		if (!isIn(pos)) { throw new IndexOutOfBoundsException("Tile not in map: " + pos); }
 		
 		return map[pos.y][pos.x];
 	}
@@ -177,9 +187,7 @@ public class ScratchMap {
 	
 	public boolean set(Coord pos, Tile tile)
 	{
-		if (!isIn(pos)) {
-			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
-		}
+		if (!isIn(pos)) { throw new IndexOutOfBoundsException("Tile not in map: " + pos); }
 		
 		map[pos.y][pos.x] = tile;
 		return true;
@@ -295,7 +303,7 @@ public class ScratchMap {
 				
 				final Tile current = get(c);
 				if (!current.isNull() && (current.isPotentiallyWalkable())) continue; // floor already, let it be
-					
+				
 				if (i == 0 && j == 0) {
 					set(c, theme.floor());
 				} else {
