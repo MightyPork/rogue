@@ -86,7 +86,7 @@ public class PlayerModel extends EntityModel {
 	@Override
 	public int getPathCost(Entity entity, Coord from, Coord to)
 	{
-		if (!entity.getLevel().getTile(entity.getCoord()).data.explored) {
+		if (!entity.getLevel().getTile(entity.getCoord()).isExplored()) {
 			return 1000;
 		}
 		

@@ -1,8 +1,9 @@
 package mightypork.rogue.world.tile;
 
 
-import mightypork.rogue.world.level.Level;
-import mightypork.util.math.color.Color;
+import java.io.IOException;
+import mightypork.util.files.ion.IonInput;
+import mightypork.util.files.ion.IonOutput;
 
 
 /**
@@ -10,79 +11,46 @@ import mightypork.util.math.color.Color;
  * 
  * @author MightyPork
  */
-public abstract class TileModel {
+public final class TileModel {
 	
 	/** Model ID */
 	public final int id;
-	public TileRenderer renderer = TileRenderer.NONE;
+	public final TileRenderer renderer;
+	public final Class<? extends Tile> tileClass;
 	
 	
-	public TileModel(int id)
+	public TileModel(int id, Class<? extends Tile> tile, TileRenderer renderer)
 	{
 		Tiles.register(id, this);
 		this.id = id;
-	}
-	
-	
-	public TileModel setRenderer(TileRenderer renderer)
-	{
 		this.renderer = renderer;
-		return this;
+		this.tileClass = tile;
 	}
 	
 	
 	/**
-	 * @return new tile of this type; if 100% invariant, can return cached one.
+	 * @return new tile of this type
 	 */
 	public Tile createTile()
 	{
-		return new Tile(this);
+		try {
+			return tileClass.getConstructor(int.class, TileRenderer.class).newInstance(id, renderer);
+		} catch (Exception e) {
+			throw new RuntimeException("Could not instantiate a tile.", e);
+		}
 	}
 	
 	
-	public abstract boolean isWalkable(Tile tile);
-	
-	
-	public abstract boolean isDoor();
-	
-	
-	public abstract boolean isWall();
-	
-	
-	public abstract boolean isFloor();
-	
-	
-	public abstract boolean doesCastShadow();
-
-
-	public abstract boolean doesReceiveShadow();
-	
-	
-	public boolean isNullTile()
+	public Tile loadTile(IonInput in) throws IOException
 	{
-		return false;
+		Tile t = createTile();
+		t.load(in);
+		return t;
 	}
 	
 	
-	/**
-	 * Update tile in world
-	 */
-	public abstract void update(Tile tile, Level level, double delta);
-	
-	
-	/**
-	 * @return true if this item can have dropped items
-	 */
-	public abstract boolean hasDroppedItems();
-	
-	
-	/**
-	 * @return true if walkable at some conditions (ie. floor, hidden door,
-	 *         locked door etc)
-	 */
-	public abstract boolean isPotentiallyWalkable();
-	
-	
-	public abstract Color getMapColor(Tile tile);
-	
+	public void saveTile(IonOutput out, Tile tile) throws IOException
+	{
+		tile.save(out);
+	}
 }

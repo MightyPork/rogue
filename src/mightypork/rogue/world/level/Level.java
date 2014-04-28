@@ -100,7 +100,7 @@ public class Level implements MapAccess, IonBinary {
 	
 	public final void setTile(Coord pos, int tileId)
 	{
-		setTile(pos, new Tile(tileId));
+		setTile(pos, Tiles.create(tileId));
 	}
 	
 	
@@ -163,10 +163,7 @@ public class Level implements MapAccess, IonBinary {
 		// load tiles
 		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
 			for (c.y = 0; c.y < size.y; c.y++) {
-				// no mark
-				final Tile tile = new Tile();
-				tile.load(in);
-				setTile(c, tile);
+				setTile(c, Tiles.loadTile(in));
 			}
 		}
 		
@@ -192,8 +189,7 @@ public class Level implements MapAccess, IonBinary {
 		
 		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
 			for (c.y = 0; c.y < size.y; c.y++) {
-				// no mark to save space
-				getTile(c).save(out);
+				Tiles.saveTile(out, getTile(c));
 			}
 		}
 	}
@@ -333,7 +329,7 @@ public class Level implements MapAccess, IonBinary {
 				if (Calc.dist(coord.x, coord.y, c.x, c.y) > radius) continue;
 				final Tile t = getTile(c);
 				if (!t.isNull()) {
-					t.data.explored = true;
+					t.setExplored();
 				}
 			}
 		}

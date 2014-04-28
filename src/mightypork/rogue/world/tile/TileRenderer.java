@@ -4,9 +4,7 @@ import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.Sides;
-import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.render.TileRenderContext;
-import mightypork.rogue.world.tile.renderers.NullTileRenderer;
 import mightypork.util.math.constraints.rect.Rect;
 
 
@@ -17,15 +15,11 @@ import mightypork.util.math.constraints.rect.Rect;
  */
 public abstract class TileRenderer {
 	
-	public static final TileRenderer NONE = new NullTileRenderer();
-	
 	private static TxQuad SH_N, SH_S, SH_E, SH_W, SH_NW, SH_NE, SH_SW, SH_SE;
 	private static TxQuad UFOG_N, UFOG_S, UFOG_E, UFOG_W, UFOG_NW, UFOG_NE, UFOG_SW, UFOG_SE;
 	
 	
 	private static boolean inited;
-	
-	private DroppedItemRenderer itemRenderer;
 	
 	
 	public TileRenderer() {
@@ -51,41 +45,10 @@ public abstract class TileRenderer {
 	}
 	
 	
-	/**
-	 * Update tile renderer
-	 * 
-	 * @param delta delta time
-	 */
-	public void update(double delta)
-	{
-		if (itemRenderer != null) {
-			itemRenderer.update(delta);
-		}
-	}
+	public abstract void renderTile(TileRenderContext context);
 	
 	
-	/**
-	 * Render the tile.
-	 * 
-	 * @param context
-	 */
-	public final void render(TileRenderContext context)
-	{
-		Tile t = context.getTile();
-		if (t.isNull() || !t.isExplored()) return;
-		
-		renderTile(context);
-		
-		if (t.doesReceiveShadow()) renderShadows(context);
-		
-		renderUFog(context);
-	}
-	
-	
-	protected abstract void renderTile(TileRenderContext context);
-	
-	
-	protected void renderShadows(TileRenderContext context)
+	public void renderShadows(TileRenderContext context)
 	{
 		final TileRenderData trd = context.getTile().renderData;
 		
@@ -96,7 +59,7 @@ public abstract class TileRenderer {
 			
 			for (int i = 0; i < 8; i++) {
 				final Tile t2 = context.getAdjacentTile(Sides.get(i));
-				if (t2.doesCastShadow()) {
+				if (!t2.isNull() && t2.doesCastShadow()) {
 					trd.shadows |= Sides.bit(i);
 				}
 			}
@@ -120,9 +83,8 @@ public abstract class TileRenderer {
 	}
 	
 	
-	protected void renderUFog(TileRenderContext context)
-	{	
-		
+	public void renderUnexploredFog(TileRenderContext context)
+	{
 		// TODO cache in tile, update neighbouring tiles upon "explored" flag changed.
 		
 		byte ufog = 0;
@@ -149,15 +111,5 @@ public abstract class TileRenderer {
 		if ((ufog & Sides.SW_CORNER) == Sides.SW)  Render.quadTextured(rect, UFOG_SW);
 		if ((ufog & Sides.S) != 0) Render.quadTextured(rect, UFOG_S);
 		if ((ufog & Sides.SE_CORNER) == Sides.SE) Render.quadTextured(rect, UFOG_SE);
-	}
-	
-	
-	public void renderItemOnTile(Item item, TileRenderContext context)
-	{
-		if (itemRenderer == null) {
-			itemRenderer = new DroppedItemRenderer();
-		}
-		
-		itemRenderer.render(item, context);
 	}
 }

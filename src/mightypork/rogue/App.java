@@ -25,7 +25,6 @@ import mightypork.rogue.screens.test_render.ScreenTestRender;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
-import mightypork.rogue.world.tile.Tile;
 import mightypork.util.control.eventbus.BusEvent;
 import mightypork.util.control.eventbus.EventBus;
 import mightypork.util.files.ion.Ion;
@@ -107,7 +106,6 @@ public final class App extends BaseApp {
 	@Override
 	protected void preInit()
 	{
-		Ion.registerBinary(Tile.ION_MARK, Tile.class);
 		Ion.registerBinary(Item.ION_MARK, Item.class);
 		Ion.registerBinary(Level.ION_MARK, Level.class);
 		Ion.registerBinary(Entity.ION_MARK, Entity.class);

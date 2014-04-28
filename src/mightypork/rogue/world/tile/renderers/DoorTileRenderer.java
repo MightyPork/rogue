@@ -10,13 +10,13 @@ import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.util.math.constraints.rect.Rect;
 
 
-public class DoorRenderer extends TileRenderer {
+public class DoorTileRenderer extends TileRenderer {
 	
 	private final TxQuad closed;
 	private final TxQuad open;
 	
 	
-	public DoorRenderer(String quadClosed, String quadOpen)
+	public DoorTileRenderer(String quadClosed, String quadOpen)
 	{
 		this.closed = Res.getTxQuad(quadClosed);
 		this.open = Res.getTxQuad(quadOpen);
