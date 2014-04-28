@@ -19,4 +19,10 @@ public interface FillContext {
 	 * @return max distance
 	 */
 	double getMaxDistance();
+
+
+	/**
+	 * @return true if start should be spread no matter what
+	 */
+	boolean forceSpreadStart();
 }

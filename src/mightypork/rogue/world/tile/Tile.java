@@ -65,7 +65,9 @@ public abstract class Tile implements IonBinaryHeadless {
 	 * @param context
 	 */
 	@DefaultImpl
-	public void renderExtra(TileRenderContext context) {}
+	public void renderExtra(TileRenderContext context)
+	{
+	}
 	
 	
 	@Override
@@ -185,6 +187,7 @@ public abstract class Tile implements IonBinaryHeadless {
 	
 	/**
 	 * Remove an item from this tile
+	 * 
 	 * @return the picked item, or null if none
 	 */
 	public abstract Item pickItem();

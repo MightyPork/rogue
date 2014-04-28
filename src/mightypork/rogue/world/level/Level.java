@@ -52,13 +52,11 @@ public class Level implements MapAccess, IonBinary {
 	private transient NoiseGen noiseGen;
 	
 	
-	public Level()
-	{
+	public Level() {
 	}
 	
 	
-	public Level(int width, int height)
-	{
+	public Level(int width, int height) {
 		size.setTo(width, height);
 		buildArray();
 	}
@@ -90,7 +88,7 @@ public class Level implements MapAccess, IonBinary {
 	public final Tile getTile(Coord pos)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) return Tiles.NULL.createTile(); // out of range
-		
+			
 		return tiles[pos.y][pos.x];
 	}
 	
@@ -324,8 +322,18 @@ public class Level implements MapAccess, IonBinary {
 	
 	public void explore(Coord center)
 	{
-		Collection<Coord> filled = FloodFill.fill(center, exploreFc);
-		for(Coord c : filled) getTile(c).setExplored();
+		// fully explored == explored & limit was not reached;
+		// -> optimization for closed rooms.
+		
+		Tile t = getTile(center);
+		
+		Collection<Coord> filled = new HashSet<>();
+		
+		FloodFill.fill(center, exploreFc, filled);
+		
+		for (Coord c : filled) {
+			getTile(c).setExplored();
+		}
 	}
 	
 	private FillContext exploreFc = new FillContext() {
@@ -340,7 +348,7 @@ public class Level implements MapAccess, IonBinary {
 		@Override
 		public double getMaxDistance()
 		{
-			return 6;
+			return 5;
 		}
 		
 		
@@ -355,7 +363,13 @@ public class Level implements MapAccess, IonBinary {
 		@Override
 		public boolean canEnter(Coord pos)
 		{
-			return !getTile(pos).isNull();
+			Tile t = getTile(pos);
+			return !t.isNull();
+		}
+		
+		@Override
+		public boolean forceSpreadStart() {
+			return true;
 		}
 	};
 }

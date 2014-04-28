@@ -1,51 +1,59 @@
 package mightypork.rogue.world.pathfinding;
 
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 import mightypork.rogue.world.Coord;
 
 
 public class FloodFill {	
 	
-	public static final Collection<Coord> fill(Coord start, FillContext context)
+	/**
+	 * Fill an area
+	 * @param start start point
+	 * @param context filling context
+	 * @param foundNodes collection to put filled coords in
+	 * @return true if fill was successful; false if max range was reached.
+	 */
+	public static final boolean fill(Coord start, FillContext context, Collection<Coord> foundNodes)
 	{
-		Set<Coord> filled = new HashSet<>();
-		Stack<Coord> active = new Stack<>();
+		Queue<Coord> activeNodes = new LinkedList<>();
 		
 		double maxDist = context.getMaxDistance();
 		
-		active.push(start);
+		activeNodes.add(start);
 		
 		Coord[] sides = context.getSpreadSides();
-		boolean first = true;
+		boolean forceSpreadNext = context.forceSpreadStart();
 		
-		while (!active.isEmpty()) {			
-			Coord current = active.pop();
-			filled.add(current);
+		boolean limitReached = false;
+		
+		while (!activeNodes.isEmpty()) {			
+			Coord current = activeNodes.poll();
+			foundNodes.add(current);
 			
-			if(!context.canSpreadFrom(current) && !first) continue;
+			if(!context.canSpreadFrom(current) && !forceSpreadNext) continue;
 			
-			first = false;
+			forceSpreadNext = false;
 			
 			
 			for (Coord spr : sides) {
 				Coord next = current.add(spr);
-				if(active.contains(next) || filled.contains(next)) continue;
+				if(activeNodes.contains(next) || foundNodes.contains(next)) continue;
 				
-				if (next.dist(start) > maxDist) continue;
+				if (next.dist(start) > maxDist) {
+					limitReached = true;
+					continue;
+				}
 				
 				if (context.canEnter(next)) {
-					active.push(next);
+					activeNodes.add(next);
 				} else {
-					filled.add(next);
+					foundNodes.add(next);
 				}
 			}
 		}
 		
-		return filled;
+		return !limitReached;
 	}
 }
