@@ -1,13 +1,12 @@
 package mightypork.rogue.world.tile.tiles;
 
 
+import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.TileType;
-import mightypork.util.math.color.Color;
-import mightypork.util.math.color.RGB;
 
 
 public class NullTile extends Tile {
@@ -44,23 +43,9 @@ public class NullTile extends Tile {
 	
 	
 	@Override
-	public boolean isPotentiallyWalkable()
-	{
-		return false;
-	}
-	
-	
-	@Override
 	public TileType getType()
 	{
 		return TileType.NULL;
-	}
-	
-	
-	@Override
-	public boolean canHaveItems()
-	{
-		return false;
 	}
 	
 	
@@ -76,11 +61,24 @@ public class NullTile extends Tile {
 	{
 		return false;
 	}
-	
-	
+
 	@Override
-	public Color getMapColor()
+	public boolean dropItem(Item item)
 	{
-		return RGB.NONE;
+		return false;
+	}
+
+
+	@Override
+	public Item pickItem()
+	{
+		return null;
+	}
+
+
+	@Override
+	public boolean hasItem()
+	{
+		return false;
 	}
 }

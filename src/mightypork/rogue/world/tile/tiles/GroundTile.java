@@ -3,20 +3,22 @@ package mightypork.rogue.world.tile.tiles;
 
 import java.io.IOException;
 
+import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.DroppedItemRenderer;
+import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
 
 
-public abstract class TileWithItems extends BasicTile {
+public abstract class GroundTile extends Tile {
 	
 	private DroppedItemRenderer itemRenderer = new DroppedItemRenderer();
 	
 	
-	public TileWithItems(int id, TileRenderer renderer)
+	public GroundTile(int id, TileRenderer renderer)
 	{
 		super(id, renderer);
 	}
@@ -39,13 +41,6 @@ public abstract class TileWithItems extends BasicTile {
 	
 	
 	@Override
-	public boolean canHaveItems()
-	{
-		return true;
-	}
-	
-	
-	@Override
 	public void save(IonOutput out) throws IOException
 	{
 		super.save(out);
@@ -61,4 +56,36 @@ public abstract class TileWithItems extends BasicTile {
 		
 		in.readSequence(items);
 	}
+	
+	@Override
+	public boolean doesCastShadow()
+	{
+		return false;
+	}
+	
+	@Override
+	public boolean isWalkable()
+	{
+		return true;
+	}
+	
+	@Override
+	public boolean dropItem(Item item)
+	{
+		items.push(item);
+		return true;
+	}
+	
+	@Override
+	public Item pickItem()
+	{
+		return hasItem() ? items.pop() : null;
+	}
+	
+	@Override
+	public boolean hasItem()
+	{
+		return !items.isEmpty();
+	}
+	
 }

@@ -7,7 +7,7 @@ import java.util.Stack;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
-import mightypork.util.files.ion.IonBinary;
+import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.files.ion.IonBinaryHeadless;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
@@ -31,14 +31,12 @@ public abstract class Tile implements IonBinaryHeadless {
 	
 	protected final Stack<Item> items = new Stack<>();
 	
-	
 	// temporary flag for map.
 	protected boolean occupied;
 	protected boolean explored;
 	
 	
-	public Tile(int id, TileRenderer renderer)
-	{
+	public Tile(int id, TileRenderer renderer) {
 		this.id = id;
 		this.renderer = renderer;
 	}
@@ -47,7 +45,17 @@ public abstract class Tile implements IonBinaryHeadless {
 	/**
 	 * Render the tile, using the main texture sheet.
 	 */
-	public abstract void renderTile(TileRenderContext context);
+	@DefaultImpl
+	public void renderTile(TileRenderContext context)
+	{
+		if (!isExplored()) return;
+		
+		renderer.renderTile(context);
+		
+		if (doesReceiveShadow()) renderer.renderShadows(context);
+		
+		renderer.renderUnexploredFog(context);
+	}
 	
 	
 	/**
@@ -56,7 +64,8 @@ public abstract class Tile implements IonBinaryHeadless {
 	 * 
 	 * @param context
 	 */
-	public abstract void renderExtra(TileRenderContext context);
+	@DefaultImpl
+	public void renderExtra(TileRenderContext context) {}
 	
 	
 	@Override
@@ -121,27 +130,69 @@ public abstract class Tile implements IonBinaryHeadless {
 	}
 	
 	
-	public abstract void update(Level level, double delta);
+	@DefaultImpl
+	public void update(Level level, double delta)
+	{
+	}
 	
 	
-	public abstract boolean isWalkable();
+	/**
+	 * Check if this tile is right now walkable.<br>
+	 * If type is not potentially walkable, this method must return false.
+	 * 
+	 * @return true if currently walkable
+	 */
+	@DefaultImpl
+	public boolean isWalkable()
+	{
+		return isPotentiallyWalkable();
+	}
 	
 	
-	public abstract boolean isPotentiallyWalkable();
+	public final boolean isPotentiallyWalkable()
+	{
+		return getType().isPotentiallyWalkable();
+	}
 	
 	
 	public abstract TileType getType();
 	
 	
-	public abstract boolean canHaveItems();
-	
-	
 	public abstract boolean doesCastShadow();
 	
 	
-	public abstract boolean doesReceiveShadow();
+	@DefaultImpl
+	public boolean doesReceiveShadow()
+	{
+		return !doesCastShadow();
+	}
 	
 	
-	public abstract Color getMapColor();
+	public final Color getMapColor()
+	{
+		return getType().getMapColor();
+	}
+	
+	
+	/**
+	 * Drop item onto this tile
+	 * 
+	 * @param item
+	 * @return true if dropped
+	 */
+	public abstract boolean dropItem(Item item);
+	
+	
+	/**
+	 * Remove an item from this tile
+	 * @return the picked item, or null if none
+	 */
+	public abstract Item pickItem();
+	
+	
+	/**
+	 * @return true if the tile has dropped items
+	 */
+	public abstract boolean hasItem();
 	
 }
