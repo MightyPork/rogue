@@ -33,4 +33,7 @@ public interface PathFindingContext {
 	 * @return used heuristic
 	 */
 	Heuristic getHeuristic();
+
+
+	Coord[] getWalkSides();
 }

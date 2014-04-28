@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mightypork.rogue.world.Coord;
+import mightypork.rogue.world.Sides;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.models.EntityModel;
 import mightypork.rogue.world.entity.models.EntityMoveListener;
@@ -77,6 +78,12 @@ public final class Entity implements IonBinary {
 		public int getCost(Coord from, Coord to)
 		{
 			return model.getPathCost(Entity.this, from, to);
+		}
+
+		
+		@Override
+		public Coord[] getWalkSides() {
+			return Sides.cardinalSides;
 		}
 	};
 	

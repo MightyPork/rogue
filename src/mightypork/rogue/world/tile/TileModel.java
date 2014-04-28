@@ -2,6 +2,7 @@ package mightypork.rogue.world.tile;
 
 
 import java.io.IOException;
+
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
 

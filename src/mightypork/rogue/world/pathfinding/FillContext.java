@@ -9,13 +9,14 @@ public interface FillContext {
 	boolean canEnter(Coord pos);
 	
 	
-	boolean canSpread(Coord pos);
+	boolean canSpreadFrom(Coord pos);
 	
+	Coord[] getSpreadSides();	
 	
 	/**
 	 * Get the max distance filled form start point. Use -1 for unlimited range.
 	 * 
 	 * @return max distance
 	 */
-	int getMaxDistance();
+	double getMaxDistance();
 }

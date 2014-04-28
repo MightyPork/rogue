@@ -58,14 +58,7 @@ public class PathFinder {
 			open.add(n);
 		}
 		
-		//@formatter:off
-		final Coord[] walkDirs = {
-				Coord.make(0, -1),
-				Coord.make(0, 1),
-				Coord.make(-1, 0),
-				Coord.make(1, 0)
-		};
-		//@formatter:on
+		final Coord[] walkDirs = context.getWalkSides();
 		
 		Node current = null;
 		

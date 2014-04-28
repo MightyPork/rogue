@@ -15,7 +15,6 @@ import mightypork.rogue.world.pathfinding.PathFinder;
 import mightypork.rogue.world.pathfinding.PathFindingContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
-import mightypork.rogue.world.tile.TileType;
 import mightypork.rogue.world.tile.Tiles;
 import mightypork.util.logging.Log;
 import mightypork.util.math.Calc;
@@ -76,6 +75,11 @@ public class ScratchMap {
 		public Heuristic getHeuristic()
 		{
 			return PathFinder.CORNER_HEURISTIC;
+		}
+		
+		@Override
+		public Coord[] getWalkSides() {
+			return Sides.cardinalSides;
 		}
 		
 	};

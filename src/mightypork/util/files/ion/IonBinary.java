@@ -1,7 +1,6 @@
 package mightypork.util.files.ion;
 
 
-import java.io.IOException;
 
 
 /**

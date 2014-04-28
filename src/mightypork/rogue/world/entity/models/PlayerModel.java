@@ -46,7 +46,7 @@ public class PlayerModel extends EntityModel {
 	
 	private void exploreSurroundings(Entity entity)
 	{
-		entity.getLevel().markExplored(entity.getCoord(), 4.5);
+		entity.getLevel().explore(entity.getCoord());
 	}
 	
 	

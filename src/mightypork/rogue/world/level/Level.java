@@ -9,17 +9,20 @@ import java.util.Map;
 import java.util.Set;
 
 import mightypork.rogue.world.Coord;
+import mightypork.rogue.world.Sides;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.pathfinding.FillContext;
+import mightypork.rogue.world.pathfinding.FloodFill;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
+import mightypork.rogue.world.tile.TileType;
 import mightypork.rogue.world.tile.Tiles;
 import mightypork.util.files.ion.IonBinary;
 import mightypork.util.files.ion.IonBundle;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
 import mightypork.util.logging.Log;
-import mightypork.util.math.Calc;
 import mightypork.util.math.noise.NoiseGen;
 
 
@@ -319,20 +322,40 @@ public class Level implements MapAccess, IonBinary {
 	}
 	
 	
-	public void markExplored(Coord coord, double radius)
+	public void explore(Coord center)
 	{
-		final int cr = (int) Math.ceil(radius);
+		Collection<Coord> filled = FloodFill.fill(center, exploreFc);
+		for(Coord c : filled) getTile(c).setExplored();
+	}
+	
+	private FillContext exploreFc = new FillContext() {
 		
-		final Coord c = Coord.zero();
-		for (c.y = coord.y - cr; c.y <= coord.y + cr; c.y++) {
-			for (c.x = coord.x - cr; c.x <= coord.x + cr; c.x++) {
-				if (Calc.dist(coord.x, coord.y, c.x, c.y) > radius) continue;
-				final Tile t = getTile(c);
-				if (!t.isNull()) {
-					t.setExplored();
-				}
-			}
+		@Override
+		public Coord[] getSpreadSides()
+		{
+			return Sides.allSides;
 		}
 		
-	}
+		
+		@Override
+		public double getMaxDistance()
+		{
+			return 6;
+		}
+		
+		
+		@Override
+		public boolean canSpreadFrom(Coord pos)
+		{
+			Tile t = getTile(pos);
+			return t.isWalkable() && t.getType() != TileType.DOOR;
+		}
+		
+		
+		@Override
+		public boolean canEnter(Coord pos)
+		{
+			return !getTile(pos).isNull();
+		}
+	};
 }
