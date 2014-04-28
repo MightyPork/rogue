@@ -348,7 +348,7 @@ public class Level implements MapAccess, IonBinary {
 		@Override
 		public double getMaxDistance()
 		{
-			return 5;
+			return 5.4;
 		}
 		
 		

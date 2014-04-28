@@ -62,7 +62,6 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	
 	public void renderTile()
 	{
-		if(!map.getTile(pos).isExplored()) return;
 		map.getTile(pos).renderTile(this);
 	}
 	

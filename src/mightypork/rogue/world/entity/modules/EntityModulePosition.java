@@ -2,7 +2,11 @@ package mightypork.rogue.world.entity.modules;
 
 
 import java.io.IOException;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.entity.Entity;
@@ -13,7 +17,7 @@ import mightypork.util.files.ion.IonBundle;
 import mightypork.util.math.constraints.vect.VectConst;
 
 
-public class EntityPosModule implements EntityModule {
+public class EntityModulePosition implements EntityModule {
 	
 	private final Entity entity;
 	
@@ -32,7 +36,7 @@ public class EntityPosModule implements EntityModule {
 	private final Set<EntityMoveListener> moveListeners = new LinkedHashSet<>();
 	
 	
-	public EntityPosModule(Entity entity) {
+	public EntityModulePosition(Entity entity) {
 		this.entity = entity;
 	}
 	
@@ -140,14 +144,12 @@ public class EntityPosModule implements EntityModule {
 	public boolean navigateTo(Coord target)
 	{
 		if (target.equals(getCoord())) return true;
-		
 		PathFindingContext pfc = entity.getPathfindingContext();
-		final List<PathStep> path = PathFinder.findPathRelative(pfc, entityPos.getCoord(), target);
+		final List<PathStep> newPath = PathFinder.findPathRelative(pfc, entityPos.getCoord(), target);
 		
-		if (path == null) return false;
-		
-		this.cancelPath();
-		this.addSteps(path);
+		if (newPath == null) return false;
+		cancelPath();
+		addSteps(newPath);
 		return true;
 	}
 	
@@ -163,7 +165,7 @@ public class EntityPosModule implements EntityModule {
 	
 	public void addSteps(List<PathStep> path)
 	{
-		path.addAll(path);
+		this.path.addAll(path);
 	}
 	
 	

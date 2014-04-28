@@ -29,7 +29,7 @@ public class LevelGenerator {
 		// start
 		map.addRoom(ROOM_SQUARE);
 		
-		for (int i = 0; i < 1+complexity/2 + rand.nextInt((int) (3 + complexity*1.5)); i++) {
+		for (int i = 0; i < 2+complexity/2+rand.nextInt((int) (1+complexity*0.3)); i++) {
 			map.addRoom(ROOM_SQUARE);
 			if(rand.nextInt(4)>0) map.addRoom(DEAD_END);
 		}

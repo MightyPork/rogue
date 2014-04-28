@@ -5,16 +5,13 @@ import java.io.File;
 import java.io.IOException;
 
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
 import mightypork.util.control.eventbus.BusAccess;
-import mightypork.util.control.eventbus.clients.BusNode;
 import mightypork.util.control.eventbus.clients.RootBusNode;
 import mightypork.util.files.ion.Ion;
-import mightypork.util.timing.Updateable;
 
 
-public class WorldProvider extends RootBusNode implements Updateable {
+public class WorldProvider extends RootBusNode{
 	
 	public static synchronized void init(BusAccess busAccess)
 	{
@@ -54,9 +51,7 @@ public class WorldProvider extends RootBusNode implements Updateable {
 	
 	public void createWorld(long seed)
 	{
-		if (world != null) removeChildClient(world);
-		world = WorldCreator.createWorld(seed);
-		addChildClient(world);
+		setWorld(WorldCreator.createWorld(seed));
 	}
 	
 	
@@ -65,10 +60,17 @@ public class WorldProvider extends RootBusNode implements Updateable {
 		return world;
 	}
 	
+	private void setWorld(World newWorld) {
+
+		if (world != null) removeChildClient(world);
+		world = newWorld;
+		addChildClient(world);
+	}
+	
 	
 	public void loadWorld(File file) throws IOException
 	{
-		world = Ion.fromFile(file, World.class);
+		setWorld(Ion.fromFile(file, World.class));
 	}
 	
 	
@@ -97,13 +99,6 @@ public class WorldProvider extends RootBusNode implements Updateable {
 	public PlayerControl getPlayerControl()
 	{
 		return playerControl;
-	}
-	
-	
-	@Override
-	public void update(double delta)
-	{
-		world.update(delta);
 	}
 	
 	

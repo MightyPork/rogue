@@ -7,7 +7,6 @@ import java.util.Set;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.PathStep;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
-import mightypork.rogue.world.entity.modules.EntityPos;
 import mightypork.rogue.world.level.Level;
 
 

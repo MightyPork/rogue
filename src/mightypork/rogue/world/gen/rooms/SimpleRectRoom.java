@@ -29,7 +29,7 @@ public class SimpleRectRoom implements RoomBuilder {
 		map.border(min, max, theme.wall());
 		map.protect(min, max);
 		
-		for (int i = 0; i <= rand.nextInt(6); i++) {
+		for (int i = 0; i <= 2 + rand.nextInt(6); i++) {
 			final Coord door = min.copy();
 			switch (rand.nextInt(4)) {
 				case 0:

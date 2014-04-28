@@ -6,13 +6,12 @@ import java.io.IOException;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.util.error.IllegalValueException;
 import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.IonBundled;
 import mightypork.util.math.Calc;
 
 
-public class EntityHealthModule implements EntityModule {
+public class EntityModuleHealth implements EntityModule {
 	
-	public EntityHealthModule(Entity entity) {
+	public EntityModuleHealth(Entity entity) {
 		this.entity = entity;
 	}
 	

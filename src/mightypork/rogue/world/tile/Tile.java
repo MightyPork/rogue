@@ -2,7 +2,6 @@ package mightypork.rogue.world.tile;
 
 
 import java.io.IOException;
-import java.util.Stack;
 
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;

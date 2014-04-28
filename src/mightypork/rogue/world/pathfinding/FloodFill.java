@@ -1,7 +1,9 @@
 package mightypork.rogue.world.pathfinding;
 
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import mightypork.rogue.world.Coord;
 

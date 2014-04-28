@@ -12,7 +12,6 @@ import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.PlayerControl;
-import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.WorldRenderer;
 import mightypork.rogue.world.entity.Entity;

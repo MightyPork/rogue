@@ -7,15 +7,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import mightypork.rogue.world.World;
-import mightypork.rogue.world.entity.modules.EntityHealthModule;
 import mightypork.rogue.world.entity.modules.EntityModule;
-import mightypork.rogue.world.entity.modules.EntityPosModule;
+import mightypork.rogue.world.entity.modules.EntityModuleHealth;
+import mightypork.rogue.world.entity.modules.EntityModulePosition;
+import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
 import mightypork.rogue.world.pathfinding.PathFindingContext;
 import mightypork.util.annotations.DefaultImpl;
 import mightypork.util.error.IllegalValueException;
-import mightypork.util.files.ion.*;
+import mightypork.util.files.ion.IonBundle;
+import mightypork.util.files.ion.IonBundled;
 import mightypork.util.timing.Updateable;
 
 
@@ -24,7 +26,7 @@ import mightypork.util.timing.Updateable;
  * 
  * @author MightyPork
  */
-public abstract class Entity implements IonBundled, Updateable {
+public abstract class Entity implements IonBundled, Updateable, EntityMoveListener {
 	
 	private Level level;
 	private final EntityModel model;
@@ -35,8 +37,8 @@ public abstract class Entity implements IonBundled, Updateable {
 	private final Map<String, EntityModule> modules = new HashMap<>();
 	
 	// default modules
-	public final EntityPosModule pos = new EntityPosModule(this);
-	public final EntityHealthModule health = new EntityHealthModule(this);
+	public final EntityModulePosition pos = new EntityModulePosition(this);
+	public final EntityModuleHealth health = new EntityModuleHealth(this);
 	
 	
 	public Entity(EntityModel model, int eid) {
@@ -46,6 +48,7 @@ public abstract class Entity implements IonBundled, Updateable {
 		
 		// register modules
 		modules.put("pos", pos);
+		pos.addMoveListener(this);
 		modules.put("health", health);
 	}
 	
@@ -122,6 +125,24 @@ public abstract class Entity implements IonBundled, Updateable {
 	
 	@DefaultImpl
 	public void onKilled()
+	{
+	}
+	
+	
+	@Override
+	public void onStepFinished(Entity entity)
+	{
+	}
+	
+	
+	@Override
+	public void onPathFinished(Entity entity)
+	{
+	}
+	
+	
+	@Override
+	public void onPathInterrupted(Entity entity)
 	{
 	}
 }

@@ -54,7 +54,7 @@ public class ScratchMap {
 					return 20;
 					
 				case WALL:
-					if (t.genData.isProtected) return 1000;
+					if (t.genData.isProtected) return 2000;
 					
 					return 100;
 					
@@ -159,7 +159,7 @@ public class ScratchMap {
 			} else {
 				failed++;
 				
-				if (failed > 150) {
+				if (failed > 200) {
 					Log.w("Faild to build room.");
 					return;
 				}
@@ -435,7 +435,6 @@ public class ScratchMap {
 						}
 						
 						if (isNull && (floors & Sides.DIAGONAL) != 0) {
-							System.out.println(c);
 							toWall = true; // null with adjacent diagonal floor
 							break;
 						}

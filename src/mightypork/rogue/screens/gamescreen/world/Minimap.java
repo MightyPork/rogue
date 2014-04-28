@@ -9,7 +9,6 @@ import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.modules.EntityPos;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.util.math.color.Color;

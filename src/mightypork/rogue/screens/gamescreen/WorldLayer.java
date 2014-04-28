@@ -6,7 +6,6 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.rogue.screens.gamescreen.world.MIPClickPathfWalk;
 import mightypork.rogue.screens.gamescreen.world.MIPKeyWalk;
 import mightypork.rogue.screens.gamescreen.world.MapView;
-import mightypork.rogue.world.World;
 import mightypork.util.math.constraints.num.Num;
 
 

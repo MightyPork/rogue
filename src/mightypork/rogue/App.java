@@ -23,7 +23,6 @@ import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
 import mightypork.rogue.screens.test_render.ScreenTestRender;
 import mightypork.rogue.world.WorldProvider;
-import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.util.control.eventbus.BusEvent;
@@ -118,7 +117,7 @@ public final class App extends BaseApp {
 	protected void postInit()
 	{
 		// TODO tmp
-		WorldProvider.get().createWorld(37);
+		WorldProvider.get().createWorld(42);
 	}
 	
 	
@@ -140,14 +139,22 @@ public final class App extends BaseApp {
 	protected void initInputSystem(InputSystem input)
 	{
 		// this will work only with reusable events (such as requests)
-		bindToKey(new ActionRequest(RequestType.FULLSCREEN), Keys.F11);
-		bindToKey(new ActionRequest(RequestType.SCREENSHOT), Keys.F2);
-		bindToKey(new CrossfadeRequest(null), Keys.L_CONTROL, Keys.Q);
-		bindToKey(new CrossfadeRequest("main_menu"), Keys.L_CONTROL, Keys.M);
+		bindEventToKey(new ActionRequest(RequestType.FULLSCREEN), Keys.F11);
+		bindEventToKey(new ActionRequest(RequestType.SCREENSHOT), Keys.F2);
+		bindEventToKey(new CrossfadeRequest(null), Keys.L_CONTROL, Keys.Q);
+		bindEventToKey(new CrossfadeRequest("main_menu"), Keys.L_CONTROL, Keys.M);
+		getInput().bindKey(new KeyStroke(Keys.N), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
+			}
+		});
 	}
 	
 	
-	private void bindToKey(final BusEvent<?> event, int... keys)
+	private void bindEventToKey(final BusEvent<?> event, int... keys)
 	{
 		getInput().bindKey(new KeyStroke(keys), new Runnable() {
 			

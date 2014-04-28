@@ -4,11 +4,9 @@ package mightypork.rogue.world;
 import mightypork.gamecore.render.Render;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.modules.EntityPos;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.util.math.color.RGB;
-import mightypork.util.math.constraints.Pollable;
 import mightypork.util.math.constraints.num.Num;
 import mightypork.util.math.constraints.rect.Rect;
 import mightypork.util.math.constraints.rect.RectConst;
@@ -72,7 +70,7 @@ public class WorldRenderer extends RectProxy {
 	private VectConst getOffset()
 	{
 		Entity ent = WorldProvider.get().getPlayerEntity();
-		return Vect.make(ent.pos.getVisualPos().neg().add(0.5, 0.5)).freeze();
+		return Vect.make(ent.pos.getVisualPos().neg().sub(0.5, 0.5)).freeze();
 	}
 	
 	

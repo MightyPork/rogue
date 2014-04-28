@@ -12,7 +12,6 @@ import mightypork.rogue.Res;
 import mightypork.rogue.screens.gamescreen.gui.HeartBar;
 import mightypork.rogue.screens.gamescreen.gui.NavItemSlot;
 import mightypork.rogue.screens.gamescreen.world.Minimap;
-import mightypork.rogue.world.World;
 import mightypork.util.math.constraints.num.Num;
 import mightypork.util.math.constraints.rect.Rect;
 

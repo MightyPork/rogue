@@ -8,6 +8,7 @@ import mightypork.rogue.world.entity.EntityPathfindingContext;
 import mightypork.rogue.world.entity.SimpleEntityPathFindingContext;
 import mightypork.rogue.world.entity.renderers.EntityRenderer;
 import mightypork.rogue.world.entity.renderers.SimpleLeftRightMobRenderer;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
 import mightypork.rogue.world.pathfinding.PathFindingContext;
 
@@ -46,10 +47,23 @@ public class PlayerEntity extends Entity {
 		return pathfc;
 	}
 	
+	@Override
+	public void setLevel(Level level)
+	{
+		super.setLevel(level);
+		onStepFinished(this);
+	}
+	
 	
 	@Override
 	public void render(MapRenderContext context)
 	{
 		renderer.render(context);
+	}
+	
+	@Override
+	public void onStepFinished(Entity entity)
+	{
+		getLevel().explore(pos.getCoord());
 	}
 }
