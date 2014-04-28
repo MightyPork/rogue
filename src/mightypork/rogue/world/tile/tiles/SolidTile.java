@@ -2,13 +2,15 @@ package mightypork.rogue.world.tile.tiles;
 
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 
 
 public abstract class SolidTile extends Tile {
 
-	public SolidTile(int id, TileRenderer renderer) {
-		super(id, renderer);
+	public SolidTile(TileModel model, TileRenderer renderer)
+	{
+		super(model, renderer);
 	}
 	
 	@Override

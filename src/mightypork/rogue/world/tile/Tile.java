@@ -27,17 +27,15 @@ public abstract class Tile implements IonBinaryHeadless {
 	
 	protected final TileRenderer renderer;
 	
-	public final int id;
-	
-	protected final Stack<Item> items = new Stack<>();
+	public final TileModel model;
 	
 	// temporary flag for map.
 	protected boolean occupied;
 	protected boolean explored;
 	
 	
-	public Tile(int id, TileRenderer renderer) {
-		this.id = id;
+	public Tile(TileModel model, TileRenderer renderer) {
+		this.model = model;
 		this.renderer = renderer;
 	}
 	
@@ -173,6 +171,12 @@ public abstract class Tile implements IonBinaryHeadless {
 	public final Color getMapColor()
 	{
 		return getType().getMapColor();
+	}
+	
+	
+	public final TileModel getModel()
+	{
+		return model;
 	}
 	
 	

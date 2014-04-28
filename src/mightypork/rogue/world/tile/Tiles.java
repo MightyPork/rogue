@@ -61,9 +61,9 @@ public final class Tiles {
 	
 	public static void saveTile(IonOutput out, Tile tile) throws IOException
 	{
-		out.writeIntByte(tile.id);
+		TileModel model = tile.getModel();
 		
-		TileModel model = get(tile.id);
+		out.writeIntByte(model.id);		
 		model.saveTile(out, tile);
 	}
 

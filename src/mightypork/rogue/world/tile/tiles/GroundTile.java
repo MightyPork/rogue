@@ -2,12 +2,14 @@ package mightypork.rogue.world.tile.tiles;
 
 
 import java.io.IOException;
+import java.util.Stack;
 
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.DroppedItemRenderer;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
@@ -17,10 +19,11 @@ public abstract class GroundTile extends Tile {
 	
 	private DroppedItemRenderer itemRenderer = new DroppedItemRenderer();
 	
+	protected final Stack<Item> items = new Stack<>();
 	
-	public GroundTile(int id, TileRenderer renderer)
+	public GroundTile(TileModel model, TileRenderer renderer)
 	{
-		super(id, renderer);
+		super(model, renderer);
 	}
 	
 	

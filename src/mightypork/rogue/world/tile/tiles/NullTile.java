@@ -5,15 +5,16 @@ import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.TileType;
 
 
 public class NullTile extends Tile {
 	
-	public NullTile(int id, TileRenderer renderer)
+	public NullTile(TileModel model, TileRenderer renderer)
 	{
-		super(id, renderer);
+		super(model, renderer);
 	}
 	
 	

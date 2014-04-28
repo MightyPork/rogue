@@ -3,6 +3,7 @@ package mightypork.rogue.world.tile.tiles;
 
 import java.io.IOException;
 
+import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.util.files.ion.IonInput;
 import mightypork.util.files.ion.IonOutput;
@@ -13,9 +14,15 @@ public class LockedDoorTile extends DoorTile {
 	public boolean locked = true;
 	
 	
-	public LockedDoorTile(int id, TileRenderer renderer)
+	public LockedDoorTile(TileModel model, TileRenderer renderer)
 	{
-		super(id, renderer);
+		super(model, renderer);
+	}
+	
+	@Override
+	public boolean isWalkable()
+	{
+		return !locked;
 	}
 	
 	
