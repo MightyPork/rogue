@@ -21,11 +21,11 @@ public abstract class PlayerControl {
 	
 	
 	private World getWorld2()
-	{		
-		World newWorld = getWorld();
+	{
+		final World newWorld = getWorld();
 		
 		if (newWorld != lastWorld) {
-			for (EntityMoveListener eml : playerMoveListeners) {
+			for (final EntityMoveListener eml : playerMoveListeners) {
 				newWorld.getPlayerEntity().pos.addMoveListener(eml);
 			}
 		}
@@ -39,7 +39,7 @@ public abstract class PlayerControl {
 	
 	private Entity getPlayerEntity()
 	{
-		if(getWorld2() == null) return null;
+		if (getWorld2() == null) return null;
 		
 		return getWorld2().getPlayerEntity();
 	}
@@ -82,7 +82,7 @@ public abstract class PlayerControl {
 	public void addMoveListener(EntityMoveListener eml)
 	{
 		playerMoveListeners.add(eml);
-		if(getPlayerEntity() != null) {
+		if (getPlayerEntity() != null) {
 			getPlayerEntity().pos.addMoveListener(eml);
 		}
 	}

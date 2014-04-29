@@ -46,7 +46,7 @@ public class World implements IonBundled, Updateable {
 		in.loadBundled("player", playerInfo);
 		
 		playerEntity = levels.get(playerInfo.getLevel()).getEntity(playerInfo.getEID());
-		if(playerEntity == null) throw new RuntimeException("Player entity not found in the world.");
+		if (playerEntity == null) throw new RuntimeException("Player entity not found in the world.");
 	}
 	
 	

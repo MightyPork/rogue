@@ -26,9 +26,9 @@ public final class Tiles {
 	public static final TileModel NULL = new TileModel(0, NullTile.class, new NullTileRenderer());
 	
 	public static final TileModel FLOOR_DARK = new TileModel(10, FloorTile.class, new BasicTileRenderer("tile.floor.dark"));
-	public static final TileModel WALL_BRICK = new TileModel(11, WallTile.class, new BasicTileRenderer("tile.wall.brick"));	
+	public static final TileModel WALL_BRICK = new TileModel(11, WallTile.class, new BasicTileRenderer("tile.wall.brick"));
 	public static final TileModel DOOR = new TileModel(12, DoorTile.class, new DoorTileRenderer("tile.door.closed", "tile.door.open"));
-
+	
 	
 	public static void register(int id, TileModel model)
 	{
@@ -52,22 +52,22 @@ public final class Tiles {
 	
 	public static Tile loadTile(IonInput in) throws IOException
 	{
-		int id = in.readIntByte();
+		final int id = in.readIntByte();
 		
-		TileModel model = get(id);
+		final TileModel model = get(id);
 		return model.loadTile(in);
 	}
 	
 	
 	public static void saveTile(IonOutput out, Tile tile) throws IOException
 	{
-		TileModel model = tile.getModel();
+		final TileModel model = tile.getModel();
 		
-		out.writeIntByte(model.id);		
+		out.writeIntByte(model.id);
 		model.saveTile(out, tile);
 	}
-
-
+	
+	
 	public static Tile create(int tileId)
 	{
 		return get(tileId).createTile();

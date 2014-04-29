@@ -229,14 +229,14 @@ public class IonOutput {
 		}
 		endSequence();
 	}
-
-
+	
+	
 	public void endSequence() throws IOException
 	{
 		writeMark(Ion.END);
 	}
-
-
+	
+	
 	public void startEntry() throws IOException
 	{
 		writeMark(Ion.ENTRY);

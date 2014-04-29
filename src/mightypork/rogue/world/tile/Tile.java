@@ -33,7 +33,8 @@ public abstract class Tile implements IonBinaryHeadless {
 	protected boolean explored;
 	
 	
-	public Tile(TileModel model, TileRenderer renderer) {
+	public Tile(TileModel model, TileRenderer renderer)
+	{
 		this.model = model;
 		this.renderer = renderer;
 	}

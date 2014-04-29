@@ -38,7 +38,8 @@ public class WorldRenderer extends RectProxy {
 	private TileRenderContext trc;
 	
 	
-	public WorldRenderer(Rect viewport, Num tileSize) {
+	public WorldRenderer(Rect viewport, Num tileSize)
+	{
 		super(viewport);
 		
 		this.tileSize = tileSize;
@@ -69,7 +70,7 @@ public class WorldRenderer extends RectProxy {
 	
 	private VectConst getOffset()
 	{
-		Entity ent = WorldProvider.get().getPlayerEntity();
+		final Entity ent = WorldProvider.get().getPlayerEntity();
 		return Vect.make(ent.pos.getVisualPos().neg().sub(0.5, 0.5)).freeze();
 	}
 	
@@ -85,7 +86,7 @@ public class WorldRenderer extends RectProxy {
 		Render.translate(getOffset());
 		
 		// tiles to render
-		Entity ent = WorldProvider.get().getPlayerEntity();
+		final Entity ent = WorldProvider.get().getPlayerEntity();
 		
 		final Coord pos = ent.pos.getCoord();
 		final double w = width().value();
@@ -131,7 +132,7 @@ public class WorldRenderer extends RectProxy {
 		for (final Entity e : activeLevel.getEntities()) {
 			
 			// avoid entities out of view rect
-			Vect entPos = e.pos.getVisualPos(); 
+			final Vect entPos = e.pos.getVisualPos();
 			final int x = (int) Math.round(entPos.x());
 			final int y = (int) Math.round(entPos.y());
 			

@@ -26,7 +26,8 @@ public enum TileType
 	private final boolean potentiallyWalkable;
 	
 	
-	private TileType(Color mapColor, boolean potentiallyWalkable) {
+	private TileType(Color mapColor, boolean potentiallyWalkable)
+	{
 		this.mapColor = mapColor;
 		this.potentiallyWalkable = potentiallyWalkable;
 	}

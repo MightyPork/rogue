@@ -19,6 +19,7 @@ public class LockedDoorTile extends DoorTile {
 		super(model, renderer);
 	}
 	
+	
 	@Override
 	public boolean isWalkable()
 	{

@@ -62,21 +62,22 @@ public class NullTile extends Tile {
 	{
 		return false;
 	}
-
+	
+	
 	@Override
 	public boolean dropItem(Item item)
 	{
 		return false;
 	}
-
-
+	
+	
 	@Override
 	public Item pickItem()
 	{
 		return null;
 	}
-
-
+	
+	
 	@Override
 	public boolean hasItem()
 	{

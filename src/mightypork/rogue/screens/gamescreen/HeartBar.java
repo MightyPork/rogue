@@ -1,4 +1,4 @@
-package mightypork.rogue.screens.gamescreen.gui;
+package mightypork.rogue.screens.gamescreen;
 
 
 import mightypork.gamecore.gui.AlignX;

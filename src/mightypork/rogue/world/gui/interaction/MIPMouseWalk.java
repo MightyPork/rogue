@@ -1,9 +1,10 @@
-package mightypork.rogue.screens.gamescreen.world;
+package mightypork.rogue.world.gui.interaction;
 
 
 import mightypork.gamecore.input.InputSystem;
 import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.PlayerControl;
+import mightypork.rogue.world.gui.MapView;
 import mightypork.util.math.Calc.Deg;
 import mightypork.util.math.Polar;
 import mightypork.util.math.constraints.vect.Vect;

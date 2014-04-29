@@ -9,9 +9,7 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Res;
-import mightypork.rogue.screens.gamescreen.gui.HeartBar;
-import mightypork.rogue.screens.gamescreen.gui.NavItemSlot;
-import mightypork.rogue.screens.gamescreen.world.Minimap;
+import mightypork.rogue.world.gui.Minimap;
 import mightypork.util.math.constraints.num.Num;
 import mightypork.util.math.constraints.rect.Rect;
 

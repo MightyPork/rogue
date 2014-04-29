@@ -10,6 +10,7 @@ import java.util.Set;
 
 import mightypork.rogue.world.Coord;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityModule;
 import mightypork.rogue.world.entity.PathStep;
 import mightypork.rogue.world.pathfinding.PathFinder;
 import mightypork.rogue.world.pathfinding.PathFindingContext;
@@ -36,7 +37,8 @@ public class EntityModulePosition implements EntityModule {
 	private final Set<EntityMoveListener> moveListeners = new LinkedHashSet<>();
 	
 	
-	public EntityModulePosition(Entity entity) {
+	public EntityModulePosition(Entity entity)
+	{
 		this.entity = entity;
 	}
 	
@@ -144,7 +146,7 @@ public class EntityModulePosition implements EntityModule {
 	public boolean navigateTo(Coord target)
 	{
 		if (target.equals(getCoord())) return true;
-		PathFindingContext pfc = entity.getPathfindingContext();
+		final PathFindingContext pfc = entity.getPathfindingContext();
 		final List<PathStep> newPath = PathFinder.findPathRelative(pfc, entityPos.getCoord(), target);
 		
 		if (newPath == null) return false;
@@ -185,14 +187,14 @@ public class EntityModulePosition implements EntityModule {
 	{
 		this.stepTime = stepTime;
 	}
-
-
+	
+	
 	public double getProgress()
 	{
 		return entityPos.getProgress();
 	}
-
-
+	
+	
 	public VectConst getVisualPos()
 	{
 		return entityPos.getVisualPos();

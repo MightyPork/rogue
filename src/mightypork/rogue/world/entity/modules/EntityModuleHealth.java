@@ -4,6 +4,7 @@ package mightypork.rogue.world.entity.modules;
 import java.io.IOException;
 
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityModule;
 import mightypork.util.error.IllegalValueException;
 import mightypork.util.files.ion.IonBundle;
 import mightypork.util.math.Calc;
@@ -11,7 +12,8 @@ import mightypork.util.math.Calc;
 
 public class EntityModuleHealth implements EntityModule {
 	
-	public EntityModuleHealth(Entity entity) {
+	public EntityModuleHealth(Entity entity)
+	{
 		this.entity = entity;
 	}
 	

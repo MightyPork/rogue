@@ -77,8 +77,10 @@ public class ScratchMap {
 			return PathFinder.CORNER_HEURISTIC;
 		}
 		
+		
 		@Override
-		public Coord[] getWalkSides() {
+		public Coord[] getWalkSides()
+		{
 			return Sides.cardinalSides;
 		}
 		
@@ -261,7 +263,7 @@ public class ScratchMap {
 		Log.f3("Building corridors.");
 		
 		Coord start = nodes.get(0);
-		Set<Coord> starts = new HashSet<>();
+		final Set<Coord> starts = new HashSet<>();
 		
 		for (int i = 0; i < 2 + rooms.size() / 5; i++) {
 			if (!starts.contains(start)) {

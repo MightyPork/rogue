@@ -17,9 +17,10 @@ import mightypork.util.files.ion.IonOutput;
 
 public abstract class GroundTile extends Tile {
 	
-	private DroppedItemRenderer itemRenderer = new DroppedItemRenderer();
+	private final DroppedItemRenderer itemRenderer = new DroppedItemRenderer();
 	
 	protected final Stack<Item> items = new Stack<>();
+	
 	
 	public GroundTile(TileModel model, TileRenderer renderer)
 	{
@@ -60,17 +61,20 @@ public abstract class GroundTile extends Tile {
 		in.readSequence(items);
 	}
 	
+	
 	@Override
 	public boolean doesCastShadow()
 	{
 		return false;
 	}
 	
+	
 	@Override
 	public boolean isWalkable()
 	{
 		return true;
 	}
+	
 	
 	@Override
 	public boolean dropItem(Item item)
@@ -79,11 +83,13 @@ public abstract class GroundTile extends Tile {
 		return true;
 	}
 	
+	
 	@Override
 	public Item pickItem()
 	{
 		return hasItem() ? items.pop() : null;
 	}
+	
 	
 	@Override
 	public boolean hasItem()

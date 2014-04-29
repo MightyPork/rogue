@@ -1,8 +1,6 @@
 package mightypork.util.files.ion;
 
 
-
-
 /**
  * Binary ion object, with a mark = saveable / loadable on it's own
  * 

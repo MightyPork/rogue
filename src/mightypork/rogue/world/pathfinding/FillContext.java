@@ -11,7 +11,9 @@ public interface FillContext {
 	
 	boolean canSpreadFrom(Coord pos);
 	
-	Coord[] getSpreadSides();	
+	
+	Coord[] getSpreadSides();
+	
 	
 	/**
 	 * Get the max distance filled form start point. Use -1 for unlimited range.
@@ -19,8 +21,8 @@ public interface FillContext {
 	 * @return max distance
 	 */
 	double getMaxDistance();
-
-
+	
+	
 	/**
 	 * @return true if start should be spread no matter what
 	 */

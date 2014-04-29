@@ -27,11 +27,12 @@ public final class EntityModel {
 		this.tileClass = entity;
 	}
 	
+	
 	public Entity createEntity(int eid)
 	{
 		try {
 			return tileClass.getConstructor(EntityModel.class, int.class).newInstance(this, eid);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException("Could not instantiate a tile.", e);
 		}
 	}
@@ -39,8 +40,8 @@ public final class EntityModel {
 	
 	public Entity loadEntity(IonInput in) throws IOException
 	{
-		IonBundle bundle = in.readBundle();
-		Entity ent = createEntity(-1);
+		final IonBundle bundle = in.readBundle();
+		final Entity ent = createEntity(-1);
 		ent.load(bundle);
 		return ent;
 	}
@@ -48,7 +49,7 @@ public final class EntityModel {
 	
 	public void saveEntity(IonOutput out, Entity entity) throws IOException
 	{
-		IonBundle bundle = new IonBundle();
+		final IonBundle bundle = new IonBundle();
 		entity.save(bundle);
 		out.writeBundle(bundle);
 	}

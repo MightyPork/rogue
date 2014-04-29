@@ -3,9 +3,9 @@ package mightypork.rogue.screens.gamescreen;
 
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.rogue.screens.gamescreen.world.MIPClickPathfWalk;
-import mightypork.rogue.screens.gamescreen.world.MIPKeyWalk;
-import mightypork.rogue.screens.gamescreen.world.MapView;
+import mightypork.rogue.world.gui.MapView;
+import mightypork.rogue.world.gui.interaction.MIPClickPathfWalk;
+import mightypork.rogue.world.gui.interaction.MIPKeyWalk;
 import mightypork.util.math.constraints.num.Num;
 
 

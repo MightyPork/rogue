@@ -21,9 +21,7 @@ public class PlayerEntity extends Entity {
 		public int getCost(Coord from, Coord to)
 		{
 			
-			if (!getLevel().getTile(pos.getCoord()).isExplored()) {
-				return 1000;
-			}
+			if (!getLevel().getTile(pos.getCoord()).isExplored()) { return 1000; }
 			
 			return super.getCost(from, to);
 			
@@ -33,7 +31,8 @@ public class PlayerEntity extends Entity {
 	private final EntityRenderer renderer = new SimpleLeftRightMobRenderer(this, "sprite.player");
 	
 	
-	public PlayerEntity(EntityModel model, int eid) {
+	public PlayerEntity(EntityModel model, int eid)
+	{
 		super(model, eid);
 		
 		// init default values
@@ -46,6 +45,7 @@ public class PlayerEntity extends Entity {
 	{
 		return pathfc;
 	}
+	
 	
 	@Override
 	public void setLevel(Level level)
@@ -60,6 +60,7 @@ public class PlayerEntity extends Entity {
 	{
 		renderer.render(context);
 	}
+	
 	
 	@Override
 	public void onStepFinished(Entity entity)

@@ -1,5 +1,6 @@
 package mightypork.rogue.world.tile;
 
+
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.textures.TxQuad;
 import mightypork.rogue.Res;
@@ -22,7 +23,8 @@ public abstract class TileRenderer {
 	private static boolean inited;
 	
 	
-	public TileRenderer() {
+	public TileRenderer()
+	{
 		if (!inited) {
 			SH_N = Res.getTxQuad("tile.shadow.n");
 			SH_S = Res.getTxQuad("tile.shadow.s");
@@ -100,7 +102,7 @@ public abstract class TileRenderer {
 		
 		if (ufog == 0) return;
 		
-		final Rect rect = context.getRect();	
+		final Rect rect = context.getRect();
 		if ((ufog & Sides.NW_CORNER) == Sides.NW) Render.quadTextured(rect, UFOG_NW);
 		if ((ufog & Sides.N) != 0) Render.quadTextured(rect, UFOG_N);
 		if ((ufog & Sides.NE_CORNER) == Sides.NE) Render.quadTextured(rect, UFOG_NE);
@@ -108,7 +110,7 @@ public abstract class TileRenderer {
 		if ((ufog & Sides.W) != 0) Render.quadTextured(rect, UFOG_W);
 		if ((ufog & Sides.E) != 0) Render.quadTextured(rect, UFOG_E);
 		
-		if ((ufog & Sides.SW_CORNER) == Sides.SW)  Render.quadTextured(rect, UFOG_SW);
+		if ((ufog & Sides.SW_CORNER) == Sides.SW) Render.quadTextured(rect, UFOG_SW);
 		if ((ufog & Sides.S) != 0) Render.quadTextured(rect, UFOG_S);
 		if ((ufog & Sides.SE_CORNER) == Sides.SE) Render.quadTextured(rect, UFOG_SE);
 	}

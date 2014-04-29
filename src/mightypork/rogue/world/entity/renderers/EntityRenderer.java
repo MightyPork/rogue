@@ -10,7 +10,8 @@ public abstract class EntityRenderer {
 	protected final Entity entity;
 	
 	
-	public EntityRenderer(Entity entity) {
+	public EntityRenderer(Entity entity)
+	{
 		this.entity = entity;
 	}
 	

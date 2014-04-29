@@ -13,11 +13,13 @@ public class DoorTile extends SolidTile {
 		super(model, renderer);
 	}
 	
+	
 	@Override
 	public boolean isWalkable()
 	{
 		return true;
 	}
+	
 	
 	@Override
 	public TileType getType()

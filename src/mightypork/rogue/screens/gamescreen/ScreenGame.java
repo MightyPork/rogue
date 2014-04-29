@@ -32,6 +32,7 @@ public class ScreenGame extends LayeredScreen {
 		WorldProvider.get().setListening(true);
 	}
 	
+	
 	@Override
 	protected void onScreenLeave()
 	{

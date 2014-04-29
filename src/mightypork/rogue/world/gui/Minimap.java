@@ -1,4 +1,4 @@
-package mightypork.rogue.screens.gamescreen.world;
+package mightypork.rogue.world.gui;
 
 
 import mightypork.gamecore.control.events.input.MouseButtonEvent;
@@ -6,7 +6,6 @@ import mightypork.gamecore.control.events.input.MouseButtonListener;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
@@ -29,17 +28,15 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 	private final Color playerColor = RGB.RED;
 	
 	
-	
 	@Override
 	protected void renderComponent()
 	{
 		Color.pushAlpha(translucency);
 		
 		final Level lvl = WorldProvider.get().getCurrentLevel();
-		unit = (int) Math.min(Math.max(2, Math.ceil((height().value()/2) / (lvl.getHeight() + 2))), 6);
+		unit = (int) Math.min(Math.max(2, Math.ceil((height().value() / 2) / (lvl.getHeight() + 2))), 6);
 		
-		final World w = lvl.getWorld();
-		final Entity e = w.getPlayerEntity();
+		final Entity e = WorldProvider.get().getPlayerEntity();
 		final Vect plCoord = e.pos.getVisualPos();
 		
 		final int lw = lvl.getWidth();

@@ -113,6 +113,7 @@ public final class App extends BaseApp {
 		Ion.registerBinary(Level.ION_MARK, Level.class);
 	}
 	
+	
 	@Override
 	protected void postInit()
 	{

@@ -1,4 +1,5 @@
-package mightypork.rogue.world.entity.modules;
+package mightypork.rogue.world.entity;
+
 
 import mightypork.util.files.ion.IonBundled;
 import mightypork.util.timing.Updateable;

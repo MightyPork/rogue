@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import mightypork.rogue.world.World;
-import mightypork.rogue.world.entity.modules.EntityModule;
 import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
@@ -41,7 +40,8 @@ public abstract class Entity implements IonBundled, Updateable, EntityMoveListen
 	public final EntityModuleHealth health = new EntityModuleHealth(this);
 	
 	
-	public Entity(EntityModel model, int eid) {
+	public Entity(EntityModel model, int eid)
+	{
 		
 		this.entityId = eid;
 		this.model = model;
@@ -57,7 +57,7 @@ public abstract class Entity implements IonBundled, Updateable, EntityMoveListen
 	public void save(IonBundle bundle) throws IOException
 	{
 		bundle.put("eid", entityId);
-		for (Entry<String, EntityModule> entry : modules.entrySet()) {
+		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
 			bundle.putBundled(entry.getKey(), entry.getValue());
 		}
 	}
@@ -69,7 +69,7 @@ public abstract class Entity implements IonBundled, Updateable, EntityMoveListen
 		entityId = bundle.get("eid", -1);
 		if (entityId < 0) throw new IllegalValueException("Bad entity id: " + entityId);
 		
-		for (Entry<String, EntityModule> entry : modules.entrySet()) {
+		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
 			bundle.loadBundled(entry.getKey(), entry.getValue());
 		}
 	}
@@ -117,7 +117,7 @@ public abstract class Entity implements IonBundled, Updateable, EntityMoveListen
 	@Override
 	public void update(double delta)
 	{
-		for (Entry<String, EntityModule> entry : modules.entrySet()) {
+		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
 			entry.getValue().update(delta);
 		}
 	}

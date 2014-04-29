@@ -1,4 +1,4 @@
-package mightypork.rogue.screens.gamescreen.world;
+package mightypork.rogue.world.gui;
 
 
 import java.util.HashSet;
@@ -16,6 +16,7 @@ import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.WorldRenderer;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
+import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
 import mightypork.util.math.Easing;
 import mightypork.util.math.constraints.num.Num;
 import mightypork.util.math.constraints.num.mutable.NumAnimated;
@@ -23,6 +24,11 @@ import mightypork.util.math.constraints.vect.Vect;
 import mightypork.util.timing.Updateable;
 
 
+/**
+ * Level display component
+ * 
+ * @author MightyPork
+ */
 public class MapView extends InputComponent implements KeyListener, MouseButtonListener, EntityMoveListener, Updateable {
 	
 	protected final WorldRenderer worldRenderer;
@@ -109,8 +115,8 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 			p.onKey(this, pc, event.getKey(), event.isDown());
 		}
 		
-		if(event.getKey() == Keys.Z) {
-			if(event.isDown()) {
+		if (event.getKey() == Keys.Z) {
+			if (event.isDown()) {
 				zoom.fadeIn(1);
 			} else {
 				zoom.fadeOut(1);
@@ -123,12 +129,17 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	}
 	
 	
+	/**
+	 * Add interaction plugin
+	 * 
+	 * @param plugin
+	 */
 	public void addPlugin(MapInteractionPlugin plugin)
 	{
 		plugins.add(plugin);
 	}
-
-
+	
+	
 	@Override
 	public void update(double delta)
 	{

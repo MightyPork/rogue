@@ -177,10 +177,10 @@ public class EntityPos implements IonBundled, Updateable {
 		} else if (!coord.equals(other.coord)) return false;
 		return true;
 	}
-
-
+	
+	
 	public VectConst getVisualPos()
 	{
-		return Vect.make(walkOffset.x()+coord.x, walkOffset.y()+coord.y);
+		return Vect.make(walkOffset.x() + coord.x, walkOffset.y() + coord.y);
 	}
 }

@@ -11,7 +11,7 @@ import mightypork.util.control.eventbus.clients.RootBusNode;
 import mightypork.util.files.ion.Ion;
 
 
-public class WorldProvider extends RootBusNode{
+public class WorldProvider extends RootBusNode {
 	
 	public static synchronized void init(BusAccess busAccess)
 	{
@@ -21,7 +21,8 @@ public class WorldProvider extends RootBusNode{
 	}
 	
 	
-	public WorldProvider(BusAccess busAccess) {
+	public WorldProvider(BusAccess busAccess)
+	{
 		super(busAccess);
 		setListening(false);
 	}
@@ -31,9 +32,7 @@ public class WorldProvider extends RootBusNode{
 	
 	public static WorldProvider get()
 	{
-		if (inst == null) {
-			throw new IllegalStateException("World provider not initialized.");
-		}
+		if (inst == null) { throw new IllegalStateException("World provider not initialized."); }
 		
 		return inst;
 	}
@@ -60,8 +59,10 @@ public class WorldProvider extends RootBusNode{
 		return world;
 	}
 	
-	private void setWorld(World newWorld) {
-
+	
+	private void setWorld(World newWorld)
+	{
+		
 		if (world != null) removeChildClient(world);
 		world = newWorld;
 		addChildClient(world);

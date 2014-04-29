@@ -13,7 +13,8 @@ public abstract class EntityPathfindingContext implements PathFindingContext {
 	protected final Entity entity;
 	
 	
-	public EntityPathfindingContext(Entity entity) {
+	public EntityPathfindingContext(Entity entity)
+	{
 		this.entity = entity;
 	}
 	

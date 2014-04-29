@@ -17,7 +17,8 @@ public class SimpleLeftRightMobRenderer extends EntityRenderer {
 	private final TxSheet sheet;
 	
 	
-	public SimpleLeftRightMobRenderer(Entity entity, String sheetKey) {
+	public SimpleLeftRightMobRenderer(Entity entity, String sheetKey)
+	{
 		super(entity);
 		this.sheet = Res.getTxSheet(sheetKey);
 	}

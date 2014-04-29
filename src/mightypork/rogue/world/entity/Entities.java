@@ -23,13 +23,9 @@ public final class Entities {
 	
 	public static void register(int id, EntityModel model)
 	{
-		if (id < 0 || id >= entities.length) {
-			throw new IllegalArgumentException("Entity model ID " + id + " is out of range.");
-		}
+		if (id < 0 || id >= entities.length) { throw new IllegalArgumentException("Entity model ID " + id + " is out of range."); }
 		
-		if (entities[id] != null) {
-			throw new IllegalArgumentException("Entity model ID " + id + " already in use.");
-		}
+		if (entities[id] != null) { throw new IllegalArgumentException("Entity model ID " + id + " already in use."); }
 		
 		entities[id] = model;
 	}
@@ -39,9 +35,7 @@ public final class Entities {
 	{
 		final EntityModel e = entities[id];
 		
-		if (e == null) {
-			throw new IllegalArgumentException("No entity model with ID " + id + ".");
-		}
+		if (e == null) { throw new IllegalArgumentException("No entity model with ID " + id + "."); }
 		
 		return e;
 	}
@@ -58,7 +52,7 @@ public final class Entities {
 	
 	public static void saveEntities(IonOutput out, Collection<Entity> entities) throws IOException
 	{
-		for (Entity entity : entities) {
+		for (final Entity entity : entities) {
 			out.startEntry();
 			saveEntity(out, entity);
 		}
@@ -69,16 +63,16 @@ public final class Entities {
 	
 	public static Entity loadEntity(IonInput in) throws IOException
 	{
-		int id = in.readIntByte();
+		final int id = in.readIntByte();
 		
-		EntityModel model = get(id);
+		final EntityModel model = get(id);
 		return model.loadEntity(in);
 	}
 	
 	
 	public static void saveEntity(IonOutput out, Entity entity) throws IOException
 	{
-		EntityModel model = entity.getModel();
+		final EntityModel model = entity.getModel();
 		
 		out.writeIntByte(model.id);
 		
