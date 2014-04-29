@@ -12,12 +12,18 @@ import mightypork.util.math.constraints.rect.Rect;
 import mightypork.util.math.constraints.vect.Vect;
 
 
-public class SimpleLeftRightMobRenderer extends EntityRenderer {
+/**
+ * Renderer for a walking mob with only one strip (right sided), which is
+ * flipped for walking left.
+ * 
+ * @author MightyPork
+ */
+public class EntityRendererMobLR extends EntityRenderer {
 	
 	private final TxSheet sheet;
 	
 	
-	public SimpleLeftRightMobRenderer(Entity entity, String sheetKey)
+	public EntityRendererMobLR(Entity entity, String sheetKey)
 	{
 		super(entity);
 		this.sheet = Res.getTxSheet(sheetKey);

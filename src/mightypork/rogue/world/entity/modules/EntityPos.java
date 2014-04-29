@@ -19,7 +19,7 @@ import mightypork.util.timing.Updateable;
  * 
  * @author MightyPork
  */
-public class EntityPos implements IonBundled, Updateable {
+class EntityPos implements IonBundled, Updateable {
 	
 	private final Coord coord = new Coord(0, 0);
 	private final VectAnimated walkOffset = new VectAnimated(Vect.ZERO, Easing.LINEAR);

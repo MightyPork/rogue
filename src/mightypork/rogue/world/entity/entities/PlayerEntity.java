@@ -7,7 +7,7 @@ import mightypork.rogue.world.entity.EntityModel;
 import mightypork.rogue.world.entity.EntityPathfindingContext;
 import mightypork.rogue.world.entity.SimpleEntityPathFindingContext;
 import mightypork.rogue.world.entity.renderers.EntityRenderer;
-import mightypork.rogue.world.entity.renderers.SimpleLeftRightMobRenderer;
+import mightypork.rogue.world.entity.renderers.EntityRendererMobLR;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
 import mightypork.rogue.world.pathfinding.PathFindingContext;
@@ -28,7 +28,7 @@ public class PlayerEntity extends Entity {
 		};
 	};
 	
-	private final EntityRenderer renderer = new SimpleLeftRightMobRenderer(this, "sprite.player");
+	private final EntityRenderer renderer = new EntityRendererMobLR(this, "sprite.player");
 	
 	
 	public PlayerEntity(EntityModel model, int eid)
