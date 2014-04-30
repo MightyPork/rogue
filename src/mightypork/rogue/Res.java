@@ -63,10 +63,6 @@ public final class Res {
 		GLTexture texture;
 		QuadGrid tiles;
 		
-		// tests
-		texture = textures.loadTexture("test.kitten", "/res/img/kitten.png", FilterMode.LINEAR, WrapMode.CLAMP);
-		texture = textures.loadTexture("test.kitten2", "/res/img/kitten_npot.png", FilterMode.LINEAR, WrapMode.CLAMP);
-		
 		// gui
 		texture = textures.loadTexture("gui1", "/res/img/gui1.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		final QuadGrid gui = texture.grid(4, 4);
@@ -85,14 +81,16 @@ public final class Res {
 		textures.addSheet("sprite.player", tiles.makeSheet(0, 0, 4, 1));
 		
 		// small sheet
-		texture = textures.loadTexture("tiles16", "/res/img/tiles16.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.loadTexture("tiles", "/res/img/tiles16.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		tiles = texture.grid(8, 8);
 		
-		textures.addSheet("tile.floor.dark", tiles.makeSheet(0, 1, 5, 1));
-		textures.addSheet("tile.wall.brick", tiles.makeSheet(0, 0, 5, 1));
+		textures.addSheet("tile.brick.floor", tiles.makeSheet(0, 1, 5, 1));
+		textures.addSheet("tile.brick.wall", tiles.makeSheet(0, 0, 5, 1));
 		
-		textures.addQuad("tile.door.closed", tiles.makeQuad(1, 2));
-		textures.addQuad("tile.door.open", tiles.makeQuad(2, 2));
+		textures.addSheet("tile.brick.door.closed", tiles.makeSheet(1, 2, 1, 1));
+		textures.addSheet("tile.brick.door.open", tiles.makeSheet(2, 2, 1, 1));
+		
+		textures.addSheet("tile.brick.passage", tiles.makeSheet(3, 2, 2, 1));
 		
 		textures.addQuad("tile.shadow.n", tiles.makeQuad(0, 7));
 		textures.addQuad("tile.shadow.s", tiles.makeQuad(0, 7).flipY());
@@ -120,8 +118,6 @@ public final class Res {
 	private static void loadSounds()
 	{
 		sounds.addEffect("gui.shutter", "/res/audio/shutter.ogg", 1, 1);
-		
-		//sounds.addLoop("test.wilderness", "/res/audio/wilderness.ogg", 1, 1, 3, 3);
 	}
 	
 	

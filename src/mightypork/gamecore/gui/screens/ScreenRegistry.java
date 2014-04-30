@@ -43,9 +43,9 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	 * 
 	 * @param screen added screen
 	 */
-	public void addScreen(Screen screen)
+	public void addScreen(String name, Screen screen)
 	{
-		screens.put(screen.getName(), screen);
+		screens.put(name, screen);
 		addChildClient(screen);
 	}
 	

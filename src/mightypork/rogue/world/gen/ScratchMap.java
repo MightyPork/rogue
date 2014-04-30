@@ -56,6 +56,7 @@ public class ScratchMap {
 					return 60;
 					
 				case DOOR:
+				case PASSAGE:
 					return 10;
 					
 				case FLOOR:
@@ -97,14 +98,14 @@ public class ScratchMap {
 	Coord genMin;
 	Coord genMax;
 	
-	private final Theme theme;
+	private final MapTheme theme;
 	private final Random rand;
 	private Coord enterPoint;
 	
 	private static final boolean FIX_GLITCHES = true;
 	
 	
-	public ScratchMap(int max_size, Theme theme, Random rand)
+	public ScratchMap(int max_size, MapTheme theme, Random rand)
 	{
 		map = new Tile[max_size][max_size];
 		

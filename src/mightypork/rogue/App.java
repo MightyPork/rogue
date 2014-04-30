@@ -8,7 +8,7 @@ import mightypork.gamecore.app.BaseApp;
 import mightypork.gamecore.app.MainLoop;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.eventbus.EventBus;
-import mightypork.gamecore.gui.screens.CrossfadeRequest;
+import mightypork.gamecore.gui.events.CrossfadeRequest;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
@@ -21,11 +21,9 @@ import mightypork.gamecore.util.ion.Ion;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.rogue.screens.FpsOverlay;
-import mightypork.rogue.screens.gamescreen.ScreenGame;
-import mightypork.rogue.screens.main_menu.ScreenMainMenu;
+import mightypork.rogue.screens.game.ScreenGame;
+import mightypork.rogue.screens.menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
-import mightypork.rogue.screens.test_cat_sound.ScreenTestCat;
-import mightypork.rogue.screens.test_render.ScreenTestRender;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
@@ -61,8 +59,6 @@ public final class App extends BaseApp {
 	{
 		Config.init();
 		Config.save();
-		
-		WorldProvider.init(this);
 	}
 	
 	
@@ -115,11 +111,13 @@ public final class App extends BaseApp {
 	{
 		super.initScreens(screens);
 		
-		screens.addScreen(new ScreenTestBouncy(this));
-		screens.addScreen(new ScreenTestCat(this));
-		screens.addScreen(new ScreenTestRender(this));
-		screens.addScreen(new ScreenMainMenu(this));
-		screens.addScreen(new ScreenGame(this));
+		/* game screen references world provider instance */
+		WorldProvider.init(this);
+		
+		screens.addScreen("test.bouncy", new ScreenTestBouncy(this));
+		
+		screens.addScreen("menu", new ScreenMainMenu(this));
+		screens.addScreen("game", new ScreenGame(this));
 		
 		screens.addOverlay(new FpsOverlay(this));
 	}
@@ -131,18 +129,10 @@ public final class App extends BaseApp {
 		// this will work only with reusable events (such as requests)
 		bindEventToKey(new ActionRequest(RequestType.FULLSCREEN), Keys.F11);
 		bindEventToKey(new ActionRequest(RequestType.SCREENSHOT), Keys.F2);
-		bindEventToKey(new CrossfadeRequest(null), Keys.L_CONTROL, Keys.Q);
-		bindEventToKey(new CrossfadeRequest("main_menu"), Keys.L_CONTROL, Keys.M);
 		
-		// TODO tmp
-		getInput().bindKey(new KeyStroke(Keys.N), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
-			}
-		});
+		bindEventToKey(new CrossfadeRequest(null), Keys.L_CONTROL, Keys.Q);
+		
+		bindEventToKey(new CrossfadeRequest("menu"), Keys.ESCAPE);
 	}
 	
 	
@@ -172,6 +162,6 @@ public final class App extends BaseApp {
 		// TODO tmp
 		WorldProvider.get().createWorld(42);
 		
-		getEventBus().send(new CrossfadeRequest("game_screen"));
+		getEventBus().send(new CrossfadeRequest("menu", true));
 	}
 }

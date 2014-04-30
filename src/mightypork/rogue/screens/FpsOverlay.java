@@ -53,7 +53,7 @@ public class FpsOverlay extends Overlay {
 		});
 		
 		tp.setRect(constraint);
-		tp.setShadow(Color.BLACK, Vect.make(tp.height().div(16)));
+		tp.setShadow(Color.BLACK, Vect.make(tp.height().div(16).round()));
 		
 		root.add(tp);
 	}

@@ -11,6 +11,7 @@ import mightypork.rogue.world.tile.renderers.NullTileRenderer;
 import mightypork.rogue.world.tile.tiles.DoorTile;
 import mightypork.rogue.world.tile.tiles.FloorTile;
 import mightypork.rogue.world.tile.tiles.NullTile;
+import mightypork.rogue.world.tile.tiles.WallPassageTile;
 import mightypork.rogue.world.tile.tiles.WallTile;
 
 
@@ -25,9 +26,10 @@ public final class Tiles {
 	
 	public static final TileModel NULL = new TileModel(0, NullTile.class, new NullTileRenderer());
 	
-	public static final TileModel FLOOR_DARK = new TileModel(10, FloorTile.class, new BasicTileRenderer("tile.floor.dark"));
-	public static final TileModel WALL_BRICK = new TileModel(11, WallTile.class, new BasicTileRenderer("tile.wall.brick"));
-	public static final TileModel DOOR = new TileModel(12, DoorTile.class, new DoorTileRenderer("tile.door.closed", "tile.door.open"));
+	public static final TileModel BRICK_FLOOR = new TileModel(10, FloorTile.class, new BasicTileRenderer("tile.brick.floor"));
+	public static final TileModel BRICK_WALL = new TileModel(11, WallTile.class, new BasicTileRenderer("tile.brick.wall"));
+	public static final TileModel BRICK_DOOR = new TileModel(12, DoorTile.class, new DoorTileRenderer("tile.brick.door.closed", "tile.brick.door.open"));
+	public static final TileModel BRICK_PASSAGE = new TileModel(13, WallPassageTile.class, new BasicTileRenderer("tile.brick.passage"));
 	
 	
 	public static void register(int id, TileModel model)

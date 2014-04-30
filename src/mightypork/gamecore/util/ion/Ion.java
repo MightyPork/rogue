@@ -104,7 +104,7 @@ public class Ion {
 		try {
 			objClass.getConstructor();
 		} catch (NoSuchMethodException | SecurityException e) {
-			throw new IllegalArgumentException("Class " + Log.str(objClass) + " doesn't have an implicit constructor.");
+			throw new RuntimeException("Class " + Log.str(objClass) + " doesn't have an implicit constructor.");
 		}
 		
 		registered[mark] = objClass;

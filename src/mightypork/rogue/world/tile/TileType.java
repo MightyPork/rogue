@@ -20,7 +20,9 @@ public enum TileType
 	/** Wall tile */
 	WALL(RGB.GRAY_LIGHT, false),
 	/** Door/gate tile */
-	DOOR(PAL16.NEWPOOP, true);
+	DOOR(PAL16.NEWPOOP, true),
+	/** Passage (ie secret door) */
+	PASSAGE(RGB.GRAY, true);
 	
 	private final Color mapColor;
 	private final boolean potentiallyWalkable;

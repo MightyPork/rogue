@@ -72,16 +72,16 @@ public abstract class TileRenderer {
 		if (trd.shadows == 0) return;
 		final Rect rect = context.getRect();
 		
-		if ((trd.shadows & Sides.NW) != 0) Render.quadTextured(rect, SH_NW);
-		if ((trd.shadows & Sides.N) != 0) Render.quadTextured(rect, SH_N);
-		if ((trd.shadows & Sides.NE) != 0) Render.quadTextured(rect, SH_NE);
+		if ((trd.shadows & Sides.MASK_NW) != 0) Render.quadTextured(rect, SH_NW);
+		if ((trd.shadows & Sides.MASK_N) != 0) Render.quadTextured(rect, SH_N);
+		if ((trd.shadows & Sides.MASK_NE) != 0) Render.quadTextured(rect, SH_NE);
 		
-		if ((trd.shadows & Sides.W) != 0) Render.quadTextured(rect, SH_W);
-		if ((trd.shadows & Sides.E) != 0) Render.quadTextured(rect, SH_E);
+		if ((trd.shadows & Sides.MASK_W) != 0) Render.quadTextured(rect, SH_W);
+		if ((trd.shadows & Sides.MASK_E) != 0) Render.quadTextured(rect, SH_E);
 		
-		if ((trd.shadows & Sides.SW) != 0) Render.quadTextured(rect, SH_SW);
-		if ((trd.shadows & Sides.S) != 0) Render.quadTextured(rect, SH_S);
-		if ((trd.shadows & Sides.SE) != 0) Render.quadTextured(rect, SH_SE);
+		if ((trd.shadows & Sides.MASK_SW) != 0) Render.quadTextured(rect, SH_SW);
+		if ((trd.shadows & Sides.MASK_S) != 0) Render.quadTextured(rect, SH_S);
+		if ((trd.shadows & Sides.MASK_SE) != 0) Render.quadTextured(rect, SH_SE);
 	}
 	
 	
@@ -103,15 +103,15 @@ public abstract class TileRenderer {
 		if (ufog == 0) return;
 		
 		final Rect rect = context.getRect();
-		if ((ufog & Sides.NW_CORNER) == Sides.NW) Render.quadTextured(rect, UFOG_NW);
-		if ((ufog & Sides.N) != 0) Render.quadTextured(rect, UFOG_N);
-		if ((ufog & Sides.NE_CORNER) == Sides.NE) Render.quadTextured(rect, UFOG_NE);
+		if ((ufog & Sides.NW_CORNER) == Sides.MASK_NW) Render.quadTextured(rect, UFOG_NW);
+		if ((ufog & Sides.MASK_N) != 0) Render.quadTextured(rect, UFOG_N);
+		if ((ufog & Sides.NE_CORNER) == Sides.MASK_NE) Render.quadTextured(rect, UFOG_NE);
 		
-		if ((ufog & Sides.W) != 0) Render.quadTextured(rect, UFOG_W);
-		if ((ufog & Sides.E) != 0) Render.quadTextured(rect, UFOG_E);
+		if ((ufog & Sides.MASK_W) != 0) Render.quadTextured(rect, UFOG_W);
+		if ((ufog & Sides.MASK_E) != 0) Render.quadTextured(rect, UFOG_E);
 		
-		if ((ufog & Sides.SW_CORNER) == Sides.SW) Render.quadTextured(rect, UFOG_SW);
-		if ((ufog & Sides.S) != 0) Render.quadTextured(rect, UFOG_S);
-		if ((ufog & Sides.SE_CORNER) == Sides.SE) Render.quadTextured(rect, UFOG_SE);
+		if ((ufog & Sides.SW_CORNER) == Sides.MASK_SW) Render.quadTextured(rect, UFOG_SW);
+		if ((ufog & Sides.MASK_S) != 0) Render.quadTextured(rect, UFOG_S);
+		if ((ufog & Sides.SE_CORNER) == Sides.MASK_SE) Render.quadTextured(rect, UFOG_SE);
 	}
 }

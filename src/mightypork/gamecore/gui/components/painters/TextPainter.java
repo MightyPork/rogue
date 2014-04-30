@@ -28,7 +28,7 @@ public class TextPainter extends VisualComponent {
 	private boolean shadow;
 	
 	private Color shadowColor = Color.BLACK;
-	private Vect shadowOffset = Vect.make(1, 1);
+	private Vect shadowOffset = Vect.make(2, 2);
 	
 	
 	/**
@@ -91,9 +91,10 @@ public class TextPainter extends VisualComponent {
 		final Rect rect = getRect();
 		
 		if (shadow) {
-			font.draw(str, rect.move(shadowOffset), align, shadowColor);
+			font.draw(str, rect.round(), align, shadowColor);
 		}
-		font.draw(str, rect, align, color);
+		
+		font.draw(str, rect.move(shadowOffset.neg()).round(), align, color);
 	}
 	
 	

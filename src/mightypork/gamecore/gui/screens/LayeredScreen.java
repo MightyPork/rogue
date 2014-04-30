@@ -14,7 +14,7 @@ import mightypork.gamecore.eventbus.clients.DelegatingClient;
  * 
  * @author MightyPork
  */
-public abstract class LayeredScreen extends BaseScreen {
+public abstract class LayeredScreen extends Screen {
 	
 	private class LayersClient implements DelegatingClient {
 		

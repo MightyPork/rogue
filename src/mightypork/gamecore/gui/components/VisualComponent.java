@@ -32,13 +32,6 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	
 	
 	@Override
-	public final Rect getRect()
-	{
-		return super.getRect();
-	}
-	
-	
-	@Override
 	public final void setRect(RectBound rect)
 	{
 		this.source = new RectBoundAdapter(rect);
@@ -62,7 +55,7 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	@Override
 	public final Rect getCacheSource()
 	{
-		return source;
+		return source.round(); // round to avoid visual artifacts in fonts and such
 	}
 	
 	

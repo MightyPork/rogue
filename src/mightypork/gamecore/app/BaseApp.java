@@ -9,8 +9,8 @@ import javax.swing.JOptionPane;
 
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.events.DestroyEvent;
-import mightypork.gamecore.gui.screens.CrossfadeOverlay;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
+import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.logging.SlickLogRedirector;

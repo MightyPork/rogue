@@ -43,7 +43,10 @@ public class Step implements IonObjBinary, IonObjBundled {
 	
 	private byte x;
 	private byte y;
-	
+
+	public Step() {
+		// for ion
+	}
 	
 	public Step(int x, int y) {
 		this.x = (byte) (x < 0 ? -1 : x > 0 ? 1 : 0);

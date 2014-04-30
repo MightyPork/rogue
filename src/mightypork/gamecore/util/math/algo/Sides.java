@@ -3,40 +3,50 @@ package mightypork.gamecore.util.math.algo;
 
 public class Sides {
 	
-	public static final byte NW = (byte) 0b10000000;
-	public static final byte N = (byte) 0b01000000;
-	public static final byte NE = (byte) 0b00100000;
-	public static final byte E = (byte) 0b00010000;
-	public static final byte SE = (byte) 0b00001000;
-	public static final byte S = (byte) 0b00000100;
-	public static final byte SW = (byte) 0b00000010;
-	public static final byte W = (byte) 0b00000001;
+	public static final byte MASK_NW = (byte) 0b10000000;
+	public static final byte MASK_N = (byte) 0b01000000;
+	public static final byte MASK_NE = (byte) 0b00100000;
+	public static final byte MASK_E = (byte) 0b00010000;
+	public static final byte MASK_SE = (byte) 0b00001000;
+	public static final byte MASK_S = (byte) 0b00000100;
+	public static final byte MASK_SW = (byte) 0b00000010;
+	public static final byte MASK_W = (byte) 0b00000001;
 	
-	public static final byte CARDINAL = N | S | E | W;
-	public static final byte DIAGONAL = NE | NW | SE | SW;
+	public static final byte CARDINAL = MASK_N | MASK_S | MASK_E | MASK_W;
+	public static final byte DIAGONAL = MASK_NE | MASK_NW | MASK_SE | MASK_SW;
 	
-	public static final byte NW_CORNER = W | NW | N;
-	public static final byte NE_CORNER = E | NE | N;
-	public static final byte SW_CORNER = W | SW | S;
-	public static final byte SE_CORNER = E | SE | S;
+	public static final byte NW_CORNER = MASK_W | MASK_NW | MASK_N;
+	public static final byte NE_CORNER = MASK_E | MASK_NE | MASK_N;
+	public static final byte SW_CORNER = MASK_W | MASK_SW | MASK_S;
+	public static final byte SE_CORNER = MASK_E | MASK_SE | MASK_S;
+
+	public static final Step NW = Step.make(-1, -1);
+	public static final Step N = Step.make(0, -1);
+	public static final Step NE = Step.make(1, -1);
+	public static final Step E = Step.make(1, 0);
+	public static final Step SE = Step.make(1, 1);
+	public static final Step S = Step.make(0, 1);
+	public static final Step SW = Step.make(-1, 1);
+	public static final Step W = Step.make(-1, 0);
 	
 	//@formatter:off	
+	/** All sides, in the order of bits. */
 	public final static Step[] allSides = {
-		Step.make(-1, -1),
-		Step.make(0, -1),
-		Step.make(1, -1),
-		Step.make(1, 0),
-		Step.make(1, 1),
-		Step.make(0, 1),
-		Step.make(-1, 1),
-		Step.make(-1, 0)
+		NW,
+		N,
+		NE,
+		E,
+		SE,
+		S,
+		SW,
+		W
 	};
 	
 	public final static Step[] cardinalSides = {
-		Step.make(0, -1),
-		Step.make(1, 0),
-		Step.make(0, 1),
-		Step.make(-1, 0)
+		N,
+		E,
+		S,
+		W
 	};
 	
 	//@formatter:on

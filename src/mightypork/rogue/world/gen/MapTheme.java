@@ -9,7 +9,7 @@ import mightypork.rogue.world.tile.TileModel;
  * 
  * @author MightyPork
  */
-public interface Theme {
+public interface MapTheme {
 	
 	TileModel wall();
 	
@@ -18,4 +18,6 @@ public interface Theme {
 	
 	
 	TileModel door();
+	
+	TileModel passage();
 }

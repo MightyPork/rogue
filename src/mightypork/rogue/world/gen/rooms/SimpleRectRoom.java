@@ -8,13 +8,14 @@ import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.rogue.world.gen.RoomBuilder;
 import mightypork.rogue.world.gen.RoomDesc;
 import mightypork.rogue.world.gen.ScratchMap;
-import mightypork.rogue.world.gen.Theme;
+import mightypork.rogue.world.gen.MapTheme;
+import mightypork.rogue.world.tile.TileModel;
 
 
 public class SimpleRectRoom implements RoomBuilder {
 	
 	@Override
-	public RoomDesc buildToFit(ScratchMap map, Theme theme, Random rand, Coord center)
+	public RoomDesc buildToFit(ScratchMap map, MapTheme theme, Random rand, Coord center)
 	{
 		// half width, half height actually
 		final int width = 2 + rand.nextInt(2);
@@ -28,6 +29,8 @@ public class SimpleRectRoom implements RoomBuilder {
 		map.fill(min, max, theme.floor());
 		map.border(min, max, theme.wall());
 		map.protect(min, max);
+		
+		boolean holes = rand.nextInt(4) == 0;
 		
 		for (int i = 0; i <= 2 + rand.nextInt(6); i++) {
 			final Coord door = min.copy();
@@ -51,11 +54,19 @@ public class SimpleRectRoom implements RoomBuilder {
 			}
 			
 			if ((map.findDoors(door) & Sides.CARDINAL) == 0) {
-				map.set(door, theme.door());
+				TileModel placed;
+				switch (rand.nextInt(8)) {
+					case 0:
+					case 1:
+						placed = theme.passage();
+						break;
+					default:
+						placed = holes ? theme.floor() : theme.door();
+				}
+				map.set(door, placed);
 			}
 		}
 		
 		return new RoomDesc(min.add(-1, -1), max);
 	}
-	
 }

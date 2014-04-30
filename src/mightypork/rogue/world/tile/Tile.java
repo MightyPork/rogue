@@ -126,7 +126,7 @@ public abstract class Tile implements IonObjBlob {
 	
 	public final boolean isDoor()
 	{
-		return getType() == TileType.DOOR;
+		return getType() == TileType.DOOR || getType() == TileType.PASSAGE;
 	}
 	
 	

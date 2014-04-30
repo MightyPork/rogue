@@ -3,6 +3,7 @@ package mightypork.rogue.world.tile.renderers;
 
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.level.render.TileRenderContext;
@@ -12,14 +13,14 @@ import mightypork.rogue.world.tile.TileRenderer;
 
 public class DoorTileRenderer extends TileRenderer {
 	
-	private final TxQuad closed;
-	private final TxQuad open;
+	private final TxSheet closed;
+	private final TxSheet open;
 	
 	
 	public DoorTileRenderer(String quadClosed, String quadOpen)
 	{
-		this.closed = Res.getTxQuad(quadClosed);
-		this.open = Res.getTxQuad(quadOpen);
+		this.closed = Res.getTxSheet(quadClosed);
+		this.open = Res.getTxSheet(quadOpen);
 	}
 	
 	
@@ -30,9 +31,9 @@ public class DoorTileRenderer extends TileRenderer {
 		final Rect rect = context.getRect();
 		
 		if (t.isOccupied()) {
-			Render.quadTextured(rect, open);
+			Render.quadTextured(rect, open.getRandomQuad(context.getTileNoise()));
 		} else {
-			Render.quadTextured(rect, closed);
+			Render.quadTextured(rect, closed.getRandomQuad(context.getTileNoise()));
 		}
 	}
 	

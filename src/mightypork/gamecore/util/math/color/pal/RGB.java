@@ -13,6 +13,7 @@ public interface RGB {
 	Color WHITE = Color.fromHex(0xFFFFFF);
 	Color BLACK = Color.fromHex(0x000000);
 	Color GRAY_DARK = Color.fromHex(0x808080);
+	Color GRAY = Color.fromHex(0xA0A0A0);
 	Color GRAY_LIGHT = Color.fromHex(0xC0C0C0);
 	
 	Color RED = Color.fromHex(0xFF0000);

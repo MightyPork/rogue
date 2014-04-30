@@ -107,7 +107,7 @@ public class WorldRenderer extends RectProxy {
 		
 		// batch rendering of the tiles
 		if (USE_BATCH_RENDERING) {
-			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles16"));
+			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles"));
 		}
 		
 		for (trc.pos.x = x1; trc.pos.x <= x2; trc.pos.x++) {

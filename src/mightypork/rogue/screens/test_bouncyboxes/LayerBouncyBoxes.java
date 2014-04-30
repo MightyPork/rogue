@@ -7,7 +7,7 @@ import java.util.List;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.RowHolder;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.screens.BaseScreen;
+import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
@@ -23,7 +23,7 @@ public class LayerBouncyBoxes extends ScreenLayer {
 	private RowHolder layout;
 	
 	
-	public LayerBouncyBoxes(BaseScreen screen)
+	public LayerBouncyBoxes(Screen screen)
 	{
 		super(screen);
 		

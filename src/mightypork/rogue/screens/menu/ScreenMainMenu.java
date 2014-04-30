@@ -1,4 +1,4 @@
-package mightypork.rogue.screens.main_menu;
+package mightypork.rogue.screens.menu;
 
 
 import mightypork.gamecore.app.AppAccess;
@@ -13,12 +13,4 @@ public class ScreenMainMenu extends LayeredScreen {
 		
 		addLayer(new MenuLayer(this));
 	}
-	
-	
-	@Override
-	public String getName()
-	{
-		return "main_menu";
-	}
-	
 }

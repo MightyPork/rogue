@@ -6,19 +6,19 @@ import java.util.Random;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.gen.rooms.DeadEndRoom;
 import mightypork.rogue.world.gen.rooms.SimpleRectRoom;
-import mightypork.rogue.world.gen.themes.ThemeDungeon;
+import mightypork.rogue.world.gen.themes.ThemeBrick;
 import mightypork.rogue.world.level.Level;
 
 
 public class LevelGenerator {
 	
-	public static final Theme DUNGEON_THEME = new ThemeDungeon();
+	public static final MapTheme DUNGEON_THEME = new ThemeBrick();
 	
 	public static final RoomBuilder ROOM_SQUARE = new SimpleRectRoom();
 	private static final RoomBuilder DEAD_END = new DeadEndRoom();
 	
 	
-	public static Level build(long seed, int complexity, Theme theme)
+	public static Level build(long seed, int complexity, MapTheme theme)
 	{
 		final Random rand = new Random(seed + 13);
 		
@@ -31,7 +31,7 @@ public class LevelGenerator {
 		
 		for (int i = 0; i < 2 + complexity / 2 + rand.nextInt((int) (1 + complexity * 0.3)); i++) {
 			map.addRoom(ROOM_SQUARE);
-			if (rand.nextInt(4) > 0) map.addRoom(DEAD_END);
+			if (rand.nextInt(6) > 0) map.addRoom(DEAD_END);
 		}
 		
 		map.buildCorridors();

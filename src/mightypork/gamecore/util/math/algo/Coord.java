@@ -46,7 +46,10 @@ public class Coord implements IonObjBundled, IonObjBinary {
 	{
 		return make(0, 0);
 	}
-	
+
+	public Coord() {
+		// for ion
+	}
 	
 	public Coord(int x, int y) {
 		super();

@@ -362,7 +362,7 @@ public class Level implements MapAccess, IonObjBinary {
 		public boolean canSpreadFrom(Coord pos)
 		{
 			final Tile t = getTile(pos);
-			return t.isWalkable() && t.getType() != TileType.DOOR;
+			return t.isWalkable() && !t.isDoor();
 		}
 		
 		
