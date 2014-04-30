@@ -7,7 +7,8 @@ import mightypork.gamecore.gui.screens.LayeredScreen;
 
 public class ScreenTestBouncy extends LayeredScreen {
 	
-	public ScreenTestBouncy(AppAccess app) {
+	public ScreenTestBouncy(AppAccess app)
+	{
 		super(app);
 		
 		addLayer(new LayerBouncyBoxes(this));

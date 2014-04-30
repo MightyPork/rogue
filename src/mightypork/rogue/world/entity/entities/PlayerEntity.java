@@ -14,7 +14,8 @@ public class PlayerEntity extends Entity {
 	
 	class PlayerAi extends EntityModule implements EntityMoveListener {
 		
-		public PlayerAi(Entity entity) {
+		public PlayerAi(Entity entity)
+		{
 			super(entity);
 		}
 		
@@ -46,13 +47,14 @@ public class PlayerEntity extends Entity {
 		
 	}
 	
-	private EntityPathfindingContext pathfc;	
+	private EntityPathfindingContext pathfc;
 	private EntityRenderer renderer;
 	
 	private final PlayerAi ai = new PlayerAi(this);
 	
 	
-	public PlayerEntity(EntityModel model, int eid) {
+	public PlayerEntity(EntityModel model, int eid)
+	{
 		super(model, eid);
 		
 		pos.setStepTime(0.25);
@@ -72,9 +74,7 @@ public class PlayerEntity extends Entity {
 				public int getCost(Coord from, Coord to)
 				{
 					
-					if (!getLevel().getTile(pos.getCoord()).isExplored()) {
-						return 1000;
-					}
+					if (!getLevel().getTile(pos.getCoord()).isExplored()) { return 1000; }
 					
 					return super.getCost(from, to);
 					
@@ -103,6 +103,7 @@ public class PlayerEntity extends Entity {
 		
 		return renderer;
 	}
+	
 	
 	@Override
 	public EntityType getType()

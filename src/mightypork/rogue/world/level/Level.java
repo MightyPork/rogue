@@ -2,7 +2,11 @@ package mightypork.rogue.world.level;
 
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.ion.IonBundle;
@@ -21,7 +25,6 @@ import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
-import mightypork.rogue.world.tile.TileType;
 import mightypork.rogue.world.tile.Tiles;
 
 
@@ -51,11 +54,13 @@ public class Level implements MapAccess, IonObjBinary {
 	private transient NoiseGen noiseGen;
 	
 	
-	public Level() {
+	public Level()
+	{
 	}
 	
 	
-	public Level(int width, int height) {
+	public Level(int width, int height)
+	{
 		size.setTo(width, height);
 		buildArray();
 	}
@@ -87,7 +92,7 @@ public class Level implements MapAccess, IonObjBinary {
 	public final Tile getTile(Coord pos)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) return Tiles.NULL.createTile(); // out of range
-			
+		
 		return tiles[pos.y][pos.x];
 	}
 	
@@ -290,16 +295,17 @@ public class Level implements MapAccess, IonObjBinary {
 		getTile(pos).setOccupied(false);
 	}
 	
-	public void cleanCorpses() {
-		for(Iterator<Entity> i = entitySet.iterator(); i.hasNext();) {
-			Entity e = i.next();
-			
-			if(e.isDead() && e.canRemoveCorpse()) {
+	
+	public void cleanCorpses()
+	{
+		for (final Entity e : entitySet) {
+			if (e.isDead() && e.canRemoveCorpse()) {
 				e.onCorpseRemoved();
 				removeEntity(e);
 			}
 		}
 	}
+	
 	
 	public Collection<Entity> getEntities()
 	{
@@ -387,12 +393,12 @@ public class Level implements MapAccess, IonObjBinary {
 		Entity closest = null;
 		double minDist = Double.MAX_VALUE;
 		
-		for (Entity e : entitySet) {
+		for (final Entity e : entitySet) {
 			if (e == self) continue;
 			if (e.isDead()) continue;
 			
 			if (e.getType() == type) {
-				double dist = e.getCoord().dist(self.getCoord());
+				final double dist = e.getCoord().dist(self.getCoord());
 				
 				if (dist <= radius && dist < minDist) {
 					minDist = dist;

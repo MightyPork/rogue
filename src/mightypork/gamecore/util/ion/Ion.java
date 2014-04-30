@@ -93,13 +93,9 @@ public class Ion {
 		if (mark > 255) throw new IllegalArgumentException("Mark must be < 256.");
 		if (mark < 0) throw new IllegalArgumentException("Mark must be positive.");
 		
-		if (reservedMarkChecking && mark < 50) {
-			throw new IllegalArgumentException("Marks 0..49 are reserved.");
-		}
+		if (reservedMarkChecking && mark < 50) { throw new IllegalArgumentException("Marks 0..49 are reserved."); }
 		
-		if (registered[mark] != null) {
-			throw new IllegalArgumentException("Mark " + mark + " is already in use.");
-		}
+		if (registered[mark] != null) { throw new IllegalArgumentException("Mark " + mark + " is already in use."); }
 		
 		try {
 			objClass.getConstructor();
@@ -125,7 +121,7 @@ public class Ion {
 	 */
 	public static <T extends IonObjBinary> T fromFile(File file) throws IOException
 	{
-		try (InputStream in = new FileInputStream(file)) {
+		try(InputStream in = new FileInputStream(file)) {
 			return fromStream(in);
 		}
 	}
@@ -145,7 +141,7 @@ public class Ion {
 	 */
 	public static <T extends IonObjBundled> T fromFile(File file, Class<? extends T> objClass) throws IOException
 	{
-		try (InputStream in = new FileInputStream(file)) {
+		try(InputStream in = new FileInputStream(file)) {
 			
 			return fromStream(in, objClass);
 			
@@ -182,7 +178,7 @@ public class Ion {
 	 */
 	public static void toFile(File file, IonObjBinary obj) throws IOException
 	{
-		try (OutputStream out = new FileOutputStream(file)) {
+		try(OutputStream out = new FileOutputStream(file)) {
 			
 			toStream(out, obj);
 			
@@ -282,13 +278,9 @@ public class Ion {
 		
 		final Class<? extends IonObjBinary> clz = Ion.getClassForMark(mark);
 		
-		if (clz == null) {
-			throw new IOException("Not registered - mark: " + mark + ", class: " + Log.str(obj.getClass()));
-		}
+		if (clz == null) { throw new IOException("Not registered - mark: " + mark + ", class: " + Log.str(obj.getClass())); }
 		
-		if (clz != obj.getClass()) {
-			throw new IOException("Class mismatch - mark: " + mark + ", class: " + Log.str(obj.getClass()));
-		}
+		if (clz != obj.getClass()) { throw new IOException("Class mismatch - mark: " + mark + ", class: " + Log.str(obj.getClass())); }
 	}
 	
 }

@@ -13,10 +13,11 @@ import mightypork.gamecore.util.math.algo.Step;
  */
 public class PathFindingContextProxy implements PathFindingContext {
 	
-	private PathFindingContext source;
+	private final PathFindingContext source;
 	
 	
-	public PathFindingContextProxy(PathFindingContext other) {
+	public PathFindingContextProxy(PathFindingContext other)
+	{
 		this.source = other;
 	}
 	

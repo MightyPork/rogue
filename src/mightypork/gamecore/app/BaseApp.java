@@ -148,14 +148,15 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		Log.i("=== Initialized sequence completed ===");
 	}
 	
+	
 	@DefaultImpl
 	protected void registerIonizables()
 	{
 		Ion.registerType(Coord.ION_MARK, Coord.class);
 		Ion.registerType(Step.ION_MARK, Step.class);
 	}
-
-
+	
+	
 	/**
 	 * Called at the beginning of the initialization sequence, right after lock
 	 * was obtained.

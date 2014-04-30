@@ -39,7 +39,8 @@ public class CrossfadeOverlay extends Overlay {
 	};
 	
 	
-	public CrossfadeOverlay(AppAccess app) {
+	public CrossfadeOverlay(AppAccess app)
+	{
 		super(app);
 		
 		final QuadPainter qp = new QuadPainter(color);

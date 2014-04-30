@@ -137,11 +137,13 @@ public class IonBundle implements IonObjBinary {
 	{
 		backingMap.put(key, value);
 	}
-
+	
+	
 	public void put(String key, byte value)
 	{
 		backingMap.put(key, value);
 	}
+	
 	
 	public void put(String key, char value)
 	{

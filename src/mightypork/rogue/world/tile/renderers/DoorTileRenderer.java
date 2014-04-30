@@ -2,7 +2,6 @@ package mightypork.rogue.world.tile.renderers;
 
 
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;

@@ -1,5 +1,6 @@
 package mightypork.gamecore.util.strings;
 
+
 /**
  * String provider with constant string
  * 

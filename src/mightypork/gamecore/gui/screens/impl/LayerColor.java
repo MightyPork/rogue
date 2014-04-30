@@ -9,9 +9,9 @@ import mightypork.gamecore.util.math.color.Color;
 
 public class LayerColor extends ScreenLayer {
 	
-	private int zIndex;
-
-
+	private final int zIndex;
+	
+	
 	public LayerColor(Screen screen, Color color, int zIndex)
 	{
 		super(screen);

@@ -9,7 +9,9 @@ public abstract class TaskRepeater extends AnimatorRewind implements Runnable, E
 	
 	private boolean enabled = true;
 	
-	public TaskRepeater(double period) {
+	
+	public TaskRepeater(double period)
+	{
 		super(period);
 	}
 	
@@ -21,11 +23,13 @@ public abstract class TaskRepeater extends AnimatorRewind implements Runnable, E
 		super.nextCycle(anim);
 	}
 	
+	
 	@Override
 	public void enable(boolean yes)
 	{
 		this.enabled = yes;
 	}
+	
 	
 	@Override
 	public boolean isEnabled()
@@ -33,10 +37,11 @@ public abstract class TaskRepeater extends AnimatorRewind implements Runnable, E
 		return enabled;
 	}
 	
+	
 	@Override
 	public void update(double delta)
 	{
-		if(!enabled) return;
+		if (!enabled) return;
 		
 		super.update(delta);
 	}

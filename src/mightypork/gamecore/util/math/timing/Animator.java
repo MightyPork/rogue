@@ -54,7 +54,8 @@ public abstract class Animator extends Num implements Updateable, Pauseable {
 	}
 	
 	
-	public void start() {
+	public void start()
+	{
 		resume();
 	}
 	
@@ -78,17 +79,22 @@ public abstract class Animator extends Num implements Updateable, Pauseable {
 		numAnim.reset();
 	}
 	
-	public void restart() {
+	
+	public void restart()
+	{
 		reset();
 		nextCycle(numAnim);
 	}
 	
 	
-	public void setDuration(double secs) {
+	public void setDuration(double secs)
+	{
 		numAnim.setDefaultDuration(secs);
 	}
 	
-	public double getDuration() {
+	
+	public double getDuration()
+	{
 		return numAnim.getDefaultDuration();
 	}
 	
@@ -111,13 +117,17 @@ public abstract class Animator extends Num implements Updateable, Pauseable {
 		return num.value();
 	}
 	
-	public void setProgress(double value) {
-		double target = numAnim.getEnd();
+	
+	public void setProgress(double value)
+	{
+		final double target = numAnim.getEnd();
 		numAnim.setTo(Calc.clamp(value, lowValue, highValue));
 		numAnim.animate(target, numAnim.getDefaultDuration());
 	}
 	
-	public double getProgress() {
+	
+	public double getProgress()
+	{
 		return numAnim.value();
 	}
 }

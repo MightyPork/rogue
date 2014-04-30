@@ -1,5 +1,6 @@
 package mightypork.rogue.world.tile.tiles;
 
+
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.TileType;
@@ -11,16 +12,19 @@ import mightypork.rogue.world.tile.TileType;
  * @author MightyPork
  */
 public class WallPassageTile extends SolidTile {
-
-	public WallPassageTile(TileModel model, TileRenderer renderer) {
+	
+	public WallPassageTile(TileModel model, TileRenderer renderer)
+	{
 		super(model, renderer);
 	}
-
+	
+	
 	@Override
 	public TileType getType()
 	{
 		return TileType.PASSAGE;
 	}
+	
 	
 	@Override
 	public boolean isWalkable()

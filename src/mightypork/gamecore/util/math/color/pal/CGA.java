@@ -1,5 +1,6 @@
 package mightypork.gamecore.util.math.color.pal;
 
+
 import mightypork.gamecore.util.math.color.Color;
 
 

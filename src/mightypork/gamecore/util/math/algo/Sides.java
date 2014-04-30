@@ -19,7 +19,7 @@ public class Sides {
 	public static final byte NE_CORNER = MASK_E | MASK_NE | MASK_N;
 	public static final byte SW_CORNER = MASK_W | MASK_SW | MASK_S;
 	public static final byte SE_CORNER = MASK_E | MASK_SE | MASK_S;
-
+	
 	public static final Step NW = Step.make(-1, -1);
 	public static final Step N = Step.make(0, -1);
 	public static final Step NE = Step.make(1, -1);

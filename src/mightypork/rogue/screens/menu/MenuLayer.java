@@ -18,7 +18,8 @@ import mightypork.rogue.Res;
 
 class MenuLayer extends ScreenLayer {
 	
-	public MenuLayer(Screen screen) {
+	public MenuLayer(Screen screen)
+	{
 		super(screen);
 		
 		init();
@@ -39,7 +40,7 @@ class MenuLayer extends ScreenLayer {
 		root.add(layout);
 		
 		int r = 0;
-		TextPainter tp = new TextPainter(Res.getFont("main_menu_title"), AlignX.CENTER, COMMODORE.PURPLE, "Rogue!");
+		final TextPainter tp = new TextPainter(Res.getFont("main_menu_title"), AlignX.CENTER, COMMODORE.PURPLE, "Rogue!");
 		layout.put(tp, r, 0, 3, 1);
 		r += 5;
 		

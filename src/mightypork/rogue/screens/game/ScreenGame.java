@@ -13,9 +13,9 @@ import mightypork.rogue.world.WorldProvider;
 public class ScreenGame extends LayeredScreen {
 	
 	
-	private Random rand = new Random();
-
-
+	private final Random rand = new Random();
+	
+	
 	public ScreenGame(AppAccess app)
 	{
 		super(app);
@@ -28,7 +28,7 @@ public class ScreenGame extends LayeredScreen {
 			@Override
 			public void run()
 			{
-				WorldProvider.get().createWorld(rand .nextLong());
+				WorldProvider.get().createWorld(rand.nextLong());
 			}
 		});
 	}

@@ -21,9 +21,11 @@ public abstract class EntityModule implements IonObjBundled, Updateable {
 	protected final Random rand = new Random();
 	
 	
-	public EntityModule(Entity entity) {
+	public EntityModule(Entity entity)
+	{
 		this.entity = entity;
 	}
+	
 	
 	public abstract boolean isModuleSaved();
 	

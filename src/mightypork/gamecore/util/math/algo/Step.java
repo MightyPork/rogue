@@ -43,12 +43,16 @@ public class Step implements IonObjBinary, IonObjBundled {
 	
 	private byte x;
 	private byte y;
-
-	public Step() {
+	
+	
+	public Step()
+	{
 		// for ion
 	}
 	
-	public Step(int x, int y) {
+	
+	public Step(int x, int y)
+	{
 		this.x = (byte) (x < 0 ? -1 : x > 0 ? 1 : 0);
 		this.y = (byte) (y < 0 ? -1 : y > 0 ? 1 : 0);
 	}
@@ -64,7 +68,6 @@ public class Step implements IonObjBinary, IonObjBundled {
 	{
 		return y;
 	}
-	
 	
 	
 	public Coord toCoord()
@@ -85,7 +88,7 @@ public class Step implements IonObjBinary, IonObjBundled {
 	{
 		return "(" + x + ";" + y + ")";
 	}
-
+	
 	
 	@Override
 	public void load(IonInput in) throws IOException
@@ -101,6 +104,7 @@ public class Step implements IonObjBinary, IonObjBundled {
 		out.writeByte(x);
 		out.writeByte(y);
 	}
+	
 	
 	@Override
 	public void load(IonBundle bundle) throws IOException

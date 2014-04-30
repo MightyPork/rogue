@@ -1,7 +1,6 @@
 package mightypork.gamecore.gui;
 
 
-
 /**
  * Triggered action
  * 

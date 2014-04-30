@@ -10,15 +10,17 @@ public abstract class SimpleMonster extends Entity {
 	/** Navigation PFC */
 	private EntityPathfindingContext pathfc;
 	
-	private EntityModule ai = new MonsterAi(this); 
+	private final EntityModule ai = new MonsterAi(this);
 	
-	public SimpleMonster(EntityModel model, int eid) {
+	
+	public SimpleMonster(EntityModel model, int eid)
+	{
 		super(model, eid);
 		
 		addModule("ai", ai);
 	}
-
-
+	
+	
 	@Override
 	public PathFindingContext getPathfindingContext()
 	{
@@ -28,6 +30,7 @@ public abstract class SimpleMonster extends Entity {
 		
 		return pathfc;
 	}
+	
 	
 	@Override
 	public EntityType getType()

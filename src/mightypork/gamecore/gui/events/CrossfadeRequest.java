@@ -13,6 +13,7 @@ public class CrossfadeRequest extends BusEvent<CrossfadeOverlay> {
 	private final String screen;
 	private final boolean fromDark;
 	
+	
 	/**
 	 * @param screen screen key to show. Null = exit the app.
 	 * @param fromDark true to fade from full black (ie. start of the game)
@@ -23,6 +24,7 @@ public class CrossfadeRequest extends BusEvent<CrossfadeOverlay> {
 		this.screen = screen;
 		this.fromDark = fromDark;
 	}
+	
 	
 	/**
 	 * @param screen screen key to show. Null = exit the app.

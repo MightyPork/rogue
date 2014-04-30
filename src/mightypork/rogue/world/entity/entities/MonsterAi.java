@@ -24,7 +24,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	private boolean sleeping = true;
 	private boolean chasing = false;
 	
-	private AiTimer timerFindPrey = new AiTimer(3) {
+	private final AiTimer timerFindPrey = new AiTimer(3) {
 		
 		@Override
 		public void run()
@@ -34,7 +34,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		}
 	};
 	
-	private AiTimer timerSleepStart = new AiTimer(10) {
+	private final AiTimer timerSleepStart = new AiTimer(10) {
 		
 		@Override
 		public void run()
@@ -49,7 +49,8 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	private int targetId = -1;
 	
 	
-	public MonsterAi(final Entity entity) {
+	public MonsterAi(final Entity entity)
+	{
 		super(entity);
 		
 		pathfcNoDoor = new PathFindingContextProxy(entity.getPathfindingContext()) {
@@ -57,7 +58,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			@Override
 			public boolean isAccessible(Coord pos)
 			{
-				Tile t = entity.getLevel().getTile(pos);
+				final Tile t = entity.getLevel().getTile(pos);
 				if (t.isDoor()) return false;
 				
 				return super.isAccessible(pos);
@@ -70,15 +71,14 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	private void lookForTarget()
 	{
 		if (rand.nextInt(3) == 0) return; // not hungry right now
-			
-		Entity prey = entity.getLevel().getClosestEntity(entity, EntityType.PLAYER, getScanRadius());
+		
+		final Entity prey = entity.getLevel().getClosestEntity(entity, EntityType.PLAYER, getScanRadius());
 		if (prey != null) {
 			
 			// check if reachable without leaving room
-			List<Coord> noDoorPath = PathFinder.findPath(pathfcNoDoor, entity.getCoord(), prey.getCoord());
+			final List<Coord> noDoorPath = PathFinder.findPath(pathfcNoDoor, entity.getCoord(), prey.getCoord());
 			
-			if (noDoorPath == null) {
-				return; // cant reach, give up
+			if (noDoorPath == null) { return; // cant reach, give up
 			}
 			
 			startChasing(prey);
@@ -136,7 +136,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	public void onStepFinished()
 	{
 		if (chasing) {
-			Entity prey = entity.getLevel().getEntity(targetId);
+			final Entity prey = entity.getLevel().getEntity(targetId);
 			if (prey == null || prey.isDead()) {
 				stopChasing();
 				return;
@@ -153,13 +153,13 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	private void stepTowardsPrey(Entity prey)
 	{
 		// if close enough
-		Coord preyPos = prey.getCoord();
-		if(preyPos.dist(entity.getCoord()) <= 1.5) {
+		final Coord preyPos = prey.getCoord();
+		if (preyPos.dist(entity.getCoord()) <= 1.5) {
 			attackPrey(prey);
 			return;
 		}
 		
-		List<Step> preyPath = getPathToPrey(prey);
+		final List<Step> preyPath = getPathToPrey(prey);
 		
 		if (preyPath.size() > getPreyAbandonDistance()) {
 			stopChasing();
@@ -174,13 +174,14 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	{
 		prey.receiveAttack(entity, getAttackStrength());
 	}
-
-
-	protected int getAttackStrength() {
+	
+	
+	protected int getAttackStrength()
+	{
 		return 1; // For override
 	}
-
-
+	
+	
 	@Override
 	public void onPathFinished()
 	{

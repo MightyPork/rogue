@@ -5,10 +5,10 @@ import java.util.Random;
 
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Sides;
+import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.RoomBuilder;
 import mightypork.rogue.world.gen.RoomDesc;
 import mightypork.rogue.world.gen.ScratchMap;
-import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.tile.TileModel;
 
 
@@ -30,7 +30,7 @@ public class SimpleRectRoom implements RoomBuilder {
 		map.border(min, max, theme.wall());
 		map.protect(min, max);
 		
-		boolean holes = rand.nextInt(4) == 0;
+		final boolean holes = rand.nextInt(4) == 0;
 		
 		for (int i = 0; i <= 2 + rand.nextInt(6); i++) {
 			final Coord door = min.copy();

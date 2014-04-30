@@ -41,7 +41,8 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	public final EntityModuleHealth health = new EntityModuleHealth(this);
 	
 	
-	public Entity(EntityModel model, int eid) {
+	public Entity(EntityModel model, int eid)
+	{
 		
 		this.entityId = eid;
 		this.model = model;
@@ -57,13 +58,13 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	{
 		bundle.put("eid", entityId);
 		
-		IonBundle modulesBundle = new IonBundle();
+		final IonBundle modulesBundle = new IonBundle();
 		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
 			modulesBundle.putBundled(entry.getKey(), entry.getValue());
 		}
 		bundle.put("modules", modulesBundle);
 		
-		IonBundle extra = new IonBundle();
+		final IonBundle extra = new IonBundle();
 		saveExtra(extra);
 		bundle.put("extra", extra);
 	}
@@ -81,13 +82,13 @@ public abstract class Entity implements IonObjBundled, Updateable {
 		entityId = bundle.get("eid", -1);
 		if (entityId < 0) throw new IllegalValueException("Bad entity id: " + entityId);
 		
-		IonBundle modulesBundle = bundle.get("modules", new IonBundle());
+		final IonBundle modulesBundle = bundle.get("modules", new IonBundle());
 		
 		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
 			modulesBundle.loadBundled(entry.getKey(), entry.getValue());
 		}
 		
-		IonBundle extra = bundle.get("extra", new IonBundle());
+		final IonBundle extra = bundle.get("extra", new IonBundle());
 		loadExtra(extra);
 	}
 	
@@ -100,9 +101,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	
 	protected final void addModule(String key, EntityModule module)
 	{
-		if (modules.containsKey(key)) {
-			throw new RuntimeException("Entity module " + key + " already defined.");
-		}
+		if (modules.containsKey(key)) { throw new RuntimeException("Entity module " + key + " already defined."); }
 		modules.put(key, module);
 	}
 	

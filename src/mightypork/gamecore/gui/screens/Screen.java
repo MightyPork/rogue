@@ -32,7 +32,8 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 	/**
 	 * @param app app access
 	 */
-	public Screen(AppAccess app) {
+	public Screen(AppAccess app)
+	{
 		super(app);
 		
 		// disable events initially

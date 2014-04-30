@@ -5,6 +5,7 @@ import java.util.logging.Level;
 
 import mightypork.gamecore.logging.writers.LogWriter;
 
+
 /**
  * Used to redirect slick log into main logger.
  * 

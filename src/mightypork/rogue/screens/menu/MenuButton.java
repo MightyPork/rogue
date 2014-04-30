@@ -17,14 +17,15 @@ class MenuButton extends ClickableComponent {
 	private static GLFont font = Res.getFont("main_menu_button");
 	private final TextPainter painter;
 	
-	private final VectVar offset = Vect.makeVar();	
+	private final VectVar offset = Vect.makeVar();
 	private final Vect offsetPassive = height().div(16).toVectXY();
 	private final Vect offsetPassive2 = height().div(24).toVectXY();
 	
 	private final Color color;
 	
 	
-	public MenuButton(String text, Color color) {
+	public MenuButton(String text, Color color)
+	{
 		this.color = color;
 		
 		this.painter = new TextPainter(font, AlignX.CENTER, this.color, text);

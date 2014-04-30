@@ -58,7 +58,8 @@ public class EntityModulePosition extends EntityModule {
 		
 		stepTime = bundle.get("step_time", stepTime);
 	}
-
+	
+	
 	@Override
 	public boolean isModuleSaved()
 	{

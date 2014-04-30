@@ -19,5 +19,6 @@ public interface MapTheme {
 	
 	TileModel door();
 	
+	
 	TileModel passage();
 }
