@@ -3,10 +3,10 @@ package mightypork.rogue.screens.gamescreen;
 
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.rogue.world.gui.MapView;
 import mightypork.rogue.world.gui.interaction.MIPClickPathfWalk;
 import mightypork.rogue.world.gui.interaction.MIPKeyWalk;
-import mightypork.util.math.constraints.num.Num;
 
 
 public class WorldLayer extends ScreenLayer {

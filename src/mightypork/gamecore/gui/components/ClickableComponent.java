@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.gamecore.control.events.input.MouseButtonEvent;
-import mightypork.gamecore.control.events.input.MouseButtonListener;
-import mightypork.util.control.Action;
-import mightypork.util.control.ActionTrigger;
+import mightypork.gamecore.gui.Action;
+import mightypork.gamecore.gui.ActionTrigger;
+import mightypork.gamecore.input.events.MouseButtonEvent;
+import mightypork.gamecore.input.events.MouseButtonListener;
 
 
 public abstract class ClickableComponent extends InputComponent implements ActionTrigger, MouseButtonListener {

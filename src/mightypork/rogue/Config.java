@@ -1,8 +1,8 @@
 package mightypork.rogue;
 
 
-import mightypork.util.files.config.PropertyManager;
-import mightypork.util.logging.Log;
+import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.files.config.PropertyManager;
 
 
 /**

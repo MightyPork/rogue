@@ -2,10 +2,10 @@ package mightypork.rogue.world.gui.interaction;
 
 
 import mightypork.gamecore.input.InputSystem;
-import mightypork.rogue.world.Coord;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.gui.MapView;
-import mightypork.util.math.constraints.vect.Vect;
 
 
 public class MIPClickPathfWalk implements MapInteractionPlugin {

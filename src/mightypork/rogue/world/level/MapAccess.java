@@ -1,9 +1,9 @@
 package mightypork.rogue.world.level;
 
 
-import mightypork.rogue.world.Coord;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.noise.NoiseGen;
 import mightypork.rogue.world.tile.Tile;
-import mightypork.util.math.noise.NoiseGen;
 
 
 /**

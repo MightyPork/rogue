@@ -1,9 +1,9 @@
 package mightypork.rogue.world.tile;
 
 
-import mightypork.util.math.color.Color;
-import mightypork.util.math.color.PAL16;
-import mightypork.util.math.color.RGB;
+import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.PAL16;
+import mightypork.gamecore.util.math.color.pal.RGB;
 
 
 /**

@@ -4,7 +4,7 @@ package mightypork.rogue.screens.test_cat_sound;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.BaseScreen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.util.math.color.Color;
+import mightypork.gamecore.util.math.color.Color;
 
 
 public class LayerColor extends ScreenLayer {

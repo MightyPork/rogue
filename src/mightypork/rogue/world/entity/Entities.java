@@ -4,13 +4,13 @@ package mightypork.rogue.world.entity;
 import java.io.IOException;
 import java.util.Collection;
 
+import mightypork.gamecore.util.ion.IonInput;
+import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.entity.entities.PlayerEntity;
-import mightypork.util.files.ion.IonInput;
-import mightypork.util.files.ion.IonOutput;
 
 
 /**
- * Tile registry
+ * Entity registry
  * 
  * @author MightyPork
  */

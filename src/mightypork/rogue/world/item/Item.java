@@ -3,13 +3,13 @@ package mightypork.rogue.world.item;
 
 import java.io.IOException;
 
-import mightypork.util.files.ion.IonBinary;
-import mightypork.util.files.ion.IonInput;
-import mightypork.util.files.ion.IonOutput;
-import mightypork.util.math.constraints.rect.proxy.RectBound;
+import mightypork.gamecore.util.ion.IonInput;
+import mightypork.gamecore.util.ion.IonObjBinary;
+import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 
 
-public class Item implements IonBinary {
+public class Item implements IonObjBinary {
 	
 	public static final short ION_MARK = 51;
 	

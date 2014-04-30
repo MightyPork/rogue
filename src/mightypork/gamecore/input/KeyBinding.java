@@ -1,8 +1,8 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.control.events.input.KeyEvent;
-import mightypork.gamecore.control.events.input.KeyListener;
+import mightypork.gamecore.input.events.KeyEvent;
+import mightypork.gamecore.input.events.KeyListener;
 
 
 /**

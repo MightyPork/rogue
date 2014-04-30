@@ -3,8 +3,8 @@ package mightypork.rogue.world.gen.rooms;
 
 import java.util.Random;
 
-import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.Sides;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.rogue.world.gen.RoomBuilder;
 import mightypork.rogue.world.gen.RoomDesc;
 import mightypork.rogue.world.gen.ScratchMap;

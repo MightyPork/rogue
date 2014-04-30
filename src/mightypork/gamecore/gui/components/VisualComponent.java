@@ -1,15 +1,15 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.gamecore.control.events.gui.LayoutChangeEvent;
-import mightypork.gamecore.control.events.gui.LayoutChangeListener;
+import mightypork.gamecore.gui.events.LayoutChangeEvent;
+import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.Renderable;
-import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.rect.caching.AbstractRectCache;
-import mightypork.util.math.constraints.rect.proxy.RectBound;
-import mightypork.util.math.constraints.rect.proxy.RectBoundAdapter;
+import mightypork.gamecore.util.annot.DefaultImpl;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.gamecore.util.math.constraints.rect.caching.AbstractRectCache;
+import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
+import mightypork.gamecore.util.math.constraints.rect.proxy.RectBoundAdapter;
 
 
 /**

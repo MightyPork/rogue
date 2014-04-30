@@ -1,7 +1,6 @@
 package mightypork.rogue.world.entity.modules;
 
 
-import mightypork.rogue.world.entity.Entity;
 
 
 public interface EntityMoveListener {
@@ -9,18 +8,18 @@ public interface EntityMoveListener {
 	/**
 	 * One step of a path finished
 	 */
-	void onStepFinished(Entity entity);
+	void onStepFinished();
 	
 	
 	/**
 	 * Scheduled path finished
 	 */
-	void onPathFinished(Entity entity);
+	void onPathFinished();
 	
 	
 	/**
 	 * Path was interrupted (bumped into a wall or entity)
 	 */
-	void onPathInterrupted(Entity entity);
+	void onPathInterrupted();
 	
 }

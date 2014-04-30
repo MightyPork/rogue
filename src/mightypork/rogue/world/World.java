@@ -4,12 +4,12 @@ package mightypork.rogue.world;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.gamecore.util.ion.IonBundle;
+import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.IonBundled;
-import mightypork.util.timing.Updateable;
 
 
 /**
@@ -17,7 +17,7 @@ import mightypork.util.timing.Updateable;
  * 
  * @author MightyPork
  */
-public class World implements IonBundled, Updateable {
+public class World implements IonObjBundled, Updateable {
 	
 	private final ArrayList<Level> levels = new ArrayList<>();
 	

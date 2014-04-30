@@ -3,11 +3,11 @@ package mightypork.rogue.world;
 
 import java.io.IOException;
 
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.IonBundled;
+import mightypork.gamecore.util.ion.IonBundle;
+import mightypork.gamecore.util.ion.IonObjBundled;
 
 
-public class PlayerInfo implements IonBundled {
+public class PlayerInfo implements IonObjBundled {
 	
 	private int eid = -1; // marks not initialized
 	private int level;

@@ -4,8 +4,9 @@ package mightypork.rogue.world;
 import java.util.HashSet;
 import java.util.Set;
 
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.Step;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.PathStep;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
 
@@ -48,28 +49,28 @@ public abstract class PlayerControl {
 	public void goNorth()
 	{
 		getPlayerEntity().pos.cancelPath();
-		getPlayerEntity().pos.addStep(PathStep.NORTH);
+		getPlayerEntity().pos.addStep(Step.NORTH);
 	}
 	
 	
 	public void goSouth()
 	{
 		getPlayerEntity().pos.cancelPath();
-		getPlayerEntity().pos.addStep(PathStep.SOUTH);
+		getPlayerEntity().pos.addStep(Step.SOUTH);
 	}
 	
 	
 	public void goEast()
 	{
 		getPlayerEntity().pos.cancelPath();
-		getPlayerEntity().pos.addStep(PathStep.EAST);
+		getPlayerEntity().pos.addStep(Step.EAST);
 	}
 	
 	
 	public void goWest()
 	{
 		getPlayerEntity().pos.cancelPath();
-		getPlayerEntity().pos.addStep(PathStep.WEST);
+		getPlayerEntity().pos.addStep(Step.WEST);
 	}
 	
 	

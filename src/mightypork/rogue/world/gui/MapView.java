@@ -4,24 +4,23 @@ package mightypork.rogue.world.gui;
 import java.util.HashSet;
 import java.util.Set;
 
-import mightypork.gamecore.control.events.input.KeyEvent;
-import mightypork.gamecore.control.events.input.KeyListener;
-import mightypork.gamecore.control.events.input.MouseButtonEvent;
-import mightypork.gamecore.control.events.input.MouseButtonListener;
+import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.Keys;
-import mightypork.rogue.world.Coord;
+import mightypork.gamecore.input.events.KeyEvent;
+import mightypork.gamecore.input.events.KeyListener;
+import mightypork.gamecore.input.events.MouseButtonEvent;
+import mightypork.gamecore.input.events.MouseButtonListener;
+import mightypork.gamecore.util.math.Easing;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.constraints.num.Num;
+import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.WorldRenderer;
-import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
-import mightypork.util.math.Easing;
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.num.mutable.NumAnimated;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.timing.Updateable;
 
 
 /**
@@ -69,7 +68,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	
 	
 	@Override
-	public void onStepFinished(Entity entity)
+	public void onStepFinished()
 	{
 		for (final MapInteractionPlugin p : plugins) {
 			p.onStepEnd(this, pc);
@@ -78,7 +77,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	
 	
 	@Override
-	public void onPathFinished(Entity entity)
+	public void onPathFinished()
 	{
 		for (final MapInteractionPlugin p : plugins) {
 			p.onStepEnd(this, pc);
@@ -87,7 +86,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	
 	
 	@Override
-	public void onPathInterrupted(Entity entity)
+	public void onPathInterrupted()
 	{
 		for (final MapInteractionPlugin p : plugins) {
 			p.onStepEnd(this, pc);

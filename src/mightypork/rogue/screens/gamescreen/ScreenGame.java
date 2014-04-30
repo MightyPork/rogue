@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.gamescreen;
 
 
-import mightypork.gamecore.control.AppAccess;
+import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.rogue.world.WorldProvider;
 

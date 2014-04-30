@@ -1,8 +1,8 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.util.control.Enableable;
-import mightypork.util.control.eventbus.clients.ToggleableClient;
+import mightypork.gamecore.eventbus.clients.ToggleableClient;
+import mightypork.gamecore.gui.Enableable;
 
 
 public abstract class InputComponent extends VisualComponent implements Enableable, ToggleableClient {

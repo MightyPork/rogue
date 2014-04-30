@@ -3,7 +3,7 @@ package mightypork.rogue.world.gen;
 
 import java.util.Random;
 
-import mightypork.rogue.world.Coord;
+import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.gen.rooms.DeadEndRoom;
 import mightypork.rogue.world.gen.rooms.SimpleRectRoom;
 import mightypork.rogue.world.gen.themes.ThemeDungeon;

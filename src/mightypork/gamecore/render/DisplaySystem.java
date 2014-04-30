@@ -5,14 +5,14 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.ByteBuffer;
 
-import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.AppModule;
-import mightypork.gamecore.control.events.gui.ViewportChangeEvent;
-import mightypork.util.logging.Log;
-import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.rect.proxy.RectBound;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.timing.FpsMeter;
+import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.app.AppModule;
+import mightypork.gamecore.gui.events.ViewportChangeEvent;
+import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.gamecore.util.math.timing.FpsMeter;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;

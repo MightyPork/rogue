@@ -1,11 +1,12 @@
 package mightypork.rogue.world.entity;
 
 
-import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.Sides;
-import mightypork.rogue.world.pathfinding.Heuristic;
-import mightypork.rogue.world.pathfinding.PathFinder;
-import mightypork.rogue.world.pathfinding.PathFindingContext;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.Sides;
+import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
 
 
 public abstract class EntityPathfindingContext implements PathFindingContext {
@@ -42,7 +43,7 @@ public abstract class EntityPathfindingContext implements PathFindingContext {
 	
 	
 	@Override
-	public Coord[] getWalkSides()
+	public Step[] getWalkSides()
 	{
 		return Sides.cardinalSides;
 	}

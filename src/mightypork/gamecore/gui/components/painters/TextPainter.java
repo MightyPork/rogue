@@ -3,13 +3,13 @@ package mightypork.gamecore.gui.components.painters;
 
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.VisualComponent;
-import mightypork.gamecore.render.fonts.FontRenderer;
-import mightypork.gamecore.render.fonts.GLFont;
-import mightypork.util.math.color.Color;
-import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.string.StringProvider;
-import mightypork.util.string.StringProvider.StringWrapper;
+import mightypork.gamecore.resources.fonts.FontRenderer;
+import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.gamecore.util.strings.StringProvider;
+import mightypork.gamecore.util.strings.StringWrapper;
 
 
 /**

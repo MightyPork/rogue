@@ -1,21 +1,21 @@
 package mightypork.rogue.world.gui;
 
 
-import mightypork.gamecore.control.events.input.MouseButtonEvent;
-import mightypork.gamecore.control.events.input.MouseButtonListener;
 import mightypork.gamecore.gui.components.InputComponent;
+import mightypork.gamecore.input.events.MouseButtonEvent;
+import mightypork.gamecore.input.events.MouseButtonListener;
 import mightypork.gamecore.render.Render;
-import mightypork.rogue.world.Coord;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
+import mightypork.gamecore.util.math.constraints.num.Num;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.gamecore.util.math.constraints.rect.mutable.RectMutable;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
-import mightypork.util.math.color.Color;
-import mightypork.util.math.color.RGB;
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.rect.mutable.RectMutable;
-import mightypork.util.math.constraints.vect.Vect;
 
 import org.lwjgl.opengl.GL11;
 

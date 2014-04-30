@@ -2,29 +2,27 @@ package mightypork.rogue.world.level;
 
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.Sides;
+import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.ion.IonBundle;
+import mightypork.gamecore.util.ion.IonInput;
+import mightypork.gamecore.util.ion.IonObjBinary;
+import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.Sides;
+import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.floodfill.FillContext;
+import mightypork.gamecore.util.math.algo.floodfill.FloodFill;
+import mightypork.gamecore.util.math.noise.NoiseGen;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.pathfinding.FillContext;
-import mightypork.rogue.world.pathfinding.FloodFill;
+import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileType;
 import mightypork.rogue.world.tile.Tiles;
-import mightypork.util.files.ion.IonBinary;
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.IonInput;
-import mightypork.util.files.ion.IonOutput;
-import mightypork.util.logging.Log;
-import mightypork.util.math.noise.NoiseGen;
 
 
 /**
@@ -32,7 +30,7 @@ import mightypork.util.math.noise.NoiseGen;
  * 
  * @author MightyPork
  */
-public class Level implements MapAccess, IonBinary {
+public class Level implements MapAccess, IonObjBinary {
 	
 	public static final int ION_MARK = 53;
 	
@@ -53,13 +51,11 @@ public class Level implements MapAccess, IonBinary {
 	private transient NoiseGen noiseGen;
 	
 	
-	public Level()
-	{
+	public Level() {
 	}
 	
 	
-	public Level(int width, int height)
-	{
+	public Level(int width, int height) {
 		size.setTo(width, height);
 		buildArray();
 	}
@@ -91,7 +87,7 @@ public class Level implements MapAccess, IonBinary {
 	public final Tile getTile(Coord pos)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) return Tiles.NULL.createTile(); // out of range
-		
+			
 		return tiles[pos.y][pos.x];
 	}
 	
@@ -155,7 +151,6 @@ public class Level implements MapAccess, IonBinary {
 		ib.loadBundled("size", size);
 		ib.loadBundled("enter_point", enterPoint);
 		
-		
 		// -- binary data --
 		
 		// load tiles
@@ -166,7 +161,6 @@ public class Level implements MapAccess, IonBinary {
 				setTile(c, Tiles.loadTile(in));
 			}
 		}
-		
 		
 		// load entities
 		Entities.loadEntities(in, entitySet);
@@ -296,6 +290,16 @@ public class Level implements MapAccess, IonBinary {
 		getTile(pos).setOccupied(false);
 	}
 	
+	public void cleanCorpses() {
+		for(Iterator<Entity> i = entitySet.iterator(); i.hasNext();) {
+			Entity e = i.next();
+			
+			if(e.isDead() && e.canRemoveCorpse()) {
+				e.onCorpseRemoved();
+				removeEntity(e);
+			}
+		}
+	}
 	
 	public Collection<Entity> getEntities()
 	{
@@ -341,7 +345,7 @@ public class Level implements MapAccess, IonBinary {
 	private final FillContext exploreFc = new FillContext() {
 		
 		@Override
-		public Coord[] getSpreadSides()
+		public Step[] getSpreadSides()
 		{
 			return Sides.allSides;
 		}
@@ -376,4 +380,33 @@ public class Level implements MapAccess, IonBinary {
 			return true;
 		}
 	};
+	
+	
+	public Entity getClosestEntity(Entity self, EntityType type, double radius)
+	{
+		Entity closest = null;
+		double minDist = Double.MAX_VALUE;
+		
+		for (Entity e : entitySet) {
+			if (e == self) continue;
+			if (e.isDead()) continue;
+			
+			if (e.getType() == type) {
+				double dist = e.getCoord().dist(self.getCoord());
+				
+				if (dist <= radius && dist < minDist) {
+					minDist = dist;
+					closest = e;
+				}
+			}
+		}
+		
+		return closest;
+	}
+	
+	
+	public boolean isEntityPresent(Entity entity)
+	{
+		return entitySet.contains(entity);
+	}
 }

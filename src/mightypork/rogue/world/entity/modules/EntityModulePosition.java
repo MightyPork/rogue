@@ -8,25 +8,23 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-import mightypork.rogue.world.Coord;
+import mightypork.gamecore.util.ion.IonBundle;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
+import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;
-import mightypork.rogue.world.entity.PathStep;
-import mightypork.rogue.world.pathfinding.PathFinder;
-import mightypork.rogue.world.pathfinding.PathFindingContext;
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.math.constraints.vect.VectConst;
 
 
-public class EntityModulePosition implements EntityModule {
-	
-	private final Entity entity;
+public class EntityModulePosition extends EntityModule {
 	
 	/** Last pos, will be freed upon finishing move */
 	private final Coord lastPos = new Coord(0, 0);
 	private boolean walking = false;
 	
-	private final Queue<PathStep> path = new LinkedList<>();
+	private final Queue<Step> path = new LinkedList<>();
 	private final EntityPos entityPos = new EntityPos();
 	private double stepTime = 0.5;
 	
@@ -39,7 +37,7 @@ public class EntityModulePosition implements EntityModule {
 	
 	public EntityModulePosition(Entity entity)
 	{
-		this.entity = entity;
+		super(entity);
 	}
 	
 	
@@ -59,6 +57,12 @@ public class EntityModulePosition implements EntityModule {
 		bundle.loadBundled("pos", entityPos);
 		
 		stepTime = bundle.get("step_time", stepTime);
+	}
+
+	@Override
+	public boolean isModuleSaved()
+	{
+		return true;
 	}
 	
 	
@@ -85,12 +89,12 @@ public class EntityModulePosition implements EntityModule {
 			entity.getLevel().freeTile(lastPos);
 			
 			for (final EntityMoveListener l : moveListeners) {
-				l.onStepFinished(entity);
+				l.onStepFinished();
 			}
 			
 			if (path.isEmpty()) {
 				for (final EntityMoveListener l : moveListeners) {
-					l.onPathFinished(entity);
+					l.onPathFinished();
 				}
 			}
 		}
@@ -99,7 +103,7 @@ public class EntityModulePosition implements EntityModule {
 			
 			walking = true;
 			
-			final PathStep step = path.poll();
+			final Step step = path.poll();
 			
 			final Coord planned = entityPos.getCoord().add(step.toCoord());
 			
@@ -107,15 +111,15 @@ public class EntityModulePosition implements EntityModule {
 				cancelPath();
 				
 				for (final EntityMoveListener l : moveListeners) {
-					l.onPathInterrupted(entity);
+					l.onPathInterrupted();
 				}
 				
 				walking = false;
 			} else {
 				
 				// tmp for renderer
-				if (step.x != 0) this.lastXDir = step.x;
-				if (step.y != 0) this.lastYDir = step.y;
+				if (step.x() != 0) this.lastXDir = step.x();
+				if (step.y() != 0) this.lastYDir = step.y();
 				
 				lastPos.setTo(entityPos.getCoord());
 				entityPos.walk(step, stepTime);
@@ -131,7 +135,7 @@ public class EntityModulePosition implements EntityModule {
 	}
 	
 	
-	public void addStep(PathStep step)
+	public void addStep(Step step)
 	{
 		path.add(step);
 	}
@@ -147,7 +151,7 @@ public class EntityModulePosition implements EntityModule {
 	{
 		if (target.equals(getCoord())) return true;
 		final PathFindingContext pfc = entity.getPathfindingContext();
-		final List<PathStep> newPath = PathFinder.findPathRelative(pfc, entityPos.getCoord(), target);
+		final List<Step> newPath = PathFinder.findPathRelative(pfc, entityPos.getCoord(), target);
 		
 		if (newPath == null) return false;
 		cancelPath();
@@ -165,7 +169,7 @@ public class EntityModulePosition implements EntityModule {
 	}
 	
 	
-	public void addSteps(List<PathStep> path)
+	public void addSteps(List<Step> path)
 	{
 		this.path.addAll(path);
 	}

@@ -7,19 +7,25 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.Sides;
+import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.math.Calc;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.Sides;
+import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
 import mightypork.rogue.world.level.Level;
-import mightypork.rogue.world.pathfinding.Heuristic;
-import mightypork.rogue.world.pathfinding.PathFinder;
-import mightypork.rogue.world.pathfinding.PathFindingContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
-import mightypork.util.logging.Log;
-import mightypork.util.math.Calc;
 
 
+/**
+ * Temporary tile map used for level generation.
+ * 
+ * @author MightyPork
+ */
 public class ScratchMap {
 	
 	private Tile[][] map;
@@ -27,7 +33,9 @@ public class ScratchMap {
 	private final int height;
 	
 	private final List<RoomDesc> rooms = new ArrayList<>();
-	private final List<Coord> nodes = new ArrayList<>(); // points to connect with corridors
+	
+	/** Coords to connect with corridors */
+	private final List<Coord> nodes = new ArrayList<>();
 	
 	private final PathFindingContext pfc = new PathFindingContext() {
 		
@@ -79,7 +87,7 @@ public class ScratchMap {
 		
 		
 		@Override
-		public Coord[] getWalkSides()
+		public Step[] getWalkSides()
 		{
 			return Sides.cardinalSides;
 		}

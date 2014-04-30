@@ -2,14 +2,14 @@ package mightypork.rogue.world.entity.renderers;
 
 
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.render.textures.TxQuad;
-import mightypork.gamecore.render.textures.TxSheet;
+import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.resources.textures.TxSheet;
+import mightypork.gamecore.util.math.Calc;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.render.MapRenderContext;
-import mightypork.util.math.Calc;
-import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.vect.Vect;
 
 
 /**

@@ -3,14 +3,14 @@ package mightypork.rogue.world.tile;
 
 import java.io.IOException;
 
+import mightypork.gamecore.util.annot.DefaultImpl;
+import mightypork.gamecore.util.ion.IonInput;
+import mightypork.gamecore.util.ion.IonObjBlob;
+import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
-import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.files.ion.IonBinaryHeadless;
-import mightypork.util.files.ion.IonInput;
-import mightypork.util.files.ion.IonOutput;
-import mightypork.util.math.color.Color;
 
 
 /**
@@ -18,7 +18,7 @@ import mightypork.util.math.color.Color;
  * 
  * @author MightyPork
  */
-public abstract class Tile implements IonBinaryHeadless {
+public abstract class Tile implements IonObjBlob {
 	
 	// tmp extras
 	public final TileRenderData renderData = new TileRenderData();

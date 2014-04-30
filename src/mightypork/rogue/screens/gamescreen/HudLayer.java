@@ -8,10 +8,10 @@ import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.util.math.constraints.num.Num;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.gui.Minimap;
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.rect.Rect;
 
 
 public class HudLayer extends ScreenLayer {

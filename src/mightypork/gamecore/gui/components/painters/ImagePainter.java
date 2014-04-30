@@ -3,7 +3,7 @@ package mightypork.gamecore.gui.components.painters;
 
 import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.render.textures.TxQuad;
+import mightypork.gamecore.resources.textures.TxQuad;
 
 
 /**

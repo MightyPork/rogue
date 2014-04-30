@@ -3,21 +3,18 @@ package mightypork.rogue.world.entity.modules;
 
 import java.io.IOException;
 
+import mightypork.gamecore.util.error.IllegalValueException;
+import mightypork.gamecore.util.ion.IonBundle;
+import mightypork.gamecore.util.math.Calc;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;
-import mightypork.util.error.IllegalValueException;
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.math.Calc;
 
 
-public class EntityModuleHealth implements EntityModule {
+public class EntityModuleHealth extends EntityModule {
 	
-	public EntityModuleHealth(Entity entity)
-	{
-		this.entity = entity;
+	public EntityModuleHealth(Entity entity) {
+		super(entity);
 	}
-	
-	private final Entity entity;
 	
 	protected int health = 1;
 	protected int maxHealth = 1;
@@ -43,8 +40,9 @@ public class EntityModuleHealth implements EntityModule {
 	
 	
 	@Override
-	public void update(double delta)
+	public boolean isModuleSaved()
 	{
+		return true;
 	}
 	
 	
@@ -88,6 +86,12 @@ public class EntityModuleHealth implements EntityModule {
 	public void setDead(boolean dead)
 	{
 		this.dead = dead;
+	}
+	
+	
+	public void receiveDamage(int attackStrength)
+	{
+		setHealth(health - attackStrength);
 	}
 	
 }

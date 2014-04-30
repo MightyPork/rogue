@@ -3,8 +3,6 @@ package mightypork.rogue.screens.test_cat_sound;
 
 import java.util.Random;
 
-import mightypork.gamecore.control.events.input.MouseButtonEvent;
-import mightypork.gamecore.control.events.input.MouseButtonListener;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
@@ -13,13 +11,15 @@ import mightypork.gamecore.gui.screens.BaseScreen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.input.events.MouseButtonEvent;
+import mightypork.gamecore.input.events.MouseButtonListener;
+import mightypork.gamecore.util.math.Easing;
+import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.gamecore.util.math.constraints.vect.mutable.VectAnimated;
 import mightypork.rogue.Res;
-import mightypork.util.math.Easing;
-import mightypork.util.math.color.Color;
-import mightypork.util.math.constraints.num.mutable.NumAnimated;
-import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.math.constraints.vect.mutable.VectAnimated;
 
 
 public class LayerFlyingCat extends ScreenLayer implements MouseButtonListener {

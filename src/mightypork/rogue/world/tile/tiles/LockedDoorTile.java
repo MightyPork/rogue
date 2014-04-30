@@ -3,10 +3,10 @@ package mightypork.rogue.world.tile.tiles;
 
 import java.io.IOException;
 
+import mightypork.gamecore.util.ion.IonInput;
+import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
-import mightypork.util.files.ion.IonInput;
-import mightypork.util.files.ion.IonOutput;
 
 
 public class LockedDoorTile extends DoorTile {

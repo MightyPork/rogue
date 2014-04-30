@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.test_cat_sound;
 
 
-import mightypork.gamecore.control.AppAccess;
+import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;

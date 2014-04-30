@@ -1,7 +1,7 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.util.control.Action;
+import mightypork.gamecore.gui.Action;
 
 
 /**

@@ -2,11 +2,11 @@ package mightypork.rogue.world.tile;
 
 
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.render.textures.TxQuad;
+import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.util.math.algo.Sides;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
-import mightypork.rogue.world.Sides;
 import mightypork.rogue.world.level.render.TileRenderContext;
-import mightypork.util.math.constraints.rect.Rect;
 
 
 /**

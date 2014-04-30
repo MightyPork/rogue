@@ -1,15 +1,15 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.audio.SoundBank;
-import mightypork.gamecore.audio.players.EffectPlayer;
-import mightypork.gamecore.audio.players.LoopPlayer;
-import mightypork.gamecore.control.BaseApp;
-import mightypork.gamecore.render.fonts.FontBank;
-import mightypork.gamecore.render.fonts.GLFont;
-import mightypork.gamecore.render.fonts.Glyphs;
-import mightypork.gamecore.render.fonts.impl.DeferredFont;
-import mightypork.gamecore.render.textures.*;
+import mightypork.gamecore.app.BaseApp;
+import mightypork.gamecore.resources.audio.SoundBank;
+import mightypork.gamecore.resources.audio.players.EffectPlayer;
+import mightypork.gamecore.resources.audio.players.LoopPlayer;
+import mightypork.gamecore.resources.fonts.FontBank;
+import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.resources.fonts.Glyphs;
+import mightypork.gamecore.resources.fonts.impl.DeferredFont;
+import mightypork.gamecore.resources.textures.*;
 
 
 /**

@@ -3,9 +3,9 @@ package mightypork.rogue.world.entity;
 
 import java.io.IOException;
 
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.IonInput;
-import mightypork.util.files.ion.IonOutput;
+import mightypork.gamecore.util.ion.IonBundle;
+import mightypork.gamecore.util.ion.IonInput;
+import mightypork.gamecore.util.ion.IonOutput;
 
 
 /**

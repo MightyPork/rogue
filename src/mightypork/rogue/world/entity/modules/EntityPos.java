@@ -3,15 +3,15 @@ package mightypork.rogue.world.entity.modules;
 
 import java.io.IOException;
 
-import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.entity.PathStep;
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.IonBundled;
-import mightypork.util.math.Easing;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.math.constraints.vect.VectConst;
-import mightypork.util.math.constraints.vect.mutable.VectAnimated;
-import mightypork.util.timing.Updateable;
+import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.gamecore.util.ion.IonBundle;
+import mightypork.gamecore.util.ion.IonObjBundled;
+import mightypork.gamecore.util.math.Easing;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.gamecore.util.math.constraints.vect.VectConst;
+import mightypork.gamecore.util.math.constraints.vect.mutable.VectAnimated;
 
 
 /**
@@ -19,7 +19,7 @@ import mightypork.util.timing.Updateable;
  * 
  * @author MightyPork
  */
-class EntityPos implements IonBundled, Updateable {
+class EntityPos implements IonObjBundled, Updateable {
 	
 	private final Coord coord = new Coord(0, 0);
 	private final VectAnimated walkOffset = new VectAnimated(Vect.ZERO, Easing.LINEAR);
@@ -128,10 +128,10 @@ class EntityPos implements IonBundled, Updateable {
 	}
 	
 	
-	public void walk(PathStep step, double secs)
+	public void walk(Step step, double secs)
 	{
-		setTo(coord.x + step.x, coord.y + step.y);
-		walkOffset.setTo(-step.x, -step.y);
+		setTo(coord.x + step.x(), coord.y + step.y());
+		walkOffset.setTo(-step.x(), -step.y());
 		walkOffset.animate(0, 0, 0, secs);
 	}
 	

@@ -3,6 +3,8 @@ package mightypork.rogue.world.tile;
 
 import java.io.IOException;
 
+import mightypork.gamecore.util.ion.IonInput;
+import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
 import mightypork.rogue.world.tile.renderers.DoorTileRenderer;
 import mightypork.rogue.world.tile.renderers.NullTileRenderer;
@@ -10,8 +12,6 @@ import mightypork.rogue.world.tile.tiles.DoorTile;
 import mightypork.rogue.world.tile.tiles.FloorTile;
 import mightypork.rogue.world.tile.tiles.NullTile;
 import mightypork.rogue.world.tile.tiles.WallTile;
-import mightypork.util.files.ion.IonInput;
-import mightypork.util.files.ion.IonOutput;
 
 
 /**

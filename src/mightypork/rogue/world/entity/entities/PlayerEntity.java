@@ -1,48 +1,87 @@
 package mightypork.rogue.world.entity.entities;
 
 
-import mightypork.rogue.world.Coord;
-import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.EntityModel;
-import mightypork.rogue.world.entity.EntityPathfindingContext;
-import mightypork.rogue.world.entity.SimpleEntityPathFindingContext;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
+import mightypork.rogue.world.entity.*;
+import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.entity.renderers.EntityRenderer;
 import mightypork.rogue.world.entity.renderers.EntityRendererMobLR;
 import mightypork.rogue.world.level.Level;
-import mightypork.rogue.world.level.render.MapRenderContext;
-import mightypork.rogue.world.pathfinding.PathFindingContext;
 
 
 public class PlayerEntity extends Entity {
 	
-	private final EntityPathfindingContext pathfc = new SimpleEntityPathFindingContext(this) {
+	class PlayerAi extends EntityModule implements EntityMoveListener {
+		
+		public PlayerAi(Entity entity) {
+			super(entity);
+		}
+		
 		
 		@Override
-		public int getCost(Coord from, Coord to)
+		public void onStepFinished()
 		{
-			
-			if (!getLevel().getTile(pos.getCoord()).isExplored()) { return 1000; }
-			
-			return super.getCost(from, to);
-			
-		};
-	};
+			entity.getLevel().explore(entity.pos.getCoord());
+		}
+		
+		
+		@Override
+		public void onPathFinished()
+		{
+		}
+		
+		
+		@Override
+		public void onPathInterrupted()
+		{
+		}
+		
+		
+		@Override
+		public boolean isModuleSaved()
+		{
+			return false;
+		}
+		
+	}
 	
-	private final EntityRenderer renderer = new EntityRendererMobLR(this, "sprite.player");
+	private EntityPathfindingContext pathfc;	
+	private EntityRenderer renderer;
+	
+	private final PlayerAi ai = new PlayerAi(this);
 	
 	
-	public PlayerEntity(EntityModel model, int eid)
-	{
+	public PlayerEntity(EntityModel model, int eid) {
 		super(model, eid);
 		
-		// init default values
 		pos.setStepTime(0.25);
+		
+		addModule("ai", ai);
+		pos.addMoveListener(ai);
 	}
 	
 	
 	@Override
 	public PathFindingContext getPathfindingContext()
 	{
+		if (pathfc == null) {
+			pathfc = new SimpleEntityPathFindingContext(this) {
+				
+				@Override
+				public int getCost(Coord from, Coord to)
+				{
+					
+					if (!getLevel().getTile(pos.getCoord()).isExplored()) {
+						return 1000;
+					}
+					
+					return super.getCost(from, to);
+					
+				};
+			};
+		}
+		
 		return pathfc;
 	}
 	
@@ -51,20 +90,24 @@ public class PlayerEntity extends Entity {
 	public void setLevel(Level level)
 	{
 		super.setLevel(level);
-		onStepFinished(this);
+		ai.onStepFinished(); // explore start area
 	}
 	
 	
 	@Override
-	public void render(MapRenderContext context)
+	protected EntityRenderer getRenderer()
 	{
-		renderer.render(context);
+		if (renderer == null) {
+			renderer = new EntityRendererMobLR(this, "sprite.player");
+		}
+		
+		return renderer;
 	}
-	
 	
 	@Override
-	public void onStepFinished(Entity entity)
+	public EntityType getType()
 	{
-		getLevel().explore(pos.getCoord());
+		return EntityType.PLAYER;
 	}
+	
 }

@@ -1,8 +1,8 @@
 package mightypork.rogue.events;
 
 
-import mightypork.util.control.eventbus.BusEvent;
-import mightypork.util.control.eventbus.event_flags.SingleReceiverEvent;
+import mightypork.gamecore.eventbus.BusEvent;
+import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 
 
 /**

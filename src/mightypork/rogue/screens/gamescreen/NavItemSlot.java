@@ -1,19 +1,19 @@
 package mightypork.rogue.screens.gamescreen;
 
 
-import mightypork.gamecore.control.events.input.MouseMotionEvent;
-import mightypork.gamecore.control.events.input.MouseMotionListener;
+import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.components.ClickableComponent;
+import mightypork.gamecore.input.events.MouseMotionEvent;
+import mightypork.gamecore.input.events.MouseMotionListener;
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.render.textures.TxQuad;
+import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.util.math.Easing;
+import mightypork.gamecore.util.math.constraints.num.Num;
+import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.gamecore.util.math.constraints.rect.caching.RectCache;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.Res;
-import mightypork.util.math.Easing;
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.num.mutable.NumAnimated;
-import mightypork.util.math.constraints.rect.Rect;
-import mightypork.util.math.constraints.rect.caching.RectCache;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.timing.Updateable;
 
 
 public class NavItemSlot extends ClickableComponent implements MouseMotionListener, Updateable {

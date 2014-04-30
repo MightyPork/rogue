@@ -1,19 +1,19 @@
 package mightypork.rogue.screens.main_menu;
 
 
+import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.BaseScreen;
+import mightypork.gamecore.gui.screens.CrossfadeRequest;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.util.math.color.pal.COMMODORE;
+import mightypork.gamecore.util.math.color.pal.PAL16;
+import mightypork.gamecore.util.math.constraints.num.Num;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
-import mightypork.rogue.screens.CrossfadeRequest;
-import mightypork.util.control.Action;
-import mightypork.util.math.color.COMMODORE;
-import mightypork.util.math.color.PAL16;
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.rect.Rect;
 
 
 class MenuLayer extends ScreenLayer {

@@ -1,20 +1,20 @@
 package mightypork.rogue.screens;
 
 
-import mightypork.gamecore.control.AppAccess;
+import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Overlay;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
-import mightypork.gamecore.render.fonts.GLFont;
+import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.constraints.num.Num;
+import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.Res;
-import mightypork.util.control.Action;
-import mightypork.util.math.color.Color;
-import mightypork.util.math.constraints.num.Num;
-import mightypork.util.math.constraints.rect.proxy.RectBound;
-import mightypork.util.math.constraints.vect.Vect;
-import mightypork.util.string.StringProvider;
 
 
 public class FpsOverlay extends Overlay {

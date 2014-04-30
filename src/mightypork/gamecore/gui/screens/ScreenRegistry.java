@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-import mightypork.gamecore.control.AppAccess;
-import mightypork.gamecore.control.AppModule;
-import mightypork.gamecore.control.events.gui.LayoutChangeEvent;
-import mightypork.gamecore.control.events.gui.ViewportChangeEvent;
-import mightypork.gamecore.control.events.gui.ViewportChangeListener;
-import mightypork.gamecore.control.events.requests.ScreenRequestListener;
+import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.app.AppModule;
+import mightypork.gamecore.gui.events.LayoutChangeEvent;
+import mightypork.gamecore.gui.events.ScreenRequestListener;
+import mightypork.gamecore.gui.events.ViewportChangeEvent;
+import mightypork.gamecore.gui.events.ViewportChangeListener;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.Renderable;
-import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.logging.Log;
+import mightypork.gamecore.util.annot.DefaultImpl;
 
 
 /**

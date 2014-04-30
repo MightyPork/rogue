@@ -6,18 +6,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.gamecore.util.annot.DefaultImpl;
+import mightypork.gamecore.util.error.IllegalValueException;
+import mightypork.gamecore.util.ion.IonBundle;
+import mightypork.gamecore.util.ion.IonObjBundled;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
-import mightypork.rogue.world.entity.modules.EntityMoveListener;
+import mightypork.rogue.world.entity.renderers.EntityRenderer;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
-import mightypork.rogue.world.pathfinding.PathFindingContext;
-import mightypork.util.annotations.DefaultImpl;
-import mightypork.util.error.IllegalValueException;
-import mightypork.util.files.ion.IonBundle;
-import mightypork.util.files.ion.IonBundled;
-import mightypork.util.timing.Updateable;
 
 
 /**
@@ -25,7 +26,7 @@ import mightypork.util.timing.Updateable;
  * 
  * @author MightyPork
  */
-public abstract class Entity implements IonBundled, Updateable, EntityMoveListener {
+public abstract class Entity implements IonObjBundled, Updateable {
 	
 	private Level level;
 	private final EntityModel model;
@@ -40,45 +41,76 @@ public abstract class Entity implements IonBundled, Updateable, EntityMoveListen
 	public final EntityModuleHealth health = new EntityModuleHealth(this);
 	
 	
-	public Entity(EntityModel model, int eid)
-	{
+	public Entity(EntityModel model, int eid) {
 		
 		this.entityId = eid;
 		this.model = model;
 		
 		// register modules
-		modules.put("pos", pos);
-		pos.addMoveListener(this);
-		modules.put("health", health);
+		addModule("pos", pos);
+		addModule("health", health);
 	}
 	
 	
 	@Override
-	public void save(IonBundle bundle) throws IOException
+	public final void save(IonBundle bundle) throws IOException
 	{
 		bundle.put("eid", entityId);
+		
+		IonBundle modulesBundle = new IonBundle();
 		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
-			bundle.putBundled(entry.getKey(), entry.getValue());
+			modulesBundle.putBundled(entry.getKey(), entry.getValue());
 		}
+		bundle.put("modules", modulesBundle);
+		
+		IonBundle extra = new IonBundle();
+		saveExtra(extra);
+		bundle.put("extra", extra);
+	}
+	
+	
+	@DefaultImpl
+	protected void saveExtra(IonBundle bundle)
+	{
 	}
 	
 	
 	@Override
-	public void load(IonBundle bundle) throws IOException
+	public final void load(IonBundle bundle) throws IOException
 	{
 		entityId = bundle.get("eid", -1);
 		if (entityId < 0) throw new IllegalValueException("Bad entity id: " + entityId);
 		
+		IonBundle modulesBundle = bundle.get("modules", new IonBundle());
+		
 		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
-			bundle.loadBundled(entry.getKey(), entry.getValue());
+			modulesBundle.loadBundled(entry.getKey(), entry.getValue());
 		}
+		
+		IonBundle extra = bundle.get("extra", new IonBundle());
+		loadExtra(extra);
+	}
+	
+	
+	@DefaultImpl
+	protected void loadExtra(IonBundle bundle)
+	{
+	}
+	
+	
+	protected final void addModule(String key, EntityModule module)
+	{
+		if (modules.containsKey(key)) {
+			throw new RuntimeException("Entity module " + key + " already defined.");
+		}
+		modules.put(key, module);
 	}
 	
 	
 	/**
 	 * @return unique entity id
 	 */
-	public int getEntityId()
+	public final int getEntityId()
 	{
 		return entityId;
 	}
@@ -90,19 +122,19 @@ public abstract class Entity implements IonBundled, Updateable, EntityMoveListen
 	}
 	
 	
-	public Level getLevel()
+	public final Level getLevel()
 	{
 		return level;
 	}
 	
 	
-	public World getWorld()
+	public final World getWorld()
 	{
-		return getLevel().getWorld();
+		return level.getWorld();
 	}
 	
 	
-	public EntityModel getModel()
+	public final EntityModel getModel()
 	{
 		return model;
 	}
@@ -111,7 +143,14 @@ public abstract class Entity implements IonBundled, Updateable, EntityMoveListen
 	public abstract PathFindingContext getPathfindingContext();
 	
 	
-	public abstract void render(MapRenderContext context);
+	@DefaultImpl
+	public final void render(MapRenderContext context)
+	{
+		getRenderer().render(context);
+	}
+	
+	
+	protected abstract EntityRenderer getRenderer();
 	
 	
 	@Override
@@ -123,26 +162,69 @@ public abstract class Entity implements IonBundled, Updateable, EntityMoveListen
 	}
 	
 	
+	/**
+	 * @return entity type (used for AI targeting)
+	 */
+	public abstract EntityType getType();
+	
+	
+	/**
+	 * @return entity coord in level
+	 */
+	public Coord getCoord()
+	{
+		return pos.getCoord();
+	}
+	
+	
+	/**
+	 * Called right after the entity's health reaches zero.
+	 */
 	@DefaultImpl
 	public void onKilled()
 	{
 	}
 	
 	
-	@Override
-	public void onStepFinished(Entity entity)
+	/**
+	 * @return true if dead
+	 */
+	public final boolean isDead()
+	{
+		return health.isDead();
+	}
+	
+	
+	/**
+	 * @return whether this dead entity can be removed from level
+	 */
+	@DefaultImpl
+	public boolean canRemoveCorpse()
+	{
+		return isDead();
+	}
+	
+	
+	/**
+	 * Called when the dead entity was removed from the level.
+	 */
+	@DefaultImpl
+	public void onCorpseRemoved()
 	{
 	}
 	
 	
-	@Override
-	public void onPathFinished(Entity entity)
+	/**
+	 * Receive damage from an attacker.<br>
+	 * The entity can decide whether to dodge, reduce damage etc.
+	 * 
+	 * @param attacker the entity attacking. Can be null for environmental
+	 *            damage.
+	 * @param attackStrength attack strength in health points to take
+	 */
+	public void receiveAttack(Entity attacker, int attackStrength)
 	{
+		health.receiveDamage(attackStrength);
 	}
 	
-	
-	@Override
-	public void onPathInterrupted(Entity entity)
-	{
-	}
 }
