@@ -151,7 +151,9 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	@DefaultImpl
 	public final void render(MapRenderContext context)
 	{
-		getRenderer().render(context);
+		if (context.getTile(getCoord()).isExplored()) {
+			getRenderer().render(context);
+		}
 	}
 	
 	

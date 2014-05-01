@@ -116,4 +116,10 @@ public class PlayerEntity extends Entity {
 	{
 		return EntityType.PLAYER;
 	}
+	
+	@Override
+	public void receiveAttack(Entity attacker, int attackStrength)
+	{
+		// FIXME ignore attack 
+	}
 }

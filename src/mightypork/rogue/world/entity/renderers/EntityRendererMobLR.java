@@ -44,7 +44,7 @@ public class EntityRendererMobLR extends EntityRenderer {
 		final Vect visualPos = entity.pos.getVisualPos();
 		
 		Rect spriteRect = Rect.make(visualPos.x() * w, visualPos.y() * w, w, w);
-		spriteRect = spriteRect.shrink(w * 0.1);
+		spriteRect = spriteRect.shrink(w * 0.05);
 		
 		Render.quadTextured(spriteRect, q);
 	}

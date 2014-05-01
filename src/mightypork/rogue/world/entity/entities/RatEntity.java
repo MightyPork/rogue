@@ -53,7 +53,7 @@ public class RatEntity extends Entity {
 	protected EntityRenderer getRenderer()
 	{
 		if (renderer == null) {
-			renderer = new EntityRendererMobLR(this, "sprite.player");
+			renderer = new EntityRendererMobLR(this, "sprite.rat");
 		}
 		
 		return renderer;

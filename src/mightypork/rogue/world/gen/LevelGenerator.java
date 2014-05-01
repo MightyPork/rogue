@@ -45,7 +45,7 @@ public class LevelGenerator {
 		// spawn rats
 		
 		final Coord pos = Coord.make(0, 0);
-		for (int i = 0; i < 1; i++) { // 4+complexity + rand.nextInt(1+complexity)
+		for (int i = 0; i < 4+complexity + rand.nextInt(1+complexity); i++) {
 		
 			final Entity e = Entities.RAT.createEntity(world);
 			
