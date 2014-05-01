@@ -2,6 +2,7 @@ package mightypork.rogue.world.gui.interaction;
 
 
 import mightypork.gamecore.input.InputSystem;
+import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.util.math.Calc.Deg;
 import mightypork.gamecore.util.math.Polar;
 import mightypork.gamecore.util.math.algo.Coord;
@@ -20,7 +21,7 @@ public class MIPMouse implements MapInteractionPlugin {
 	@Override
 	public void update(MapView view, PlayerControl pc, double delta)
 	{
-		if (pc.getPlayerEntity().pos.hasPath()) return;
+		if (!InputSystem.isKeyDown(Keys.L_SHIFT)) return;
 		
 		final Vect pos = InputSystem.getMousePos();
 		
@@ -34,13 +35,15 @@ public class MIPMouse implements MapInteractionPlugin {
 	@Override
 	public boolean onClick(MapView view, PlayerControl pc, Vect mouse, int button, boolean down)
 	{
-		if (!down && button == BTN) {
-			
-			final Coord pos = view.toWorldPos(mouse);
-			final Tile t = pc.getLevel().getTile(pos);
-			if (t.onClick()) return true;
-			
+		if (button != BTN) return false;
+		final Coord pos = view.toWorldPos(mouse);
+		final Tile t = pc.getLevel().getTile(pos);
+		
+		if (t.onClick()) return true;
+		
+		if (!down && t.isWalkable()) {
 			if (troToNav(view, pc, mouse)) return true;
+			return mouseWalk(view, pc, mouse);
 		}
 		
 		return false;
@@ -49,7 +52,9 @@ public class MIPMouse implements MapInteractionPlugin {
 	
 	private boolean troToNav(MapView view, PlayerControl pc, Vect mouse)
 	{
+		final Coord plpos = pc.getCoord();
 		final Coord clicked = view.toWorldPos(mouse);
+		if (clicked.equals(plpos)) return false;
 		
 		final Tile t = pc.getLevel().getTile(clicked);
 		if (!t.isWalkable() || !t.isExplored()) return false;
@@ -63,6 +68,7 @@ public class MIPMouse implements MapInteractionPlugin {
 	{
 		final Coord plpos = pc.getCoord();
 		final Coord clicked = view.toWorldPos(pos);
+		if (clicked.equals(plpos)) return false;
 		
 		final Polar p = Polar.fromCoord(clicked.x - plpos.x, clicked.y - plpos.y);
 		
@@ -94,8 +100,17 @@ public class MIPMouse implements MapInteractionPlugin {
 	
 	
 	@Override
-	public boolean onStepEnd(MapView mapView, PlayerControl player)
+	public boolean onStepEnd(MapView view, PlayerControl pc)
 	{
+		if (!InputSystem.isKeyDown(Keys.L_SHIFT)) return false;
+		
+		final Vect pos = InputSystem.getMousePos();
+		
+		if (InputSystem.isMouseButtonDown(BTN)) {
+			if (mouseWalk(view, pc, pos)) return true;
+			if (troToNav(view, pc, pos)) return true;
+		}
+		
 		return false;
 	}
 	

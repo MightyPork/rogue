@@ -82,7 +82,7 @@ public class HudLayer extends ScreenLayer {
 	@Override
 	public int getEventPriority()
 	{
-		return 200;
+		return 400;
 	}
 	
 }

@@ -41,10 +41,12 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	
 	public MapView()
 	{
-		this.tileSize = height().min(width()).div(12).max(32).mul(Num.make(1).sub(zoom.mul(0.66)));
+		this.tileSize = height().min(width()).div(10).max(32).mul(Num.make(1).sub(zoom.mul(0.5)));
 		this.worldRenderer = new WorldRenderer(this, tileSize);
 		pc = WorldProvider.get().getPlayerControl();
 		pc.addMoveListener(this);
+		
+		zoom.setDefaultDuration(0.5);
 	}
 	
 	
@@ -105,6 +107,16 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 				break;
 			}
 		}
+		
+		if (event.isWheelEvent()) {
+			final int delta = event.getWheelDelta();
+			if (!zoom.isFinished()) return;
+			if (delta < 0) {
+				zoom.fadeOut();
+			} else {
+				zoom.fadeIn();
+			}
+		}
 	}
 	
 	
@@ -117,9 +129,9 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 		
 		if (event.getKey() == Keys.Z) {
 			if (event.isDown()) {
-				zoom.fadeIn(1);
+				zoom.fadeIn();
 			} else {
-				zoom.fadeOut(1);
+				zoom.fadeOut();
 			}
 		}
 		

@@ -43,7 +43,7 @@ public class EntityPathFinder extends PathFinder {
 	@Override
 	public Heuristic getHeuristic()
 	{
-		return PathFinder.DIAGONAL_HEURISTIC;
+		return PathFinder.CORNER_HEURISTIC;
 	}
 	
 	

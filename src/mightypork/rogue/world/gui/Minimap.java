@@ -89,7 +89,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 	@Override
 	public void receive(MouseButtonEvent event)
 	{
-		if (event.isOver(bounds)) {
+		if (event.isOver(bounds) && event.getButton() == 0) {
 			if (event.isUp()) {
 				final Vect relative = event.getPos().sub(bounds.origin());
 				final Coord actual = Coord.make(relative.xi() / unit, relative.yi() / unit);
