@@ -82,7 +82,9 @@ public class KeyStroke {
 		
 		if (keys == null) {
 			if (other.keys != null) return false;
-		} else if (!keys.equals(other.keys)) { return false; }
+		} else if (!keys.equals(other.keys)) {
+			return false;
+		}
 		
 		if (fallingEdge != other.fallingEdge) return false;
 		

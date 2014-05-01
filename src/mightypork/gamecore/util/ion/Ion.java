@@ -93,9 +93,13 @@ public class Ion {
 		if (mark > 255) throw new IllegalArgumentException("Mark must be < 256.");
 		if (mark < 0) throw new IllegalArgumentException("Mark must be positive.");
 		
-		if (reservedMarkChecking && mark < 50) { throw new IllegalArgumentException("Marks 0..49 are reserved."); }
+		if (reservedMarkChecking && mark < 50) {
+			throw new IllegalArgumentException("Marks 0..49 are reserved.");
+		}
 		
-		if (registered[mark] != null) { throw new IllegalArgumentException("Mark " + mark + " is already in use."); }
+		if (registered[mark] != null) {
+			throw new IllegalArgumentException("Mark " + mark + " is already in use.");
+		}
 		
 		try {
 			objClass.getConstructor();
@@ -278,9 +282,13 @@ public class Ion {
 		
 		final Class<? extends IonObjBinary> clz = Ion.getClassForMark(mark);
 		
-		if (clz == null) { throw new IOException("Not registered - mark: " + mark + ", class: " + Log.str(obj.getClass())); }
+		if (clz == null) {
+			throw new IOException("Not registered - mark: " + mark + ", class: " + Log.str(obj.getClass()));
+		}
 		
-		if (clz != obj.getClass()) { throw new IOException("Class mismatch - mark: " + mark + ", class: " + Log.str(obj.getClass())); }
+		if (clz != obj.getClass()) {
+			throw new IOException("Class mismatch - mark: " + mark + ", class: " + Log.str(obj.getClass()));
+		}
 	}
 	
 }

@@ -31,7 +31,9 @@ class EventChannel<EVENT extends BusEvent<CLIENT>, CLIENT> {
 	public EventChannel(Class<EVENT> eventClass, Class<CLIENT> clientClass)
 	{
 		
-		if (eventClass == null || clientClass == null) { throw new NullPointerException("Null Event or Client class."); }
+		if (eventClass == null || clientClass == null) {
+			throw new NullPointerException("Null Event or Client class.");
+		}
 		
 		this.clientClass = clientClass;
 		this.eventClass = eventClass;

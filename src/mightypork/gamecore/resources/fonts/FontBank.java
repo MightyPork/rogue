@@ -80,7 +80,9 @@ public class FontBank extends LightAppModule {
 		
 		if (f == null) f = fonts.get(aliases.get(key));
 		
-		if (f == null) { throw new RuntimeException("There's no font called " + key + "!"); }
+		if (f == null) {
+			throw new RuntimeException("There's no font called " + key + "!");
+		}
 		
 		return f;
 	}

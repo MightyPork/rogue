@@ -8,7 +8,7 @@ import mightypork.gamecore.util.ion.IonOutput;
 
 
 /**
- * Tile model (logic of a tile)
+ * Tile model (builder)
  * 
  * @author MightyPork
  */

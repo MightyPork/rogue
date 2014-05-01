@@ -205,7 +205,9 @@ public abstract class Color {
 	 */
 	public static void pushAlpha(Num alpha)
 	{
-		if (!alphaStackEnabled) { return; }
+		if (!alphaStackEnabled) {
+			return;
+		}
 		
 		alphaStack.push(alpha);
 	}
@@ -219,9 +221,13 @@ public abstract class Color {
 	 */
 	public static void popAlpha()
 	{
-		if (!alphaStackEnabled) { return; }
+		if (!alphaStackEnabled) {
+			return;
+		}
 		
-		if (alphaStack.isEmpty()) { throw new EmptyStackException(); }
+		if (alphaStack.isEmpty()) {
+			throw new EmptyStackException();
+		}
 		
 		alphaStack.pop();
 	}

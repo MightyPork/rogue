@@ -49,7 +49,7 @@ public abstract class Tile implements IonObjBlob {
 	{
 		if (!isExplored()) return;
 		
-		TileRenderer r = getRenderer();
+		final TileRenderer r = getRenderer();
 		if (r == null) {
 			Log.e("Tile with no renderer: " + Log.str(this));
 			return;

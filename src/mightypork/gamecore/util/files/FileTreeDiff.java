@@ -82,7 +82,9 @@ public class FileTreeDiff {
 						final int read1 = cin1.read(BUFFER);
 						final int read2 = cin2.read(BUFFER);
 						
-						if (read1 != read2 || ck1.getValue() != ck2.getValue()) { throw new NotEqualException("Bytes differ:\n" + pair.a + "\n" + pair.b); }
+						if (read1 != read2 || ck1.getValue() != ck2.getValue()) {
+							throw new NotEqualException("Bytes differ:\n" + pair.a + "\n" + pair.b);
+						}
 						
 						if (read1 == -1) break;
 					}

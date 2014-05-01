@@ -7,7 +7,6 @@ import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.gen.rooms.DeadEndRoom;
 import mightypork.rogue.world.gen.rooms.Rooms;
 import mightypork.rogue.world.gen.themes.ThemeBrick;
 import mightypork.rogue.world.level.Level;
@@ -45,16 +44,16 @@ public class LevelGenerator {
 		// TODO tmp
 		// spawn rats
 		
-		Coord pos = Coord.make(0,0);
-		for(int i=0; i<1;i++) { // 4+complexity + rand.nextInt(1+complexity)
+		final Coord pos = Coord.make(0, 0);
+		for (int i = 0; i < 1; i++) { // 4+complexity + rand.nextInt(1+complexity)
+		
+			final Entity e = Entities.RAT.createEntity(world);
 			
-			Entity e = Entities.RAT.createEntity(world);
-			
-			for(int j=0; j<20;j++) {
+			for (int j = 0; j < 20; j++) {
 				pos.x = rand.nextInt(lvl.getWidth());
 				pos.y = rand.nextInt(lvl.getHeight());
 				
-				if(lvl.addEntity(e, pos)) break;
+				if (lvl.addEntity(e, pos)) break;
 			}
 		}
 		

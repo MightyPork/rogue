@@ -88,7 +88,7 @@ public class CachedFont implements GLFont {
 	 */
 	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars)
 	{
-		this(font, antialias, filter, (" "+chars).toCharArray());
+		this(font, antialias, filter, (" " + chars).toCharArray());
 	}
 	
 	

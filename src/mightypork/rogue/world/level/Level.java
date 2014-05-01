@@ -243,13 +243,14 @@ public class Level implements MapAccess, IonObjBinary {
 	
 	/**
 	 * Try to add entity at given pos
+	 * 
 	 * @param entity the entity
 	 * @param pos pos
 	 * @return true if added (false if void, wall etc)
 	 */
 	public boolean addEntity(Entity entity, Coord pos)
 	{
-		Tile t = getTile(pos);
+		final Tile t = getTile(pos);
 		if (!t.isWalkable()) return false;
 		
 		addEntity(entity);

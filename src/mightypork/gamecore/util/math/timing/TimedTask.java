@@ -29,7 +29,8 @@ public abstract class TimedTask implements Runnable, Updateable {
 	}
 	
 	
-	public boolean isRunning() {
+	public boolean isRunning()
+	{
 		return !timer.isFinished();
 	}
 	

@@ -112,7 +112,9 @@ public class ArchivingLog extends SimpleLog {
 		
 		// playing with fireee
 		for (int i = 0; i < oldLogs.size() - logs_to_keep; i++) {
-			if (!oldLogs.get(i).delete()) { throw new RuntimeException("Could not delete old log file."); }
+			if (!oldLogs.get(i).delete()) {
+				throw new RuntimeException("Could not delete old log file.");
+			}
 		}
 	}
 	

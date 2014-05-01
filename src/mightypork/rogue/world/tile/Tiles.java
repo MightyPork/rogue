@@ -5,10 +5,7 @@ import java.io.IOException;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
-import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
-import mightypork.rogue.world.tile.renderers.DoorTileRenderer;
-import mightypork.rogue.world.tile.renderers.NullTileRenderer;
-import mightypork.rogue.world.tile.tiles.*;
+import mightypork.rogue.world.tile.tiles.NullTile;
 import mightypork.rogue.world.tile.tiles.brick.TileBrickDoor;
 import mightypork.rogue.world.tile.tiles.brick.TileBrickFloor;
 import mightypork.rogue.world.tile.tiles.brick.TileBrickPassage;
@@ -36,9 +33,13 @@ public final class Tiles {
 	
 	public static void register(int id, TileModel model)
 	{
-		if (id < 0 || id >= tiles.length) { throw new IllegalArgumentException("Tile ID " + id + " is out of range."); }
+		if (id < 0 || id >= tiles.length) {
+			throw new IllegalArgumentException("Tile ID " + id + " is out of range.");
+		}
 		
-		if (tiles[id] != null) { throw new IllegalArgumentException("Tile ID " + id + " already in use."); }
+		if (tiles[id] != null) {
+			throw new IllegalArgumentException("Tile ID " + id + " already in use.");
+		}
 		
 		tiles[id] = model;
 	}
@@ -48,7 +49,9 @@ public final class Tiles {
 	{
 		final TileModel m = tiles[id];
 		
-		if (m == null) { throw new IllegalArgumentException("No tile with ID " + id + "."); }
+		if (m == null) {
+			throw new IllegalArgumentException("No tile with ID " + id + ".");
+		}
 		
 		return m;
 	}

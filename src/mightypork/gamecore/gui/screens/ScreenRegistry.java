@@ -69,7 +69,9 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 		
 		// find screen to show
 		final Screen toShow = screens.get(key);
-		if (toShow == null) { throw new RuntimeException("Screen " + key + " not defined."); }
+		if (toShow == null) {
+			throw new RuntimeException("Screen " + key + " not defined.");
+		}
 		
 		// deactivate last screen
 		if (active != null) {

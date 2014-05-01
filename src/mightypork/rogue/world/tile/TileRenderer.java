@@ -22,19 +22,22 @@ public abstract class TileRenderer implements Updateable {
 	
 	private static TxQuad SH_N, SH_S, SH_E, SH_W, SH_NW, SH_NE, SH_SW, SH_SE;
 	private static TxQuad UFOG_N, UFOG_S, UFOG_E, UFOG_W, UFOG_NW, UFOG_NE, UFOG_SW, UFOG_SE;
-		
+	
 	private static boolean inited;
 	
 	// data
-
+	
 	public byte shadows;
 	public boolean shadowsComputed;
-
+	
 	protected final Tile tile;
 	
-	protected Tile getTile() {
+	
+	protected Tile getTile()
+	{
 		return tile;
 	}
+	
 	
 	public TileRenderer(Tile tile)
 	{
@@ -66,7 +69,7 @@ public abstract class TileRenderer implements Updateable {
 	
 	
 	public void renderShadows(TileRenderContext context)
-	{		
+	{
 		if (!shadowsComputed) {
 			// no shadows computed yet
 			
@@ -125,6 +128,7 @@ public abstract class TileRenderer implements Updateable {
 		if ((ufog & Sides.MASK_S) != 0) Render.quadTextured(rect, UFOG_S);
 		if ((ufog & Sides.SE_CORNER) == Sides.MASK_SE) Render.quadTextured(rect, UFOG_SE);
 	}
+	
 	
 	@Override
 	public void update(double delta)

@@ -5,10 +5,8 @@ import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.rogue.world.gui.MapView;
-import mightypork.rogue.world.gui.interaction.MIPClickPathfWalk;
-import mightypork.rogue.world.gui.interaction.MIPKeyWalk;
-import mightypork.rogue.world.gui.interaction.MIPMouseWalk;
-import mightypork.rogue.world.gui.interaction.MIPTileClick;
+import mightypork.rogue.world.gui.interaction.MIPKeyboard;
+import mightypork.rogue.world.gui.interaction.MIPMouse;
 
 
 public class WorldLayer extends ScreenLayer {
@@ -25,10 +23,8 @@ public class WorldLayer extends ScreenLayer {
 		worldView = new MapView();
 		
 		// map input plugins
-		worldView.addPlugin(new MIPKeyWalk());
-		worldView.addPlugin(new MIPTileClick());
-		worldView.addPlugin(new MIPClickPathfWalk());
-		worldView.addPlugin(new MIPMouseWalk());
+		worldView.addPlugin(new MIPKeyboard());
+		worldView.addPlugin(new MIPMouse());
 		
 		// size of lower navbar
 		final Num lownav = root.width().min(root.height()).max(700).perc(7);

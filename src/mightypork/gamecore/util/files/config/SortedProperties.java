@@ -263,7 +263,9 @@ public class SortedProperties extends java.util.Properties {
 	private static char hexDigit(char ch, int offset)
 	{
 		final int val = (ch >> offset) & 0xF;
-		if (val <= 9) { return (char) ('0' + val); }
+		if (val <= 9) {
+			return (char) ('0' + val);
+		}
 		
 		return (char) ('A' + val - 10);
 	}

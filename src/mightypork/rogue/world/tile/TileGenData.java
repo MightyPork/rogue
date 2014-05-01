@@ -1,5 +1,6 @@
 package mightypork.rogue.world.tile;
 
+
 import mightypork.rogue.world.gen.TileProtectLevel;
 
 

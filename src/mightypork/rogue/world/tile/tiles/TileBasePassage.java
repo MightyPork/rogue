@@ -15,7 +15,7 @@ import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
  */
 public abstract class TileBasePassage extends TileSolid {
 	
-	private BasicTileRenderer renderer;
+	private final BasicTileRenderer renderer;
 	
 	
 	public TileBasePassage(TileModel model, TxSheet sheet)

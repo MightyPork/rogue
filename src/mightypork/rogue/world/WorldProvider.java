@@ -32,7 +32,9 @@ public class WorldProvider extends RootBusNode {
 	
 	public static WorldProvider get()
 	{
-		if (inst == null) { throw new IllegalStateException("World provider not initialized."); }
+		if (inst == null) {
+			throw new IllegalStateException("World provider not initialized.");
+		}
 		
 		return inst;
 	}

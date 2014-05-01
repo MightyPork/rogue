@@ -21,15 +21,15 @@ public abstract class AbstractRectRoom implements RoomBuilder {
 	{
 		// half width, half height actually
 		final Coord innerSize = getInnerSize(rand);
-		final int width = 2+innerSize.x;
-		final int height = 2+innerSize.y;
+		final int width = 2 + innerSize.x;
+		final int height = 2 + innerSize.y;
 		
-		int wLow = width/2;
-		int wHigh = width - wLow;
-		int hLow = height/2;
-		int hHigh = height - hLow;
+		final int wLow = width / 2;
+		final int wHigh = width - wLow;
+		final int hLow = height / 2;
+		final int hHigh = height - hLow;
 		
-		final Coord min = new Coord(center.x-wLow, center.y-hLow);
+		final Coord min = new Coord(center.x - wLow, center.y - hLow);
 		final Coord max = new Coord(center.x + wHigh, center.y + hHigh);
 		
 		if (!map.isClear(min.add(-1, -1), max)) return null;
@@ -48,8 +48,8 @@ public abstract class AbstractRectRoom implements RoomBuilder {
 	
 	protected void placeDoors(ScratchMap map, MapTheme theme, Random rand, Coord min, Coord max)
 	{
-		int width = max.x - min.x;
-		int height = max.y - min.y;
+		final int width = max.x - min.x;
+		final int height = max.y - min.y;
 		
 		for (int i = 0, j = 0; i <= getDoorCount(rand) && j < 100; j++) { // j is to prevent inf loop
 			final Coord door = min.copy();

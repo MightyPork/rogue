@@ -30,7 +30,9 @@ public class RoomDesc {
 		int rw = amax.x - amin.x;
 		int rh = amax.y - amin.y;
 		
-		if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) { return false; }
+		if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+			return false;
+		}
 		
 		final int tx = min.x;
 		final int ty = min.y;

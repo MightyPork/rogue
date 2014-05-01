@@ -1028,7 +1028,9 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 		double rw = other.size().x();
 		double rh = other.size().y();
 		
-		if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) { return false; }
+		if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+			return false;
+		}
 		
 		final double tx = this.origin().x();
 		final double ty = this.origin().y();

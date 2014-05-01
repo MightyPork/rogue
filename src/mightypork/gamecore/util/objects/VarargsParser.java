@@ -34,7 +34,9 @@ public class VarargsParser<K, V> {
 	{
 		final LinkedHashMap<K, V> attrs = new LinkedHashMap<>();
 		
-		if (args.length % 2 != 0) { throw new IllegalArgumentException("Odd number of elements in varargs map!"); }
+		if (args.length % 2 != 0) {
+			throw new IllegalArgumentException("Odd number of elements in varargs map!");
+		}
 		
 		K key = null;
 		for (final Object o : args) {

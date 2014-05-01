@@ -34,7 +34,9 @@ public class HorizontalFixedFlowLayout extends LayoutComponent {
 		this.colWidth = elementWidth;
 		this.align = align;
 		
-		if (align != AlignX.LEFT && align != AlignX.RIGHT) { throw new IllegalArgumentException("Can align only left or right."); }
+		if (align != AlignX.LEFT && align != AlignX.RIGHT) {
+			throw new IllegalArgumentException("Can align only left or right.");
+		}
 	}
 	
 	

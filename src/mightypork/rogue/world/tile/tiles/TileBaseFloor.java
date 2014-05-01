@@ -10,14 +10,15 @@ import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
 
 public abstract class TileBaseFloor extends TileWalkable {
 	
-	private BasicTileRenderer renderer;
-
-
+	private final BasicTileRenderer renderer;
+	
+	
 	public TileBaseFloor(TileModel model, TxSheet sheet)
 	{
 		super(model);
 		this.renderer = new BasicTileRenderer(this, sheet);
 	}
+	
 	
 	@Override
 	protected TileRenderer getRenderer()

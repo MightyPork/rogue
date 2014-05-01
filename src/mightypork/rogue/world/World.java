@@ -9,7 +9,6 @@ import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.EntityModel;
 import mightypork.rogue.world.level.Level;
 
 
@@ -95,9 +94,12 @@ public class World implements IonObjBundled, Updateable {
 		return eid++;
 	}
 	
+	
 	public void createPlayer(int level)
 	{
-		if (playerInfo.isInitialized()) { throw new RuntimeException("Player already created."); }
+		if (playerInfo.isInitialized()) {
+			throw new RuntimeException("Player already created.");
+		}
 		
 		// make entity
 		final int playerEid = getNewEID();

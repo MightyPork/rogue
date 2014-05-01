@@ -2,7 +2,6 @@ package mightypork.rogue.world.tile.renderers;
 
 
 import mightypork.rogue.world.level.render.TileRenderContext;
-import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileRenderer;
 
 

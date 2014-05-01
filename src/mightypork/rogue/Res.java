@@ -86,7 +86,7 @@ public final class Res {
 		
 		textures.addSheet("tile.brick.floor", tiles.makeSheet(0, 1, 5, 1));
 		textures.addSheet("tile.brick.wall", tiles.makeSheet(0, 0, 8, 1));
-
+		
 		textures.addSheet("tile.brick.door.locked", tiles.makeSheet(1, 2, 1, 1));//TODO unique tx
 		textures.addSheet("tile.brick.door.closed", tiles.makeSheet(1, 2, 1, 1));
 		textures.addSheet("tile.brick.door.open", tiles.makeSheet(2, 2, 1, 1));

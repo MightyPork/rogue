@@ -6,8 +6,8 @@ import mightypork.gamecore.util.math.algo.Step;
 
 
 /**
- * Pathfinder proxy. Can be used to override individual methods but
- * keep the rest as is.
+ * Pathfinder proxy. Can be used to override individual methods but keep the
+ * rest as is.
  * 
  * @author MightyPork
  */

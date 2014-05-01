@@ -70,7 +70,9 @@ public class SoundBank extends LightAppModule {
 	public LoopPlayer getLoop(String key)
 	{
 		final LoopPlayer p = loops.get(key);
-		if (p == null) { throw new RuntimeException("Unknown sound loop \"" + key + "\"."); }
+		if (p == null) {
+			throw new RuntimeException("Unknown sound loop \"" + key + "\".");
+		}
 		return p;
 	}
 	
@@ -84,7 +86,9 @@ public class SoundBank extends LightAppModule {
 	public EffectPlayer getEffect(String key)
 	{
 		final EffectPlayer p = effects.get(key);
-		if (p == null) { throw new RuntimeException("Unknown sound effect \"" + key + "\"."); }
+		if (p == null) {
+			throw new RuntimeException("Unknown sound effect \"" + key + "\".");
+		}
 		return p;
 	}
 }

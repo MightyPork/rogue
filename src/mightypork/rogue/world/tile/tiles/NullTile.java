@@ -17,6 +17,7 @@ public class NullTile extends Tile {
 		super(model);
 	}
 	
+	
 	@Override
 	protected TileRenderer getRenderer()
 	{

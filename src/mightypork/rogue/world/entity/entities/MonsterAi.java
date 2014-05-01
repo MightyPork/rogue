@@ -52,7 +52,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		{
 			if (!chasing) return;
 			
-			Entity prey = getPreyEntity();
+			final Entity prey = getPreyEntity();
 			
 			if (prey == null || prey.isDead()) {
 				//System.out.println("prey dead?");
@@ -178,7 +178,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		timerAttack.update(delta);
 		
 		if (chasing && !entity.pos.isMoving()) {
-			Entity prey = getPreyEntity();
+			final Entity prey = getPreyEntity();
 			
 			if (!isPreyInAttackRange(prey)) {
 				//System.out.println("-upd STEP--");

@@ -103,14 +103,16 @@ public abstract class PlayerControl {
 		return getLevel().getTile(getCoord().add(side)).isWalkable();
 	}
 	
+	
 	public boolean clickTile(Step side)
 	{
 		return clickTile(getCoord().add(side));
 	}
 	
+	
 	public boolean clickTile(Coord pos)
 	{
-		if(pos.dist(getCoord()) > 8) return false; // too far
+		if (pos.dist(getCoord()) > 8) return false; // too far
 		
 		return getLevel().getTile(pos).onClick();
 	}
@@ -120,5 +122,13 @@ public abstract class PlayerControl {
 	{
 		getPlayerEntity().pos.cancelPath();
 		getPlayerEntity().pos.addStep(side);
+	}
+	
+	
+	public boolean tryGo(Step e)
+	{
+		if (!canGo(e)) return false;
+		go(e);
+		return true;
 	}
 }

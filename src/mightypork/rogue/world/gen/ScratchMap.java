@@ -41,8 +41,8 @@ public class ScratchMap {
 		@Override
 		public boolean isAccessible(Coord pos)
 		{
-			if(!isIn(pos)) return false;
-			Tile t = get(pos);
+			if (!isIn(pos)) return false;
+			final Tile t = get(pos);
 			return t.isPotentiallyWalkable() || (t.genData.protection != TileProtectLevel.STRONG);
 		}
 		
@@ -189,7 +189,9 @@ public class ScratchMap {
 	
 	public Tile get(Coord pos)
 	{
-		if (!isIn(pos)) { throw new IndexOutOfBoundsException("Tile not in map: " + pos); }
+		if (!isIn(pos)) {
+			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
+		}
 		
 		return map[pos.y][pos.x];
 	}
@@ -203,7 +205,9 @@ public class ScratchMap {
 	
 	public boolean set(Coord pos, Tile tile)
 	{
-		if (!isIn(pos)) { throw new IndexOutOfBoundsException("Tile not in map: " + pos); }
+		if (!isIn(pos)) {
+			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
+		}
 		
 		map[pos.y][pos.x] = tile;
 		return true;

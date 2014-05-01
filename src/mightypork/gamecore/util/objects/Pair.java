@@ -59,9 +59,13 @@ public class Pair<T1, T2> {
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj == null) { return false; }
+		if (obj == null) {
+			return false;
+		}
 		
-		if (!this.getClass().equals(obj.getClass())) { return false; }
+		if (!this.getClass().equals(obj.getClass())) {
+			return false;
+		}
 		
 		final Pair<?, ?> t = (Pair<?, ?>) obj;
 		

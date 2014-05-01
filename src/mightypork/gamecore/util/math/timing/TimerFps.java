@@ -64,11 +64,15 @@ public class TimerFps {
 	 */
 	public double getFraction()
 	{
-		if (getSkipped() >= 1) { return 1; }
+		if (getSkipped() >= 1) {
+			return 1;
+		}
 		
 		final long time = getTime();
 		
-		if (time <= nextFrame) { return (double) (time - lastFrame) / (double) FRAME; }
+		if (time <= nextFrame) {
+			return (double) (time - lastFrame) / (double) FRAME;
+		}
 		
 		return 1;
 	}

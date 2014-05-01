@@ -5,9 +5,7 @@ import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.timing.TimedTask;
-import mightypork.rogue.Res;
 import mightypork.rogue.world.level.render.TileRenderContext;
-import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.tiles.TileBaseDoor;
 
@@ -25,7 +23,6 @@ public class DoorTileRenderer extends TileRenderer {
 		@Override
 		public void run()
 		{
-			System.out.println("CLOSEDOOR + "+ ((TileBaseDoor) tile).isOpen());
 			visuallyOpen = ((TileBaseDoor) tile).isOpen();
 		}
 	};
@@ -49,13 +46,13 @@ public class DoorTileRenderer extends TileRenderer {
 		if (!visuallyOpen && ((TileBaseDoor) tile).isOpen()) visuallyOpen = true;
 		
 		if (visuallyOpen && !((TileBaseDoor) tile).isOpen()) {
-			if(!closeTask.isRunning()) closeTask.start(0.4);
+			if (!closeTask.isRunning()) closeTask.start(0.4);
 		}
 		
-		if (visuallyOpen) {			
+		if (visuallyOpen) {
 			Render.quadTextured(rect, open.getRandomQuad(context.getTileNoise()));
 		} else {
-			TxSheet sheet = (((TileBaseDoor) tile).isLocked() ? locked : closed);			
+			final TxSheet sheet = (((TileBaseDoor) tile).isLocked() ? locked : closed);
 			Render.quadTextured(rect, sheet.getRandomQuad(context.getTileNoise()));
 		}
 	}

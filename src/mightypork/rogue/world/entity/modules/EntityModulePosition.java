@@ -11,7 +11,6 @@ import java.util.Set;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Step;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;
@@ -202,11 +201,17 @@ public class EntityModulePosition extends EntityModule {
 	{
 		return entityPos.getVisualPos();
 	}
-
-
+	
+	
 	public boolean isMoving()
 	{
 		return walking;
+	}
+	
+	
+	public boolean hasPath()
+	{
+		return isMoving() || !path.isEmpty();
 	}
 	
 }

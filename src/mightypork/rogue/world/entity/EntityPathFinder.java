@@ -27,13 +27,15 @@ public class EntityPathFinder extends PathFinder {
 	
 	
 	@Override
-	public int getCost(Coord from, Coord to) {
+	public int getCost(Coord from, Coord to)
+	{
 		return 10;
 	}
 	
 	
 	@Override
-	public int getMinCost() {
+	public int getMinCost()
+	{
 		return 10;
 	}
 	

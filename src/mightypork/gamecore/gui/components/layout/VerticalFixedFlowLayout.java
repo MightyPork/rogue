@@ -34,7 +34,9 @@ public class VerticalFixedFlowLayout extends LayoutComponent {
 		this.rowHeight = elementHeight;
 		this.align = align;
 		
-		if (align != AlignY.TOP && align != AlignY.BOTTOM) { throw new IllegalArgumentException("Can align only to top or bottom."); }
+		if (align != AlignY.TOP && align != AlignY.BOTTOM) {
+			throw new IllegalArgumentException("Can align only to top or bottom.");
+		}
 	}
 	
 	

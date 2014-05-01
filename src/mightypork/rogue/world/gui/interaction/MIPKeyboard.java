@@ -10,7 +10,7 @@ import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.gui.MapView;
 
 
-public class MIPKeyWalk implements MapInteractionPlugin {
+public class MIPKeyboard implements MapInteractionPlugin {
 	
 	private static final int[] keys = { Keys.LEFT, Keys.RIGHT, Keys.UP, Keys.DOWN };
 	private static final Step[] sides = { Sides.W, Sides.E, Sides.N, Sides.S };
@@ -33,7 +33,7 @@ public class MIPKeyWalk implements MapInteractionPlugin {
 	@Override
 	public boolean onKey(MapView view, PlayerControl player, int key, boolean down)
 	{
-		if(down) return false; // not interested
+		if (down) return false; // not interested
 		
 		for (int i = 0; i < 4; i++) {
 			if (key == keys[i]) {
@@ -47,12 +47,12 @@ public class MIPKeyWalk implements MapInteractionPlugin {
 	
 	private boolean walkByKey(PlayerControl pc)
 	{
-		if(pc.getPlayerEntity().pos.isMoving()) return false;
+		if (pc.getPlayerEntity().pos.isMoving()) return false;
 		
 		for (int i = 0; i < 4; i++) {
 			if (InputSystem.isKeyDown(keys[i])) {
 				
-				Step side = sides[i];
+				final Step side = sides[i];
 				if (pc.canGo(side)) {
 					pc.go(side);
 					return true;

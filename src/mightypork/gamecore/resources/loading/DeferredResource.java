@@ -41,7 +41,9 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 		loadFailed = false;
 		
 		try {
-			if (resource == null) { throw new NullPointerException("Resource string cannot be null for non-null resource."); }
+			if (resource == null) {
+				throw new NullPointerException("Resource string cannot be null for non-null resource.");
+			}
 			
 			Log.f3("<RES> Loading: " + this);
 			loadResource(resource);

@@ -594,7 +594,9 @@ public class Calc {
 	 */
 	public static List<Integer> parseIntList(String list)
 	{
-		if (list == null) { return null; }
+		if (list == null) {
+			return null;
+		}
 		final String[] parts = list.split(",");
 		
 		final ArrayList<Integer> intList = new ArrayList<>();
@@ -654,7 +656,9 @@ public class Calc {
 	 */
 	public static void assertValidIndex(int index, int length)
 	{
-		if (!inRange(index, 0, length - 1)) { throw new IndexOutOfBoundsException(); }
+		if (!inRange(index, 0, length - 1)) {
+			throw new IndexOutOfBoundsException();
+		}
 	}
 	
 	
