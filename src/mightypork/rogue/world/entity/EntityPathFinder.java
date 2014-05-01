@@ -6,15 +6,14 @@ import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
 
 
-public abstract class EntityPathfindingContext implements PathFindingContext {
+public class EntityPathFinder extends PathFinder {
 	
 	protected final Entity entity;
 	
 	
-	public EntityPathfindingContext(Entity entity)
+	public EntityPathFinder(Entity entity)
 	{
 		this.entity = entity;
 	}
@@ -28,11 +27,15 @@ public abstract class EntityPathfindingContext implements PathFindingContext {
 	
 	
 	@Override
-	public abstract int getCost(Coord from, Coord to);
+	public int getCost(Coord from, Coord to) {
+		return 10;
+	}
 	
 	
 	@Override
-	public abstract int getMinCost();
+	public int getMinCost() {
+		return 10;
+	}
 	
 	
 	@Override
@@ -45,7 +48,7 @@ public abstract class EntityPathfindingContext implements PathFindingContext {
 	@Override
 	public Step[] getWalkSides()
 	{
-		return Sides.cardinalSides;
+		return Sides.CARDINAL_SIDES;
 	}
 	
 }

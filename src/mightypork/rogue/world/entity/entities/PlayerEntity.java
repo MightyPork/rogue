@@ -2,7 +2,7 @@ package mightypork.rogue.world.entity.entities;
 
 
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.rogue.world.entity.*;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.entity.renderers.EntityRenderer;
@@ -17,6 +17,8 @@ public class PlayerEntity extends Entity {
 		public PlayerAi(Entity entity)
 		{
 			super(entity);
+			health.setMaxHealth(24);
+			health.fill();
 		}
 		
 		
@@ -47,7 +49,7 @@ public class PlayerEntity extends Entity {
 		
 	}
 	
-	private EntityPathfindingContext pathfc;
+	private PathFinder pathf;
 	private EntityRenderer renderer;
 	
 	private final PlayerAi ai = new PlayerAi(this);
@@ -65,24 +67,24 @@ public class PlayerEntity extends Entity {
 	
 	
 	@Override
-	public PathFindingContext getPathfindingContext()
+	public PathFinder getPathFinder()
 	{
-		if (pathfc == null) {
-			pathfc = new SimpleEntityPathFindingContext(this) {
+		if (pathf == null) {
+			pathf = new EntityPathFinder(this) {
 				
 				@Override
 				public int getCost(Coord from, Coord to)
-				{
+				{					
+					if (!getLevel().getTile(pos.getCoord()).isExplored()) {
+						return 1000;
+					}
 					
-					if (!getLevel().getTile(pos.getCoord()).isExplored()) { return 1000; }
-					
-					return super.getCost(from, to);
-					
+					return super.getCost(from, to);					
 				};
 			};
 		}
 		
-		return pathfc;
+		return pathf;
 	}
 	
 	

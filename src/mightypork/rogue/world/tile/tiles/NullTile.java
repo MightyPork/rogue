@@ -12,9 +12,15 @@ import mightypork.rogue.world.tile.TileType;
 
 public class NullTile extends Tile {
 	
-	public NullTile(TileModel model, TileRenderer renderer)
+	public NullTile(TileModel model)
 	{
-		super(model, renderer);
+		super(model);
+	}
+	
+	@Override
+	protected TileRenderer getRenderer()
+	{
+		return TileRenderer.NONE;
 	}
 	
 	

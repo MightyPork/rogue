@@ -12,8 +12,8 @@ public class Sides {
 	public static final byte MASK_SW = (byte) 0b00000010;
 	public static final byte MASK_W = (byte) 0b00000001;
 	
-	public static final byte CARDINAL = MASK_N | MASK_S | MASK_E | MASK_W;
-	public static final byte DIAGONAL = MASK_NE | MASK_NW | MASK_SE | MASK_SW;
+	public static final byte MASK_CARDINAL = MASK_N | MASK_S | MASK_E | MASK_W;
+	public static final byte MASK_DIAGONAL = MASK_NE | MASK_NW | MASK_SE | MASK_SW;
 	
 	public static final byte NW_CORNER = MASK_W | MASK_NW | MASK_N;
 	public static final byte NE_CORNER = MASK_E | MASK_NE | MASK_N;
@@ -31,7 +31,7 @@ public class Sides {
 	
 	//@formatter:off	
 	/** All sides, in the order of bits. */
-	public final static Step[] allSides = {
+	public final static Step[] ALL_SIDES = {
 		NW,
 		N,
 		NE,
@@ -42,7 +42,7 @@ public class Sides {
 		W
 	};
 	
-	public final static Step[] cardinalSides = {
+	public final static Step[] CARDINAL_SIDES = {
 		N,
 		E,
 		S,
@@ -59,7 +59,7 @@ public class Sides {
 	 */
 	public static Step get(int i)
 	{
-		return allSides[i];
+		return ALL_SIDES[i];
 	}
 	
 	

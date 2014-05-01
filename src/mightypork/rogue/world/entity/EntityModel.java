@@ -6,6 +6,7 @@ import java.io.IOException;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.rogue.world.World;
 
 
 /**
@@ -27,6 +28,10 @@ public final class EntityModel {
 		this.tileClass = entity;
 	}
 	
+	public Entity createEntity(World world)
+	{
+		return createEntity(world.getNewEID());
+	}
 	
 	public Entity createEntity(int eid)
 	{

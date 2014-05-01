@@ -5,16 +5,7 @@ import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.render.MapRenderContext;
 
 
-public abstract class EntityRenderer {
-	
-	protected final Entity entity;
-	
-	
-	public EntityRenderer(Entity entity)
-	{
-		this.entity = entity;
-	}
-	
+public abstract class EntityRenderer {	
 	
 	public abstract void render(MapRenderContext context);
 	

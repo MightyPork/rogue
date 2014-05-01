@@ -6,17 +6,17 @@ import mightypork.gamecore.util.math.algo.Step;
 
 
 /**
- * Pathfinding context proxy. Can be used to override individual methods but
+ * Pathfinder proxy. Can be used to override individual methods but
  * keep the rest as is.
  * 
  * @author MightyPork
  */
-public class PathFindingContextProxy implements PathFindingContext {
+public class PathFinderProxy extends PathFinder {
 	
-	private final PathFindingContext source;
+	private final PathFinder source;
 	
 	
-	public PathFindingContextProxy(PathFindingContext other)
+	public PathFinderProxy(PathFinder other)
 	{
 		this.source = other;
 	}
@@ -44,14 +44,14 @@ public class PathFindingContextProxy implements PathFindingContext {
 	
 	
 	@Override
-	public Heuristic getHeuristic()
+	protected Heuristic getHeuristic()
 	{
 		return source.getHeuristic();
 	}
 	
 	
 	@Override
-	public Step[] getWalkSides()
+	protected Step[] getWalkSides()
 	{
 		return source.getWalkSides();
 	}

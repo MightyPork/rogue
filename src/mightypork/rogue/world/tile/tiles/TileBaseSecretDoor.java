@@ -3,24 +3,27 @@ package mightypork.rogue.world.tile.tiles;
 
 import java.io.IOException;
 
+import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.timing.TimedTask;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.TileType;
+import mightypork.rogue.world.tile.renderers.DoorTileRenderer;
 
 
-public class SecretDoorTile extends LockedDoorTile {
+public abstract class TileBaseSecretDoor extends TileBaseDoor {
 	
 	private int clicks = 2 + rand.nextInt(2);
 	
 	
-	public SecretDoorTile(TileModel model, TileRenderer renderer)
+	public TileBaseSecretDoor(TileModel model, TxSheet secret, TxSheet closed, TxSheet open)
 	{
-		super(model, renderer);
+		super(model, secret, closed, open);
 	}
 	
 	
@@ -41,7 +44,7 @@ public class SecretDoorTile extends LockedDoorTile {
 	public Color getMapColor()
 	{
 		if (locked) return TileType.WALL.getMapColor();
-		return super.getMapColor();
+		return RGB.PINK;
 	}
 	
 	

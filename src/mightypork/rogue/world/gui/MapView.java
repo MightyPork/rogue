@@ -43,7 +43,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	
 	public MapView()
 	{
-		this.tileSize = height().min(width()).div(8).max(32).mul(Num.make(1).sub(zoom.mul(0.66)));
+		this.tileSize = height().min(width()).div(12).max(32).mul(Num.make(1).sub(zoom.mul(0.66)));
 		this.worldRenderer = new WorldRenderer(this, tileSize);
 		pc = WorldProvider.get().getPlayerControl();
 		pc.addMoveListener(this);

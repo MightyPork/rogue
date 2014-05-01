@@ -1,30 +1,45 @@
 package mightypork.rogue.world.tile;
 
 
+import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.level.render.TileRenderContext;
+import mightypork.rogue.world.tile.renderers.NullTileRenderer;
 
 
 /**
- * Renderer for a tile model, in client
+ * Renderer for a tile; each tile has own renderer.
  * 
  * @author MightyPork
  */
-public abstract class TileRenderer {
+public abstract class TileRenderer implements Updateable {
+	
+	public static final TileRenderer NONE = new NullTileRenderer();
 	
 	private static TxQuad SH_N, SH_S, SH_E, SH_W, SH_NW, SH_NE, SH_SW, SH_SE;
 	private static TxQuad UFOG_N, UFOG_S, UFOG_E, UFOG_W, UFOG_NW, UFOG_NE, UFOG_SW, UFOG_SE;
-	
-	
+		
 	private static boolean inited;
 	
+	// data
+
+	public byte shadows;
+	public boolean shadowsComputed;
+
+	protected final Tile tile;
 	
-	public TileRenderer()
+	protected Tile getTile() {
+		return tile;
+	}
+	
+	public TileRenderer(Tile tile)
 	{
+		this.tile = tile;
+		
 		if (!inited) {
 			SH_N = Res.getTxQuad("tile.shadow.n");
 			SH_S = Res.getTxQuad("tile.shadow.s");
@@ -51,47 +66,43 @@ public abstract class TileRenderer {
 	
 	
 	public void renderShadows(TileRenderContext context)
-	{
-		final TileRenderData trd = context.getTile().renderData;
-		
-		if (!trd.shadowsComputed) {
+	{		
+		if (!shadowsComputed) {
 			// no shadows computed yet
 			
-			trd.shadows = 0; // reset the mask
+			shadows = 0; // reset the mask
 			
 			for (int i = 0; i < 8; i++) {
 				final Tile t2 = context.getAdjacentTile(Sides.get(i));
 				if (!t2.isNull() && t2.doesCastShadow()) {
-					trd.shadows |= Sides.bit(i);
+					shadows |= Sides.bit(i);
 				}
 			}
 			
-			trd.shadowsComputed = true;
+			shadowsComputed = true;
 		}
 		
-		if (trd.shadows == 0) return;
+		if (shadows == 0) return;
 		final Rect rect = context.getRect();
 		
-		if ((trd.shadows & Sides.NW_CORNER) == Sides.MASK_NW) Render.quadTextured(rect, SH_NW);
-		if ((trd.shadows & Sides.MASK_N) != 0) Render.quadTextured(rect, SH_N);
-		if ((trd.shadows & Sides.NE_CORNER) == Sides.MASK_NE) Render.quadTextured(rect, SH_NE);
+		if ((shadows & Sides.NW_CORNER) == Sides.MASK_NW) Render.quadTextured(rect, SH_NW);
+		if ((shadows & Sides.MASK_N) != 0) Render.quadTextured(rect, SH_N);
+		if ((shadows & Sides.NE_CORNER) == Sides.MASK_NE) Render.quadTextured(rect, SH_NE);
 		
-		if ((trd.shadows & Sides.MASK_W) != 0) Render.quadTextured(rect, SH_W);
-		if ((trd.shadows & Sides.MASK_E) != 0) Render.quadTextured(rect, SH_E);
+		if ((shadows & Sides.MASK_W) != 0) Render.quadTextured(rect, SH_W);
+		if ((shadows & Sides.MASK_E) != 0) Render.quadTextured(rect, SH_E);
 		
-		if ((trd.shadows & Sides.SW_CORNER) == Sides.MASK_SW) Render.quadTextured(rect, SH_SW);
-		if ((trd.shadows & Sides.MASK_S) != 0) Render.quadTextured(rect, SH_S);
-		if ((trd.shadows & Sides.SE_CORNER) == Sides.MASK_SE) Render.quadTextured(rect, SH_SE);
+		if ((shadows & Sides.SW_CORNER) == Sides.MASK_SW) Render.quadTextured(rect, SH_SW);
+		if ((shadows & Sides.MASK_S) != 0) Render.quadTextured(rect, SH_S);
+		if ((shadows & Sides.SE_CORNER) == Sides.MASK_SE) Render.quadTextured(rect, SH_SE);
 	}
 	
 	
 	public void renderUnexploredFog(TileRenderContext context)
 	{
-		// TODO cache in tile, update neighbouring tiles upon "explored" flag changed.
+		// TODO cache values, update neighbouring tiles upon "explored" flag changed.
 		
 		byte ufog = 0;
-		
-		ufog = 0; // reset the mask
 		
 		for (int i = 0; i < 8; i++) {
 			final Tile t2 = context.getAdjacentTile(Sides.get(i));
@@ -113,5 +124,10 @@ public abstract class TileRenderer {
 		if ((ufog & Sides.SW_CORNER) == Sides.MASK_SW) Render.quadTextured(rect, UFOG_SW);
 		if ((ufog & Sides.MASK_S) != 0) Render.quadTextured(rect, UFOG_S);
 		if ((ufog & Sides.SE_CORNER) == Sides.MASK_SE) Render.quadTextured(rect, UFOG_SE);
+	}
+	
+	@Override
+	public void update(double delta)
+	{
 	}
 }

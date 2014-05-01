@@ -83,7 +83,7 @@ public abstract class Animator extends Num implements Updateable, Pauseable {
 	public void restart()
 	{
 		reset();
-		nextCycle(numAnim);
+		resume();
 	}
 	
 	

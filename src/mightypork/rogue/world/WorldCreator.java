@@ -25,7 +25,7 @@ public class WorldCreator {
 			// TODO real algorithm
 			
 			// first level
-			l = LevelGenerator.build(rand.nextLong(), 6, LevelGenerator.DUNGEON_THEME); //
+			l = LevelGenerator.build(w, rand.nextLong(), 1, LevelGenerator.DUNGEON_THEME); //
 			w.addLevel(l);
 			
 			w.createPlayer(0);

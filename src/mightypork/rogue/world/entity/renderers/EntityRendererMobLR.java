@@ -22,11 +22,13 @@ public class EntityRendererMobLR extends EntityRenderer {
 	
 	private final TxSheet sheet;
 	
+	protected final Entity entity;
+	
 	
 	public EntityRendererMobLR(Entity entity, String sheetKey)
 	{
-		super(entity);
-		this.sheet = Res.getTxSheet(sheetKey);
+		this.entity = entity;
+		this.sheet = Res.sheet(sheetKey);
 	}
 	
 	

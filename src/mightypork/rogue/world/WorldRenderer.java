@@ -89,7 +89,7 @@ public class WorldRenderer extends RectProxy {
 		// tiles to render
 		final Entity ent = WorldProvider.get().getPlayerEntity();
 		
-		final Coord pos = ent.pos.getCoord();
+		final Coord pos = ent.getCoord();
 		final double w = width().value();
 		final double h = height().value();
 		

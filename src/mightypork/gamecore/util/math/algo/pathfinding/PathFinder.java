@@ -18,7 +18,7 @@ import mightypork.gamecore.util.math.algo.pathfinding.heuristics.ManhattanHeuris
  * 
  * @author MightyPork
  */
-public class PathFinder {
+public abstract class PathFinder {
 	
 	private static final FComparator F_COMPARATOR = new FComparator();
 	
@@ -26,9 +26,15 @@ public class PathFinder {
 	public static final Heuristic DIAGONAL_HEURISTIC = new DiagonalHeuristic();
 	
 	
-	public static List<Step> findPathRelative(PathFindingContext context, Coord start, Coord end)
+	public List<Step> findPathRelative(Coord start, Coord end)
 	{
-		final List<Coord> path = findPath(context, start, end);
+		return findPathRelative(start, end, false);
+	}
+	
+	
+	public List<Step> findPathRelative(Coord start, Coord end, boolean ignoreEnd)
+	{
+		final List<Coord> path = findPath(start, end, ignoreEnd);
 		if (path == null) return null;
 		
 		final List<Step> out = new ArrayList<>();
@@ -45,22 +51,28 @@ public class PathFinder {
 	}
 	
 	
-	public static List<Coord> findPath(PathFindingContext context, Coord start, Coord end)
+	public List<Coord> findPath(Coord start, Coord end)
+	{
+		return findPath(start, end, false);
+	}
+	
+	
+	public List<Coord> findPath(Coord start, Coord end, boolean ignoreEnd)
 	{
 		final LinkedList<Node> open = new LinkedList<>();
 		final LinkedList<Node> closed = new LinkedList<>();
 		
-		final Heuristic heuristic = context.getHeuristic();
+		final Heuristic heuristic = getHeuristic();
 		
 		// add first node
 		{
 			final Node n = new Node(start);
-			n.h_cost = (int) (heuristic.getCost(start, end) * context.getMinCost());
+			n.h_cost = (int) (heuristic.getCost(start, end) * getMinCost());
 			n.g_cost = 0;
 			open.add(n);
 		}
 		
-		final Step[] walkDirs = context.getWalkSides();
+		final Step[] walkDirs = getWalkSides();
 		
 		Node current = null;
 		
@@ -80,43 +92,43 @@ public class PathFinder {
 			for (final Step go : walkDirs) {
 				
 				final Coord c = current.pos.add(go);
-				if (!context.isAccessible(c)) continue;
+				if (!isAccessible(c) && !(c.equals(end) && ignoreEnd)) continue;
 				final Node a = new Node(c);
-				a.g_cost = current.g_cost + context.getCost(c, a.pos);
-				a.h_cost = (int) (heuristic.getCost(a.pos, end) * context.getMinCost());
+				a.g_cost = current.g_cost + getCost(c, a.pos);
+				a.h_cost = (int) (heuristic.getCost(a.pos, end) * getMinCost());
 				a.parent = current;
 				
-				if (context.isAccessible(a.pos)) {
-					if (!closed.contains(a)) {
+				
+				if (!closed.contains(a)) {
+					
+					if (open.contains(a)) {
 						
-						if (open.contains(a)) {
-							
-							boolean needSort = false;
-							
-							// find where it is
-							for (final Node n : open) {
-								if (n.pos.equals(a.pos)) { // found it
-									if (n.g_cost > a.g_cost) {
-										n.parent = current;
-										n.g_cost = a.g_cost;
-										needSort = true;
-									}
-									break;
+						boolean needSort = false;
+						
+						// find where it is
+						for (final Node n : open) {
+							if (n.pos.equals(a.pos)) { // found it
+								if (n.g_cost > a.g_cost) {
+									n.parent = current;
+									n.g_cost = a.g_cost;
+									needSort = true;
 								}
+								break;
 							}
-							
-							if (needSort) Collections.sort(open, F_COMPARATOR);
-							
-						} else {
-							open.add(a);
 						}
+						
+						if (needSort) Collections.sort(open, F_COMPARATOR);
+						
+					} else {
+						open.add(a);
 					}
 				}
 			}
 			
 		}
 		
-		if (current == null) { return null; // no path found
+		if (current == null) {
+			return null; // no path found
 		}
 		
 		final LinkedList<Coord> path = new LinkedList<>();
@@ -189,4 +201,36 @@ public class PathFinder {
 			return n1.fCost() - n2.fCost();
 		}
 	}
+	
+	
+	/**
+	 * @return used heuristic
+	 */
+	protected abstract Heuristic getHeuristic();
+	
+	
+	protected abstract Step[] getWalkSides();
+	
+	
+	/**
+	 * @param pos tile pos
+	 * @return true if the tile is walkable
+	 */
+	protected abstract boolean isAccessible(Coord pos);
+	
+	
+	/**
+	 * Cost of walking onto a tile. It's useful to use ie. 10 for basic step.
+	 * 
+	 * @param from last tile
+	 * @param to current tile
+	 * @return cost
+	 */
+	protected abstract int getCost(Coord from, Coord to);
+	
+	
+	/**
+	 * @return lowest cost. Used to multiply heuristics.
+	 */
+	protected abstract int getMinCost();
 }

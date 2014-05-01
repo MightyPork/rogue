@@ -94,5 +94,11 @@ public class EntityModuleHealth extends EntityModule {
 	{
 		setHealth(health - attackStrength);
 	}
+
+
+	public void fill()
+	{
+		setHealth(maxHealth);
+	}
 	
 }

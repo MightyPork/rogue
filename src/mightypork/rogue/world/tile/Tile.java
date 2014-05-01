@@ -4,6 +4,7 @@ package mightypork.rogue.world.tile;
 import java.io.IOException;
 import java.util.Random;
 
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonObjBlob;
@@ -22,13 +23,10 @@ import mightypork.rogue.world.level.render.TileRenderContext;
 public abstract class Tile implements IonObjBlob {
 	
 	// tmp extras
-	public final TileRenderData renderData = new TileRenderData();
 	public final TileGenData genData = new TileGenData();
 	
 	/** RNG for random stuff in tiles */
 	protected static final Random rand = new Random();
-	
-	protected final TileRenderer renderer;
 	
 	public final TileModel model;
 	
@@ -37,10 +35,9 @@ public abstract class Tile implements IonObjBlob {
 	protected boolean explored;
 	
 	
-	public Tile(TileModel model, TileRenderer renderer)
+	public Tile(TileModel model)
 	{
 		this.model = model;
-		this.renderer = renderer;
 	}
 	
 	
@@ -52,12 +49,21 @@ public abstract class Tile implements IonObjBlob {
 	{
 		if (!isExplored()) return;
 		
-		renderer.renderTile(context);
+		TileRenderer r = getRenderer();
+		if (r == null) {
+			Log.e("Tile with no renderer: " + Log.str(this));
+			return;
+		}
 		
-		if (doesReceiveShadow()) renderer.renderShadows(context);
+		r.renderTile(context);
 		
-		renderer.renderUnexploredFog(context);
+		if (doesReceiveShadow()) r.renderShadows(context);
+		
+		r.renderUnexploredFog(context);
 	}
+	
+	
+	protected abstract TileRenderer getRenderer();
 	
 	
 	/**
@@ -137,6 +143,7 @@ public abstract class Tile implements IonObjBlob {
 	@DefaultImpl
 	public void update(Level level, double delta)
 	{
+		getRenderer().update(delta);
 	}
 	
 	

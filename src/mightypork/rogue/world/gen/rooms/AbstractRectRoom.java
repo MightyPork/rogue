@@ -72,7 +72,7 @@ public abstract class AbstractRectRoom implements RoomBuilder {
 					break;
 			}
 			
-			if ((map.findDoors(door) & Sides.CARDINAL) == 0) {
+			if ((map.findDoors(door) & Sides.MASK_CARDINAL) == 0) {
 				map.set(door, getDoorType(theme, rand));
 				i++; // increment pointer
 			}

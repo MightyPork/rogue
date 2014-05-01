@@ -173,7 +173,7 @@ public class Level implements MapAccess, IonObjBinary {
 		// prepare entities
 		for (final Entity ent : entitySet) {
 			ent.setLevel(this);
-			occupyTile(ent.pos.getCoord());
+			occupyTile(ent.getCoord());
 			entityMap.put(ent.getEntityId(), ent);
 		}
 	}
@@ -238,6 +238,25 @@ public class Level implements MapAccess, IonObjBinary {
 	public Entity getEntity(int eid)
 	{
 		return entityMap.get(eid);
+	}
+	
+	
+	/**
+	 * Try to add entity at given pos
+	 * @param entity the entity
+	 * @param pos pos
+	 * @return true if added (false if void, wall etc)
+	 */
+	public boolean addEntity(Entity entity, Coord pos)
+	{
+		Tile t = getTile(pos);
+		if (!t.isWalkable()) return false;
+		
+		addEntity(entity);
+		
+		entity.setCoord(pos);
+		
+		return true;
 	}
 	
 	
@@ -353,7 +372,7 @@ public class Level implements MapAccess, IonObjBinary {
 		@Override
 		public Step[] getSpreadSides()
 		{
-			return Sides.allSides;
+			return Sides.ALL_SIDES;
 		}
 		
 		

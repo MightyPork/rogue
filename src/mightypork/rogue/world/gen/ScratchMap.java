@@ -14,7 +14,6 @@ import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
@@ -37,7 +36,7 @@ public class ScratchMap {
 	/** Coords to connect with corridors */
 	private final List<Coord> nodes = new ArrayList<>();
 	
-	private final PathFindingContext pfc = new PathFindingContext() {
+	private final PathFinder pathf = new PathFinder() {
 		
 		@Override
 		public boolean isAccessible(Coord pos)
@@ -92,7 +91,7 @@ public class ScratchMap {
 		@Override
 		public Step[] getWalkSides()
 		{
-			return Sides.cardinalSides;
+			return Sides.CARDINAL_SIDES;
 		}
 		
 	};
@@ -291,7 +290,7 @@ public class ScratchMap {
 	private void buildCorridor(Coord node1, Coord node2)
 	{
 		Log.f3("Building corridor " + node1 + " -> " + node2);
-		final List<Coord> steps = PathFinder.findPath(pfc, node1, node2);
+		final List<Coord> steps = pathf.findPath(node1, node2);
 		
 		if (steps == null) {
 			Log.w("Could not build corridor " + node1 + "->" + node2);
@@ -442,29 +441,29 @@ public class ScratchMap {
 							break;
 						}
 						
-						if (isFloor && (nils & Sides.CARDINAL) != 0) {
+						if (isFloor && (nils & Sides.MASK_CARDINAL) != 0) {
 							toWall = true; // floor with adjacent cardinal null
 							break;
 						}
 						
-						if (isNull && (floors & Sides.DIAGONAL) != 0) {
+						if (isNull && (floors & Sides.MASK_DIAGONAL) != 0) {
 							toWall = true; // null with adjacent diagonal floor
 							break;
 						}
 						
 						if (isDoor) {
 							
-							if (countBits((byte) (floors & Sides.CARDINAL)) < 2) {
+							if (countBits((byte) (floors & Sides.MASK_CARDINAL)) < 2) {
 								toWall = true;
 								break;
 							}
 							
-							if (countBits((byte) (walls & Sides.CARDINAL)) > 2) {
+							if (countBits((byte) (walls & Sides.MASK_CARDINAL)) > 2) {
 								toWall = true;
 								break;
 							}
 							
-							if (countBits((byte) (floors & Sides.CARDINAL)) > 2) {
+							if (countBits((byte) (floors & Sides.MASK_CARDINAL)) > 2) {
 								toFloor = true;
 								break;
 							}

@@ -16,15 +16,13 @@ public final class TileModel {
 	
 	/** Model ID */
 	public final int id;
-	public final TileRenderer renderer;
 	public final Class<? extends Tile> tileClass;
 	
 	
-	public TileModel(int id, Class<? extends Tile> tile, TileRenderer renderer)
+	public TileModel(int id, Class<? extends Tile> tile)
 	{
 		Tiles.register(id, this);
 		this.id = id;
-		this.renderer = renderer;
 		this.tileClass = tile;
 	}
 	
@@ -32,10 +30,10 @@ public final class TileModel {
 	/**
 	 * @return new tile of this type
 	 */
-	public Tile createTile()
+	public <T extends Tile> T createTile()
 	{
 		try {
-			return tileClass.getConstructor(TileModel.class, TileRenderer.class).newInstance(this, renderer);
+			return (T) tileClass.getConstructor(TileModel.class).newInstance(this);
 		} catch (final Exception e) {
 			throw new RuntimeException("Could not instantiate a tile.", e);
 		}
@@ -52,6 +50,8 @@ public final class TileModel {
 	
 	public void saveTile(IonOutput out, Tile tile) throws IOException
 	{
+		if (tileClass != tile.getClass()) throw new RuntimeException("Tile class mismatch.");
+		
 		tile.save(out);
 	}
 }

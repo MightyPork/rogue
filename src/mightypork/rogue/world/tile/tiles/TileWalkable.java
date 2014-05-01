@@ -15,16 +15,16 @@ import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 
 
-public abstract class GroundTile extends Tile {
+public abstract class TileWalkable extends Tile {
 	
 	private final DroppedItemRenderer itemRenderer = new DroppedItemRenderer();
 	
 	protected final Stack<Item> items = new Stack<>();
 	
 	
-	public GroundTile(TileModel model, TileRenderer renderer)
+	public TileWalkable(TileModel model)
 	{
-		super(model, renderer);
+		super(model);
 	}
 	
 	
@@ -40,6 +40,7 @@ public abstract class GroundTile extends Tile {
 	@Override
 	public void update(Level level, double delta)
 	{
+		super.update(level, delta);
 		itemRenderer.update(delta);
 	}
 	

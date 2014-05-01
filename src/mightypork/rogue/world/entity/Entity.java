@@ -12,7 +12,7 @@ import mightypork.gamecore.util.error.IllegalValueException;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
+import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
@@ -101,7 +101,9 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	
 	protected final void addModule(String key, EntityModule module)
 	{
-		if (modules.containsKey(key)) { throw new RuntimeException("Entity module " + key + " already defined."); }
+		if (modules.containsKey(key)) {
+			throw new RuntimeException("Entity module " + key + " already defined.");
+		}
 		modules.put(key, module);
 	}
 	
@@ -117,7 +119,11 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	
 	public void setLevel(Level level)
 	{
+		if (level != null) level.freeTile(getCoord());
+		
 		this.level = level;
+		
+		if (level != null) level.occupyTile(getCoord());
 	}
 	
 	
@@ -139,7 +145,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	}
 	
 	
-	public abstract PathFindingContext getPathfindingContext();
+	public abstract PathFinder getPathFinder();
 	
 	
 	@DefaultImpl
@@ -173,6 +179,16 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	public Coord getCoord()
 	{
 		return pos.getCoord();
+	}
+	
+	
+	public void setCoord(Coord coord)
+	{
+		if (level != null) level.freeTile(getCoord());
+		
+		pos.setCoord(coord);
+		
+		if (level != null) level.occupyTile(getCoord());
 	}
 	
 	

@@ -7,6 +7,7 @@ import java.util.Collection;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.entity.entities.PlayerEntity;
+import mightypork.rogue.world.entity.entities.RatEntity;
 
 
 /**
@@ -19,6 +20,7 @@ public final class Entities {
 	private static final EntityModel[] entities = new EntityModel[256];
 	
 	public static final EntityModel PLAYER = new EntityModel(1, PlayerEntity.class);
+	public static final EntityModel RAT = new EntityModel(2, RatEntity.class);
 	
 	
 	public static void register(int id, EntityModel model)

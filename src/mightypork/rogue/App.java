@@ -162,6 +162,6 @@ public final class App extends BaseApp {
 		// TODO tmp
 		WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
 		
-		getEventBus().send(new CrossfadeRequest("menu", true));
+		getEventBus().send(new CrossfadeRequest("game", true));
 	}
 }

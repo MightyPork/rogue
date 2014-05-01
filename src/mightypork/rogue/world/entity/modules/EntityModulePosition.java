@@ -12,7 +12,6 @@ import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFindingContext;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;
@@ -67,7 +66,7 @@ public class EntityModulePosition extends EntityModule {
 	}
 	
 	
-	public void setPosition(Coord coord)
+	public void setCoord(Coord coord)
 	{
 		entityPos.setTo(coord);
 		lastPos.setTo(coord);
@@ -87,7 +86,6 @@ public class EntityModulePosition extends EntityModule {
 		
 		if (walking && entityPos.isFinished()) {
 			walking = false;
-			entity.getLevel().freeTile(lastPos);
 			
 			for (final EntityMoveListener l : moveListeners) {
 				l.onStepFinished();
@@ -123,6 +121,7 @@ public class EntityModulePosition extends EntityModule {
 				if (step.y() != 0) this.lastYDir = step.y();
 				
 				lastPos.setTo(entityPos.getCoord());
+				entity.getLevel().freeTile(lastPos);//
 				entityPos.walk(step, stepTime);
 				entity.getLevel().occupyTile(planned);
 			}
@@ -151,8 +150,7 @@ public class EntityModulePosition extends EntityModule {
 	public boolean navigateTo(Coord target)
 	{
 		if (target.equals(getCoord())) return true;
-		final PathFindingContext pfc = entity.getPathfindingContext();
-		final List<Step> newPath = PathFinder.findPathRelative(pfc, entityPos.getCoord(), target);
+		final List<Step> newPath = entity.getPathFinder().findPathRelative(entityPos.getCoord(), target);
 		
 		if (newPath == null) return false;
 		cancelPath();

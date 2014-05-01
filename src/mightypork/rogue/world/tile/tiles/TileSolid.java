@@ -7,11 +7,11 @@ import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 
 
-public abstract class SolidTile extends Tile {
+public abstract class TileSolid extends Tile {
 	
-	public SolidTile(TileModel model, TileRenderer renderer)
+	public TileSolid(TileModel model)
 	{
-		super(model, renderer);
+		super(model);
 	}
 	
 	
