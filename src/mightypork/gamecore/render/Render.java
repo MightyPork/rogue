@@ -455,9 +455,9 @@ public class Render {
 		final RectDigest q = quad.digest();
 		final RectDigest u = txquad.uvs.digest();
 		
-		final double offs = 0.0001;// hack to avoid white stitching
+		double offs = 0.0001;// hack to avoid white stitching
 		
-		double tL = u.left + offs, tR = u.right - offs, tT = u.top + offs, tB = u.bottom - offs;
+		double tL = u.left+offs, tR = u.right-offs, tT = u.top+offs, tB = u.bottom-offs;
 		
 		// handle flip
 		if (txquad.isFlippedY()) {

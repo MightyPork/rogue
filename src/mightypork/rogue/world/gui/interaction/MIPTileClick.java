@@ -4,6 +4,7 @@ package mightypork.rogue.world.gui.interaction;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.PlayerControl;
+import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.gui.MapView;
 
 
@@ -19,9 +20,10 @@ public class MIPTileClick implements MapInteractionPlugin {
 	@Override
 	public boolean onClick(MapView wv, PlayerControl player, Vect mouse, int button, boolean down)
 	{
-		if (down && button == 1) { // right button
-			final Coord pos = wv.toWorldPos(mouse);
+		if (!down && button == 0) {
+			Coord pos = wv.toWorldPos(mouse);
 			player.clickTile(pos);
+			System.out.println("~");
 			return true;
 		}
 		
@@ -34,7 +36,6 @@ public class MIPTileClick implements MapInteractionPlugin {
 	{
 		return false;
 	}
-	
 	
 	@Override
 	public void update(MapView mapView, PlayerControl pc, double delta)

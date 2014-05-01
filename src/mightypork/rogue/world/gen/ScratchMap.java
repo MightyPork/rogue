@@ -42,8 +42,8 @@ public class ScratchMap {
 		@Override
 		public boolean isAccessible(Coord pos)
 		{
-			if (!isIn(pos)) return false;
-			final Tile t = get(pos);
+			if(!isIn(pos)) return false;
+			Tile t = get(pos);
 			return t.isPotentiallyWalkable() || (t.genData.protection != TileProtectLevel.STRONG);
 		}
 		

@@ -49,7 +49,7 @@ public final class Res {
 	private static void loadFonts()
 	{
 		fonts.loadFont("polygon_pixel", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16));
-		fonts.loadFont("press_start", new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
+		fonts.loadFont("press_start", new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.latin, 16));
 		
 		// aliases based on concrete usage
 		fonts.addAlias("default", "polygon_pixel");

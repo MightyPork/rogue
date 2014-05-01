@@ -15,8 +15,8 @@ public interface MapInteractionPlugin {
 	
 	
 	boolean onKey(MapView mapView, PlayerControl player, int key, boolean down);
-	
-	
-	void update(MapView mapView, PlayerControl pc, double delta);
+
+
+	void update(MapView mapView, PlayerControl pc, double delta);	
 	
 }

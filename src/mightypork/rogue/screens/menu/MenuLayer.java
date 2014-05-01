@@ -11,8 +11,10 @@ import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.util.math.color.pal.COMMODORE;
 import mightypork.gamecore.util.math.color.pal.PAL16;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.Res;
 
 
@@ -40,7 +42,8 @@ class MenuLayer extends ScreenLayer {
 		root.add(layout);
 		
 		int r = 0;
-		final TextPainter tp = new TextPainter(Res.getFont("main_menu_title"), AlignX.CENTER, COMMODORE.PURPLE, "Rogue!");
+		final TextPainter tp = new TextPainter(Res.getFont("main_menu_title"), AlignX.CENTER, COMMODORE.PURPLE, "Rats");
+		tp.setShadow(RGB.BLACK.withAlpha(0.6), Vect.make(tp.height().div(16)));
 		layout.put(tp, r, 0, 3, 1);
 		r += 5;
 		
@@ -62,7 +65,7 @@ class MenuLayer extends ScreenLayer {
 		
 		
 		// bouncy text button
-		btn = new MenuButton("Bouncy Cubes Test", PAL16.CLOUDBLUE);
+		btn = new MenuButton("Bouncy", PAL16.CLOUDBLUE);
 		btn.setAction(new Action() {
 			
 			@Override

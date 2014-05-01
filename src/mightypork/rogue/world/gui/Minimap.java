@@ -34,7 +34,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 		Color.pushAlpha(translucency);
 		
 		final Level lvl = WorldProvider.get().getCurrentLevel();
-		unit = (int) Math.min(Math.max(2, Math.ceil((height().value() / 2) / (lvl.getHeight() + 2))), 6);
+		unit = (int) Math.min(Math.max(2, Math.ceil((height().value() / 2) / (lvl.getHeight() + 2))), 10);
 		
 		final Entity e = WorldProvider.get().getPlayerEntity();
 		final Vect plCoord = e.pos.getVisualPos();

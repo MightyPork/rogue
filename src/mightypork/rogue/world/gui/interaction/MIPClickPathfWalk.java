@@ -1,6 +1,7 @@
 package mightypork.rogue.world.gui.interaction;
 
 
+import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.PlayerControl;
@@ -14,12 +15,13 @@ public class MIPClickPathfWalk implements MapInteractionPlugin {
 	
 	
 	@Override
-	public void update(MapView view, PlayerControl player, double delta)
+	public void update(MapView view, PlayerControl pc, double delta)
 	{
-//		if (InputSystem.isMouseButtonDown(BTN)) {
-//			
-//			troToNav(view, player, InputSystem.getMousePos());
-//		}
+		if(pc.getPlayerEntity().pos.isMoving()) return;
+		if (InputSystem.isMouseButtonDown(BTN)) {
+			
+			troToNav(view, pc, InputSystem.getMousePos());
+		}
 	}
 	
 	
@@ -30,13 +32,13 @@ public class MIPClickPathfWalk implements MapInteractionPlugin {
 		
 		return troToNav(view, player, mouse);
 	}
-	
-	
+
+
 	private boolean troToNav(MapView view, PlayerControl player, Vect mouse)
 	{
 		final Coord clicked = view.toWorldPos(mouse);
 		
-		final Tile t = player.getLevel().getTile(clicked);
+		Tile t = player.getLevel().getTile(clicked);
 		if (!t.isWalkable() || !t.isExplored()) return false;
 		
 		player.navigateTo(clicked);
@@ -49,8 +51,8 @@ public class MIPClickPathfWalk implements MapInteractionPlugin {
 	{
 		return false;
 	}
-	
-	
+
+
 	@Override
 	public boolean onStepEnd(MapView mapView, PlayerControl player)
 	{

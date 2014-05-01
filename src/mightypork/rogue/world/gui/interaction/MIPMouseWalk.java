@@ -14,24 +14,31 @@ import mightypork.rogue.world.tile.Tile;
 public class MIPMouseWalk implements MapInteractionPlugin {
 	
 	@Override
-	public void update(MapView world, PlayerControl player, double delta)
+	public void update(MapView view, PlayerControl pc, double delta)
 	{
 		if (InputSystem.isMouseButtonDown(0)) {
 			// walk by holding btn
-			onClick(world, player, InputSystem.getMousePos(), 0, true);
+			tryWalk(view, pc, InputSystem.getMousePos());
 		}
 	}
 	
 	
 	@Override
-	public boolean onClick(MapView world, PlayerControl player, Vect mouse, int button, boolean down)
+	public boolean onClick(MapView view, PlayerControl pc, Vect mouse, int button, boolean down)
 	{
 		if (!down || button != 0) return false;
 		
-		final Coord plpos = player.getCoord();
-		final Coord clicked = world.toWorldPos(mouse);
+		tryWalk(view, pc, mouse);
+		return true;
+	}
+	
+	
+	private void tryWalk(MapView view, PlayerControl pc, Vect pos)
+	{
+		if (pc.getPlayerEntity().pos.isMoving()) return;
 		
-		final Tile t = player.getLevel().getTile(clicked);
+		final Coord plpos = pc.getCoord();
+		final Coord clicked = view.toWorldPos(pos);
 		
 		final Polar p = Polar.fromCoord(clicked.x - plpos.x, clicked.y - plpos.y);
 		
@@ -39,22 +46,21 @@ public class MIPMouseWalk implements MapInteractionPlugin {
 		
 		switch (dir) {
 			case 0:
-				player.goEast();
+				pc.goEast();
 				break;
 			
 			case 1:
-				player.goSouth();
+				pc.goSouth();
 				break;
 			
 			case 2:
-				player.goWest();
+				pc.goWest();
 				break;
 			
 			case 3:
-				player.goNorth();
+				pc.goNorth();
 				break;
 		}
-		return true;
 	}
 	
 	
@@ -66,9 +72,12 @@ public class MIPMouseWalk implements MapInteractionPlugin {
 	
 	
 	@Override
-	public boolean onStepEnd(MapView mapView, PlayerControl player)
+	public boolean onStepEnd(MapView view, PlayerControl pc)
 	{
-		return false;
+		if(!InputSystem.isMouseButtonDown(0)) return false;
+
+		tryWalk(view, pc, InputSystem.getMousePos());
+		return true;
 	}
 	
 }

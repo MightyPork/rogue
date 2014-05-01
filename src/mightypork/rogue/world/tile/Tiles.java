@@ -27,8 +27,7 @@ public final class Tiles {
 	public static final TileModel BRICK_WALL = new TileModel(11, WallTile.class, new BasicTileRenderer("tile.brick.wall"));
 	public static final TileModel BRICK_DOOR = new TileModel(12, DoorTile.class, new DoorRenderer("tile.brick.door.closed", "tile.brick.door.open"));
 	public static final TileModel BRICK_PASSAGE = new TileModel(13, WallPassageTile.class, new BasicTileRenderer("tile.brick.passage"));
-	public static final TileModel BRICK_HIDDEN_DOOR = new TileModel(14, SecretDoorTile.class, new LockedDoorRenderer("tile.brick.door.secret",
-			"tile.brick.door.closed", "tile.brick.door.open"));
+	public static final TileModel BRICK_HIDDEN_DOOR = new TileModel(14, SecretDoorTile.class, new LockedDoorRenderer("tile.brick.door.secret", "tile.brick.door.closed", "tile.brick.door.open"));
 	
 	
 	public static void register(int id, TileModel model)

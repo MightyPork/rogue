@@ -7,6 +7,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.rogue.world.tile.TileRenderer;
 
 
 public class LockedDoorRenderer extends DoorRenderer {

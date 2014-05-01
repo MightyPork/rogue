@@ -1,6 +1,7 @@
 package mightypork.rogue.world.gui;
 
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.WorldRenderer;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
+import mightypork.rogue.world.tile.Tile;
 
 
 /**
@@ -71,7 +73,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void onStepFinished()
 	{
 		for (final MapInteractionPlugin p : plugins) {
-			if (p.onStepEnd(this, pc)) break;
+			if(p.onStepEnd(this, pc)) break;
 		}
 	}
 	
@@ -80,7 +82,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void onPathFinished()
 	{
 		for (final MapInteractionPlugin p : plugins) {
-			if (p.onStepEnd(this, pc)) break;
+			if(p.onStepEnd(this, pc)) break;
 		}
 	}
 	
@@ -89,7 +91,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void onPathInterrupted()
 	{
 		for (final MapInteractionPlugin p : plugins) {
-			if (p.onStepEnd(this, pc)) break;
+			if(p.onStepEnd(this, pc)) break;
 		}
 	}
 	
@@ -100,7 +102,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 		if (!event.isOver(this)) return;
 		
 		for (final MapInteractionPlugin p : plugins) {
-			if (p.onClick(this, pc, event.getPos(), event.getButton(), event.isDown())) {
+			if(p.onClick(this, pc, event.getPos(), event.getButton(), event.isDown())) {
 				event.consume();
 				break;
 			}
@@ -112,7 +114,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void receive(KeyEvent event)
 	{
 		for (final MapInteractionPlugin p : plugins) {
-			if (p.onKey(this, pc, event.getKey(), event.isDown())) break;
+			if(p.onKey(this, pc, event.getKey(), event.isDown())) break;
 		}
 		
 		if (event.getKey() == Keys.Z) {

@@ -4,6 +4,7 @@ package mightypork.rogue.world.gen;
 import java.util.Random;
 
 import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.rogue.world.gen.rooms.DeadEndRoom;
 import mightypork.rogue.world.gen.rooms.Rooms;
 import mightypork.rogue.world.gen.themes.ThemeBrick;
 import mightypork.rogue.world.level.Level;

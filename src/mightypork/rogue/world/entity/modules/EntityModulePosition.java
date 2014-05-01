@@ -204,5 +204,11 @@ public class EntityModulePosition extends EntityModule {
 	{
 		return entityPos.getVisualPos();
 	}
+
+
+	public boolean isMoving()
+	{
+		return walking;
+	}
 	
 }
