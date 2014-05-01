@@ -72,16 +72,16 @@ public abstract class TileRenderer {
 		if (trd.shadows == 0) return;
 		final Rect rect = context.getRect();
 		
-		if ((trd.shadows & Sides.MASK_NW) != 0) Render.quadTextured(rect, SH_NW);
+		if ((trd.shadows & Sides.NW_CORNER) == Sides.MASK_NW) Render.quadTextured(rect, SH_NW);
 		if ((trd.shadows & Sides.MASK_N) != 0) Render.quadTextured(rect, SH_N);
-		if ((trd.shadows & Sides.MASK_NE) != 0) Render.quadTextured(rect, SH_NE);
+		if ((trd.shadows & Sides.NE_CORNER) == Sides.MASK_NE) Render.quadTextured(rect, SH_NE);
 		
 		if ((trd.shadows & Sides.MASK_W) != 0) Render.quadTextured(rect, SH_W);
 		if ((trd.shadows & Sides.MASK_E) != 0) Render.quadTextured(rect, SH_E);
 		
-		if ((trd.shadows & Sides.MASK_SW) != 0) Render.quadTextured(rect, SH_SW);
+		if ((trd.shadows & Sides.SW_CORNER) == Sides.MASK_SW) Render.quadTextured(rect, SH_SW);
 		if ((trd.shadows & Sides.MASK_S) != 0) Render.quadTextured(rect, SH_S);
-		if ((trd.shadows & Sides.MASK_SE) != 0) Render.quadTextured(rect, SH_SE);
+		if ((trd.shadows & Sides.SE_CORNER) == Sides.MASK_SE) Render.quadTextured(rect, SH_SE);
 	}
 	
 	

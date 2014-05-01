@@ -6,13 +6,10 @@ import java.io.IOException;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
-import mightypork.rogue.world.tile.renderers.DoorTileRenderer;
+import mightypork.rogue.world.tile.renderers.DoorRenderer;
+import mightypork.rogue.world.tile.renderers.LockedDoorRenderer;
 import mightypork.rogue.world.tile.renderers.NullTileRenderer;
-import mightypork.rogue.world.tile.tiles.DoorTile;
-import mightypork.rogue.world.tile.tiles.FloorTile;
-import mightypork.rogue.world.tile.tiles.NullTile;
-import mightypork.rogue.world.tile.tiles.WallPassageTile;
-import mightypork.rogue.world.tile.tiles.WallTile;
+import mightypork.rogue.world.tile.tiles.*;
 
 
 /**
@@ -28,8 +25,10 @@ public final class Tiles {
 	
 	public static final TileModel BRICK_FLOOR = new TileModel(10, FloorTile.class, new BasicTileRenderer("tile.brick.floor"));
 	public static final TileModel BRICK_WALL = new TileModel(11, WallTile.class, new BasicTileRenderer("tile.brick.wall"));
-	public static final TileModel BRICK_DOOR = new TileModel(12, DoorTile.class, new DoorTileRenderer("tile.brick.door.closed", "tile.brick.door.open"));
+	public static final TileModel BRICK_DOOR = new TileModel(12, DoorTile.class, new DoorRenderer("tile.brick.door.closed", "tile.brick.door.open"));
 	public static final TileModel BRICK_PASSAGE = new TileModel(13, WallPassageTile.class, new BasicTileRenderer("tile.brick.passage"));
+	public static final TileModel BRICK_HIDDEN_DOOR = new TileModel(14, SecretDoorTile.class, new LockedDoorRenderer("tile.brick.door.secret",
+			"tile.brick.door.closed", "tile.brick.door.open"));
 	
 	
 	public static void register(int id, TileModel model)

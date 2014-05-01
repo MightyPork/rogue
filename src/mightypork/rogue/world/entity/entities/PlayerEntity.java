@@ -110,5 +110,4 @@ public class PlayerEntity extends Entity {
 	{
 		return EntityType.PLAYER;
 	}
-	
 }

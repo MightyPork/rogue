@@ -48,34 +48,31 @@ public abstract class PlayerControl {
 	
 	public void goNorth()
 	{
-		getPlayerEntity().pos.cancelPath();
-		getPlayerEntity().pos.addStep(Step.NORTH);
+		go(Step.NORTH);
 	}
 	
 	
 	public void goSouth()
 	{
-		getPlayerEntity().pos.cancelPath();
-		getPlayerEntity().pos.addStep(Step.SOUTH);
+		go(Step.SOUTH);
 	}
 	
 	
 	public void goEast()
 	{
-		getPlayerEntity().pos.cancelPath();
-		getPlayerEntity().pos.addStep(Step.EAST);
+		go(Step.EAST);
 	}
 	
 	
 	public void goWest()
 	{
-		getPlayerEntity().pos.cancelPath();
-		getPlayerEntity().pos.addStep(Step.WEST);
+		go(Step.WEST);
 	}
 	
 	
 	public void navigateTo(Coord pos)
 	{
+		if (!getLevel().getTile(pos).isExplored()) return;
 		getPlayerEntity().pos.navigateTo(pos);
 	}
 	
@@ -98,5 +95,32 @@ public abstract class PlayerControl {
 	public Coord getCoord()
 	{
 		return getPlayerEntity().pos.getCoord();
+	}
+	
+	
+	public boolean canGo(Step side)
+	{
+		return getLevel().getTile(getCoord().add(side)).isWalkable();
+	}
+	
+	
+	public boolean clickTile(Step side)
+	{
+		return clickTile(getCoord().add(side));
+	}
+	
+	
+	public boolean clickTile(Coord pos)
+	{
+		if (pos.dist(getCoord()) > 8) return false; // too far
+		
+		return getLevel().getTile(pos).onClick();
+	}
+	
+	
+	public void go(Step side)
+	{
+		getPlayerEntity().pos.cancelPath();
+		getPlayerEntity().pos.addStep(side);
 	}
 }

@@ -1,7 +1,7 @@
 package mightypork.rogue.world.gui;
 
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import mightypork.gamecore.eventbus.events.Updateable;
@@ -33,7 +33,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	protected final WorldRenderer worldRenderer;
 	private final PlayerControl pc;
 	
-	private final Set<MapInteractionPlugin> plugins = new HashSet<>();
+	private final Set<MapInteractionPlugin> plugins = new LinkedHashSet<>();
 	private final NumAnimated zoom = new NumAnimated(0, Easing.SINE_BOTH);
 	
 	private final Num tileSize;
@@ -71,7 +71,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void onStepFinished()
 	{
 		for (final MapInteractionPlugin p : plugins) {
-			p.onStepEnd(this, pc);
+			if (p.onStepEnd(this, pc)) break;
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void onPathFinished()
 	{
 		for (final MapInteractionPlugin p : plugins) {
-			p.onStepEnd(this, pc);
+			if (p.onStepEnd(this, pc)) break;
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void onPathInterrupted()
 	{
 		for (final MapInteractionPlugin p : plugins) {
-			p.onStepEnd(this, pc);
+			if (p.onStepEnd(this, pc)) break;
 		}
 	}
 	
@@ -100,10 +100,11 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 		if (!event.isOver(this)) return;
 		
 		for (final MapInteractionPlugin p : plugins) {
-			p.onClick(this, pc, event.getPos(), event.getButton(), event.isDown());
+			if (p.onClick(this, pc, event.getPos(), event.getButton(), event.isDown())) {
+				event.consume();
+				break;
+			}
 		}
-		
-		event.consume(); // only our clicks.
 	}
 	
 	
@@ -111,7 +112,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void receive(KeyEvent event)
 	{
 		for (final MapInteractionPlugin p : plugins) {
-			p.onKey(this, pc, event.getKey(), event.isDown());
+			if (p.onKey(this, pc, event.getKey(), event.isDown())) break;
 		}
 		
 		if (event.getKey() == Keys.Z) {
@@ -120,8 +121,6 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 			} else {
 				zoom.fadeOut(1);
 			}
-			
-			
 		}
 		
 		// don't consume key events, can be useful for others.
@@ -142,6 +141,9 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	@Override
 	public void update(double delta)
 	{
+		for (final MapInteractionPlugin p : plugins) {
+			p.update(this, pc, delta);
+		}
 		zoom.update(delta);
 	}
 }

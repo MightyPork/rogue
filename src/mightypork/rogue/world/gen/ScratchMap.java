@@ -42,7 +42,9 @@ public class ScratchMap {
 		@Override
 		public boolean isAccessible(Coord pos)
 		{
-			return isIn(pos); // suffices for now
+			if (!isIn(pos)) return false;
+			final Tile t = get(pos);
+			return t.isPotentiallyWalkable() || (t.genData.protection != TileProtectLevel.STRONG);
 		}
 		
 		
@@ -63,7 +65,7 @@ public class ScratchMap {
 					return 20;
 					
 				case WALL:
-					if (t.genData.isProtected) return 2000;
+					if (t.genData.protection != TileProtectLevel.NONE) return 2000;
 					
 					return 100;
 					
@@ -220,14 +222,14 @@ public class ScratchMap {
 	}
 	
 	
-	public void protect(Coord min, Coord max)
+	public void protect(Coord min, Coord max, TileProtectLevel prot)
 	{
 		if (!isIn(min) || !isIn(max)) throw new IndexOutOfBoundsException("Tile(s) not in map: " + min + " , " + max);
 		
 		final Coord c = Coord.make(0, 0);
 		for (c.x = min.x; c.x <= max.x; c.x++)
 			for (c.y = min.y; c.y <= max.y; c.y++)
-				get(c).genData.isProtected = true;
+				get(c).genData.protection = prot;
 	}
 	
 	

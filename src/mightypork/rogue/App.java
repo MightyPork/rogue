@@ -160,7 +160,7 @@ public final class App extends BaseApp {
 	protected void postInit()
 	{
 		// TODO tmp
-		WorldProvider.get().createWorld(42);
+		WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
 		
 		getEventBus().send(new CrossfadeRequest("menu", true));
 	}

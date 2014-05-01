@@ -21,4 +21,7 @@ public interface MapTheme {
 	
 	
 	TileModel passage();
+	
+	
+	TileModel secretDoor();
 }

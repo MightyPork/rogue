@@ -1,11 +1,11 @@
 package mightypork.rogue.world.gui.interaction;
 
 
-import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.gui.MapView;
+import mightypork.rogue.world.tile.Tile;
 
 
 public class MIPClickPathfWalk implements MapInteractionPlugin {
@@ -14,29 +14,47 @@ public class MIPClickPathfWalk implements MapInteractionPlugin {
 	
 	
 	@Override
-	public void onStepEnd(MapView view, PlayerControl player)
+	public void update(MapView view, PlayerControl player, double delta)
 	{
-		if (InputSystem.isMouseButtonDown(BTN)) {
-			final Coord clicked = view.toWorldPos(InputSystem.getMousePos());
-			player.navigateTo(clicked);
-		}
+//		if (InputSystem.isMouseButtonDown(BTN)) {
+//			
+//			troToNav(view, player, InputSystem.getMousePos());
+//		}
 	}
 	
 	
 	@Override
-	public void onClick(MapView view, PlayerControl player, Vect mouse, int button, boolean down)
+	public boolean onClick(MapView view, PlayerControl player, Vect mouse, int button, boolean down)
 	{
-		if (!down || button != BTN) return;
+		if (down || button != BTN) return false;
 		
+		return troToNav(view, player, mouse);
+	}
+	
+	
+	private boolean troToNav(MapView view, PlayerControl player, Vect mouse)
+	{
 		final Coord clicked = view.toWorldPos(mouse);
 		
+		final Tile t = player.getLevel().getTile(clicked);
+		if (!t.isWalkable() || !t.isExplored()) return false;
+		
 		player.navigateTo(clicked);
+		return true;
 	}
 	
 	
 	@Override
-	public void onKey(MapView view, PlayerControl player, int key, boolean down)
+	public boolean onKey(MapView view, PlayerControl player, int key, boolean down)
 	{
+		return false;
+	}
+	
+	
+	@Override
+	public boolean onStepEnd(MapView mapView, PlayerControl player)
+	{
+		return false;
 	}
 	
 }

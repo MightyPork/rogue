@@ -85,12 +85,13 @@ public final class Res {
 		tiles = texture.grid(8, 8);
 		
 		textures.addSheet("tile.brick.floor", tiles.makeSheet(0, 1, 5, 1));
-		textures.addSheet("tile.brick.wall", tiles.makeSheet(0, 0, 5, 1));
+		textures.addSheet("tile.brick.wall", tiles.makeSheet(0, 0, 8, 1));
 		
 		textures.addSheet("tile.brick.door.closed", tiles.makeSheet(1, 2, 1, 1));
 		textures.addSheet("tile.brick.door.open", tiles.makeSheet(2, 2, 1, 1));
+		textures.addSheet("tile.brick.door.secret", tiles.makeSheet(0, 3, 2, 1));
 		
-		textures.addSheet("tile.brick.passage", tiles.makeSheet(3, 2, 2, 1));
+		textures.addSheet("tile.brick.passage", tiles.makeSheet(3, 2, 4, 1));
 		
 		textures.addQuad("tile.shadow.n", tiles.makeQuad(0, 7));
 		textures.addQuad("tile.shadow.s", tiles.makeQuad(0, 7).flipY());

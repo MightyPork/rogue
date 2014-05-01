@@ -2,6 +2,7 @@ package mightypork.rogue.world.tile;
 
 
 import java.io.IOException;
+import java.util.Random;
 
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.ion.IonInput;
@@ -23,6 +24,9 @@ public abstract class Tile implements IonObjBlob {
 	// tmp extras
 	public final TileRenderData renderData = new TileRenderData();
 	public final TileGenData genData = new TileGenData();
+	
+	/** RNG for random stuff in tiles */
+	protected static final Random rand = new Random();
 	
 	protected final TileRenderer renderer;
 	
@@ -168,7 +172,7 @@ public abstract class Tile implements IonObjBlob {
 	}
 	
 	
-	public final Color getMapColor()
+	public Color getMapColor()
 	{
 		return getType().getMapColor();
 	}
@@ -201,5 +205,17 @@ public abstract class Tile implements IonObjBlob {
 	 * @return true if the tile has dropped items
 	 */
 	public abstract boolean hasItem();
+	
+	
+	/**
+	 * Handle player click
+	 * 
+	 * @return true if the tile is interactive and did something.
+	 */
+	@DefaultImpl
+	public boolean onClick()
+	{
+		return false;
+	}
 	
 }

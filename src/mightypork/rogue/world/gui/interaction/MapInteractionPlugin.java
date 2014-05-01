@@ -8,12 +8,15 @@ import mightypork.rogue.world.gui.MapView;
 
 public interface MapInteractionPlugin {
 	
-	void onStepEnd(MapView wv, PlayerControl player);
+	boolean onStepEnd(MapView mapView, PlayerControl player);
 	
 	
-	void onClick(MapView wv, PlayerControl player, Vect mouse, int button, boolean down);
+	boolean onClick(MapView mapView, PlayerControl player, Vect mouse, int button, boolean down);
 	
 	
-	void onKey(MapView wv, PlayerControl player, int key, boolean down);
+	boolean onKey(MapView mapView, PlayerControl player, int key, boolean down);
+	
+	
+	void update(MapView mapView, PlayerControl pc, double delta);
 	
 }

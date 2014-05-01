@@ -1,6 +1,9 @@
 package mightypork.rogue.world.tile;
 
 
+import mightypork.rogue.world.gen.TileProtectLevel;
+
+
 /**
  * Data storage for world generator
  * 
@@ -8,6 +11,6 @@ package mightypork.rogue.world.tile;
  */
 public class TileGenData {
 	
-	public boolean isProtected = false;
+	public TileProtectLevel protection = TileProtectLevel.NONE;
 	
 }

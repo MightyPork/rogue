@@ -35,4 +35,11 @@ public class ThemeBrick implements MapTheme {
 	{
 		return Tiles.BRICK_PASSAGE;
 	}
+	
+	
+	@Override
+	public TileModel secretDoor()
+	{
+		return Tiles.BRICK_HIDDEN_DOOR;
+	}
 }
