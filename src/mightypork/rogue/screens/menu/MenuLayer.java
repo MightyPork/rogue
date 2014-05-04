@@ -4,11 +4,13 @@ package mightypork.rogue.screens.menu;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.GridLayout;
+import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.events.CrossfadeRequest;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.COMMODORE;
 import mightypork.gamecore.util.math.color.pal.PAL16;
 import mightypork.gamecore.util.math.color.pal.RGB;
@@ -30,28 +32,28 @@ class MenuLayer extends ScreenLayer {
 	
 	private void init()
 	{
-		final Rect menuBox = root.shrink(Num.ZERO, root.height().mul(0.18)); //.moveY(root.height().mul(-0.03))
+		final Rect menuBox = root.shrink(Num.ZERO, root.height().mul(0.15)).moveY(root.height().mul(-0.04));
 		
-		final GridLayout layout = new GridLayout(root, menuBox, 17, 1);
+		final GridLayout layout = new GridLayout(root, menuBox, 14, 1);
 		layout.enableCaching(true);
 		
-		final QuadPainter bg = QuadPainter.gradV(PAL16.NIGHTBLUE, PAL16.SEABLUE);
+		final QuadPainter bg = QuadPainter.gradV(Color.fromHex(0x007eb3), PAL16.SEABLUE);
 		bg.setRect(root);
 		root.add(bg);
 		
 		root.add(layout);
 		
 		int r = 0;
-		final TextPainter tp = new TextPainter(Res.getFont("main_menu_title"), AlignX.CENTER, COMMODORE.PURPLE, "Rats");
-		tp.setShadow(RGB.BLACK.withAlpha(0.6), Vect.make(tp.height().div(16)));
-		layout.put(tp, r, 0, 3, 1);
-		r += 5;
+		ImagePainter ip = new ImagePainter(Res.getTxQuad("logo"));
+		ip.keepAspectRatio();
+		layout.put(ip, r, 0, 5, 1);
+		r += 6;
 		
 		MenuButton btn;
 		
 		
 		// world button
-		btn = new MenuButton("World Test", PAL16.SLIMEGREEN);
+		btn = new MenuButton("Game", PAL16.SLIMEGREEN);
 		btn.setAction(new Action() {
 			
 			@Override

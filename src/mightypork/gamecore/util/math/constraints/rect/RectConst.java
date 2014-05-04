@@ -38,6 +38,8 @@ public class RectConst extends Rect {
 	private RectDigest digest;
 	private RectConst v_floor;
 	private RectConst v_ceil;
+	private RectConst v_axis_v;
+	private RectConst v_axis_h;
 	
 	
 	/**
@@ -312,6 +314,20 @@ public class RectConst extends Rect {
 	public RectConst bottomEdge()
 	{
 		return (v_edge_b != null) ? v_edge_b : (v_edge_b = super.bottomEdge().freeze());
+	}
+	
+	
+	@Override
+	public Rect axisV()
+	{
+		return (v_axis_v != null) ? v_axis_v : (v_axis_v = super.axisV().freeze());
+	}
+	
+	
+	@Override
+	public Rect axisH()
+	{
+		return (v_axis_h != null) ? v_axis_h : (v_axis_h = super.axisH().freeze());
 	}
 	
 	

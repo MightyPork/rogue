@@ -10,6 +10,7 @@ import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.resources.fonts.Glyphs;
 import mightypork.gamecore.resources.fonts.impl.DeferredFont;
 import mightypork.gamecore.resources.textures.*;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
 /**
@@ -80,6 +81,10 @@ public final class Res {
 		tiles = texture.grid(8, 8);
 		textures.addSheet("sprite.player", tiles.makeSheet(0, 0, 4, 1));
 		textures.addSheet("sprite.rat", tiles.makeSheet(0, 1, 4, 1));
+		
+		// sprites
+		texture = textures.loadTexture("logo2", "/res/img/logo2.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		textures.addQuad("logo", texture.makeQuad(Rect.make(0, 0, 0.543, 0.203)));
 		
 		// small sheet
 		texture = textures.loadTexture("tiles", "/res/img/tiles16.png", FilterMode.NEAREST, WrapMode.CLAMP);

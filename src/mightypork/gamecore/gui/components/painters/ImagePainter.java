@@ -4,6 +4,8 @@ package mightypork.gamecore.gui.components.painters;
 import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.util.math.constraints.num.Num;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
 /**
@@ -13,31 +15,31 @@ import mightypork.gamecore.resources.textures.TxQuad;
  */
 public class ImagePainter extends VisualComponent {
 	
-	private TxQuad texture;
+	private final TxQuad txQuad;
+	private boolean aspratio = false;
+	private Rect asprRect;
 	
 	
 	/**
-	 * @param texture drawn image
+	 * @param txQuad drawn image
 	 */
-	public ImagePainter(TxQuad texture)
+	public ImagePainter(TxQuad txQuad)
 	{
-		this.texture = texture;
+		this.txQuad = txQuad;
+		this.asprRect = ((Rect) this).axisV().grow(height().div(txQuad.uvs.height()).mul(txQuad.uvs.width()).half(), Num.ZERO);;
 	}
 	
 	
-	/**
-	 * @param texture texture to use
-	 */
-	public void setTexture(TxQuad texture)
+	public void keepAspectRatio()
 	{
-		this.texture = texture;
+		aspratio = true;
 	}
 	
 	
 	@Override
 	public void renderComponent()
 	{
-		Render.quadTextured(getRect(), texture);
+		Render.quadTextured(aspratio ? asprRect : this, txQuad);
 	}
 	
 }
