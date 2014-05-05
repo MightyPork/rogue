@@ -43,6 +43,7 @@ public class EntityModulePosition extends EntityModule {
 	public void save(IonBundle bundle) throws IOException
 	{
 		bundle.putSequence("path", path);
+		bundle.putBundled("lpos", lastPos);
 		bundle.putBundled("pos", entityPos);
 		bundle.put("step_time", stepTime);
 	}
@@ -52,6 +53,7 @@ public class EntityModulePosition extends EntityModule {
 	public void load(IonBundle bundle) throws IOException
 	{
 		bundle.loadSequence("path", path);
+		bundle.loadBundled("lpos", lastPos);
 		bundle.loadBundled("pos", entityPos);
 		
 		stepTime = bundle.get("step_time", stepTime);
@@ -67,9 +69,29 @@ public class EntityModulePosition extends EntityModule {
 	
 	public void setCoord(Coord coord)
 	{
+		freeTile(); // release old tile
+		
 		entityPos.setTo(coord);
 		lastPos.setTo(coord);
 		cancelPath(); // discard remaining steps
+		
+		occupyTile();
+	}
+	
+	
+	public void occupyTile()
+	{
+		if (entity.getLevel() != null) {
+			entity.getLevel().occupyTile(getCoord());
+		}
+	}
+	
+	
+	public void freeTile()
+	{
+		if (entity.getLevel() != null) {
+			entity.getLevel().freeTile(getCoord());
+		}
 	}
 	
 	
@@ -79,6 +101,8 @@ public class EntityModulePosition extends EntityModule {
 	@Override
 	public void update(double delta)
 	{
+		if (entity.isDead()) return; // corpses dont walk
+		
 		if (!entityPos.isFinished()) {
 			entityPos.update(delta);
 		}
@@ -119,10 +143,10 @@ public class EntityModulePosition extends EntityModule {
 				if (step.x() != 0) this.lastXDir = step.x();
 				if (step.y() != 0) this.lastYDir = step.y();
 				
+				freeTile();
 				lastPos.setTo(entityPos.getCoord());
-				entity.getLevel().freeTile(lastPos);//
 				entityPos.walk(step, stepTime);
-				entity.getLevel().occupyTile(planned);
+				occupyTile();
 			}
 		}
 	}

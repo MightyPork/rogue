@@ -66,7 +66,7 @@ public abstract class Color {
 	
 	
 	@FactoryMethod
-	public static final Color rgba(Num r, Num g, Num b)
+	public static final Color rgb(Num r, Num g, Num b)
 	{
 		return rgba(r, g, b, Num.ONE);
 	}

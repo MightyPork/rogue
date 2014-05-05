@@ -21,6 +21,8 @@ public class EntityModuleHealth extends EntityModule {
 	protected int maxHealth = 1;
 	protected boolean dead = false;
 	
+	private double timeSinceLastDamage = Integer.MAX_VALUE;
+	
 	
 	@Override
 	public void load(IonBundle bundle) throws IOException
@@ -93,6 +95,7 @@ public class EntityModuleHealth extends EntityModule {
 	public void receiveDamage(int attackStrength)
 	{
 		setHealth(health - attackStrength);
+		timeSinceLastDamage = 0;
 	}
 	
 	
@@ -101,4 +104,19 @@ public class EntityModuleHealth extends EntityModule {
 		setHealth(maxHealth);
 	}
 	
+	
+	@Override
+	public void update(double delta)
+	{
+		if(timeSinceLastDamage < 3600) timeSinceLastDamage += delta;
+	}
+	
+	
+	/**
+	 * @return seconds since last attack received (can be used for rendering)
+	 */
+	public double getTimeSinceLastDamage()
+	{
+		return timeSinceLastDamage;
+	}
 }

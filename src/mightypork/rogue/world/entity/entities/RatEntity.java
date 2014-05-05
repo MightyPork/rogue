@@ -28,6 +28,10 @@ public class RatEntity extends Entity {
 		pos.addMoveListener(ai);
 		
 		pos.setStepTime(0.5);
+		setDespawnDelay(3);
+		
+		health.setMaxHealth(3 + rand.nextInt(3));
+		health.fill(); // fill health bar to max
 	}
 	
 	

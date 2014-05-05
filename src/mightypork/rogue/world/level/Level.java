@@ -2,11 +2,9 @@ package mightypork.rogue.world.level;
 
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import javax.print.attribute.standard.MediaSize.ISO;
 
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.ion.IonBundle;
@@ -218,8 +216,15 @@ public class Level implements MapAccess, IonObjBinary {
 			}
 		}
 		
+		List<Entity> toRemove = new ArrayList<>();
+		
 		for (final Entity e : entitySet) {
 			e.update(delta);
+			if (e.isDead() && e.canRemoveCorpse()) toRemove.add(e);
+		}
+		
+		for (Entity e : toRemove) {
+			removeEntity(e);
 		}
 	}
 	
@@ -251,7 +256,7 @@ public class Level implements MapAccess, IonObjBinary {
 	public boolean addEntity(Entity entity, Coord pos)
 	{
 		final Tile t = getTile(pos);
-		if (!t.isWalkable()) return false;
+		if (!t.isWalkable() || isOccupied(pos)) return false;
 		
 		addEntity(entity);
 		
@@ -273,13 +278,13 @@ public class Level implements MapAccess, IonObjBinary {
 		
 		// join to level & world
 		entity.setLevel(this);
+		occupyTile(entity.getCoord());
 	}
 	
 	
 	public void removeEntity(Entity entity)
 	{
-		entityMap.remove(entity.getEntityId());
-		entitySet.remove(entity);
+		removeEntity(entity.getEntityId());
 	}
 	
 	
@@ -287,6 +292,7 @@ public class Level implements MapAccess, IonObjBinary {
 	{
 		final Entity removed = entityMap.remove(eid);
 		entitySet.remove(removed);
+		freeTile(removed.getCoord());
 	}
 	
 	
@@ -316,14 +322,13 @@ public class Level implements MapAccess, IonObjBinary {
 	}
 	
 	
-	public void cleanCorpses()
+	/**
+	 * @param pos tile coord
+	 * @return true if something is standing there.
+	 */
+	public boolean isOccupied(Coord pos)
 	{
-		for (final Entity e : entitySet) {
-			if (e.isDead() && e.canRemoveCorpse()) {
-				e.onCorpseRemoved();
-				removeEntity(e);
-			}
-		}
+		return getTile(pos).isOccupied();
 	}
 	
 	

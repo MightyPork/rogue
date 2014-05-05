@@ -21,8 +21,10 @@ public class PlayerEntity extends Entity {
 		public PlayerAi(Entity entity)
 		{
 			super(entity);
-			health.setMaxHealth(24);
-			health.fill();
+			setDespawnDelay(3);
+			
+			health.setMaxHealth(12);
+			health.fill(); // fill health bar to max
 		}
 		
 		
@@ -117,9 +119,9 @@ public class PlayerEntity extends Entity {
 		return EntityType.PLAYER;
 	}
 	
-	@Override
-	public void receiveAttack(Entity attacker, int attackStrength)
-	{
-		// FIXME ignore attack 
-	}
+//	@Override
+//	public void receiveAttack(Entity attacker, int attackStrength)
+//	{
+//		// FIXME ignore attack 
+//	}
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.annot.DefaultImpl;
@@ -31,6 +32,8 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	private Level level;
 	private final EntityModel model;
 	
+	protected final Random rand = new Random();
+	
 	/** Entity ID */
 	private int entityId;
 	
@@ -39,11 +42,11 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	// default modules
 	public final EntityModulePosition pos = new EntityModulePosition(this);
 	public final EntityModuleHealth health = new EntityModuleHealth(this);
+	private double despawnDelay = 1;
 	
 	
 	public Entity(EntityModel model, int eid)
 	{
-		
 		this.entityId = eid;
 		this.model = model;
 		
@@ -218,16 +221,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	@DefaultImpl
 	public boolean canRemoveCorpse()
 	{
-		return isDead();
-	}
-	
-	
-	/**
-	 * Called when the dead entity was removed from the level.
-	 */
-	@DefaultImpl
-	public void onCorpseRemoved()
-	{
+		return isDead() && health.getTimeSinceLastDamage() > despawnDelay;
 	}
 	
 	
@@ -242,6 +236,12 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	public void receiveAttack(Entity attacker, int attackStrength)
 	{
 		health.receiveDamage(attackStrength);
+	}
+	
+	
+	public void setDespawnDelay(double despawnDelay)
+	{
+		this.despawnDelay = despawnDelay;
 	}
 	
 }

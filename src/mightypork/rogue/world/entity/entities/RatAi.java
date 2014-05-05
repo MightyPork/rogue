@@ -11,8 +11,8 @@ public class RatAi extends MonsterAi {
 		super(entity);
 		
 		setAttackTime(1);
-		setScanTime(2);
-		setSleepTime(100);
+		setScanTime(1);
+		setSleepTime(10);
 	}
 	
 	
@@ -33,7 +33,7 @@ public class RatAi extends MonsterAi {
 	@Override
 	protected int getAttackStrength()
 	{
-		return 1 + rand.nextInt(2);
+		return 1 + (rand.nextInt(5) == 0 ? 1 : 0);
 	}
 	
 	

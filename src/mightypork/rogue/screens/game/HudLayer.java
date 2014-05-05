@@ -11,10 +11,30 @@ import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
+import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.gui.Minimap;
 
 
 public class HudLayer extends ScreenLayer {
+	
+	private Num playerHealthTotal = new Num() {
+		
+		@Override
+		public double value()
+		{
+			return WorldProvider.get().getPlayerEntity().health.getMaxHealth() / 2D;
+		}
+	};
+	
+	private Num playerHealthActive = new Num() {
+		
+		@Override
+		public double value()
+		{
+			return WorldProvider.get().getPlayerEntity().health.getHealth() / 2D;
+		}
+	};
+	
 	
 	public HudLayer(Screen screen)
 	{
@@ -38,15 +58,25 @@ public class HudLayer extends ScreenLayer {
 		final Rect shrunk = root.shrink(minWH.perc(3));
 		final Num displays_height = minWH.perc(6);
 		
-		final HeartBar hearts = new HeartBar(6, 3, Res.getTxQuad("heart_on"), Res.getTxQuad("heart_off"), AlignX.LEFT);
+		//@formatter:off
+		final HeartBar hearts = new HeartBar(
+				playerHealthTotal,
+				playerHealthActive,
+				Res.getTxQuad("heart_on"),
+				Res.getTxQuad("heart_half"),
+				Res.getTxQuad("heart_off"),
+				AlignX.LEFT);
+		//@formatter:on
+		
+		
 		final Rect hearts_box = shrunk.topLeft().startRect().growDown(displays_height);
 		hearts.setRect(hearts_box);
 		root.add(hearts);
 		
-		final HeartBar experience = new HeartBar(6, 2, Res.getTxQuad("xp_on"), Res.getTxQuad("xp_off"), AlignX.RIGHT);
+		/*final HeartBar experience = new HeartBar(6, 2, Res.getTxQuad("xp_on"), Res.getTxQuad("xp_off"), AlignX.RIGHT);
 		final Rect xp_box = shrunk.topRight().startRect().growDown(displays_height);
 		experience.setRect(xp_box);
-		root.add(experience);
+		root.add(experience);*/
 		
 		
 		final Minimap mm = new Minimap();
