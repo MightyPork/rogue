@@ -27,7 +27,7 @@ public abstract class TileBasePassage extends TileSolid {
 	
 	
 	@Override
-	protected TileRenderer getRenderer()
+	protected TileRenderer makeRenderer()
 	{
 		return renderer;
 	}

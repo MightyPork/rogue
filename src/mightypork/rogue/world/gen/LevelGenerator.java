@@ -9,7 +9,10 @@ import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.gen.rooms.Rooms;
 import mightypork.rogue.world.gen.themes.ThemeBrick;
+import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.item.Items;
 import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.tile.Tile;
 
 
 public class LevelGenerator {
@@ -56,6 +59,20 @@ public class LevelGenerator {
 				if (lvl.addEntity(e, pos)) break;
 			}
 		}
+
+		for (int i = 0; i < 4+complexity + rand.nextInt(1+complexity); i++) {
+			
+			Item meat = Items.MEAT.createItem();
+			
+			for (int j = 0; j < 20; j++) {
+				pos.x = rand.nextInt(lvl.getWidth());
+				pos.y = rand.nextInt(lvl.getHeight());
+				
+				Tile t = lvl.getTile(pos);
+				if(t.dropItem(meat)) break;
+			}
+		}
+		
 		
 		return lvl;
 	}

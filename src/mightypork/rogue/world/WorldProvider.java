@@ -43,7 +43,7 @@ public class WorldProvider extends RootBusNode {
 	private final PlayerControl playerControl = new PlayerControl() {
 		
 		@Override
-		protected World getWorld()
+		protected World provideWorld()
 		{
 			return world;
 		}

@@ -7,6 +7,8 @@ import java.util.Stack;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.item.Items;
+import mightypork.rogue.world.item.items.ItemMeat;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.DroppedItemRenderer;
@@ -14,14 +16,14 @@ import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 
 
-public abstract class TileWalkable extends Tile {
+public abstract class TileWithItems extends Tile {
 	
 	private final DroppedItemRenderer itemRenderer = new DroppedItemRenderer();
 	
 	protected final Stack<Item> items = new Stack<>();
 	
 	
-	public TileWalkable(TileModel model)
+	public TileWithItems(TileModel model)
 	{
 		super(model);
 	}
@@ -30,7 +32,7 @@ public abstract class TileWalkable extends Tile {
 	@Override
 	public void renderExtra(TileRenderContext context)
 	{
-		if (!items.isEmpty()) {
+		if (isExplored() && !items.isEmpty()) {
 			itemRenderer.render(items.peek(), context);
 		}
 	}
@@ -49,7 +51,7 @@ public abstract class TileWalkable extends Tile {
 	{
 		super.save(out);
 		
-		out.writeSequence(items);
+		Items.saveItems(out, items);
 	}
 	
 	
@@ -58,7 +60,7 @@ public abstract class TileWalkable extends Tile {
 	{
 		super.load(in);
 		
-		in.readSequence(items);
+		Items.loadItems(in, items);
 	}
 	
 	
@@ -96,5 +98,4 @@ public abstract class TileWalkable extends Tile {
 	{
 		return !items.isEmpty();
 	}
-	
 }

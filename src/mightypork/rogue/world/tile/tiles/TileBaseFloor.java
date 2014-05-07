@@ -8,7 +8,7 @@ import mightypork.rogue.world.tile.TileType;
 import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
 
 
-public abstract class TileBaseFloor extends TileWalkable {
+public abstract class TileBaseFloor extends TileWithItems {
 	
 	private final BasicTileRenderer renderer;
 	
@@ -21,7 +21,7 @@ public abstract class TileBaseFloor extends TileWalkable {
 	
 	
 	@Override
-	protected TileRenderer getRenderer()
+	protected TileRenderer makeRenderer()
 	{
 		return renderer;
 	}

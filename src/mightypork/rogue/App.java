@@ -76,7 +76,6 @@ public final class App extends BaseApp {
 	{
 		super.registerIonizables();
 		
-		Ion.registerType(Item.ION_MARK, Item.class);
 		Ion.registerType(Level.ION_MARK, Level.class);
 	}
 	

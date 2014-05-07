@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
  */
 public class AnimatorBounce extends Animator {
 	
-	private final boolean wasUp = false;
+	private boolean wasUp = false;
 	
 	
 	public AnimatorBounce(double start, double end, double period, Easing easing)
@@ -47,6 +47,8 @@ public class AnimatorBounce extends Animator {
 		} else {
 			anim.fadeIn();
 		}
+		
+		wasUp = !wasUp;
 	}
 	
 }

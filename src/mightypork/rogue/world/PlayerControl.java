@@ -18,12 +18,12 @@ public abstract class PlayerControl {
 	private World lastWorld;
 	
 	
-	protected abstract World getWorld();
+	protected abstract World provideWorld();
 	
 	
-	private World getWorld2()
+	public World getWorld()
 	{
-		final World newWorld = getWorld();
+		final World newWorld = provideWorld();
 		
 		if (newWorld != lastWorld) {
 			for (final EntityMoveListener eml : playerMoveListeners) {
@@ -40,9 +40,9 @@ public abstract class PlayerControl {
 	
 	public Entity getPlayerEntity()
 	{
-		if (getWorld2() == null) return null;
+		if (getWorld() == null) return null;
 		
-		return getWorld2().getPlayerEntity();
+		return getWorld().getPlayerEntity();
 	}
 	
 	
@@ -88,7 +88,7 @@ public abstract class PlayerControl {
 	
 	public Level getLevel()
 	{
-		return getWorld2().getCurrentLevel();
+		return getWorld().getCurrentLevel();
 	}
 	
 	
@@ -114,7 +114,7 @@ public abstract class PlayerControl {
 	{
 		if (pos.dist(getCoord()) > 8) return false; // too far
 		
-		return getLevel().getTile(pos).onClick();
+		return getLevel().getTile(pos).onClick(getWorld());
 	}
 	
 	

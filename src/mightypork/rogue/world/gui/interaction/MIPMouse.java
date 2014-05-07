@@ -39,7 +39,7 @@ public class MIPMouse implements MapInteractionPlugin {
 		final Coord pos = view.toWorldPos(mouse);
 		final Tile t = pc.getLevel().getTile(pos);
 		
-		if (t.onClick()) return true;
+		if (t.onClick(pc.getWorld())) return true;
 		
 		if (!down && t.isWalkable()) {
 			if (troToNav(view, pc, mouse)) return true;

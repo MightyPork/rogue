@@ -19,7 +19,7 @@ public class NullTile extends Tile {
 	
 	
 	@Override
-	protected TileRenderer getRenderer()
+	protected TileRenderer makeRenderer()
 	{
 		return TileRenderer.NONE;
 	}

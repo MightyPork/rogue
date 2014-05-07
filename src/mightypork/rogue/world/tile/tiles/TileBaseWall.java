@@ -20,7 +20,7 @@ public abstract class TileBaseWall extends TileSolid {
 	
 	
 	@Override
-	public BasicTileRenderer getRenderer()
+	public BasicTileRenderer makeRenderer()
 	{
 		return renderer;
 	}

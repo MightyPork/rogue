@@ -10,6 +10,7 @@ import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonObjBlob;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.color.Color;
+import mightypork.rogue.world.World;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
@@ -33,6 +34,8 @@ public abstract class Tile implements IonObjBlob {
 	// temporary flag for map.
 	protected boolean occupied;
 	protected boolean explored;
+
+	private TileRenderer renderer;
 	
 	
 	public Tile(TileModel model)
@@ -49,21 +52,24 @@ public abstract class Tile implements IonObjBlob {
 	{
 		if (!isExplored()) return;
 		
-		final TileRenderer r = getRenderer();
-		if (r == null) {
-			Log.e("Tile with no renderer: " + Log.str(this));
+		if (renderer == null) {
+			renderer = makeRenderer();
+		}
+		
+		if(renderer == null) {
+			Log.w("No renderer for tile "+Log.str(this));
 			return;
 		}
 		
-		r.renderTile(context);
+		renderer.renderTile(context);
 		
-		if (doesReceiveShadow()) r.renderShadows(context);
+		if (doesReceiveShadow()) renderer.renderShadows(context);
 		
-		r.renderUnexploredFog(context);
+		renderer.renderUnexploredFog(context);
 	}
 	
 	
-	protected abstract TileRenderer getRenderer();
+	protected abstract TileRenderer makeRenderer();
 	
 	
 	/**
@@ -143,7 +149,7 @@ public abstract class Tile implements IonObjBlob {
 	@DefaultImpl
 	public void update(Level level, double delta)
 	{
-		getRenderer().update(delta);
+		makeRenderer().update(delta);
 	}
 	
 	
@@ -220,7 +226,7 @@ public abstract class Tile implements IonObjBlob {
 	 * @return true if the tile is interactive and did something.
 	 */
 	@DefaultImpl
-	public boolean onClick()
+	public boolean onClick(World world)
 	{
 		return false;
 	}
