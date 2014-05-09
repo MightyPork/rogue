@@ -15,13 +15,13 @@ public class HeartBar extends VisualComponent {
 	private final TxQuad img_on;
 	private final TxQuad img_off;
 	private final TxQuad img_half;
-	private Num total;
-	private Num active;
+	private final Num total;
+	private final Num active;
 	
 	NumVar index = new NumVar(0);
 	Rect heart;
 	
-
+	
 	/**
 	 * @param total
 	 * @param active
@@ -63,9 +63,9 @@ public class HeartBar extends VisualComponent {
 		for (int i = 0; i < total.value(); i++) {
 			index.setTo(i);
 			
-			double rem = active.value()-i;
+			final double rem = active.value() - i;
 			
-			Render.quadTextured(heart, (rem>0.6 ? img_on : rem>0.25 ? img_half: img_off));
+			Render.quadTextured(heart, (rem > 0.6 ? img_on : rem > 0.25 ? img_half : img_off));
 		}
 	}
 	

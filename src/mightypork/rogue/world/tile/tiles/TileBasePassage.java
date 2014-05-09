@@ -5,7 +5,7 @@ import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.TileType;
-import mightypork.rogue.world.tile.renderers.BasicTileRenderer;
+import mightypork.rogue.world.tile.render.BasicTileRenderer;
 
 
 /**

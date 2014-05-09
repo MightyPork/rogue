@@ -6,6 +6,7 @@ import java.io.IOException;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
 
+
 /**
  * Item model (builder)
  * 
@@ -54,4 +55,3 @@ public final class ItemModel {
 		tile.save(out);
 	}
 }
-

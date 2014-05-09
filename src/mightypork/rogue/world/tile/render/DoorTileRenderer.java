@@ -1,4 +1,4 @@
-package mightypork.rogue.world.tile.renderers;
+package mightypork.rogue.world.tile.render;
 
 
 import mightypork.gamecore.render.Render;

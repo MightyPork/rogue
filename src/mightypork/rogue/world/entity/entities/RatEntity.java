@@ -6,8 +6,8 @@ import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModel;
 import mightypork.rogue.world.entity.EntityPathFinder;
 import mightypork.rogue.world.entity.EntityType;
-import mightypork.rogue.world.entity.renderers.EntityRenderer;
-import mightypork.rogue.world.entity.renderers.EntityRendererMobLR;
+import mightypork.rogue.world.entity.render.EntityRenderer;
+import mightypork.rogue.world.entity.render.EntityRendererMobLR;
 
 
 public class RatEntity extends Entity {

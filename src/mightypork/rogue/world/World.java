@@ -4,12 +4,15 @@ package mightypork.rogue.world;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import mightypork.gamecore.eventbus.BusAccess;
+import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.level.LevelAccess;
 
 
 /**
@@ -17,12 +20,14 @@ import mightypork.rogue.world.level.Level;
  * 
  * @author MightyPork
  */
-public class World implements IonObjBundled, Updateable {
+public class World implements BusAccess, IonObjBundled, Updateable {
 	
 	private final ArrayList<Level> levels = new ArrayList<>();
 	
 	private final PlayerInfo playerInfo = new PlayerInfo();
 	private Entity playerEntity;
+	
+	private BusAccess bus;
 	
 	/** World seed */
 	private long seed;
@@ -34,8 +39,8 @@ public class World implements IonObjBundled, Updateable {
 	@Override
 	public void load(IonBundle in) throws IOException
 	{
-		seed = in.get("seed", 0L);
-		eid = in.get("next_eid", 0);
+		seed = in.get("seed", seed);
+		eid = in.get("next_eid", eid);
 		in.loadSequence("levels", levels);
 		
 		// join levels to world
@@ -46,7 +51,9 @@ public class World implements IonObjBundled, Updateable {
 		in.loadBundled("player", playerInfo);
 		
 		playerEntity = levels.get(playerInfo.getLevel()).getEntity(playerInfo.getEID());
-		if (playerEntity == null) throw new RuntimeException("Player entity not found in the world.");
+		if (playerEntity == null) {
+			throw new RuntimeException("Player entity not found in the world.");
+		}
 	}
 	
 	
@@ -104,16 +111,21 @@ public class World implements IonObjBundled, Updateable {
 		// make entity
 		final int playerEid = getNewEID();
 		
+		final Level floor = levels.get(level);
+		if (floor == null) {
+			throw new IndexOutOfBoundsException("No such level: " + level);
+		}
+		
 		playerEntity = Entities.PLAYER.createEntity(playerEid);
-		playerEntity.setCoord(levels.get(level).getEnterPoint());
-		levels.get(level).addEntity(playerEntity);
+		floor.addEntity(playerEntity, floor.getEnterPoint());
+		floor.explore(playerEntity.getCoord());
 		
 		playerInfo.setLevel(level);
 		playerInfo.setEID(playerEid);
 	}
 	
 	
-	public Level getCurrentLevel()
+	public LevelAccess getCurrentLevel()
 	{
 		return levels.get(playerInfo.getLevel());
 	}
@@ -122,6 +134,25 @@ public class World implements IonObjBundled, Updateable {
 	public Entity getPlayerEntity()
 	{
 		return playerEntity;
+	}
+	
+	
+	/**
+	 * Attach to an event bus
+	 * 
+	 * @param bus event bus
+	 */
+	public void assignBus(BusAccess bus)
+	{
+		this.bus = bus;
+	}
+	
+	
+	@Override
+	public EventBus getEventBus()
+	{
+		if (bus == null) throw new NullPointerException("World doesn't have a bus assigned.");
+		return bus.getEventBus();
 	}
 	
 }

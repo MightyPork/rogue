@@ -4,8 +4,8 @@ package mightypork.rogue.world.level;
 import java.io.IOException;
 import java.util.*;
 
-import javax.print.attribute.standard.MediaSize.ISO;
-
+import mightypork.gamecore.eventbus.BusAccess;
+import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonInput;
@@ -31,7 +31,7 @@ import mightypork.rogue.world.tile.Tiles;
  * 
  * @author MightyPork
  */
-public class Level implements MapAccess, IonObjBinary {
+public class Level implements BusAccess, LevelAccess, IonObjBinary {
 	
 	public static final int ION_MARK = 53;
 	
@@ -70,12 +70,7 @@ public class Level implements MapAccess, IonObjBinary {
 	}
 	
 	
-	public void fill(short id)
-	{
-		fill(Tiles.get(id));
-	}
-	
-	
+	@Override
 	public void fill(TileModel model)
 	{
 		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
@@ -95,18 +90,7 @@ public class Level implements MapAccess, IonObjBinary {
 	}
 	
 	
-	public final void setTile(Coord pos, TileModel model)
-	{
-		setTile(pos, model.createTile());
-	}
-	
-	
-	public final void setTile(Coord pos, int tileId)
-	{
-		setTile(pos, Tiles.create(tileId));
-	}
-	
-	
+	@Override
 	public final void setTile(Coord pos, Tile tile)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) {
@@ -115,6 +99,9 @@ public class Level implements MapAccess, IonObjBinary {
 		}
 		
 		tiles[pos.y][pos.x] = tile;
+		
+		// assign level (tile logic may need it)
+		tile.setLevel(this);
 	}
 	
 	
@@ -132,6 +119,7 @@ public class Level implements MapAccess, IonObjBinary {
 	}
 	
 	
+	@Override
 	public void setSeed(long seed)
 	{
 		this.seed = seed;
@@ -207,23 +195,24 @@ public class Level implements MapAccess, IonObjBinary {
 	}
 	
 	
+	@Override
 	public void update(double delta)
 	{
 		// just update them all
 		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
 			for (c.y = 0; c.y < size.y; c.y++) {
-				getTile(c).update(this, delta);
+				getTile(c).update(delta);
 			}
 		}
 		
-		List<Entity> toRemove = new ArrayList<>();
+		final List<Entity> toRemove = new ArrayList<>();
 		
 		for (final Entity e : entitySet) {
 			e.update(delta);
 			if (e.isDead() && e.canRemoveCorpse()) toRemove.add(e);
 		}
 		
-		for (Entity e : toRemove) {
+		for (final Entity e : toRemove) {
 			removeEntity(e);
 		}
 	}
@@ -240,37 +229,22 @@ public class Level implements MapAccess, IonObjBinary {
 	}
 	
 	
+	@Override
 	public Entity getEntity(int eid)
 	{
 		return entityMap.get(eid);
 	}
 	
 	
-	/**
-	 * Try to add entity at given pos
-	 * 
-	 * @param entity the entity
-	 * @param pos pos
-	 * @return true if added (false if void, wall etc)
-	 */
+	@Override
 	public boolean addEntity(Entity entity, Coord pos)
 	{
 		final Tile t = getTile(pos);
-		if (!t.isWalkable() || isOccupied(pos)) return false;
+		if (!t.isWalkable() || t.isOccupied()) return false;
 		
-		addEntity(entity);
-		
-		entity.setCoord(pos);
-		
-		return true;
-	}
-	
-	
-	public void addEntity(Entity entity)
-	{
 		if (entityMap.containsKey(entity.getEntityId())) {
 			Log.w("Entity already in level.");
-			return;
+			return false;
 		}
 		
 		entityMap.put(entity.getEntityId(), entity);
@@ -279,15 +253,21 @@ public class Level implements MapAccess, IonObjBinary {
 		// join to level & world
 		entity.setLevel(this);
 		occupyTile(entity.getCoord());
+		
+		entity.setCoord(pos);
+		
+		return true;
 	}
 	
 	
+	@Override
 	public void removeEntity(Entity entity)
 	{
 		removeEntity(entity.getEntityId());
 	}
 	
 	
+	@Override
 	public void removeEntity(int eid)
 	{
 		final Entity removed = entityMap.remove(eid);
@@ -296,6 +276,7 @@ public class Level implements MapAccess, IonObjBinary {
 	}
 	
 	
+	@Override
 	public boolean isWalkable(Coord pos)
 	{
 		final Tile t = getTile(pos);
@@ -307,6 +288,7 @@ public class Level implements MapAccess, IonObjBinary {
 	/**
 	 * Mark tile as occupied by an entity
 	 */
+	@Override
 	public void occupyTile(Coord pos)
 	{
 		getTile(pos).setOccupied(true);
@@ -316,52 +298,56 @@ public class Level implements MapAccess, IonObjBinary {
 	/**
 	 * Mark tile as free (no longet occupied)
 	 */
+	@Override
 	public void freeTile(Coord pos)
 	{
 		getTile(pos).setOccupied(false);
 	}
 	
 	
-	/**
-	 * @param pos tile coord
-	 * @return true if something is standing there.
-	 */
+	@Override
 	public boolean isOccupied(Coord pos)
 	{
 		return getTile(pos).isOccupied();
 	}
 	
 	
+	@Override
 	public Collection<Entity> getEntities()
 	{
 		return entitySet;
 	}
 	
 	
+	@Override
 	public void setEnterPoint(Coord pos)
 	{
 		this.enterPoint.setTo(pos);
 	}
 	
 	
+	@Override
 	public Coord getEnterPoint()
 	{
 		return enterPoint;
 	}
 	
 	
+	@Override
 	public World getWorld()
 	{
 		return world;
 	}
 	
 	
+	@Override
 	public void setWorld(World world)
 	{
 		this.world = world;
 	}
 	
 	
+	@Override
 	public void explore(Coord center)
 	{
 		final Collection<Coord> filled = new HashSet<>();
@@ -413,6 +399,7 @@ public class Level implements MapAccess, IonObjBinary {
 	};
 	
 	
+	@Override
 	public Entity getClosestEntity(Entity self, EntityType type, double radius)
 	{
 		Entity closest = null;
@@ -436,8 +423,43 @@ public class Level implements MapAccess, IonObjBinary {
 	}
 	
 	
+	public void forceFreeTile(Coord pos)
+	{
+		if (getTile(pos).isOccupied()) {
+			final Set<Entity> toButcher = new HashSet<>();
+			for (final Entity e : entitySet) {
+				if (e.getCoord().equals(pos)) {
+					toButcher.add(e);
+					break;
+				}
+			}
+			
+			for (final Entity e : toButcher) {
+				removeEntity(e);
+				freeTile(pos);
+			}
+		}
+		
+	}
+	
+	
+	@Override
 	public boolean isEntityPresent(Entity entity)
 	{
 		return entitySet.contains(entity);
+	}
+	
+	
+	@Override
+	public boolean isEntityPresent(int eid)
+	{
+		return entityMap.containsKey(eid);
+	}
+	
+	
+	@Override
+	public EventBus getEventBus()
+	{
+		return world.getEventBus();
 	}
 }

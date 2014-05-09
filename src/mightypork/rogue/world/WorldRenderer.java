@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.level.LevelAccess;
 import mightypork.rogue.world.level.render.TileRenderContext;
 
 
@@ -29,7 +29,7 @@ public class WorldRenderer extends RectProxy {
 	
 	// can be changed
 	private RectConst mapRect;
-	private Level activeLevel;
+	private LevelAccess activeLevel;
 	
 	private final Rect rightShadow;
 	private final Rect leftShadow;
@@ -57,7 +57,7 @@ public class WorldRenderer extends RectProxy {
 	
 	private void prepareRenderContextIfNeeded()
 	{
-		final Level level = WorldProvider.get().getCurrentLevel();
+		final LevelAccess level = WorldProvider.get().getCurrentLevel();
 		
 		if (activeLevel == level) return;
 		

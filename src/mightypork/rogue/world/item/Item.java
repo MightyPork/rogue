@@ -8,7 +8,6 @@ import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonObjBlob;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 
 
 public abstract class Item implements IonObjBlob {
@@ -17,7 +16,8 @@ public abstract class Item implements IonObjBlob {
 	private ItemRenderer renderer;
 	
 	
-	public Item(ItemModel model) {
+	public Item(ItemModel model)
+	{
 		this.model = model;
 	}
 	
@@ -29,7 +29,7 @@ public abstract class Item implements IonObjBlob {
 		}
 		
 		renderer.render(rect);
-	};
+	}
 	
 	
 	protected abstract ItemRenderer makeRenderer();

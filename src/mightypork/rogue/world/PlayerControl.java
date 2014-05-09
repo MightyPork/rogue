@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
-import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.level.LevelAccess;
 
 
 public abstract class PlayerControl {
@@ -35,7 +35,7 @@ public abstract class PlayerControl {
 		
 		return newWorld;
 		
-	};
+	}
 	
 	
 	public Entity getPlayerEntity()
@@ -86,7 +86,7 @@ public abstract class PlayerControl {
 	}
 	
 	
-	public Level getLevel()
+	public LevelAccess getLevel()
 	{
 		return getWorld().getCurrentLevel();
 	}
@@ -114,7 +114,7 @@ public abstract class PlayerControl {
 	{
 		if (pos.dist(getCoord()) > 8) return false; // too far
 		
-		return getLevel().getTile(pos).onClick(getWorld());
+		return getLevel().getTile(pos).onClick();
 	}
 	
 	

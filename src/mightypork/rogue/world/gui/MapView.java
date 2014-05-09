@@ -35,6 +35,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	
 	private final Set<MapInteractionPlugin> plugins = new LinkedHashSet<>();
 	private final NumAnimated zoom = new NumAnimated(0, Easing.SINE_BOTH);
+	private boolean zoom_in = true;
 	
 	private final Num tileSize;
 	
@@ -112,9 +113,11 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 			final int delta = event.getWheelDelta();
 			if (!zoom.isFinished()) return;
 			if (delta < 0) {
-				zoom.fadeOut();
-			} else {
 				zoom.fadeIn();
+				zoom_in = false;
+			} else {
+				zoom.fadeOut();
+				zoom_in = true;
 			}
 		}
 	}
@@ -127,11 +130,13 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 			if (p.onKey(this, pc, event.getKey(), event.isDown())) break;
 		}
 		
-		if (event.getKey() == Keys.Z) {
-			if (event.isDown()) {
+		if (event.getKey() == Keys.Z && event.isDown()) {
+			if (zoom_in) {
 				zoom.fadeIn();
+				zoom_in = false;
 			} else {
 				zoom.fadeOut();
+				zoom_in = true;
 			}
 		}
 		

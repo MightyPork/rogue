@@ -914,12 +914,13 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 		return p_edge_b != null ? p_edge_b : (p_edge_b = bottomLeft().expand(Num.ZERO, width(), Num.ZERO, Num.ZERO));
 	}
 	
-
+	
 	public Rect axisV()
 	{
 		return p_axis_v != null ? p_axis_v : (p_axis_v = topCenter().expand(Num.ZERO, Num.ZERO, Num.ZERO, height()));
 	}
-
+	
+	
 	public Rect axisH()
 	{
 		return p_axis_h != null ? p_axis_h : (p_axis_h = centerLeft().expand(Num.ZERO, width(), Num.ZERO, Num.ZERO));
@@ -1058,6 +1059,6 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 		//      overflow || intersect
 		return ((rw < rx || rw > tx) && (rh < ry || rh > ty) && (tw < tx || tw > rx) && (th < ty || th > ry));
 	}
-
+	
 	
 }

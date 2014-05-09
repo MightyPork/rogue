@@ -12,7 +12,7 @@ import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.item.Item;
-import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.level.LevelAccess;
 import mightypork.rogue.world.level.render.TileRenderContext;
 
 
@@ -34,7 +34,9 @@ public abstract class Tile implements IonObjBlob {
 	// temporary flag for map.
 	protected boolean occupied;
 	protected boolean explored;
-
+	
+	protected LevelAccess level;
+	
 	private TileRenderer renderer;
 	
 	
@@ -46,6 +48,8 @@ public abstract class Tile implements IonObjBlob {
 	
 	/**
 	 * Render the tile, using the main texture sheet.
+	 * 
+	 * @param context rendering ctx
 	 */
 	@DefaultImpl
 	public void renderTile(TileRenderContext context)
@@ -56,8 +60,8 @@ public abstract class Tile implements IonObjBlob {
 			renderer = makeRenderer();
 		}
 		
-		if(renderer == null) {
-			Log.w("No renderer for tile "+Log.str(this));
+		if (renderer == null) {
+			Log.w("No renderer for tile " + Log.str(this));
 			return;
 		}
 		
@@ -147,7 +151,7 @@ public abstract class Tile implements IonObjBlob {
 	
 	
 	@DefaultImpl
-	public void update(Level level, double delta)
+	public void update(double delta)
 	{
 		makeRenderer().update(delta);
 	}
@@ -226,9 +230,27 @@ public abstract class Tile implements IonObjBlob {
 	 * @return true if the tile is interactive and did something.
 	 */
 	@DefaultImpl
-	public boolean onClick(World world)
+	public boolean onClick()
 	{
 		return false;
+	}
+	
+	
+	public void setLevel(LevelAccess level)
+	{
+		this.level = level;
+	}
+	
+	
+	public LevelAccess getLevel()
+	{
+		return level;
+	}
+	
+	
+	protected World getWorld()
+	{
+		return level.getWorld();
 	}
 	
 }

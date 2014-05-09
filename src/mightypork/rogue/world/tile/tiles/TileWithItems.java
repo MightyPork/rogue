@@ -8,8 +8,6 @@ import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.Items;
-import mightypork.rogue.world.item.items.ItemMeat;
-import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.DroppedItemRenderer;
 import mightypork.rogue.world.tile.Tile;
@@ -39,9 +37,9 @@ public abstract class TileWithItems extends Tile {
 	
 	
 	@Override
-	public void update(Level level, double delta)
+	public void update(double delta)
 	{
-		super.update(level, delta);
+		super.update(delta);
 		itemRenderer.update(delta);
 	}
 	

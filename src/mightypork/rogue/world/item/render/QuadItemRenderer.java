@@ -1,4 +1,4 @@
-package mightypork.rogue.world.item.rendr;
+package mightypork.rogue.world.item.render;
 
 
 import mightypork.gamecore.render.Render;
@@ -13,12 +13,14 @@ public class QuadItemRenderer extends ItemRenderer {
 	private final TxQuad txq;
 	
 	
-	public QuadItemRenderer(TxQuad txq) {
+	public QuadItemRenderer(TxQuad txq)
+	{
 		this.txq = txq;
 	}
 	
 	
-	public QuadItemRenderer(TxSheet txs) {
+	public QuadItemRenderer(TxSheet txs)
+	{
 		this.txq = txs.getQuad(0);
 	}
 	

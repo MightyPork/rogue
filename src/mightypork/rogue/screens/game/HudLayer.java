@@ -17,7 +17,7 @@ import mightypork.rogue.world.gui.Minimap;
 
 public class HudLayer extends ScreenLayer {
 	
-	private Num playerHealthTotal = new Num() {
+	private final Num playerHealthTotal = new Num() {
 		
 		@Override
 		public double value()
@@ -26,7 +26,7 @@ public class HudLayer extends ScreenLayer {
 		}
 	};
 	
-	private Num playerHealthActive = new Num() {
+	private final Num playerHealthActive = new Num() {
 		
 		@Override
 		public double value()

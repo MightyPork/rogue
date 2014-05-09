@@ -4,18 +4,18 @@ package mightypork.rogue.world.level.render;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.builders.TiledRect;
-import mightypork.rogue.world.level.MapAccess;
+import mightypork.rogue.world.level.LevelReadAccess;
 import mightypork.rogue.world.tile.Tile;
 
 
 public abstract class MapRenderContext {
 	
-	protected final MapAccess map;
+	protected final LevelReadAccess map;
 	protected final TiledRect tiler;
 	private final Rect mapRect;
 	
 	
-	public MapRenderContext(MapAccess map, Rect drawArea)
+	public MapRenderContext(LevelReadAccess map, Rect drawArea)
 	{
 		this.map = map;
 		
@@ -35,7 +35,9 @@ public abstract class MapRenderContext {
 		return mapRect;
 	}
 	
-	public Tile getTile(Coord pos) {
+	
+	public Tile getTile(Coord pos)
+	{
 		return map.getTile(pos);
 	}
 }

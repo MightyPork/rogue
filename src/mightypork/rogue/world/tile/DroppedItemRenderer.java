@@ -16,9 +16,8 @@ public class DroppedItemRenderer {
 	
 	// prepared constraints, to avoid re-building each frame
 	private final RectBoundAdapter tileRectAdapter = new RectBoundAdapter();
-	private final Rect itemRect = tileRectAdapter
-			.shrink(tileRectAdapter.height().perc(10))
-			.moveY(itemAnim.neg().mul(tileRectAdapter.height().mul(0.2)));
+	private final Rect itemRect = tileRectAdapter.shrink(tileRectAdapter.height().perc(10)).moveY(itemAnim.neg().mul(tileRectAdapter.height().mul(0.2)));
+	
 	
 	public Animator getItemAnim()
 	{

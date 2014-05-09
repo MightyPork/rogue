@@ -2,7 +2,6 @@ package mightypork.rogue.world.tile.tiles;
 
 
 import mightypork.rogue.world.item.Item;
-import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
@@ -26,7 +25,7 @@ public class NullTile extends Tile {
 	
 	
 	@Override
-	public void update(Level level, double delta)
+	public void update(double delta)
 	{
 	}
 	

@@ -17,7 +17,7 @@ public class ImagePainter extends VisualComponent {
 	
 	private final TxQuad txQuad;
 	private boolean aspratio = false;
-	private Rect asprRect;
+	private final Rect asprRect;
 	
 	
 	/**

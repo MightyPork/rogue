@@ -25,7 +25,6 @@ import mightypork.rogue.screens.game.ScreenGame;
 import mightypork.rogue.screens.menu.ScreenMainMenu;
 import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
 import mightypork.rogue.world.WorldProvider;
-import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 
 

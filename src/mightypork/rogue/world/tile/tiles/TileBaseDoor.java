@@ -9,7 +9,7 @@ import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.TileType;
-import mightypork.rogue.world.tile.renderers.DoorTileRenderer;
+import mightypork.rogue.world.tile.render.DoorTileRenderer;
 
 
 public abstract class TileBaseDoor extends TileSolid {

@@ -14,7 +14,7 @@ import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
-import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.level.LevelAccess;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
@@ -410,7 +410,7 @@ public class ScratchMap {
 	}
 	
 	
-	public void writeToLevel(Level level)
+	public void writeToLevel(LevelAccess level)
 	{
 		// make sure no walkable are at edges.
 		final Coord c = Coord.make(0, 0);

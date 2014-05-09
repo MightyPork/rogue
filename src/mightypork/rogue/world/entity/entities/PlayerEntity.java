@@ -9,9 +9,9 @@ import mightypork.rogue.world.entity.EntityModule;
 import mightypork.rogue.world.entity.EntityPathFinder;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
-import mightypork.rogue.world.entity.renderers.EntityRenderer;
-import mightypork.rogue.world.entity.renderers.EntityRendererMobLR;
-import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.entity.render.EntityRenderer;
+import mightypork.rogue.world.entity.render.EntityRendererMobLR;
+import mightypork.rogue.world.events.PlayerKilledEvent;
 
 
 public class PlayerEntity extends Entity {
@@ -82,7 +82,7 @@ public class PlayerEntity extends Entity {
 				public int getCost(Coord from, Coord to)
 				{
 					if (!getLevel().getTile(pos.getCoord()).isExplored()) {
-						return 1000;
+						return 1000; // avoid unexplored, but allow them if there's no other way
 					}
 					
 					return super.getCost(from, to);
@@ -91,14 +91,6 @@ public class PlayerEntity extends Entity {
 		}
 		
 		return pathf;
-	}
-	
-	
-	@Override
-	public void setLevel(Level level)
-	{
-		super.setLevel(level);
-		ai.onStepFinished(); // explore start area
 	}
 	
 	
@@ -119,9 +111,11 @@ public class PlayerEntity extends Entity {
 		return EntityType.PLAYER;
 	}
 	
-//	@Override
-//	public void receiveAttack(Entity attacker, int attackStrength)
-//	{
-//		// FIXME ignore attack 
-//	}
+	
+	@Override
+	public void onKilled()
+	{
+		// send kill event to listeners (GUI?)
+		getWorld().getEventBus().sendDelayed(new PlayerKilledEvent(), getDespawnDelay());
+	}
 }

@@ -8,7 +8,7 @@ import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.util.ion.Ion;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.level.LevelAccess;
 
 
 public class WorldProvider extends RootBusNode {
@@ -67,6 +67,7 @@ public class WorldProvider extends RootBusNode {
 		
 		if (world != null) removeChildClient(world);
 		world = newWorld;
+		world.assignBus(this); // connect to bus (for event dispatching)
 		addChildClient(world);
 	}
 	
@@ -84,7 +85,7 @@ public class WorldProvider extends RootBusNode {
 	}
 	
 	
-	public Level getCurrentLevel()
+	public LevelAccess getCurrentLevel()
 	{
 		return getWorld().getCurrentLevel();
 	}

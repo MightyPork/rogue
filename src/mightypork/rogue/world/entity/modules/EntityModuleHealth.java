@@ -108,7 +108,7 @@ public class EntityModuleHealth extends EntityModule {
 	@Override
 	public void update(double delta)
 	{
-		if(timeSinceLastDamage < 3600) timeSinceLastDamage += delta;
+		if (timeSinceLastDamage < 3600) timeSinceLastDamage += delta;
 	}
 	
 	

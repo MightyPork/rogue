@@ -1,16 +1,12 @@
-package mightypork.rogue.world.entity.renderers;
+package mightypork.rogue.world.entity.render;
 
 
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.num.NumConst;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumVar;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
@@ -31,9 +27,9 @@ public class EntityRendererMobLR extends EntityRenderer {
 	
 	protected final Entity entity;
 	
-	private NumVar animRedVar = Num.makeVar(0);
+	private final NumVar animRedVar = Num.makeVar(0);
 	
-	private Color hue = Color.rgb(Num.ONE, animRedVar, animRedVar);
+	private final Color hue = Color.rgb(Num.ONE, animRedVar, animRedVar);
 	
 	
 	public EntityRendererMobLR(Entity entity, String sheetKey)
@@ -46,7 +42,7 @@ public class EntityRendererMobLR extends EntityRenderer {
 	@Override
 	public void render(MapRenderContext context)
 	{
-		double hurtTime = entity.health.getTimeSinceLastDamage();
+		final double hurtTime = entity.health.getTimeSinceLastDamage();
 		
 		TxQuad q = sheet.getQuad(Calc.frag(entity.pos.getProgress()));
 		
@@ -56,7 +52,7 @@ public class EntityRendererMobLR extends EntityRenderer {
 		final double w = tileRect.width().value();
 		final Vect visualPos = entity.pos.getVisualPos();
 		
-		double hurtOffset = (1 - Calc.clamp(hurtTime / 0.1, 0, 1)) * (entity.isDead() ? 0.3 : 0.05);
+		final double hurtOffset = (1 - Calc.clamp(hurtTime / 0.1, 0, 1)) * (entity.isDead() ? 0.3 : 0.05);
 		
 		
 		Rect spriteRect = Rect.make(visualPos.x() * w, (visualPos.y() - hurtOffset) * w, w, w);
@@ -72,7 +68,7 @@ public class EntityRendererMobLR extends EntityRenderer {
 			Render.rotateZ(Calc.clamp(hurtTime / 0.3, 0, 1) * 90);
 		}
 		
-		double hw = spriteRect.width().half().value();
+		final double hw = spriteRect.width().half().value();
 		
 		Render.quadTextured(Vect.ZERO.expand(hw, hw, hw, hw), q, hue.withAlpha(entity.isDead() ? 1 - hurtTime / 3 : 1));
 		Render.popMatrix();

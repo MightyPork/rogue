@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.level.render.TileRenderContext;
-import mightypork.rogue.world.tile.renderers.NullTileRenderer;
+import mightypork.rogue.world.tile.render.NullTileRenderer;
 
 
 /**

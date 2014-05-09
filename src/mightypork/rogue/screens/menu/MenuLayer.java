@@ -2,21 +2,16 @@ package mightypork.rogue.screens.menu;
 
 
 import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
-import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.events.CrossfadeRequest;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.COMMODORE;
 import mightypork.gamecore.util.math.color.pal.PAL16;
-import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.Res;
 
 
@@ -44,7 +39,7 @@ class MenuLayer extends ScreenLayer {
 		root.add(layout);
 		
 		int r = 0;
-		ImagePainter ip = new ImagePainter(Res.getTxQuad("logo"));
+		final ImagePainter ip = new ImagePainter(Res.getTxQuad("logo"));
 		ip.keepAspectRatio();
 		layout.put(ip, r, 0, 5, 1);
 		r += 6;

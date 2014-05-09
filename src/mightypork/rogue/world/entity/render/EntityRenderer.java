@@ -1,4 +1,4 @@
-package mightypork.rogue.world.entity.renderers;
+package mightypork.rogue.world.entity.render;
 
 
 import mightypork.rogue.world.level.render.MapRenderContext;

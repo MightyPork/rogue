@@ -17,8 +17,8 @@ import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
-import mightypork.rogue.world.entity.renderers.EntityRenderer;
-import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.entity.render.EntityRenderer;
+import mightypork.rogue.world.level.LevelAccess;
 import mightypork.rogue.world.level.render.MapRenderContext;
 
 
@@ -29,7 +29,7 @@ import mightypork.rogue.world.level.render.MapRenderContext;
  */
 public abstract class Entity implements IonObjBundled, Updateable {
 	
-	private Level level;
+	private LevelAccess level;
 	private final EntityModel model;
 	
 	protected final Random rand = new Random();
@@ -120,7 +120,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	}
 	
 	
-	public void setLevel(Level level)
+	public void setLevel(LevelAccess level)
 	{
 		if (level != null) level.freeTile(getCoord());
 		
@@ -130,7 +130,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	}
 	
 	
-	public final Level getLevel()
+	public final LevelAccess getLevel()
 	{
 		return level;
 	}
@@ -226,6 +226,15 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	
 	
 	/**
+	 * Called after the corpse has been cleaned from level.
+	 */
+	@DefaultImpl
+	public void onCorpseRemoved()
+	{
+	}
+	
+	
+	/**
 	 * Receive damage from an attacker.<br>
 	 * The entity can decide whether to dodge, reduce damage etc.
 	 * 
@@ -239,9 +248,20 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	}
 	
 	
+	/**
+	 * Set how long after being killed is the corpse elligible for removal
+	 * 
+	 * @param despawnDelay (secs)
+	 */
 	public void setDespawnDelay(double despawnDelay)
 	{
 		this.despawnDelay = despawnDelay;
+	}
+	
+	
+	public double getDespawnDelay()
+	{
+		return despawnDelay;
 	}
 	
 }

@@ -22,7 +22,7 @@ import mightypork.gamecore.logging.Log;
  * 
  * @author MightyPork
  */
-final public class EventBus implements Destroyable {
+final public class EventBus implements Destroyable, BusAccess {
 	
 	/**
 	 * Queued event holder
@@ -382,6 +382,13 @@ final public class EventBus implements Destroyable {
 		if (event.getClass().isAnnotationPresent(UnloggedEvent.class)) return false;
 		
 		return true;
+	}
+	
+	
+	@Override
+	public EventBus getEventBus()
+	{
+		return this; // just for compatibility use-case
 	}
 	
 }

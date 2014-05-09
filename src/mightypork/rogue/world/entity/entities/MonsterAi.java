@@ -179,7 +179,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		
 		if (chasing && !entity.pos.isMoving()) {
 			final Entity prey = getPreyEntity();
-			if(prey==null) {
+			if (prey == null) {
 				// prey killed and cleaned from level
 				stopChasing();
 				return;
@@ -219,7 +219,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			}
 			
 			startChasing(prey);
-		}		
+		}
 	}
 	
 	
