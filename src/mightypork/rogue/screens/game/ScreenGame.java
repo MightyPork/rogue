@@ -8,6 +8,7 @@ import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.world.WorldProvider;
+import mightypork.rogue.world.events.WorldPauseRequest;
 
 
 public class ScreenGame extends LayeredScreen {
@@ -23,7 +24,7 @@ public class ScreenGame extends LayeredScreen {
 		addLayer(new HudLayer(this));
 		addLayer(new WorldLayer(this));
 		
-		bindKey(new KeyStroke(Keys.N), new Runnable() {
+		bindKey(new KeyStroke(Keys.L_CONTROL, Keys.N), new Runnable() {
 			
 			@Override
 			public void run()
@@ -31,6 +32,19 @@ public class ScreenGame extends LayeredScreen {
 				WorldProvider.get().createWorld(rand.nextLong());
 			}
 		});
+		
+		final Runnable pauseIt = new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				getEventBus().send(new WorldPauseRequest());
+			}
+		};
+		
+		//pause key
+		bindKey(new KeyStroke(Keys.L_CONTROL, Keys.P), pauseIt);
+		bindKey(new KeyStroke(Keys.PAUSE), pauseIt);
 	}
 	
 	

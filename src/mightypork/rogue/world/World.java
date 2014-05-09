@@ -3,12 +3,15 @@ package mightypork.rogue.world;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.EventBus;
-import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
+import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.timing.Pauseable;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
@@ -20,7 +23,7 @@ import mightypork.rogue.world.level.LevelAccess;
  * 
  * @author MightyPork
  */
-public class World implements BusAccess, IonObjBundled, Updateable {
+public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable {
 	
 	private final ArrayList<Level> levels = new ArrayList<>();
 	
@@ -34,6 +37,23 @@ public class World implements BusAccess, IonObjBundled, Updateable {
 	
 	/** Next entity ID */
 	private int eid;
+	
+	private boolean paused;
+	
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public Collection getChildClients()
+	{
+		return levels;
+	}
+	
+	
+	@Override
+	public boolean doesDelegate()
+	{
+		return !paused;
+	}
 	
 	
 	@Override
@@ -74,13 +94,6 @@ public class World implements BusAccess, IonObjBundled, Updateable {
 	}
 	
 	
-	@Override
-	public void update(double delta)
-	{
-		getCurrentLevel().update(delta);
-	}
-	
-	
 	public void setSeed(long seed)
 	{
 		this.seed = seed;
@@ -117,8 +130,12 @@ public class World implements BusAccess, IonObjBundled, Updateable {
 		}
 		
 		playerEntity = Entities.PLAYER.createEntity(playerEid);
-		floor.addEntity(playerEntity, floor.getEnterPoint());
-		floor.explore(playerEntity.getCoord());
+		
+		final Coord spawn = floor.getEnterPoint();
+		
+		floor.forceFreeTile(spawn);
+		floor.addEntity(playerEntity, spawn);
+		floor.explore(spawn);
 		
 		playerInfo.setLevel(level);
 		playerInfo.setEID(playerEid);
@@ -153,6 +170,27 @@ public class World implements BusAccess, IonObjBundled, Updateable {
 	{
 		if (bus == null) throw new NullPointerException("World doesn't have a bus assigned.");
 		return bus.getEventBus();
+	}
+	
+	
+	@Override
+	public void pause()
+	{
+		paused = true;
+	}
+	
+	
+	@Override
+	public void resume()
+	{
+		paused = false;
+	}
+	
+	
+	@Override
+	public boolean isPaused()
+	{
+		return paused;
 	}
 	
 }

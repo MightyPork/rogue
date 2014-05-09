@@ -18,18 +18,17 @@ public abstract class PlayerControl {
 	private World lastWorld;
 	
 	
+	/**
+	 * Implementing classes should return a world instance from this method.
+	 * 
+	 * @return
+	 */
 	protected abstract World provideWorld();
 	
 	
 	public World getWorld()
 	{
 		final World newWorld = provideWorld();
-		
-		if (newWorld != lastWorld) {
-			for (final EntityMoveListener eml : playerMoveListeners) {
-				newWorld.getPlayerEntity().pos.addMoveListener(eml);
-			}
-		}
 		
 		lastWorld = newWorld;
 		
@@ -77,15 +76,6 @@ public abstract class PlayerControl {
 	}
 	
 	
-	public void addMoveListener(EntityMoveListener eml)
-	{
-		playerMoveListeners.add(eml);
-		if (getPlayerEntity() != null) {
-			getPlayerEntity().pos.addMoveListener(eml);
-		}
-	}
-	
-	
 	public LevelAccess getLevel()
 	{
 		return getWorld().getCurrentLevel();
@@ -104,6 +94,12 @@ public abstract class PlayerControl {
 	}
 	
 	
+	/**
+	 * Click tile on player's side
+	 * 
+	 * @param side
+	 * @return
+	 */
 	public boolean clickTile(Step side)
 	{
 		return clickTile(getCoord().add(side));

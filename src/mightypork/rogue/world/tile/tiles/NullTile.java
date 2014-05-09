@@ -25,7 +25,7 @@ public class NullTile extends Tile {
 	
 	
 	@Override
-	public void update(double delta)
+	public void updateTile(double delta)
 	{
 	}
 	

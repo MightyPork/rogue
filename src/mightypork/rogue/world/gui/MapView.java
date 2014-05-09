@@ -1,9 +1,11 @@
 package mightypork.rogue.world.gui;
 
 
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.Keys;
@@ -19,7 +21,6 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.WorldRenderer;
-import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
 
 
@@ -28,10 +29,10 @@ import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
  * 
  * @author MightyPork
  */
-public class MapView extends InputComponent implements KeyListener, MouseButtonListener, EntityMoveListener, Updateable {
+public class MapView extends InputComponent implements DelegatingClient, KeyListener, MouseButtonListener, Updateable {
 	
 	protected final WorldRenderer worldRenderer;
-	private final PlayerControl pc;
+	public final PlayerControl playerControl;
 	
 	private final Set<MapInteractionPlugin> plugins = new LinkedHashSet<>();
 	private final NumAnimated zoom = new NumAnimated(0, Easing.SINE_BOTH);
@@ -40,12 +41,26 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	private final Num tileSize;
 	
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public Collection getChildClients()
+	{
+		return plugins;
+	}
+	
+	
+	@Override
+	public boolean doesDelegate()
+	{
+		return true;
+	}
+	
+	
 	public MapView()
 	{
 		this.tileSize = height().min(width()).div(10).max(32).mul(Num.make(1).sub(zoom.mul(0.5)));
 		this.worldRenderer = new WorldRenderer(this, tileSize);
-		pc = WorldProvider.get().getPlayerControl();
-		pc.addMoveListener(this);
+		playerControl = WorldProvider.get().getPlayerControl();
 		
 		zoom.setDefaultDuration(0.5);
 	}
@@ -71,39 +86,12 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	
 	
 	@Override
-	public void onStepFinished()
-	{
-		for (final MapInteractionPlugin p : plugins) {
-			if (p.onStepEnd(this, pc)) break;
-		}
-	}
-	
-	
-	@Override
-	public void onPathFinished()
-	{
-		for (final MapInteractionPlugin p : plugins) {
-			if (p.onStepEnd(this, pc)) break;
-		}
-	}
-	
-	
-	@Override
-	public void onPathInterrupted()
-	{
-		for (final MapInteractionPlugin p : plugins) {
-			if (p.onStepEnd(this, pc)) break;
-		}
-	}
-	
-	
-	@Override
 	public void receive(MouseButtonEvent event)
 	{
 		if (!event.isOver(this)) return;
 		
 		for (final MapInteractionPlugin p : plugins) {
-			if (p.onClick(this, pc, event.getPos(), event.getButton(), event.isDown())) {
+			if (p.onClick(event.getPos(), event.getButton(), event.isDown())) {
 				event.consume();
 				break;
 			}
@@ -127,7 +115,7 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	public void receive(KeyEvent event)
 	{
 		for (final MapInteractionPlugin p : plugins) {
-			if (p.onKey(this, pc, event.getKey(), event.isDown())) break;
+			if (p.onKey(event.getKey(), event.isDown())) break;
 		}
 		
 		if (event.getKey() == Keys.Z && event.isDown()) {
@@ -158,9 +146,6 @@ public class MapView extends InputComponent implements KeyListener, MouseButtonL
 	@Override
 	public void update(double delta)
 	{
-		for (final MapInteractionPlugin p : plugins) {
-			p.update(this, pc, delta);
-		}
 		zoom.update(delta);
 	}
 }

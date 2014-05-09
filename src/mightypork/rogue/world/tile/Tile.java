@@ -56,20 +56,27 @@ public abstract class Tile implements IonObjBlob {
 	{
 		if (!isExplored()) return;
 		
-		if (renderer == null) {
-			renderer = makeRenderer();
-		}
-		
-		if (renderer == null) {
-			Log.w("No renderer for tile " + Log.str(this));
-			return;
-		}
+		initRenderer();
 		
 		renderer.renderTile(context);
 		
 		if (doesReceiveShadow()) renderer.renderShadows(context);
 		
 		renderer.renderUnexploredFog(context);
+	}
+	
+	
+	private void initRenderer()
+	{
+		if (renderer == null) {
+			renderer = makeRenderer();
+			
+			if (renderer == /*still*/null) {
+				Log.w("No renderer for tile " + Log.str(this));
+				renderer = TileRenderer.NONE;
+				return;
+			}
+		}
 	}
 	
 	
@@ -151,9 +158,10 @@ public abstract class Tile implements IonObjBlob {
 	
 	
 	@DefaultImpl
-	public void update(double delta)
+	public void updateTile(double delta)
 	{
-		makeRenderer().update(delta);
+		initRenderer();
+		renderer.update(delta);
 	}
 	
 	

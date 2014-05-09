@@ -184,6 +184,8 @@ public class EntityModulePosition extends EntityModule {
 	
 	/**
 	 * Add a move listener. If already present, do nothing.
+	 * 
+	 * @param listener the listener
 	 */
 	public void addMoveListener(EntityMoveListener listener)
 	{

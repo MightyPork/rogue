@@ -23,7 +23,7 @@ import mightypork.rogue.world.level.render.MapRenderContext;
 
 
 /**
- * World entity (mob or player)
+ * World entity (mob or player). Entities are attached to the event bus.
  * 
  * @author MightyPork
  */

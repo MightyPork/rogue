@@ -23,7 +23,7 @@ public class LevelGenerator {
 	
 	public static Level build(World world, long seed, int complexity, MapTheme theme)
 	{
-		Log.f3("Generating level of complexity: "+complexity);
+		Log.f3("Generating level of complexity: " + complexity);
 		
 		final Random rand = new Random(seed + 13);
 		

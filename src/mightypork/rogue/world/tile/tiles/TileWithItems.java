@@ -37,9 +37,9 @@ public abstract class TileWithItems extends Tile {
 	
 	
 	@Override
-	public void update(double delta)
+	public void updateTile(double delta)
 	{
-		super.update(delta);
+		super.updateTile(delta);
 		itemRenderer.update(delta);
 	}
 	

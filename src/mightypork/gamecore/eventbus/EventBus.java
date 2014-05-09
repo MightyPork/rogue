@@ -91,7 +91,11 @@ final public class EventBus implements Destroyable, BusAccess {
 				}
 				
 				if (evt != null) {
-					dispatch(evt.getEvent());
+					try {
+						dispatch(evt.getEvent());
+					} catch (final Throwable t) {
+						Log.w(logMark + "Error while dispatching event: " + t);
+					}
 				}
 			}
 		}
@@ -136,6 +140,8 @@ final public class EventBus implements Destroyable, BusAccess {
 	
 	/** Messages queued for delivery */
 	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<>();
+	
+	private volatile boolean sendingDirect = false;
 	
 	
 	/**
@@ -335,9 +341,19 @@ final public class EventBus implements Destroyable, BusAccess {
 	{
 		assertLive();
 		
+		if (sendingDirect) {
+			Log.w("Cannot send a direct event in response to another.");
+			sendQueued(event);
+			return;
+		}
+		
+		sendingDirect = true;
+		
 		clients.setBuffering(true);
 		doDispatch(clients, event);
 		clients.setBuffering(false);
+		
+		sendingDirect = false;
 	}
 	
 	

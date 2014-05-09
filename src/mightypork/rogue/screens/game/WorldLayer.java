@@ -23,8 +23,8 @@ public class WorldLayer extends ScreenLayer {
 		worldView = new MapView();
 		
 		// map input plugins
-		worldView.addPlugin(new MIPKeyboard());
-		worldView.addPlugin(new MIPMouse());
+		worldView.addPlugin(new MIPKeyboard(worldView));
+		worldView.addPlugin(new MIPMouse(worldView));
 		
 		// size of lower navbar
 		final Num lownav = root.width().min(root.height()).max(700).perc(7);

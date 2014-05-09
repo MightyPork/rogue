@@ -8,66 +8,72 @@ import mightypork.gamecore.util.math.Polar;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.world.PlayerControl;
+import mightypork.rogue.world.entity.entities.PlayerEntity;
 import mightypork.rogue.world.gui.MapView;
 import mightypork.rogue.world.tile.Tile;
 
 
-public class MIPMouse implements MapInteractionPlugin {
+public class MIPMouse extends MapInteractionPlugin {
 	
 	private static final int BTN = 0; // left
 	
 	
+	public MIPMouse(MapView mapView)
+	{
+		super(mapView);
+	}
+	
+	
 	@Override
-	public void update(MapView view, PlayerControl pc, double delta)
+	public void update(double delta)
 	{
 		if (!InputSystem.isKeyDown(Keys.L_SHIFT)) return;
 		
 		final Vect pos = InputSystem.getMousePos();
 		
 		if (InputSystem.isMouseButtonDown(BTN)) {
-			if (mouseWalk(view, pc, pos)) return;
-			if (troToNav(view, pc, pos)) return;
+			if (mouseWalk(pos)) return;
+			if (troToNav(pos)) return;
 		}
 	}
 	
 	
 	@Override
-	public boolean onClick(MapView view, PlayerControl pc, Vect mouse, int button, boolean down)
+	public boolean onClick(Vect mouse, int button, boolean down)
 	{
 		if (button != BTN) return false;
-		final Coord pos = view.toWorldPos(mouse);
-		final Tile t = pc.getLevel().getTile(pos);
+		final Coord pos = mapView.toWorldPos(mouse);
+		final Tile t = mapView.playerControl.getLevel().getTile(pos);
 		
 		if (t.onClick()) return true;
 		
 		if (!down && t.isWalkable()) {
-			if (troToNav(view, pc, mouse)) return true;
-			return mouseWalk(view, pc, mouse);
+			if (troToNav(mouse)) return true;
+			return mouseWalk(mouse);
 		}
 		
 		return false;
 	}
 	
 	
-	private boolean troToNav(MapView view, PlayerControl pc, Vect mouse)
+	private boolean troToNav(Vect mouse)
 	{
-		final Coord plpos = pc.getCoord();
-		final Coord clicked = view.toWorldPos(mouse);
+		final Coord plpos = mapView.playerControl.getCoord();
+		final Coord clicked = mapView.toWorldPos(mouse);
 		if (clicked.equals(plpos)) return false;
 		
-		final Tile t = pc.getLevel().getTile(clicked);
+		final Tile t = mapView.playerControl.getLevel().getTile(clicked);
 		if (!t.isWalkable() || !t.isExplored()) return false;
 		
-		pc.navigateTo(clicked);
+		mapView.playerControl.navigateTo(clicked);
 		return true;
 	}
 	
 	
-	private boolean mouseWalk(MapView view, PlayerControl pc, Vect pos)
+	private boolean mouseWalk(Vect pos)
 	{
-		final Coord plpos = pc.getCoord();
-		final Coord clicked = view.toWorldPos(pos);
+		final Coord plpos = mapView.playerControl.getCoord();
+		final Coord clicked = mapView.toWorldPos(pos);
 		if (clicked.equals(plpos)) return false;
 		
 		final Polar p = Polar.fromCoord(clicked.x - plpos.x, clicked.y - plpos.y);
@@ -76,16 +82,16 @@ public class MIPMouse implements MapInteractionPlugin {
 		
 		switch (dir) {
 			case 0:
-				return pc.tryGo(Sides.E);
+				return mapView.playerControl.tryGo(Sides.E);
 				
 			case 1:
-				return pc.tryGo(Sides.S);
+				return mapView.playerControl.tryGo(Sides.S);
 				
 			case 2:
-				return pc.tryGo(Sides.W);
+				return mapView.playerControl.tryGo(Sides.W);
 				
 			case 3:
-				return pc.tryGo(Sides.N);
+				return mapView.playerControl.tryGo(Sides.N);
 		}
 		
 		return false;
@@ -93,25 +99,23 @@ public class MIPMouse implements MapInteractionPlugin {
 	
 	
 	@Override
-	public boolean onKey(MapView view, PlayerControl player, int key, boolean down)
+	public boolean onKey(int key, boolean down)
 	{
 		return false;
 	}
 	
 	
 	@Override
-	public boolean onStepEnd(MapView view, PlayerControl pc)
+	public void onStepFinished(PlayerEntity player)
 	{
-		if (!InputSystem.isKeyDown(Keys.L_SHIFT)) return false;
+		if (!InputSystem.isKeyDown(Keys.L_SHIFT)) return;
 		
 		final Vect pos = InputSystem.getMousePos();
 		
 		if (InputSystem.isMouseButtonDown(BTN)) {
-			if (mouseWalk(view, pc, pos)) return true;
-			if (troToNav(view, pc, pos)) return true;
+			if (mouseWalk(pos)) return;
+			if (troToNav(pos)) return;
 		}
-		
-		return false;
 	}
 	
 }

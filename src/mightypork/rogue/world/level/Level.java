@@ -6,6 +6,8 @@ import java.util.*;
 
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.EventBus;
+import mightypork.gamecore.eventbus.clients.DelegatingClient;
+import mightypork.gamecore.eventbus.clients.ToggleableClient;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonInput;
@@ -21,6 +23,7 @@ import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityType;
+import mightypork.rogue.world.entity.entities.PlayerEntity;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
@@ -31,7 +34,7 @@ import mightypork.rogue.world.tile.Tiles;
  * 
  * @author MightyPork
  */
-public class Level implements BusAccess, LevelAccess, IonObjBinary {
+public class Level implements BusAccess, DelegatingClient, ToggleableClient, LevelAccess, IonObjBinary {
 	
 	public static final int ION_MARK = 53;
 	
@@ -45,6 +48,8 @@ public class Level implements BusAccess, LevelAccess, IonObjBinary {
 	
 	private final Map<Integer, Entity> entityMap = new HashMap<>();
 	private final Set<Entity> entitySet = new HashSet<>();
+	
+	private int playerCount = 0;
 	
 	/** Level seed (used for generation and tile variation) */
 	public long seed;
@@ -201,14 +206,13 @@ public class Level implements BusAccess, LevelAccess, IonObjBinary {
 		// just update them all
 		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
 			for (c.y = 0; c.y < size.y; c.y++) {
-				getTile(c).update(delta);
+				getTile(c).updateTile(delta);
 			}
 		}
 		
 		final List<Entity> toRemove = new ArrayList<>();
 		
 		for (final Entity e : entitySet) {
-			e.update(delta);
 			if (e.isDead() && e.canRemoveCorpse()) toRemove.add(e);
 		}
 		
@@ -249,6 +253,7 @@ public class Level implements BusAccess, LevelAccess, IonObjBinary {
 		
 		entityMap.put(entity.getEntityId(), entity);
 		entitySet.add(entity);
+		if (entity instanceof PlayerEntity) playerCount++;
 		
 		// join to level & world
 		entity.setLevel(this);
@@ -271,6 +276,8 @@ public class Level implements BusAccess, LevelAccess, IonObjBinary {
 	public void removeEntity(int eid)
 	{
 		final Entity removed = entityMap.remove(eid);
+		if (removed == null) throw new NullPointerException("No such entity in level: " + eid);
+		if (removed instanceof PlayerEntity) playerCount--;
 		entitySet.remove(removed);
 		freeTile(removed.getCoord());
 	}
@@ -461,5 +468,27 @@ public class Level implements BusAccess, LevelAccess, IonObjBinary {
 	public EventBus getEventBus()
 	{
 		return world.getEventBus();
+	}
+	
+	
+	@Override
+	public boolean isListening()
+	{
+		return playerCount > 0;
+	}
+	
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public Collection getChildClients()
+	{
+		return entitySet;
+	}
+	
+	
+	@Override
+	public boolean doesDelegate()
+	{
+		return isListening();
 	}
 }

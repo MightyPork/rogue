@@ -1,22 +1,31 @@
 package mightypork.rogue.world.gui.interaction;
 
 
+import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.world.PlayerControl;
+import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
 
 
-public interface MapInteractionPlugin {
+public abstract class MapInteractionPlugin implements Updateable, PlayerStepEndListener {
 	
-	boolean onStepEnd(MapView mapView, PlayerControl player);
-	
-	
-	boolean onClick(MapView mapView, PlayerControl player, Vect mouse, int button, boolean down);
+	protected final MapView mapView;
 	
 	
-	boolean onKey(MapView mapView, PlayerControl player, int key, boolean down);
+	public MapInteractionPlugin(MapView mapView)
+	{
+		super();
+		this.mapView = mapView;
+	}
 	
 	
-	void update(MapView mapView, PlayerControl pc, double delta);
+	public abstract boolean onClick(Vect mouse, int button, boolean down);
+	
+	
+	public abstract boolean onKey(int key, boolean down);
+	
+	
+	@Override
+	public abstract void update(double delta);
 	
 }

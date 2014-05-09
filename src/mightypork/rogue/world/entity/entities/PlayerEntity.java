@@ -12,6 +12,7 @@ import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.entity.render.EntityRenderer;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
 import mightypork.rogue.world.events.PlayerKilledEvent;
+import mightypork.rogue.world.events.PlayerStepEndEvent;
 
 
 public class PlayerEntity extends Entity {
@@ -32,18 +33,26 @@ public class PlayerEntity extends Entity {
 		public void onStepFinished()
 		{
 			entity.getLevel().explore(entity.pos.getCoord());
+			fireEvt();
 		}
 		
 		
 		@Override
 		public void onPathFinished()
 		{
+			fireEvt();
 		}
 		
 		
 		@Override
 		public void onPathInterrupted()
 		{
+		}
+		
+		
+		private void fireEvt()
+		{
+			getWorld().getEventBus().send(new PlayerStepEndEvent(PlayerEntity.this));
 		}
 		
 		
@@ -86,7 +95,7 @@ public class PlayerEntity extends Entity {
 					}
 					
 					return super.getCost(from, to);
-				};
+				}
 			};
 		}
 		
