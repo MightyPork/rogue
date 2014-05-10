@@ -13,6 +13,8 @@ import mightypork.rogue.world.entity.render.EntityRenderer;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
 import mightypork.rogue.world.events.PlayerKilledEvent;
 import mightypork.rogue.world.events.PlayerStepEndEvent;
+import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.tile.Tile;
 
 
 public class PlayerEntity extends Entity {
@@ -35,6 +37,18 @@ public class PlayerEntity extends Entity {
 		{
 			entity.getLevel().explore(entity.pos.getCoord());
 			fireEvt();
+			
+			// try to pickup items
+			
+			final Tile t = getLevel().getTile(getCoord());
+			if (t.hasItem()) {
+				final Item item = t.pickItem();
+				if (getWorld().getPlayer().getInventory().addItem(item)) {
+					// player picked item
+				} else {
+					t.dropItem(item); // put back.
+				}
+			}
 		}
 		
 		
@@ -125,7 +139,7 @@ public class PlayerEntity extends Entity {
 	@Override
 	public void onKilled()
 	{
-		// send kill event to listeners (GUI?)
+		// send kill event to listeners, after the entity has despawned (disappeared)
 		getWorld().getEventBus().sendDelayed(new PlayerKilledEvent(), getDespawnDelay());
 	}
 }

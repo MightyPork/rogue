@@ -72,7 +72,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	private Tile[][] tiles;
 	
 	private final Map<Integer, Entity> entityMap = new HashMap<>();
-	private final List<Entity> entitySet = new LinkedList<>();
+	private final List<Entity> entityList = new LinkedList<>();
 	
 	private int playerCount = 0;
 	
@@ -210,10 +210,10 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		}
 		
 		// load entities
-		Entities.loadEntities(in, entitySet);
+		Entities.loadEntities(in, entityList);
 		
 		// prepare entities
-		for (final Entity ent : entitySet) {
+		for (final Entity ent : entityList) {
 			ent.setLevel(this);
 			occupyTile(ent.getCoord());
 			entityMap.put(ent.getEntityId(), ent);
@@ -241,7 +241,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 			}
 		}
 		
-		Entities.saveEntities(out, entitySet);
+		Entities.saveEntities(out, entityList);
 	}
 	
 	
@@ -258,7 +258,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		timeSinceLastEntitySort += delta;
 		
 		if (timeSinceLastEntitySort > 0.2) {
-			Collections.sort(entitySet, ENTITY_RENDER_CMP);
+			Collections.sort(entityList, ENTITY_RENDER_CMP);
 			timeSinceLastEntitySort = 0;
 		}
 		
@@ -271,7 +271,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		
 		final List<Entity> toRemove = new ArrayList<>();
 		
-		for (final Entity e : entitySet) {
+		for (final Entity e : entityList) {
 			if (e.isDead() && e.canRemoveCorpse()) toRemove.add(e);
 		}
 		
@@ -324,7 +324,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		}
 		
 		entityMap.put(entity.getEntityId(), entity);
-		entitySet.add(entity);
+		entityList.add(entity);
 		if (entity instanceof PlayerEntity) playerCount++;
 		
 		// join to level & world
@@ -358,7 +358,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		final Entity removed = entityMap.remove(eid);
 		if (removed == null) throw new NullPointerException("No such entity in level: " + eid);
 		if (removed instanceof PlayerEntity) playerCount--;
-		entitySet.remove(removed);
+		entityList.remove(removed);
 		freeTile(removed.getCoord());
 	}
 	
@@ -548,7 +548,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		
 		if (type == EntityType.MONSTER) System.out.println("Finding entity in range " + radius + " of " + pos);
 		
-		for (final Entity e : entitySet) {
+		for (final Entity e : entityList) {
 			if (e.isDead()) continue;
 			
 			if (e.getType() == type) {
@@ -578,7 +578,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	{
 		if (getTile(pos).isOccupied()) {
 			final Set<Entity> toButcher = new HashSet<>();
-			for (final Entity e : entitySet) {
+			for (final Entity e : entityList) {
 				if (e.getCoord().equals(pos)) {
 					toButcher.add(e);
 					break;
@@ -602,7 +602,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	 */
 	public boolean isEntityPresent(Entity entity)
 	{
-		return entitySet.contains(entity);
+		return entityList.contains(entity);
 	}
 	
 	
@@ -625,7 +625,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	 */
 	public Collection<Entity> getEntities()
 	{
-		return entitySet;
+		return entityList;
 	}
 	
 	
@@ -647,7 +647,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	@Override
 	public Collection getChildClients()
 	{
-		return entitySet;
+		return entityList;
 	}
 	
 	

@@ -3,6 +3,7 @@ package mightypork.rogue.world.item;
 
 import java.io.IOException;
 
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonObjBlob;
@@ -61,7 +62,7 @@ public abstract class Item implements IonObjBlob {
 	@DefaultImpl
 	protected int getMaxStackSize()
 	{
-		return isStackable() ? 1 : 65535;
+		return isStackable() ? 65535 : 1;
 	}
 	
 	
@@ -85,6 +86,7 @@ public abstract class Item implements IonObjBlob {
 	public boolean addItem(Item added)
 	{
 		if (!canStackWith(added)) return false;
+		if (added.isEmpty()) return true;
 		
 		final int room = getMaxStackSize() - this.amount;
 		final int avail = added.amount;
@@ -148,4 +150,11 @@ public abstract class Item implements IonObjBlob {
 	
 	
 	public abstract ItemType getType();
+	
+	
+	@Override
+	public String toString()
+	{
+		return Log.str(getClass()) + " x " + getAmount();
+	}
 }

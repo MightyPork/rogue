@@ -203,7 +203,6 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	@DefaultImpl
 	public void onKilled()
 	{
-		getLevel().freeTile(getCoord());
 	}
 	
 	

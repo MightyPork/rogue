@@ -5,6 +5,7 @@ import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.gamecore.util.math.Calc;
+import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumVar;
@@ -70,7 +71,10 @@ public class EntityRendererMobLR extends EntityRenderer {
 		
 		final double hw = spriteRect.width().half().value();
 		
-		Render.quadTextured(Vect.ZERO.expand(hw, hw, hw, hw), q, hue.withAlpha(entity.isDead() ? 1 - hurtTime / 2 : 1));
+		Render.quadTextured(
+				Vect.ZERO.expand(hw, hw, hw, hw),
+				q,
+				hue.withAlpha(entity.isDead() ? 1 - Easing.CIRC_IN.get(hurtTime / entity.getDespawnDelay()) : 1));
 		Render.popMatrix();
 	}
 }

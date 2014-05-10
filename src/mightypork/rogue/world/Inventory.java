@@ -135,7 +135,7 @@ public class Inventory implements IonObjBinary {
 		// try to merge with another item
 		for (int i = 0; i < getSize(); i++) {
 			final Item itm = getItem(i);
-			if (itm != null && itm.canStackWith(stored)) {
+			if (itm != null) {
 				if (itm.addItem(stored)) return true;
 			}
 		}
@@ -151,5 +151,23 @@ public class Inventory implements IonObjBinary {
 		
 		// could not insert.
 		return false;
+	}
+	
+	
+	@Override
+	public String toString()
+	{
+		String s = "Inv[";
+		
+		for (int i = 0; i < getSize(); i++) {
+			if (i > 0) s += ", ";
+			s += i + ": ";
+			final Item itm = getItem(i);
+			
+			if (itm == null) s += "<null>";
+			else s += itm;
+		}
+		s += "]";
+		return s;
 	}
 }

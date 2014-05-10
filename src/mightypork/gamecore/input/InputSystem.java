@@ -153,7 +153,6 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		
 		// flip Y axis
 		pos.setY(Display.getHeight() - pos.y());
-		move.mul(1, -1, 1);
 		
 		if (button != -1 || wheeld != 0) {
 			getEventBus().send(new MouseButtonEvent(pos.freeze(), button, down, wheeld));

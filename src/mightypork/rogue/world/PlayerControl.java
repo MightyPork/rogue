@@ -110,7 +110,7 @@ public abstract class PlayerControl {
 		if (pos.dist(getPlayer().getVisualPos().add(0.5, 0.5)).value() < 1.5) {
 			
 			// 1st try to hit entity
-			final Entity prey = getLevel().getClosestEntity(pos, EntityType.MONSTER, 1.2);
+			final Entity prey = getLevel().getClosestEntity(pos, EntityType.MONSTER, 1);
 			if (prey != null) {
 				prey.receiveAttack(getPlayer().getEntity(), getPlayer().getAttackStrength());
 				return true;

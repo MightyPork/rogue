@@ -8,6 +8,8 @@ import mightypork.rogue.world.entity.EntityPathFinder;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.render.EntityRenderer;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
+import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.item.Items;
 
 
 public class RatEntity extends Entity {
@@ -28,11 +30,11 @@ public class RatEntity extends Entity {
 		pos.addMoveListener(ai);
 		
 		pos.setStepTime(0.5);
-		setDespawnDelay(2);
+		setDespawnDelay(1);
 		
 		health.setMaxHealth(3 + rand.nextInt(3));
 		health.fill(); // fill health bar to max
-		health.setHitCooldownTime(0.2);
+		health.setHitCooldownTime(0.3);
 	}
 	
 	
@@ -62,6 +64,18 @@ public class RatEntity extends Entity {
 		}
 		
 		return renderer;
+	}
+	
+	
+	@Override
+	public void onKilled()
+	{
+		super.onKilled();
+		
+		// drop rat meat
+		final Item meat = Items.MEAT.createItem();
+		
+		getLevel().getTile(getCoord()).dropItem(meat);
 	}
 	
 }

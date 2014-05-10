@@ -61,6 +61,7 @@ public abstract class TileRenderer implements Updateable {
 			UFOG_NE = Res.txq("tile.ufog.ne");
 			UFOG_SW = Res.txq("tile.ufog.sw");
 			UFOG_SE = Res.txq("tile.ufog.se");
+			inited = true;
 		}
 	}
 	
