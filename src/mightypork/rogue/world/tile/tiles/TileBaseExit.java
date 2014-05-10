@@ -17,8 +17,8 @@ public abstract class TileBaseExit extends TileBaseStairs {
 	@Override
 	public boolean onClick()
 	{
-		Coord plpos = getWorld().getPlayerEntity().getCoord();		
-		if(!plpos.equals(getLevel().getExitPoint())) return false;
+		final Coord plpos = getWorld().getPlayer().getCoord();
+		if (!plpos.equals(getLevel().getExitPoint())) return false;
 		
 		getEventBus().send(new WorldDescendRequest());
 		

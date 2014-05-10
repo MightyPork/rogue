@@ -12,6 +12,8 @@ import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.timing.Pauseable;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
@@ -25,20 +27,152 @@ import mightypork.rogue.world.level.Level;
  */
 public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable {
 	
-	private final ArrayList<Level> levels = new ArrayList<>();
+	/**
+	 * Convenient access to player-related methods and data
+	 * 
+	 * @author MightyPork
+	 */
+	public class PlayerFacade {
+		
+		
+		public boolean canAscend()
+		{
+			return playerInfo.getLevelNumber() > 0;
+		}
+		
+		
+		public void descend()
+		{
+			if (!canDescend()) return;
+			
+			final int lvl_num = getLevelNumber();
+			getLevel().removeEntity(playerEntity);
+			
+			playerInfo.setLevelNumber(lvl_num + 1);
+			
+			getLevel().addEntity(playerEntity, getLevel().getEnterPoint());
+			getLevel().explore(getCoord());
+		}
+		
+		
+		public boolean canDescend()
+		{
+			return playerInfo.getLevelNumber() < levels.size() - 1;
+		}
+		
+		
+		public void ascend()
+		{
+			if (!canAscend()) return;
+			
+			final int lvl_num = getLevelNumber();
+			getLevel().removeEntity(playerEntity);
+			
+			playerInfo.setLevelNumber(lvl_num - 1);
+			
+			getLevel().addEntity(playerEntity, getLevel().getExitPoint());
+			getLevel().explore(getCoord());
+		}
+		
+		
+		/**
+		 * @return current level number, zero based.
+		 */
+		public int getLevelNumber()
+		{
+			return playerInfo.getLevelNumber();
+		}
+		
+		
+		public Level getLevel()
+		{
+			return levels.get(playerInfo.getLevelNumber());
+		}
+		
+		
+		public int getEID()
+		{
+			return playerInfo.getEID();
+		}
+		
+		
+		public Coord getCoord()
+		{
+			return playerEntity.getCoord();
+		}
+		
+		
+		public Vect getVisualPos()
+		{
+			return playerEntity.pos.getVisualPos();
+		}
+		
+		
+		public void navigateTo(Coord pos)
+		{
+			playerEntity.pos.navigateTo(pos);
+		}
+		
+		
+		public void cancelPath()
+		{
+			playerEntity.pos.cancelPath();
+		}
+		
+		
+		public void addPathStep(Step step)
+		{
+			playerEntity.pos.addStep(step);
+		}
+		
+		
+		public boolean isMoving()
+		{
+			return playerEntity.pos.isMoving();
+		}
+		
+		
+		public double getMoveProgress()
+		{
+			return playerEntity.pos.getProgress();
+		}
+		
+		
+		public boolean isDead()
+		{
+			return playerEntity.isDead();
+		}
+		
+		
+		public int getHealth()
+		{
+			return playerEntity.health.getHealth();
+		}
+		
+		
+		public int getHealthMax()
+		{
+			return playerEntity.health.getMaxHealth();
+		}
+		
+	}
 	
-	private final PlayerInfo playerInfo = new PlayerInfo();
+	// not saved stuffs
+	private final PlayerFacade player = new PlayerFacade();
 	private Entity playerEntity;
-	
 	private BusAccess bus;
+	private boolean paused;
+	
+	
+	private final ArrayList<Level> levels = new ArrayList<>();
+	private final PlayerInfo playerInfo = new PlayerInfo();
+	
 	
 	/** World seed */
 	private long seed;
 	
 	/** Next entity ID */
 	private int eid;
-	
-	private boolean paused;
 	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -70,7 +204,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		in.loadBundled("player", playerInfo);
 		
-		playerEntity = levels.get(playerInfo.getLevel()).getEntity(playerInfo.getEID());
+		playerEntity = levels.get(playerInfo.getLevelNumber()).getEntity(playerInfo.getEID());
 		if (playerEntity == null) {
 			throw new RuntimeException("Player entity not found in the world.");
 		}
@@ -115,7 +249,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	}
 	
 	
-	public void createPlayer(int level)
+	public void createPlayer()
 	{
 		if (playerInfo.isInitialized()) {
 			throw new RuntimeException("Player already created.");
@@ -124,10 +258,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		// make entity
 		final int playerEid = getNewEID();
 		
-		final Level floor = levels.get(level);
-		if (floor == null) {
-			throw new IndexOutOfBoundsException("No such level: " + level);
-		}
+		final Level floor = levels.get(0);
 		
 		playerEntity = Entities.PLAYER.createEntity(playerEid);
 		
@@ -143,20 +274,8 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		floor.explore(spawn);
 		
-		playerInfo.setLevel(level);
+		playerInfo.setLevelNumber(0);
 		playerInfo.setEID(playerEid);
-	}
-	
-	
-	public Level getCurrentLevel()
-	{
-		return levels.get(playerInfo.getLevel());
-	}
-	
-	
-	public Entity getPlayerEntity()
-	{
-		return playerEntity;
 	}
 	
 	
@@ -200,39 +319,9 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	}
 	
 	
-	public boolean canAscend()
+	public PlayerFacade getPlayer()
 	{
-		return playerInfo.getLevel() > 0;
-	}
-	
-	
-	public boolean canDescend()
-	{
-		return playerInfo.getLevel() < levels.size() - 1;
-	}
-	
-	
-	public void ascend()
-	{
-		if (!canAscend()) return;
-		
-		int lvl_num = playerInfo.getLevel();
-		getCurrentLevel().removeEntity(playerEntity);
-		playerInfo.setLevel(lvl_num - 1);
-		getCurrentLevel().addEntity(playerEntity, getCurrentLevel().getExitPoint());
-		getCurrentLevel().explore(playerEntity.getCoord());
-	}
-	
-	
-	public void descend()
-	{
-		if (!canDescend()) return;
-		
-		int lvl_num = playerInfo.getLevel();
-		getCurrentLevel().removeEntity(playerEntity);
-		playerInfo.setLevel(lvl_num + 1);
-		getCurrentLevel().addEntity(playerEntity, getCurrentLevel().getEnterPoint());
-		getCurrentLevel().explore(playerEntity.getCoord());
+		return player;
 	}
 	
 }

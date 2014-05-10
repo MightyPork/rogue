@@ -43,7 +43,7 @@ public class ScreenGame extends LayeredScreen {
 		};
 		
 		//pause key
-		bindKey(new KeyStroke(Keys.L_CONTROL, Keys.P), pauseIt);
+		bindKey(new KeyStroke(Keys.P), pauseIt);
 		bindKey(new KeyStroke(Keys.PAUSE), pauseIt);
 	}
 	

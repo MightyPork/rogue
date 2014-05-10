@@ -71,8 +71,7 @@ public class WorldRenderer extends RectProxy {
 	
 	private VectConst getOffset()
 	{
-		final Entity ent = WorldProvider.get().getPlayerEntity();
-		return Vect.make(ent.pos.getVisualPos().neg().sub(0.5, 0.5)).freeze();
+		return Vect.make(WorldProvider.get().getPlayer().getVisualPos().neg().sub(0.5, 0.5)).freeze();
 	}
 	
 	
@@ -87,9 +86,8 @@ public class WorldRenderer extends RectProxy {
 		Render.translate(getOffset());
 		
 		// tiles to render
-		final Entity ent = WorldProvider.get().getPlayerEntity();
 		
-		final Coord pos = ent.getCoord();
+		final Coord pos = WorldProvider.get().getPlayer().getCoord();
 		final double w = width().value();
 		final double h = height().value();
 		

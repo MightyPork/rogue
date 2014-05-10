@@ -17,8 +17,8 @@ public abstract class TileBaseEntrance extends TileBaseStairs {
 	@Override
 	public boolean onClick()
 	{
-		Coord plpos = getWorld().getPlayerEntity().getCoord();		
-		if(!plpos.equals(getLevel().getEnterPoint())) return false;
+		final Coord plpos = getWorld().getPlayer().getCoord();
+		if (!plpos.equals(getLevel().getEnterPoint())) return false;
 		
 		getEventBus().send(new WorldAscendRequest());
 		

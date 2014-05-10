@@ -1,0 +1,47 @@
+package mightypork.rogue.screens.game;
+
+
+import mightypork.gamecore.gui.components.ClickableComponent;
+import mightypork.gamecore.render.Render;
+import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.rogue.Res;
+
+
+/**
+ * Button in the ingame nav
+ * 
+ * @author MightyPork
+ */
+public class NavButton extends ClickableComponent {
+	
+	private final TxQuad base, hover, down, fg;
+	
+	
+	public NavButton(TxQuad fg)
+	{
+		super();
+		this.base = Res.txq("nav.button.bg.base");
+		this.hover = Res.txq("nav.button.bg.hover");
+		this.down = Res.txq("nav.button.bg.down");
+		this.fg = fg;
+	}
+	
+	
+	@Override
+	protected void renderComponent()
+	{
+		TxQuad bg;
+		
+		if (btnDownOver) {
+			bg = down;
+		} else if (isMouseOver()) {
+			bg = hover;
+		} else {
+			bg = base;
+		}
+		
+		Render.quadTextured(this, bg);
+		Render.quadTextured(this, fg);
+	}
+	
+}

@@ -50,12 +50,13 @@ public final class Res {
 	private static void loadFonts()
 	{
 		fonts.loadFont("polygon_pixel", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16));
-		fonts.loadFont("press_start", new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.latin, 16));
+		fonts.loadFont("press_start", new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
 		
 		// aliases based on concrete usage
 		fonts.addAlias("default", "polygon_pixel");
 		fonts.addAlias("main_menu_button", "press_start");
 		fonts.addAlias("main_menu_title", "press_start");
+		fonts.addAlias("hud", "press_start");
 	}
 	
 	
@@ -65,69 +66,83 @@ public final class Res {
 		QuadGrid grid;
 		
 		// gui
-		texture = textures.loadTexture("gui1", "/res/img/gui1.png", FilterMode.NEAREST, WrapMode.CLAMP);
-		final QuadGrid gui = texture.grid(4, 4);
-		textures.addQuad("item_frame", gui.makeQuad(0, 0));
-		textures.addQuad("sword", gui.makeQuad(1, 0));
-		textures.addQuad("meat", gui.makeQuad(2, 0));
-		textures.addQuad("heart_on", gui.makeQuad(.0, 1, .5, .5));
-		textures.addQuad("heart_off", gui.makeQuad(.5, 1, .5, .5));
-		textures.addQuad("heart_half", gui.makeQuad(1, 1, .5, .5));
-		textures.addQuad("xp_on", gui.makeQuad(0, 1.5, .5, .5));
-		textures.addQuad("xp_off", gui.makeQuad(.5, 1.5, .5, .5));
-		textures.addQuad("panel", gui.makeQuad(0, 3.75, 4, .25));
+		texture = textures.loadTexture("/res/img/gui.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		
+		// small gui elements
+		grid = texture.grid(32, 32);
+		textures.add("hud.heart.on", grid.makeQuad(0, 0));
+		textures.add("hud.heart.off", grid.makeQuad(1, 0));
+		textures.add("hud.heart.half", grid.makeQuad(2, 0));
+		textures.add("hud.xp.on", grid.makeQuad(0, 1));
+		textures.add("hud.xp.off", grid.makeQuad(1, 1));
+		
+		// nav
+		grid = texture.grid(8, 8);
+		textures.add("nav.bg", grid.makeQuad(0, 7, 4, 1));
+		textures.add("nav.button.bg.base", grid.makeQuad(4, 7));
+		textures.add("nav.button.bg.hover", grid.makeQuad(5, 7));
+		textures.add("nav.button.bg.down", grid.makeQuad(6, 7));
+		
+		textures.add("nav.button.fg.eat", grid.makeQuad(0, 6));
+		textures.add("nav.button.fg.inventory", grid.makeQuad(1, 6));
+		textures.add("nav.button.fg.attack", grid.makeQuad(2, 6));
+		textures.add("nav.button.fg.options", grid.makeQuad(3, 6));
+		textures.add("nav.button.fg.help", grid.makeQuad(4, 6));
+		
 		
 		// sprites
-		texture = textures.loadTexture("mob", "/res/img/dudes.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.loadTexture("/res/img/sprites.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
-		textures.addSheet("sprite.player", grid.makeSheet(0, 0, 4, 1));
-		textures.addSheet("sprite.rat", grid.makeSheet(0, 1, 4, 1));
+		textures.add("sprite.player", grid.makeSheet(0, 0, 4, 1));
+		textures.add("sprite.rat", grid.makeSheet(0, 1, 4, 1));
 		
-		// sprites
-		texture = textures.loadTexture("logo2", "/res/img/logo2.png", FilterMode.NEAREST, WrapMode.CLAMP);
-		textures.addQuad("logo", texture.makeQuad(Rect.make(0, 0, 0.543, 0.203)));
 		
-		// small sheet
-		texture = textures.loadTexture("tiles", "/res/img/tiles16.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		// logo
+		texture = textures.loadTexture("/res/img/logo.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		textures.add("logo", texture.makeQuad(Rect.make(0, 0, 0.543, 0.203)));
+		
+		
+		// tiles
+		texture = textures.loadTexture("tiles", "/res/img/tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
 		
-		textures.addSheet("tile.brick.floor", grid.makeSheet(0, 1, 5, 1));
-		textures.addSheet("tile.brick.wall", grid.makeSheet(0, 0, 8, 1));
+		textures.add("tile.brick.floor", grid.makeSheet(0, 1, 5, 1));
+		textures.add("tile.brick.wall", grid.makeSheet(0, 0, 8, 1));
 		
-		textures.addSheet("tile.brick.door.locked", grid.makeSheet(1, 2, 1, 1));//TODO unique tx
-		textures.addSheet("tile.brick.door.closed", grid.makeSheet(1, 2, 1, 1));
-		textures.addSheet("tile.brick.door.open", grid.makeSheet(2, 2, 1, 1));
-		textures.addSheet("tile.brick.door.secret", grid.makeSheet(0, 3, 2, 1));
+		textures.add("tile.brick.door.closed", grid.makeQuad(1, 2));
+		textures.add("tile.brick.door.open", grid.makeQuad(2, 2));
+		textures.add("tile.brick.door.secret", grid.makeSheet(0, 3, 2, 1));
 		
-		textures.addSheet("tile.brick.passage", grid.makeSheet(3, 2, 4, 1));
-		textures.addQuad("tile.brick.stairs.up", grid.makeQuad(0, 6));
-		textures.addQuad("tile.brick.stairs.down", grid.makeQuad(1, 6));
+		textures.add("tile.brick.passage", grid.makeSheet(3, 2, 4, 1));
+		textures.add("tile.brick.stairs.up", grid.makeQuad(0, 6));
+		textures.add("tile.brick.stairs.down", grid.makeQuad(1, 6));
 		
-		textures.addQuad("tile.shadow.n", grid.makeQuad(0, 7));
-		textures.addQuad("tile.shadow.s", grid.makeQuad(0, 7).flipY());
-		textures.addQuad("tile.shadow.w", grid.makeQuad(1, 7));
-		textures.addQuad("tile.shadow.e", grid.makeQuad(1, 7).flipX());
+		// shadows
+		textures.add("tile.shadow.n", grid.makeQuad(0, 7));
+		textures.add("tile.shadow.s", grid.makeQuad(0, 7).flipY());
+		textures.add("tile.shadow.w", grid.makeQuad(1, 7));
+		textures.add("tile.shadow.e", grid.makeQuad(1, 7).flipX());
 		
-		textures.addQuad("tile.shadow.nw", grid.makeQuad(2, 7));
-		textures.addQuad("tile.shadow.ne", grid.makeQuad(2, 7).flipX());
-		textures.addQuad("tile.shadow.sw", grid.makeQuad(2, 7).flipY());
-		textures.addQuad("tile.shadow.se", grid.makeQuad(2, 7).flipY().flipX());
+		textures.add("tile.shadow.nw", grid.makeQuad(2, 7));
+		textures.add("tile.shadow.ne", grid.makeQuad(2, 7).flipX());
+		textures.add("tile.shadow.sw", grid.makeQuad(2, 7).flipY());
+		textures.add("tile.shadow.se", grid.makeQuad(2, 7).flipY().flipX());
 		
 		// unexplored fog
-		textures.addQuad("tile.ufog.n", grid.makeQuad(3, 7));
-		textures.addQuad("tile.ufog.s", grid.makeQuad(3, 7).flipY());
-		textures.addQuad("tile.ufog.w", grid.makeQuad(4, 7));
-		textures.addQuad("tile.ufog.e", grid.makeQuad(4, 7).flipX());
+		textures.add("tile.ufog.n", grid.makeQuad(3, 7));
+		textures.add("tile.ufog.s", grid.makeQuad(3, 7).flipY());
+		textures.add("tile.ufog.w", grid.makeQuad(4, 7));
+		textures.add("tile.ufog.e", grid.makeQuad(4, 7).flipX());
 		
-		textures.addQuad("tile.ufog.nw", grid.makeQuad(5, 7));
-		textures.addQuad("tile.ufog.ne", grid.makeQuad(5, 7).flipX());
-		textures.addQuad("tile.ufog.sw", grid.makeQuad(5, 7).flipY());
-		textures.addQuad("tile.ufog.se", grid.makeQuad(5, 7).flipY().flipX());
+		textures.add("tile.ufog.nw", grid.makeQuad(5, 7));
+		textures.add("tile.ufog.ne", grid.makeQuad(5, 7).flipX());
+		textures.add("tile.ufog.sw", grid.makeQuad(5, 7).flipY());
+		textures.add("tile.ufog.se", grid.makeQuad(5, 7).flipY().flipX());
 		
 		
-		texture = textures.loadTexture("items", "/res/img/items16.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.loadTexture("items", "/res/img/items.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
-		textures.addQuad("item.meat", grid.makeQuad(0, 0));
+		textures.add("item.meat", grid.makeQuad(0, 0));
 	}
 	
 	

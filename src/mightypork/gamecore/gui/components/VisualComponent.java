@@ -26,7 +26,6 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	
 	public VisualComponent()
 	{
-		super();
 		enableCaching(false);
 	}
 	

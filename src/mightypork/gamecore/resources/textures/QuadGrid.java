@@ -70,7 +70,7 @@ public class QuadGrid {
 	
 	
 	/**
-	 * Make a sheet of given cells.
+	 * Make a sheet.
 	 * 
 	 * @param x x origin coordinate (cells)
 	 * @param y y origin coordinate (cells)

@@ -8,18 +8,17 @@ import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.app.LightAppModule;
 import mightypork.gamecore.resources.events.ResourceLoadRequest;
 import mightypork.gamecore.util.error.KeyAlreadyExistsException;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
 /**
- * Texture loader and quad registry
+ * Texture storage and quad/sheet registry. Quads and Sheets are interchangeable
+ * once registered.
  * 
  * @author MightyPork
  */
 public class TextureBank extends LightAppModule {
 	
 	private final Map<String, GLTexture> textures = new HashMap<>();
-	private final Map<String, TxQuad> quads = new HashMap<>();
 	private final Map<String, TxSheet> sheets = new HashMap<>();
 	
 	
@@ -33,14 +32,27 @@ public class TextureBank extends LightAppModule {
 	
 	
 	/**
-	 * Load a texture from resource. A full-sized quad with the same key will be
-	 * automatically added.
+	 * Load a texture from resource, with the resource-path as a name.
+	 * 
+	 * @param resourcePath resource path of the texture
+	 * @param filter
+	 * @param wrap
+	 * @return texture reference
+	 */
+	public GLTexture loadTexture(String resourcePath, FilterMode filter, WrapMode wrap)
+	{
+		return loadTexture(resourcePath, resourcePath, filter, wrap);
+	}
+	
+	
+	/**
+	 * Load a texture from resource
 	 * 
 	 * @param key texture key
-	 * @param resourcePath texture resource path
-	 * @param filter filter
-	 * @param wrap texture wrapping
-	 * @return the loaded texture.
+	 * @param resourcePath resource path of the texture
+	 * @param filter
+	 * @param wrap
+	 * @return texture reference
 	 */
 	public GLTexture loadTexture(String key, String resourcePath, FilterMode filter, WrapMode wrap)
 	{
@@ -50,25 +62,11 @@ public class TextureBank extends LightAppModule {
 		texture.setFilter(filter);
 		texture.setWrap(wrap);
 		
-		loadTexture(key, texture);
-		
-		return texture;
-	}
-	
-	
-	/**
-	 * Add an already initialized deferred texture to textures registry
-	 * 
-	 * @param key
-	 * @param texture
-	 */
-	public void loadTexture(String key, DeferredTexture texture)
-	{
 		getEventBus().send(new ResourceLoadRequest(texture));
 		
 		textures.put(key, texture);
 		
-		addQuad(key, texture.makeQuad(Rect.ONE));
+		return texture;
 	}
 	
 	
@@ -78,11 +76,11 @@ public class TextureBank extends LightAppModule {
 	 * @param quadKey key
 	 * @param quad quad to add
 	 */
-	public void addQuad(String quadKey, TxQuad quad)
+	public void add(String quadKey, TxQuad quad)
 	{
-		if (quads.containsKey(quadKey)) throw new KeyAlreadyExistsException();
+		if (sheets.containsKey(quadKey)) throw new KeyAlreadyExistsException();
 		
-		quads.put(quadKey, quad);
+		sheets.put(quadKey, quad.makeSheet(1, 1));
 	}
 	
 	
@@ -92,7 +90,7 @@ public class TextureBank extends LightAppModule {
 	 * @param sheetKey key
 	 * @param sheet sheet to add
 	 */
-	public void addSheet(String sheetKey, TxSheet sheet)
+	public void add(String sheetKey, TxSheet sheet)
 	{
 		if (sheets.containsKey(sheetKey)) throw new KeyAlreadyExistsException();
 		
@@ -101,18 +99,15 @@ public class TextureBank extends LightAppModule {
 	
 	
 	/**
-	 * Get a {@link TxQuad} for key
+	 * Get a {@link TxQuad} for key; if it was added as sheet, the first quad
+	 * ofthe sheet is returned.
 	 * 
 	 * @param key quad key
 	 * @return the quad
 	 */
 	public TxQuad getQuad(String key)
 	{
-		final TxQuad qu = quads.get(key);
-		
-		if (qu == null) throw new RuntimeException("There's no quad called " + key + "!");
-		
-		return qu;
+		return getSheet(key).getQuad(0); // get the first
 	}
 	
 	
@@ -126,7 +121,7 @@ public class TextureBank extends LightAppModule {
 	{
 		final GLTexture tx = textures.get(key);
 		
-		if (tx == null) throw new RuntimeException("There's no texture called " + key + "!");
+		if (tx == null) throw new RuntimeException("There's no texture called \"" + key + "\"!");
 		
 		return tx;
 	}
@@ -142,7 +137,9 @@ public class TextureBank extends LightAppModule {
 	{
 		final TxSheet sh = sheets.get(key);
 		
-		if (sh == null) throw new RuntimeException("There's no sheet called " + key + "!");
+		if (sh == null) {
+			throw new RuntimeException("There's no sheet called  \"" + key + "\"!");
+		}
 		
 		return sh;
 	}

@@ -7,7 +7,7 @@ import java.io.IOException;
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.util.ion.Ion;
-import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.World.PlayerFacade;
 import mightypork.rogue.world.level.Level;
 
 
@@ -87,13 +87,13 @@ public class WorldProvider extends RootBusNode {
 	
 	public Level getCurrentLevel()
 	{
-		return getWorld().getCurrentLevel();
+		return getWorld().getPlayer().getLevel();
 	}
 	
 	
-	public Entity getPlayerEntity()
+	public PlayerFacade getPlayer()
 	{
-		return getWorld().getPlayerEntity();
+		return getWorld().getPlayer();
 	}
 	
 	

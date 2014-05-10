@@ -2,9 +2,12 @@ package mightypork.rogue.world;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
+import mightypork.rogue.world.item.Item;
 
 
 public class PlayerInfo implements IonObjBundled {
@@ -12,12 +15,17 @@ public class PlayerInfo implements IonObjBundled {
 	private int eid = -1; // marks not initialized
 	private int level;
 	
+	private final List<Item> inventory = new ArrayList<>();
+	private int selectedWeapon = -1;
+	
 	
 	@Override
 	public void load(IonBundle bundle) throws IOException
 	{
-		eid = bundle.get("eid", 0);
-		level = bundle.get("floor", 0);
+		eid = bundle.get("eid", eid);
+		level = bundle.get("floor", level);
+		selectedWeapon = bundle.get("weapon", selectedWeapon);
+		bundle.loadSequence("inv", inventory);
 	}
 	
 	
@@ -26,6 +34,8 @@ public class PlayerInfo implements IonObjBundled {
 	{
 		bundle.put("eid", eid);
 		bundle.put("floor", level);
+		bundle.put("weapon", selectedWeapon);
+		bundle.putSequence("inv", inventory);
 	}
 	
 	
@@ -36,7 +46,7 @@ public class PlayerInfo implements IonObjBundled {
 	}
 	
 	
-	public void setLevel(int level)
+	public void setLevelNumber(int level)
 	{
 		this.level = level;
 	}
@@ -48,7 +58,7 @@ public class PlayerInfo implements IonObjBundled {
 	}
 	
 	
-	public int getLevel()
+	public int getLevelNumber()
 	{
 		return level;
 	}

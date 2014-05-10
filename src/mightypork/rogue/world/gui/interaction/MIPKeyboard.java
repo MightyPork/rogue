@@ -43,11 +43,13 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 	@Override
 	public void receive(KeyEvent evt)
 	{
-		if (evt.isDown() || mapView.playerControl.getPlayerEntity().pos.isMoving()) return; // not interested
+		if (isImmobile()) return;
+		
+		if (evt.isDown() || mapView.plc.getPlayer().isMoving()) return; // not interested
 		
 		for (int i = 0; i < 4; i++) {
 			if (evt.getKey() == keys[i]) {
-				mapView.playerControl.clickTile(sides[i]);
+				mapView.plc.clickTile(sides[i]);
 			}
 		}
 	}
@@ -55,14 +57,16 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 	
 	private boolean walkByKey()
 	{
-		if (mapView.playerControl.getPlayerEntity().pos.getProgress()<0.8) return false;
+		if (isImmobile()) return false;
+		
+		if (mapView.plc.getPlayer().getMoveProgress() < 0.8) return false;
 		
 		for (int i = 0; i < 4; i++) {
 			if (InputSystem.isKeyDown(keys[i])) {
 				
 				final Step side = sides[i];
-				if (mapView.playerControl.canGo(side)) {
-					mapView.playerControl.go(side);
+				if (mapView.plc.canGo(side)) {
+					mapView.plc.go(side);
 					return true;
 				} else {
 					return false;

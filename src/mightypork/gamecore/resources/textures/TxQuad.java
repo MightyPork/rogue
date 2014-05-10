@@ -152,4 +152,16 @@ public class TxQuad {
 	{
 		return flipX;
 	}
+	
+	
+	/**
+	 * Use the same flit/other attributes as the original txQuad
+	 * 
+	 * @param original
+	 */
+	public void dupeAttrs(TxQuad original)
+	{
+		this.flipX = original.flipX;
+		this.flipY = original.flipY;
+	}
 }

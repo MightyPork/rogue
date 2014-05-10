@@ -56,6 +56,8 @@ public class FpsOverlay extends Overlay {
 		tp.setShadow(Color.BLACK, Vect.make(tp.height().div(16).round()));
 		
 		root.add(tp);
+		
+		setVisible(false); // initially hide.
 	}
 	
 	

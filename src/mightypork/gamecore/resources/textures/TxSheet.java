@@ -74,7 +74,10 @@ public class TxSheet {
 			final double origW = original.uvs.width().value();
 			final double origH = original.uvs.height().value();
 			
-			sprites[index] = new TxQuad(original.tx, original.uvs.move(x * origW, y * origH));
+			final TxQuad txq = new TxQuad(original.tx, original.uvs.move(x * origW, y * origH));
+			txq.dupeAttrs(original);
+			
+			sprites[index] = txq;
 		}
 		
 		return sprites[index];

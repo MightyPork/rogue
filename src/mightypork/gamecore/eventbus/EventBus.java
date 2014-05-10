@@ -4,6 +4,7 @@ package mightypork.gamecore.eventbus;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
@@ -94,7 +95,7 @@ final public class EventBus implements Destroyable, BusAccess {
 					try {
 						dispatch(evt.getEvent());
 					} catch (final Throwable t) {
-						Log.w(logMark + "Error while dispatching event: " + t);
+						Log.w(logMark + "Error while dispatching event: ", t);
 					}
 				}
 			}
@@ -136,12 +137,14 @@ final public class EventBus implements Destroyable, BusAccess {
 	private boolean dead = false;
 	
 	/** Message channels */
-	private final BufferedHashSet<EventChannel<?, ?>> channels = new BufferedHashSet<>();
+	private final ConcurrentLinkedDeque<EventChannel<?, ?>> channels = new ConcurrentLinkedDeque<>();
 	
 	/** Messages queued for delivery */
 	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<>();
 	
 	private volatile boolean sendingDirect = false;
+	
+	private BusEvent<?> lastEvt;
 	
 	
 	/**
@@ -341,19 +344,9 @@ final public class EventBus implements Destroyable, BusAccess {
 	{
 		assertLive();
 		
-		if (sendingDirect) {
-			Log.w(logMark + "Already dispatching, adding event to queue instead: " + Log.str(event));
-			sendQueued(event);
-			return;
-		}
-		
-		sendingDirect = true;
-		
 		clients.setBuffering(true);
 		doDispatch(clients, event);
 		clients.setBuffering(false);
-		
-		sendingDirect = false;
 	}
 	
 	
@@ -371,7 +364,7 @@ final public class EventBus implements Destroyable, BusAccess {
 		
 		for (int i = 0; i < 2; i++) { // two tries.
 		
-			channels.setBuffering(true);
+//			channels.setBuffering(true);
 			for (final EventChannel<?, ?> b : channels) {
 				if (b.canBroadcast(event)) {
 					accepted = true;
@@ -380,7 +373,7 @@ final public class EventBus implements Destroyable, BusAccess {
 				
 				if (event.isConsumed()) break;
 			}
-			channels.setBuffering(false);
+//			channels.setBuffering(false);
 			
 			if (!accepted) if (addChannelForEvent(event)) continue;
 			

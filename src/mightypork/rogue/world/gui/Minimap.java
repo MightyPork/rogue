@@ -12,8 +12,8 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.mutable.RectMutable;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.rogue.world.World.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
-import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 
@@ -36,8 +36,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 		final Level lvl = WorldProvider.get().getCurrentLevel();
 		unit = (int) Math.min(Math.max(2, Math.ceil((height().value() / 2) / (lvl.getHeight() + 2))), 10);
 		
-		final Entity e = WorldProvider.get().getPlayerEntity();
-		final Vect plCoord = e.pos.getVisualPos();
+		final Vect plCoord = WorldProvider.get().getPlayer().getVisualPos();
 		
 		final int lw = lvl.getWidth();
 		final int lh = lvl.getHeight();
@@ -93,10 +92,11 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 			if (event.isUp()) {
 				final Vect relative = event.getPos().sub(bounds.origin());
 				final Coord actual = Coord.make(relative.xi() / unit, relative.yi() / unit);
-				final Entity player = WorldProvider.get().getPlayerEntity();
+				
+				final PlayerFacade player = WorldProvider.get().getPlayer();
 				
 				if (player.getLevel().getTile(actual).isExplored()) {
-					player.pos.navigateTo(actual);
+					player.navigateTo(actual);
 				}
 			}
 			

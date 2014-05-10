@@ -6,7 +6,7 @@ import java.util.Set;
 
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Step;
-import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.World.PlayerFacade;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
 
@@ -37,11 +37,11 @@ public abstract class PlayerControl {
 	}
 	
 	
-	public Entity getPlayerEntity()
+	public PlayerFacade getPlayer()
 	{
 		if (getWorld() == null) return null;
 		
-		return getWorld().getPlayerEntity();
+		return getWorld().getPlayer();
 	}
 	
 	
@@ -72,25 +72,19 @@ public abstract class PlayerControl {
 	public void navigateTo(Coord pos)
 	{
 		if (!getLevel().getTile(pos).isExplored()) return;
-		getPlayerEntity().pos.navigateTo(pos);
+		getPlayer().navigateTo(pos);
 	}
 	
 	
 	public Level getLevel()
 	{
-		return getWorld().getCurrentLevel();
-	}
-	
-	
-	public Coord getCoord()
-	{
-		return getPlayerEntity().pos.getCoord();
+		return getWorld().getPlayer().getLevel();
 	}
 	
 	
 	public boolean canGo(Step side)
 	{
-		return getLevel().getTile(getCoord().add(side)).isWalkable();
+		return getLevel().getTile(getPlayer().getCoord().add(side)).isWalkable();
 	}
 	
 	
@@ -102,13 +96,13 @@ public abstract class PlayerControl {
 	 */
 	public boolean clickTile(Step side)
 	{
-		return clickTile(getCoord().add(side));
+		return clickTile(getPlayer().getCoord().add(side));
 	}
 	
 	
 	public boolean clickTile(Coord pos)
 	{
-		if (pos.dist(getCoord()) > 8) return false; // too far
+		if (pos.dist(getPlayer().getCoord()) > 8) return false; // too far
 		
 		return getLevel().getTile(pos).onClick();
 	}
@@ -116,8 +110,8 @@ public abstract class PlayerControl {
 	
 	public void go(Step side)
 	{
-		getPlayerEntity().pos.cancelPath();
-		getPlayerEntity().pos.addStep(side);
+		getPlayer().cancelPath();
+		getPlayer().addPathStep(side);
 	}
 	
 	

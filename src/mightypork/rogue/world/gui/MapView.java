@@ -42,33 +42,33 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 	private static final double transition_time = 0.8;
 	
 	protected final WorldRenderer worldRenderer;
-	public final PlayerControl playerControl;
+	public final PlayerControl plc;
 	
 	private final Set<MapInteractionPlugin> plugins = new LinkedHashSet<>();
 	private final NumAnimated zoom = new NumAnimated(0, Easing.SINE_BOTH);
 	private boolean zoom_in = true;
 	
-	private NumAnimated descFadeAnim = new NumAnimated(0);
-	private Color blackColor = RGB.BLACK.withAlpha(descFadeAnim);
+	private final NumAnimated descFadeAnim = new NumAnimated(0);
+	private final Color blackColor = RGB.BLACK.withAlpha(descFadeAnim);
 	
 	private int descDir = 0;
 	
-	private TimedTask timerDesc1 = new TimedTask() {
+	private final TimedTask timerDesc1 = new TimedTask() {
 		
 		@Override
 		public void run()
 		{
 			descFadeAnim.fadeOut(transition_time);
-			timerDesc2.start(transition_time);		
+			timerDesc2.start(transition_time);
 			if (descDir == 1) {
-				WorldProvider.get().getWorld().descend();
+				WorldProvider.get().getWorld().getPlayer().descend();
 			} else {
-				WorldProvider.get().getWorld().ascend();
+				WorldProvider.get().getWorld().getPlayer().ascend();
 			}
 		}
 	};
 	
-	private TimedTask timerDesc2 = new TimedTask() {
+	private final TimedTask timerDesc2 = new TimedTask() {
 		
 		@Override
 		public void run()
@@ -100,7 +100,7 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 	{
 		this.tileSize = height().min(width()).div(10).max(32).mul(Num.make(1).sub(zoom.mul(0.5)));
 		this.worldRenderer = new WorldRenderer(this, tileSize);
-		playerControl = WorldProvider.get().getPlayerControl();
+		plc = WorldProvider.get().getPlayerControl();
 		
 		zoom.setDefaultDuration(0.5);
 	}
@@ -194,11 +194,11 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 	@Override
 	public void onAscendRequest()
 	{
-		if(descFadeAnim.isInProgress()) return;
+		if (descFadeAnim.isInProgress()) return;
 		
-		World w = WorldProvider.get().getWorld();
+		final World w = WorldProvider.get().getWorld();
 		
-		if (w.canAscend()) {
+		if (w.getPlayer().canAscend()) {
 			descDir = -1;
 			startDescAnim();
 		}
@@ -214,16 +214,16 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 		descFadeAnim.setTo(0);
 		descFadeAnim.fadeIn(transition_time);
 	}
-
-
+	
+	
 	@Override
 	public void onDescendRequest()
 	{
-		if(descFadeAnim.isInProgress()) return;
+		if (descFadeAnim.isInProgress()) return;
 		
-		World w = WorldProvider.get().getWorld();
+		final World w = WorldProvider.get().getWorld();
 		
-		if (w.canDescend()) {
+		if (w.getPlayer().canDescend()) {
 			descDir = 1;
 			startDescAnim();
 		}

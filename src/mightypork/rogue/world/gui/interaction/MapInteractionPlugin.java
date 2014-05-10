@@ -1,11 +1,10 @@
 package mightypork.rogue.world.gui.interaction;
 
 
-import mightypork.gamecore.eventbus.events.Updateable;
-import mightypork.gamecore.input.events.KeyEvent;
-import mightypork.gamecore.input.events.KeyListener;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.world.events.PlayerStepEndListener;
+import mightypork.rogue.world.World;
+import mightypork.rogue.world.World.PlayerFacade;
+import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.gui.MapView;
 
 
@@ -18,6 +17,24 @@ public abstract class MapInteractionPlugin {
 	{
 		super();
 		this.mapView = mapView;
+	}
+	
+	
+	protected PlayerFacade getPlayer()
+	{
+		return mapView.plc.getPlayer();
+	}
+	
+	
+	protected boolean isImmobile()
+	{
+		return getPlayer().isDead() || getWorld().isPaused();
+	}
+	
+	
+	protected World getWorld()
+	{
+		return WorldProvider.get().getWorld();
 	}
 	
 	

@@ -20,14 +20,14 @@ public class WorldCreator {
 			final World w = new World();
 			w.setSeed(seed);
 			
-			int count = 6;
+			final int count = 6;
 			
 			for (int i = 1; i <= count; i++) {
 				final Level l = LevelGenerator.build(w, rand.nextLong(), i, LevelGenerator.DUNGEON_THEME, i == count);
 				w.addLevel(l);
 			}
 			
-			w.createPlayer(0);
+			w.createPlayer();
 			
 			return w;
 		}

@@ -27,7 +27,7 @@ public class WorldLayer extends ScreenLayer {
 		worldView.addPlugin(new MIPMouse(worldView));
 		
 		// size of lower navbar
-		final Num lownav = root.width().min(root.height()).max(700).perc(7);
+		final Num lownav = root.height().perc(12);
 		worldView.setRect(root.shrinkBottom(lownav));
 		
 		root.add(worldView);
