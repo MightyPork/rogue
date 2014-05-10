@@ -25,16 +25,20 @@ public abstract class PathFinder {
 	public static final Heuristic CORNER_HEURISTIC = new ManhattanHeuristic();
 	public static final Heuristic DIAGONAL_HEURISTIC = new DiagonalHeuristic();
 	
+	private boolean ignoreStart;
+	private boolean ignoreEnd;
+	
 	
 	public List<Step> findPathRelative(Coord start, Coord end)
 	{
-		return findPathRelative(start, end, false);
+		return findPathRelative(start, end, ignoreStart, ignoreEnd);
 	}
 	
 	
-	public List<Step> findPathRelative(Coord start, Coord end, boolean ignoreEnd)
+	public List<Step> findPathRelative(Coord start, Coord end, boolean ignoreStart, boolean ignoreEnd)
 	{
-		final List<Coord> path = findPath(start, end, ignoreEnd);
+		final List<Coord> path = findPath(start, end, ignoreStart, ignoreEnd);
+		
 		if (path == null) return null;
 		
 		final List<Step> out = new ArrayList<>();
@@ -53,11 +57,11 @@ public abstract class PathFinder {
 	
 	public List<Coord> findPath(Coord start, Coord end)
 	{
-		return findPath(start, end, false);
+		return findPath(start, end, ignoreStart, ignoreEnd);
 	}
 	
 	
-	public List<Coord> findPath(Coord start, Coord end, boolean ignoreEnd)
+	public List<Coord> findPath(Coord start, Coord end, boolean ignoreStart, boolean ignoreEnd)
 	{
 		final LinkedList<Node> open = new LinkedList<>();
 		final LinkedList<Node> closed = new LinkedList<>();
@@ -92,7 +96,7 @@ public abstract class PathFinder {
 			for (final Step go : walkDirs) {
 				
 				final Coord c = current.pos.add(go);
-				if (!isAccessible(c) && !(c.equals(end) && ignoreEnd)) continue;
+				if (!isAccessible(c) && !(c.equals(end) && ignoreEnd) && !(c.equals(start) && ignoreStart)) continue;
 				final Node a = new Node(c);
 				a.g_cost = current.g_cost + getCost(c, a.pos);
 				a.h_cost = (int) (heuristic.getCost(a.pos, end) * getMinCost());
@@ -200,6 +204,18 @@ public abstract class PathFinder {
 		{
 			return n1.fCost() - n2.fCost();
 		}
+	}
+	
+	
+	public void setIgnoreEnd(boolean ignoreEnd)
+	{
+		this.ignoreEnd = ignoreEnd;
+	}
+	
+	
+	public void setIgnoreStart(boolean ignoreStart)
+	{
+		this.ignoreStart = ignoreStart;
 	}
 	
 	

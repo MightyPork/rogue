@@ -18,7 +18,7 @@ import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
 import mightypork.rogue.world.entity.render.EntityRenderer;
-import mightypork.rogue.world.level.LevelAccess;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
 
 
@@ -29,7 +29,7 @@ import mightypork.rogue.world.level.render.MapRenderContext;
  */
 public abstract class Entity implements IonObjBundled, Updateable {
 	
-	private LevelAccess level;
+	private Level level;
 	private final EntityModel model;
 	
 	protected final Random rand = new Random();
@@ -120,7 +120,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	}
 	
 	
-	public void setLevel(LevelAccess level)
+	public void setLevel(Level level)
 	{
 		if (level != null) level.freeTile(getCoord());
 		
@@ -130,7 +130,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	}
 	
 	
-	public final LevelAccess getLevel()
+	public final Level getLevel()
 	{
 		return level;
 	}

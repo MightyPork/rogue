@@ -21,7 +21,7 @@ public class LevelGenerator {
 	public static final MapTheme DUNGEON_THEME = new ThemeBrick();
 	
 	
-	public static Level build(World world, long seed, int complexity, MapTheme theme)
+	public static Level build(World world, long seed, int complexity, MapTheme theme, boolean lastLevel)
 	{
 		Log.f3("Generating level of complexity: " + complexity);
 		
@@ -32,13 +32,15 @@ public class LevelGenerator {
 		final ScratchMap map = new ScratchMap(max_size, theme, rand);
 		
 		// start
-		map.addRoom(Rooms.BASIC);
+		map.addRoom(Rooms.ENTRANCE, true);
 		
 		for (int i = 0; i < 1 + complexity / 2 + rand.nextInt((int) (1 + complexity * 0.3)); i++) {
-			map.addRoom(Rooms.BASIC);
-			if (rand.nextInt(7) > 0) map.addRoom(Rooms.SECRET);
-			if (rand.nextInt(6) > 0) map.addRoom(Rooms.DEAD_END);
+			map.addRoom(Rooms.BASIC, false);
+			if (rand.nextInt(7) > 0) map.addRoom(Rooms.SECRET, false);
+			if (rand.nextInt(6) > 0) map.addRoom(Rooms.DEAD_END, false);
 		}
+		
+		if (!lastLevel) map.addRoom(Rooms.EXIT, true);
 		
 		map.buildCorridors();
 		

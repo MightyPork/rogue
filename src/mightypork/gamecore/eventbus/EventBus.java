@@ -342,7 +342,7 @@ final public class EventBus implements Destroyable, BusAccess {
 		assertLive();
 		
 		if (sendingDirect) {
-			Log.w("Cannot send a direct event in response to another.");
+			Log.w(logMark + "Already dispatching, adding event to queue instead: " + Log.str(event));
 			sendQueued(event);
 			return;
 		}

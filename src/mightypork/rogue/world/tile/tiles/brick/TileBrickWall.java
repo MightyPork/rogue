@@ -10,7 +10,7 @@ public class TileBrickWall extends TileBaseWall {
 	
 	public TileBrickWall(TileModel model)
 	{
-		super(model, Res.sheet("tile.brick.wall"));
+		super(model, Res.txs("tile.brick.wall"));
 	}
 	
 }

@@ -8,6 +8,7 @@ import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.clients.ToggleableClient;
+import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonInput;
@@ -34,7 +35,7 @@ import mightypork.rogue.world.tile.Tiles;
  * 
  * @author MightyPork
  */
-public class Level implements BusAccess, DelegatingClient, ToggleableClient, LevelAccess, IonObjBinary {
+public class Level implements BusAccess, Updateable, DelegatingClient, ToggleableClient, IonObjBinary {
 	
 	public static final int ION_MARK = 53;
 	
@@ -42,6 +43,7 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	private World world;
 	
 	private final Coord enterPoint = Coord.zero();
+	private final Coord exitPoint = Coord.zero();
 	
 	/** Array of tiles [y][x] */
 	private Tile[][] tiles;
@@ -75,7 +77,11 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
-	@Override
+	/**
+	 * Fill whole map with tile type
+	 * 
+	 * @param model tile model
+	 */
 	public void fill(TileModel model)
 	{
 		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
@@ -86,7 +92,12 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
-	@Override
+	/**
+	 * Ge tile at X,Y
+	 * 
+	 * @param pos
+	 * @return tile
+	 */
 	public final Tile getTile(Coord pos)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) return Tiles.NULL.createTile(); // out of range
@@ -95,7 +106,12 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
-	@Override
+	/**
+	 * Set tile at pos
+	 * 
+	 * @param pos tile pos
+	 * @param tile the tile instance to set
+	 */
 	public final void setTile(Coord pos, Tile tile)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) {
@@ -110,28 +126,38 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
-	@Override
+	/**
+	 * @return map width in tiles
+	 */
 	public final int getWidth()
 	{
 		return size.x;
 	}
 	
 	
-	@Override
+	/**
+	 * @return map height in tiles
+	 */
 	public final int getHeight()
 	{
 		return size.y;
 	}
 	
 	
-	@Override
+	/**
+	 * Set level seed (used for visuals; the seed used for generation)
+	 * 
+	 * @param seed seed
+	 */
 	public void setSeed(long seed)
 	{
 		this.seed = seed;
 	}
 	
 	
-	@Override
+	/**
+	 * @return map seed
+	 */
 	public long getSeed()
 	{
 		return seed;
@@ -146,6 +172,7 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 		seed = ib.get("seed", 0L);
 		ib.loadBundled("size", size);
 		ib.loadBundled("enter_point", enterPoint);
+		ib.loadBundled("exit_point", exitPoint);
 		
 		// -- binary data --
 		
@@ -178,6 +205,7 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 		ib.put("seed", seed);
 		ib.putBundled("size", size);
 		ib.putBundled("enter_point", enterPoint);
+		ib.putBundled("exit_point", exitPoint);
 		out.writeBundle(ib);
 		
 		// -- binary data --
@@ -222,7 +250,9 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
-	@Override
+	/**
+	 * @return level-specific noise generator
+	 */
 	public NoiseGen getNoiseGen()
 	{
 		if (noiseGen == null) {
@@ -233,14 +263,25 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
-	@Override
+	/**
+	 * Get entity by ID
+	 * 
+	 * @param eid entity ID
+	 * @return the entity, or null
+	 */
 	public Entity getEntity(int eid)
 	{
 		return entityMap.get(eid);
 	}
 	
 	
-	@Override
+	/**
+	 * Try to add entity at given pos
+	 * 
+	 * @param entity the entity
+	 * @param pos pos
+	 * @return true if added (false if void, wall etc)
+	 */
 	public boolean addEntity(Entity entity, Coord pos)
 	{
 		final Tile t = getTile(pos);
@@ -265,14 +306,22 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
-	@Override
+	/**
+	 * Remove an entity from the level, if present
+	 * 
+	 * @param entity entity
+	 */
 	public void removeEntity(Entity entity)
 	{
 		removeEntity(entity.getEntityId());
 	}
 	
 	
-	@Override
+	/**
+	 * Remove an entity from the level, if present
+	 * 
+	 * @param eid entity id
+	 */
 	public void removeEntity(int eid)
 	{
 		final Entity removed = entityMap.remove(eid);
@@ -283,7 +332,12 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
-	@Override
+	/**
+	 * Check tile walkability
+	 * 
+	 * @param pos tile coord
+	 * @return true if the tile is walkable by entity
+	 */
 	public boolean isWalkable(Coord pos)
 	{
 		final Tile t = getTile(pos);
@@ -293,9 +347,10 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	
 	
 	/**
-	 * Mark tile as occupied by an entity
+	 * Mark tile as occupied (entity entered)
+	 * 
+	 * @param pos tile pos
 	 */
-	@Override
 	public void occupyTile(Coord pos)
 	{
 		getTile(pos).setOccupied(true);
@@ -303,58 +358,99 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	
 	
 	/**
-	 * Mark tile as free (no longet occupied)
+	 * Mark tile as free (entity left)
+	 * 
+	 * @param pos tile pos
 	 */
-	@Override
 	public void freeTile(Coord pos)
 	{
 		getTile(pos).setOccupied(false);
 	}
 	
 	
-	@Override
+	/**
+	 * Check entity on tile
+	 * 
+	 * @param pos tile coord
+	 * @return true if some entity is standing there
+	 */
 	public boolean isOccupied(Coord pos)
 	{
 		return getTile(pos).isOccupied();
 	}
 	
 	
-	@Override
-	public Collection<Entity> getEntities()
-	{
-		return entitySet;
-	}
-	
-	
-	@Override
+	/**
+	 * Set level entry point
+	 * 
+	 * @param pos pos where the player appears upon descending to this level
+	 */
 	public void setEnterPoint(Coord pos)
 	{
 		this.enterPoint.setTo(pos);
 	}
 	
 	
-	@Override
+	/**
+	 * Get location where the player appears upon descending to this level
+	 * 
+	 * @return pos
+	 */
 	public Coord getEnterPoint()
 	{
 		return enterPoint;
 	}
 	
 	
-	@Override
+	/**
+	 * Set level exit point
+	 * 
+	 * @param pos pos where the player appears upon ascending to this level
+	 */
+	public void setExitPoint(Coord pos)
+	{
+		this.exitPoint.setTo(pos);
+	}
+	
+	
+	/**
+	 * Get location where the player appears upon ascending to this level
+	 * 
+	 * @return pos
+	 */
+	public Coord getExitPoint()
+	{
+		return exitPoint;
+	}
+	
+	
+	/**
+	 * Get the level's world
+	 * 
+	 * @return world
+	 */
 	public World getWorld()
 	{
 		return world;
 	}
 	
 	
-	@Override
+	/**
+	 * Assign a world
+	 * 
+	 * @param world new world
+	 */
 	public void setWorld(World world)
 	{
 		this.world = world;
 	}
 	
 	
-	@Override
+	/**
+	 * Mark tile and surrounding area as explored
+	 * 
+	 * @param center center the explored tile
+	 */
 	public void explore(Coord center)
 	{
 		final Collection<Coord> filled = new HashSet<>();
@@ -406,7 +502,15 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	};
 	
 	
-	@Override
+	/**
+	 * Get entity of type closest to coord
+	 * 
+	 * @param self the querying entity - to provide position, and to be excluded
+	 *            from the search.
+	 * @param type wanted entity type
+	 * @param radius search radius; -1 for unlimited.
+	 * @return
+	 */
 	public Entity getClosestEntity(Entity self, EntityType type, double radius)
 	{
 		Entity closest = null;
@@ -430,6 +534,11 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
+	/**
+	 * Free a tile. If entity is present, remove it.
+	 * 
+	 * @param pos the tile pos
+	 */
 	public void forceFreeTile(Coord pos)
 	{
 		if (getTile(pos).isOccupied()) {
@@ -450,17 +559,38 @@ public class Level implements BusAccess, DelegatingClient, ToggleableClient, Lev
 	}
 	
 	
-	@Override
+	/**
+	 * Check if entity is in the level
+	 * 
+	 * @param entity entity
+	 * @return is present
+	 */
 	public boolean isEntityPresent(Entity entity)
 	{
 		return entitySet.contains(entity);
 	}
 	
 	
-	@Override
+	/**
+	 * Check if entity is in the level
+	 * 
+	 * @param eid entity ID
+	 * @return true if present
+	 */
 	public boolean isEntityPresent(int eid)
 	{
 		return entityMap.containsKey(eid);
+	}
+	
+	
+	/**
+	 * Get entity collection (for rendering)
+	 * 
+	 * @return entities
+	 */
+	public Collection<Entity> getEntities()
+	{
+		return entitySet;
 	}
 	
 	

@@ -24,4 +24,10 @@ public interface MapTheme {
 	
 	
 	TileModel secretDoor();
+	
+	
+	TileModel entrance();
+	
+	
+	TileModel exit();
 }

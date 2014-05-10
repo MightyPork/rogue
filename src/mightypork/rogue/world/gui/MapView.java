@@ -13,14 +13,21 @@ import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.KeyListener;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonListener;
+import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.gamecore.util.math.timing.TimedTask;
 import mightypork.rogue.world.PlayerControl;
+import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.WorldRenderer;
+import mightypork.rogue.world.events.WorldAscendRequestListener;
+import mightypork.rogue.world.events.WorldDescendRequestListener;
 import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
 
 
@@ -29,7 +36,10 @@ import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
  * 
  * @author MightyPork
  */
-public class MapView extends InputComponent implements DelegatingClient, KeyListener, MouseButtonListener, Updateable {
+public class MapView extends InputComponent implements DelegatingClient, KeyListener, MouseButtonListener, Updateable, WorldAscendRequestListener,
+		WorldDescendRequestListener {
+	
+	private static final double transition_time = 0.8;
 	
 	protected final WorldRenderer worldRenderer;
 	public final PlayerControl playerControl;
@@ -37,6 +47,36 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 	private final Set<MapInteractionPlugin> plugins = new LinkedHashSet<>();
 	private final NumAnimated zoom = new NumAnimated(0, Easing.SINE_BOTH);
 	private boolean zoom_in = true;
+	
+	private NumAnimated descFadeAnim = new NumAnimated(0);
+	private Color blackColor = RGB.BLACK.withAlpha(descFadeAnim);
+	
+	private int descDir = 0;
+	
+	private TimedTask timerDesc1 = new TimedTask() {
+		
+		@Override
+		public void run()
+		{
+			descFadeAnim.fadeOut(transition_time);
+			timerDesc2.start(transition_time);		
+			if (descDir == 1) {
+				WorldProvider.get().getWorld().descend();
+			} else {
+				WorldProvider.get().getWorld().ascend();
+			}
+		}
+	};
+	
+	private TimedTask timerDesc2 = new TimedTask() {
+		
+		@Override
+		public void run()
+		{
+			WorldProvider.get().getWorld().resume();
+		}
+	};
+	
 	
 	private final Num tileSize;
 	
@@ -70,6 +110,8 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 	protected void renderComponent()
 	{
 		worldRenderer.render();
+		
+		Render.quadColor(this, blackColor);
 	}
 	
 	
@@ -114,10 +156,6 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 	@Override
 	public void receive(KeyEvent event)
 	{
-		for (final MapInteractionPlugin p : plugins) {
-			if (p.onKey(event.getKey(), event.isDown())) break;
-		}
-		
 		if (event.getKey() == Keys.Z && event.isDown()) {
 			if (zoom_in) {
 				zoom.fadeIn();
@@ -147,5 +185,47 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 	public void update(double delta)
 	{
 		zoom.update(delta);
+		descFadeAnim.update(delta);
+		timerDesc1.update(delta);
+		timerDesc2.update(delta);
+	}
+	
+	
+	@Override
+	public void onAscendRequest()
+	{
+		if(descFadeAnim.isInProgress()) return;
+		
+		World w = WorldProvider.get().getWorld();
+		
+		if (w.canAscend()) {
+			descDir = -1;
+			startDescAnim();
+		}
+	}
+	
+	
+	private void startDescAnim()
+	{
+		WorldProvider.get().getWorld().pause();
+		
+		timerDesc2.stop();
+		timerDesc1.start(transition_time);
+		descFadeAnim.setTo(0);
+		descFadeAnim.fadeIn(transition_time);
+	}
+
+
+	@Override
+	public void onDescendRequest()
+	{
+		if(descFadeAnim.isInProgress()) return;
+		
+		World w = WorldProvider.get().getWorld();
+		
+		if (w.canDescend()) {
+			descDir = 1;
+			startDescAnim();
+		}
 	}
 }

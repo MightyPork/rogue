@@ -14,7 +14,7 @@ import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
-import mightypork.rogue.world.level.LevelAccess;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
@@ -43,6 +43,7 @@ public class ScratchMap {
 		{
 			if (!isIn(pos)) return false;
 			final Tile t = get(pos);
+			if (t.isStairs()) return false;
 			return t.isPotentiallyWalkable() || (t.genData.protection != TileProtectLevel.STRONG);
 		}
 		
@@ -60,6 +61,7 @@ public class ScratchMap {
 				case PASSAGE:
 					return 10;
 					
+				case STAIRS:
 				case FLOOR:
 					return 20;
 					
@@ -96,12 +98,19 @@ public class ScratchMap {
 		
 	};
 	
+	{
+		// needed for when the path starts / ends at stairs.
+		pathf.setIgnoreEnd(true);
+		pathf.setIgnoreStart(true);
+	}
+	
 	Coord genMin;
 	Coord genMax;
 	
 	private final MapTheme theme;
 	private final Random rand;
-	private Coord enterPoint;
+	private final Coord enterPoint = new Coord();
+	private final Coord exitPoint = new Coord();
 	
 	private static final boolean FIX_GLITCHES = true;
 	
@@ -122,11 +131,13 @@ public class ScratchMap {
 	}
 	
 	
-	public void addRoom(RoomBuilder rb)
+	public void addRoom(RoomBuilder rb, boolean critical)
 	{
 		final Coord center = Coord.make(0, 0);
 		
 		int failed = 0;
+		
+		int failed_total = 0;
 		
 		while (true) {
 			
@@ -138,24 +149,20 @@ public class ScratchMap {
 			
 			switch (rand.nextInt(4)) {
 				case 0:
-					center.x += 1 + rand.nextInt(4);
+					center.x += 1 + rand.nextInt(critical ? 6 : 4);
 					break;
 				case 1:
-					center.x -= 1 + rand.nextInt(4);
+					center.x -= 1 + rand.nextInt(critical ? 6 : 4);
 					break;
 				case 2:
-					center.y += 1 + rand.nextInt(4);
+					center.y += 1 + rand.nextInt(critical ? 6 : 4);
 					break;
 				case 3:
-					center.y -= 1 + rand.nextInt(4);
+					center.y -= 1 + rand.nextInt(critical ? 6 : 4);
 			}
 			
 			final RoomDesc rd = rb.buildToFit(this, theme, rand, center);
 			if (rd != null) {
-				if (rooms.isEmpty()) {
-					enterPoint = center.copy();
-				}
-				
 				rooms.add(rd);
 				
 				genMin.x = Math.min(genMin.x, rd.min.x);
@@ -163,6 +170,7 @@ public class ScratchMap {
 				
 				genMax.x = Math.max(genMax.x, rd.max.x);
 				genMax.y = Math.max(genMax.y, rd.max.y);
+				clampBounds();
 				
 				nodes.add(center);
 				Log.f3("placed room: " + rd.min + " -> " + rd.max);
@@ -170,14 +178,41 @@ public class ScratchMap {
 				return;
 			} else {
 				failed++;
+				failed_total++;
 				
 				if (failed > 200) {
 					Log.w("Faild to build room.");
-					return;
+					if (critical) {
+						
+						genMin.x -= 5;
+						genMin.y -= 5;
+						genMax.x += 5;
+						genMax.y += 5;
+						clampBounds();
+						
+						failed = 0;
+						continue;
+						
+					} else {
+						return;
+					}
+				}
+				
+				if (failed_total > 1000) {
+					throw new RuntimeException("Generation error - could not place critical room.");
 				}
 			}
 		}
 		
+	}
+	
+	
+	private void clampBounds()
+	{
+		genMin.x = Calc.clamp(genMin.x, 0, width - 1);
+		genMin.y = Calc.clamp(genMin.y, 0, height - 1);
+		genMax.x = Calc.clamp(genMax.x, 0, width - 1);
+		genMax.y = Calc.clamp(genMax.y, 0, height - 1);
 	}
 	
 	
@@ -320,9 +355,10 @@ public class ScratchMap {
 				
 				genMax.x = Math.max(genMax.x, c.x);
 				genMax.y = Math.max(genMax.y, c.y);
+				clampBounds();
 				
 				final Tile current = get(c);
-				if (!current.isNull() && (current.isPotentiallyWalkable())) continue; // floor already, let it be
+				if (!current.isNull() && (current.isPotentiallyWalkable() || current.isStairs())) continue; // floor already, let it be
 				
 				if (i == 0 && j == 0) {
 					set(c, theme.floor());
@@ -410,7 +446,7 @@ public class ScratchMap {
 	}
 	
 	
-	public void writeToLevel(LevelAccess level)
+	public void writeToLevel(Level level)
 	{
 		// make sure no walkable are at edges.
 		final Coord c = Coord.make(0, 0);
@@ -503,5 +539,21 @@ public class ScratchMap {
 		
 		final Coord entrance = new Coord(enterPoint.x - genMin.x, enterPoint.y - genMin.y);
 		level.setEnterPoint(entrance);
+		System.out.println("Entrance = " + entrance + ", original: " + enterPoint + ", minG=" + genMin + ", maxG=" + genMax);
+		
+		final Coord exit = new Coord(exitPoint.x - genMin.x, exitPoint.y - genMin.y);
+		level.setExitPoint(exit);
+	}
+	
+	
+	public void setEntrance(Coord pos)
+	{
+		enterPoint.setTo(pos);
+	}
+	
+	
+	public void setExit(Coord pos)
+	{
+		exitPoint.setTo(pos);
 	}
 }

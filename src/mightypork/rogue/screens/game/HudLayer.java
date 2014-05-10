@@ -44,7 +44,7 @@ public class HudLayer extends ScreenLayer {
 		final Num w = root.width();
 		final Num minWH = w.min(h).max(700); // avoid too small shrinking
 		
-		final ImagePainter nav = new ImagePainter(Res.getTxQuad("panel"));
+		final ImagePainter nav = new ImagePainter(Res.txq("panel"));
 		nav.setRect(root.bottomEdge().growUp(minWH.perc(7)));
 		root.add(nav);
 		
@@ -52,8 +52,8 @@ public class HudLayer extends ScreenLayer {
 		itemSlots.setRect(nav.growUp(nav.height()).move(nav.height().mul(0.2), nav.height().mul(-0.2)));
 		root.add(itemSlots);
 		
-		itemSlots.add(new NavItemSlot(Res.getTxQuad("meat")));
-		itemSlots.add(new NavItemSlot(Res.getTxQuad("sword")));
+		itemSlots.add(new NavItemSlot(Res.txq("meat")));
+		itemSlots.add(new NavItemSlot(Res.txq("sword")));
 		
 		final Rect shrunk = root.shrink(minWH.perc(3));
 		final Num displays_height = minWH.perc(6);
@@ -62,9 +62,9 @@ public class HudLayer extends ScreenLayer {
 		final HeartBar hearts = new HeartBar(
 				playerHealthTotal,
 				playerHealthActive,
-				Res.getTxQuad("heart_on"),
-				Res.getTxQuad("heart_half"),
-				Res.getTxQuad("heart_off"),
+				Res.txq("heart_on"),
+				Res.txq("heart_half"),
+				Res.txq("heart_off"),
 				AlignX.LEFT);
 		//@formatter:on
 		

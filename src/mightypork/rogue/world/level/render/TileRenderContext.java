@@ -6,7 +6,7 @@ import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 import mightypork.gamecore.util.math.noise.NoiseGen;
-import mightypork.rogue.world.level.LevelReadAccess;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 
 
@@ -21,7 +21,7 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	private final NoiseGen noise;
 	
 	
-	public TileRenderContext(LevelReadAccess map, Rect drawArea)
+	public TileRenderContext(Level map, Rect drawArea)
 	{
 		super(map, drawArea);
 		

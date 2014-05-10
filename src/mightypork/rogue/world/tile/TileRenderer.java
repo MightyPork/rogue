@@ -44,23 +44,23 @@ public abstract class TileRenderer implements Updateable {
 		this.tile = tile;
 		
 		if (!inited) {
-			SH_N = Res.getTxQuad("tile.shadow.n");
-			SH_S = Res.getTxQuad("tile.shadow.s");
-			SH_E = Res.getTxQuad("tile.shadow.e");
-			SH_W = Res.getTxQuad("tile.shadow.w");
-			SH_NW = Res.getTxQuad("tile.shadow.nw");
-			SH_NE = Res.getTxQuad("tile.shadow.ne");
-			SH_SW = Res.getTxQuad("tile.shadow.sw");
-			SH_SE = Res.getTxQuad("tile.shadow.se");
+			SH_N = Res.txq("tile.shadow.n");
+			SH_S = Res.txq("tile.shadow.s");
+			SH_E = Res.txq("tile.shadow.e");
+			SH_W = Res.txq("tile.shadow.w");
+			SH_NW = Res.txq("tile.shadow.nw");
+			SH_NE = Res.txq("tile.shadow.ne");
+			SH_SW = Res.txq("tile.shadow.sw");
+			SH_SE = Res.txq("tile.shadow.se");
 			
-			UFOG_N = Res.getTxQuad("tile.ufog.n");
-			UFOG_S = Res.getTxQuad("tile.ufog.s");
-			UFOG_E = Res.getTxQuad("tile.ufog.e");
-			UFOG_W = Res.getTxQuad("tile.ufog.w");
-			UFOG_NW = Res.getTxQuad("tile.ufog.nw");
-			UFOG_NE = Res.getTxQuad("tile.ufog.ne");
-			UFOG_SW = Res.getTxQuad("tile.ufog.sw");
-			UFOG_SE = Res.getTxQuad("tile.ufog.se");
+			UFOG_N = Res.txq("tile.ufog.n");
+			UFOG_S = Res.txq("tile.ufog.s");
+			UFOG_E = Res.txq("tile.ufog.e");
+			UFOG_W = Res.txq("tile.ufog.w");
+			UFOG_NW = Res.txq("tile.ufog.nw");
+			UFOG_NE = Res.txq("tile.ufog.ne");
+			UFOG_SW = Res.txq("tile.ufog.sw");
+			UFOG_SE = Res.txq("tile.ufog.se");
 		}
 	}
 	

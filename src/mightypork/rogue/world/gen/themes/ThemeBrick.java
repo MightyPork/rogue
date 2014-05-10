@@ -42,4 +42,18 @@ public class ThemeBrick implements MapTheme {
 	{
 		return Tiles.BRICK_HIDDEN_DOOR;
 	}
+	
+	
+	@Override
+	public TileModel entrance()
+	{
+		return Tiles.BRICK_ENTRANCE;
+	}
+	
+	
+	@Override
+	public TileModel exit()
+	{
+		return Tiles.BRICK_EXIT;
+	}
 }

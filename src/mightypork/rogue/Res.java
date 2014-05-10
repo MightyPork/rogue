@@ -100,6 +100,8 @@ public final class Res {
 		textures.addSheet("tile.brick.door.secret", grid.makeSheet(0, 3, 2, 1));
 		
 		textures.addSheet("tile.brick.passage", grid.makeSheet(3, 2, 4, 1));
+		textures.addQuad("tile.brick.stairs.up", grid.makeQuad(0, 6));
+		textures.addQuad("tile.brick.stairs.down", grid.makeQuad(1, 6));
 		
 		textures.addQuad("tile.shadow.n", grid.makeQuad(0, 7));
 		textures.addQuad("tile.shadow.s", grid.makeQuad(0, 7).flipY());
@@ -135,21 +137,33 @@ public final class Res {
 	}
 	
 	
-	public static TxQuad getTxQuad(String key)
-	{
-		return textures.getQuad(key);
-	}
-	
-	
 	public static GLTexture getTexture(String key)
 	{
 		return textures.getTexture(key);
 	}
 	
 	
-	public static TxSheet sheet(String key)
+	/**
+	 * Get a texture sheet by key
+	 * 
+	 * @param key
+	 * @return sheet
+	 */
+	public static TxSheet txs(String key)
 	{
 		return textures.getSheet(key);
+	}
+	
+	
+	/**
+	 * Get a texture quad by key
+	 * 
+	 * @param key
+	 * @return quad
+	 */
+	public static TxQuad txq(String key)
+	{
+		return textures.getQuad(key);
 	}
 	
 	

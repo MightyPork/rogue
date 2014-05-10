@@ -4,18 +4,18 @@ package mightypork.rogue.world.level.render;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.builders.TiledRect;
-import mightypork.rogue.world.level.LevelReadAccess;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 
 
 public abstract class MapRenderContext {
 	
-	protected final LevelReadAccess map;
+	protected final Level map;
 	protected final TiledRect tiler;
 	private final Rect mapRect;
 	
 	
-	public MapRenderContext(LevelReadAccess map, Rect drawArea)
+	public MapRenderContext(Level map, Rect drawArea)
 	{
 		this.map = map;
 		

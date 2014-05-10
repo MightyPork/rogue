@@ -87,6 +87,8 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			
 		};
 		
+		noDoorPf.setIgnoreEnd(true);
+		
 		timerAttack.start();
 		timerFindPrey.start();
 		timerSleepStart.start();
@@ -211,7 +213,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			//System.out.println("-- path would be: " + entity.getCoord() + "->" + prey.getCoord());
 			
 			// check if reachable without leaving room
-			final List<Coord> noDoorPath = noDoorPf.findPath(entity.getCoord(), prey.getCoord(), true);
+			final List<Coord> noDoorPath = noDoorPf.findPath(entity.getCoord(), prey.getCoord());
 			
 			if (noDoorPath == null) {
 				//System.out.println("-- Could not navigate to prey, aborting.");
@@ -273,7 +275,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	{
 		if (!isPreyValid(prey)) return null;
 		
-		return entity.getPathFinder().findPathRelative(entity.getCoord(), prey.getCoord(), true);
+		return entity.getPathFinder().findPathRelative(entity.getCoord(), prey.getCoord(), false, true);
 	}
 	
 	

@@ -4,6 +4,7 @@ package mightypork.rogue.world;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.EventBus;
@@ -15,7 +16,6 @@ import mightypork.gamecore.util.math.timing.Pauseable;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
-import mightypork.rogue.world.level.LevelAccess;
 
 
 /**
@@ -134,7 +134,13 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		final Coord spawn = floor.getEnterPoint();
 		
 		floor.forceFreeTile(spawn);
-		floor.addEntity(playerEntity, spawn);
+		final Random rand = new Random(seed + 71);
+		
+		while (!floor.addEntity(playerEntity, spawn)) {
+			spawn.x += -1 + rand.nextInt(3);
+			spawn.y += -1 + rand.nextInt(3);
+		}
+		
 		floor.explore(spawn);
 		
 		playerInfo.setLevel(level);
@@ -142,7 +148,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	}
 	
 	
-	public LevelAccess getCurrentLevel()
+	public Level getCurrentLevel()
 	{
 		return levels.get(playerInfo.getLevel());
 	}
@@ -191,6 +197,42 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	public boolean isPaused()
 	{
 		return paused;
+	}
+	
+	
+	public boolean canAscend()
+	{
+		return playerInfo.getLevel() > 0;
+	}
+	
+	
+	public boolean canDescend()
+	{
+		return playerInfo.getLevel() < levels.size() - 1;
+	}
+	
+	
+	public void ascend()
+	{
+		if (!canAscend()) return;
+		
+		int lvl_num = playerInfo.getLevel();
+		getCurrentLevel().removeEntity(playerEntity);
+		playerInfo.setLevel(lvl_num - 1);
+		getCurrentLevel().addEntity(playerEntity, getCurrentLevel().getExitPoint());
+		getCurrentLevel().explore(playerEntity.getCoord());
+	}
+	
+	
+	public void descend()
+	{
+		if (!canDescend()) return;
+		
+		int lvl_num = playerInfo.getLevel();
+		getCurrentLevel().removeEntity(playerEntity);
+		playerInfo.setLevel(lvl_num + 1);
+		getCurrentLevel().addEntity(playerEntity, getCurrentLevel().getEnterPoint());
+		getCurrentLevel().explore(playerEntity.getCoord());
 	}
 	
 }

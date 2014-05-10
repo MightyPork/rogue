@@ -39,7 +39,7 @@ class MenuLayer extends ScreenLayer {
 		root.add(layout);
 		
 		int r = 0;
-		final ImagePainter ip = new ImagePainter(Res.getTxQuad("logo"));
+		final ImagePainter ip = new ImagePainter(Res.txq("logo"));
 		ip.keepAspectRatio();
 		layout.put(ip, r, 0, 5, 1);
 		r += 6;

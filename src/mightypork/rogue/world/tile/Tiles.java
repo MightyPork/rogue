@@ -6,11 +6,7 @@ import java.io.IOException;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.tile.tiles.NullTile;
-import mightypork.rogue.world.tile.tiles.brick.TileBrickDoor;
-import mightypork.rogue.world.tile.tiles.brick.TileBrickFloor;
-import mightypork.rogue.world.tile.tiles.brick.TileBrickPassage;
-import mightypork.rogue.world.tile.tiles.brick.TileBrickSecretDoor;
-import mightypork.rogue.world.tile.tiles.brick.TileBrickWall;
+import mightypork.rogue.world.tile.tiles.brick.*;
 
 
 /**
@@ -29,6 +25,8 @@ public final class Tiles {
 	public static final TileModel BRICK_DOOR = new TileModel(12, TileBrickDoor.class);
 	public static final TileModel BRICK_PASSAGE = new TileModel(13, TileBrickPassage.class);
 	public static final TileModel BRICK_HIDDEN_DOOR = new TileModel(14, TileBrickSecretDoor.class);
+	public static final TileModel BRICK_ENTRANCE = new TileModel(15, TileBrickEntrance.class);
+	public static final TileModel BRICK_EXIT = new TileModel(16, TileBrickExit.class);
 	
 	
 	public static void register(int id, TileModel model)

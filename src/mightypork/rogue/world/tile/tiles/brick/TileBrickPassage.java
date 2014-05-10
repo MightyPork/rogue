@@ -10,7 +10,7 @@ public class TileBrickPassage extends TileBasePassage {
 	
 	public TileBrickPassage(TileModel model)
 	{
-		super(model, Res.sheet("tile.brick.passage"));
+		super(model, Res.txs("tile.brick.passage"));
 	}
 	
 }

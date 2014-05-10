@@ -14,7 +14,7 @@ import mightypork.gamecore.util.math.constraints.rect.mutable.RectMutable;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.level.LevelReadAccess;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 
 import org.lwjgl.opengl.GL11;
@@ -33,7 +33,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 	{
 		Color.pushAlpha(translucency);
 		
-		final LevelReadAccess lvl = WorldProvider.get().getCurrentLevel();
+		final Level lvl = WorldProvider.get().getCurrentLevel();
 		unit = (int) Math.min(Math.max(2, Math.ceil((height().value() / 2) / (lvl.getHeight() + 2))), 10);
 		
 		final Entity e = WorldProvider.get().getPlayerEntity();
@@ -89,7 +89,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 	@Override
 	public void receive(MouseButtonEvent event)
 	{
-		if (event.isOver(bounds) && event.getButton() == 0) {
+		if (event.isOver(bounds) && event.getButton() == 1) {
 			if (event.isUp()) {
 				final Vect relative = event.getPos().sub(bounds.origin());
 				final Coord actual = Coord.make(relative.xi() / unit, relative.yi() / unit);

@@ -28,7 +28,7 @@ public class NavItemSlot extends ClickableComponent implements MouseMotionListen
 	public NavItemSlot(TxQuad image)
 	{
 		this.image = image;
-		this.frame = Res.getTxQuad("item_frame");
+		this.frame = Res.txq("item_frame");
 		
 		final Rect ref = shrink(height().perc(8));
 		yOffset = new NumAnimated(0, Easing.LINEAR);

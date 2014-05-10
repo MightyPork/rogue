@@ -34,8 +34,8 @@ public abstract class AbstractRectRoom implements RoomBuilder {
 		
 		if (!map.isClear(min.add(-1, -1), max)) return null;
 		
-		map.fill(min, max, theme.floor());
-		map.border(min, max, theme.wall());
+		map.fill(min, max, getFloor(theme));
+		map.border(min, max, getWall(theme));
 		map.protect(min, max, getWallProtectionLevel());
 		
 		placeDoors(map, theme, rand, min, max);
@@ -46,12 +46,24 @@ public abstract class AbstractRectRoom implements RoomBuilder {
 	}
 	
 	
+	protected TileModel getWall(MapTheme theme)
+	{
+		return theme.wall();
+	}
+	
+	
+	protected TileModel getFloor(MapTheme theme)
+	{
+		return theme.floor();
+	}
+	
+	
 	protected void placeDoors(ScratchMap map, MapTheme theme, Random rand, Coord min, Coord max)
 	{
 		final int width = max.x - min.x;
 		final int height = max.y - min.y;
 		
-		for (int i = 0, j = 0; i <= getDoorCount(rand) && j < 100; j++) { // j is to prevent inf loop
+		for (int i = 0, j = 0; i < getDoorCount(rand) && j < 100; j++) { // j is to prevent inf loop
 			final Coord door = min.copy();
 			switch (rand.nextInt(4)) {
 				case 0:

@@ -4,6 +4,8 @@ package mightypork.rogue.world.tile;
 import java.io.IOException;
 import java.util.Random;
 
+import mightypork.gamecore.eventbus.BusAccess;
+import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.ion.IonInput;
@@ -12,7 +14,7 @@ import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.item.Item;
-import mightypork.rogue.world.level.LevelAccess;
+import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 
 
@@ -21,7 +23,7 @@ import mightypork.rogue.world.level.render.TileRenderContext;
  * 
  * @author MightyPork
  */
-public abstract class Tile implements IonObjBlob {
+public abstract class Tile implements BusAccess, IonObjBlob {
 	
 	// tmp extras
 	public final TileGenData genData = new TileGenData();
@@ -35,7 +37,7 @@ public abstract class Tile implements IonObjBlob {
 	protected boolean occupied;
 	protected boolean explored;
 	
-	protected LevelAccess level;
+	protected Level level;
 	
 	private TileRenderer renderer;
 	
@@ -157,6 +159,12 @@ public abstract class Tile implements IonObjBlob {
 	}
 	
 	
+	public final boolean isStairs()
+	{
+		return getType() == TileType.STAIRS;
+	}
+	
+	
 	@DefaultImpl
 	public void updateTile(double delta)
 	{
@@ -244,13 +252,13 @@ public abstract class Tile implements IonObjBlob {
 	}
 	
 	
-	public void setLevel(LevelAccess level)
+	public void setLevel(Level level)
 	{
 		this.level = level;
 	}
 	
 	
-	public LevelAccess getLevel()
+	public Level getLevel()
 	{
 		return level;
 	}
@@ -259,6 +267,13 @@ public abstract class Tile implements IonObjBlob {
 	protected World getWorld()
 	{
 		return level.getWorld();
+	}
+	
+	
+	@Override
+	public EventBus getEventBus()
+	{
+		return level.getEventBus();
 	}
 	
 }
