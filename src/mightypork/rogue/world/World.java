@@ -17,6 +17,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.timing.Pauseable;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 
 
@@ -153,6 +154,28 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		public int getHealthMax()
 		{
 			return playerEntity.health.getMaxHealth();
+		}
+		
+		
+		public Inventory getInventory()
+		{
+			return playerInfo.getInventory();
+		}
+		
+		
+		public Entity getEntity()
+		{
+			return playerEntity;
+		}
+		
+		
+		public int getAttackStrength()
+		{
+			final Item weapon = playerInfo.getEquippedWeapon();
+			
+			if (weapon == null) return PlayerInfo.BARE_ATTACK;
+			
+			return Math.min(weapon.getAttackPoints(), playerInfo.BARE_ATTACK);
 		}
 		
 	}

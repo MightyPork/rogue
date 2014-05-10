@@ -29,7 +29,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		public void run()
 		{
 			if (chasing) return;
-			//System.out.println("Mob looks around.");
 			lookForTarget();
 		}
 	};
@@ -40,7 +39,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		public void run()
 		{
 			if (chasing) return;
-			//System.out.println("Mob going to sleep");
 			sleeping = true;
 		}
 	};
@@ -54,12 +52,8 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			
 			final Entity prey = getPreyEntity();
 			
-			if (prey == null || prey.isDead()) {
-				//System.out.println("prey dead?");
-				return;
-			}
+			if (prey == null || prey.isDead()) return;
 			
-			//System.out.println("Timed prey attack");
 			attackPrey(prey);
 		}
 	};
@@ -98,12 +92,13 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	@Override
 	public void onStepFinished()
 	{
+		if (entity.isDead()) return;
+		
 		//System.out.println("monster ai step finished.");
 		if (chasing) {
 			//System.out.println("chasing..");
 			final Entity prey = getPreyEntity();
 			if (!isPreyValid(prey)) {
-				//System.out.println("prey dead or null, stop chasing: " + prey + ", prey.isdead " + prey.isDead());
 				stopChasing();
 				return;
 			}
@@ -113,14 +108,9 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 				return;
 			}
 			
-			if (isPreyInAttackRange(prey)) {
-				//System.out.println("prey in attack range");
-				return; // attacking
-			} else {
+			if (!isPreyInAttackRange(prey)) {
 				stepTowardsPrey(prey);
 			}
-		} else {
-			//System.out.println("not chasing.");
 		}
 	}
 	
@@ -175,6 +165,8 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	@Override
 	public void update(double delta)
 	{
+		if (entity.isDead()) return;
+		
 		timerFindPrey.update(delta);
 		timerSleepStart.update(delta);
 		timerAttack.update(delta);
@@ -188,7 +180,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			}
 			
 			if (!isPreyInAttackRange(prey)) {
-				//System.out.println("-upd STEP--");
 				stepTowardsPrey(prey);
 			}
 		}
@@ -203,22 +194,17 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	
 	private void lookForTarget()
 	{
+		if (entity.isDead()) return;
+		
 		if (shouldSkipScan()) return; // not hungry right now
 		
-		//System.out.println("- Lookin for prey, r=" + getScanRadius());
-		
-		final Entity prey = entity.getLevel().getClosestEntity(entity, EntityType.PLAYER, getScanRadius());
+		final Entity prey = entity.getLevel().getClosestEntity(entity.pos.getVisualPos(), EntityType.PLAYER, getScanRadius());
 		if (prey != null) {
-			//System.out.println("-- Prey in sight: " + prey);
-			//System.out.println("-- path would be: " + entity.getCoord() + "->" + prey.getCoord());
 			
 			// check if reachable without leaving room
 			final List<Coord> noDoorPath = noDoorPf.findPath(entity.getCoord(), prey.getCoord());
 			
-			if (noDoorPath == null) {
-				//System.out.println("-- Could not navigate to prey, aborting.");
-				return; // cant reach, give up
-			}
+			if (noDoorPath == null) return; // cant reach, give up
 			
 			startChasing(prey);
 		}
@@ -245,7 +231,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	
 	private void startChasing(Entity prey)
 	{
-		//System.out.println("start chasing");
+		if (entity.isDead()) return;
 		
 		preyId = prey.getEntityId();
 		chasing = true;
@@ -263,7 +249,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	
 	private void stopChasing()
 	{
-		//System.out.println("stop chasing.");
 		chasing = false;
 		preyId = -1;
 		timerSleepStart.restart();
@@ -281,15 +266,12 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	
 	private void stepTowardsPrey(Entity prey)
 	{
-		//System.out.println("stepTowardsPrey");
-		if (!isPreyValid(prey)) {
-			//System.out.println("prey dead?");
-			return;
-		}
+		if (entity.isDead()) return;
+		
+		if (!isPreyValid(prey)) return;
 		
 		// if close enough
 		if (isPreyInAttackRange(prey)) {
-			//System.out.println("attack");
 			attackPrey(prey);
 			return;
 		}
@@ -297,7 +279,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		final List<Step> preyPath = getPathToPrey(prey);
 		
 		if (preyPath == null || preyPath.size() > getPreyAbandonDistance()) {
-			//System.out.println("no path");
 			stopChasing();
 			return;
 		}
@@ -309,10 +290,9 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	
 	private void attackPrey(Entity prey)
 	{
-		if (!isPreyInAttackRange(prey)) {
-			//System.out.println("prey out of attack range, cant attack");
-			return;
-		}
+		if (entity.isDead()) return;
+		
+		if (!isPreyInAttackRange(prey)) return;
 		
 		prey.receiveAttack(entity, getAttackStrength());
 	}
@@ -353,7 +333,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	@DefaultImpl
 	protected double getAttackDistance()
 	{
-		return 1.6;
+		return 1;
 	}
 	
 	

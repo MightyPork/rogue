@@ -45,13 +45,19 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 	{
 		if (isImmobile()) return false;
 		
-		final Coord pos = mapView.toWorldPos(mouse);
-		final Tile t = mapView.plc.getLevel().getTile(pos);
+		final Vect pos = mapView.toWorldPos(mouse);
 		
-		if (button == BTN && !down && t.onClick()) {
-			return true;
+		if (button == BTN && !down) {
+			// try to click tile
+			
+			System.out.println("---");
+			System.out.println("Standing at: " + getPlayer().getCoord() + ", visual " + getPlayer().getVisualPos());
+			System.out.println("Click tile: " + pos + ", floored: " + pos.floor());
+			
+			if (mapView.plc.clickTile(pos)) return true;
 		}
 		
+		final Tile t = mapView.plc.getLevel().getTile(Coord.fromVect(pos));
 		if (button == 1 && !down && t.isWalkable()) {
 			if (troToNav(mouse)) return true;
 			return mouseWalk(mouse);
@@ -66,7 +72,8 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 		if (isImmobile()) return false;
 		
 		final Coord plpos = mapView.plc.getPlayer().getCoord();
-		final Coord clicked = mapView.toWorldPos(mouse);
+		
+		final Coord clicked = Coord.fromVect(mapView.toWorldPos(mouse));
 		if (clicked.equals(plpos)) return false;
 		
 		final Tile t = mapView.plc.getLevel().getTile(clicked);
@@ -82,7 +89,7 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 		if (isImmobile()) return false;
 		
 		final Coord plpos = mapView.plc.getPlayer().getCoord();
-		final Coord clicked = mapView.toWorldPos(pos);
+		final Coord clicked = Coord.fromVect(mapView.toWorldPos(pos));
 		if (clicked.equals(plpos)) return false;
 		
 		final Polar p = Polar.fromCoord(clicked.x - plpos.x, clicked.y - plpos.y);

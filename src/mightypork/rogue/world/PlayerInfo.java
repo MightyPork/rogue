@@ -2,21 +2,35 @@ package mightypork.rogue.world;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.rogue.world.item.Item;
 
 
+/**
+ * Player information stored in world.
+ * 
+ * @author MightyPork
+ */
 public class PlayerInfo implements IonObjBundled {
+	
+	/** Player inventory size */
+	private static final int INV_SIZE = 8;
+	
+	/** Constant indicating that no weapon is selected. */
+	private static final int NO_WEAPON = -1;
+	
+	/** Attack str with bare hands */
+	public static final int BARE_ATTACK = 1;
+	
 	
 	private int eid = -1; // marks not initialized
 	private int level;
 	
-	private final List<Item> inventory = new ArrayList<>();
-	private int selectedWeapon = -1;
+	private Inventory inventory = new Inventory(INV_SIZE);
+	
+	private int selectedWeapon = NO_WEAPON;
 	
 	
 	@Override
@@ -25,7 +39,8 @@ public class PlayerInfo implements IonObjBundled {
 		eid = bundle.get("eid", eid);
 		level = bundle.get("floor", level);
 		selectedWeapon = bundle.get("weapon", selectedWeapon);
-		bundle.loadSequence("inv", inventory);
+		
+		inventory = bundle.get("inv", inventory);
 	}
 	
 	
@@ -35,7 +50,7 @@ public class PlayerInfo implements IonObjBundled {
 		bundle.put("eid", eid);
 		bundle.put("floor", level);
 		bundle.put("weapon", selectedWeapon);
-		bundle.putSequence("inv", inventory);
+		bundle.put("inv", inventory);
 	}
 	
 	
@@ -67,6 +82,19 @@ public class PlayerInfo implements IonObjBundled {
 	public boolean isInitialized()
 	{
 		return eid != -1;
+	}
+	
+	
+	public Inventory getInventory()
+	{
+		return inventory;
+	}
+	
+	
+	public Item getEquippedWeapon()
+	{
+		if (selectedWeapon == NO_WEAPON) return null;
+		return inventory.getItem(selectedWeapon);
 	}
 	
 }

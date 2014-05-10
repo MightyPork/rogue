@@ -10,8 +10,8 @@ public class RatAi extends MonsterAi {
 	{
 		super(entity);
 		
-		setAttackTime(1);
-		setScanTime(1);
+		setAttackTime(1.2);
+		setScanTime(1.5);
 		setSleepTime(10);
 	}
 	
@@ -26,7 +26,7 @@ public class RatAi extends MonsterAi {
 	@Override
 	protected double getAttackDistance()
 	{
-		return 1.42;
+		return 1.43;
 	}
 	
 	

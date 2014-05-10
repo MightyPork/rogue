@@ -153,11 +153,11 @@ public class WorldRenderer extends RectProxy {
 	}
 	
 	
-	public Coord getClickedTile(Vect clickPos)
+	public Vect getClickedTile(Vect clickPos)
 	{
 		final int ts = (int) tileSize.value();
 		final Vect v = clickPos.sub(center().add(getOffset().mul(ts)));
-		return new Coord(v.xi() / ts, v.yi() / ts);
+		return Vect.make(v.x() / ts, v.y() / ts);
 	}
 	
 }

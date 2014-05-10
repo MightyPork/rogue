@@ -19,6 +19,7 @@ public class EntityModuleHealth extends EntityModule {
 	
 	protected int health = 1;
 	protected int maxHealth = 1;
+	private double hitCooldownTime = 0.3;
 	protected boolean dead = false;
 	
 	private double timeSinceLastDamage = Integer.MAX_VALUE;
@@ -94,6 +95,8 @@ public class EntityModuleHealth extends EntityModule {
 	
 	public void receiveDamage(int attackStrength)
 	{
+		if (timeSinceLastDamage < hitCooldownTime) return;
+		
 		setHealth(health - attackStrength);
 		timeSinceLastDamage = 0;
 	}
@@ -118,5 +121,16 @@ public class EntityModuleHealth extends EntityModule {
 	public double getTimeSinceLastDamage()
 	{
 		return timeSinceLastDamage;
+	}
+	
+	
+	/**
+	 * Set how long after hit another hit can be received.
+	 * 
+	 * @param secs
+	 */
+	public void setHitCooldownTime(double secs)
+	{
+		this.hitCooldownTime = secs;
 	}
 }

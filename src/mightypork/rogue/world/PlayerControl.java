@@ -6,7 +6,10 @@ import java.util.Set;
 
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.World.PlayerFacade;
+import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
 
@@ -96,15 +99,29 @@ public abstract class PlayerControl {
 	 */
 	public boolean clickTile(Step side)
 	{
-		return clickTile(getPlayer().getCoord().add(side));
+		return clickTile(getPlayer().getCoord().add(side).toVect().add(0.5, 0.5));
 	}
 	
 	
-	public boolean clickTile(Coord pos)
+	public boolean clickTile(Vect pos)
 	{
-		if (pos.dist(getPlayer().getCoord()) > 8) return false; // too far
+		//if (pos.dist(getPlayer().getVisualPos()).value() > 8) return false; // too far
 		
-		return getLevel().getTile(pos).onClick();
+		if (pos.dist(getPlayer().getVisualPos().add(0.5, 0.5)).value() < 1.5) {
+			
+			// 1st try to hit entity
+			final Entity prey = getLevel().getClosestEntity(pos, EntityType.MONSTER, 1.2);
+			if (prey != null) {
+				prey.receiveAttack(getPlayer().getEntity(), getPlayer().getAttackStrength());
+				return true;
+			}
+			
+			//2nd try to click tile
+			System.out.println("do click: " + Coord.fromVect(pos));
+			return getLevel().getTile(Coord.fromVect(pos)).onClick();
+		}
+		
+		return false;
 	}
 	
 	

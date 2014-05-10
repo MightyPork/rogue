@@ -19,6 +19,7 @@ import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.algo.floodfill.FillContext;
 import mightypork.gamecore.util.math.algo.floodfill.FloodFill;
+import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.noise.NoiseGen;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
@@ -37,7 +38,29 @@ import mightypork.rogue.world.tile.Tiles;
  */
 public class Level implements BusAccess, Updateable, DelegatingClient, ToggleableClient, IonObjBinary {
 	
+	private static class EntityRenderComparator implements Comparator<Entity> {
+		
+		@Override
+		public int compare(Entity o1, Entity o2)
+		{
+			if (o1.isDead() && !o2.isDead()) {
+				return -1;
+			}
+			
+			if (!o1.isDead() && o2.isDead()) {
+				return 1;
+			}
+			
+			int c = Double.compare(o1.pos.getVisualPos().y(), o1.pos.getVisualPos().y());
+			if (c == 0) c = Double.compare(o1.pos.getVisualPos().x(), o1.pos.getVisualPos().x());
+			
+			return c;
+		}
+		
+	}
+	
 	public static final int ION_MARK = 53;
+	private static final Comparator<Entity> ENTITY_RENDER_CMP = new EntityRenderComparator();
 	
 	private final Coord size = Coord.zero();
 	private World world;
@@ -49,7 +72,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	private Tile[][] tiles;
 	
 	private final Map<Integer, Entity> entityMap = new HashMap<>();
-	private final Set<Entity> entitySet = new HashSet<>();
+	private final List<Entity> entitySet = new LinkedList<>();
 	
 	private int playerCount = 0;
 	
@@ -57,6 +80,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public long seed;
 	
 	private transient NoiseGen noiseGen;
+	private double timeSinceLastEntitySort;
 	
 	
 	public Level()
@@ -231,6 +255,13 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	@Override
 	public void update(double delta)
 	{
+		timeSinceLastEntitySort += delta;
+		
+		if (timeSinceLastEntitySort > 0.2) {
+			Collections.sort(entitySet, ENTITY_RENDER_CMP);
+			timeSinceLastEntitySort = 0;
+		}
+		
 		// just update them all
 		for (final Coord c = Coord.zero(); c.x < size.x; c.x++) {
 			for (c.y = 0; c.y < size.y; c.y++) {
@@ -505,23 +536,27 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	/**
 	 * Get entity of type closest to coord
 	 * 
-	 * @param self the querying entity - to provide position, and to be excluded
-	 *            from the search.
+	 * @param pos the attack origin
 	 * @param type wanted entity type
 	 * @param radius search radius; -1 for unlimited.
 	 * @return
 	 */
-	public Entity getClosestEntity(Entity self, EntityType type, double radius)
+	public Entity getClosestEntity(Vect pos, EntityType type, double radius)
 	{
 		Entity closest = null;
 		double minDist = Double.MAX_VALUE;
 		
+		if (type == EntityType.MONSTER) System.out.println("Finding entity in range " + radius + " of " + pos);
+		
 		for (final Entity e : entitySet) {
-			if (e == self) continue;
 			if (e.isDead()) continue;
 			
 			if (e.getType() == type) {
-				final double dist = e.getCoord().dist(self.getCoord());
+				final double dist = e.pos.getVisualPos().dist(pos).value();
+				
+				if (type == EntityType.MONSTER && dist < radius * 2) {
+					System.out.println("Entity " + e + ", dist: " + dist + ", standing at: " + e.pos.getCoord() + ", visual: " + e.pos.getVisualPos());
+				}
 				
 				if (dist <= radius && dist < minDist) {
 					minDist = dist;

@@ -15,7 +15,6 @@ import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonListener;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
@@ -121,7 +120,7 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 	 * @param pos position on screen (px)
 	 * @return position on map (tiles)
 	 */
-	public Coord toWorldPos(Vect pos)
+	public Vect toWorldPos(Vect pos)
 	{
 		return worldRenderer.getClickedTile(pos);
 	}

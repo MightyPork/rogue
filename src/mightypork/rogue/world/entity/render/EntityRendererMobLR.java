@@ -70,7 +70,7 @@ public class EntityRendererMobLR extends EntityRenderer {
 		
 		final double hw = spriteRect.width().half().value();
 		
-		Render.quadTextured(Vect.ZERO.expand(hw, hw, hw, hw), q, hue.withAlpha(entity.isDead() ? 1 - hurtTime / 3 : 1));
+		Render.quadTextured(Vect.ZERO.expand(hw, hw, hw, hw), q, hue.withAlpha(entity.isDead() ? 1 - hurtTime / 2 : 1));
 		Render.popMatrix();
 	}
 }

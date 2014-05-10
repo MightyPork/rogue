@@ -201,4 +201,10 @@ public class Coord implements IonObjBundled, IonObjBinary {
 	{
 		return ION_MARK;
 	}
+	
+	
+	public static Coord fromVect(Vect vect)
+	{
+		return make((int) Math.floor(vect.x()), (int) Math.floor(vect.y()));
+	}
 }

@@ -22,10 +22,11 @@ public class PlayerEntity extends Entity {
 		public PlayerAi(Entity entity)
 		{
 			super(entity);
-			setDespawnDelay(3);
+			setDespawnDelay(2);
 			
 			health.setMaxHealth(12);
 			health.fill(); // fill health bar to max
+			health.setHitCooldownTime(0.5);
 		}
 		
 		
