@@ -11,6 +11,7 @@ import mightypork.gamecore.util.ion.IonObjBlob;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.rogue.world.World.PlayerFacade;
 
 
 public abstract class Item implements IonObjBlob {
@@ -139,6 +140,7 @@ public abstract class Item implements IonObjBlob {
 		final int realRemoved = Math.min(removed, amount);
 		
 		final Item newItm = model.createItem();
+		newItm.uses = uses;
 		newItm.amount = realRemoved;
 		this.amount -= realRemoved;
 		
@@ -188,4 +190,11 @@ public abstract class Item implements IonObjBlob {
 	
 	
 	public abstract String getVisualName();
+	
+	
+	@DefaultImpl
+	public boolean pickUp(PlayerFacade pl)
+	{
+		return pl.addItem(this);
+	}
 }

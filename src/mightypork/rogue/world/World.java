@@ -10,7 +10,6 @@ import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
-import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
@@ -159,7 +158,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		public int getHealthMax()
 		{
-			return playerEntity.health.getMaxHealth();
+			return playerEntity.health.getHealthMax();
 		}
 		
 		
@@ -348,6 +347,18 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 			}
 			
 			return true;
+		}
+		
+		
+		public void setHealth(int health)
+		{
+			playerEntity.health.setHealth(health);
+		}
+		
+		
+		public void setHealthMax(int health)
+		{
+			playerEntity.health.setHealthMax(health);
 		}
 	}
 	
@@ -540,6 +551,8 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	public void msgPick(Item item)
 	{
 		console.addMessage("You've picked a " + item.getVisualName() + ".");
+		console.lastPickupItem = item;
+		console.timeSinceLastPickup = 0;
 	}
 	
 	
@@ -599,6 +612,6 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	
 	public void msgEnterFloor(int floor)
 	{
-		console.addMessage("~ " + Calc.ordinal(floor + 1) + " floor ~");
+		console.addMessage("~ Floor " + floor + " ~");
 	}
 }

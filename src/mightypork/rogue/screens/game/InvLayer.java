@@ -15,7 +15,6 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.Res;
-import mightypork.rogue.screens.game.ScreenGame.GScrState;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.World.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;

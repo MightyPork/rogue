@@ -167,6 +167,7 @@ public final class Res {
 		textures.add("item.bone", grid.makeQuad(5, 0));
 		textures.add("item.cheese", grid.makeQuad(6, 0));
 		textures.add("item.sandwich", grid.makeQuad(7, 0));
+		textures.add("item.heart_piece", grid.makeQuad(0, 1));
 	}
 	
 	

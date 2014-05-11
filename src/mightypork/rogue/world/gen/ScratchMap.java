@@ -578,26 +578,34 @@ public class ScratchMap {
 	}
 	
 	
-	public boolean dropInArea(Item item, Coord min, Coord max, int tries)
+	public boolean putItem(Item item, Coord pos)
+	{
+		if (!isIn(pos)) return false;
+		
+		final Tile t = getTile(pos);
+		if (t.dropItem(item)) return true;
+		
+		return false;
+	}
+	
+	
+	public boolean putItemInArea(Item item, Coord min, Coord max, int tries)
 	{
 		final Coord pos = Coord.zero();
 		
 		for (int i = 0; i < tries; i++) {
 			pos.x = min.x + rand.nextInt(max.x - min.x);
 			pos.y = min.y + rand.nextInt(max.y - min.y);
-			if (!isIn(pos)) continue;
-			
-			final Tile t = getTile(pos);
-			if (t.dropItem(item)) return true;
+			if (putItem(item, pos)) return true;
 		}
 		
 		return false;
 	}
 	
 	
-	public boolean dropInMap(Item item, int tries)
+	public boolean putItemInMap(Item item, int tries)
 	{
-		return dropInArea(item, genMin, genMax, tries);
+		return putItemInArea(item, genMin, genMax, tries);
 	}
 	
 	

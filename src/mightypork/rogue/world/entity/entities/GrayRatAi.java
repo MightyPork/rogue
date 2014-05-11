@@ -26,7 +26,7 @@ public class GrayRatAi extends MonsterAi {
 	@Override
 	protected double getAttackDistance()
 	{
-		return 1.43;
+		return 1.1;
 	}
 	
 	

@@ -33,7 +33,7 @@ public class ItemClub extends ItemBaseWeapon {
 	@Override
 	public int getMaxUses()
 	{
-		return 25;
+		return 40;
 	}
 	
 	

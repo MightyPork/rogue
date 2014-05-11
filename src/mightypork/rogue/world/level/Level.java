@@ -393,7 +393,11 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		if (removed == null) throw new NullPointerException("No such entity in level: " + eid);
 		if (removed instanceof PlayerEntity) playerCount--;
 		entityList.remove(removed);
-		freeTile(removed.getCoord());
+		
+		// upon kill, entities free tile themselves.
+		if (!removed.isDead()) {
+			freeTile(removed.getCoord());
+		}
 	}
 	
 	

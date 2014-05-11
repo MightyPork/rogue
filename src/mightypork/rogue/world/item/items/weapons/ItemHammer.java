@@ -33,7 +33,7 @@ public class ItemHammer extends ItemBaseWeapon {
 	@Override
 	public int getMaxUses()
 	{
-		return 50;
+		return 60;
 	}
 	
 	

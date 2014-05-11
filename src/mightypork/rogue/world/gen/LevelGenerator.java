@@ -4,6 +4,7 @@ package mightypork.rogue.world.gen;
 import java.util.Random;
 
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
@@ -20,9 +21,9 @@ public class LevelGenerator {
 	
 	
 	@SuppressWarnings("fallthrough")
-	public static Level build(World world, long seed, int complexity, MapTheme theme, boolean lastLevel) throws WorldGenError
+	public static Level build(World world, long seed, int level, MapTheme theme, boolean lastLevel) throws WorldGenError
 	{
-		Log.f3("Generating level of complexity: " + complexity);
+		Log.f3("Generating level of complexity: " + level);
 		
 		final Random rand = new Random(seed + 13);
 		
@@ -35,10 +36,15 @@ public class LevelGenerator {
 			throw new WorldGenError("Could not place entrance room.");
 		}
 		
-		for (int i = 0; i < 1 + complexity / 2 + rand.nextInt((int) (1 + complexity * 0.2)); i++) {
+		for (int i = 0; i < Calc.randInt(rand, 1 + level, (int) (1 + level * 1.5)); i++) {
 			map.addRoom(Rooms.BASIC, false);
-			if (rand.nextInt(7) > 0) map.addRoom(Rooms.SECRET, false);
-			if (rand.nextInt(7) > 0) map.addRoom(Rooms.DEAD_END, false);
+			
+			// spice it up with dead ends
+			if (rand.nextInt(6) > 0) map.addRoom(Rooms.DEAD_END, false);
+		}
+		
+		for (int i = 0; i < Calc.randInt(rand, 1, level / 3); i++) {
+			map.addRoom(Rooms.TREASURE, false);
 		}
 		
 		if (!lastLevel) {
@@ -48,39 +54,48 @@ public class LevelGenerator {
 		}
 		
 		if (lastLevel) {
-			if (!map.addRoom(Rooms.BOSS_ROOM, true)) {
+			if (!map.addRoom(Rooms.BOSS, true)) {
 				throw new WorldGenError("Could not place boss room.");
 			}
 		}
 		
+		map.addRoom(Rooms.HEART_ROOM, true);
+		
 		
 		map.buildCorridors();
 		
-		switch (complexity) {
+		switch (level) {
 			default:
 			case 3:
 			case 2:
-				if (rand.nextInt(2) == 0) map.dropInMap(Items.CLUB.createItemDamaged(60), 50);
+				if (rand.nextInt(2) == 0) map.putItemInMap(Items.CLUB.createItemDamaged(30), 50);
 			case 1:
-			case 0:
-				if (rand.nextInt(2) == 0) map.dropInMap(Items.ROCK.createItemDamaged(10), 50);
+				if (rand.nextInt(2) == 0) map.putItemInMap(Items.ROCK.createItemDamaged(10), 50);
 		}
 		
-		if (complexity == 6) {
-			map.dropInMap(Items.SWORD.createItemDamaged(40), 200);
+		if (level == 1) {
+			map.putItemInMap(Items.BONE.createItemDamaged(20), 60);
 		}
 		
-		if (complexity == 5) {
-			map.dropInMap(Items.HAMMER.createItemDamaged(40), 100);
+		if (level == 2) {
+			map.putItemInMap(Items.CLUB.createItemDamaged(50), 60);
+		}
+		
+		if (level == 6) {
+			map.putItemInMap(Items.SWORD.createItemDamaged(60), 200);
+		}
+		
+		if (level == 4) {
+			map.putItemInMap(Items.HAMMER.createItemDamaged(60), 100);
 		}
 		
 		// entities - random rats
 		
 		
-		for (int i = 0; i < 3 + complexity + rand.nextInt(1 + complexity); i++) {
+		for (int i = 0; i < Calc.randInt(rand, (int) (3 + level * 1.5), (int) (3 + level * 2.5)); i++) {
 			Entity e;
 			
-			if (rand.nextInt((int) (complexity / 1.5) + 1) != 0) {
+			if (level > 2 && rand.nextInt(level - 2 + 1) != 0) {
 				e = Entities.RAT_BROWN.createEntity();
 			} else {
 				e = Entities.RAT_GRAY.createEntity();

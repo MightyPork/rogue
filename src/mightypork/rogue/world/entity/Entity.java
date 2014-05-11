@@ -44,6 +44,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	public final EntityModuleHealth health = new EntityModuleHealth(this);
 	private double despawnDelay = 1;
 	protected Entity lastAttacker;
+	private boolean freed;
 	
 	
 	public Entity(EntityModel model, int eid)
@@ -171,6 +172,11 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	@Override
 	public void update(double delta)
 	{
+		if (!freed && isDead() && health.getTimeSinceLastDamage() >= 0.2) {
+			getLevel().freeTile(getCoord());
+			freed = true;
+		}
+		
 		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
 			entry.getValue().update(delta);
 		}

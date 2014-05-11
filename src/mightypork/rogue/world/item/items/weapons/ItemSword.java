@@ -33,7 +33,7 @@ public class ItemSword extends ItemBaseWeapon {
 	@Override
 	public int getMaxUses()
 	{
-		return 100;
+		return 150;
 	}
 	
 	

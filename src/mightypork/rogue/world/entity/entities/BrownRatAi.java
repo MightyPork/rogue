@@ -10,8 +10,8 @@ public class BrownRatAi extends GrayRatAi {
 	{
 		super(entity);
 		
-		setAttackTime(0.8);
-		setScanTime(1);
+		setAttackTime(1.2);
+		setScanTime(1.3);
 	}
 	
 	
@@ -25,7 +25,7 @@ public class BrownRatAi extends GrayRatAi {
 	@Override
 	protected int getAttackStrength()
 	{
-		return 3 + rand.nextInt(2);
+		return 2 + rand.nextInt(3);
 	}
 	
 	

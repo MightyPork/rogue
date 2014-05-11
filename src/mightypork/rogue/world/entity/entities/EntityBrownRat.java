@@ -28,10 +28,10 @@ public class EntityBrownRat extends Entity {
 		addModule("ai", ai);
 		pos.addMoveListener(ai);
 		
-		pos.setStepTime(0.37); // faster than gray rat
+		pos.setStepTime(0.39); // faster than gray rat
 		setDespawnDelay(1);
 		
-		health.setMaxHealth(14);
+		health.setHealthMax(14);
 		health.setHealth(Calc.randInt(rand, 8, 14)); // tougher to kill
 		health.setHitCooldownTime(0.35); // a bit longer than gray rat
 	}
@@ -63,11 +63,11 @@ public class EntityBrownRat extends Entity {
 	
 	
 	@Override
-	public void onCorpseRemoved()
+	public void onKilled()
 	{
 		// drop rat stuff
 		
-		if (rand.nextInt(8) == 0) {
+		if (rand.nextInt(7) == 0) {
 			getLevel().dropNear(getCoord(), Items.BONE.createItemDamaged(10));
 			return;
 		}

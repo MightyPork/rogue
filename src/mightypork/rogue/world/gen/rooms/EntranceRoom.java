@@ -15,7 +15,7 @@ public class EntranceRoom extends AbstractRectRoom {
 	@Override
 	protected Coord getInnerSize(Random rand)
 	{
-		return Coord.make(3 + rand.nextInt(2) * 2, 3 + rand.nextInt(2) * 3);
+		return Coord.make(3 + rand.nextInt(3), 3 + rand.nextInt(3));
 	}
 	
 	

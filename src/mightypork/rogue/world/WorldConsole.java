@@ -9,9 +9,14 @@ import java.util.concurrent.LinkedBlockingDeque;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.rogue.world.item.Item;
 
 
 public class WorldConsole implements Updateable {
+	
+	/** Used only for display */
+	public Item lastPickupItem;
+	public double timeSinceLastPickup = Integer.MAX_VALUE;
 	
 	private static final double DURATION = 5;
 	
@@ -87,6 +92,8 @@ public class WorldConsole implements Updateable {
 				iter.remove();
 			}
 		}
+		
+		timeSinceLastPickup += delta;
 	}
 	
 	

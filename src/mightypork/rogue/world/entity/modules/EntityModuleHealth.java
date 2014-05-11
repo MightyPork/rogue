@@ -68,13 +68,13 @@ public class EntityModuleHealth extends EntityModule {
 	}
 	
 	
-	public int getMaxHealth()
+	public int getHealthMax()
 	{
 		return maxHealth;
 	}
 	
 	
-	public void setMaxHealth(int maxHealth)
+	public void setHealthMax(int maxHealth)
 	{
 		if (maxHealth <= 0) throw new IllegalValueException("Max health out of allowed range: " + maxHealth);
 		this.maxHealth = maxHealth;

@@ -19,15 +19,11 @@ public class WorldCreator {
 			final World w = new World();
 			w.setSeed(seed);
 			
-//			final int count = 7;
-//			
-//			for (int i = 1; i <= count; i++) {
-//				final Level l = LevelGenerator.build(w, rand.nextLong(), i, LevelGenerator.DUNGEON_THEME, i == count);
-//				w.addLevel(l);
-//			}
+			final int count = 7;
 			
-			w.addLevel(LevelGenerator.build(w, rand.nextLong(), 6, LevelGenerator.DUNGEON_THEME, false));
-			w.addLevel(LevelGenerator.build(w, rand.nextLong(), 7, LevelGenerator.DUNGEON_THEME, true));
+			for (int lvl = 1; lvl <= count; lvl++) {
+				w.addLevel(LevelGenerator.build(w, rand.nextLong(), lvl, LevelGenerator.DUNGEON_THEME, lvl == count));
+			}
 			
 			w.createPlayer();
 			

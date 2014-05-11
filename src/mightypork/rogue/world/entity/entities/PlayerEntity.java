@@ -21,7 +21,7 @@ public class PlayerEntity extends Entity {
 			super(entity);
 			setDespawnDelay(2);
 			
-			health.setMaxHealth(12);
+			health.setHealthMax(6); // 3 hearts
 			health.fill(); // fill health bar to max
 			health.setHitCooldownTime(0.5);
 		}
@@ -38,7 +38,8 @@ public class PlayerEntity extends Entity {
 			final Tile t = getLevel().getTile(getCoord());
 			if (t.hasItem()) {
 				final Item item = t.pickItem();
-				if (getWorld().getPlayer().addItem(item)) {
+				
+				if (item.pickUp(getWorld().getPlayer())) {
 					// player picked item
 				} else {
 					t.dropItem(item); // put back.

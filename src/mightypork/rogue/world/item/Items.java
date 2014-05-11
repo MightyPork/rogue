@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.rogue.world.item.items.active.ItemHeartPiece;
 import mightypork.rogue.world.item.items.food.ItemCheese;
 import mightypork.rogue.world.item.items.food.ItemMeat;
 import mightypork.rogue.world.item.items.food.ItemSandwich;
@@ -33,6 +34,7 @@ public final class Items {
 	public static final ItemModel HAMMER = new ItemModel(6, ItemHammer.class);
 	public static final ItemModel SWORD = new ItemModel(7, ItemSword.class);
 	public static final ItemModel ROCK = new ItemModel(8, ItemStone.class);
+	public static final ItemModel HEART_PIECE = new ItemModel(9, ItemHeartPiece.class);
 	
 	
 	public static void register(int id, ItemModel model)
@@ -76,12 +78,6 @@ public final class Items {
 		
 		out.writeIntByte(model.id);
 		model.saveItem(out, item);
-	}
-	
-	
-	public static Item create(int tileId)
-	{
-		return get(tileId).createItem();
 	}
 	
 	

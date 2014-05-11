@@ -21,12 +21,12 @@ public abstract class AbstractRectRoom implements RoomBuilder {
 	{
 		// half width, half height actually
 		final Coord innerSize = getInnerSize(rand);
-		final int width = 2 + innerSize.x;
-		final int height = 2 + innerSize.y;
+		final int width = 2 + innerSize.x - 1;
+		final int height = 2 + innerSize.y - 1;
 		
-		final int wLow = width / 2;
+		final int wLow = (int) Math.round(width / 2D);
 		final int wHigh = width - wLow;
-		final int hLow = height / 2;
+		final int hLow = (int) Math.round(height / 2D);
 		final int hHigh = height - hLow;
 		
 		final Coord min = new Coord(center.x - wLow, center.y - hLow);

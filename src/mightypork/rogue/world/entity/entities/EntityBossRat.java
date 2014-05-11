@@ -31,7 +31,7 @@ public class EntityBossRat extends Entity {
 		pos.setStepTime(0.4);
 		setDespawnDelay(1);
 		
-		health.setMaxHealth(80);
+		health.setHealthMax(80);
 		health.setHealth(80);
 		health.setHitCooldownTime(0.35);
 	}
@@ -63,7 +63,7 @@ public class EntityBossRat extends Entity {
 	
 	
 	@Override
-	public void onCorpseRemoved()
+	public void onKilled()
 	{
 		// TODO drop rare stuff & fire event.
 		

@@ -4,7 +4,6 @@ package mightypork.rogue.screens.game;
 import java.util.Random;
 
 import mightypork.gamecore.app.AppAccess;
-import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.gui.screens.LayeredScreen;
