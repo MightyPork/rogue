@@ -80,6 +80,8 @@ public class ItemHeartPiece extends Item {
 		pl.setHealthMax(pl.getHealthMax() + 2); // two points / heart
 		pl.setHealth(pl.getHealthMax());
 		
+		pl.getWorld().msgHeartPiece();
+		
 		return true;
 	}
 	

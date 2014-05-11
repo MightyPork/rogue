@@ -22,14 +22,14 @@ public abstract class ItemBaseWeapon extends Item {
 	
 	
 	@Override
-	public int getFoodPoints()
+	public final int getFoodPoints()
 	{
 		return 0;
 	}
 	
 	
 	@Override
-	public ItemType getType()
+	public final ItemType getType()
 	{
 		return ItemType.WEAPON;
 	}

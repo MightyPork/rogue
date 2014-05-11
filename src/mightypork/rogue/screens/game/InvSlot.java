@@ -138,7 +138,7 @@ public class InvSlot extends ClickableComponent {
 			
 			if (itm.getType() == ItemType.FOOD) {
 				rtTxP.setText(Calc.toString(itm.getFoodPoints() / 2D));
-				rbTxP.setColor(RGB.GREEN);
+				rtTxP.setColor(RGB.GREEN);
 				rtTxP.render();
 			} else if (itm.getType() == ItemType.WEAPON) {
 				

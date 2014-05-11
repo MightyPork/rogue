@@ -22,14 +22,14 @@ public abstract class ItemBaseFood extends Item {
 	
 	
 	@Override
-	public int getAttackPoints()
+	public final int getAttackPoints()
 	{
 		return 0;
 	}
 	
 	
 	@Override
-	public ItemType getType()
+	public final ItemType getType()
 	{
 		return ItemType.FOOD;
 	}

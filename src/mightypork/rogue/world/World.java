@@ -360,6 +360,12 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		{
 			playerEntity.health.setHealthMax(health);
 		}
+
+
+		public World getWorld()
+		{
+			return World.this;
+		}
 	}
 	
 	// not saved stuffs
@@ -550,7 +556,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	
 	public void msgPick(Item item)
 	{
-		console.addMessage("You've picked a " + item.getVisualName() + ".");
+		console.addMessage("You've picked up a " + item.getVisualName() + ".");
 		console.lastPickupItem = item;
 		console.timeSinceLastPickup = 0;
 	}
@@ -606,12 +612,18 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	
 	public void msgCannotPick()
 	{
-		console.addMessage("Can't pick items, inventory is full.");
+		console.addMessage("Can't collect items, inventory is full.");
 	}
 	
 	
 	public void msgEnterFloor(int floor)
 	{
-		console.addMessage("~ Floor " + floor + " ~");
+		console.addMessage("~ Welcome to floor " + (1+floor) + "! ~");
+	}
+
+
+	public void msgHeartPiece()
+	{
+		console.addMessage("Your health capacity has been increased.");
 	}
 }
