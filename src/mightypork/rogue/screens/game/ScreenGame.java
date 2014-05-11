@@ -92,6 +92,9 @@ public class ScreenGame extends LayeredScreen {
 	{
 		if (this.state == nstate) return;
 		
+
+		System.out.println("Goto: "+nstate);
+		
 		if (nstate != GScrState.WORLD) { // leaving world.
 			getEventBus().send(new WorldPauseRequest(PauseAction.PAUSE));
 			
@@ -150,6 +153,7 @@ public class ScreenGame extends LayeredScreen {
 		//pause key
 		bindKey(new KeyStroke(Keys.P), actionTogglePause);
 		bindKey(new KeyStroke(Keys.PAUSE), actionTogglePause);
+		bindKey(new KeyStroke(Keys.SPACE), actionTogglePause);
 		
 		bindKey(new KeyStroke(Keys.I), actionInv);
 		bindKey(new KeyStroke(Keys.E), actionEat);

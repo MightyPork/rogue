@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
-import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.resources.fonts.FontRenderer;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.RGB;
