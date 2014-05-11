@@ -284,7 +284,8 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		}
 		
 		//System.out.println("step to prey");
-		entity.pos.addStep(preyPath.get(0));
+		entity.pos.cancelPath();
+		entity.pos.addSteps(preyPath);
 	}
 	
 	
