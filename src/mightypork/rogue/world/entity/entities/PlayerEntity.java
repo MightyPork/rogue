@@ -16,7 +16,8 @@ public class PlayerEntity extends Entity {
 	
 	class PlayerAi extends EntityModule implements EntityMoveListener {
 		
-		public PlayerAi(Entity entity) {
+		public PlayerAi(Entity entity)
+		{
 			super(entity);
 			setDespawnDelay(2);
 			
@@ -79,7 +80,8 @@ public class PlayerEntity extends Entity {
 	private final PlayerAi ai = new PlayerAi(this);
 	
 	
-	public PlayerEntity(EntityModel model, int eid) {
+	public PlayerEntity(EntityModel model, int eid)
+	{
 		super(model, eid);
 		
 		pos.setStepTime(0.25);

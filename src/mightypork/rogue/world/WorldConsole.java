@@ -1,9 +1,10 @@
 package mightypork.rogue.world;
 
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.Iterator;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.math.Easing;
@@ -22,7 +23,8 @@ public class WorldConsole implements Updateable {
 		private double elapsed = 0;
 		
 		
-		private Entry(String text) {
+		private Entry(String text)
+		{
 			this.text = text;
 			this.fadeout = new NumAnimated(1, Easing.LINEAR);
 			this.fadeout.setDefaultDuration(0.5);
@@ -76,8 +78,8 @@ public class WorldConsole implements Updateable {
 	@Override
 	public void update(double delta)
 	{
-		for (Iterator<Entry> iter = entries.iterator(); iter.hasNext();) {
-			Entry e = iter.next();
+		for (final Iterator<Entry> iter = entries.iterator(); iter.hasNext();) {
+			final Entry e = iter.next();
 			
 			e.update(delta);
 			
@@ -99,7 +101,9 @@ public class WorldConsole implements Updateable {
 		return entries;
 	}
 	
-	public void clear() {
+	
+	public void clear()
+	{
 		entries.clear();
 	}
 }

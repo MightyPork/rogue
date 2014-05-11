@@ -30,7 +30,8 @@ public class HeartBar extends BaseComponent {
 	 * @param img_off
 	 * @param align
 	 */
-	public HeartBar(Num total, Num active, TxQuad img_on, TxQuad img_half, TxQuad img_off, AlignX align) {
+	public HeartBar(Num total, Num active, TxQuad img_on, TxQuad img_half, TxQuad img_off, AlignX align)
+	{
 		super();
 		this.total = total;
 		this.active = active;
@@ -60,7 +61,7 @@ public class HeartBar extends BaseComponent {
 	
 	@Override
 	protected void renderComponent()
-	{		
+	{
 		for (int i = 0; i < total.value(); i++) {
 			index.setTo(i);
 			

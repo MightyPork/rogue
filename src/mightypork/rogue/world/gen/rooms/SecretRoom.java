@@ -43,18 +43,18 @@ public class SecretRoom extends AbstractRectRoom {
 		}
 		
 		for (int i = 0; i < Calc.randInt(rand, 0, 2); i++) {
-			map.dropInArea(Items.BONE.createItem(), min, max, 50);
+			map.dropInArea(Items.BONE.createItemDamaged(20), min, max, 50);
 		}
 		
 		for (int i = 0; i < Calc.randInt(rand, 0, 1); i++) {
-			map.dropInArea(Items.ROCK.createItem(), min, max, 50);
+			map.dropInArea(Items.ROCK.createItemDamaged(30), min, max, 50);
 		}
 		
-		for (int i = 0; i < Calc.randInt(rand, 0, 3); i++) {
+		for (int i = 0; i < Calc.randInt(rand, 0, 2); i++) {
 			map.dropInArea(Items.MEAT.createItem(), min, max, 50);
 		}
 		
-		for (int i = 0; i < Calc.randInt(rand, 0, 3); i++) {
+		for (int i = 0; i < Calc.randInt(rand, 0, 2); i++) {
 			map.dropInArea(Items.CHEESE.createItem(), min, max, 50);
 		}
 	}

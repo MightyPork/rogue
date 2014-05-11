@@ -4,9 +4,9 @@ package mightypork.rogue.world.entity.entities;
 import mightypork.rogue.world.entity.Entity;
 
 
-public class RatAi extends MonsterAi {
+public class GrayRatAi extends MonsterAi {
 	
-	public RatAi(Entity entity)
+	public GrayRatAi(Entity entity)
 	{
 		super(entity);
 		

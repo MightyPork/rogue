@@ -27,7 +27,8 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	private int disableLevel = 0;
 	
 	
-	public BaseComponent() {
+	public BaseComponent()
+	{
 		enableCaching(false);
 	}
 	

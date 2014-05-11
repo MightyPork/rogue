@@ -2,9 +2,11 @@ package mightypork.rogue.world.item;
 
 
 import java.io.IOException;
+import java.util.Random;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.gamecore.util.math.Calc;
 
 
 /**
@@ -18,8 +20,11 @@ public final class ItemModel {
 	public final int id;
 	public final Class<? extends Item> itemClass;
 	
+	public static final Random rand = new Random();
 	
-	public ItemModel(int id, Class<? extends Item> item) {
+	
+	public ItemModel(int id, Class<? extends Item> item)
+	{
 		Items.register(id, this);
 		this.id = id;
 		this.itemClass = item;
@@ -32,7 +37,7 @@ public final class ItemModel {
 	public Item createItem()
 	{
 		try {
-			Item itm = itemClass.getConstructor(ItemModel.class).newInstance(this);
+			final Item itm = itemClass.getConstructor(ItemModel.class).newInstance(this);
 			
 			itm.setRemainingUses(itm.getMaxUses());
 			
@@ -57,5 +62,13 @@ public final class ItemModel {
 		if (itemClass != tile.getClass()) throw new RuntimeException("Item class mismatch.");
 		
 		tile.save(out);
+	}
+	
+	
+	public Item createItemDamaged(int minimalHealthPercent)
+	{
+		final Item item = createItem();
+		item.setRemainingUses(Calc.randInt(rand, (int) Math.ceil(item.getMaxUses() * (minimalHealthPercent / 100D)), item.getMaxUses()));
+		return item;
 	}
 }

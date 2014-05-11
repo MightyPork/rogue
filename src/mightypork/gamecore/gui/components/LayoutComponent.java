@@ -105,14 +105,16 @@ public abstract class LayoutComponent extends BaseComponent implements ClientHub
 		subModule.removeChildClient(client);
 	}
 	
+	
 	@Override
 	public void enable(boolean yes)
 	{
 		super.enable(yes);
-		for(Component c : components) {
+		for (final Component c : components) {
 			c.enable(yes);
 		}
 	}
+	
 	
 //	@Override
 //	public void enable(boolean yes)

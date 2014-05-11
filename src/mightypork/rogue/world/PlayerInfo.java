@@ -106,7 +106,7 @@ public class PlayerInfo implements IonObjBundled {
 	
 	public void selectWeapon(int selectedWeapon)
 	{
-		if(selectedWeapon<0||selectedWeapon>=getInventory().getSize()) {
+		if (selectedWeapon < 0 || selectedWeapon >= getInventory().getSize()) {
 			selectedWeapon = NO_WEAPON;
 		}
 		

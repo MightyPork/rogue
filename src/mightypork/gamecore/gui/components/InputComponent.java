@@ -6,7 +6,7 @@ import mightypork.gamecore.gui.Enableable;
 
 
 public abstract class InputComponent extends BaseComponent implements Enableable, ToggleableClient {
-		
+	
 	@Override
 	public boolean isListening()
 	{

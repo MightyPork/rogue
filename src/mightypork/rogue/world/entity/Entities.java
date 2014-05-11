@@ -6,8 +6,10 @@ import java.util.Collection;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.rogue.world.entity.entities.EntityBossRat;
+import mightypork.rogue.world.entity.entities.EntityBrownRat;
+import mightypork.rogue.world.entity.entities.EntityGrayRat;
 import mightypork.rogue.world.entity.entities.PlayerEntity;
-import mightypork.rogue.world.entity.entities.RatEntity;
 
 
 /**
@@ -20,7 +22,9 @@ public final class Entities {
 	private static final EntityModel[] entities = new EntityModel[256];
 	
 	public static final EntityModel PLAYER = new EntityModel(1, PlayerEntity.class);
-	public static final EntityModel RAT = new EntityModel(2, RatEntity.class);
+	public static final EntityModel RAT_GRAY = new EntityModel(2, EntityGrayRat.class);
+	public static final EntityModel RAT_BROWN = new EntityModel(3, EntityBrownRat.class);
+	public static final EntityModel RAT_BOSS = new EntityModel(4, EntityBossRat.class);
 	
 	
 	public static void register(int id, EntityModel model)

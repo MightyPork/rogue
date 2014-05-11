@@ -86,11 +86,13 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	private double timeSinceLastEntitySort;
 	
 	
-	public Level() {
+	public Level()
+	{
 	}
 	
 	
-	public Level(int width, int height) {
+	public Level(int width, int height)
+	{
 		size.setTo(width, height);
 		buildArray();
 	}
@@ -126,7 +128,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public final Tile getTile(Coord pos)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) return Tiles.NULL.createTile(); // out of range
-			
+		
 		return tiles[pos.y][pos.x];
 	}
 	
@@ -309,6 +311,34 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	
 	
 	/**
+	 * Try to add entity at given pos, then near the pos.
+	 * 
+	 * @param entity the entity
+	 * @param pos pos
+	 * @return true if added
+	 */
+	public boolean addEntityNear(Entity entity, Coord pos)
+	{
+		if (addEntity(entity, pos)) return true;
+		
+		// closer
+		for (int i = 0; i < 20; i++) {
+			final Coord c = pos.add(-1 + rand.nextInt(3), -1 + rand.nextInt(3));
+			if (addEntity(entity, c)) return true;
+		}
+		
+		// further
+		for (int i = 0; i < 20; i++) {
+			final Coord c = pos.add(-2 + rand.nextInt(5), -2 + rand.nextInt(5));
+			if (addEntity(entity, c)) return true;
+		}
+		
+		return false;
+		
+	}
+	
+	
+	/**
 	 * Try to add entity at given pos
 	 * 
 	 * @param entity the entity
@@ -320,6 +350,9 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		final Tile t = getTile(pos);
 		if (!t.isWalkable() || t.isOccupied()) return false;
 		
+		// set level to init EID
+		entity.setLevel(this);
+		
 		if (entityMap.containsKey(entity.getEntityId())) {
 			Log.w("Entity already in level.");
 			return false;
@@ -330,7 +363,6 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		if (entity instanceof PlayerEntity) playerCount++;
 		
 		// join to level & world
-		entity.setLevel(this);
 		occupyTile(entity.getCoord());
 		
 		entity.setCoord(pos);

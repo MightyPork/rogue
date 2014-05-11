@@ -8,8 +8,10 @@ import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.util.math.Calc;
+import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.caching.RectCache;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.World.PlayerFacade;
@@ -41,8 +43,12 @@ public class InvSlot extends ClickableComponent {
 	private final RectCache rbTxRect;
 	private final RectCache rtTxRect;
 	
+	private final Rect usesRect;
+	private final Num hAlpha = Num.make(0.7);
 	
-	public InvSlot(int index, InvSlot[] allSlots) {
+	
+	public InvSlot(int index, InvSlot[] allSlots)
+	{
 		super();
 		this.txBase = Res.txq("inv.slot.base");
 		this.txSelected = Res.txq("inv.slot.selected");
@@ -52,6 +58,8 @@ public class InvSlot extends ClickableComponent {
 		
 		this.uiRect = getRect().shrink(height().perc(16)).cached();
 		this.itemRect = uiRect.shrink(Num.ZERO, height().perc(14), height().perc(14), Num.ZERO).cached();
+		
+		this.usesRect = uiRect.topLeft().startRect().grow(Num.ZERO, uiRect.width().perc(40), Num.ZERO, uiRect.height().perc(8));
 		
 		//@formatter:off
 		this.rbTxRect = uiRect.bottomEdge()
@@ -134,10 +142,25 @@ public class InvSlot extends ClickableComponent {
 				rtTxP.render();
 			} else if (itm.getType() == ItemType.WEAPON) {
 				
-				int atk = itm.getAttackPoints();				
+				final int atk = itm.getAttackPoints();
 				rtTxP.setText((atk >= 0 ? "+" : "") + atk);
 				rtTxP.setColor(RGB.CYAN);
 				rtTxP.render();
+			}
+			
+			
+			if (itm.isDamageable()) {
+				Color.pushAlpha(hAlpha);
+				
+				Render.quadColor(usesRect, RGB.BLACK);
+				
+				final double useRatio = (itm.getRemainingUses() / (double) itm.getMaxUses());
+				
+				final Color barColor = (useRatio > 0.6 ? RGB.GREEN : useRatio > 0.2 ? RGB.ORANGE : RGB.RED);
+				
+				Render.quadColor(usesRect.shrinkRight(usesRect.width().value() * (1 - useRatio)), barColor);
+				
+				Color.popAlpha();
 			}
 		}
 	}

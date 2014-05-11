@@ -105,7 +105,7 @@ public abstract class TileRenderer implements Updateable {
 	
 	public void renderUnexploredFog(TileRenderContext context)
 	{
-		if(!Config.RENDER_UFOG) return;
+		if (!Config.RENDER_UFOG) return;
 		
 		// TODO cache values, update neighbouring tiles upon "explored" flag changed.
 		

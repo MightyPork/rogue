@@ -3,8 +3,6 @@ package mightypork.rogue.screens.game;
 
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
-import java.util.LinkedList;
-import java.util.List;
 
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
@@ -17,7 +15,6 @@ import mightypork.gamecore.util.math.constraints.num.mutable.NumVar;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.WorldConsole;
-import mightypork.rogue.world.WorldConsole.Entry;
 import mightypork.rogue.world.WorldProvider;
 
 
@@ -37,25 +34,25 @@ public class WorldConsoleRenderer extends BaseComponent {
 	@Override
 	protected void renderComponent()
 	{
-		double rh = rowHeight.value();
+		final double rh = rowHeight.value();
 		
-		Rect lowRow = bottomEdge().growUp(rowHeight);
+		final Rect lowRow = bottomEdge().growUp(rowHeight);
 		
-		Collection<WorldConsole.Entry> entries = WorldProvider.get().getWorld().getConsole().getEntries();
+		final Collection<WorldConsole.Entry> entries = WorldProvider.get().getWorld().getConsole().getEntries();
 		
 		int cnt = 0;
 		
-		NumVar alph = Num.makeVar();
+		final NumVar alph = Num.makeVar();
 		
 		Color.pushAlpha(alph);
 		
 		try {
 			
-			for (WorldConsole.Entry entry : entries) {
+			for (final WorldConsole.Entry entry : entries) {
 				
 				alph.setTo(entry.getAlpha());
 				
-				Rect rrr = lowRow.moveY(-rh * cnt);
+				final Rect rrr = lowRow.moveY(-rh * cnt);
 				
 				fr.draw(entry.getMessage(), rrr.move(rh / 12, rh / 12), AlignX.LEFT, RGB.BLACK_60);
 				fr.draw(entry.getMessage(), rrr, AlignX.LEFT, RGB.WHITE);
@@ -63,7 +60,7 @@ public class WorldConsoleRenderer extends BaseComponent {
 				cnt++;
 			}
 			
-		} catch (ConcurrentModificationException e) {
+		} catch (final ConcurrentModificationException e) {
 			Log.e(e); // this should not happen anymore
 		}
 		

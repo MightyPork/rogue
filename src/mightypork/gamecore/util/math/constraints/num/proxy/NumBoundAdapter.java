@@ -21,9 +21,9 @@ public class NumBoundAdapter extends NumAdapter implements PluggableNumBound {
 	
 	
 	@Override
-	public void setNum(NumBound rect)
+	public void setNum(NumBound num)
 	{
-		this.backing = rect;
+		this.backing = num;
 	}
 	
 	

@@ -35,7 +35,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	protected final Random rand = new Random();
 	
 	/** Entity ID */
-	private int entityId;
+	private int entityId = -1;
 	
 	private final Map<String, EntityModule> modules = new HashMap<>();
 	
@@ -123,6 +123,10 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	
 	public void setLevel(Level level)
 	{
+		if (level != null && entityId < 0) {
+			entityId = level.getWorld().getNewEID();
+		}
+		
 		if (level != null) level.freeTile(getCoord());
 		
 		this.level = level;
@@ -265,6 +269,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	{
 		return despawnDelay;
 	}
+	
 	
 	public abstract String getVisualName();
 }

@@ -122,7 +122,7 @@ public abstract class Animator extends Num implements Updateable, Pauseable {
 	{
 		final double target = numAnim.getEnd();
 		numAnim.setTo(Calc.clamp(value, lowValue, highValue));
-		numAnim.animate(target, numAnim.getDefaultDuration());
+		numAnim.animate((target < value ? highValue : lowValue), target, numAnim.getDefaultDuration());
 	}
 	
 	

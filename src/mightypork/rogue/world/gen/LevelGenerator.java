@@ -20,7 +20,7 @@ public class LevelGenerator {
 	
 	
 	@SuppressWarnings("fallthrough")
-	public static Level build(World world, long seed, int complexity, MapTheme theme, boolean lastLevel)
+	public static Level build(World world, long seed, int complexity, MapTheme theme, boolean lastLevel) throws WorldGenError
 	{
 		Log.f3("Generating level of complexity: " + complexity);
 		
@@ -31,7 +31,9 @@ public class LevelGenerator {
 		final ScratchMap map = new ScratchMap(max_size, theme, rand);
 		
 		// start
-		map.addRoom(Rooms.ENTRANCE, true);
+		if (!map.addRoom(Rooms.ENTRANCE, true)) {
+			throw new WorldGenError("Could not place entrance room.");
+		}
 		
 		for (int i = 0; i < 1 + complexity / 2 + rand.nextInt((int) (1 + complexity * 0.2)); i++) {
 			map.addRoom(Rooms.BASIC, false);
@@ -39,50 +41,60 @@ public class LevelGenerator {
 			if (rand.nextInt(7) > 0) map.addRoom(Rooms.DEAD_END, false);
 		}
 		
-		if (!lastLevel) map.addRoom(Rooms.EXIT, true);
+		if (!lastLevel) {
+			if (!map.addRoom(Rooms.EXIT, true)) {
+				throw new WorldGenError("Could not place exit room.");
+			}
+		}
+		
+		if (lastLevel) {
+			if (!map.addRoom(Rooms.BOSS_ROOM, true)) {
+				throw new WorldGenError("Could not place boss room.");
+			}
+		}
+		
 		
 		map.buildCorridors();
 		
-		switch(complexity) {
+		switch (complexity) {
 			default:
 			case 3:
 			case 2:
-				if(rand.nextInt(2)==0) map.dropInMap(Items.CLUB.createItem(), 50);
+				if (rand.nextInt(2) == 0) map.dropInMap(Items.CLUB.createItemDamaged(60), 50);
 			case 1:
 			case 0:
-				if(rand.nextInt(2)==0) map.dropInMap(Items.ROCK.createItem(), 50);
+				if (rand.nextInt(2) == 0) map.dropInMap(Items.ROCK.createItemDamaged(10), 50);
 		}
 		
-		if(complexity == 6) {
-			map.dropInMap(Items.SWORD.createItem(), 200);
+		if (complexity == 6) {
+			map.dropInMap(Items.SWORD.createItemDamaged(40), 200);
 		}
 		
-		if(complexity == 5) {
-			map.dropInMap(Items.HAMMER.createItem(), 100);
+		if (complexity == 5) {
+			map.dropInMap(Items.HAMMER.createItemDamaged(40), 100);
 		}
+		
+		// entities - random rats
+		
+		
+		for (int i = 0; i < 3 + complexity + rand.nextInt(1 + complexity); i++) {
+			Entity e;
+			
+			if (rand.nextInt((int) (complexity / 1.5) + 1) != 0) {
+				e = Entities.RAT_BROWN.createEntity();
+			} else {
+				e = Entities.RAT_GRAY.createEntity();
+			}
+			
+			map.putEntityInMap(e, 20);
+		}
+		
 		
 		final Coord size = map.getNeededSize();
 		final Level lvl = new Level(size.x, size.y);
+		lvl.setWorld(world); // important for creating entities
 		
 		map.writeToLevel(lvl);
-		
-		// TODO tmp
-		// spawn rats
-		
-		// TODO entities in ScratchMap itself
-		
-		final Coord pos = Coord.make(0, 0);
-		for (int i = 0; i < 3 + complexity + rand.nextInt(1 + complexity); i++) {
-			
-			final Entity e = Entities.RAT.createEntity(world);
-			
-			for (int j = 0; j < 20; j++) {
-				pos.x = rand.nextInt(lvl.getWidth());
-				pos.y = rand.nextInt(lvl.getHeight());
-				
-				if (lvl.addEntity(e, pos)) break;
-			}
-		}
 		
 		return lvl;
 	}

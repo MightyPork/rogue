@@ -40,7 +40,7 @@ public class NavButton extends ClickableComponent {
 			bg = base;
 		}
 		
-		if(!isEnabled()) bg = base; // override effects
+		if (!isEnabled()) bg = base; // override effects
 		
 		Render.quadTextured(this, bg);
 		Render.quadTextured(this, fg);

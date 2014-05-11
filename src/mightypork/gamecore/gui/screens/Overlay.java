@@ -25,7 +25,8 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
  * 
  * @author MightyPork
  */
-public abstract class Overlay extends AppSubModule implements Comparable<Overlay>, Updateable, Renderable, KeyBinder, Hideable, Enableable, LayoutChangeListener {
+public abstract class Overlay extends AppSubModule implements Comparable<Overlay>, Updateable, Renderable, KeyBinder, Hideable, Enableable,
+		LayoutChangeListener {
 	
 	private boolean visible = true;
 	private boolean enabled = true;
@@ -87,18 +88,21 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 		root.setVisible(visible);
 	}
 	
+	
 	@Override
 	public void enable(boolean yes)
 	{
-		this.enabled  = yes;
+		this.enabled = yes;
 		root.enable(yes);
 	}
+	
 	
 	@Override
 	public boolean isEnabled()
 	{
 		return enabled;
 	}
+	
 	
 	/**
 	 * Get rendering layer
@@ -126,7 +130,7 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	@Override
 	public void render()
 	{
-		if(!isVisible()) return;
+		if (!isVisible()) return;
 		
 		for (final Renderable r : rendered) {
 			r.render();
@@ -137,7 +141,7 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	@Override
 	public void update(double delta)
 	{
-		if(!isEnabled()) return;
+		if (!isEnabled()) return;
 		
 		for (final Updateable u : updated) {
 			u.update(delta);

@@ -13,5 +13,5 @@ import mightypork.gamecore.util.math.algo.Coord;
  */
 public interface RoomBuilder {
 	
-	RoomDesc buildToFit(ScratchMap map, MapTheme theme, Random rand, Coord center);
+	RoomDesc buildToFit(ScratchMap map, MapTheme theme, Random rand, Coord center) throws WorldGenError;
 }

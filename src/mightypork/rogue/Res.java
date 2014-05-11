@@ -108,7 +108,10 @@ public final class Res {
 		texture = textures.loadTexture("/res/img/sprites.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
 		textures.add("sprite.player", grid.makeSheet(0, 0, 4, 1));
-		textures.add("sprite.rat", grid.makeSheet(0, 1, 4, 1));
+		textures.add("sprite.rat.gray", grid.makeSheet(0, 1, 4, 1));
+		textures.add("sprite.rat.brown", grid.makeSheet(0, 2, 4, 1));
+		textures.add("sprite.rat.boss", grid.makeSheet(0, 3, 4, 1));
+		textures.add("sprite.zzz", grid.makeQuad(0, 7)); // sleep thingy
 		
 		
 		// logo

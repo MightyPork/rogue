@@ -90,7 +90,8 @@ public class CachedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars) {
+	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars)
+	{
 		this(font, antialias, filter, (" " + chars).toCharArray());
 	}
 	
@@ -103,7 +104,8 @@ public class CachedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars) {
+	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars)
+	{
 		GLUtils.checkGLContext();
 		
 		this.font = font;
@@ -163,7 +165,8 @@ public class CachedFont implements GLFont {
 				public int height;
 				
 				
-				public LoadedGlyph(char c, BufferedImage image) {
+				public LoadedGlyph(char c, BufferedImage image)
+				{
 					this.image = image;
 					this.c = c;
 					this.width = image.getWidth();
@@ -299,7 +302,8 @@ public class CachedFont implements GLFont {
 				
 				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(newI);
 			} else {
-				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
+				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder())
+						.put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
 			}
 			
 			byteBuffer.flip();
@@ -413,7 +417,7 @@ public class CachedFont implements GLFont {
 				final float tymin = chtx.texPosY;
 				final float draw_width = minx + chtx.width - minx;
 				final float draw_height = chtx.height;
-				final float drawy0 = (float) (0f - draw_height*discardTop);
+				final float drawy0 = (float) (0f - draw_height * discardTop);
 				
 				final float txmin01 = txmin / textureWidth;
 				final float tymin01 = tymin / textureHeight;

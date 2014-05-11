@@ -41,7 +41,8 @@ public class TextPainter extends BaseComponent {
 	/**
 	 * @param font font to use
 	 */
-	public TextPainter(GLFont font) {
+	public TextPainter(GLFont font)
+	{
 		this(font, AlignX.LEFT, RGB.WHITE);
 	}
 	
@@ -54,7 +55,8 @@ public class TextPainter extends BaseComponent {
 	 * @param color default color
 	 * @param text drawn text
 	 */
-	public TextPainter(GLFont font, AlignX align, Color color, String text) {
+	public TextPainter(GLFont font, AlignX align, Color color, String text)
+	{
 		this(font, align, color, new StringWrapper(text));
 	}
 	
@@ -67,7 +69,8 @@ public class TextPainter extends BaseComponent {
 	 * @param color default color
 	 * @param text text provider
 	 */
-	public TextPainter(GLFont font, AlignX align, Color color, StringProvider text) {
+	public TextPainter(GLFont font, AlignX align, Color color, StringProvider text)
+	{
 		this.font = new FontRenderer(font);
 		this.color = color;
 		this.align = align;
@@ -80,7 +83,8 @@ public class TextPainter extends BaseComponent {
 	 * @param align text align
 	 * @param color default color
 	 */
-	public TextPainter(GLFont font, AlignX align, Color color) {
+	public TextPainter(GLFont font, AlignX align, Color color)
+	{
 		this(font, align, color, (StringProvider) null);
 	}
 	
@@ -92,8 +96,8 @@ public class TextPainter extends BaseComponent {
 		
 		final String str = text.getString();
 		
-		Num shrX = height().perc(xPaddingPerc);
-		Num shrY = height().perc(yPaddingPerc);
+		final Num shrX = height().perc(xPaddingPerc);
+		final Num shrY = height().perc(yPaddingPerc);
 		
 		final Rect rect = getRect().shrink(shrX, shrY);
 		
@@ -101,7 +105,7 @@ public class TextPainter extends BaseComponent {
 			font.draw(str, rect.round(), align, shadowColor);
 		}
 		
-		Rect r = (shadow ? rect.move(shadowOffset.neg()) : rect).round();
+		final Rect r = (shadow ? rect.move(shadowOffset.neg()) : rect).round();
 		font.draw(str, r, align, color);
 		
 		if (Config.DEBUG_FONT_RENDER) Render.quadColor(r, RGB.PINK.withAlpha(0.4));

@@ -39,7 +39,8 @@ public class HudLayer extends ScreenLayer {
 	private final ScreenGame gameScreen;
 	
 	
-	public HudLayer(ScreenGame screen) {
+	public HudLayer(ScreenGame screen)
+	{
 		super(screen);
 		this.gameScreen = screen;
 		
@@ -55,13 +56,13 @@ public class HudLayer extends ScreenLayer {
 	
 	private void buildConsole()
 	{
-		Num rh = root.height();
-		Num rw = root.width();
-		Rect consoleRect = root.shrink(rw.perc(2), Num.ZERO, rh.perc(6), rh.perc(16));
+		final Num rh = root.height();
+		final Num rw = root.width();
+		final Rect consoleRect = root.shrink(rw.perc(2), Num.ZERO, rh.perc(6), rh.perc(16));
 		
-		Num perRow = consoleRect.height().div(20).max(12).min(32);
+		final Num perRow = consoleRect.height().div(20).max(12).min(32);
 		
-		WorldConsoleRenderer wcr = new WorldConsoleRenderer(perRow);
+		final WorldConsoleRenderer wcr = new WorldConsoleRenderer(perRow);
 		wcr.setRect(consoleRect);
 		root.add(wcr);
 	}
@@ -103,7 +104,7 @@ public class HudLayer extends ScreenLayer {
 			}
 		});
 		
-		levelText.setRect(hearts_box.moveY(hearts_box.height().mul(1/7D)));
+		levelText.setRect(hearts_box.moveY(hearts_box.height().mul(1 / 7D)));
 		root.add(levelText);
 	}
 	
@@ -117,7 +118,7 @@ public class HudLayer extends ScreenLayer {
 		NavButton btn;
 		
 		nav.addRight(btn = new NavButton(Res.txq("nav.button.fg.inventory")));
-		btn.setAction(gameScreen.actionInv);
+		btn.setAction(gameScreen.actionToggleInv);
 		
 		nav.addRight(btn = new NavButton(Res.txq("nav.button.fg.eat")));
 		btn.setAction(gameScreen.actionEat);

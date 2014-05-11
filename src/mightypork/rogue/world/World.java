@@ -229,7 +229,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		public void tryToEatSomeFood()
 		{
-			List<Item> foods = new ArrayList<>();
+			final List<Item> foods = new ArrayList<>();
 			for (int i = 0; i < getInventory().getSize(); i++) {
 				final Item itm = getInventory().getItem(i);
 				if (itm != null && itm.getType() == ItemType.FOOD) {
@@ -247,14 +247,14 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 				}
 			});
 			
-			for (Item itm : foods) {
+			for (final Item itm : foods) {
 				if (eatFood(itm)) {
 					getInventory().clean();
 					return;
 				}
 			}
 			
-			if(getHealth()<getHealthMax()) {
+			if (getHealth() < getHealthMax()) {
 				msgNoMoreFood();
 			} else {
 				msgNotHungry();
@@ -264,7 +264,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		public void attack(Entity prey)
 		{
-			int attackPoints = getAttackStrength();
+			final int attackPoints = getAttackStrength();
 			
 			prey.receiveAttack(getPlayer().getEntity(), attackPoints);
 			
@@ -272,7 +272,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 				msgKill(prey);
 			}
 			
-			Item wpn = getSelectedWeapon();
+			final Item wpn = getSelectedWeapon();
 			
 			if (wpn != null) {
 				wpn.use();
@@ -293,7 +293,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		{
 			if (getSelectedWeapon() != null) return;
 			
-			List<Item> wpns = new ArrayList<>();
+			final List<Item> wpns = new ArrayList<>();
 			for (int i = 0; i < getInventory().getSize(); i++) {
 				final Item itm = getInventory().getItem(i);
 				if (itm != null && itm.getType() == ItemType.WEAPON) {
@@ -311,7 +311,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 				}
 			});
 			
-			for (Item itm : wpns) {
+			for (final Item itm : wpns) {
 				for (int i = 0; i < getInventory().getSize(); i++) {
 					final Item itm2 = getInventory().getItem(i);
 					if (itm2 == itm) {
@@ -583,6 +583,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	{
 		console.addMessage("You don't have any food!");
 	}
+	
 	
 	public void msgNotHungry()
 	{

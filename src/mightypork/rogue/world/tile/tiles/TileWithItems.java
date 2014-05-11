@@ -22,7 +22,8 @@ public abstract class TileWithItems extends Tile {
 	protected final Stack<Item> items = new Stack<>();
 	
 	
-	public TileWithItems(TileModel model) {
+	public TileWithItems(TileModel model)
+	{
 		super(model);
 	}
 	
@@ -31,7 +32,7 @@ public abstract class TileWithItems extends Tile {
 	public void renderExtra(TileRenderContext context)
 	{
 		if ((isExplored() || !Config.RENDER_UFOG) && !items.isEmpty()) {
-			itemRenderer.render(items.peek(), context);
+			itemRenderer.render(items, context);
 		}
 	}
 	

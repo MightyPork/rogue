@@ -45,6 +45,18 @@ public final class EntityModel {
 	}
 	
 	
+	/**
+	 * Create entitiy without EID. EID will be assigned when the entity is added
+	 * to a level.
+	 * 
+	 * @return entity.
+	 */
+	public Entity createEntity()
+	{
+		return createEntity(-1);
+	}
+	
+	
 	public Entity loadEntity(IonInput in) throws IOException
 	{
 		final IonBundle bundle = in.readBundle();

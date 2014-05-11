@@ -87,12 +87,15 @@ public class InvLayer extends ScreenLayer {
 	}
 	
 	
-	public InvLayer(final ScreenGame screen) {
+	public InvLayer(final ScreenGame screen)
+	{
 		super(screen);
 		
 		final Rect fg = root.shrink(root.height().perc(15));
 		
-		final QuadPainter qp = new QuadPainter(RGB.BLACK_30, RGB.BLACK_30, RGB.BLACK_80, RGB.BLACK_80);
+		// darker down to cover console.
+		final QuadPainter qp = new QuadPainter(RGB.BLACK_30, RGB.BLACK_30, RGB.BLACK_90, RGB.BLACK_90);
+		
 		qp.setRect(root);
 		root.add(qp);
 		
@@ -137,19 +140,7 @@ public class InvLayer extends ScreenLayer {
 		gl.put(txp2, pos, 0, 1, 1);
 		txp2.setPaddingHPerc(0, 25);
 		
-		final Runnable leaveInv = new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				if(!isEnabled()) return;
-				
-				screen.setState(GScrState.WORLD);
-			}
-		};
-		
-		bindKey(new KeyStroke(Keys.ESCAPE), leaveInv);
-		//bindKey(new KeyStroke(Keys.I), leaveInv);
+		bindKey(new KeyStroke(Keys.ESCAPE), screen.actionToggleInv);
 		// TODO needs some rewrite of keys system
 		
 		bindKey(new KeyStroke(Keys.E), new Runnable() {
@@ -157,7 +148,7 @@ public class InvLayer extends ScreenLayer {
 			@Override
 			public void run()
 			{
-				if(!isEnabled()) return;
+				if (!isEnabled()) return;
 				
 				if (WorldProvider.get().getPlayer().isDead()) return;
 				
@@ -198,7 +189,7 @@ public class InvLayer extends ScreenLayer {
 			@Override
 			public void run()
 			{
-				if(!isEnabled()) return;
+				if (!isEnabled()) return;
 				
 				final int selected = getSelectedSlot();
 				if (selected != -1) {
@@ -229,9 +220,9 @@ public class InvLayer extends ScreenLayer {
 			@Override
 			public void run()
 			{
-				if(!isEnabled()) return;
+				if (!isEnabled()) return;
 				
-				int sel = getSelectedSlot();
+				final int sel = getSelectedSlot();
 				if (sel == -1) {
 					selectSlot(0);
 					return;
@@ -246,9 +237,9 @@ public class InvLayer extends ScreenLayer {
 			@Override
 			public void run()
 			{
-				if(!isEnabled()) return;
+				if (!isEnabled()) return;
 				
-				int sel = getSelectedSlot();
+				final int sel = getSelectedSlot();
 				if (sel == -1) {
 					selectSlot(0);
 					return;
@@ -263,9 +254,9 @@ public class InvLayer extends ScreenLayer {
 			@Override
 			public void run()
 			{
-				if(!isEnabled()) return;
+				if (!isEnabled()) return;
 				
-				int sel = getSelectedSlot();
+				final int sel = getSelectedSlot();
 				if (sel == -1) {
 					selectSlot(0);
 					return;
@@ -280,9 +271,9 @@ public class InvLayer extends ScreenLayer {
 			@Override
 			public void run()
 			{
-				if(!isEnabled()) return;
+				if (!isEnabled()) return;
 				
-				int sel = getSelectedSlot();
+				final int sel = getSelectedSlot();
 				if (sel == -1) {
 					selectSlot(0);
 					return;

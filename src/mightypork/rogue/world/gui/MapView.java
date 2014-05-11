@@ -128,13 +128,13 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 	{
 		if (!event.isOver(this)) return;
 		
-		if(event.isButtonEvent()) {
-		for (final MapInteractionPlugin p : plugins) {
-			if (p.onClick(event.getPos(), event.getButton(), event.isDown())) {
-				event.consume();
-				break;
+		if (event.isButtonEvent()) {
+			for (final MapInteractionPlugin p : plugins) {
+				if (p.onClick(event.getPos(), event.getButton(), event.isDown())) {
+					event.consume();
+					break;
+				}
 			}
-		}
 		}
 		
 		if (event.isWheelEvent()) {

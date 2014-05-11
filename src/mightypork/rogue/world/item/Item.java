@@ -161,24 +161,31 @@ public abstract class Item implements IonObjBlob {
 		return Log.str(getClass()) + " x " + getAmount();
 	}
 	
-	public int getRemainingUses() {
+	
+	public int getRemainingUses()
+	{
 		return uses;
 	}
 	
+	
 	public abstract int getMaxUses();
 	
-	public void setRemainingUses(int uses) {
+	
+	public void setRemainingUses(int uses)
+	{
 		this.uses = Calc.clamp(uses, 0, getMaxUses());
 	}
 	
-	public void use() {
-		if(uses>0) uses--;
-		if(uses==0) consume();
+	
+	public void use()
+	{
+		if (uses > 0) uses--;
+		if (uses == 0) consume();
 	}
-
-
+	
+	
 	public abstract boolean isDamageable();
-
-
+	
+	
 	public abstract String getVisualName();
 }

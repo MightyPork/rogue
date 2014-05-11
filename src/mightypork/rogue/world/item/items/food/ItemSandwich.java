@@ -28,7 +28,7 @@ public class ItemSandwich extends ItemBaseFood {
 	{
 		return 6;
 	}
-
+	
 	
 	@Override
 	public String getVisualName()

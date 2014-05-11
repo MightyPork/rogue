@@ -14,6 +14,7 @@ import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
+import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
@@ -36,6 +37,9 @@ public class ScratchMap {
 	
 	/** Coords to connect with corridors */
 	private final List<Coord> nodes = new ArrayList<>();
+	
+	private final List<Coord> occupied = new ArrayList<>();
+	private final List<Entity> entities = new ArrayList<>();
 	
 	private final PathFinder pathf = new PathFinder() {
 		
@@ -72,7 +76,7 @@ public class ScratchMap {
 					return 100;
 					
 				default:
-					throw new RuntimeException("Unknown tile type: " + t.getType());
+					throw new WorldGenError("Unknown tile type: " + t.getType());
 			}
 		}
 		
@@ -132,7 +136,7 @@ public class ScratchMap {
 	}
 	
 	
-	public void addRoom(RoomBuilder rb, boolean critical)
+	public boolean addRoom(RoomBuilder rb, boolean critical)
 	{
 		final Coord center = Coord.make(0, 0);
 		
@@ -150,16 +154,16 @@ public class ScratchMap {
 			
 			switch (rand.nextInt(4)) {
 				case 0:
-					center.x += 1 + (failed_total / 50);
+					center.x += (failed_total / 35);
 					break;
 				case 1:
-					center.x -= 1 + (failed_total / 50);
+					center.x -= (failed_total / 35);
 					break;
 				case 2:
-					center.y += 1 + (failed_total / 50);
+					center.y += (failed_total / 35);
 					break;
 				case 3:
-					center.y -= 1 + (failed_total / 50);
+					center.y -= (failed_total / 35);
 			}
 			
 			final RoomDesc rd = rb.buildToFit(this, theme, rand, center);
@@ -174,14 +178,18 @@ public class ScratchMap {
 				clampBounds();
 				
 				nodes.add(center);
-				Log.f3("Placed room on " + Calc.ordinal(1+failed_total) + " try.");
+//				Log.f3("Placed room (failed " + failed_total + " x).");
 				
-				return;
+				return true;
 			} else {
 				failed++;
 				failed_total++;
 				
-				if (failed > 400) {
+				if (failed_total > 1000) {
+					return false;
+				}
+				
+				if (failed > 300) {
 					Log.w("Faild to build room.");
 					if (critical) {
 						
@@ -192,15 +200,12 @@ public class ScratchMap {
 						clampBounds();
 						
 						failed = 0;
+						Log.f3("Trying again.");
 						continue;
 						
 					} else {
-						return;
+						return false;
 					}
-				}
-				
-				if (failed_total > 1000) {
-					throw new RuntimeException("Generation error - could not place critical room.");
 				}
 			}
 		}
@@ -226,7 +231,7 @@ public class ScratchMap {
 	public Tile getTile(Coord pos)
 	{
 		if (!isIn(pos)) {
-			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
+			throw new WorldGenError("Tile not in map: " + pos);
 		}
 		
 		return map[pos.y][pos.x];
@@ -242,7 +247,7 @@ public class ScratchMap {
 	public boolean set(Coord pos, Tile tile)
 	{
 		if (!isIn(pos)) {
-			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
+			throw new WorldGenError("Tile not in map: " + pos);
 		}
 		
 		map[pos.y][pos.x] = tile;
@@ -263,7 +268,7 @@ public class ScratchMap {
 	
 	public void protect(Coord min, Coord max, TileProtectLevel prot)
 	{
-		if (!isIn(min) || !isIn(max)) throw new IndexOutOfBoundsException("Tile(s) not in map: " + min + " , " + max);
+		if (!isIn(min) || !isIn(max)) throw new WorldGenError("Tile(s) not in map: " + min + " , " + max);
 		
 		final Coord c = Coord.make(0, 0);
 		for (c.x = min.x; c.x <= max.x; c.x++)
@@ -274,7 +279,7 @@ public class ScratchMap {
 	
 	public void fill(Coord min, Coord max, TileModel tm)
 	{
-		if (!isIn(min) || !isIn(max)) throw new IndexOutOfBoundsException("Tile(s) not in map: " + min + " , " + max);
+		if (!isIn(min) || !isIn(max)) throw new WorldGenError("Tile(s) not in map: " + min + " , " + max);
 		
 		final Coord c = Coord.make(0, 0);
 		for (c.x = min.x; c.x <= max.x; c.x++)
@@ -285,7 +290,7 @@ public class ScratchMap {
 	
 	public void border(Coord min, Coord max, TileModel tm)
 	{
-		if (!isIn(min) || !isIn(max)) throw new IndexOutOfBoundsException("Tile(s) not in map: " + min + " , " + max);
+		if (!isIn(min) || !isIn(max)) throw new WorldGenError("Tile(s) not in map: " + min + " , " + max);
 		
 		final Coord c = Coord.make(0, 0);
 		
@@ -540,9 +545,24 @@ public class ScratchMap {
 		
 		final Coord entrance = new Coord(enterPoint.x - genMin.x, enterPoint.y - genMin.y);
 		level.setEnterPoint(entrance);
-
+		
 		final Coord exit = new Coord(exitPoint.x - genMin.x, exitPoint.y - genMin.y);
 		level.setExitPoint(exit);
+		
+		for (final Entity e : entities) {
+			final Coord pos = e.getCoord().add(-genMin.x, -genMin.y);
+			if (!level.addEntityNear(e, pos)) {
+				final Tile t = level.getTile(pos);
+				//@formatter:off
+				throw new WorldGenError(
+						"Could not put entity into a level map: e_pos="	+ pos
+						+ ", tile: " + Log.str(t)
+						+ ", t.wa " + t.isWalkable()
+						+ ", t.oc " + t.isOccupied()
+						+ ", ent.. " + e.getVisualName());
+				//@formatter:on
+			}
+		}
 	}
 	
 	
@@ -556,26 +576,68 @@ public class ScratchMap {
 	{
 		exitPoint.setTo(pos);
 	}
-
-
+	
+	
 	public boolean dropInArea(Item item, Coord min, Coord max, int tries)
 	{
-		Coord pos = Coord.zero();
+		final Coord pos = Coord.zero();
 		
-		for(int i=0; i<tries; i++) {
-			pos.x = min.x+rand.nextInt(max.x-min.x);
-			pos.y = min.y+rand.nextInt(max.y-min.y);
+		for (int i = 0; i < tries; i++) {
+			pos.x = min.x + rand.nextInt(max.x - min.x);
+			pos.y = min.y + rand.nextInt(max.y - min.y);
+			if (!isIn(pos)) continue;
 			
-			Tile t = getTile(pos);
-			if(t.dropItem(item)) return true;
+			final Tile t = getTile(pos);
+			if (t.dropItem(item)) return true;
 		}
 		
 		return false;
 	}
-
-
-	public void dropInMap(Item item, int tries)
+	
+	
+	public boolean dropInMap(Item item, int tries)
 	{
-		dropInArea(item, genMin, genMax, tries);
+		return dropInArea(item, genMin, genMax, tries);
+	}
+	
+	
+	public boolean putEntityInArea(Entity entity, Coord min, Coord max, int tries)
+	{
+		final Coord pos = Coord.zero();
+		
+		for (int i = 0; i < tries; i++) {
+			pos.x = min.x + rand.nextInt(max.x - min.x);
+			pos.y = min.y + rand.nextInt(max.y - min.y);
+			if (!isIn(pos)) continue;
+			
+			if (putEntity(entity, pos)) return true;
+		}
+		
+		return false;
+	}
+	
+	
+	public boolean putEntityInMap(Entity entity, int tries)
+	{
+		return putEntityInArea(entity, genMin, genMax, tries);
+	}
+	
+	
+	public boolean putEntity(Entity entity, Coord pos)
+	{
+		if (!isIn(pos)) return false;
+		
+		if (pos.dist(enterPoint) < 5) return false; // protected distance.
+		
+		final Tile t = getTile(pos);
+		if (!t.isWalkable()) return false;
+		
+		if (occupied.contains(pos)) return false;
+		
+		occupied.add(pos.copy());
+		entity.setCoord(pos);
+		entities.add(entity);
+		
+		return true;
 	}
 }

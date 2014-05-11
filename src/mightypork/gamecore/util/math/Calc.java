@@ -671,11 +671,11 @@ public class Calc {
 	public static int randInt(Random rand, int low, int high)
 	{
 		int range = high - low + 1;
-		if(range < 1) range = 1;
+		if (range < 1) range = 1;
 		return low + rand.nextInt(range);
 	}
-
-
+	
+	
 	/**
 	 * Get ordinal version of numbers (1 = 1st, 5 = 5th etc.)
 	 * 
@@ -691,8 +691,8 @@ public class Calc {
 		}
 		return number + "th";
 	}
-
-
+	
+	
 	/**
 	 * Format number with thousands separated by a dot.
 	 * 

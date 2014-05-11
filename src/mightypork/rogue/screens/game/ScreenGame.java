@@ -4,12 +4,14 @@ package mightypork.rogue.screens.game;
 import java.util.Random;
 
 import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Config;
+import mightypork.rogue.world.World.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.events.WorldPauseRequest;
 import mightypork.rogue.world.events.WorldPauseRequest.PauseAction;
@@ -31,6 +33,8 @@ public class ScreenGame extends LayeredScreen {
 	private InvLayer invLayer;
 	private HudLayer hudLayer;
 	
+	private WorldLayer worldLayer;
+	
 	private GScrState state = GScrState.WORLD;
 	
 	private final ActionGroup worldActions = new ActionGroup();
@@ -40,16 +44,18 @@ public class ScreenGame extends LayeredScreen {
 		@Override
 		public void execute()
 		{
-			WorldProvider.get().getPlayer().tryToEatSomeFood();
+			final PlayerFacade pl = WorldProvider.get().getPlayer();
+			if (pl.isDead()) return;
+			pl.tryToEatSomeFood();
 		}
 	};
 	
-	public Action actionInv = new Action() {
+	public Action actionToggleInv = new Action() {
 		
 		@Override
 		public void execute()
 		{
-			setState(GScrState.INV);
+			setState(getState() == GScrState.INV ? GScrState.WORLD : GScrState.INV);
 		}
 	};
 	
@@ -79,8 +85,6 @@ public class ScreenGame extends LayeredScreen {
 			worldLayer.map.toggleMag();
 		}
 	};
-	
-	private WorldLayer worldLayer;
 	
 	
 	/**
@@ -122,7 +126,8 @@ public class ScreenGame extends LayeredScreen {
 	}
 	
 	
-	public ScreenGame(AppAccess app) {
+	public ScreenGame(AppAccess app)
+	{
 		super(app);
 		
 		addLayer(invLayer = new InvLayer(this));
@@ -152,17 +157,16 @@ public class ScreenGame extends LayeredScreen {
 		bindKey(new KeyStroke(Keys.PAUSE), actionTogglePause);
 		bindKey(new KeyStroke(Keys.SPACE), actionTogglePause);
 		
-		bindKey(new KeyStroke(Keys.I), actionInv);
+		bindKey(new KeyStroke(Keys.I), actionToggleInv);
 		bindKey(new KeyStroke(Keys.E), actionEat);
 		bindKey(new KeyStroke(Keys.M), actionToggleMinimap);
 		bindKey(new KeyStroke(Keys.Z), actionToggleZoom);
-
+		
 		// add as actions - enableables.
 		worldActions.add(worldLayer);
 		worldActions.add(hudLayer);
 		
 		worldActions.add(actionEat);
-		worldActions.add(actionInv);
 		worldActions.add(actionToggleMinimap);
 		worldActions.add(actionTogglePause);
 		worldActions.add(actionToggleZoom);

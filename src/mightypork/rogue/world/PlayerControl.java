@@ -12,6 +12,7 @@ import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
+import mightypork.rogue.world.tile.Tile;
 
 
 public abstract class PlayerControl {
@@ -104,7 +105,7 @@ public abstract class PlayerControl {
 	
 	
 	public boolean clickTile(Vect pos)
-	{	
+	{
 		if (pos.dist(getPlayer().getVisualPos().add(0.5, 0.5)).value() < 1.5) {
 			return doClickTile(pos);
 		}
@@ -115,15 +116,20 @@ public abstract class PlayerControl {
 	
 	private boolean doClickTile(Vect pos)
 	{
-		// 1st try to hit entity
+		//try to click tile
+		if (getLevel().getTile(Coord.fromVect(pos)).onClick()) return true;
+		
+		final Tile t = getLevel().getTile(Coord.fromVect(pos));
+		if (!t.isPotentiallyWalkable()) return false; // no point in attacking entity thru wall, right?
+		
+		//try to hit entity
 		final Entity prey = getLevel().getClosestEntity(pos, EntityType.MONSTER, 1);
 		if (prey != null) {
 			getPlayer().attack(prey);
 			return true;
 		}
 		
-		//2nd try to click tile
-		return getLevel().getTile(Coord.fromVect(pos)).onClick();
+		return false;
 	}
 	
 	

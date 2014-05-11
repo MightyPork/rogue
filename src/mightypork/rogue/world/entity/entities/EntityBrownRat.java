@@ -12,39 +12,39 @@ import mightypork.rogue.world.entity.render.EntityRendererMobLR;
 import mightypork.rogue.world.item.Items;
 
 
-public class RatEntity extends Entity {
-	
-	/** Navigation PFC */
-	private PathFinder pathf;
-	
-	private final RatAi ai = new RatAi(this);
+public class EntityBrownRat extends Entity {
 	
 	private EntityRenderer renderer;
 	
+	private final PathFinder pathf = new EntityPathFinder(this);
 	
-	public RatEntity(EntityModel model, int eid) {
+	private final BrownRatAi ai = new BrownRatAi(this);
+	
+	
+	public EntityBrownRat(EntityModel model, int eid)
+	{
 		super(model, eid);
 		
 		addModule("ai", ai);
 		pos.addMoveListener(ai);
 		
-		pos.setStepTime(0.5);
+		pos.setStepTime(0.37); // faster than gray rat
 		setDespawnDelay(1);
 		
-		health.setMaxHealth(5);
-		health.setHealth(Calc.randInt(rand, 3, 5)); // fill health bar to max
-		health.setHitCooldownTime(0.3);
+		health.setMaxHealth(14);
+		health.setHealth(Calc.randInt(rand, 8, 14)); // tougher to kill
+		health.setHitCooldownTime(0.35); // a bit longer than gray rat
 	}
 	
 	
 	@Override
-	public PathFinder getPathFinder()
+	protected EntityRenderer getRenderer()
 	{
-		if (pathf == null) {
-			pathf = new EntityPathFinder(this);
+		if (renderer == null) {
+			renderer = new EntityRendererMobLR(this, "sprite.rat.brown");
 		}
 		
-		return pathf;
+		return renderer;
 	}
 	
 	
@@ -56,20 +56,9 @@ public class RatEntity extends Entity {
 	
 	
 	@Override
-	protected EntityRenderer getRenderer()
+	public PathFinder getPathFinder()
 	{
-		if (renderer == null) {
-			renderer = new EntityRendererMobLR(this, "sprite.rat");
-		}
-		
-		return renderer;
-	}
-	
-	
-	@Override
-	public void onKilled()
-	{
-		super.onKilled();
+		return pathf;
 	}
 	
 	
@@ -78,25 +67,26 @@ public class RatEntity extends Entity {
 	{
 		// drop rat stuff
 		
-		if(rand.nextInt(7) == 0) {
-			getLevel().dropNear(getCoord(), Items.BONE.createItem());
+		if (rand.nextInt(8) == 0) {
+			getLevel().dropNear(getCoord(), Items.BONE.createItemDamaged(10));
 			return;
 		}
-
-		if(rand.nextInt(3) == 0) {
+		
+		if (rand.nextInt(3) == 0) {
 			getLevel().dropNear(getCoord(), Items.MEAT.createItem());
 			return;
 		}
 		
-		if(rand.nextInt(2) == 0) {
+		if (rand.nextInt(6) == 0) {
 			getLevel().dropNear(getCoord(), Items.CHEESE.createItem());
 			return;
 		}
 	}
 	
+	
 	@Override
 	public String getVisualName()
 	{
-		return "Gray Rat";
+		return "Brown Rat";
 	}
 }
