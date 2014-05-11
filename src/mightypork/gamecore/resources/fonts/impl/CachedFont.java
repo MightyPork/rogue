@@ -90,8 +90,7 @@ public class CachedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars)
-	{
+	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars) {
 		this(font, antialias, filter, (" " + chars).toCharArray());
 	}
 	
@@ -104,8 +103,7 @@ public class CachedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars)
-	{
+	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars) {
 		GLUtils.checkGLContext();
 		
 		this.font = font;
@@ -165,8 +163,7 @@ public class CachedFont implements GLFont {
 				public int height;
 				
 				
-				public LoadedGlyph(char c, BufferedImage image)
-				{
+				public LoadedGlyph(char c, BufferedImage image) {
 					this.image = image;
 					this.c = c;
 					this.width = image.getWidth();
@@ -302,8 +299,7 @@ public class CachedFont implements GLFont {
 				
 				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(newI);
 			} else {
-				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder())
-						.put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
+				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
 			}
 			
 			byteBuffer.flip();
@@ -363,7 +359,7 @@ public class CachedFont implements GLFont {
 	@Override
 	public int getLineHeight()
 	{
-		return fontHeight;
+		return (int) Math.round(fontHeight * ((1 - discardTop) - discardBottom));
 	}
 	
 	
@@ -416,7 +412,8 @@ public class CachedFont implements GLFont {
 				final float txmin = chtx.texPosX;
 				final float tymin = chtx.texPosY;
 				final float draw_width = minx + chtx.width - minx;
-				final float draw_height = (float) (chtx.height) - (float) 0;
+				final float draw_height = chtx.height;
+				final float drawy0 = (float) (0f - draw_height*discardTop);
 				
 				final float txmin01 = txmin / textureWidth;
 				final float tymin01 = tymin / textureHeight;
@@ -424,18 +421,17 @@ public class CachedFont implements GLFont {
 				final float theight01 = ((chtx.texPosY + chtx.height - tymin) / textureHeight);
 				
 				glTexCoord2f(txmin01, tymin01);
-				glVertex2f(minx, 0);
+				glVertex2f(minx, drawy0);
 				
 				glTexCoord2f(txmin01, tymin01 + theight01);
-				glVertex2f(minx, 0 + draw_height);
+				glVertex2f(minx, drawy0 + draw_height);
 				
 				glTexCoord2f(txmin01 + twidth01, tymin01 + theight01);
-				glVertex2f(minx + draw_width, 0 + draw_height);
+				glVertex2f(minx + draw_width, drawy0 + draw_height);
 				
 				glTexCoord2f(txmin01 + twidth01, tymin01);
-				glVertex2f(minx + draw_width, 0);
+				glVertex2f(minx + draw_width, drawy0);
 				minx += chtx.width;
-				
 			}
 		}
 		

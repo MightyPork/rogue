@@ -3,13 +3,8 @@ package mightypork.rogue.world.entity.entities;
 
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
-import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.EntityModel;
-import mightypork.rogue.world.entity.EntityModule;
-import mightypork.rogue.world.entity.EntityPathFinder;
-import mightypork.rogue.world.entity.EntityType;
+import mightypork.rogue.world.entity.*;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
-import mightypork.rogue.world.entity.render.EntityRenderer;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
 import mightypork.rogue.world.events.PlayerKilledEvent;
 import mightypork.rogue.world.events.PlayerStepEndEvent;
@@ -21,8 +16,7 @@ public class PlayerEntity extends Entity {
 	
 	class PlayerAi extends EntityModule implements EntityMoveListener {
 		
-		public PlayerAi(Entity entity)
-		{
+		public PlayerAi(Entity entity) {
 			super(entity);
 			setDespawnDelay(2);
 			
@@ -43,7 +37,7 @@ public class PlayerEntity extends Entity {
 			final Tile t = getLevel().getTile(getCoord());
 			if (t.hasItem()) {
 				final Item item = t.pickItem();
-				if (getWorld().getPlayer().getInventory().addItem(item)) {
+				if (getWorld().getPlayer().addItem(item)) {
 					// player picked item
 				} else {
 					t.dropItem(item); // put back.
@@ -85,8 +79,7 @@ public class PlayerEntity extends Entity {
 	private final PlayerAi ai = new PlayerAi(this);
 	
 	
-	public PlayerEntity(EntityModel model, int eid)
-	{
+	public PlayerEntity(EntityModel model, int eid) {
 		super(model, eid);
 		
 		pos.setStepTime(0.25);
@@ -141,5 +134,15 @@ public class PlayerEntity extends Entity {
 	{
 		// send kill event to listeners, after the entity has despawned (disappeared)
 		getWorld().getEventBus().sendDelayed(new PlayerKilledEvent(), getDespawnDelay());
+		
+		getWorld().msgDie(lastAttacker);
+		
+	}
+	
+	
+	@Override
+	public String getVisualName()
+	{
+		return "Player";
 	}
 }

@@ -2,15 +2,15 @@ package mightypork.rogue.world;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
+import java.util.*;
 
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
+import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
@@ -27,7 +27,7 @@ import mightypork.rogue.world.level.Level;
  * 
  * @author MightyPork
  */
-public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable {
+public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable, Updateable {
 	
 	/**
 	 * Convenient access to player-related methods and data
@@ -35,7 +35,6 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	 * @author MightyPork
 	 */
 	public class PlayerFacade {
-		
 		
 		public boolean canAscend()
 		{
@@ -52,8 +51,11 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 			
 			playerInfo.setLevelNumber(lvl_num + 1);
 			
+			getLevel().forceFreeTile(getLevel().getEnterPoint());
 			getLevel().addEntity(playerEntity, getLevel().getEnterPoint());
 			getLevel().explore(getCoord());
+			
+			msgEnterFloor(getLevelNumber());
 		}
 		
 		
@@ -72,8 +74,11 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 			
 			playerInfo.setLevelNumber(lvl_num - 1);
 			
+			getLevel().forceFreeTile(getLevel().getExitPoint());
 			getLevel().addEntity(playerEntity, getLevel().getExitPoint());
 			getLevel().explore(getCoord());
+			
+			msgEnterFloor(getLevelNumber());
 		}
 		
 		
@@ -176,10 +181,16 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 			
 			if (weapon == null) return PlayerInfo.BARE_ATTACK;
 			
-			return Math.min(weapon.getAttackPoints(), playerInfo.BARE_ATTACK);
+			return PlayerInfo.BARE_ATTACK + weapon.getAttackPoints();
 		}
 		
 		
+		/**
+		 * Eat food.
+		 * 
+		 * @param itm food item
+		 * @return if something was eaten
+		 */
 		public boolean eatFood(Item itm)
 		{
 			if (itm == null || itm.isEmpty() || itm.getType() != ItemType.FOOD) return false;
@@ -187,10 +198,12 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 			if (getHealth() < getHealthMax()) {
 				
 				playerEntity.health.addHealth(itm.getFoodPoints());
+				itm.consume();
+				
+				msgEat(itm);
 				
 				return true;
 			}
-			
 			
 			return false;
 		}
@@ -202,7 +215,13 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		}
 		
 		
-		public int getSelectedWeapon()
+		public Item getSelectedWeapon()
+		{
+			return playerInfo.getSelectedWeapon();
+		}
+		
+		
+		public int getSelectedWeaponIndex()
 		{
 			return playerInfo.getSelectedWeaponIndex();
 		}
@@ -210,17 +229,122 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		public void tryToEatSomeFood()
 		{
+			List<Item> foods = new ArrayList<>();
 			for (int i = 0; i < getInventory().getSize(); i++) {
 				final Item itm = getInventory().getItem(i);
-				if (itm == null || itm.isEmpty()) continue;
-				
-				final Item slice = itm.split(1);
-				if (!eatFood(slice)) itm.addItem(slice);
-				if (itm.isEmpty()) getInventory().setItem(i, null);
-				return;
+				if (itm != null && itm.getType() == ItemType.FOOD) {
+					foods.add(itm);
+				}
 			}
+			
+			// sort from smallest to biggest foods
+			Collections.sort(foods, new Comparator<Item>() {
+				
+				@Override
+				public int compare(Item o1, Item o2)
+				{
+					return (o1.getFoodPoints() - o2.getFoodPoints());
+				}
+			});
+			
+			for (Item itm : foods) {
+				if (eatFood(itm)) {
+					getInventory().clean();
+					return;
+				}
+			}
+			
+			msgNoMoreFood();
 		}
 		
+		
+		public void attack(Entity prey)
+		{
+			int attackPoints = getAttackStrength();
+			
+			prey.receiveAttack(getPlayer().getEntity(), attackPoints);
+			
+			if (prey.isDead()) {
+				msgKill(prey);
+			}
+			
+			Item wpn = getSelectedWeapon();
+			
+			if (wpn != null) {
+				wpn.use();
+				if (wpn.isEmpty()) {
+					msgWeaponBreak(wpn);
+					
+					getInventory().clean();
+					selectWeapon(-1);
+					
+					pickBestWeaponIfNoneSelected();
+				}
+			}
+			
+		}
+		
+		
+		private void pickBestWeaponIfNoneSelected()
+		{
+			if (getSelectedWeapon() != null) return;
+			
+			List<Item> wpns = new ArrayList<>();
+			for (int i = 0; i < getInventory().getSize(); i++) {
+				final Item itm = getInventory().getItem(i);
+				if (itm != null && itm.getType() == ItemType.WEAPON) {
+					wpns.add(itm);
+				}
+			}
+			
+			// sort from smallest to biggest foods
+			Collections.sort(wpns, new Comparator<Item>() {
+				
+				@Override
+				public int compare(Item o1, Item o2)
+				{
+					return (o2.getAttackPoints() - o1.getAttackPoints());
+				}
+			});
+			
+			for (Item itm : wpns) {
+				for (int i = 0; i < getInventory().getSize(); i++) {
+					final Item itm2 = getInventory().getItem(i);
+					if (itm2 == itm) {
+						selectWeapon(i);
+						break;
+					}
+				}
+				break; // just one cycle
+			}
+			
+			msgEquipWeapon(getSelectedWeapon());
+		}
+		
+		
+		public boolean addItem(Item item)
+		{
+			if (!getInventory().addItem(item)) {
+				
+				msgCannotPick();
+				
+				return false;
+			}
+			
+			msgPick(item);
+			
+			if (item.getType() == ItemType.WEAPON) {
+				if (getSelectedWeapon() != null) {
+					if (item.getAttackPoints() > getSelectedWeapon().getAttackPoints()) {
+						selectWeapon(-1); // unselect to grab the best one
+					}
+				}
+				
+				pickBestWeaponIfNoneSelected();
+			}
+			
+			return true;
+		}
 	}
 	
 	// not saved stuffs
@@ -229,10 +353,10 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	private BusAccess bus;
 	private int pauseDepth = 0;
 	
-	
 	private final ArrayList<Level> levels = new ArrayList<>();
 	private final PlayerInfo playerInfo = new PlayerInfo();
 	
+	private final WorldConsole console = new WorldConsole();
 	
 	/** World seed */
 	private long seed;
@@ -342,6 +466,8 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		playerInfo.setLevelNumber(0);
 		playerInfo.setEID(playerEid);
+		
+		msgEnterFloor(0);
 	}
 	
 	
@@ -390,4 +516,79 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		return player;
 	}
 	
+	
+	@Override
+	public void update(double delta)
+	{
+		if (isPaused()) return;
+		
+		// update console timing
+		console.update(delta);
+	}
+	
+	
+	public WorldConsole getConsole()
+	{
+		return console;
+	}
+	
+	
+	public void msgPick(Item item)
+	{
+		console.addMessage("You've picked a " + item.getVisualName() + ".");
+	}
+	
+	
+	public void msgWeaponBreak(Item item)
+	{
+		console.addMessage("Your " + item.getVisualName() + " has broken!");
+	}
+	
+	
+	public void msgEquipWeapon(Item item)
+	{
+		console.addMessage("You're now wielding " + (item == null ? "NOTHING" : "a " + item.getVisualName()) + ".");
+	}
+	
+	
+	public void msgEat(Item item)
+	{
+		console.addMessage("You've eaten a " + item.getVisualName() + ".");
+	}
+	
+	
+	public void msgKill(Entity prey)
+	{
+		console.addMessage("You've killed a " + prey.getVisualName() + ".");
+	}
+	
+	
+	public void msgDie(Entity attacker)
+	{
+		console.addMessage("You've been defeated by a " + attacker.getVisualName() + "!");
+	}
+	
+	
+	public void msgDiscoverSecretDoor()
+	{
+		console.addMessage("You've discovered a secret door.");
+	}
+	
+	
+	public void msgNoMoreFood()
+	{
+		console.addMessage("You have no more food!");
+	}
+	
+	
+	public void msgCannotPick()
+	{
+		console.addMessage("Inventory is full.");
+	}
+	
+	
+	public void msgEnterFloor(int floor)
+	{
+		console.addMessage("~ " + Calc.ordinal(floor + 1) + " floor ~");
+	}
 }

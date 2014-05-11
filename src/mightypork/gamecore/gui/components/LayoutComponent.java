@@ -8,14 +8,13 @@ import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.app.AppSubModule;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.clients.ClientHub;
-import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 
 
-public abstract class LayoutComponent extends VisualComponent implements Enableable, ClientHub, AppAccess {
+public abstract class LayoutComponent extends BaseComponent implements ClientHub, AppAccess {
 	
 	private boolean enabled;
 	
@@ -106,21 +105,29 @@ public abstract class LayoutComponent extends VisualComponent implements Enablea
 		subModule.removeChildClient(client);
 	}
 	
-	
 	@Override
 	public void enable(boolean yes)
 	{
-		subModule.setDelegating(yes);
-		subModule.setListening(yes);
-		enabled = yes;
+		super.enable(yes);
+		for(Component c : components) {
+			c.enable(yes);
+		}
 	}
 	
-	
-	@Override
-	public boolean isEnabled()
-	{
-		return enabled;
-	}
+//	@Override
+//	public void enable(boolean yes)
+//	{
+//		subModule.setDelegating(yes);
+//		subModule.setListening(yes);
+//		enabled = yes;
+//	}
+//	
+//	
+//	@Override
+//	public boolean isEnabled()
+//	{
+//		return enabled;
+//	}
 	
 	
 	/**

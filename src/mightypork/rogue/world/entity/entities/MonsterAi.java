@@ -94,9 +94,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	{
 		if (entity.isDead()) return;
 		
-		//System.out.println("monster ai step finished.");
 		if (chasing) {
-			//System.out.println("chasing..");
 			final Entity prey = getPreyEntity();
 			if (!isPreyValid(prey)) {
 				stopChasing();
@@ -283,7 +281,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			return;
 		}
 		
-		//System.out.println("step to prey");
 		entity.pos.cancelPath();
 		entity.pos.addSteps(preyPath);
 	}

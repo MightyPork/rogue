@@ -24,8 +24,7 @@ public class FontRenderer {
 	/**
 	 * @param font used font
 	 */
-	public FontRenderer(GLFont font)
-	{
+	public FontRenderer(GLFont font) {
 		this(font, RGB.WHITE);
 	}
 	
@@ -34,8 +33,7 @@ public class FontRenderer {
 	 * @param font used font
 	 * @param color drawing color
 	 */
-	public FontRenderer(GLFont font, Color color)
-	{
+	public FontRenderer(GLFont font, Color color) {
 		this.font = font;
 		this.color = color;
 	}
@@ -69,10 +67,7 @@ public class FontRenderer {
 	
 	private double getScale(double height)
 	{
-		final double fontHeight = font.getLineHeight();
-		final double usefulHeight = fontHeight - fontHeight * font.getTopDiscardRatio() - fontHeight * font.getBottomDiscardRatio();
-		
-		return height / usefulHeight;
+		return height / font.getLineHeight();
 	}
 	
 	
@@ -112,7 +107,7 @@ public class FontRenderer {
 		
 		final double sc = getScale(height);
 		
-		Render.translate(pos.x(), pos.y() - font.getTopDiscardRatio() * sc);
+		Render.translate(pos.x(), pos.y());
 		Render.scaleXY(sc);
 		
 		font.draw(text, color);

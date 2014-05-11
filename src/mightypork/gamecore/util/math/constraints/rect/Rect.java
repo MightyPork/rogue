@@ -474,7 +474,7 @@ public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	
 	public Rect shrinkRight(final double shrink)
 	{
-		return growLeft(-shrink);
+		return growRight(-shrink);
 	}
 	
 	

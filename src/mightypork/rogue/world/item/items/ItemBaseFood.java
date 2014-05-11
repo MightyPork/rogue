@@ -34,4 +34,15 @@ public abstract class ItemBaseFood extends Item {
 		return ItemType.FOOD;
 	}
 	
+	@Override
+	public boolean isDamageable()
+	{
+		return false;
+	}
+	
+	@Override
+	public int getMaxUses()
+	{
+		return 1;
+	}
 }

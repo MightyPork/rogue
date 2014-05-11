@@ -9,6 +9,7 @@ import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.rogue.Config;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.events.WorldPauseRequest;
 import mightypork.rogue.world.events.WorldPauseRequest.PauseAction;
@@ -25,7 +26,6 @@ public class ScreenGame extends LayeredScreen {
 	{
 		WORLD, INV;
 	}
-	
 	
 	private final Random rand = new Random();
 	private InvLayer invLayer;
@@ -102,12 +102,14 @@ public class ScreenGame extends LayeredScreen {
 			getEventBus().send(new WorldPauseRequest(PauseAction.RESUME));
 			
 			invLayer.setVisible(false); // hide all extra layers
+			invLayer.enable(false);
 			
 			worldActions.enable(true);
 		}
 		
 		if (nstate == GScrState.INV) {
 			invLayer.setVisible(true);
+			invLayer.enable(true);
 		}
 		
 		this.state = nstate;
@@ -120,13 +122,20 @@ public class ScreenGame extends LayeredScreen {
 	}
 	
 	
-	public ScreenGame(AppAccess app)
-	{
+	public ScreenGame(AppAccess app) {
 		super(app);
 		
 		addLayer(invLayer = new InvLayer(this));
+		invLayer.enable(false);
+		invLayer.setVisible(false);
+		
 		addLayer(hudLayer = new HudLayer(this));
+		hudLayer.enable(true);
+		hudLayer.setVisible(true);
+		
 		addLayer(worldLayer = new WorldLayer(this));
+		worldLayer.enable(true);
+		worldLayer.setVisible(true);
 		
 		// TODO temporary here ↓
 		bindKey(new KeyStroke(Keys.L_CONTROL, Keys.N), new Runnable() {
@@ -146,6 +155,10 @@ public class ScreenGame extends LayeredScreen {
 		bindKey(new KeyStroke(Keys.E), actionEat);
 		bindKey(new KeyStroke(Keys.M), actionToggleMinimap);
 		bindKey(new KeyStroke(Keys.Z), actionToggleZoom);
+
+		// add as actions - enableables.
+		worldActions.add(worldLayer);
+		worldActions.add(hudLayer);
 		
 		worldActions.add(actionEat);
 		worldActions.add(actionInv);
@@ -154,6 +167,16 @@ public class ScreenGame extends LayeredScreen {
 		worldActions.add(actionToggleZoom);
 		
 		worldActions.enable(true);
+		
+		// TMP TODO remove
+		bindKey(new KeyStroke(Keys.X), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				Config.RENDER_UFOG ^= true;
+			}
+		});
 	}
 	
 	

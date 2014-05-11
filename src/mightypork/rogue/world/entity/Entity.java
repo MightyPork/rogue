@@ -14,10 +14,10 @@ import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
+import mightypork.rogue.Config;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
-import mightypork.rogue.world.entity.render.EntityRenderer;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
 
@@ -43,6 +43,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	public final EntityModulePosition pos = new EntityModulePosition(this);
 	public final EntityModuleHealth health = new EntityModuleHealth(this);
 	private double despawnDelay = 1;
+	protected Entity lastAttacker;
 	
 	
 	public Entity(EntityModel model, int eid)
@@ -154,7 +155,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	@DefaultImpl
 	public final void render(MapRenderContext context)
 	{
-		if (context.getTile(getCoord()).isExplored()) {
+		if (context.getTile(getCoord()).isExplored() || !Config.RENDER_UFOG) {
 			getRenderer().render(context);
 		}
 	}
@@ -244,6 +245,7 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	 */
 	public void receiveAttack(Entity attacker, int attackStrength)
 	{
+		this.lastAttacker = attacker;
 		health.receiveDamage(attackStrength);
 	}
 	
@@ -264,4 +266,5 @@ public abstract class Entity implements IonObjBundled, Updateable {
 		return despawnDelay;
 	}
 	
+	public abstract String getVisualName();
 }

@@ -19,8 +19,7 @@ public final class ItemModel {
 	public final Class<? extends Item> itemClass;
 	
 	
-	public ItemModel(int id, Class<? extends Item> item)
-	{
+	public ItemModel(int id, Class<? extends Item> item) {
 		Items.register(id, this);
 		this.id = id;
 		this.itemClass = item;
@@ -30,10 +29,15 @@ public final class ItemModel {
 	/**
 	 * @return new item instance of this type
 	 */
-	public <T extends Item> T createItem()
+	public Item createItem()
 	{
 		try {
-			return (T) itemClass.getConstructor(ItemModel.class).newInstance(this);
+			Item itm = itemClass.getConstructor(ItemModel.class).newInstance(this);
+			
+			itm.setRemainingUses(itm.getMaxUses());
+			
+			return itm;
+			
 		} catch (final Exception e) {
 			throw new RuntimeException("Could not instantiate an item.", e);
 		}

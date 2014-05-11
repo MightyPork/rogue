@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.components.painters;
 
 
-import mightypork.gamecore.gui.components.VisualComponent;
+import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.annot.FactoryMethod;
 import mightypork.gamecore.util.math.color.Color;
@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.color.Color;
  * 
  * @author MightyPork
  */
-public class QuadPainter extends VisualComponent {
+public class QuadPainter extends BaseComponent {
 	
 	@FactoryMethod
 	public static QuadPainter gradH(Color colorLeft, Color colorRight)

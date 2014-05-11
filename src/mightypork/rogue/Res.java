@@ -53,13 +53,18 @@ public final class Res {
 		
 		//fonts.loadFont("polygon_pixel", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16));
 		fonts.loadFont("press_start", font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
-		fonts.loadFont("polygon_pixel", font = new DeferredFont("/res/font/Simpleton.ttf", Glyphs.basic, 16));
-		font.setDiscardRatio(5 / 16D, 2 / 16D);
+		
+		fonts.loadFont("battlenet", font = new DeferredFont("/res/font/battlenet.ttf", Glyphs.basic, 16));
+		font.setDiscardRatio(3 / 16D, 2 / 16D);
+		
+		fonts.loadFont("tinyutf", font = new DeferredFont("/res/font/TinyUnicode2.ttf", Glyphs.basic, 16));
+		font.setDiscardRatio(6 / 16D, 2 / 16D);
 		
 		// aliases based on concrete usage
 		fonts.addAlias("thick", "press_start");
 		
-		fonts.addAlias("thin", "polygon_pixel");
+		fonts.addAlias("thin", "battlenet");
+		fonts.addAlias("tiny", "tinyutf");
 	}
 	
 	
@@ -152,6 +157,13 @@ public final class Res {
 		texture = textures.loadTexture("items", "/res/img/items.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
 		textures.add("item.meat", grid.makeQuad(0, 0));
+		textures.add("item.club", grid.makeQuad(1, 0));
+		textures.add("item.sword", grid.makeQuad(2, 0));
+		textures.add("item.hammer", grid.makeQuad(3, 0));
+		textures.add("item.stone", grid.makeQuad(4, 0));
+		textures.add("item.bone", grid.makeQuad(5, 0));
+		textures.add("item.cheese", grid.makeQuad(6, 0));
+		textures.add("item.sandwich", grid.makeQuad(7, 0));
 	}
 	
 	

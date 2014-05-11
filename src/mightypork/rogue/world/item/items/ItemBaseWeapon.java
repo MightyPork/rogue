@@ -34,4 +34,10 @@ public abstract class ItemBaseWeapon extends Item {
 		return ItemType.WEAPON;
 	}
 	
+	@Override
+	public boolean isDamageable()
+	{
+		return true;
+	}
+	
 }

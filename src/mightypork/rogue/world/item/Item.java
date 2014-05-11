@@ -2,12 +2,14 @@ package mightypork.rogue.world.item;
 
 
 import java.io.IOException;
+import java.util.Random;
 
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonObjBlob;
 import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
@@ -16,6 +18,9 @@ public abstract class Item implements IonObjBlob {
 	private final ItemModel model;
 	private ItemRenderer renderer;
 	private int amount = 1;
+	private int uses = 1;
+	
+	protected static final Random rand = new Random();
 	
 	
 	public Item(ItemModel model)
@@ -68,11 +73,11 @@ public abstract class Item implements IonObjBlob {
 	
 	public boolean canStackWith(Item other)
 	{
-		return (getModel().id == other.getModel().id) && isStackable();
+		return (getModel().id == other.getModel().id);
 	}
 	
 	
-	public abstract boolean isStackable();
+	protected abstract boolean isStackable();
 	
 	
 	/**
@@ -113,13 +118,11 @@ public abstract class Item implements IonObjBlob {
 	 * 
 	 * @return true if the item is fully consumed and should be removed.
 	 */
-	public boolean consume()
+	public void consume()
 	{
 		if (isEmpty()) throw new RuntimeException("Item is empty, cannot consume.");
 		
 		amount--;
-		
-		return isEmpty();
 	}
 	
 	
@@ -157,4 +160,25 @@ public abstract class Item implements IonObjBlob {
 	{
 		return Log.str(getClass()) + " x " + getAmount();
 	}
+	
+	public int getRemainingUses() {
+		return uses;
+	}
+	
+	public abstract int getMaxUses();
+	
+	public void setRemainingUses(int uses) {
+		this.uses = Calc.clamp(uses, 0, getMaxUses());
+	}
+	
+	public void use() {
+		if(uses>0) uses--;
+		if(uses==0) consume();
+	}
+
+
+	public abstract boolean isDamageable();
+
+
+	public abstract String getVisualName();
 }

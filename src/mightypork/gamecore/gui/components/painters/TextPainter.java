@@ -2,15 +2,18 @@ package mightypork.gamecore.gui.components.painters;
 
 
 import mightypork.gamecore.gui.AlignX;
-import mightypork.gamecore.gui.components.VisualComponent;
+import mightypork.gamecore.gui.components.BaseComponent;
+import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.fonts.FontRenderer;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.RGB;
+import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.gamecore.util.strings.StringWrapper;
+import mightypork.rogue.Config;
 
 
 /**
@@ -20,13 +23,16 @@ import mightypork.gamecore.util.strings.StringWrapper;
  * 
  * @author MightyPork
  */
-public class TextPainter extends VisualComponent {
+public class TextPainter extends BaseComponent {
 	
 	private final FontRenderer font;
 	private Color color;
 	private AlignX align;
 	private StringProvider text;
 	private boolean shadow;
+	
+	private double yPaddingPerc = 0;
+	private double xPaddingPerc = 0;
 	
 	private Color shadowColor = RGB.BLACK;
 	private Vect shadowOffset = Vect.make(2, 2);
@@ -35,8 +41,7 @@ public class TextPainter extends VisualComponent {
 	/**
 	 * @param font font to use
 	 */
-	public TextPainter(GLFont font)
-	{
+	public TextPainter(GLFont font) {
 		this(font, AlignX.LEFT, RGB.WHITE);
 	}
 	
@@ -49,8 +54,7 @@ public class TextPainter extends VisualComponent {
 	 * @param color default color
 	 * @param text drawn text
 	 */
-	public TextPainter(GLFont font, AlignX align, Color color, String text)
-	{
+	public TextPainter(GLFont font, AlignX align, Color color, String text) {
 		this(font, align, color, new StringWrapper(text));
 	}
 	
@@ -63,8 +67,7 @@ public class TextPainter extends VisualComponent {
 	 * @param color default color
 	 * @param text text provider
 	 */
-	public TextPainter(GLFont font, AlignX align, Color color, StringProvider text)
-	{
+	public TextPainter(GLFont font, AlignX align, Color color, StringProvider text) {
 		this.font = new FontRenderer(font);
 		this.color = color;
 		this.align = align;
@@ -77,8 +80,7 @@ public class TextPainter extends VisualComponent {
 	 * @param align text align
 	 * @param color default color
 	 */
-	public TextPainter(GLFont font, AlignX align, Color color)
-	{
+	public TextPainter(GLFont font, AlignX align, Color color) {
 		this(font, align, color, (StringProvider) null);
 	}
 	
@@ -89,13 +91,20 @@ public class TextPainter extends VisualComponent {
 		if (text == null) return;
 		
 		final String str = text.getString();
-		final Rect rect = getRect();
+		
+		Num shrX = height().perc(xPaddingPerc);
+		Num shrY = height().perc(yPaddingPerc);
+		
+		final Rect rect = getRect().shrink(shrX, shrY);
 		
 		if (shadow) {
 			font.draw(str, rect.round(), align, shadowColor);
 		}
 		
-		font.draw(str, rect.move(shadowOffset.neg()).round(), align, color);
+		Rect r = (shadow ? rect.move(shadowOffset.neg()) : rect).round();
+		font.draw(str, r, align, color);
+		
+		if (Config.DEBUG_FONT_RENDER) Render.quadColor(r, RGB.PINK.withAlpha(0.4));
 	}
 	
 	
@@ -146,5 +155,12 @@ public class TextPainter extends VisualComponent {
 	public void setText(StringProvider text)
 	{
 		this.text = text;
+	}
+	
+	
+	public void setPaddingHPerc(double percX, double percY)
+	{
+		xPaddingPerc = percX;
+		yPaddingPerc = percY;
 	}
 }

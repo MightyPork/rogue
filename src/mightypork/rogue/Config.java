@@ -24,6 +24,7 @@ public final class Config {
 	// property keys
 	private static final String PK_LAST_RUN_VERSION = "status.last_run_version";
 	private static final String PK_START_IN_FS = "cfg.start_in_fullscreen";
+
 	
 	
 	/**
@@ -76,4 +77,9 @@ public final class Config {
 	public static boolean LOG_TO_STDOUT = true;
 	public static boolean SINGLE_INSTANCE = true;
 	
+	/** Render dark in unknown area & skip invisible stuff */
+	public static boolean RENDER_UFOG = true;
+	
+	/** Render a font bounding box in text painters. */
+	public static boolean DEBUG_FONT_RENDER = false;
 }

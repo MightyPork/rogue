@@ -20,7 +20,7 @@ public class WorldCreator {
 			final World w = new World();
 			w.setSeed(seed);
 			
-			final int count = 6;
+			final int count = 7;
 			
 			for (int i = 1; i <= count; i++) {
 				final Level l = LevelGenerator.build(w, rand.nextLong(), i, LevelGenerator.DUNGEON_THEME, i == count);

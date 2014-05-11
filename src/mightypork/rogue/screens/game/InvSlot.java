@@ -7,12 +7,17 @@ import mightypork.gamecore.gui.components.ClickableComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.util.math.Calc;
+import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.RGB;
+import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.caching.RectCache;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.World.PlayerFacade;
+import mightypork.rogue.world.PlayerInfo;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.item.ItemType;
 
 
 /**
@@ -28,16 +33,18 @@ public class InvSlot extends ClickableComponent {
 	protected int index;
 	
 	private final RectCache itemRect;
+	private final RectCache uiRect;
 	
 	private final InvSlot[] slots;
 	
-	private final TextPainter txt;
+	private final TextPainter rbTxP;
+	private final TextPainter rtTxP;
 	
-	private final RectCache txtRect;
+	private final RectCache rbTxRect;
+	private final RectCache rtTxRect;
 	
 	
-	public InvSlot(int index, InvSlot[] allSlots)
-	{
+	public InvSlot(int index, InvSlot[] allSlots) {
 		super();
 		this.txBase = Res.txq("inv.slot.base");
 		this.txSelected = Res.txq("inv.slot.selected");
@@ -45,17 +52,27 @@ public class InvSlot extends ClickableComponent {
 		this.index = index;
 		this.slots = allSlots;
 		
-		this.itemRect = getRect().shrink(height().perc(16)).cached();
+		this.uiRect = getRect().shrink(height().perc(16)).cached();
+		this.itemRect = uiRect.shrink(Num.ZERO, height().perc(14), height().perc(14), Num.ZERO).cached();
 		
 		//@formatter:off
-		this.txtRect = itemRect.bottomEdge()
-				.move(itemRect.height().perc(5).neg(), itemRect.height().perc(10).neg())
-				.growUp(itemRect.height().perc(35)).cached();
+		this.rbTxRect = uiRect.bottomEdge()
+				.moveY(uiRect.height().perc(1*(30/7D)))
+				.growUp(uiRect.height().perc(30)).cached();
 		//@formatter:on
 		
-		txt = new TextPainter(Res.getFont("thin"), AlignX.RIGHT, RGB.WHITE);
-		txt.setRect(txtRect);
-		txt.setShadow(RGB.BLACK_60, txt.getRect().height().div(8).toVectXY());
+		rbTxP = new TextPainter(Res.getFont("tiny"), AlignX.RIGHT, RGB.WHITE);
+		rbTxP.setRect(rbTxRect);
+		rbTxP.setShadow(RGB.BLACK_70, rbTxP.getRect().height().div(7).toVectXY());
+		
+		//@formatter:off
+		this.rtTxRect = uiRect.topEdge()
+				.growDown(uiRect.height().perc(30)).cached();
+		//@formatter:on
+		
+		rtTxP = new TextPainter(Res.getFont("tiny"), AlignX.RIGHT, RGB.GREEN);
+		rtTxP.setRect(rtTxRect);
+		rtTxP.setShadow(RGB.BLACK_70, rtTxP.getRect().height().div(7).toVectXY());
 		
 		setAction(new Action() {
 			
@@ -76,8 +93,10 @@ public class InvSlot extends ClickableComponent {
 	@Override
 	public void updateLayout()
 	{
+		uiRect.poll();
 		itemRect.poll();
-		txtRect.poll();
+		rbTxRect.poll();
+		rtTxRect.poll();
 	}
 	
 	
@@ -100,18 +119,28 @@ public class InvSlot extends ClickableComponent {
 		if (itm != null && !itm.isEmpty()) {
 			itm.render(itemRect);
 			if (itm.getAmount() > 1) {
-				txt.setText("" + itm.getAmount());
-				txt.setColor(RGB.WHITE);
-				txt.render();
+				rbTxP.setText("" + itm.getAmount());
+				rbTxP.setColor(RGB.WHITE);
+				rbTxP.render();
 			}
 			
-			if (pl.getSelectedWeapon() == index) {
-				txt.setText("*");
-				txt.setColor(RGB.YELLOW);
-				txt.render();
+			if (pl.getSelectedWeaponIndex() == index) {
+				rbTxP.setText("*");
+				rbTxP.setColor(RGB.YELLOW);
+				rbTxP.render();
 			}
 			
-			
+			if (itm.getType() == ItemType.FOOD) {
+				rtTxP.setText(Calc.toString(itm.getFoodPoints() / 2D));
+				rbTxP.setColor(RGB.GREEN);
+				rtTxP.render();
+			} else if (itm.getType() == ItemType.WEAPON) {
+				
+				int atk = itm.getAttackPoints();				
+				rtTxP.setText((atk >= 0 ? "+" : "") + atk);
+				rtTxP.setColor(RGB.CYAN);
+				rtTxP.render();
+			}
 		}
 	}
 	

@@ -16,14 +16,12 @@ public class Inventory implements IonObjBinary {
 	private Item[] items;
 	
 	
-	public Inventory(int size)
-	{
+	public Inventory(int size) {
 		this.items = new Item[size];
 	}
 	
 	
-	public Inventory()
-	{
+	public Inventory() {
 		// ION constructor
 	}
 	
@@ -154,6 +152,19 @@ public class Inventory implements IonObjBinary {
 	}
 	
 	
+	/**
+	 * Clean empty items
+	 */
+	public void clean()
+	{
+		for (int i = 0; i < getSize(); i++) {
+			Item itm = getItem(i);
+			if (itm == null) continue;
+			if (itm.isEmpty()) setItem(i, null);
+		}
+	}
+	
+	
 	@Override
 	public String toString()
 	{
@@ -164,8 +175,10 @@ public class Inventory implements IonObjBinary {
 			s += i + ": ";
 			final Item itm = getItem(i);
 			
-			if (itm == null) s += "<null>";
-			else s += itm;
+			if (itm == null)
+				s += "<null>";
+			else
+				s += itm;
 		}
 		s += "]";
 		return s;

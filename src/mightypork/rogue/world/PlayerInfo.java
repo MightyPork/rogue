@@ -19,7 +19,7 @@ public class PlayerInfo implements IonObjBundled {
 	private static final int INV_SIZE = 8;
 	
 	/** Constant indicating that no weapon is selected. */
-	private static final int NO_WEAPON = -1;
+	public static final int NO_WEAPON = -1;
 	
 	/** Attack str with bare hands */
 	public static final int BARE_ATTACK = 1;
@@ -106,6 +106,10 @@ public class PlayerInfo implements IonObjBundled {
 	
 	public void selectWeapon(int selectedWeapon)
 	{
+		if(selectedWeapon<0||selectedWeapon>=getInventory().getSize()) {
+			selectedWeapon = NO_WEAPON;
+		}
+		
 		this.selectedWeapon = selectedWeapon;
 	}
 	

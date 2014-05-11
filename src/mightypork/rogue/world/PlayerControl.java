@@ -99,28 +99,31 @@ public abstract class PlayerControl {
 	 */
 	public boolean clickTile(Step side)
 	{
-		return clickTile(getPlayer().getCoord().add(side).toVect().add(0.5, 0.5));
+		return doClickTile(getPlayer().getCoord().add(side).toVect());
 	}
 	
 	
 	public boolean clickTile(Vect pos)
-	{
-		//if (pos.dist(getPlayer().getVisualPos()).value() > 8) return false; // too far
-		
+	{	
 		if (pos.dist(getPlayer().getVisualPos().add(0.5, 0.5)).value() < 1.5) {
-			
-			// 1st try to hit entity
-			final Entity prey = getLevel().getClosestEntity(pos, EntityType.MONSTER, 1);
-			if (prey != null) {
-				prey.receiveAttack(getPlayer().getEntity(), getPlayer().getAttackStrength());
-				return true;
-			}
-			
-			//2nd try to click tile
-			return getLevel().getTile(Coord.fromVect(pos)).onClick();
+			return doClickTile(pos);
 		}
 		
 		return false;
+	}
+	
+	
+	private boolean doClickTile(Vect pos)
+	{
+		// 1st try to hit entity
+		final Entity prey = getLevel().getClosestEntity(pos, EntityType.MONSTER, 1);
+		if (prey != null) {
+			getPlayer().attack(prey);
+			return true;
+		}
+		
+		//2nd try to click tile
+		return getLevel().getTile(Coord.fromVect(pos)).onClick();
 	}
 	
 	

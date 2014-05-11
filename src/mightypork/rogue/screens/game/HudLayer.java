@@ -39,8 +39,7 @@ public class HudLayer extends ScreenLayer {
 	private final ScreenGame gameScreen;
 	
 	
-	public HudLayer(ScreenGame screen)
-	{
+	public HudLayer(ScreenGame screen) {
 		super(screen);
 		this.gameScreen = screen;
 		
@@ -49,6 +48,22 @@ public class HudLayer extends ScreenLayer {
 		buildDisplays();
 		
 		buildMinimap();
+		
+		buildConsole();
+	}
+	
+	
+	private void buildConsole()
+	{
+		Num rh = root.height();
+		Num rw = root.width();
+		Rect consoleRect = root.shrink(rw.perc(2), Num.ZERO, rh.perc(6), rh.perc(16));
+		
+		Num perRow = consoleRect.height().div(20).max(12).min(32);
+		
+		WorldConsoleRenderer wcr = new WorldConsoleRenderer(perRow);
+		wcr.setRect(consoleRect);
+		root.add(wcr);
 	}
 	
 	
@@ -64,8 +79,6 @@ public class HudLayer extends ScreenLayer {
 	{
 		final Num h = root.height();
 		
-		final Num displays_height = h.perc(6);
-		
 		//@formatter:off
 		final HeartBar hearts = new HeartBar(
 				playerHealthTotal,
@@ -76,13 +89,11 @@ public class HudLayer extends ScreenLayer {
 				AlignX.LEFT);
 		//@formatter:on
 		
-		
-		final Rect hearts_box = root.shrink(h.perc(3)).topLeft().startRect().growDown(displays_height);
+		final Rect hearts_box = root.shrink(h.perc(3)).topEdge().growDown(h.perc(6));
 		hearts.setRect(hearts_box);
 		root.add(hearts);
 		
-		
-		final TextPainter lvl = new TextPainter(Res.getFont("thick"), AlignX.RIGHT, RGB.WHITE, new StringProvider() {
+		final TextPainter levelText = new TextPainter(Res.getFont("tiny"), AlignX.RIGHT, RGB.WHITE, new StringProvider() {
 			
 			@Override
 			public String getString()
@@ -92,15 +103,8 @@ public class HudLayer extends ScreenLayer {
 			}
 		});
 		
-		final Rect rr = root.shrink(h.perc(3)).topEdge().growDown(displays_height);
-		lvl.setRect(rr.shrink(Num.ZERO, rr.height().perc(20)));
-		root.add(lvl);
-		
-		
-		/*final HeartBar experience = new HeartBar(6, 2, Res.getTxQuad("xp_on"), Res.getTxQuad("xp_off"), AlignX.RIGHT);
-		final Rect xp_box = shrunk.topRight().startRect().growDown(displays_height);
-		experience.setRect(xp_box);
-		root.add(experience);*/
+		levelText.setRect(hearts_box.moveY(hearts_box.height().mul(1/7D)));
+		root.add(levelText);
 	}
 	
 	
@@ -112,24 +116,24 @@ public class HudLayer extends ScreenLayer {
 		
 		NavButton btn;
 		
-		// ltr
-		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.inventory")));
+		nav.addRight(btn = new NavButton(Res.txq("nav.button.fg.inventory")));
 		btn.setAction(gameScreen.actionInv);
 		
-		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.eat")));
+		nav.addRight(btn = new NavButton(Res.txq("nav.button.fg.eat")));
 		btn.setAction(gameScreen.actionEat);
 		
-		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.pause")));
+		nav.addRight(btn = new NavButton(Res.txq("nav.button.fg.pause")));
 		btn.setAction(gameScreen.actionTogglePause);
 		
-		// TODO actions
-		nav.addRight(new NavButton(Res.txq("nav.button.fg.options")));
-		nav.addRight(new NavButton(Res.txq("nav.button.fg.help")));
 		
-		nav.addRight(btn = new NavButton(Res.txq("nav.button.fg.map")));
+		// TODO actions
+		nav.addLeft(new NavButton(Res.txq("nav.button.fg.options")));
+		nav.addLeft(new NavButton(Res.txq("nav.button.fg.help")));
+		
+		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.map")));
 		btn.setAction(gameScreen.actionToggleMinimap);
 		
-		nav.addRight(btn = new NavButton(Res.txq("nav.button.fg.magnify")));
+		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.magnify")));
 		btn.setAction(gameScreen.actionToggleZoom);
 	}
 	

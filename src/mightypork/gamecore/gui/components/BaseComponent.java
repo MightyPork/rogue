@@ -1,6 +1,7 @@
 package mightypork.gamecore.gui.components;
 
 
+import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.InputSystem;
@@ -18,14 +19,15 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBoundAdapter;
  * 
  * @author MightyPork
  */
-public abstract class VisualComponent extends AbstractRectCache implements Component, LayoutChangeListener {
+public abstract class BaseComponent extends AbstractRectCache implements Component, LayoutChangeListener, Enableable {
 	
 	private Rect source;
 	private boolean visible = true;
 	
+	private int disableLevel = 0;
 	
-	public VisualComponent()
-	{
+	
+	public BaseComponent() {
 		enableCaching(false);
 	}
 	
@@ -61,7 +63,7 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	@Override
 	public final void render()
 	{
-		if (!visible) return;
+		if (!isVisible()) return;
 		
 		renderComponent();
 	}
@@ -100,5 +102,23 @@ public abstract class VisualComponent extends AbstractRectCache implements Compo
 	@DefaultImpl
 	public void updateLayout()
 	{
+	}
+	
+	
+	@Override
+	public void enable(boolean yes)
+	{
+		if (yes) {
+			if (disableLevel > 0) disableLevel--;
+		} else {
+			disableLevel++;
+		}
+	}
+	
+	
+	@Override
+	public boolean isEnabled()
+	{
+		return disableLevel == 0;
 	}
 }

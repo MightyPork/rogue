@@ -16,6 +16,11 @@ import mightypork.gamecore.eventbus.clients.DelegatingClient;
  */
 public abstract class LayeredScreen extends Screen {
 	
+	/**
+	 * Wrapper for delegating client, to use custom client ordering.
+	 * 
+	 * @author MightyPork
+	 */
 	private class LayersClient implements DelegatingClient {
 		
 		@SuppressWarnings({ "unchecked", "rawtypes" })

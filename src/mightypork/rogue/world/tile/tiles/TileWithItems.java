@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.rogue.Config;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.Items;
 import mightypork.rogue.world.level.render.TileRenderContext;
@@ -21,8 +22,7 @@ public abstract class TileWithItems extends Tile {
 	protected final Stack<Item> items = new Stack<>();
 	
 	
-	public TileWithItems(TileModel model)
-	{
+	public TileWithItems(TileModel model) {
 		super(model);
 	}
 	
@@ -30,7 +30,7 @@ public abstract class TileWithItems extends Tile {
 	@Override
 	public void renderExtra(TileRenderContext context)
 	{
-		if (isExplored() && !items.isEmpty()) {
+		if ((isExplored() || !Config.RENDER_UFOG) && !items.isEmpty()) {
 			itemRenderer.render(items.peek(), context);
 		}
 	}
@@ -98,18 +98,18 @@ public abstract class TileWithItems extends Tile {
 	}
 	
 	
-	@Override
-	public boolean onClick()
-	{
-		if (hasItem()) {
-			final Item item = pickItem();
-			if (getWorld().getPlayer().getInventory().addItem(item)) {
-				// player picked item
-			} else {
-				dropItem(item); // put back.
-			}
-			return true;
-		}
-		return false;
-	}
+//	@Override
+//	public boolean onClick()
+//	{
+//		if (hasItem()) {
+//			final Item item = pickItem();
+//			if (getWorld().getPlayer().addItem(item)) {
+//				// player picked item
+//			} else {
+//				dropItem(item); // put back.
+//			}
+//			return true;
+//		}
+//		return false;
+//	}
 }

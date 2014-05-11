@@ -6,6 +6,7 @@ import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.rogue.Config;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.render.NullTileRenderer;
@@ -104,6 +105,8 @@ public abstract class TileRenderer implements Updateable {
 	
 	public void renderUnexploredFog(TileRenderContext context)
 	{
+		if(!Config.RENDER_UFOG) return;
+		
 		// TODO cache values, update neighbouring tiles upon "explored" flag changed.
 		
 		byte ufog = 0;

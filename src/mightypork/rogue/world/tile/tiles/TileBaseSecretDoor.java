@@ -30,7 +30,10 @@ public abstract class TileBaseSecretDoor extends TileBaseDoor {
 		
 		if (clicks > 0) clicks--;
 		
-		if (clicks == 0) locked = false;
+		if (clicks == 0) {
+			locked = false;
+			getWorld().msgDiscoverSecretDoor();
+		}
 		
 		return true;
 	}

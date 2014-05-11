@@ -2,15 +2,16 @@ package mightypork.rogue.screens.game;
 
 
 import mightypork.gamecore.gui.AlignX;
-import mightypork.gamecore.gui.components.VisualComponent;
+import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumVar;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
-public class HeartBar extends VisualComponent {
+public class HeartBar extends BaseComponent {
 	
 	private final TxQuad img_on;
 	private final TxQuad img_off;
@@ -18,8 +19,8 @@ public class HeartBar extends VisualComponent {
 	private final Num total;
 	private final Num active;
 	
-	NumVar index = new NumVar(0);
-	Rect heart;
+	private final NumVar index = new NumVar(0);
+	private final Rect heart;
 	
 	
 	/**
@@ -30,8 +31,7 @@ public class HeartBar extends VisualComponent {
 	 * @param img_off
 	 * @param align
 	 */
-	public HeartBar(Num total, Num active, TxQuad img_on, TxQuad img_half, TxQuad img_off, AlignX align)
-	{
+	public HeartBar(Num total, Num active, TxQuad img_on, TxQuad img_half, TxQuad img_off, AlignX align) {
 		super();
 		this.total = total;
 		this.active = active;
@@ -52,6 +52,8 @@ public class HeartBar extends VisualComponent {
 			case CENTER:
 				heart = leftEdge().moveX(w.half().add(h.mul(total.half().neg()))).growRight(h).moveX(index.mul(h));
 				break;
+			default:
+				heart = null; // impossible
 		}
 		
 	}
@@ -59,12 +61,11 @@ public class HeartBar extends VisualComponent {
 	
 	@Override
 	protected void renderComponent()
-	{
+	{		
 		for (int i = 0; i < total.value(); i++) {
 			index.setTo(i);
 			
 			final double rem = active.value() - i;
-			
 			Render.quadTextured(heart, (rem > 0.6 ? img_on : rem > 0.25 ? img_half : img_off));
 		}
 	}

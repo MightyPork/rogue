@@ -1,14 +1,14 @@
 package mightypork.rogue.world.entity.entities;
 
 
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModel;
 import mightypork.rogue.world.entity.EntityPathFinder;
+import mightypork.rogue.world.entity.EntityRenderer;
 import mightypork.rogue.world.entity.EntityType;
-import mightypork.rogue.world.entity.render.EntityRenderer;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
-import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.Items;
 
 
@@ -22,8 +22,7 @@ public class RatEntity extends Entity {
 	private EntityRenderer renderer;
 	
 	
-	public RatEntity(EntityModel model, int eid)
-	{
+	public RatEntity(EntityModel model, int eid) {
 		super(model, eid);
 		
 		addModule("ai", ai);
@@ -32,8 +31,8 @@ public class RatEntity extends Entity {
 		pos.setStepTime(0.5);
 		setDespawnDelay(1);
 		
-		health.setMaxHealth(3 + rand.nextInt(3));
-		health.fill(); // fill health bar to max
+		health.setMaxHealth(5);
+		health.setHealth(Calc.randInt(rand, 3, 5)); // fill health bar to max
 		health.setHitCooldownTime(0.3);
 	}
 	
@@ -77,10 +76,27 @@ public class RatEntity extends Entity {
 	@Override
 	public void onCorpseRemoved()
 	{
-		// drop rat meat
-		final Item meat = Items.MEAT.createItem();
+		// drop rat stuff
 		
-		getLevel().dropNear(getCoord(), meat);
+		if(rand.nextInt(7) == 0) {
+			getLevel().dropNear(getCoord(), Items.BONE.createItem());
+			return;
+		}
+
+		if(rand.nextInt(3) == 0) {
+			getLevel().dropNear(getCoord(), Items.MEAT.createItem());
+			return;
+		}
+		
+		if(rand.nextInt(2) == 0) {
+			getLevel().dropNear(getCoord(), Items.CHEESE.createItem());
+			return;
+		}
 	}
 	
+	@Override
+	public String getVisualName()
+	{
+		return "Gray Rat";
+	}
 }

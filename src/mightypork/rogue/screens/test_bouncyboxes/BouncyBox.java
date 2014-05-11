@@ -4,7 +4,7 @@ package mightypork.rogue.screens.test_bouncyboxes;
 import java.util.Random;
 
 import mightypork.gamecore.eventbus.events.Updateable;
-import mightypork.gamecore.gui.components.VisualComponent;
+import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.pal.RGB;
@@ -14,7 +14,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.caching.RectCache;
 
 
-public class BouncyBox extends VisualComponent implements Updateable {
+public class BouncyBox extends BaseComponent implements Updateable {
 	
 	private final Random rand = new Random();
 	

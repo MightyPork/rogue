@@ -119,6 +119,7 @@ public class DeferredFont extends DeferredResource implements GLFont {
 		final Font awtFont = getAwtFont(path, (float) size, style.numval);
 		
 		font = new CachedFont(awtFont, antialias, filter, chars);
+		font.setDiscardRatio(discardTop, discardBottom);
 	}
 	
 	

@@ -13,6 +13,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityRenderer;
 import mightypork.rogue.world.level.render.MapRenderContext;
 
 

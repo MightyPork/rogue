@@ -16,7 +16,8 @@ import mightypork.rogue.world.tile.Tile;
 
 public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListener, Updateable {
 	
-	private static final int BTN = 0; // left
+	private static final int LEFT = 0; // left
+	private static final int RIGHT = 1; // left
 	
 	
 	public MIPMouse(MapView mapView)
@@ -33,7 +34,7 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 		final Vect pos = InputSystem.getMousePos();
 		if (!pos.isInside(mapView)) return;
 		
-		if (InputSystem.isMouseButtonDown(BTN)) {
+		if (InputSystem.isMouseButtonDown(LEFT)) {
 			if (mouseWalk(pos)) return;
 			if (mapView.plc.getPlayer().isMoving() && troToNav(pos)) return;
 		}
@@ -43,22 +44,20 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 	@Override
 	public boolean onClick(Vect mouse, int button, boolean down)
 	{
-		if (isImmobile()) return false;
+		if (isImmobile()) {
+			return false;
+		}
 		
 		final Vect pos = mapView.toWorldPos(mouse);
 		
-		if (button == BTN && !down) {
+		if (button == LEFT && !down) {
 			// try to click tile
-			
-			System.out.println("---");
-			System.out.println("Standing at: " + getPlayer().getCoord() + ", visual " + getPlayer().getVisualPos());
-			System.out.println("Click tile: " + pos + ", floored: " + pos.floor());
 			
 			if (mapView.plc.clickTile(pos)) return true;
 		}
 		
 		final Tile t = mapView.plc.getLevel().getTile(Coord.fromVect(pos));
-		if (button == 1 && !down && t.isWalkable()) {
+		if (button == RIGHT && !down && t.isWalkable()) {
 			if (troToNav(mouse)) return true;
 			return mouseWalk(mouse);
 		}
@@ -122,7 +121,7 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 		final Vect pos = InputSystem.getMousePos();
 		if (!pos.isInside(mapView)) return;
 		
-		if (InputSystem.isMouseButtonDown(BTN)) {
+		if (InputSystem.isMouseButtonDown(LEFT)) {
 			if (mouseWalk(pos)) return;
 			if (mapView.plc.getPlayer().isMoving() && troToNav(pos)) return;
 		}

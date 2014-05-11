@@ -1,9 +1,8 @@
 package mightypork.gamecore.gui.components;
 
 
+import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.Hideable;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 
 
 /**
@@ -11,26 +10,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
  * 
  * @author MightyPork
  */
-public interface Component extends Hideable, PluggableRenderable {
-	
-	/**
-	 * Set visible. When not visible, the component should not render.
-	 */
-	@Override
-	void setVisible(boolean yes);
-	
-	
-	@Override
-	boolean isVisible();
-	
-	
-	@Override
-	Rect getRect();
-	
-	
-	@Override
-	void setRect(RectBound rect);
-	
+public interface Component extends Enableable, Hideable, PluggableRenderable {
 	
 	/**
 	 * Render the component, if it is visible.

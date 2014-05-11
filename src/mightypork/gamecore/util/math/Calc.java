@@ -666,4 +666,51 @@ public class Calc {
 	{
 		return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 	}
+	
+	
+	public static int randInt(Random rand, int low, int high)
+	{
+		int range = high - low + 1;
+		if(range < 1) range = 1;
+		return low + rand.nextInt(range);
+	}
+
+
+	/**
+	 * Get ordinal version of numbers (1 = 1st, 5 = 5th etc.)
+	 * 
+	 * @param number number
+	 * @return ordinal, string
+	 */
+	public static String ordinal(int number)
+	{
+		if (number % 100 < 4 || number % 100 > 13) {
+			if (number % 10 == 1) return number + "st";
+			if (number % 10 == 2) return number + "nd";
+			if (number % 10 == 3) return number + "rd";
+		}
+		return number + "th";
+	}
+
+
+	/**
+	 * Format number with thousands separated by a dot.
+	 * 
+	 * @param number number
+	 * @return string 12.004.225
+	 */
+	public static String formatInt(long number)
+	{
+		final String num = number + "";
+		String out = "";
+		final String dot = ".";
+		int cnt = 1;
+		for (int i = num.length() - 1; i >= 0; i--) {
+			out = num.charAt(i) + out;
+			if (cnt % 3 == 0 && i > 0) out = dot + out;
+			cnt++;
+		}
+		
+		return out;
+	}
 }

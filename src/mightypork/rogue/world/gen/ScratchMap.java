@@ -14,6 +14,7 @@ import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
+import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
@@ -42,7 +43,7 @@ public class ScratchMap {
 		public boolean isAccessible(Coord pos)
 		{
 			if (!isIn(pos)) return false;
-			final Tile t = get(pos);
+			final Tile t = getTile(pos);
 			if (t.isStairs()) return false;
 			return t.isPotentiallyWalkable() || (t.genData.protection != TileProtectLevel.STRONG);
 		}
@@ -51,7 +52,7 @@ public class ScratchMap {
 		@Override
 		public int getCost(Coord last, Coord pos)
 		{
-			final Tile t = get(pos);
+			final Tile t = getTile(pos);
 			
 			switch (t.getType()) {
 				case NULL:
@@ -173,7 +174,7 @@ public class ScratchMap {
 				clampBounds();
 				
 				nodes.add(center);
-//				Log.f3("placed room: " + rd.min + " -> " + rd.max);
+				Log.f3("Placed room on " + Calc.ordinal(1+failed_total) + " try.");
 				
 				return;
 			} else {
@@ -222,7 +223,7 @@ public class ScratchMap {
 	}
 	
 	
-	public Tile get(Coord pos)
+	public Tile getTile(Coord pos)
 	{
 		if (!isIn(pos)) {
 			throw new IndexOutOfBoundsException("Tile not in map: " + pos);
@@ -267,7 +268,7 @@ public class ScratchMap {
 		final Coord c = Coord.make(0, 0);
 		for (c.x = min.x; c.x <= max.x; c.x++)
 			for (c.y = min.y; c.y <= max.y; c.y++)
-				get(c).genData.protection = prot;
+				getTile(c).genData.protection = prot;
 	}
 	
 	
@@ -357,7 +358,7 @@ public class ScratchMap {
 				genMax.y = Math.max(genMax.y, c.y);
 				clampBounds();
 				
-				final Tile current = get(c);
+				final Tile current = getTile(c);
 				if (!current.isNull() && (current.isPotentiallyWalkable() || current.isStairs())) continue; // floor already, let it be
 				
 				if (i == 0 && j == 0) {
@@ -394,7 +395,7 @@ public class ScratchMap {
 			final Coord cc = pos.add(Sides.get(i));
 			if (!isIn(cc)) continue;
 			
-			if (get(cc).isWall()) {
+			if (getTile(cc).isWall()) {
 				walls |= Sides.bit(i);
 			}
 		}
@@ -409,7 +410,7 @@ public class ScratchMap {
 			final Coord cc = pos.add(Sides.get(i));
 			if (!isIn(cc)) continue;
 			
-			if (get(cc).isFloor()) {
+			if (getTile(cc).isFloor()) {
 				floors |= Sides.bit(i);
 			}
 		}
@@ -424,7 +425,7 @@ public class ScratchMap {
 			final Coord cc = pos.add(Sides.get(i));
 			if (!isIn(cc)) continue;
 			
-			if (get(cc).isDoor()) {
+			if (getTile(cc).isDoor()) {
 				doors |= Sides.bit(i);
 			}
 		}
@@ -438,7 +439,7 @@ public class ScratchMap {
 		for (int i = 0; i <= 7; i++) {
 			final Coord cc = pos.add(Sides.get(i));
 			
-			if (!isIn(cc) || get(cc).isNull()) {
+			if (!isIn(cc) || getTile(cc).isNull()) {
 				nils |= Sides.bit(i);
 			}
 		}
@@ -459,7 +460,7 @@ public class ScratchMap {
 			for (c.x = 0; c.x < width; c.x++) {
 				for (c.y = 0; c.y < height; c.y++) {
 					
-					final Tile t = get(c);
+					final Tile t = getTile(c);
 					final boolean isNull = t.isNull();
 					
 					final boolean isDoor = !isNull && t.isDoor();
@@ -533,14 +534,13 @@ public class ScratchMap {
 		
 		for (c.x = genMin.x, c1.x = 0; c.x <= genMax.x; c.x++, c1.x++) {
 			for (c.y = genMin.y, c1.y = 0; c.y <= genMax.y; c.y++, c1.y++) {
-				level.setTile(c1, get(c));
+				level.setTile(c1, getTile(c));
 			}
 		}
 		
 		final Coord entrance = new Coord(enterPoint.x - genMin.x, enterPoint.y - genMin.y);
 		level.setEnterPoint(entrance);
-//		System.out.println("Entrance = " + entrance + ", original: " + enterPoint + ", minG=" + genMin + ", maxG=" + genMax);
-		
+
 		final Coord exit = new Coord(exitPoint.x - genMin.x, exitPoint.y - genMin.y);
 		level.setExitPoint(exit);
 	}
@@ -555,5 +555,27 @@ public class ScratchMap {
 	public void setExit(Coord pos)
 	{
 		exitPoint.setTo(pos);
+	}
+
+
+	public boolean dropInArea(Item item, Coord min, Coord max, int tries)
+	{
+		Coord pos = Coord.zero();
+		
+		for(int i=0; i<tries; i++) {
+			pos.x = min.x+rand.nextInt(max.x-min.x);
+			pos.y = min.y+rand.nextInt(max.y-min.y);
+			
+			Tile t = getTile(pos);
+			if(t.dropItem(item)) return true;
+		}
+		
+		return false;
+	}
+
+
+	public void dropInMap(Item item, int tries)
+	{
+		dropInArea(item, genMin, genMax, tries);
 	}
 }

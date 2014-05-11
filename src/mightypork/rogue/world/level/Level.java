@@ -86,13 +86,11 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	private double timeSinceLastEntitySort;
 	
 	
-	public Level()
-	{
+	public Level() {
 	}
 	
 	
-	public Level(int width, int height)
-	{
+	public Level(int width, int height) {
 		size.setTo(width, height);
 		buildArray();
 	}
@@ -128,7 +126,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public final Tile getTile(Coord pos)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) return Tiles.NULL.createTile(); // out of range
-		
+			
 		return tiles[pos.y][pos.x];
 	}
 	
@@ -587,6 +585,11 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 				removeEntity(e);
 				freeTile(pos);
 			}
+		}
+		
+		if (!getTile(pos).isWalkable()) {
+			// this should never happen.
+			setTile(pos, Tiles.BRICK_FLOOR.createTile());
 		}
 		
 	}
