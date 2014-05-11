@@ -92,9 +92,6 @@ public class ScreenGame extends LayeredScreen {
 	{
 		if (this.state == nstate) return;
 		
-
-		System.out.println("Goto: "+nstate);
-		
 		if (nstate != GScrState.WORLD) { // leaving world.
 			getEventBus().send(new WorldPauseRequest(PauseAction.PAUSE));
 			

@@ -94,7 +94,7 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 	
 	public MapView()
 	{
-		this.tileSize = height().min(width()).div(10).max(32).mul(Num.make(1).sub(zoom.mul(0.5)));
+		this.tileSize = height().min(width()).div(9).max(32).mul(Num.make(1).sub(zoom.mul(0.5)));
 		this.worldRenderer = new WorldRenderer(this, tileSize);
 		plc = WorldProvider.get().getPlayerControl();
 		

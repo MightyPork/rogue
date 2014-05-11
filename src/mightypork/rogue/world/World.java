@@ -254,7 +254,11 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 				}
 			}
 			
-			msgNoMoreFood();
+			if(getHealth()<getHealthMax()) {
+				msgNoMoreFood();
+			} else {
+				msgNotHungry();
+			}
 		}
 		
 		
@@ -577,13 +581,18 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	
 	public void msgNoMoreFood()
 	{
-		console.addMessage("You have no more food!");
+		console.addMessage("You don't have any food!");
+	}
+	
+	public void msgNotHungry()
+	{
+		console.addMessage("You are not hungry.");
 	}
 	
 	
 	public void msgCannotPick()
 	{
-		console.addMessage("Inventory is full.");
+		console.addMessage("Can't pick items, inventory is full.");
 	}
 	
 	

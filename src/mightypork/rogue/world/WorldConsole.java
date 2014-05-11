@@ -1,10 +1,9 @@
 package mightypork.rogue.world;
 
 
-import java.util.Collection;
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.math.Easing;
@@ -71,7 +70,7 @@ public class WorldConsole implements Updateable {
 		}
 	}
 	
-	private final Deque<Entry> entries = new LinkedList<>();
+	private final Deque<Entry> entries = new LinkedBlockingDeque<>();
 	
 	
 	@Override

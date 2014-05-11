@@ -55,7 +55,7 @@ public abstract class MainLoop extends AppModule implements MainLoopRequestListe
 		while (running) {
 			getDisplay().beginFrame();
 			
-			getEventBus().send(new UpdateEvent(timer.getDelta()));
+			getEventBus().sendDirect(new UpdateEvent(timer.getDelta()));
 			
 			Runnable r;
 			while ((r = taskQueue.poll()) != null) {
