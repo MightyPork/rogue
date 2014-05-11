@@ -3,15 +3,13 @@ package mightypork.rogue.screens.game;
 
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.Res;
+import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.gui.Minimap;
 
@@ -36,27 +34,21 @@ public class HudLayer extends ScreenLayer {
 		}
 	};
 	
-	private Minimap mm;
+	protected Minimap mm;
+	
+	private final ScreenGame gameScreen;
 	
 	
-	public HudLayer(Screen screen)
+	public HudLayer(ScreenGame screen)
 	{
 		super(screen);
+		this.gameScreen = screen;
 		
 		buildNav();
 		
 		buildDisplays();
 		
 		buildMinimap();
-		
-		bindKey(new KeyStroke(Keys.M), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				mm.setVisible(!mm.isVisible());
-			}
-		});
 	}
 	
 	
@@ -90,12 +82,13 @@ public class HudLayer extends ScreenLayer {
 		root.add(hearts);
 		
 		
-		final TextPainter lvl = new TextPainter(Res.getFont("hud"), AlignX.RIGHT, RGB.WHITE, new StringProvider() {
+		final TextPainter lvl = new TextPainter(Res.getFont("thick"), AlignX.RIGHT, RGB.WHITE, new StringProvider() {
 			
 			@Override
 			public String getString()
 			{
-				return "Floor " + (1 + WorldProvider.get().getWorld().getPlayer().getLevelNumber());
+				final World w = WorldProvider.get().getWorld();
+				return (w.isPaused() ? "[P] " : "") + "Floor " + (1 + w.getPlayer().getLevelNumber());
 			}
 		});
 		
@@ -117,14 +110,27 @@ public class HudLayer extends ScreenLayer {
 		nav.setRect(root.bottomEdge().growUp(root.height().perc(12)));
 		root.add(nav);
 		
-		// ltr
-		nav.addLeft(new NavButton(Res.txq("nav.button.fg.inventory")));
-		nav.addLeft(new NavButton(Res.txq("nav.button.fg.eat")));
-		nav.addLeft(new NavButton(Res.txq("nav.button.fg.attack")));
+		NavButton btn;
 		
-		// rtl
+		// ltr
+		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.inventory")));
+		btn.setAction(gameScreen.actionInv);
+		
+		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.eat")));
+		btn.setAction(gameScreen.actionEat);
+		
+		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.pause")));
+		btn.setAction(gameScreen.actionTogglePause);
+		
+		// TODO actions
 		nav.addRight(new NavButton(Res.txq("nav.button.fg.options")));
 		nav.addRight(new NavButton(Res.txq("nav.button.fg.help")));
+		
+		nav.addRight(btn = new NavButton(Res.txq("nav.button.fg.map")));
+		btn.setAction(gameScreen.actionToggleMinimap);
+		
+		nav.addRight(btn = new NavButton(Res.txq("nav.button.fg.magnify")));
+		btn.setAction(gameScreen.actionToggleZoom);
 	}
 	
 	

@@ -11,6 +11,7 @@ import mightypork.gamecore.resources.textures.GLTexture;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.util.files.FileUtils;
 import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.caching.RectDigest;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
@@ -432,7 +433,7 @@ public class Render {
 	 */
 	public static void quadTextured(Rect quad, TxQuad txquad)
 	{
-		quadTextured(quad, txquad, Color.WHITE);
+		quadTextured(quad, txquad, RGB.WHITE);
 	}
 	
 	

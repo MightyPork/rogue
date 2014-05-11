@@ -11,7 +11,7 @@ import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
-import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.Res;
@@ -55,10 +55,10 @@ public class LayerBouncyBoxes extends ScreenLayer {
 			boxes.add(bbr);
 		}
 		
-		final TextPainter tp = new TextPainter(Res.getFont("default"), AlignX.LEFT, Color.WHITE);
+		final TextPainter tp = new TextPainter(Res.getFont("thick"), AlignX.LEFT, RGB.WHITE);
 		tp.setText("Press left & right to move.");
 		final Num shadowOffset = tp.height().div(16);
-		tp.setShadow(Color.RED, Vect.make(shadowOffset, shadowOffset));
+		tp.setShadow(RGB.RED, Vect.make(shadowOffset, shadowOffset));
 		
 		layout.add(tp);
 	}

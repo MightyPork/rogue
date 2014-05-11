@@ -47,4 +47,13 @@ public interface GLFont {
 	 * @return specified font size
 	 */
 	int getFontSize();
+	
+	
+	void setDiscardRatio(double top, double bottom);
+	
+	
+	double getTopDiscardRatio();
+	
+	
+	double getBottomDiscardRatio();
 }

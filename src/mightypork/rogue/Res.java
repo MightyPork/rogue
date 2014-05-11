@@ -49,14 +49,17 @@ public final class Res {
 	
 	private static void loadFonts()
 	{
-		fonts.loadFont("polygon_pixel", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16));
-		fonts.loadFont("press_start", new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
+		DeferredFont font;
+		
+		//fonts.loadFont("polygon_pixel", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16));
+		fonts.loadFont("press_start", font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
+		fonts.loadFont("polygon_pixel", font = new DeferredFont("/res/font/Simpleton.ttf", Glyphs.basic, 16));
+		font.setDiscardRatio(5 / 16D, 2 / 16D);
 		
 		// aliases based on concrete usage
-		fonts.addAlias("default", "polygon_pixel");
-		fonts.addAlias("main_menu_button", "press_start");
-		fonts.addAlias("main_menu_title", "press_start");
-		fonts.addAlias("hud", "press_start");
+		fonts.addAlias("thick", "press_start");
+		
+		fonts.addAlias("thin", "polygon_pixel");
 	}
 	
 	
@@ -88,6 +91,12 @@ public final class Res {
 		textures.add("nav.button.fg.attack", grid.makeQuad(2, 6));
 		textures.add("nav.button.fg.options", grid.makeQuad(3, 6));
 		textures.add("nav.button.fg.help", grid.makeQuad(4, 6));
+		textures.add("nav.button.fg.map", grid.makeQuad(5, 6));
+		textures.add("nav.button.fg.pause", grid.makeQuad(6, 6));
+		textures.add("nav.button.fg.magnify", grid.makeQuad(7, 6));
+		
+		textures.add("inv.slot.base", grid.makeQuad(0, 5));
+		textures.add("inv.slot.selected", grid.makeQuad(1, 5));
 		
 		
 		// sprites

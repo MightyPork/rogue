@@ -8,9 +8,6 @@ import java.util.Set;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.components.InputComponent;
-import mightypork.gamecore.input.Keys;
-import mightypork.gamecore.input.events.KeyEvent;
-import mightypork.gamecore.input.events.KeyListener;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonListener;
 import mightypork.gamecore.render.Render;
@@ -35,7 +32,7 @@ import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
  * 
  * @author MightyPork
  */
-public class MapView extends InputComponent implements DelegatingClient, KeyListener, MouseButtonListener, Updateable, WorldAscendRequestListener,
+public class MapView extends InputComponent implements DelegatingClient, MouseButtonListener, Updateable, WorldAscendRequestListener,
 		WorldDescendRequestListener {
 	
 	private static final double transition_time = 0.8;
@@ -152,20 +149,15 @@ public class MapView extends InputComponent implements DelegatingClient, KeyList
 	}
 	
 	
-	@Override
-	public void receive(KeyEvent event)
+	public void toggleMag()
 	{
-		if (event.getKey() == Keys.Z && event.isDown()) {
-			if (zoom_in) {
-				zoom.fadeIn();
-				zoom_in = false;
-			} else {
-				zoom.fadeOut();
-				zoom_in = true;
-			}
+		if (zoom_in) {
+			zoom.fadeIn();
+			zoom_in = false;
+		} else {
+			zoom.fadeOut();
+			zoom_in = true;
 		}
-		
-		// don't consume key events, can be useful for others.
 	}
 	
 	

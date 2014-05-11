@@ -6,6 +6,7 @@ import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.resources.fonts.FontRenderer;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.strings.StringProvider;
@@ -27,7 +28,7 @@ public class TextPainter extends VisualComponent {
 	private StringProvider text;
 	private boolean shadow;
 	
-	private Color shadowColor = Color.BLACK;
+	private Color shadowColor = RGB.BLACK;
 	private Vect shadowOffset = Vect.make(2, 2);
 	
 	
@@ -36,7 +37,7 @@ public class TextPainter extends VisualComponent {
 	 */
 	public TextPainter(GLFont font)
 	{
-		this(font, AlignX.LEFT, Color.WHITE);
+		this(font, AlignX.LEFT, RGB.WHITE);
 	}
 	
 	

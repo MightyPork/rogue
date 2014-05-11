@@ -117,7 +117,6 @@ public abstract class PlayerControl {
 			}
 			
 			//2nd try to click tile
-			System.out.println("do click: " + Coord.fromVect(pos));
 			return getLevel().getTile(Coord.fromVect(pos)).onClick();
 		}
 		

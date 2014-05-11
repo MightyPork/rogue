@@ -18,7 +18,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 public class HorizontalFixedFlowLayout extends LayoutComponent {
 	
 	private int col = 0;
-	private final Num colWidth;
+	private Num elementWidth;
 	private final AlignX align;
 	
 	
@@ -31,7 +31,7 @@ public class HorizontalFixedFlowLayout extends LayoutComponent {
 	public HorizontalFixedFlowLayout(AppAccess app, RectBound context, Num elementWidth, AlignX align)
 	{
 		super(app, context);
-		this.colWidth = elementWidth;
+		this.elementWidth = elementWidth;
 		this.align = align;
 		
 		if (align != AlignX.LEFT && align != AlignX.RIGHT) {
@@ -67,10 +67,10 @@ public class HorizontalFixedFlowLayout extends LayoutComponent {
 		
 		switch (align) {
 			case LEFT:
-				r = leftEdge().growRight(colWidth).moveX(colWidth.mul(col++));
+				r = leftEdge().growRight(elementWidth).moveX(elementWidth.mul(col++));
 				break;
 			case RIGHT:
-				r = rightEdge().growLeft(colWidth).moveX(colWidth.mul(-(col++)));
+				r = rightEdge().growLeft(elementWidth).moveX(elementWidth.mul(-(col++)));
 				break;
 			default:
 				throw new IllegalArgumentException("Bad align.");
@@ -79,6 +79,12 @@ public class HorizontalFixedFlowLayout extends LayoutComponent {
 		elem.setRect(r);
 		
 		attach(elem);
+	}
+	
+	
+	public void setElementWidth(Num elementWidth)
+	{
+		this.elementWidth = elementWidth;
 	}
 	
 }

@@ -91,10 +91,22 @@ public class PlayerInfo implements IonObjBundled {
 	}
 	
 	
-	public Item getEquippedWeapon()
+	public int getSelectedWeaponIndex()
+	{
+		return selectedWeapon;
+	}
+	
+	
+	public Item getSelectedWeapon()
 	{
 		if (selectedWeapon == NO_WEAPON) return null;
 		return inventory.getItem(selectedWeapon);
+	}
+	
+	
+	public void selectWeapon(int selectedWeapon)
+	{
+		this.selectedWeapon = selectedWeapon;
 	}
 	
 }

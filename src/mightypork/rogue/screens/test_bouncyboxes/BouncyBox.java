@@ -7,7 +7,7 @@ import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.components.VisualComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
@@ -41,7 +41,7 @@ public class BouncyBox extends VisualComponent implements Updateable {
 	@Override
 	public void renderComponent()
 	{
-		Render.quad(box, Color.GREEN);
+		Render.quad(box, RGB.GREEN);
 	}
 	
 	

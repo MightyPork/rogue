@@ -9,7 +9,7 @@ import mightypork.gamecore.gui.screens.Overlay;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
@@ -38,12 +38,12 @@ public class FpsOverlay extends Overlay {
 			}
 		});
 		
-		final GLFont font = Res.getFont("default");
+		final GLFont font = Res.getFont("thin");
 		
 		final Num h = root.height();
-		final RectBound constraint = root.shrink(h.perc(3)).topRight().startRect().growDown(h.perc(8).max(32));
+		final RectBound constraint = root.shrink(h.perc(3)).topRight().startRect().growDown(h.perc(5).max(16));
 		
-		tp = new TextPainter(font, AlignX.RIGHT, Color.WHITE, new StringProvider() {
+		tp = new TextPainter(font, AlignX.RIGHT, RGB.WHITE, new StringProvider() {
 			
 			@Override
 			public String getString()
@@ -53,7 +53,7 @@ public class FpsOverlay extends Overlay {
 		});
 		
 		tp.setRect(constraint);
-		tp.setShadow(Color.BLACK, Vect.make(tp.height().div(16).round()));
+		tp.setShadow(RGB.BLACK, Vect.make(tp.height().div(8).round()));
 		
 		root.add(tp);
 		

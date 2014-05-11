@@ -71,11 +71,16 @@ public class RatEntity extends Entity {
 	public void onKilled()
 	{
 		super.onKilled();
-		
+	}
+	
+	
+	@Override
+	public void onCorpseRemoved()
+	{
 		// drop rat meat
 		final Item meat = Items.MEAT.createItem();
 		
-		getLevel().getTile(getCoord()).dropItem(meat);
+		getLevel().dropNear(getCoord(), meat);
 	}
 	
 }

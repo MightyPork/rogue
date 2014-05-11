@@ -11,7 +11,7 @@ import mightypork.rogue.world.gui.interaction.MIPMouse;
 
 public class WorldLayer extends ScreenLayer {
 	
-	private final MapView worldView;
+	protected final MapView map;
 	
 	
 	public WorldLayer(Screen screen)
@@ -20,17 +20,17 @@ public class WorldLayer extends ScreenLayer {
 		
 		// render component
 		
-		worldView = new MapView();
+		map = new MapView();
 		
 		// map input plugins
-		worldView.addPlugin(new MIPKeyboard(worldView));
-		worldView.addPlugin(new MIPMouse(worldView));
+		map.addPlugin(new MIPKeyboard(map));
+		map.addPlugin(new MIPMouse(map));
 		
 		// size of lower navbar
 		final Num lownav = root.height().perc(12);
-		worldView.setRect(root.shrinkBottom(lownav));
+		map.setRect(root.shrinkBottom(lownav));
 		
-		root.add(worldView);
+		root.add(map);
 	}
 	
 	

@@ -102,6 +102,12 @@ public class EntityModuleHealth extends EntityModule {
 	}
 	
 	
+	public void addHealth(int healthPoints)
+	{
+		setHealth(health + healthPoints);
+	}
+	
+	
 	public void fill()
 	{
 		setHealth(maxHealth);

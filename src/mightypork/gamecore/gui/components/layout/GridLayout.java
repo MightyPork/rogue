@@ -65,11 +65,11 @@ public class GridLayout extends LayoutComponent {
 	/**
 	 * Put with span
 	 * 
+	 * @param elem
 	 * @param row
 	 * @param column
 	 * @param rowspan
 	 * @param colspan
-	 * @param elem
 	 */
 	public void put(Component elem, int row, int column, int rowspan, int colspan)
 	{

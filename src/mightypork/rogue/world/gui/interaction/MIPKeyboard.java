@@ -17,6 +17,7 @@ import mightypork.rogue.world.gui.MapView;
 public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndListener, KeyListener, Updateable {
 	
 	private static final int[] keys = { Keys.LEFT, Keys.RIGHT, Keys.UP, Keys.DOWN };
+	private static final int[] keys2 = { Keys.A, Keys.D, Keys.W, Keys.S };
 	private static final Step[] sides = { Sides.W, Sides.E, Sides.N, Sides.S };
 	
 	
@@ -48,7 +49,7 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 		if (evt.isDown() || mapView.plc.getPlayer().isMoving()) return; // not interested
 		
 		for (int i = 0; i < 4; i++) {
-			if (evt.getKey() == keys[i]) {
+			if (evt.getKey() == keys[i] || evt.getKey() == keys2[i]) {
 				mapView.plc.clickTile(sides[i]);
 			}
 		}
@@ -62,7 +63,7 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 		if (mapView.plc.getPlayer().getMoveProgress() < 0.8) return false;
 		
 		for (int i = 0; i < 4; i++) {
-			if (InputSystem.isKeyDown(keys[i])) {
+			if (InputSystem.isKeyDown(keys[i]) || InputSystem.isKeyDown(keys2[i])) {
 				
 				final Step side = sides[i];
 				if (mapView.plc.canGo(side)) {

@@ -26,6 +26,7 @@ import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.entities.PlayerEntity;
+import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
@@ -58,6 +59,8 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		}
 		
 	}
+	
+	private static final Random rand = new Random();
 	
 	public static final int ION_MARK = 53;
 	private static final Comparator<Entity> ENTITY_RENDER_CMP = new EntityRenderComparator();
@@ -277,6 +280,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		
 		for (final Entity e : toRemove) {
 			removeEntity(e);
+			e.onCorpseRemoved();
 		}
 	}
 	
@@ -546,17 +550,11 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		Entity closest = null;
 		double minDist = Double.MAX_VALUE;
 		
-		if (type == EntityType.MONSTER) System.out.println("Finding entity in range " + radius + " of " + pos);
-		
 		for (final Entity e : entityList) {
 			if (e.isDead()) continue;
 			
 			if (e.getType() == type) {
 				final double dist = e.pos.getVisualPos().dist(pos).value();
-				
-				if (type == EntityType.MONSTER && dist < radius * 2) {
-					System.out.println("Entity " + e + ", dist: " + dist + ", standing at: " + e.pos.getCoord() + ", visual: " + e.pos.getVisualPos());
-				}
 				
 				if (dist <= radius && dist < minDist) {
 					minDist = dist;
@@ -655,5 +653,18 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public boolean doesDelegate()
 	{
 		return isListening();
+	}
+	
+	
+	public boolean dropNear(Coord coord, Item itm)
+	{
+		if (getTile(coord).dropItem(itm)) return true;
+		
+		for (int i = 0; i < 6; i++) {
+			final Coord c = coord.add(-1 + rand.nextInt(3), -1 + rand.nextInt(3));
+			if (getTile(c).dropItem(itm)) return true;
+		}
+		
+		return false;
 	}
 }

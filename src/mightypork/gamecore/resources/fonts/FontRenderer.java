@@ -4,6 +4,7 @@ package mightypork.gamecore.resources.fonts;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 
@@ -25,7 +26,7 @@ public class FontRenderer {
 	 */
 	public FontRenderer(GLFont font)
 	{
-		this(font, Color.WHITE);
+		this(font, RGB.WHITE);
 	}
 	
 	
@@ -68,7 +69,10 @@ public class FontRenderer {
 	
 	private double getScale(double height)
 	{
-		return height / font.getLineHeight();
+		final double fontHeight = font.getLineHeight();
+		final double usefulHeight = fontHeight - fontHeight * font.getTopDiscardRatio() - fontHeight * font.getBottomDiscardRatio();
+		
+		return height / usefulHeight;
 	}
 	
 	
@@ -106,8 +110,10 @@ public class FontRenderer {
 	{
 		Render.pushMatrix();
 		
-		Render.translateXY(pos);
-		Render.scaleXY(getScale(height));
+		final double sc = getScale(height);
+		
+		Render.translate(pos.x(), pos.y() - font.getTopDiscardRatio() * sc);
+		Render.scaleXY(sc);
 		
 		font.draw(text, color);
 		

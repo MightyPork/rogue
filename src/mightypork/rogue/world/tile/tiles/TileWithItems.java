@@ -96,4 +96,20 @@ public abstract class TileWithItems extends Tile {
 	{
 		return !items.isEmpty();
 	}
+	
+	
+	@Override
+	public boolean onClick()
+	{
+		if (hasItem()) {
+			final Item item = pickItem();
+			if (getWorld().getPlayer().getInventory().addItem(item)) {
+				// player picked item
+			} else {
+				dropItem(item); // put back.
+			}
+			return true;
+		}
+		return false;
+	}
 }

@@ -44,6 +44,8 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	private String chars;
 	private FilterMode filter;
 	private boolean antialias;
+	private double discardTop;
+	private double discardBottom;
 	
 	
 	/**
@@ -207,5 +209,27 @@ public class DeferredFont extends DeferredResource implements GLFont {
 	{
 		// this will have to suffice
 		font = null;
+	}
+	
+	
+	@Override
+	public void setDiscardRatio(double top, double bottom)
+	{
+		discardTop = top;
+		discardBottom = bottom;
+	}
+	
+	
+	@Override
+	public double getTopDiscardRatio()
+	{
+		return discardTop;
+	}
+	
+	
+	@Override
+	public double getBottomDiscardRatio()
+	{
+		return discardBottom;
 	}
 }

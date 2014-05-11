@@ -29,7 +29,7 @@ class MenuLayer extends ScreenLayer {
 	{
 		final Rect menuBox = root.shrink(Num.ZERO, root.height().mul(0.15)).moveY(root.height().mul(-0.04));
 		
-		final GridLayout layout = new GridLayout(root, menuBox, 14, 1);
+		final GridLayout layout = new GridLayout(root, menuBox, 11, 1);
 		layout.enableCaching(true);
 		
 		final QuadPainter bg = QuadPainter.gradV(Color.fromHex(0x007eb3), PAL16.SEABLUE);
@@ -60,7 +60,7 @@ class MenuLayer extends ScreenLayer {
 		layout.put(btn, r, 0, 2, 1);
 		r += 3;
 		
-		
+		/*
 		// bouncy text button
 		btn = new MenuButton("Bouncy", PAL16.CLOUDBLUE);
 		btn.setAction(new Action() {
@@ -73,7 +73,7 @@ class MenuLayer extends ScreenLayer {
 		});
 		layout.put(btn, r, 0, 2, 1);
 		r += 3;
-		
+		*/
 		
 		// quit button
 		btn = new MenuButton("Bye!", PAL16.BLOODRED);

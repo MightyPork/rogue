@@ -130,7 +130,7 @@ public final class App extends BaseApp {
 		
 		bindEventToKey(new CrossfadeRequest(null), Keys.L_CONTROL, Keys.Q);
 		
-		bindEventToKey(new CrossfadeRequest("menu"), Keys.ESCAPE);
+		bindEventToKey(new CrossfadeRequest("menu"), Keys.L_CONTROL, Keys.M);
 	}
 	
 	

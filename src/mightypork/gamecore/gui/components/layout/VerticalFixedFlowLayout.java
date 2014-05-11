@@ -18,7 +18,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 public class VerticalFixedFlowLayout extends LayoutComponent {
 	
 	private int row = 0;
-	private final Num rowHeight;
+	private Num elementHeight;
 	private final AlignY align;
 	
 	
@@ -31,7 +31,7 @@ public class VerticalFixedFlowLayout extends LayoutComponent {
 	public VerticalFixedFlowLayout(AppAccess app, RectBound context, Num elementHeight, AlignY align)
 	{
 		super(app, context);
-		this.rowHeight = elementHeight;
+		this.elementHeight = elementHeight;
 		this.align = align;
 		
 		if (align != AlignY.TOP && align != AlignY.BOTTOM) {
@@ -67,10 +67,10 @@ public class VerticalFixedFlowLayout extends LayoutComponent {
 		
 		switch (align) {
 			case TOP:
-				r = topEdge().growDown(rowHeight).moveY(rowHeight.mul(row++));
+				r = topEdge().growDown(elementHeight).moveY(elementHeight.mul(row++));
 				break;
 			case BOTTOM:
-				r = bottomEdge().growUp(rowHeight).moveY(rowHeight.mul(-(row++)));
+				r = bottomEdge().growUp(elementHeight).moveY(elementHeight.mul(-(row++)));
 				break;
 			default:
 				throw new IllegalArgumentException("Bad align.");
@@ -81,4 +81,9 @@ public class VerticalFixedFlowLayout extends LayoutComponent {
 		attach(elem);
 	}
 	
+	
+	public void setElementHeight(Num elementHeight)
+	{
+		this.elementHeight = elementHeight;
+	}
 }

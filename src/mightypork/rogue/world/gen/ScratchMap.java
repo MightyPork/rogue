@@ -149,16 +149,16 @@ public class ScratchMap {
 			
 			switch (rand.nextInt(4)) {
 				case 0:
-					center.x += 1 + rand.nextInt(critical ? 6 : 4);
+					center.x += 1 + (failed_total / 50);
 					break;
 				case 1:
-					center.x -= 1 + rand.nextInt(critical ? 6 : 4);
+					center.x -= 1 + (failed_total / 50);
 					break;
 				case 2:
-					center.y += 1 + rand.nextInt(critical ? 6 : 4);
+					center.y += 1 + (failed_total / 50);
 					break;
 				case 3:
-					center.y -= 1 + rand.nextInt(critical ? 6 : 4);
+					center.y -= 1 + (failed_total / 50);
 			}
 			
 			final RoomDesc rd = rb.buildToFit(this, theme, rand, center);
@@ -173,14 +173,14 @@ public class ScratchMap {
 				clampBounds();
 				
 				nodes.add(center);
-				Log.f3("placed room: " + rd.min + " -> " + rd.max);
+//				Log.f3("placed room: " + rd.min + " -> " + rd.max);
 				
 				return;
 			} else {
 				failed++;
 				failed_total++;
 				
-				if (failed > 200) {
+				if (failed > 400) {
 					Log.w("Faild to build room.");
 					if (critical) {
 						
@@ -309,7 +309,7 @@ public class ScratchMap {
 	
 	public void buildCorridors()
 	{
-		Log.f3("Building corridors.");
+//		Log.f3("Building corridors.");
 		
 		Coord start = nodes.get(0);
 		final Set<Coord> starts = new HashSet<>();
@@ -328,7 +328,7 @@ public class ScratchMap {
 	
 	private void buildCorridor(Coord node1, Coord node2)
 	{
-		Log.f3("Building corridor " + node1 + " -> " + node2);
+//		Log.f3("Building corridor " + node1 + " -> " + node2);
 		final List<Coord> steps = pathf.findPath(node1, node2);
 		
 		if (steps == null) {
@@ -539,7 +539,7 @@ public class ScratchMap {
 		
 		final Coord entrance = new Coord(enterPoint.x - genMin.x, enterPoint.y - genMin.y);
 		level.setEnterPoint(entrance);
-		System.out.println("Entrance = " + entrance + ", original: " + enterPoint + ", minG=" + genMin + ", maxG=" + genMax);
+//		System.out.println("Entrance = " + entrance + ", original: " + enterPoint + ", minG=" + genMin + ", maxG=" + genMax);
 		
 		final Coord exit = new Coord(exitPoint.x - genMin.x, exitPoint.y - genMin.y);
 		level.setExitPoint(exit);

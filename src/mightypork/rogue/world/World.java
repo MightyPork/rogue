@@ -18,6 +18,7 @@ import mightypork.gamecore.util.math.timing.Pauseable;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
+import mightypork.rogue.world.item.ItemType;
 import mightypork.rogue.world.level.Level;
 
 
@@ -171,11 +172,53 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		public int getAttackStrength()
 		{
-			final Item weapon = playerInfo.getEquippedWeapon();
+			final Item weapon = playerInfo.getSelectedWeapon();
 			
 			if (weapon == null) return PlayerInfo.BARE_ATTACK;
 			
 			return Math.min(weapon.getAttackPoints(), playerInfo.BARE_ATTACK);
+		}
+		
+		
+		public boolean eatFood(Item itm)
+		{
+			if (itm == null || itm.isEmpty() || itm.getType() != ItemType.FOOD) return false;
+			
+			if (getHealth() < getHealthMax()) {
+				
+				playerEntity.health.addHealth(itm.getFoodPoints());
+				
+				return true;
+			}
+			
+			
+			return false;
+		}
+		
+		
+		public void selectWeapon(int selected)
+		{
+			playerInfo.selectWeapon(selected);
+		}
+		
+		
+		public int getSelectedWeapon()
+		{
+			return playerInfo.getSelectedWeaponIndex();
+		}
+		
+		
+		public void tryToEatSomeFood()
+		{
+			for (int i = 0; i < getInventory().getSize(); i++) {
+				final Item itm = getInventory().getItem(i);
+				if (itm == null || itm.isEmpty()) continue;
+				
+				final Item slice = itm.split(1);
+				if (!eatFood(slice)) itm.addItem(slice);
+				if (itm.isEmpty()) getInventory().setItem(i, null);
+				return;
+			}
 		}
 		
 	}
@@ -184,7 +227,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	private final PlayerFacade player = new PlayerFacade();
 	private Entity playerEntity;
 	private BusAccess bus;
-	private boolean paused;
+	private int pauseDepth = 0;
 	
 	
 	private final ArrayList<Level> levels = new ArrayList<>();
@@ -209,7 +252,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	@Override
 	public boolean doesDelegate()
 	{
-		return !paused;
+		return !isPaused();
 	}
 	
 	
@@ -324,21 +367,21 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	@Override
 	public void pause()
 	{
-		paused = true;
+		pauseDepth++;
 	}
 	
 	
 	@Override
 	public void resume()
 	{
-		paused = false;
+		if (pauseDepth > 0) pauseDepth--;
 	}
 	
 	
 	@Override
 	public boolean isPaused()
 	{
-		return paused;
+		return pauseDepth > 0;
 	}
 	
 	

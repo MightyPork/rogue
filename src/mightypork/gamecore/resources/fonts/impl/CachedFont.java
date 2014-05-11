@@ -77,6 +77,10 @@ public class CachedFont implements GLFont {
 	
 	private final FilterMode filter;
 	
+	private double discardTop;
+	
+	private double discardBottom;
+	
 	
 	/**
 	 * Make a font
@@ -448,4 +452,25 @@ public class CachedFont implements GLFont {
 		return Vect.make(getWidth(text), getLineHeight());
 	}
 	
+	
+	@Override
+	public void setDiscardRatio(double top, double bottom)
+	{
+		discardTop = top;
+		discardBottom = bottom;
+	}
+	
+	
+	@Override
+	public double getTopDiscardRatio()
+	{
+		return discardTop;
+	}
+	
+	
+	@Override
+	public double getBottomDiscardRatio()
+	{
+		return discardBottom;
+	}
 }

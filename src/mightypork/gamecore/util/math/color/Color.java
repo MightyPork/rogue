@@ -17,26 +17,6 @@ import mightypork.gamecore.util.math.constraints.num.Num;
  */
 public abstract class Color {
 	
-	public static final Color NONE = rgba(0, 0, 0, 0);
-	public static final Color SHADOW = rgba(0, 0, 0, 0.5);
-	
-	public static final Color WHITE = fromHex(0xFFFFFF);
-	public static final Color BLACK = fromHex(0x000000);
-	public static final Color DARK_GRAY = fromHex(0x808080);
-	public static final Color GRAY = rgb(0.5, 0.5, 0.5);
-	public static final Color LIGHT_GRAY = rgb(0.75, 0.75, 0.75);
-	
-	public static final Color RED = rgb(1, 0, 0);
-	public static final Color GREEN = rgb(0, 1, 0);
-	public static final Color BLUE = rgb(0, 0, 1);
-	
-	public static final Color YELLOW = rgb(1, 1, 0);
-	public static final Color MAGENTA = rgb(1, 0, 1);
-	public static final Color CYAN = rgb(0, 1, 1);
-	
-	public static final Color ORANGE = rgb(1, 0.78, 0);
-	public static final Color PINK = rgb(1, 0.68, 0.68);
-	
 	private static final Stack<Num> alphaStack = new Stack<>();
 	private static volatile boolean alphaStackEnabled = true;
 	
