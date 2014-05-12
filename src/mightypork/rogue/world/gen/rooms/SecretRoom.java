@@ -3,6 +3,7 @@ package mightypork.rogue.world.gen.rooms;
 
 import java.util.Random;
 
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.TileProtectLevel;
@@ -21,7 +22,7 @@ public abstract class SecretRoom extends AbstractRectRoom {
 	@Override
 	protected int getDoorCount(Random rand)
 	{
-		return 1 + rand.nextInt(2);
+		return Calc.randInt(rand, 1, 3);
 	}
 	
 	

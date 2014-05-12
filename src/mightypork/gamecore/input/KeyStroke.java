@@ -1,9 +1,9 @@
 package mightypork.gamecore.input;
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 
@@ -15,8 +15,22 @@ import org.lwjgl.input.Keyboard;
  */
 public class KeyStroke {
 	
-	private final Set<Integer> keys = new LinkedHashSet<>();
+	private final List<Integer> keys = new ArrayList<>(2);
 	private final boolean fallingEdge;
+	
+	private final List<Integer> badModifs = new ArrayList<>(8);
+	
+	
+//	{
+//		badModifs.add(Keys.L_ALT);
+//		badModifs.add(Keys.L_CONTROL);
+//		badModifs.add(Keys.L_SHIFT);
+//		badModifs.add(Keys.L_META);
+//		badModifs.add(Keys.R_ALT);
+//		badModifs.add(Keys.R_CONTROL);
+//		badModifs.add(Keys.R_SHIFT);
+//		badModifs.add(Keys.R_META);
+//	}
 	
 	
 	/**
@@ -27,9 +41,20 @@ public class KeyStroke {
 	 */
 	public KeyStroke(boolean fallingEdge, int... keys)
 	{
+		badModifs.add(Keys.L_ALT);
+		badModifs.add(Keys.L_CONTROL);
+		badModifs.add(Keys.L_SHIFT);
+		badModifs.add(Keys.L_META);
+		badModifs.add(Keys.R_ALT);
+		badModifs.add(Keys.R_CONTROL);
+		badModifs.add(Keys.R_SHIFT);
+		badModifs.add(Keys.R_META);
+		
 		this.fallingEdge = fallingEdge;
 		for (final int k : keys) {
 			this.keys.add(k);
+			
+			badModifs.remove((Integer) k);
 		}
 	}
 	
@@ -41,10 +66,7 @@ public class KeyStroke {
 	 */
 	public KeyStroke(int... keys)
 	{
-		fallingEdge = false;
-		for (final int k : keys) {
-			this.keys.add(k);
-		}
+		this(false, keys);
 	}
 	
 	
@@ -54,8 +76,16 @@ public class KeyStroke {
 	public boolean isActive()
 	{
 		boolean st = true;
+		
 		for (final int k : keys) {
 			st &= Keyboard.isKeyDown(k);
+		}
+		
+		for (final int i : badModifs) {
+			if (Keyboard.isKeyDown(i)) {
+				st = false;
+				break;
+			}
 		}
 		
 		return fallingEdge ? st : !st;
@@ -112,10 +142,7 @@ public class KeyStroke {
 	}
 	
 	
-	/**
-	 * @return the key set
-	 */
-	public Set<Integer> getKeys()
+	public List<Integer> getKeys()
 	{
 		return keys;
 	}

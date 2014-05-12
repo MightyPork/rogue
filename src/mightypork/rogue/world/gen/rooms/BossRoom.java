@@ -3,6 +3,7 @@ package mightypork.rogue.world.gen.rooms;
 
 import java.util.Random;
 
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
@@ -16,7 +17,7 @@ public class BossRoom extends SecretRoom {
 	@Override
 	protected int getDoorCount(Random rand)
 	{
-		return 2;
+		return Calc.randInt(rand, 1, 3);
 	}
 	
 	

@@ -3,6 +3,7 @@ package mightypork.rogue.world.gen.rooms;
 
 import java.util.Random;
 
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.ScratchMap;
@@ -16,7 +17,7 @@ public class HeartPieceRoom extends SecretRoom {
 	@Override
 	protected int getDoorCount(Random rand)
 	{
-		return 1;
+		return Calc.randInt(rand, 1, 3);
 	}
 	
 	

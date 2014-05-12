@@ -3,6 +3,7 @@ package mightypork.gamecore.eventbus.clients;
 
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.events.Destroyable;
+import mightypork.gamecore.util.annot.DefaultImpl;
 
 
 /**
@@ -36,6 +37,9 @@ public abstract class RootBusNode extends BusNode implements Destroyable {
 	 * Deinitialize the subsystem<br>
 	 * (called during destruction)
 	 */
-	protected abstract void deinit();
+	@DefaultImpl
+	protected void deinit()
+	{
+	}
 	
 }

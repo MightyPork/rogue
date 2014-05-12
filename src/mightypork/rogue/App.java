@@ -8,7 +8,6 @@ import mightypork.gamecore.app.BaseApp;
 import mightypork.gamecore.app.MainLoop;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.eventbus.EventBus;
-import mightypork.gamecore.gui.events.CrossfadeRequest;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke;
@@ -18,12 +17,14 @@ import mightypork.gamecore.logging.writers.LogWriter;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.loading.AsyncResourceLoader;
 import mightypork.gamecore.util.ion.Ion;
+import mightypork.rogue.GameStateManager.GameState;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
+import mightypork.rogue.events.GameStateRequest;
 import mightypork.rogue.screens.FpsOverlay;
 import mightypork.rogue.screens.game.ScreenGame;
 import mightypork.rogue.screens.menu.ScreenMainMenu;
-import mightypork.rogue.screens.test_bouncyboxes.ScreenTestBouncy;
+import mightypork.rogue.screens.select_world.ScreenSelectWorld;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.level.Level;
 
@@ -112,9 +113,10 @@ public final class App extends BaseApp {
 		/* game screen references world provider instance */
 		WorldProvider.init(this);
 		
-		screens.addScreen("test.bouncy", new ScreenTestBouncy(this));
+		getEventBus().subscribe(new GameStateManager(this));
 		
-		screens.addScreen("menu", new ScreenMainMenu(this));
+		screens.addScreen("main_menu", new ScreenMainMenu(this));
+		screens.addScreen("select_world", new ScreenSelectWorld(this));
 		screens.addScreen("game", new ScreenGame(this));
 		
 		screens.addOverlay(new FpsOverlay(this));
@@ -128,9 +130,8 @@ public final class App extends BaseApp {
 		bindEventToKey(new ActionRequest(RequestType.FULLSCREEN), Keys.F11);
 		bindEventToKey(new ActionRequest(RequestType.SCREENSHOT), Keys.F2);
 		
-		bindEventToKey(new CrossfadeRequest(null), Keys.L_CONTROL, Keys.Q);
-		
-		bindEventToKey(new CrossfadeRequest("menu"), Keys.L_CONTROL, Keys.M);
+		bindEventToKey(new GameStateRequest(GameState.EXIT), Keys.L_CONTROL, Keys.Q);
+		bindEventToKey(new GameStateRequest(GameState.MAIN_MENU), Keys.L_CONTROL, Keys.M);
 	}
 	
 	
@@ -158,8 +159,10 @@ public final class App extends BaseApp {
 	protected void postInit()
 	{
 		// TODO tmp
-		WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
+		//WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
 		
-		getEventBus().send(new CrossfadeRequest("game", true));
+		//getEventBus().send(new CrossfadeRequest("game", true));
+		
+		getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
 	}
 }

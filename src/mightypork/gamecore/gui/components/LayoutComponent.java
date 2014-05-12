@@ -116,28 +116,12 @@ public abstract class LayoutComponent extends BaseComponent implements ClientHub
 	}
 	
 	
-//	@Override
-//	public void enable(boolean yes)
-//	{
-//		subModule.setDelegating(yes);
-//		subModule.setListening(yes);
-//		enabled = yes;
-//	}
-//	
-//	
-//	@Override
-//	public boolean isEnabled()
-//	{
-//		return enabled;
-//	}
-	
-	
 	/**
 	 * Connect to bus and add to element list
 	 * 
 	 * @param component added component, whose context has already been set.
 	 */
-	public final void attach(Component component)
+	protected final void attach(Component component)
 	{
 		if (component == null) return;
 		if (component == this) throw new IllegalArgumentException("Uruboros. (infinite recursion evaded)");

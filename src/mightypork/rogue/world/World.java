@@ -1,6 +1,7 @@
 package mightypork.rogue.world;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,6 +47,8 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	/** Next entity ID */
 	private int eid;
 	
+	private File saveFile;
+	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -90,6 +93,9 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		out.put("next_eid", eid);
 		out.putSequence("levels", levels);
 		out.putBundled("player", playerData);
+		
+		// used for peking in before actually loading the world.
+		out.put("meta.last_level", playerData.getLevelNumber());
 	}
 	
 	
@@ -212,5 +218,17 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	public WorldConsole getConsole()
 	{
 		return console;
+	}
+	
+	
+	public void setSaveFile(File file)
+	{
+		this.saveFile = file;
+	}
+	
+	
+	public File getSaveFile()
+	{
+		return saveFile;
 	}
 }

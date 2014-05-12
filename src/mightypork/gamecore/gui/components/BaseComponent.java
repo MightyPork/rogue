@@ -5,6 +5,7 @@ import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.InputSystem;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
@@ -34,7 +35,7 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	
 	
 	@Override
-	public final void setRect(RectBound rect)
+	public void setRect(RectBound rect)
 	{
 		this.source = new RectBoundAdapter(rect);
 	}
@@ -73,10 +74,11 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	@Override
 	public final void onLayoutChanged()
 	{
-		if (getRect() == null) {
-			throw new NullPointerException("Component is missing a bounding rect.");
+		try {
+			poll();
+		} catch (final NullPointerException e) {
+			Log.e("Component is missing a bounding rect, at: " + Log.str(getClass()));
 		}
-		poll();
 	}
 	
 	

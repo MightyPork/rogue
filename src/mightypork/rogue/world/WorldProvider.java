@@ -68,7 +68,7 @@ public class WorldProvider extends RootBusNode {
 	}
 	
 	
-	private void setWorld(World newWorld)
+	public void setWorld(World newWorld)
 	{
 		if (world != null) removeChildClient(world);
 		world = newWorld;
@@ -88,8 +88,26 @@ public class WorldProvider extends RootBusNode {
 	
 	public void saveWorld(File file) throws IOException
 	{
-		if (world == null) throw new IllegalStateException("Trying to save a NULL world.");
+		if (world == null) {
+			throw new IllegalStateException("Trying to save a NULL world.");
+		}
 		Ion.toFile(file, world);
+	}
+	
+	
+	public void saveWorld() throws IOException
+	{
+		if (world == null) {
+			throw new IllegalStateException("Trying to save a NULL world.");
+		}
+		
+		final File f = world.getSaveFile();
+		
+		if (f == null) {
+			throw new IllegalStateException("Trying to save world to a NULL file.");
+		}
+		
+		Ion.toFile(f, world);
 	}
 	
 	
@@ -111,12 +129,6 @@ public class WorldProvider extends RootBusNode {
 	public PlayerControl getPlayerControl()
 	{
 		return playerControl;
-	}
-	
-	
-	@Override
-	protected void deinit()
-	{
 	}
 	
 }

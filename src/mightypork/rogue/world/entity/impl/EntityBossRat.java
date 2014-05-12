@@ -8,7 +8,6 @@ import mightypork.rogue.world.entity.EntityPathFinder;
 import mightypork.rogue.world.entity.EntityRenderer;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
-import mightypork.rogue.world.item.Items;
 
 
 public class EntityBossRat extends Entity {
@@ -65,22 +64,9 @@ public class EntityBossRat extends Entity {
 	@Override
 	public void onKilled()
 	{
-		// TODO drop rare stuff & fire event.
-		
-		if (rand.nextInt(8) == 0) {
-			getLevel().dropNear(getCoord(), Items.BONE.createItem());
-			return;
-		}
-		
-		if (rand.nextInt(3) == 0) {
-			getLevel().dropNear(getCoord(), Items.MEAT.createItem());
-			return;
-		}
-		
-		if (rand.nextInt(6) == 0) {
-			getLevel().dropNear(getCoord(), Items.CHEESE.createItem());
-			return;
-		}
+		getWorld().getConsole().addMessage("YOU DEFEATED THE BOSS RAT");
+		getWorld().getConsole().addMessage("CTRL+M ... main menu");
+		getWorld().getConsole().addMessage("CTRL+N ... new game");
 	}
 	
 	

@@ -20,7 +20,8 @@ class MenuButton extends ClickableComponent {
 	
 	private final VectVar offset = Vect.makeVar();
 	private final Vect offsetPassive = height().div(16).toVectXY();
-	private final Vect offsetPassive2 = height().div(24).toVectXY();
+	private final Vect offsetPassive2 = height().div(20).toVectXY();
+	private final Vect offsetUnder = height().div(32).toVectXY();
 	
 	private final Color color;
 	
@@ -32,6 +33,7 @@ class MenuButton extends ClickableComponent {
 		this.painter = new TextPainter(font, AlignX.CENTER, this.color, text);
 		this.painter.setRect(this);
 		this.painter.setShadow(RGB.BLACK_30, offset);
+		painter.setPaddingHPerc(0, 5);
 	}
 	
 	
@@ -40,7 +42,7 @@ class MenuButton extends ClickableComponent {
 	{
 		if (isMouseOver()) {
 			if (InputSystem.isMouseButtonDown(0)) {
-				offset.setTo(Vect.ZERO);
+				offset.setTo(offsetUnder);
 			} else {
 				offset.setTo(offsetPassive2);
 			}

@@ -128,8 +128,8 @@ public class HudLayer extends ScreenLayer {
 		
 		
 		// TODO actions
-		nav.addLeft(new NavButton(Res.txq("nav.button.fg.options")));
-		nav.addLeft(new NavButton(Res.txq("nav.button.fg.help")));
+		//nav.addLeft(new NavButton(Res.txq("nav.button.fg.options")));
+		//nav.addLeft(new NavButton(Res.txq("nav.button.fg.help")));
 		
 		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.map")));
 		btn.setAction(gameScreen.actionToggleMinimap);
