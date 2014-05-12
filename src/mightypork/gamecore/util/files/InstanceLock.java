@@ -18,6 +18,7 @@ public class InstanceLock {
 	public static boolean onFile(final File lockFile)
 	{
 		try {
+			lockFile.getParentFile().mkdirs();
 			final RandomAccessFile randomAccessFile = new RandomAccessFile(lockFile, "rw");
 			
 			final FileLock fileLock = randomAccessFile.getChannel().tryLock();
@@ -44,6 +45,8 @@ public class InstanceLock {
 			
 			return false;
 		} catch (final IOException e) {
+			System.err.println("IO error while obtaining lock.");
+			e.printStackTrace();
 			return false;
 		}
 	}

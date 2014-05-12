@@ -20,7 +20,6 @@ import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 
 /**
@@ -308,7 +307,7 @@ public class Render {
 			
 			final String ext = FileUtils.getExtension(resourcePath).toUpperCase();
 			
-			final Texture texture = TextureLoader.getTexture(ext, ResourceLoader.getResourceAsStream(resourcePath), false, filtering.num);
+			final Texture texture = TextureLoader.getTexture(ext, FileUtils.getResource(resourcePath), false, filtering.num);
 			
 			if (texture == null) {
 				Log.w("Texture " + resourcePath + " could not be loaded.");

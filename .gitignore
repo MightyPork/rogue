@@ -1,5 +1,8 @@
 /bin/
 /target/
 /.rogue-save/
+/build/.rogue-save/
+/build/out/*.jar
+/build/in/*.jar
 *.log
 .attach_pid*

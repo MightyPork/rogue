@@ -2,6 +2,7 @@ package mightypork.gamecore.resources.audio;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import mightypork.gamecore.logging.LogAlias;
 import mightypork.gamecore.resources.loading.DeferredResource;
@@ -91,20 +92,23 @@ public class DeferredAudio extends DeferredResource {
 	{
 		final String ext = FileUtils.getExtension(resource);
 		
-		if (ext.equalsIgnoreCase("ogg")) {
-			backingAudio = SoundStore.get().getOgg(resource);
+		try(final InputStream stream = FileUtils.getResource(resource)) {
 			
-		} else if (ext.equalsIgnoreCase("wav")) {
-			backingAudio = SoundStore.get().getWAV(resource);
-			
-		} else if (ext.equalsIgnoreCase("aif")) {
-			backingAudio = SoundStore.get().getAIF(resource);
-			
-		} else if (ext.equalsIgnoreCase("mod")) {
-			backingAudio = SoundStore.get().getMOD(resource);
-			
-		} else {
-			throw new RuntimeException("Invalid audio file extension.");
+			if (ext.equalsIgnoreCase("ogg")) {
+				backingAudio = SoundStore.get().getOgg(resource, stream);
+				
+			} else if (ext.equalsIgnoreCase("wav")) {
+				backingAudio = SoundStore.get().getWAV(resource, stream);
+				
+			} else if (ext.equalsIgnoreCase("aif")) {
+				backingAudio = SoundStore.get().getAIF(resource, stream);
+				
+			} else if (ext.equalsIgnoreCase("mod")) {
+				backingAudio = SoundStore.get().getMOD(resource, stream);
+				
+			} else {
+				throw new RuntimeException("Invalid audio file extension.");
+			}
 		}
 	}
 	

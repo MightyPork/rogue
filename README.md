@@ -5,8 +5,6 @@ Goals
 -----
 
 - Simple retro-themed dungeon crawler
-- (Multiplayer support) <- maybe
-- Threads for resource loading and event handling
 
 
 Features
@@ -15,17 +13,19 @@ Features
 - Full OOP design
 - Event driven
 - OpenGL 2D rendering
-- Screen / layer based graphics with Constraint System.
+- Screen / layer based graphics with Constraint System
+- A* path-finding system
+- Audio, Font & Texture systems
+- Easily extensible base framework
 
 
 Gameplay
 --------------
 
-- Random floors
-- Turn-based
-- Monsters with AI (-> combat system)
-- Collectable items, armor upgrades etc.
-- Health, Hunger, Level
+- Real-time action
+- Monsters with AI
+- Collectable items (weapons, food)
+- Random floor generator
 
 
 Used libraries
