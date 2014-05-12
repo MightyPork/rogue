@@ -8,7 +8,9 @@ OUT = $(OUT_DIR)/release.jar
 
 TMP_DIR = ./tmp
 
-all:
+all: $(OUT)
+
+$(OUT): $(IN) $(STUB)
 	# clean
 	mkdir -p $(TMP_DIR)
 	mkdir -p $(OUT_DIR)
@@ -27,6 +29,10 @@ all:
 
 	# clean
 	rm -rf $(TMP_DIR)
+	
 
-run:
+run: $(OUT)
 	java -jar $(OUT)
+
+deploy: $(OUT)
+	cp -f $(OUT) /home/ondra/Dokumenty/Dropbox/Public/Rogue
