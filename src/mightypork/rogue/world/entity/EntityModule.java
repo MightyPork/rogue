@@ -11,7 +11,7 @@ import mightypork.gamecore.util.ion.IonObjBundled;
 
 
 /**
- * Abstract entity module
+ * Abstract entity module; Modules make up an entity AI and behavior.
  * 
  * @author MightyPork
  */

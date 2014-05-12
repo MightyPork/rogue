@@ -7,7 +7,7 @@ import java.io.IOException;
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.util.ion.Ion;
-import mightypork.rogue.world.World.PlayerFacade;
+import mightypork.rogue.world.gen.WorldCreator;
 import mightypork.rogue.world.level.Level;
 
 
@@ -56,6 +56,12 @@ public class WorldProvider extends RootBusNode {
 	}
 	
 	
+	public void destroyWorld()
+	{
+		setWorld(null);
+	}
+	
+	
 	public World getWorld()
 	{
 		return world;
@@ -64,9 +70,11 @@ public class WorldProvider extends RootBusNode {
 	
 	private void setWorld(World newWorld)
 	{
-		
 		if (world != null) removeChildClient(world);
 		world = newWorld;
+		
+		if (newWorld == null) return;
+		
 		world.assignBus(this); // connect to bus (for event dispatching)
 		addChildClient(world);
 	}

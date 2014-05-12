@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.timing.TimedTask;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.TileRenderer;
-import mightypork.rogue.world.tile.tiles.TileBaseDoor;
+import mightypork.rogue.world.tile.impl.TileBaseDoor;
 
 
 public class DoorTileRenderer extends TileRenderer {

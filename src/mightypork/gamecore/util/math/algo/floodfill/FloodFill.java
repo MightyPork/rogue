@@ -9,26 +9,48 @@ import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Step;
 
 
-public class FloodFill {
+public abstract class FloodFill {
+	
+	public abstract boolean canEnter(Coord pos);
+	
+	
+	public abstract boolean canSpreadFrom(Coord pos);
+	
+	
+	public abstract Step[] getSpreadSides();
+	
+	
+	/**
+	 * Get the max distance filled form start point. Use -1 for unlimited range.
+	 * 
+	 * @return max distance
+	 */
+	public abstract double getMaxDistance();
+	
+	
+	/**
+	 * @return true if start should be spread no matter what
+	 */
+	public abstract boolean forceSpreadStart();
+	
 	
 	/**
 	 * Fill an area
 	 * 
 	 * @param start start point
-	 * @param context filling context
 	 * @param foundNodes collection to put filled coords in
 	 * @return true if fill was successful; false if max range was reached.
 	 */
-	public static final boolean fill(Coord start, FillContext context, Collection<Coord> foundNodes)
+	public final boolean fill(Coord start, Collection<Coord> foundNodes)
 	{
 		final Queue<Coord> activeNodes = new LinkedList<>();
 		
-		final double maxDist = context.getMaxDistance();
+		final double maxDist = getMaxDistance();
 		
 		activeNodes.add(start);
 		
-		final Step[] sides = context.getSpreadSides();
-		boolean forceSpreadNext = context.forceSpreadStart();
+		final Step[] sides = getSpreadSides();
+		boolean forceSpreadNext = forceSpreadStart();
 		
 		boolean limitReached = false;
 		
@@ -36,7 +58,7 @@ public class FloodFill {
 			final Coord current = activeNodes.poll();
 			foundNodes.add(current);
 			
-			if (!context.canSpreadFrom(current) && !forceSpreadNext) continue;
+			if (!canSpreadFrom(current) && !forceSpreadNext) continue;
 			
 			forceSpreadNext = false;
 			
@@ -49,7 +71,7 @@ public class FloodFill {
 					continue;
 				}
 				
-				if (context.canEnter(next)) {
+				if (canEnter(next)) {
 					activeNodes.add(next);
 				} else {
 					foundNodes.add(next);

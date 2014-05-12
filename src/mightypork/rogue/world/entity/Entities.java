@@ -6,10 +6,10 @@ import java.util.Collection;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
-import mightypork.rogue.world.entity.entities.EntityBossRat;
-import mightypork.rogue.world.entity.entities.EntityBrownRat;
-import mightypork.rogue.world.entity.entities.EntityGrayRat;
-import mightypork.rogue.world.entity.entities.PlayerEntity;
+import mightypork.rogue.world.entity.impl.EntityBossRat;
+import mightypork.rogue.world.entity.impl.EntityBrownRat;
+import mightypork.rogue.world.entity.impl.EntityGrayRat;
+import mightypork.rogue.world.entity.impl.PlayerEntity;
 
 
 /**

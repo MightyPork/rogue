@@ -2,8 +2,8 @@ package mightypork.rogue.world.gui.interaction;
 
 
 import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.World;
-import mightypork.rogue.world.World.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.gui.MapView;
 

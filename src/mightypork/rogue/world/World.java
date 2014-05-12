@@ -2,7 +2,9 @@ package mightypork.rogue.world;
 
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Random;
 
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.EventBus;
@@ -11,13 +13,9 @@ import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.timing.Pauseable;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.item.Item;
-import mightypork.rogue.world.item.ItemType;
 import mightypork.rogue.world.level.Level;
 
 
@@ -28,356 +26,19 @@ import mightypork.rogue.world.level.Level;
  */
 public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable, Updateable {
 	
-	/**
-	 * Convenient access to player-related methods and data
-	 * 
-	 * @author MightyPork
-	 */
-	public class PlayerFacade {
-		
-		public boolean canAscend()
-		{
-			return playerInfo.getLevelNumber() > 0;
-		}
-		
-		
-		public void descend()
-		{
-			if (!canDescend()) return;
-			
-			final int lvl_num = getLevelNumber();
-			getLevel().removeEntity(playerEntity);
-			
-			playerInfo.setLevelNumber(lvl_num + 1);
-			
-			getLevel().forceFreeTile(getLevel().getEnterPoint());
-			getLevel().addEntity(playerEntity, getLevel().getEnterPoint());
-			getLevel().explore(getCoord());
-			
-			msgEnterFloor(getLevelNumber());
-		}
-		
-		
-		public boolean canDescend()
-		{
-			return playerInfo.getLevelNumber() < levels.size() - 1;
-		}
-		
-		
-		public void ascend()
-		{
-			if (!canAscend()) return;
-			
-			final int lvl_num = getLevelNumber();
-			getLevel().removeEntity(playerEntity);
-			
-			playerInfo.setLevelNumber(lvl_num - 1);
-			
-			getLevel().forceFreeTile(getLevel().getExitPoint());
-			getLevel().addEntity(playerEntity, getLevel().getExitPoint());
-			getLevel().explore(getCoord());
-			
-			msgEnterFloor(getLevelNumber());
-		}
-		
-		
-		/**
-		 * @return current level number, zero based.
-		 */
-		public int getLevelNumber()
-		{
-			return playerInfo.getLevelNumber();
-		}
-		
-		
-		public Level getLevel()
-		{
-			return levels.get(playerInfo.getLevelNumber());
-		}
-		
-		
-		public int getEID()
-		{
-			return playerInfo.getEID();
-		}
-		
-		
-		public Coord getCoord()
-		{
-			return playerEntity.getCoord();
-		}
-		
-		
-		public Vect getVisualPos()
-		{
-			return playerEntity.pos.getVisualPos();
-		}
-		
-		
-		public void navigateTo(Coord pos)
-		{
-			playerEntity.pos.navigateTo(pos);
-		}
-		
-		
-		public void cancelPath()
-		{
-			playerEntity.pos.cancelPath();
-		}
-		
-		
-		public void addPathStep(Step step)
-		{
-			playerEntity.pos.addStep(step);
-		}
-		
-		
-		public boolean isMoving()
-		{
-			return playerEntity.pos.isMoving();
-		}
-		
-		
-		public double getMoveProgress()
-		{
-			return playerEntity.pos.getProgress();
-		}
-		
-		
-		public boolean isDead()
-		{
-			return playerEntity.isDead();
-		}
-		
-		
-		public int getHealth()
-		{
-			return playerEntity.health.getHealth();
-		}
-		
-		
-		public int getHealthMax()
-		{
-			return playerEntity.health.getHealthMax();
-		}
-		
-		
-		public Inventory getInventory()
-		{
-			return playerInfo.getInventory();
-		}
-		
-		
-		public Entity getEntity()
-		{
-			return playerEntity;
-		}
-		
-		
-		public int getAttackStrength()
-		{
-			final Item weapon = playerInfo.getSelectedWeapon();
-			
-			if (weapon == null) return PlayerInfo.BARE_ATTACK;
-			
-			return PlayerInfo.BARE_ATTACK + weapon.getAttackPoints();
-		}
-		
-		
-		/**
-		 * Eat food.
-		 * 
-		 * @param itm food item
-		 * @return if something was eaten
-		 */
-		public boolean eatFood(Item itm)
-		{
-			if (itm == null || itm.isEmpty() || itm.getType() != ItemType.FOOD) return false;
-			
-			if (getHealth() < getHealthMax()) {
-				
-				playerEntity.health.addHealth(itm.getFoodPoints());
-				itm.consume();
-				
-				msgEat(itm);
-				
-				return true;
-			}
-			
-			return false;
-		}
-		
-		
-		public void selectWeapon(int selected)
-		{
-			playerInfo.selectWeapon(selected);
-		}
-		
-		
-		public Item getSelectedWeapon()
-		{
-			return playerInfo.getSelectedWeapon();
-		}
-		
-		
-		public int getSelectedWeaponIndex()
-		{
-			return playerInfo.getSelectedWeaponIndex();
-		}
-		
-		
-		public void tryToEatSomeFood()
-		{
-			final List<Item> foods = new ArrayList<>();
-			for (int i = 0; i < getInventory().getSize(); i++) {
-				final Item itm = getInventory().getItem(i);
-				if (itm != null && itm.getType() == ItemType.FOOD) {
-					foods.add(itm);
-				}
-			}
-			
-			// sort from smallest to biggest foods
-			Collections.sort(foods, new Comparator<Item>() {
-				
-				@Override
-				public int compare(Item o1, Item o2)
-				{
-					return (o1.getFoodPoints() - o2.getFoodPoints());
-				}
-			});
-			
-			for (final Item itm : foods) {
-				if (eatFood(itm)) {
-					getInventory().clean();
-					return;
-				}
-			}
-			
-			if (getHealth() < getHealthMax()) {
-				msgNoMoreFood();
-			} else {
-				msgNotHungry();
-			}
-		}
-		
-		
-		public void attack(Entity prey)
-		{
-			final int attackPoints = getAttackStrength();
-			
-			prey.receiveAttack(getPlayer().getEntity(), attackPoints);
-			
-			if (prey.isDead()) {
-				msgKill(prey);
-			}
-			
-			final Item wpn = getSelectedWeapon();
-			
-			if (wpn != null) {
-				wpn.use();
-				if (wpn.isEmpty()) {
-					msgWeaponBreak(wpn);
-					
-					getInventory().clean();
-					selectWeapon(-1);
-					
-					pickBestWeaponIfNoneSelected();
-				}
-			}
-			
-		}
-		
-		
-		private void pickBestWeaponIfNoneSelected()
-		{
-			if (getSelectedWeapon() != null) return;
-			
-			final List<Item> wpns = new ArrayList<>();
-			for (int i = 0; i < getInventory().getSize(); i++) {
-				final Item itm = getInventory().getItem(i);
-				if (itm != null && itm.getType() == ItemType.WEAPON) {
-					wpns.add(itm);
-				}
-			}
-			
-			// sort from smallest to biggest foods
-			Collections.sort(wpns, new Comparator<Item>() {
-				
-				@Override
-				public int compare(Item o1, Item o2)
-				{
-					return (o2.getAttackPoints() - o1.getAttackPoints());
-				}
-			});
-			
-			for (final Item itm : wpns) {
-				for (int i = 0; i < getInventory().getSize(); i++) {
-					final Item itm2 = getInventory().getItem(i);
-					if (itm2 == itm) {
-						selectWeapon(i);
-						break;
-					}
-				}
-				break; // just one cycle
-			}
-			
-			msgEquipWeapon(getSelectedWeapon());
-		}
-		
-		
-		public boolean addItem(Item item)
-		{
-			if (!getInventory().addItem(item)) {
-				
-				msgCannotPick();
-				
-				return false;
-			}
-			
-			msgPick(item);
-			
-			if (item.getType() == ItemType.WEAPON) {
-				if (getSelectedWeapon() != null) {
-					if (item.getAttackPoints() > getSelectedWeapon().getAttackPoints()) {
-						selectWeapon(-1); // unselect to grab the best one
-					}
-				}
-				
-				pickBestWeaponIfNoneSelected();
-			}
-			
-			return true;
-		}
-		
-		
-		public void setHealth(int health)
-		{
-			playerEntity.health.setHealth(health);
-		}
-		
-		
-		public void setHealthMax(int health)
-		{
-			playerEntity.health.setHealthMax(health);
-		}
-
-
-		public World getWorld()
-		{
-			return World.this;
-		}
-	}
-	
 	// not saved stuffs
-	private final PlayerFacade player = new PlayerFacade();
-	private Entity playerEntity;
+	private final PlayerFacade playerFacade = new PlayerFacade(this);
+	
+	final WorldConsole console = new WorldConsole();
+	Entity playerEntity;
 	private BusAccess bus;
 	private int pauseDepth = 0;
 	
-	private final ArrayList<Level> levels = new ArrayList<>();
-	private final PlayerInfo playerInfo = new PlayerInfo();
+	/** List of world's levels */
+	final ArrayList<Level> levels = new ArrayList<>();
 	
-	private final WorldConsole console = new WorldConsole();
+	/** Player data saved together with world */
+	final PlayerData playerData = new PlayerData();
 	
 	/** World seed */
 	private long seed;
@@ -413,9 +74,9 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 			lvl.setWorld(this);
 		}
 		
-		in.loadBundled("player", playerInfo);
+		in.loadBundled("player", playerData);
 		
-		playerEntity = levels.get(playerInfo.getLevelNumber()).getEntity(playerInfo.getEID());
+		playerEntity = levels.get(playerData.getLevelNumber()).getEntity(playerData.getEID());
 		if (playerEntity == null) {
 			throw new RuntimeException("Player entity not found in the world.");
 		}
@@ -428,7 +89,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		out.put("seed", seed);
 		out.put("next_eid", eid);
 		out.putSequence("levels", levels);
-		out.putBundled("player", playerInfo);
+		out.putBundled("player", playerData);
 	}
 	
 	
@@ -462,7 +123,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	
 	public void createPlayer()
 	{
-		if (playerInfo.isInitialized()) {
+		if (playerData.isInitialized()) {
 			throw new RuntimeException("Player already created.");
 		}
 		
@@ -485,10 +146,10 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		floor.explore(spawn);
 		
-		playerInfo.setLevelNumber(0);
-		playerInfo.setEID(playerEid);
+		playerData.setLevelNumber(0);
+		playerData.setEID(playerEid);
 		
-		msgEnterFloor(0);
+		console.msgEnterFloor(0);
 	}
 	
 	
@@ -534,7 +195,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	
 	public PlayerFacade getPlayer()
 	{
-		return player;
+		return playerFacade;
 	}
 	
 	
@@ -543,7 +204,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	{
 		if (isPaused()) return;
 		
-		// update console timing
+		// update console timing - not as child client
 		console.update(delta);
 	}
 	
@@ -551,79 +212,5 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	public WorldConsole getConsole()
 	{
 		return console;
-	}
-	
-	
-	public void msgPick(Item item)
-	{
-		console.addMessage("You've picked up a " + item.getVisualName() + ".");
-		console.lastPickupItem = item;
-		console.timeSinceLastPickup = 0;
-	}
-	
-	
-	public void msgWeaponBreak(Item item)
-	{
-		console.addMessage("Your " + item.getVisualName() + " has broken!");
-	}
-	
-	
-	public void msgEquipWeapon(Item item)
-	{
-		console.addMessage("You're now wielding " + (item == null ? "NOTHING" : "a " + item.getVisualName()) + ".");
-	}
-	
-	
-	public void msgEat(Item item)
-	{
-		console.addMessage("You've eaten a " + item.getVisualName() + ".");
-	}
-	
-	
-	public void msgKill(Entity prey)
-	{
-		console.addMessage("You've killed a " + prey.getVisualName() + ".");
-	}
-	
-	
-	public void msgDie(Entity attacker)
-	{
-		console.addMessage("You've been defeated by a " + attacker.getVisualName() + "!");
-	}
-	
-	
-	public void msgDiscoverSecretDoor()
-	{
-		console.addMessage("You've discovered a secret door.");
-	}
-	
-	
-	public void msgNoMoreFood()
-	{
-		console.addMessage("You don't have any food!");
-	}
-	
-	
-	public void msgNotHungry()
-	{
-		console.addMessage("You are not hungry.");
-	}
-	
-	
-	public void msgCannotPick()
-	{
-		console.addMessage("Can't collect items, inventory is full.");
-	}
-	
-	
-	public void msgEnterFloor(int floor)
-	{
-		console.addMessage("~ Welcome to floor " + (1+floor) + "! ~");
-	}
-
-
-	public void msgHeartPiece()
-	{
-		console.addMessage("Your health capacity has been increased.");
 	}
 }

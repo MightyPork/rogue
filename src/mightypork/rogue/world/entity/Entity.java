@@ -2,11 +2,13 @@ package mightypork.rogue.world.entity;
 
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.error.IllegalValueException;
@@ -27,7 +29,7 @@ import mightypork.rogue.world.level.render.MapRenderContext;
  * 
  * @author MightyPork
  */
-public abstract class Entity implements IonObjBundled, Updateable {
+public abstract class Entity implements IonObjBundled, Updateable, DelegatingClient {
 	
 	private Level level;
 	private final EntityModel model;
@@ -176,10 +178,6 @@ public abstract class Entity implements IonObjBundled, Updateable {
 			getLevel().freeTile(getCoord());
 			freed = true;
 		}
-		
-		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
-			entry.getValue().update(delta);
-		}
 	}
 	
 	
@@ -278,4 +276,19 @@ public abstract class Entity implements IonObjBundled, Updateable {
 	
 	
 	public abstract String getVisualName();
+	
+	
+	@Override
+	public boolean doesDelegate()
+	{
+		return true;
+	}
+	
+	
+	@Override
+	public Collection<?> getChildClients()
+	{
+		return modules.values();
+	}
+	
 }

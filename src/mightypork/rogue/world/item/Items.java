@@ -6,15 +6,15 @@ import java.util.Collection;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
-import mightypork.rogue.world.item.items.active.ItemHeartPiece;
-import mightypork.rogue.world.item.items.food.ItemCheese;
-import mightypork.rogue.world.item.items.food.ItemMeat;
-import mightypork.rogue.world.item.items.food.ItemSandwich;
-import mightypork.rogue.world.item.items.weapons.ItemBone;
-import mightypork.rogue.world.item.items.weapons.ItemClub;
-import mightypork.rogue.world.item.items.weapons.ItemHammer;
-import mightypork.rogue.world.item.items.weapons.ItemStone;
-import mightypork.rogue.world.item.items.weapons.ItemSword;
+import mightypork.rogue.world.item.impl.active.ItemHeartPiece;
+import mightypork.rogue.world.item.impl.food.ItemCheese;
+import mightypork.rogue.world.item.impl.food.ItemMeat;
+import mightypork.rogue.world.item.impl.food.ItemSandwich;
+import mightypork.rogue.world.item.impl.weapons.ItemBone;
+import mightypork.rogue.world.item.impl.weapons.ItemClub;
+import mightypork.rogue.world.item.impl.weapons.ItemHammer;
+import mightypork.rogue.world.item.impl.weapons.ItemStone;
+import mightypork.rogue.world.item.impl.weapons.ItemSword;
 
 
 /**

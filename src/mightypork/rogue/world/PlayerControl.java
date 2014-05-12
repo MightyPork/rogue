@@ -7,7 +7,6 @@ import java.util.Set;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.world.World.PlayerFacade;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;

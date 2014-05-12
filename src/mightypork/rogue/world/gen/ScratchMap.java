@@ -454,6 +454,10 @@ public class ScratchMap {
 	
 	public void writeToLevel(Level level)
 	{
+		if (level.getWorld() == null) {
+			throw new WorldGenError("Level has no world assigned."); // need for entities
+		}
+		
 		// make sure no walkable are at edges.
 		final Coord c = Coord.make(0, 0);
 		final Coord c1 = Coord.make(0, 0);

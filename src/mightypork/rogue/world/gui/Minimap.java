@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.mutable.RectMutable;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.world.World.PlayerFacade;
+import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;

@@ -10,7 +10,7 @@ import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.Config;
-import mightypork.rogue.world.World.PlayerFacade;
+import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.events.WorldPauseRequest;
 import mightypork.rogue.world.events.WorldPauseRequest.PauseAction;

@@ -9,9 +9,15 @@ import java.util.concurrent.LinkedBlockingDeque;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 
 
+/**
+ * Message log in world view
+ * 
+ * @author MightyPork
+ */
 public class WorldConsole implements Updateable {
 	
 	/** Used only for display */
@@ -112,5 +118,79 @@ public class WorldConsole implements Updateable {
 	public void clear()
 	{
 		entries.clear();
+	}
+	
+	
+	public void msgCannotPick()
+	{
+		addMessage("Can't collect items, inventory is full.");
+	}
+	
+	
+	public void msgDie(Entity attacker)
+	{
+		addMessage("You've been defeated by a " + attacker.getVisualName() + "!");
+	}
+	
+	
+	public void msgDiscoverSecretDoor()
+	{
+		addMessage("You've discovered a secret door.");
+	}
+	
+	
+	public void msgEat(Item item)
+	{
+		addMessage("You've eaten a " + item.getVisualName() + ".");
+	}
+	
+	
+	public void msgEnterFloor(int floor)
+	{
+		addMessage("~ Floor " + (1 + floor) + " ~");
+	}
+	
+	
+	public void msgEquipWeapon(Item item)
+	{
+		addMessage("You're now wielding " + (item == null ? "NOTHING" : "a " + item.getVisualName()) + ".");
+	}
+	
+	
+	public void msgHeartPiece()
+	{
+		addMessage("Your health capacity has been increased.");
+	}
+	
+	
+	public void msgKill(Entity prey)
+	{
+		addMessage("You've killed a " + prey.getVisualName() + ".");
+	}
+	
+	
+	public void msgNoMoreFood()
+	{
+		addMessage("You don't have any food!");
+	}
+	
+	
+	public void msgNotHungry()
+	{
+		addMessage("You are not hungry.");
+	}
+	
+	
+	public void msgPick(Item item)
+	{
+		addMessage("You've picked up a " + item.getVisualName() + ".");
+		lastPickupItem = item;
+		timeSinceLastPickup = 0;
+	}
+	
+	
+	public void msgWeaponBreak(Item item)
+	{
+		addMessage("Your " + item.getVisualName() + " has broken!");
 	}
 }

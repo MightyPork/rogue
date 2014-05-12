@@ -15,8 +15,8 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.Res;
+import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.World;
-import mightypork.rogue.world.World.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemType;
@@ -175,7 +175,7 @@ public class InvLayer extends ScreenLayer {
 							} else {
 								pl.selectWeapon(selected);
 							}
-							world.msgEquipWeapon(pl.getSelectedWeapon());
+							world.getConsole().msgEquipWeapon(pl.getSelectedWeapon());
 							
 						}
 					}

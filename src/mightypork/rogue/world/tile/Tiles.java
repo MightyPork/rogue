@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
-import mightypork.rogue.world.tile.tiles.NullTile;
-import mightypork.rogue.world.tile.tiles.brick.*;
+import mightypork.rogue.world.tile.impl.NullTile;
+import mightypork.rogue.world.tile.impl.brick.*;
 
 
 /**

@@ -16,7 +16,7 @@ public interface DelegatingClient {
 	/**
 	 * @return collection of child clients. Can not be null.
 	 */
-	public Collection<Object> getChildClients();
+	public Collection<?> getChildClients();
 	
 	
 	/**

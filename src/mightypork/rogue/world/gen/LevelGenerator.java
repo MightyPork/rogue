@@ -92,7 +92,7 @@ public class LevelGenerator {
 		// entities - random rats
 		
 		
-		for (int i = 0; i < Calc.randInt(rand, (int) (3 + level * 1.5), (int) (3 + level * 2.5)); i++) {
+		for (int i = 0; i < Calc.randInt(rand, (int) (3 + level * 1.5), 3 + level * 3); i++) {
 			Entity e;
 			
 			if (level > 2 && rand.nextInt(level - 2 + 1) != 0) {

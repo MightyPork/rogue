@@ -9,7 +9,7 @@ import mightypork.gamecore.input.events.KeyListener;
 import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.world.entity.entities.PlayerEntity;
+import mightypork.rogue.world.entity.impl.PlayerEntity;
 import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
 

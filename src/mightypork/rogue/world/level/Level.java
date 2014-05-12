@@ -17,7 +17,6 @@ import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
-import mightypork.gamecore.util.math.algo.floodfill.FillContext;
 import mightypork.gamecore.util.math.algo.floodfill.FloodFill;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.noise.NoiseGen;
@@ -25,7 +24,7 @@ import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityType;
-import mightypork.rogue.world.entity.entities.PlayerEntity;
+import mightypork.rogue.world.entity.impl.PlayerEntity;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
@@ -59,6 +58,45 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		}
 		
 	}
+	
+	private final FloodFill exploreFiller = new FloodFill() {
+		
+		@Override
+		public Step[] getSpreadSides()
+		{
+			return Sides.ALL_SIDES;
+		}
+		
+		
+		@Override
+		public double getMaxDistance()
+		{
+			return 5.4;
+		}
+		
+		
+		@Override
+		public boolean canSpreadFrom(Coord pos)
+		{
+			final Tile t = getTile(pos);
+			return t.isWalkable() && !t.isDoor();
+		}
+		
+		
+		@Override
+		public boolean canEnter(Coord pos)
+		{
+			final Tile t = getTile(pos);
+			return !t.isNull();
+		}
+		
+		
+		@Override
+		public boolean forceSpreadStart()
+		{
+			return true;
+		}
+	};
 	
 	private static final Random rand = new Random();
 	
@@ -524,51 +562,12 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	{
 		final Collection<Coord> filled = new HashSet<>();
 		
-		FloodFill.fill(center, exploreFc, filled);
+		exploreFiller.fill(center, filled);
 		
 		for (final Coord c : filled) {
 			getTile(c).setExplored();
 		}
 	}
-	
-	private final FillContext exploreFc = new FillContext() {
-		
-		@Override
-		public Step[] getSpreadSides()
-		{
-			return Sides.ALL_SIDES;
-		}
-		
-		
-		@Override
-		public double getMaxDistance()
-		{
-			return 5.4;
-		}
-		
-		
-		@Override
-		public boolean canSpreadFrom(Coord pos)
-		{
-			final Tile t = getTile(pos);
-			return t.isWalkable() && !t.isDoor();
-		}
-		
-		
-		@Override
-		public boolean canEnter(Coord pos)
-		{
-			final Tile t = getTile(pos);
-			return !t.isNull();
-		}
-		
-		
-		@Override
-		public boolean forceSpreadStart()
-		{
-			return true;
-		}
-	};
 	
 	
 	/**
@@ -676,7 +675,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	@Override
 	public boolean isListening()
 	{
-		return playerCount > 0;
+		return playerCount > 0; // listen only when player is in this level
 	}
 	
 	

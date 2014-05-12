@@ -14,7 +14,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.caching.RectCache;
 import mightypork.rogue.Res;
-import mightypork.rogue.world.World.PlayerFacade;
+import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemType;

@@ -1,7 +1,7 @@
 package mightypork.rogue.world.events;
 
 
-import mightypork.rogue.world.entity.entities.PlayerEntity;
+import mightypork.rogue.world.entity.impl.PlayerEntity;
 
 
 public interface PlayerStepEndListener {

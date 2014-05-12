@@ -11,7 +11,7 @@ import mightypork.gamecore.util.ion.IonObjBlob;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.rogue.world.World.PlayerFacade;
+import mightypork.rogue.world.PlayerFacade;
 
 
 public abstract class Item implements IonObjBlob {

@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.Polar;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.world.entity.entities.PlayerEntity;
+import mightypork.rogue.world.entity.impl.PlayerEntity;
 import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
 import mightypork.rogue.world.tile.Tile;

@@ -47,7 +47,7 @@ class EventChannel<EVENT extends BusEvent<CLIENT>, CLIENT> {
 	 * @param event a event to be sent
 	 * @param clients collection of clients
 	 */
-	public void broadcast(BusEvent<?> event, Collection<Object> clients)
+	public void broadcast(BusEvent<?> event, Collection<?> clients)
 	{
 		if (!canBroadcast(event)) return;
 		
@@ -62,7 +62,7 @@ class EventChannel<EVENT extends BusEvent<CLIENT>, CLIENT> {
 	 * @param clients subscribing clients
 	 * @param processed clients already processed
 	 */
-	private void doBroadcast(final EVENT event, final Collection<Object> clients, final Collection<Object> processed)
+	private void doBroadcast(final EVENT event, final Collection<?> clients, final Collection<Object> processed)
 	{
 		for (final Object client : clients) {
 			
@@ -91,7 +91,7 @@ class EventChannel<EVENT extends BusEvent<CLIENT>, CLIENT> {
 			if (client instanceof DelegatingClient) {
 				if (((DelegatingClient) client).doesDelegate()) {
 					
-					final Collection<Object> children = ((DelegatingClient) client).getChildClients();
+					final Collection<?> children = ((DelegatingClient) client).getChildClients();
 					
 					if (children != null && children.size() > 0) {
 						doBroadcast(event, children, processed);

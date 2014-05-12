@@ -356,7 +356,7 @@ final public class EventBus implements Destroyable, BusAccess {
 	 * @param clients clients
 	 * @param event event
 	 */
-	private synchronized void doDispatch(Collection<Object> clients, BusEvent<?> event)
+	private synchronized void doDispatch(Collection<?> clients, BusEvent<?> event)
 	{
 		boolean accepted = false;
 		
