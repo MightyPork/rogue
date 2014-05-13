@@ -1,7 +1,6 @@
-# Rogue - dungeon crawler
+# Rogue - Savage Rats
 
-Alt-name: *Savage Rats: The Beer Hunt*
-
+Manual on [Google Drive](https://docs.google.com/document/d/1Ak9oVOnCKSqWux4Hm_-efDYTj4uewf5MtR_Zmys7goQ)
 
 ## Description
 
