@@ -10,6 +10,7 @@ import mightypork.gamecore.util.math.constraints.rect.RectConst;
 import mightypork.gamecore.util.math.constraints.rect.proxy.RectProxy;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
+import mightypork.rogue.Config;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
@@ -107,13 +108,11 @@ public class WorldRenderer extends RectProxy {
 		if (USE_BATCH_RENDERING) {
 			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles"));
 		}
-		
 		for (trc.pos.x = x1; trc.pos.x <= x2; trc.pos.x++) {
 			for (trc.pos.y = y1; trc.pos.y <= y2; trc.pos.y++) {
 				trc.renderTile();
 			}
 		}
-		
 		if (USE_BATCH_RENDERING) {
 			Render.leaveBatchTexturedQuadMode();
 		}
@@ -141,9 +140,25 @@ public class WorldRenderer extends RectProxy {
 			e.render(trc);
 		}
 		
-		Render.popMatrix();
+		// === unexplored fog ===
+		
+		// batch rendering of the tiles
+		if (USE_BATCH_RENDERING) {
+			Render.setColor(RGB.WHITE, Config.RENDER_UFOG ? 1 : 0.6);
+			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles"));
+		}
+		for (trc.pos.x = x1; trc.pos.x <= x2; trc.pos.x++) {
+			for (trc.pos.y = y1; trc.pos.y <= y2; trc.pos.y++) {
+				trc.renderUFog();
+			}
+		}
+		if (USE_BATCH_RENDERING) {
+			Render.leaveBatchTexturedQuadMode();
+		}
 		
 		// === OVERLAY SHADOW ===
+		
+		Render.popMatrix();
 		
 		Render.quadGradH(leftShadow, RGB.BLACK, RGB.NONE);
 		Render.quadGradH(rightShadow, RGB.NONE, RGB.BLACK);

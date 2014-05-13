@@ -2,7 +2,6 @@ package mightypork.rogue.world.entity;
 
 
 import java.io.IOException;
-import java.util.Random;
 
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.annot.DefaultImpl;
@@ -11,7 +10,8 @@ import mightypork.gamecore.util.ion.IonObjBundled;
 
 
 /**
- * Abstract entity module; Modules make up an entity AI and behavior.
+ * Abstract entity module<br>
+ * Modules make up an entity AI and behavior.
  * 
  * @author MightyPork
  */
@@ -26,6 +26,9 @@ public abstract class EntityModule implements IonObjBundled, Updateable {
 	}
 	
 	
+	/**
+	 * @return whether the module should be saved into a world file
+	 */
 	public abstract boolean isModuleSaved();
 	
 	

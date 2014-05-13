@@ -67,6 +67,11 @@ public class EntityModulePosition extends EntityModule {
 	}
 	
 	
+	/**
+	 * Set coord without animation
+	 * 
+	 * @param coord coord
+	 */
 	public void setCoord(Coord coord)
 	{
 		freeTile(); // release old tile
@@ -79,6 +84,9 @@ public class EntityModulePosition extends EntityModule {
 	}
 	
 	
+	/**
+	 * Occupy current tile in level
+	 */
 	public void occupyTile()
 	{
 		if (entity.getLevel() != null) {
@@ -87,6 +95,9 @@ public class EntityModulePosition extends EntityModule {
 	}
 	
 	
+	/**
+	 * free current tile in level
+	 */
 	public void freeTile()
 	{
 		if (entity.getLevel() != null) {
@@ -152,12 +163,20 @@ public class EntityModulePosition extends EntityModule {
 	}
 	
 	
+	/**
+	 * @return true if path buffer is empty
+	 */
 	public boolean isPathFinished()
 	{
 		return entityPos.isFinished() && path.isEmpty();
 	}
 	
 	
+	/**
+	 * Add a step to path buffer
+	 * 
+	 * @param step
+	 */
 	public void addStep(Step step)
 	{
 		if (path.isEmpty() && !canGoTo(step)) return;
@@ -166,12 +185,21 @@ public class EntityModulePosition extends EntityModule {
 	}
 	
 	
+	/**
+	 * Discard steps in buffer
+	 */
 	public void cancelPath()
 	{
 		path.clear();
 	}
 	
 	
+	/**
+	 * Find path to
+	 * 
+	 * @param target
+	 * @return path found
+	 */
 	public boolean navigateTo(Coord target)
 	{
 		if (target.equals(getCoord())) return true;
@@ -195,36 +223,49 @@ public class EntityModulePosition extends EntityModule {
 	}
 	
 	
+	/**
+	 * Add steps to path buffer
+	 * 
+	 * @param path steps
+	 */
 	public void addSteps(List<Step> path)
 	{
 		this.path.addAll(path);
 	}
 	
 	
+	/**
+	 * @return coord in level
+	 */
 	public Coord getCoord()
 	{
 		return entityPos.getCoord();
 	}
 	
 	
-	public double getStepTime()
-	{
-		return stepTime;
-	}
-	
-	
+	/**
+	 * Set step time (seconds)
+	 * 
+	 * @param stepTime step time
+	 */
 	public void setStepTime(double stepTime)
 	{
 		this.stepTime = stepTime;
 	}
 	
 	
+	/**
+	 * @return step progress 0..1
+	 */
 	public double getProgress()
 	{
 		return entityPos.getProgress();
 	}
 	
 	
+	/**
+	 * @return visual pos in level; interpolated from last to new coord
+	 */
 	public VectConst getVisualPos()
 	{
 		return entityPos.getVisualPos();

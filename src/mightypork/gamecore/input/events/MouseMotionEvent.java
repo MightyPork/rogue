@@ -2,7 +2,7 @@ package mightypork.gamecore.input.events;
 
 
 import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.gamecore.eventbus.event_flags.UnloggedEvent;
+import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
 
@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.constraints.vect.VectConst;
  * 
  * @author MightyPork
  */
-@UnloggedEvent
+@NotLoggedEvent
 public class MouseMotionEvent extends BusEvent<MouseMotionListener> {
 	
 	private final VectConst move;

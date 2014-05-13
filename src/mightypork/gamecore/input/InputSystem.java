@@ -215,25 +215,25 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	{
 		return Mouse.isButtonDown(button);
 	}
-
-
+	
+	
 	public static int getModifierKeys()
 	{
 		int mods = 0;
 		
-		if(Keyboard.isKeyDown(Keys.L_ALT) || Keyboard.isKeyDown(Keys.R_ALT)) {
+		if (Keyboard.isKeyDown(Keys.L_ALT) || Keyboard.isKeyDown(Keys.R_ALT)) {
 			mods |= Keys.MOD_ALT;
 		}
 		
-		if(Keyboard.isKeyDown(Keys.L_SHIFT) || Keyboard.isKeyDown(Keys.R_SHIFT)) {
+		if (Keyboard.isKeyDown(Keys.L_SHIFT) || Keyboard.isKeyDown(Keys.R_SHIFT)) {
 			mods |= Keys.MOD_SHIFT;
 		}
 		
-		if(Keyboard.isKeyDown(Keys.L_CONTROL) || Keyboard.isKeyDown(Keys.R_CONTROL)) {
+		if (Keyboard.isKeyDown(Keys.L_CONTROL) || Keyboard.isKeyDown(Keys.R_CONTROL)) {
 			mods |= Keys.MOD_CONTROL;
 		}
 		
-		if(Keyboard.isKeyDown(Keys.L_META) || Keyboard.isKeyDown(Keys.R_META)) {
+		if (Keyboard.isKeyDown(Keys.L_META) || Keyboard.isKeyDown(Keys.R_META)) {
 			mods |= Keys.MOD_META;
 		}
 		

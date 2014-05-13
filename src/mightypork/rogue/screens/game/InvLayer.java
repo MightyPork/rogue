@@ -144,7 +144,7 @@ public class InvLayer extends ScreenLayer {
 			@Override
 			public void run()
 			{
-				if(isEnabled()) {
+				if (isEnabled()) {
 					screen.actionToggleInv.run();
 				}
 			}

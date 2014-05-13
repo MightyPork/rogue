@@ -2,12 +2,14 @@ package mightypork.gamecore.gui.events;
 
 
 import mightypork.gamecore.eventbus.BusEvent;
+import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 
 
 /**
  * @author MightyPork
  */
+@SingleReceiverEvent
 public class CrossfadeRequest extends BusEvent<CrossfadeOverlay> {
 	
 	private final String screen;

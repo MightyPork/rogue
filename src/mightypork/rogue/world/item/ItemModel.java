@@ -2,7 +2,6 @@ package mightypork.rogue.world.item;
 
 
 import java.io.IOException;
-import java.util.Random;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;

@@ -2,8 +2,6 @@ package mightypork.rogue.screens.game;
 
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Random;
 
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.Action;
@@ -89,7 +87,7 @@ public class ScreenGame extends LayeredScreen {
 			worldLayer.map.toggleMag();
 		}
 	};
-
+	
 	public Action actionSave = new Action() {
 		
 		@Override
@@ -98,30 +96,30 @@ public class ScreenGame extends LayeredScreen {
 			try {
 				WorldProvider.get().saveWorld();
 				WorldProvider.get().getWorld().getConsole().msgWorldSaved();
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				Log.e("Could not save the world.", e);
 				WorldProvider.get().getWorld().getConsole().msgWorldSaveError();
 			}
 		}
 	};
-
+	
 	public Action actionLoad = new Action() {
 		
 		@Override
 		public void execute()
 		{
 			try {
-				File f = WorldProvider.get().getWorld().getSaveFile();
+				final File f = WorldProvider.get().getWorld().getSaveFile();
 				WorldProvider.get().loadWorld(f);
 				WorldProvider.get().getWorld().getConsole().msgReloaded();
 				
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				Log.e("Could not load the world.", e);
 				WorldProvider.get().getWorld().getConsole().msgLoadFailed();
 			}
 		}
 	};
-
+	
 	public Action actionMenu = new Action() {
 		
 		@Override
@@ -132,6 +130,8 @@ public class ScreenGame extends LayeredScreen {
 			getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
 		}
 	};
+	
+	
 	/**
 	 * Set gui state (overlay)
 	 * 
@@ -144,21 +144,21 @@ public class ScreenGame extends LayeredScreen {
 		if (nstate != GScrState.WORLD) { // leaving world.
 			getEventBus().send(new WorldPauseRequest(PauseAction.PAUSE));
 			
-			worldActions.enable(false); // disable world actions
+			worldActions.setEnabled(false); // disable world actions
 		}
 		
 		if (nstate == GScrState.WORLD) {
 			getEventBus().send(new WorldPauseRequest(PauseAction.RESUME));
 			
 			invLayer.setVisible(false); // hide all extra layers
-			invLayer.enable(false);
+			invLayer.setEnabled(false);
 			
-			worldActions.enable(true);
+			worldActions.setEnabled(true);
 		}
 		
 		if (nstate == GScrState.INV) {
 			invLayer.setVisible(true);
-			invLayer.enable(true);
+			invLayer.setEnabled(true);
 		}
 		
 		this.state = nstate;
@@ -176,15 +176,15 @@ public class ScreenGame extends LayeredScreen {
 		super(app);
 		
 		addLayer(invLayer = new InvLayer(this));
-		invLayer.enable(false);
+		invLayer.setEnabled(false);
 		invLayer.setVisible(false);
 		
 		addLayer(hudLayer = new HudLayer(this));
-		hudLayer.enable(true);
+		hudLayer.setEnabled(true);
 		hudLayer.setVisible(true);
 		
 		addLayer(worldLayer = new WorldLayer(this));
-		worldLayer.enable(true);
+		worldLayer.setEnabled(true);
 		worldLayer.setVisible(true);
 		
 		// TODO temporary, remove
@@ -206,7 +206,7 @@ public class ScreenGame extends LayeredScreen {
 		bindKey(new KeyStroke(Keys.E), actionEat);
 		bindKey(new KeyStroke(Keys.M), actionToggleMinimap);
 		bindKey(new KeyStroke(Keys.Z), actionToggleZoom);
-
+		
 		bindKey(new KeyStroke(Keys.R, Keys.MOD_CONTROL), actionLoad);
 		bindKey(new KeyStroke(Keys.L, Keys.MOD_CONTROL), actionLoad);
 		
@@ -225,7 +225,7 @@ public class ScreenGame extends LayeredScreen {
 		worldActions.add(actionLoad);
 		worldActions.add(actionMenu);
 		
-		worldActions.enable(true);
+		worldActions.setEnabled(true);
 		
 		// TMP TODO remove
 		bindKey(new KeyStroke(Keys.X), new Runnable() {

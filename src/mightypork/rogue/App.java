@@ -138,10 +138,12 @@ public final class App extends BaseApp {
 		bindEventToKey(new GameStateRequest(GameState.MAIN_MENU), Keys.M, Keys.MOD_CONTROL);
 	}
 	
+	
 	private void bindEventToKey(final BusEvent<?> event, int key)
 	{
 		bindEventToKey(event, key, Keys.MOD_NONE);
 	}
+	
 	
 	private void bindEventToKey(final BusEvent<?> event, int key, byte mod)
 	{

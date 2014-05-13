@@ -13,11 +13,11 @@ public class ActionGroup implements Enableable {
 	
 	
 	@Override
-	public void enable(boolean yes)
+	public void setEnabled(boolean yes)
 	{
 		enabled = yes;
 		for (final Enableable e : groupMembers)
-			e.enable(yes);
+			e.setEnabled(yes);
 	}
 	
 	

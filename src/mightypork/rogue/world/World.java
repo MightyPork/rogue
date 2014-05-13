@@ -22,7 +22,7 @@ import mightypork.rogue.world.level.Level;
 
 
 /**
- * World on a server. To a server, all players and levels are equal.
+ * World object.
  * 
  * @author MightyPork
  */
@@ -80,18 +80,18 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		in.loadBundled("player", playerData);
 		
-		int eid = playerData.getEID();
-		int lvl = playerData.getLevelNumber();
+		final int eid = playerData.getEID();
+		final int lvl = playerData.getLevelNumber();
 		
 		playerEntity = levels.get(lvl).getEntity(eid);
 		if (playerEntity == null) {
 			
 			Log.e("Player entity not found in the world: " + eid + " on floor " + lvl);
 			
-			for(int i=0; i<levels.size(); i++) {
-				Entity ent = levels.get(i).getEntity(eid);
-				if(ent != null) {
-					Log.f3("Player entity was really on floor: "+i);
+			for (int i = 0; i < levels.size(); i++) {
+				final Entity ent = levels.get(i).getEntity(eid);
+				if (ent != null) {
+					Log.f3("Player entity was really on floor: " + i);
 				}
 			}
 			
@@ -231,18 +231,29 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	}
 	
 	
+	/**
+	 * @return world console
+	 */
 	public WorldConsole getConsole()
 	{
 		return console;
 	}
 	
 	
+	/**
+	 * Set file for saving
+	 * 
+	 * @param file save file
+	 */
 	public void setSaveFile(File file)
 	{
 		this.saveFile = file;
 	}
 	
 	
+	/**
+	 * @return assigned file fro saving
+	 */
 	public File getSaveFile()
 	{
 		return saveFile;

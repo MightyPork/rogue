@@ -7,26 +7,21 @@ import java.io.IOException;
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
-import mightypork.gamecore.gui.components.layout.ClickableWrapper;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
-import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.events.CrossfadeRequest;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.util.Utils;
 import mightypork.gamecore.util.ion.Ion;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.strings.StringProvider;
-import mightypork.rogue.GameStateManager.GameState;
 import mightypork.rogue.Res;
-import mightypork.rogue.events.GameStateRequest;
-import mightypork.rogue.screens.LoaderRequest;
+import mightypork.rogue.events.LoadingOverlayRequest;
+import mightypork.rogue.screens.PushButton;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 
@@ -47,8 +42,13 @@ public class WorldSlot extends ConstraintLayout {
 	
 	private IonBundle worldBundle;
 	
+	private PushButton loadBtn;
 	
-	public WorldSlot(AppAccess app, File worldFile) {
+	private PushButton delBtn;
+	
+	
+	public WorldSlot(AppAccess app, File worldFile)
+	{
 		super(app);
 		
 		this.file = worldFile;
@@ -60,7 +60,7 @@ public class WorldSlot extends ConstraintLayout {
 			@Override
 			public double value()
 			{
-				return isMouseOver() ? 0.2 : 0.1;
+				return isMouseOver() ? 0.15 : 0.1;
 			}
 		}));
 		
@@ -68,18 +68,20 @@ public class WorldSlot extends ConstraintLayout {
 		add(qp);
 		
 		final GridLayout gridl = new GridLayout(app, 1, 8);
-		gridl.setRect(innerRect.shrink(width().perc(10), Num.ZERO));
+		final Num shrinkH = width().perc(8);
+		final Num shrinkV = height().perc(10);
+		gridl.setRect(innerRect.shrink(shrinkH, shrinkH, shrinkV, shrinkV.half()));
 		add(gridl);
 		
-		TextPainter tp;
-		ClickableWrapper btn;
 		final GLFont font = Res.getFont("thick");
 		
-		tp = new TextPainter(font, AlignX.LEFT, RGB.WHITE, lblStrp);
-		tp.setPaddingHPerc(0, 20);
+		gridl.put(loadBtn = new PushButton(font, "", RGB.WHITE), 0, 0, 1, 7);
+		loadBtn.textPainter.setPaddingHPerc(0, 20);
+		loadBtn.textPainter.setAlign(AlignX.LEFT);
+		loadBtn.textPainter.setText(lblStrp);
+		loadBtn.disableHover();
 		
-		gridl.put(btn = new ClickableWrapper(tp), 0, 0, 1, 7);
-		btn.setAction(new Action() {
+		loadBtn.setAction(new Action() {
 			
 			@Override
 			protected void execute()
@@ -92,7 +94,7 @@ public class WorldSlot extends ConstraintLayout {
 					msg = "Creating world...";
 				}
 				
-				getEventBus().send(new LoaderRequest(msg, new Runnable() {
+				getEventBus().send(new LoadingOverlayRequest(msg, new Runnable() {
 					
 					@Override
 					public void run()
@@ -109,7 +111,7 @@ public class WorldSlot extends ConstraintLayout {
 								
 								getEventBus().send(new ScreenRequest("game"));
 								
-							} catch (Exception e) {
+							} catch (final Exception e) {
 								Log.e("Could not create & save the world.", e);
 							}
 							
@@ -123,7 +125,7 @@ public class WorldSlot extends ConstraintLayout {
 								
 								getEventBus().send(new ScreenRequest("game"));
 								
-							} catch (IOException e) {
+							} catch (final IOException e) {
 								Log.e("Could not load the world.", e);
 							}
 						}
@@ -134,10 +136,12 @@ public class WorldSlot extends ConstraintLayout {
 			}
 		});
 		
-		tp = new TextPainter(font, AlignX.LEFT, RGB.RED, "X");
-		tp.setPaddingHPerc(0, 20);
-		gridl.put(btn = new ClickableWrapper(tp), 0, 7, 1, 1);
-		btn.setAction(new Action() {
+		gridl.put(delBtn = new PushButton(font, "X", RGB.RED), 0, 7, 1, 1);
+		delBtn.textPainter.setPaddingHPerc(0, 20);
+		delBtn.textPainter.setAlign(AlignX.RIGHT);
+		delBtn.disableHover();
+		
+		delBtn.setAction(new Action() {
 			
 			@Override
 			protected void execute()
@@ -153,6 +157,9 @@ public class WorldSlot extends ConstraintLayout {
 	
 	public void refresh()
 	{
+		delBtn.setVisible(false);
+		delBtn.setEnabled(false);
+		
 		if (!file.exists()) {
 			label = "<empty>";
 		} else {
@@ -161,8 +168,11 @@ public class WorldSlot extends ConstraintLayout {
 				final int lvl = worldBundle.get("meta.last_level", -1);
 				
 				if (lvl == -1) throw new RuntimeException(); // let the catch block handle it
-					
-				label = "Floor " + (lvl + 1);
+				
+				label = "Level " + (lvl + 1);
+				delBtn.setVisible(true);
+				delBtn.setEnabled(true);
+				
 			} catch (final IOException e) {
 				label = "<corrupt>";
 			}

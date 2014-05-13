@@ -14,4 +14,4 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Inherited
 @Documented
-public @interface UnloggedEvent {}
+public @interface NotLoggedEvent {}

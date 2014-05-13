@@ -10,7 +10,7 @@ import mightypork.rogue.world.World;
 
 
 /**
- * Entity model
+ * Entity model - builder
  * 
  * @author MightyPork
  */

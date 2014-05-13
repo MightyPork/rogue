@@ -17,6 +17,11 @@ import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.Res;
 
 
+/**
+ * FPS indicator overlay
+ * 
+ * @author MightyPork
+ */
 public class FpsOverlay extends Overlay {
 	
 	TextPainter tp;
@@ -43,7 +48,7 @@ public class FpsOverlay extends Overlay {
 		final Num h = root.height();
 		final RectBound constraint = root.shrink(h.perc(3)).topRight().startRect().growDown(h.perc(5).max(16));
 		
-		tp = new TextPainter(font, AlignX.RIGHT, RGB.WHITE, new StringProvider() {
+		tp = new TextPainter(font, AlignX.RIGHT, RGB.YELLOW, new StringProvider() {
 			
 			@Override
 			public String getString()
@@ -53,7 +58,7 @@ public class FpsOverlay extends Overlay {
 		});
 		
 		tp.setRect(constraint);
-		tp.setShadow(RGB.BLACK, Vect.make(tp.height().div(8).round()));
+		tp.setShadow(RGB.BLACK_60, Vect.make(tp.height().div(8).round()));
 		
 		root.add(tp);
 		

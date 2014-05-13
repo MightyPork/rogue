@@ -3,6 +3,7 @@ package mightypork.gamecore.gui.events;
 
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.eventbus.event_flags.NonConsumableEvent;
+import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 
 
@@ -12,6 +13,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
  * @author MightyPork
  */
 @NonConsumableEvent
+@NotLoggedEvent
 public class ViewportChangeEvent extends BusEvent<ViewportChangeListener> {
 	
 	private final boolean fullscreen;

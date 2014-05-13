@@ -8,5 +8,10 @@ package mightypork.rogue.world.entity;
  */
 public enum EntityType
 {
-	PLAYER, MONSTER, PASSIVE;
+	/** Player entity */
+	PLAYER,
+	/** Monster entity */
+	MONSTER,
+	/** Non-mobile entity */
+	PASSIVE;
 }

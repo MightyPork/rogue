@@ -8,6 +8,8 @@ import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.util.annot.DefaultImpl;
+import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.caching.AbstractRectCache;
 import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
@@ -26,6 +28,7 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	private boolean visible = true;
 	
 	private int disableLevel = 0;
+	private Num alphaMul = Num.ONE;
 	
 	
 	public BaseComponent()
@@ -67,7 +70,9 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	{
 		if (!isVisible()) return;
 		
+		Color.pushAlpha(alphaMul);
 		renderComponent();
+		Color.popAlpha();
 	}
 	
 	
@@ -109,7 +114,7 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	
 	
 	@Override
-	public void enable(boolean yes)
+	public void setEnabled(boolean yes)
 	{
 		if (yes) {
 			if (disableLevel > 0) disableLevel--;
@@ -123,5 +128,17 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	public boolean isEnabled()
 	{
 		return disableLevel == 0;
+	}
+	
+	
+	public void setAlpha(Num alpha)
+	{
+		this.alphaMul = alpha;
+	}
+	
+	
+	public void setAlpha(double alpha)
+	{
+		this.alphaMul = Num.make(alpha);
 	}
 }

@@ -34,7 +34,8 @@ public class WorldConsole implements Updateable {
 		private double elapsed = 0;
 		
 		
-		private Entry(String text) {
+		private Entry(String text)
+		{
 			this.text = text;
 			this.fadeout = new NumAnimated(1, Easing.LINEAR);
 			this.fadeout.setDefaultDuration(0.5);
@@ -204,14 +205,14 @@ public class WorldConsole implements Updateable {
 	{
 		addMessage("Error while saving; See the log for details.");
 	}
-
-
+	
+	
 	public void msgReloaded()
 	{
 		addMessage("World loaded from file.");
 	}
-
-
+	
+	
 	public void msgLoadFailed()
 	{
 		addMessage("Error while loading; See the log for details.");

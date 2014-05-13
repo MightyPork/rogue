@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
@@ -16,7 +15,6 @@ import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
-import mightypork.rogue.Config;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
@@ -160,9 +158,7 @@ public abstract class Entity implements IonObjBundled, Updateable, DelegatingCli
 	@DefaultImpl
 	public final void render(MapRenderContext context)
 	{
-		if (context.getTile(getCoord()).isExplored() || !Config.RENDER_UFOG) {
-			getRenderer().render(context);
-		}
+		getRenderer().render(context);
 	}
 	
 	
@@ -295,7 +291,9 @@ public abstract class Entity implements IonObjBundled, Updateable, DelegatingCli
 		return lastAttacker;
 	}
 	
-	public double getLastAttackTime() {
+	
+	public double getLastAttackTime()
+	{
 		return health.getTimeSinceLastDamage();
 	}
 }

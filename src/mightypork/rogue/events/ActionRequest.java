@@ -6,7 +6,7 @@ import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 
 
 /**
- * Request for a global sction to be done in the main loop.
+ * Request for a global action to be done in the main loop.
  * 
  * @author MightyPork
  */

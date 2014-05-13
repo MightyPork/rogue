@@ -67,6 +67,12 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	}
 	
 	
+	public void renderUFog()
+	{
+		map.getTile(pos).renderUFog(this);
+	}
+	
+	
 	public void renderItems()
 	{
 		map.getTile(pos).renderExtra(this);

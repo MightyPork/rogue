@@ -12,6 +12,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.mutable.RectMutable;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.rogue.Config;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.level.Level;
@@ -55,7 +56,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 			for (pos.x = 0, point.x = tl.xi(); pos.x < lw; pos.x++, point.x += unit) {
 				
 				final Tile t = lvl.getTile(pos);
-				if (t.isNull() || !t.isExplored()) continue;
+				if (t.isNull() || (!t.isExplored() && Config.RENDER_UFOG)) continue;
 				
 				final Color clr = t.getMapColor();
 				

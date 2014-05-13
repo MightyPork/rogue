@@ -15,7 +15,7 @@ public interface Enableable {
 	 * 
 	 * @param yes enabled
 	 */
-	public void enable(boolean yes);
+	public void setEnabled(boolean yes);
 	
 	
 	/**

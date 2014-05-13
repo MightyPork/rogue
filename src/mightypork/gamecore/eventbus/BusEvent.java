@@ -4,8 +4,8 @@ package mightypork.gamecore.eventbus;
 import mightypork.gamecore.eventbus.event_flags.DelayedEvent;
 import mightypork.gamecore.eventbus.event_flags.ImmediateEvent;
 import mightypork.gamecore.eventbus.event_flags.NonConsumableEvent;
+import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
-import mightypork.gamecore.eventbus.event_flags.UnloggedEvent;
 
 
 /**
@@ -15,7 +15,7 @@ import mightypork.gamecore.eventbus.event_flags.UnloggedEvent;
  * <p>
  * Can be annotated as {@link SingleReceiverEvent} to be delivered once only,
  * and {@link DelayedEvent} or {@link ImmediateEvent} to specify default sending
- * mode. When marked as {@link UnloggedEvent}, it will not appear in detailed
+ * mode. When marked as {@link NotLoggedEvent}, it will not appear in detailed
  * bus logging (useful for very frequent events, such as UpdateEvent).
  * </p>
  * <p>

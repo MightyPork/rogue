@@ -3,7 +3,6 @@ package mightypork.gamecore.input;
 
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.KeyListener;
-import mightypork.gamecore.logging.Log;
 
 
 /**

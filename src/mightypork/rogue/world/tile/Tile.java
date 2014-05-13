@@ -2,7 +2,6 @@ package mightypork.rogue.world.tile;
 
 
 import java.io.IOException;
-import java.util.Random;
 
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.EventBus;
@@ -61,6 +60,13 @@ public abstract class Tile implements BusAccess, IonObjBlob {
 		renderer.renderTile(context);
 		
 		if (doesReceiveShadow()) renderer.renderShadows(context);
+	}
+	
+	
+	@DefaultImpl
+	public void renderUFog(TileRenderContext context)
+	{
+		initRenderer();
 		
 		renderer.renderUnexploredFog(context);
 	}

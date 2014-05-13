@@ -6,7 +6,6 @@ import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.rogue.Config;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.render.NullTileRenderer;
@@ -22,7 +21,7 @@ public abstract class TileRenderer implements Updateable {
 	public static final TileRenderer NONE = new NullTileRenderer();
 	
 	private static TxQuad SH_N, SH_S, SH_E, SH_W, SH_NW, SH_NE, SH_SW, SH_SE;
-	private static TxQuad UFOG_N, UFOG_S, UFOG_E, UFOG_W, UFOG_NW, UFOG_NE, UFOG_SW, UFOG_SE;
+	private static TxQuad UFOG_N, UFOG_S, UFOG_E, UFOG_W, UFOG_NW, UFOG_NE, UFOG_SW, UFOG_SE, UFOG_FULL;
 	
 	private static boolean inited;
 	
@@ -62,6 +61,7 @@ public abstract class TileRenderer implements Updateable {
 			UFOG_NE = Res.txq("tile.ufog.ne");
 			UFOG_SW = Res.txq("tile.ufog.sw");
 			UFOG_SE = Res.txq("tile.ufog.se");
+			UFOG_FULL = Res.txq("tile.ufog.full");
 			inited = true;
 		}
 	}
@@ -105,9 +105,14 @@ public abstract class TileRenderer implements Updateable {
 	
 	public void renderUnexploredFog(TileRenderContext context)
 	{
-		if (!Config.RENDER_UFOG) return;
-		
 		// TODO cache values, update neighbouring tiles upon "explored" flag changed.
+		
+		final Rect rect = context.getRect();
+		
+		if (!context.getTile().isExplored()) {
+			Render.quadTextured(rect, UFOG_FULL);
+			return;
+		}
 		
 		byte ufog = 0;
 		
@@ -120,7 +125,6 @@ public abstract class TileRenderer implements Updateable {
 		
 		if (ufog == 0) return;
 		
-		final Rect rect = context.getRect();
 		if ((ufog & Sides.NW_CORNER) == Sides.MASK_NW) Render.quadTextured(rect, UFOG_NW);
 		if ((ufog & Sides.MASK_N) != 0) Render.quadTextured(rect, UFOG_N);
 		if ((ufog & Sides.NE_CORNER) == Sides.MASK_NE) Render.quadTextured(rect, UFOG_NE);
@@ -131,6 +135,7 @@ public abstract class TileRenderer implements Updateable {
 		if ((ufog & Sides.SW_CORNER) == Sides.MASK_SW) Render.quadTextured(rect, UFOG_SW);
 		if ((ufog & Sides.MASK_S) != 0) Render.quadTextured(rect, UFOG_S);
 		if ((ufog & Sides.SE_CORNER) == Sides.MASK_SE) Render.quadTextured(rect, UFOG_SE);
+		
 	}
 	
 	

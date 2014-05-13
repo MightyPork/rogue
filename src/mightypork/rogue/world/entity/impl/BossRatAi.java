@@ -48,6 +48,7 @@ public class BossRatAi extends GrayRatAi {
 		healTimer.update(delta);
 	}
 	
+	
 	@Override
 	protected double getStepTime()
 	{

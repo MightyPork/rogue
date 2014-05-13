@@ -42,7 +42,7 @@ public class GrayRatAi extends MonsterAi {
 	{
 		return Calc.randInt(7, 11);
 	}
-
+	
 	
 	@Override
 	protected double getStepTime()

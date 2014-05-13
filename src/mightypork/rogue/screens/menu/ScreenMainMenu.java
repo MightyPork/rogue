@@ -9,6 +9,7 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.PAL16;
 import mightypork.gamecore.util.math.constraints.num.Num;
@@ -16,6 +17,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.GameStateManager.GameState;
 import mightypork.rogue.Res;
 import mightypork.rogue.events.GameStateRequest;
+import mightypork.rogue.screens.PushButton;
 
 
 /**
@@ -67,11 +69,12 @@ public class ScreenMainMenu extends LayeredScreen {
 			layout.put(ip, r, 0, 4, 1);
 			r += 5;
 			
-			MenuButton btn;
+			PushButton btn;
 			
+			final GLFont btnFont = Res.getFont("thick");
 			
 			// world button
-			btn = new MenuButton("Play", PAL16.SLIMEGREEN);
+			btn = new PushButton(btnFont, "Play", PAL16.SLIMEGREEN);
 			btn.setAction(new Action() {
 				
 				@Override
@@ -99,7 +102,7 @@ public class ScreenMainMenu extends LayeredScreen {
 			*/
 			
 			// quit button
-			btn = new MenuButton("Exit", PAL16.BLOODRED);
+			btn = new PushButton(btnFont, "Exit", PAL16.BLOODRED);
 			btn.setAction(new Action() {
 				
 				@Override

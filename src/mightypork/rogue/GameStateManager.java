@@ -5,7 +5,6 @@ import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.app.AppModule;
 import mightypork.gamecore.gui.events.CrossfadeRequest;
 import mightypork.gamecore.logging.Log;
-import mightypork.rogue.world.WorldProvider;
 
 
 public class GameStateManager extends AppModule {

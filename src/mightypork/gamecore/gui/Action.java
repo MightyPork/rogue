@@ -17,7 +17,7 @@ public abstract class Action implements Runnable, Enableable {
 	 * @param enable true to enable
 	 */
 	@Override
-	public final void enable(boolean enable)
+	public final void setEnabled(boolean enable)
 	{
 		this.enabled = enable;
 	}

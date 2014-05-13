@@ -57,14 +57,14 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			if (!isIdle()) return;
 			
 			// annoyed by attacking.
-			if(entity.getLastAttackTime() < 0.5) {
+			if (entity.getLastAttackTime() < 0.5) {
 				lookForTarget();
 				return;
 			}
 			
-			if(entity.pos.isMoving()) return;
+			if (entity.pos.isMoving()) return;
 			
-			if(Calc.rand.nextInt(10) == 0) {
+			if (Calc.rand.nextInt(10) == 0) {
 				entity.pos.addStep(Sides.randomCardinal());
 			}
 		}
@@ -76,7 +76,8 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	private int preyId = -1;
 	
 	
-	public MonsterAi(final Entity entity) {
+	public MonsterAi(final Entity entity)
+	{
 		super(entity);
 		
 		noDoorPf = new PathFinderProxy(entity.getPathFinder()) {
@@ -189,7 +190,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	{
 		return !chasing;
 	}
-
 	
 	
 	public boolean isChasing()
@@ -197,10 +197,11 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		return chasing;
 	}
 	
+	
 	private void lookForTarget()
 	{
 		if (entity.isDead()) return;
-			
+		
 		final Entity prey = entity.getLevel().getClosestEntity(entity.pos.getVisualPos(), EntityType.PLAYER, getScanRadius());
 		if (prey != null) {
 			
@@ -208,7 +209,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			final List<Coord> noDoorPath = noDoorPf.findPath(entity.getCoord(), prey.getCoord());
 			
 			if (noDoorPath == null) return; // cant reach, give up
-				
+			
 			startChasing(prey);
 		}
 	}
@@ -339,6 +340,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	{
 		return 1; // For override
 	}
+	
 	
 	@DefaultImpl
 	protected double getStepTime()

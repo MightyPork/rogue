@@ -6,6 +6,11 @@ import mightypork.rogue.GameStateManager;
 import mightypork.rogue.GameStateManager.GameState;
 
 
+/**
+ * Request for a game state change
+ * 
+ * @author MightyPork
+ */
 public class GameStateRequest extends BusEvent<GameStateManager> {
 	
 	final private GameState requested;

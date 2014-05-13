@@ -11,6 +11,11 @@ import mightypork.rogue.world.gen.WorldCreator;
 import mightypork.rogue.world.level.Level;
 
 
+/**
+ * Global singleton world holder and storage
+ * 
+ * @author MightyPork
+ */
 public class WorldProvider extends RootBusNode {
 	
 	public static synchronized void init(BusAccess busAccess)
@@ -21,7 +26,8 @@ public class WorldProvider extends RootBusNode {
 	}
 	
 	
-	public WorldProvider(BusAccess busAccess) {
+	public WorldProvider(BusAccess busAccess)
+	{
 		super(busAccess);
 		setListening(false);
 	}
@@ -49,14 +55,23 @@ public class WorldProvider extends RootBusNode {
 	};
 	
 	
+	/**
+	 * Create and register a world based on a seed
+	 * 
+	 * @param seed random seed
+	 * @return the world
+	 */
 	public World createWorld(long seed)
 	{
-		World w = WorldCreator.createWorld(seed);
+		final World w = WorldCreator.createWorld(seed);
 		setWorld(w);
 		return w;
 	}
 	
 	
+	/**
+	 * Destroy world, set to null.
+	 */
 	public void destroyWorld()
 	{
 		setWorld(null);
@@ -100,6 +115,11 @@ public class WorldProvider extends RootBusNode {
 	}
 	
 	
+	/**
+	 * Save to world's assigned save file.
+	 * 
+	 * @throws IOException
+	 */
 	public void saveWorld() throws IOException
 	{
 		saveWorld(world.getSaveFile());

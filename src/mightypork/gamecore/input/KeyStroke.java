@@ -1,10 +1,6 @@
 package mightypork.gamecore.input;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.lwjgl.input.Keyboard;
 
 
@@ -27,7 +23,8 @@ public class KeyStroke {
 	 * @param mod_mask mods mask
 	 * @param key key code
 	 */
-	public KeyStroke(boolean fallingEdge, int key, int mod_mask) {
+	public KeyStroke(boolean fallingEdge, int key, int mod_mask)
+	{
 		this.fallingEdge = fallingEdge;
 		this.key = key;
 		this.mod = mod_mask;
@@ -36,10 +33,12 @@ public class KeyStroke {
 	
 	/**
 	 * Rising edge keystroke
+	 * 
 	 * @param mod_mask mods mask
 	 * @param key key code
 	 */
-	public KeyStroke(int key, int mod_mask) {
+	public KeyStroke(int key, int mod_mask)
+	{
 		this(false, key, mod_mask);
 	}
 	
@@ -49,7 +48,8 @@ public class KeyStroke {
 	 * 
 	 * @param key key code
 	 */
-	public KeyStroke(int key) {
+	public KeyStroke(int key)
+	{
 		this(false, key, Keys.MOD_NONE);
 	}
 	
@@ -115,7 +115,7 @@ public class KeyStroke {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
-		KeyStroke other = (KeyStroke) obj;
+		final KeyStroke other = (KeyStroke) obj;
 		if (fallingEdge != other.fallingEdge) return false;
 		if (key != other.key) return false;
 		if (mod != other.mod) return false;

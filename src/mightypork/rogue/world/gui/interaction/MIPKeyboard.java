@@ -49,7 +49,7 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 		
 		if (evt.isDown() || mapView.plc.getPlayer().isMoving()) return; // not interested
 		
-		if(InputSystem.getModifierKeys() != Keys.MOD_NONE) return;
+		if (InputSystem.getModifierKeys() != Keys.MOD_NONE) return;
 		
 		for (int i = 0; i < 4; i++) {
 			if (evt.getKey() == keys[i]) {
@@ -65,8 +65,8 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 		
 		if (mapView.plc.getPlayer().getMoveProgress() < 0.8) return false;
 		
-
-		if(InputSystem.getModifierKeys() != Keys.MOD_NONE) return false;
+		
+		if (InputSystem.getModifierKeys() != Keys.MOD_NONE) return false;
 		
 		
 		for (int i = 0; i < 4; i++) {

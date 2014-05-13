@@ -8,6 +8,11 @@ import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 
 
+/**
+ * Basic Pathfinder implementation for entities
+ * 
+ * @author MightyPork
+ */
 public class EntityPathFinder extends PathFinder {
 	
 	protected final Entity entity;

@@ -25,7 +25,7 @@ public abstract class TaskRepeater extends AnimatorRewind implements Runnable, E
 	
 	
 	@Override
-	public void enable(boolean yes)
+	public void setEnabled(boolean yes)
 	{
 		this.enabled = yes;
 	}

@@ -22,8 +22,17 @@ import mightypork.rogue.world.level.Level;
  */
 public class PlayerFacade {
 	
-	/**  */
+	/** a world */
 	private final World world;
+	
+	
+	/**
+	 * @return true if can go up
+	 */
+	public boolean canAscend()
+	{
+		return world.playerData.getLevelNumber() > 0;
+	}
 	
 	
 	/**
@@ -35,12 +44,18 @@ public class PlayerFacade {
 	}
 	
 	
-	public boolean canAscend()
+	/**
+	 * @return true if can go down
+	 */
+	public boolean canDescend()
 	{
-		return world.playerData.getLevelNumber() > 0;
+		return world.playerData.getLevelNumber() < world.levels.size() - 1;
 	}
 	
 	
+	/**
+	 * Go one level down if applicable
+	 */
 	public void descend()
 	{
 		if (!canDescend()) return;
@@ -58,12 +73,9 @@ public class PlayerFacade {
 	}
 	
 	
-	public boolean canDescend()
-	{
-		return world.playerData.getLevelNumber() < world.levels.size() - 1;
-	}
-	
-	
+	/**
+	 * Go one level up if applicable
+	 */
 	public void ascend()
 	{
 		if (!canAscend()) return;
@@ -90,36 +102,56 @@ public class PlayerFacade {
 	}
 	
 	
+	/**
+	 * @return current level
+	 */
 	public Level getLevel()
 	{
 		return world.levels.get(world.playerData.getLevelNumber());
 	}
 	
 	
+	/**
+	 * @return entity ID
+	 */
 	public int getEID()
 	{
 		return world.playerData.getEID();
 	}
 	
 	
+	/**
+	 * @return entity coordinate in level
+	 */
 	public Coord getCoord()
 	{
 		return world.playerEntity.getCoord();
 	}
 	
 	
+	/**
+	 * @return entity visual pos in level
+	 */
 	public Vect getVisualPos()
 	{
 		return world.playerEntity.pos.getVisualPos();
 	}
 	
 	
+	/**
+	 * Find path to
+	 * 
+	 * @param pos
+	 */
 	public void navigateTo(Coord pos)
 	{
 		world.playerEntity.pos.navigateTo(pos);
 	}
 	
 	
+	/**
+	 * Discard steps in buffer
+	 */
 	public void cancelPath()
 	{
 		world.playerEntity.pos.cancelPath();
@@ -366,8 +398,8 @@ public class PlayerFacade {
 	{
 		return world;
 	}
-
-
+	
+	
 	public boolean canGoTo(Step side)
 	{
 		return getEntity().pos.canGoTo(side);

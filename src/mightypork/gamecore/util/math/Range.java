@@ -1,9 +1,6 @@
 package mightypork.gamecore.util.math;
 
 
-import java.util.Random;
-
-
 /**
  * Numeric range, able to generate random numbers and give min/max values.
  * 
@@ -74,7 +71,7 @@ public class Range {
 	 */
 	public int randInt()
 	{
-		return Calc.randInt(Calc.rand, (int)Math.round(min), (int)Math.round(min));
+		return Calc.randInt(Calc.rand, (int) Math.round(min), (int) Math.round(min));
 	}
 	
 	

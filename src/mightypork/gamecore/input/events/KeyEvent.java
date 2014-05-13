@@ -2,7 +2,7 @@ package mightypork.gamecore.input.events;
 
 
 import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.gamecore.eventbus.event_flags.UnloggedEvent;
+import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 
 import org.lwjgl.input.Keyboard;
 
@@ -12,7 +12,7 @@ import org.lwjgl.input.Keyboard;
  * 
  * @author MightyPork
  */
-@UnloggedEvent
+@NotLoggedEvent
 public class KeyEvent extends BusEvent<KeyListener> {
 	
 	private final int key;

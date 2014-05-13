@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.event_flags.DelayedEvent;
 import mightypork.gamecore.eventbus.event_flags.ImmediateEvent;
-import mightypork.gamecore.eventbus.event_flags.UnloggedEvent;
+import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 import mightypork.gamecore.eventbus.events.Destroyable;
 import mightypork.gamecore.logging.Log;
 
@@ -388,7 +388,7 @@ final public class EventBus implements Destroyable, BusAccess {
 	private boolean shallLog(BusEvent<?> event)
 	{
 		if (!detailedLogging) return false;
-		if (event.getClass().isAnnotationPresent(UnloggedEvent.class)) return false;
+		if (event.getClass().isAnnotationPresent(NotLoggedEvent.class)) return false;
 		
 		return true;
 	}

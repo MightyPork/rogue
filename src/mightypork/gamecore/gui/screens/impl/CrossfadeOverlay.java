@@ -6,7 +6,7 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.gui.screens.Overlay;
 import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.timing.TimedTask;
 import mightypork.rogue.events.ActionRequest;
@@ -18,9 +18,7 @@ public class CrossfadeOverlay extends Overlay {
 	private static final double T_IN = 0.5;
 	private static final double T_OUT = 0.7;
 	
-	NumAnimated blackLevel = new NumAnimated(0);
-	
-	Color color = Color.dark(blackLevel);
+	NumAnimated alpha = new NumAnimated(0);
 	String requestedScreenName;
 	
 	TimedTask revealTask = new TimedTask() {
@@ -33,8 +31,8 @@ public class CrossfadeOverlay extends Overlay {
 			} else {
 				getEventBus().send(new ScreenRequest(requestedScreenName));
 			}
-			blackLevel.setEasing(Easing.SINE_OUT);
-			blackLevel.fadeOut(T_OUT);
+			alpha.setEasing(Easing.SINE_OUT);
+			alpha.fadeOut(T_OUT);
 		}
 	};
 	
@@ -43,12 +41,14 @@ public class CrossfadeOverlay extends Overlay {
 	{
 		super(app);
 		
-		final QuadPainter qp = new QuadPainter(color);
+		final QuadPainter qp = new QuadPainter(RGB.BLACK);
 		qp.setRect(root);
 		root.add(qp);
 		
-		updated.add(blackLevel);
+		updated.add(alpha);
 		updated.add(revealTask);
+		
+		setAlpha(alpha);
 	}
 	
 	
@@ -64,13 +64,13 @@ public class CrossfadeOverlay extends Overlay {
 		requestedScreenName = screen;
 		
 		if (fromDark) {
-			blackLevel.setTo(1);
+			alpha.setTo(1);
 			revealTask.run();
 		} else {
 			revealTask.start(T_IN);
 			
-			blackLevel.setEasing(Easing.SINE_IN);
-			blackLevel.fadeIn(T_IN);
+			alpha.setEasing(Easing.SINE_IN);
+			alpha.fadeIn(T_IN);
 			
 		}
 	}

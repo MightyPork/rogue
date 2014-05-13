@@ -107,11 +107,11 @@ public abstract class LayoutComponent extends BaseComponent implements ClientHub
 	
 	
 	@Override
-	public void enable(boolean yes)
+	public void setEnabled(boolean yes)
 	{
-		super.enable(yes);
+		super.setEnabled(yes);
 		for (final Component c : components) {
-			c.enable(yes);
+			c.setEnabled(yes);
 		}
 	}
 	

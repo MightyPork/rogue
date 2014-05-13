@@ -16,6 +16,8 @@ import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.util.annot.DefaultImpl;
+import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 
 
@@ -44,6 +46,7 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	
 	/** Extra updated items (outside root - those can just implement Updateable) */
 	protected final Collection<Updateable> updated = new LinkedHashSet<>();
+	private Num alphaMul = Num.ONE;
 	
 	
 	public Overlay(AppAccess app)
@@ -90,10 +93,10 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	
 	
 	@Override
-	public void enable(boolean yes)
+	public void setEnabled(boolean yes)
 	{
 		this.enabled = yes;
-		root.enable(yes);
+		root.setEnabled(yes);
 	}
 	
 	
@@ -132,9 +135,12 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	{
 		if (!isVisible()) return;
 		
+		Color.pushAlpha(alphaMul);
 		for (final Renderable r : rendered) {
 			r.render();
 		}
+		
+		Color.popAlpha();
 	}
 	
 	
@@ -172,4 +178,15 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	{
 	}
 	
+	
+	public void setAlpha(Num alpha)
+	{
+		this.alphaMul = alpha;
+	}
+	
+	
+	public void setAlpha(double alpha)
+	{
+		this.alphaMul = Num.make(alpha);
+	}
 }

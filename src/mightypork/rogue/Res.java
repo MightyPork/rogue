@@ -157,6 +157,7 @@ public final class Res {
 		textures.add("tile.ufog.ne", grid.makeQuad(5, 7).flipX());
 		textures.add("tile.ufog.sw", grid.makeQuad(5, 7).flipY());
 		textures.add("tile.ufog.se", grid.makeQuad(5, 7).flipY().flipX());
+		textures.add("tile.ufog.full", grid.makeQuad(6, 7));
 		
 		
 		texture = textures.loadTexture("items", "/res/img/items.png", FilterMode.NEAREST, WrapMode.CLAMP);

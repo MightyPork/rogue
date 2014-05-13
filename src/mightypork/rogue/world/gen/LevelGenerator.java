@@ -43,7 +43,7 @@ public class LevelGenerator {
 			if (rand.nextInt(6) > 0) map.addRoom(Rooms.DEAD_END, false);
 		}
 		
-		for (int i = 0; i < Calc.randInt(rand, 1, (int)Math.ceil(level / 2D)); i++) {
+		for (int i = 0; i < Calc.randInt(rand, 1, (int) Math.ceil(level / 2D)); i++) {
 			map.addRoom(Rooms.TREASURE, false);
 		}
 		
@@ -103,12 +103,12 @@ public class LevelGenerator {
 			
 			map.putEntityInMap(e, 30);
 			
-			if(rand.nextInt(6+level/2)==0) {
-				map.putItemInMap(Items.CHEESE.createItem(), 10);				
+			if (rand.nextInt(6 + level / 2) == 0) {
+				map.putItemInMap(Items.CHEESE.createItem(), 10);
 			}
 			
-			if(rand.nextInt(6)==0) {
-				map.putItemInMap(Items.MEAT.createItem(), 10);				
+			if (rand.nextInt(6) == 0) {
+				map.putItemInMap(Items.MEAT.createItem(), 10);
 			}
 		}
 		

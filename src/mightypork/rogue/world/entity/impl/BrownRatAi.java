@@ -36,6 +36,7 @@ public class BrownRatAi extends GrayRatAi {
 		return Calc.randInt(7, 12);
 	}
 	
+	
 	@Override
 	protected double getStepTime()
 	{

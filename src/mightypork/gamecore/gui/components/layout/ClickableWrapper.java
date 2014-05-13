@@ -49,10 +49,10 @@ public class ClickableWrapper extends ClickableComponent implements DelegatingCl
 	
 	
 	@Override
-	public void enable(boolean yes)
+	public void setEnabled(boolean yes)
 	{
-		super.enable(yes);
-		wrapped.enable(yes);
+		super.setEnabled(yes);
+		wrapped.setEnabled(yes);
 	}
 	
 	
