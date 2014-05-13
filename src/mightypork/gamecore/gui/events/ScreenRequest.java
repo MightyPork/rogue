@@ -11,7 +11,7 @@ import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
  * @author MightyPork
  */
 @SingleReceiverEvent
-public class ScreenRequestEvent extends BusEvent<ScreenRequestListener> {
+public class ScreenRequest extends BusEvent<ScreenRequestListener> {
 	
 	private final String scrName;
 	
@@ -19,7 +19,7 @@ public class ScreenRequestEvent extends BusEvent<ScreenRequestListener> {
 	/**
 	 * @param screenKey screen name
 	 */
-	public ScreenRequestEvent(String screenKey)
+	public ScreenRequest(String screenKey)
 	{
 		scrName = screenKey;
 	}

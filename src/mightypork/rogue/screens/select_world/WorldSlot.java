@@ -7,11 +7,15 @@ import java.io.IOException;
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
+import mightypork.gamecore.gui.components.layout.ClickableWrapper;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
+import mightypork.gamecore.gui.events.CrossfadeRequest;
+import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.util.Utils;
 import mightypork.gamecore.util.ion.Ion;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.math.color.pal.RGB;
@@ -21,6 +25,7 @@ import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.GameStateManager.GameState;
 import mightypork.rogue.Res;
 import mightypork.rogue.events.GameStateRequest;
+import mightypork.rogue.screens.LoaderRequest;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 
@@ -42,8 +47,7 @@ public class WorldSlot extends ConstraintLayout {
 	private IonBundle worldBundle;
 	
 	
-	public WorldSlot(AppAccess app, File worldFile)
-	{
+	public WorldSlot(AppAccess app, File worldFile) {
 		super(app);
 		
 		this.file = worldFile;
@@ -59,10 +63,8 @@ public class WorldSlot extends ConstraintLayout {
 			}
 		}));
 		
-		
 		qp.setRect(innerRect);
 		add(qp);
-		
 		
 		final GridLayout gridl = new GridLayout(app, 1, 8);
 		gridl.setRect(innerRect.shrink(width().perc(10), Num.ZERO));
@@ -81,16 +83,37 @@ public class WorldSlot extends ConstraintLayout {
 			@Override
 			protected void execute()
 			{
-				try {
-					final World w = new World();
-					w.setSaveFile(file);
-					w.load(worldBundle);
-					WorldProvider.get().setWorld(w);
-				} catch (final Exception e) {
-					WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
+				String msg;
+				
+				if (worldBundle != null) {
+					msg = "Loading world...";
+				} else {
+					msg = "Creating world...";
 				}
 				
-				getEventBus().send(new GameStateRequest(GameState.PLAY_WORLD));
+				getEventBus().send(new LoaderRequest(true, msg));
+				
+				Utils.runAsThread(new Runnable() {
+					
+					@Override
+					public void run()
+					{
+						try {
+							final World w = new World();
+							w.setSaveFile(file);
+							w.load(worldBundle);
+							WorldProvider.get().setWorld(w);
+						} catch (final Exception e) {
+							WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
+						}
+						
+						getEventBus().send(new LoaderRequest(false));
+						//getEventBus().send(new GameStateRequest(GameState.PLAY_WORLD));
+
+						getEventBus().send(new ScreenRequest("game"));
+					}
+				});
+				
 			}
 		});
 		
@@ -121,7 +144,7 @@ public class WorldSlot extends ConstraintLayout {
 				final int lvl = worldBundle.get("meta.last_level", -1);
 				
 				if (lvl == -1) throw new RuntimeException(); // let the catch block handle it
-				
+					
 				label = "Floor " + (lvl + 1);
 			} catch (final IOException e) {
 				label = "<corrupt>";

@@ -2,7 +2,7 @@ package mightypork.gamecore.gui.events;
 
 
 /**
- * {@link ScreenRequestEvent} listener
+ * {@link ScreenRequest} listener
  * 
  * @author MightyPork
  */

@@ -3,6 +3,7 @@ package mightypork.gamecore.input;
 
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.KeyListener;
+import mightypork.gamecore.logging.Log;
 
 
 /**
@@ -54,8 +55,11 @@ public class KeyBinding implements KeyListener {
 	@Override
 	public void receive(KeyEvent event)
 	{
+		/*Log.f3("evt k="+event.getKey()+", c="+(int)event.getChar());
+		
 		// ignore unrelated events
 		if (!keystroke.getKeys().contains(event.getKey())) return;
+		*/
 		
 		// run handler when event was met
 		if (keystroke.isActive() && !wasActive) {

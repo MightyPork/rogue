@@ -22,6 +22,7 @@ import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 import mightypork.rogue.events.GameStateRequest;
 import mightypork.rogue.screens.FpsOverlay;
+import mightypork.rogue.screens.LoadingOverlay;
 import mightypork.rogue.screens.game.ScreenGame;
 import mightypork.rogue.screens.menu.ScreenMainMenu;
 import mightypork.rogue.screens.select_world.ScreenSelectWorld;
@@ -120,6 +121,7 @@ public final class App extends BaseApp {
 		screens.addScreen("game", new ScreenGame(this));
 		
 		screens.addOverlay(new FpsOverlay(this));
+		screens.addOverlay(new LoadingOverlay(this));
 	}
 	
 	

@@ -307,7 +307,7 @@ public abstract class Num implements NumBound, Digestable<NumDigest> {
 	
 	public Num perc(final double percent)
 	{
-		return mul(percent / 100);
+		return mul(percent / 100D);
 	}
 	
 	

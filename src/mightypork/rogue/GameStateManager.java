@@ -33,11 +33,6 @@ public class GameStateManager extends AppModule {
 				break;
 			
 			case PLAY_WORLD:
-				
-				if (WorldProvider.get().getWorld() == null) {
-					Log.w("WorldProvider has no world.");
-				}
-				
 				getEventBus().send(new CrossfadeRequest("game"));
 				break;
 			
