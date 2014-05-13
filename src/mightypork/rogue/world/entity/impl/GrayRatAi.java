@@ -13,7 +13,6 @@ public class GrayRatAi extends MonsterAi {
 		
 		setAttackTime(1.2);
 		setScanTime(1.5);
-		setSleepTime(10);
 	}
 	
 	
@@ -48,13 +47,13 @@ public class GrayRatAi extends MonsterAi {
 	@Override
 	protected boolean shouldSkipScan()
 	{
-		return false;//rand.nextInt(3) == 0;
+		return false;
 	}
 	
 	
 	@Override
 	protected boolean shouldRandomlyAbandonPrey()
 	{
-		return false;//rand.nextInt(8) == 0;
+		return false;
 	}
 }

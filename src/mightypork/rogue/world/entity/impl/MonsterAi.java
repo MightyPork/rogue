@@ -35,16 +35,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		}
 	};
 	
-	private final AiTimer timerSleepStart = new AiTimer(10) {
-		
-		@Override
-		public void run()
-		{
-			if (chasing) return;
-			sleeping = true;
-		}
-	};
-	
 	private final AiTimer timerAttack = new AiTimer(3) {
 		
 		@Override
@@ -66,8 +56,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	private int preyId = -1;
 	
 	
-	public MonsterAi(final Entity entity)
-	{
+	public MonsterAi(final Entity entity) {
 		super(entity);
 		
 		noDoorPf = new PathFinderProxy(entity.getPathFinder()) {
@@ -87,7 +76,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		
 		timerAttack.start();
 		timerFindPrey.start();
-		timerSleepStart.start();
 	}
 	
 	
@@ -131,7 +119,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	public void save(IonBundle bundle) throws IOException
 	{
 		bundle.putBundled("tscan", timerFindPrey);
-		bundle.putBundled("tsleep", timerSleepStart);
 		bundle.putBundled("tattack", timerAttack);
 		
 		bundle.put("chasing", chasing);
@@ -145,7 +132,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	public void load(IonBundle bundle) throws IOException
 	{
 		bundle.loadBundled("tscan", timerFindPrey);
-		bundle.loadBundled("tsleep", timerSleepStart);
 		bundle.loadBundled("tattack", timerAttack);
 		
 		chasing = bundle.get("chasing", chasing);
@@ -168,7 +154,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		if (entity.isDead()) return;
 		
 		timerFindPrey.update(delta);
-		timerSleepStart.update(delta);
 		timerAttack.update(delta);
 		
 		if (chasing && !entity.pos.isMoving()) {
@@ -181,7 +166,20 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			
 			if (!isPreyInAttackRange(prey)) {
 				stepTowardsPrey(prey);
+				return;
 			}
+		}
+		
+		if (sleeping && shouldRandomlyWake()) {
+			sleeping = false;
+		}
+		
+		if (!chasing && shouldRandomlyFallAsleep()) {
+			sleeping = true;
+		}
+		
+		if (!chasing && !sleeping && !entity.pos.isMoving() && Calc.rand.nextInt(6) == 0) {
+			entity.pos.addStep(Sides.randomCardinal());
 		}
 	}
 	
@@ -197,7 +195,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		if (entity.isDead()) return;
 		
 		if (shouldSkipScan()) return; // not hungry right now
-		
+			
 		final Entity prey = entity.getLevel().getClosestEntity(entity.pos.getVisualPos(), EntityType.PLAYER, getScanRadius());
 		if (prey != null) {
 			
@@ -205,12 +203,8 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			final List<Coord> noDoorPath = noDoorPf.findPath(entity.getCoord(), prey.getCoord());
 			
 			if (noDoorPath == null) return; // cant reach, give up
-			
+				
 			startChasing(prey);
-		} else {
-			if(Calc.rand.nextBoolean()) {
-				entity.pos.addStep(Sides.randomCardinal());
-			}
 		}
 	}
 	
@@ -241,9 +235,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		chasing = true;
 		sleeping = false;
 		
-		// not good to take a nap while chasing
-		timerSleepStart.pause();
-		
 		// follow this one prey
 		timerFindPrey.pause();
 		
@@ -255,7 +246,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	{
 		chasing = false;
 		preyId = -1;
-		timerSleepStart.restart();
 		timerFindPrey.restart();
 	}
 	
@@ -299,12 +289,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		if (!isPreyInAttackRange(prey)) return;
 		
 		prey.receiveAttack(entity, getAttackStrength());
-	}
-	
-	
-	protected void setSleepTime(double secs)
-	{
-		timerSleepStart.setDuration(secs);
 	}
 	
 	
@@ -359,5 +343,19 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	protected boolean shouldRandomlyAbandonPrey()
 	{
 		return false;
+	}
+	
+	
+	@DefaultImpl
+	protected boolean shouldRandomlyWake()
+	{
+		return Calc.rand.nextInt(3) == 0;
+	}
+	
+	
+	@DefaultImpl
+	protected boolean shouldRandomlyFallAsleep()
+	{
+		return Calc.rand.nextInt(5) == 0;
 	}
 }
