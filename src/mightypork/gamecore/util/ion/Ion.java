@@ -182,6 +182,7 @@ public class Ion {
 	 */
 	public static void toFile(File file, IonObjBinary obj) throws IOException
 	{
+		file.getParentFile().mkdirs();
 		try(OutputStream out = new FileOutputStream(file)) {
 			
 			toStream(out, obj);

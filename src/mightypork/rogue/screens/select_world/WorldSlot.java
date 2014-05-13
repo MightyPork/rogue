@@ -14,6 +14,7 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.events.CrossfadeRequest;
 import mightypork.gamecore.gui.events.ScreenRequest;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.Utils;
 import mightypork.gamecore.util.ion.Ion;
@@ -91,28 +92,44 @@ public class WorldSlot extends ConstraintLayout {
 					msg = "Creating world...";
 				}
 				
-				getEventBus().send(new LoaderRequest(true, msg));
-				
-				Utils.runAsThread(new Runnable() {
+				getEventBus().send(new LoaderRequest(msg, new Runnable() {
 					
 					@Override
 					public void run()
 					{
-						try {
-							final World w = new World();
-							w.setSaveFile(file);
-							w.load(worldBundle);
-							WorldProvider.get().setWorld(w);
-						} catch (final Exception e) {
-							WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
+						World w;
+						
+						if (worldBundle == null) {
+							
+							try {
+								w = WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
+								w.setSaveFile(file);
+								
+								WorldProvider.get().saveWorld();
+								
+								getEventBus().send(new ScreenRequest("game"));
+								
+							} catch (Exception e) {
+								Log.e("Could not create & save the world.", e);
+							}
+							
+						} else {
+							
+							try {
+								w = new World();
+								w.setSaveFile(file);
+								w.load(worldBundle);
+								WorldProvider.get().setWorld(w);
+								
+								getEventBus().send(new ScreenRequest("game"));
+								
+							} catch (IOException e) {
+								Log.e("Could not load the world.", e);
+							}
 						}
 						
-						getEventBus().send(new LoaderRequest(false));
-						//getEventBus().send(new GameStateRequest(GameState.PLAY_WORLD));
-
-						getEventBus().send(new ScreenRequest("game"));
 					}
-				});
+				}));
 				
 			}
 		});

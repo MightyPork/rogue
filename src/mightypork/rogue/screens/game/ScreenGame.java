@@ -1,6 +1,8 @@
 package mightypork.rogue.screens.game;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 import mightypork.gamecore.app.AppAccess;
@@ -9,6 +11,7 @@ import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.rogue.Config;
 import mightypork.rogue.world.PlayerFacade;
@@ -84,7 +87,38 @@ public class ScreenGame extends LayeredScreen {
 			worldLayer.map.toggleMag();
 		}
 	};
-	
+
+	public Action actionSave = new Action() {
+		
+		@Override
+		public void execute()
+		{
+			try {
+				WorldProvider.get().saveWorld();
+				WorldProvider.get().getWorld().getConsole().msgWorldSaved();
+			} catch (Exception e) {
+				Log.e("Could not save the world.", e);
+				WorldProvider.get().getWorld().getConsole().msgWorldSaveError();
+			}
+		}
+	};
+
+	public Action actionRestore = new Action() {
+		
+		@Override
+		public void execute()
+		{
+			try {
+				File f = WorldProvider.get().getWorld().getSaveFile();
+				WorldProvider.get().loadWorld(f);
+				WorldProvider.get().getWorld().getConsole().msgReloaded();
+				
+			} catch (Exception e) {
+				Log.e("Could not load the world.", e);
+				WorldProvider.get().getWorld().getConsole().msgLoadFailed();
+			}
+		}
+	};
 	
 	/**
 	 * Set gui state (overlay)
@@ -142,7 +176,7 @@ public class ScreenGame extends LayeredScreen {
 		worldLayer.setVisible(true);
 		
 		// TODO temporary here ↓
-		bindKey(new KeyStroke(Keys.L_CONTROL, Keys.N), new Runnable() {
+		bindKey(new KeyStroke(Keys.N, Keys.MOD_CONTROL), new Runnable() {
 			
 			@Override
 			public void run()
@@ -160,6 +194,9 @@ public class ScreenGame extends LayeredScreen {
 		bindKey(new KeyStroke(Keys.E), actionEat);
 		bindKey(new KeyStroke(Keys.M), actionToggleMinimap);
 		bindKey(new KeyStroke(Keys.Z), actionToggleZoom);
+
+		bindKey(new KeyStroke(Keys.R, Keys.MOD_CONTROL), actionRestore);
+		bindKey(new KeyStroke(Keys.S, Keys.MOD_CONTROL), actionSave);
 		
 		// add as actions - enableables.
 		worldActions.add(worldLayer);
@@ -169,6 +206,9 @@ public class ScreenGame extends LayeredScreen {
 		worldActions.add(actionToggleMinimap);
 		worldActions.add(actionTogglePause);
 		worldActions.add(actionToggleZoom);
+		
+		worldActions.add(actionSave);
+		worldActions.add(actionRestore);
 		
 		worldActions.enable(true);
 		

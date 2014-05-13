@@ -22,7 +22,6 @@ import mightypork.rogue.world.tile.Tile;
 
 public class MonsterAi extends EntityModule implements EntityMoveListener {
 	
-	private boolean sleeping = true;
 	private boolean chasing = false;
 	
 	private final AiTimer timerFindPrey = new AiTimer(3) {
@@ -30,23 +29,38 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		@Override
 		public void run()
 		{
-			if (chasing) return;
+			if (!isIdle()) return;
 			lookForTarget();
 		}
 	};
 	
-	private final AiTimer timerAttack = new AiTimer(3) {
+	private final AiTimer timerAttack = new AiTimer(1) {
 		
 		@Override
 		public void run()
 		{
-			if (!chasing) return;
+			if (!isChasing()) return;
 			
 			final Entity prey = getPreyEntity();
 			
 			if (prey == null || prey.isDead()) return;
 			
 			attackPrey(prey);
+		}
+	};
+	
+	private final AiTimer timerRandomWalk = new AiTimer(0.2) {
+		
+		@Override
+		public void run()
+		{
+			if (!isIdle()) return;
+			
+			if(entity.pos.isMoving()) return;
+			
+			if(Calc.rand.nextInt(10) == 0) {
+				entity.pos.addStep(Sides.randomCardinal());
+			}
 		}
 	};
 	
@@ -84,14 +98,9 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	{
 		if (entity.isDead()) return;
 		
-		if (chasing) {
+		if (isChasing()) {
 			final Entity prey = getPreyEntity();
 			if (!isPreyValid(prey)) {
-				stopChasing();
-				return;
-			}
-			
-			if (shouldRandomlyAbandonPrey()) {
 				stopChasing();
 				return;
 			}
@@ -122,7 +131,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		bundle.putBundled("tattack", timerAttack);
 		
 		bundle.put("chasing", chasing);
-		bundle.put("sleeping", sleeping);
 		
 		bundle.put("prey", preyId);
 	}
@@ -135,7 +143,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		bundle.loadBundled("tattack", timerAttack);
 		
 		chasing = bundle.get("chasing", chasing);
-		sleeping = bundle.get("sleeping", sleeping);
 		
 		preyId = bundle.get("prey", preyId);
 	}
@@ -155,46 +162,39 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		
 		timerFindPrey.update(delta);
 		timerAttack.update(delta);
+		timerRandomWalk.update(delta);
 		
-		if (chasing && !entity.pos.isMoving()) {
+		// go after the prey
+		if (isChasing() && !entity.pos.isMoving()) {
 			final Entity prey = getPreyEntity();
 			if (prey == null) {
 				// prey killed and cleaned from level
 				stopChasing();
-				return;
 			}
 			
 			if (!isPreyInAttackRange(prey)) {
 				stepTowardsPrey(prey);
-				return;
 			}
 		}
 		
-		if (sleeping && shouldRandomlyWake()) {
-			sleeping = false;
-		}
-		
-		if (!chasing && shouldRandomlyFallAsleep()) {
-			sleeping = true;
-		}
-		
-		if (!chasing && !sleeping && !entity.pos.isMoving() && Calc.rand.nextInt(10) == 0) {
-			entity.pos.addStep(Sides.randomCardinal());
-		}
 	}
 	
 	
-	public boolean isSleeping()
+	public boolean isIdle()
 	{
-		return sleeping;
+		return !chasing;
 	}
+
 	
+	
+	public boolean isChasing()
+	{
+		return chasing;
+	}
 	
 	private void lookForTarget()
 	{
 		if (entity.isDead()) return;
-		
-		if (shouldSkipScan()) return; // not hungry right now
 			
 		final Entity prey = entity.getLevel().getClosestEntity(entity.pos.getVisualPos(), EntityType.PLAYER, getScanRadius());
 		if (prey != null) {
@@ -233,7 +233,8 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		
 		preyId = prey.getEntityId();
 		chasing = true;
-		sleeping = false;
+		
+		entity.pos.setStepTime(getStepTime());
 		
 		// follow this one prey
 		timerFindPrey.pause();
@@ -245,6 +246,9 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	private void stopChasing()
 	{
 		chasing = false;
+		
+		entity.pos.setStepTime(getStepTime());
+		
 		preyId = -1;
 		timerFindPrey.restart();
 	}
@@ -266,7 +270,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		
 		// if close enough
 		if (isPreyInAttackRange(prey)) {
-			attackPrey(prey);
+			// attack using the timed loop
 			return;
 		}
 		
@@ -307,7 +311,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	@DefaultImpl
 	protected double getScanRadius()
 	{
-		return sleeping ? Calc.randInt(1, 3) : Calc.randInt(4, 8); // For override
+		return isIdle() ? Calc.randInt(1, 3) : Calc.randInt(4, 8); // For override
 	}
 	
 	
@@ -331,31 +335,9 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		return 1; // For override
 	}
 	
-	
 	@DefaultImpl
-	protected boolean shouldSkipScan()
+	protected double getStepTime()
 	{
-		return false;
-	}
-	
-	
-	@DefaultImpl
-	protected boolean shouldRandomlyAbandonPrey()
-	{
-		return false;
-	}
-	
-	
-	@DefaultImpl
-	protected boolean shouldRandomlyWake()
-	{
-		return Calc.rand.nextInt(10) == 0;
-	}
-	
-	
-	@DefaultImpl
-	protected boolean shouldRandomlyFallAsleep()
-	{
-		return Calc.rand.nextInt(8) == 0;
+		return isIdle() ? 0.7 : 0.4;
 	}
 }

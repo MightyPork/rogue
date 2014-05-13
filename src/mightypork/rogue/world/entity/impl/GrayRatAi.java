@@ -19,7 +19,7 @@ public class GrayRatAi extends MonsterAi {
 	@Override
 	protected double getScanRadius()
 	{
-		return isSleeping() ? Calc.randInt(2, 4) : Calc.randInt(4, 6);
+		return isIdle() ? Calc.randInt(2, 3) : Calc.randInt(4, 6);
 	}
 	
 	
@@ -33,27 +33,20 @@ public class GrayRatAi extends MonsterAi {
 	@Override
 	protected int getAttackStrength()
 	{
-		return 1 + (Calc.rand.nextInt(5) == 0 ? 1 : 0);
+		return Calc.randInt(1, 2);
 	}
 	
 	
 	@Override
 	protected int getPreyAbandonDistance()
 	{
-		return Calc.randInt(8, 11);
+		return Calc.randInt(7, 11);
 	}
-	
+
 	
 	@Override
-	protected boolean shouldSkipScan()
+	protected double getStepTime()
 	{
-		return false;
-	}
-	
-	
-	@Override
-	protected boolean shouldRandomlyAbandonPrey()
-	{
-		return false;
+		return isIdle() ? 0.7 : 0.5;
 	}
 }

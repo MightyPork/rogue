@@ -21,8 +21,7 @@ public class WorldProvider extends RootBusNode {
 	}
 	
 	
-	public WorldProvider(BusAccess busAccess)
-	{
+	public WorldProvider(BusAccess busAccess) {
 		super(busAccess);
 		setListening(false);
 	}
@@ -50,9 +49,11 @@ public class WorldProvider extends RootBusNode {
 	};
 	
 	
-	public void createWorld(long seed)
+	public World createWorld(long seed)
 	{
-		setWorld(WorldCreator.createWorld(seed));
+		World w = WorldCreator.createWorld(seed);
+		setWorld(w);
+		return w;
 	}
 	
 	
@@ -83,6 +84,7 @@ public class WorldProvider extends RootBusNode {
 	public void loadWorld(File file) throws IOException
 	{
 		setWorld(Ion.fromFile(file, World.class));
+		world.setSaveFile(file);
 	}
 	
 	

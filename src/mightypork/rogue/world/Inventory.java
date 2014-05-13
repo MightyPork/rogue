@@ -12,7 +12,7 @@ import mightypork.rogue.world.item.Items;
 
 public class Inventory implements IonObjBinary {
 	
-	private static final short ION_MARK = 0;
+	public static final short ION_MARK = 54;
 	private Item[] items;
 	
 	

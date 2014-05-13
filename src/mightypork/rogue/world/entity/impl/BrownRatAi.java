@@ -19,20 +19,26 @@ public class BrownRatAi extends GrayRatAi {
 	@Override
 	protected double getScanRadius()
 	{
-		return isSleeping() ? Calc.randInt(3, 5) : Calc.randInt(5, 8);
+		return isIdle() ? Calc.randInt(2, 4) : Calc.randInt(5, 8);
 	}
 	
 	
 	@Override
 	protected int getAttackStrength()
 	{
-		return Calc.randInt(2, 5);
+		return Calc.randInt(1, 4);
 	}
 	
 	
 	@Override
 	protected int getPreyAbandonDistance()
 	{
-		return Calc.randInt(11, 14);
+		return Calc.randInt(7, 12);
+	}
+	
+	@Override
+	protected double getStepTime()
+	{
+		return isIdle() ? 0.5 : 0.38;
 	}
 }

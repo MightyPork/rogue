@@ -132,6 +132,12 @@ public interface Keys {
 	public static final int PAUSE           = 0xC5; /* Pause */
 	public static final int INSERT          = 0xD2; /* Insert on arrow keypad */
 	public static final int DELETE          = 0xD3; /* Delete on arrow keypad */
+
+	public static final byte MOD_NONE = 0;
+	public static final byte MOD_ALT = 1;
+	public static final byte MOD_CONTROL = 2;
+	public static final byte MOD_SHIFT = 4;
+	public static final byte MOD_META = 8;
 	
 	//@formatter:on
 }

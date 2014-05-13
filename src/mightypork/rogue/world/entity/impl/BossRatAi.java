@@ -29,14 +29,14 @@ public class BossRatAi extends GrayRatAi {
 	@Override
 	protected int getAttackStrength()
 	{
-		return Calc.randInt(5, 11);
+		return Calc.randInt(3, 11);
 	}
 	
 	
 	@Override
 	protected int getPreyAbandonDistance()
 	{
-		return Calc.randInt(15, 18);
+		return Calc.randInt(12, 18);
 	}
 	
 	
@@ -44,6 +44,13 @@ public class BossRatAi extends GrayRatAi {
 	public void update(double delta)
 	{
 		super.update(delta);
+		
 		healTimer.update(delta);
+	}
+	
+	@Override
+	protected double getStepTime()
+	{
+		return isIdle() ? 0.6 : 0.4;
 	}
 }

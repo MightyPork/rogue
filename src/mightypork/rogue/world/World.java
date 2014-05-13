@@ -11,6 +11,7 @@ import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.algo.Coord;
@@ -79,9 +80,12 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		in.loadBundled("player", playerData);
 		
-		playerEntity = levels.get(playerData.getLevelNumber()).getEntity(playerData.getEID());
+		int eid = playerData.getEID();
+		int lvl = playerData.getLevelNumber();
+		
+		playerEntity = levels.get(lvl).getEntity(eid);
 		if (playerEntity == null) {
-			throw new RuntimeException("Player entity not found in the world.");
+			throw new RuntimeException("Player entity not found in the world: " + eid + " on floor " + lvl);
 		}
 	}
 	
@@ -212,6 +216,8 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		// update console timing - not as child client
 		console.update(delta);
+		
+		if (saveFile == null) Log.w("World has no save file.");
 	}
 	
 	

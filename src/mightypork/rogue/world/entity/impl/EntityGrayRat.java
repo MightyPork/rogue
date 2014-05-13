@@ -28,7 +28,6 @@ public class EntityGrayRat extends Entity {
 		addModule("ai", ai);
 		pos.addMoveListener(ai);
 		
-		pos.setStepTime(0.5);
 		setDespawnDelay(1);
 		
 		health.setHealthMax(6);

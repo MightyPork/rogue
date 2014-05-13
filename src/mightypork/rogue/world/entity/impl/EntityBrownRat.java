@@ -28,7 +28,6 @@ public class EntityBrownRat extends Entity {
 		addModule("ai", ai);
 		pos.addMoveListener(ai);
 		
-		pos.setStepTime(0.38); // faster than gray rat
 		setDespawnDelay(1);
 		
 		health.setHealthMax(20);

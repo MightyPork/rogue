@@ -7,6 +7,7 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.gui.screens.Overlay;
+import mightypork.gamecore.util.Utils;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.PAL16;
@@ -36,7 +37,29 @@ public class LoadingOverlay extends Overlay {
 			return msg == null ? "" : msg;
 		}
 	};
+	
+	private boolean busy;
 	private String msg;
+	private Runnable task;
+	
+	private TimedTask tt = new TimedTask() {
+		
+		@Override
+		public void run()
+		{
+			Utils.runAsThread(new Runnable() {
+				
+				@Override
+				public void run()
+				{
+					task.run();
+					alpha.setEasing(Easing.SINE_OUT);
+					alpha.fadeOut(T_OUT);
+					busy = false;
+				}
+			});
+		}
+	};
 	
 	
 	public LoadingOverlay(AppAccess app) {
@@ -47,6 +70,7 @@ public class LoadingOverlay extends Overlay {
 		root.add(qp);
 		
 		updated.add(alpha);
+		updated.add(tt);
 		
 		Rect textRect = root.shrink(Num.ZERO, root.height().perc(48));
 		textRect = textRect.moveY(root.height().perc(-10));
@@ -54,7 +78,7 @@ public class LoadingOverlay extends Overlay {
 		final TextPainter tp = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.WHITE, msgStrProv);
 		
 		tp.setRect(textRect);
-		tp.setShadow(RGB.BLACK_60, tp.height().mul(1/8D).toVectXY());
+		tp.setShadow(RGB.BLACK_60, tp.height().mul(1 / 8D).toVectXY());
 		root.add(tp);
 	}
 	
@@ -66,20 +90,20 @@ public class LoadingOverlay extends Overlay {
 	}
 	
 	
-	public void show(String message)
+	public void show(String message, Runnable task)
 	{
+		if(busy) throw new IllegalStateException("Loader is busy with another task.");
+		
 		this.msg = message;
+		this.task = task;
+		this.busy = true;
+		
 		alpha.setEasing(Easing.SINE_IN);
 		alpha.fadeIn(T_IN);
-	}
-	
-	
-	public void hide()
-	{
 		
-		alpha.setEasing(Easing.SINE_OUT);
-		alpha.fadeOut(T_OUT);
+		tt.start(T_IN);
 	}
+	
 	
 	@Override
 	public void render()

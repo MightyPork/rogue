@@ -24,6 +24,7 @@ import mightypork.gamecore.util.math.noise.NoiseGen;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityPathFinder;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.impl.PlayerEntity;
 import mightypork.rogue.world.item.Item;
@@ -123,13 +124,11 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	private double timeSinceLastEntitySort;
 	
 	
-	public Level()
-	{
+	public Level() {
 	}
 	
 	
-	public Level(int width, int height)
-	{
+	public Level(int width, int height) {
 		size.setTo(width, height);
 		buildArray();
 	}
@@ -165,7 +164,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public final Tile getTile(Coord pos)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) return Tiles.NULL.createTile(); // out of range
-		
+			
 		return tiles[pos.y][pos.x];
 	}
 	
@@ -257,6 +256,9 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 			ent.setLevel(this);
 			occupyTile(ent.getCoord());
 			entityMap.put(ent.getEntityId(), ent);
+			if (ent instanceof PlayerEntity) {
+				playerCount++;
+			}
 		}
 	}
 	
@@ -366,7 +368,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		
 		// further
 		for (int i = 0; i < 20; i++) {
-			final Coord c = pos.add(Calc.randInt(-2, 2),Calc.randInt(-2, 2));
+			final Coord c = pos.add(Calc.randInt(-2, 2), Calc.randInt(-2, 2));
 			if (addEntity(entity, c)) return true;
 		}
 		

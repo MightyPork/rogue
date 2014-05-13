@@ -27,7 +27,6 @@ public class EntityBossRat extends Entity {
 		addModule("ai", ai);
 		pos.addMoveListener(ai);
 		
-		pos.setStepTime(0.4);
 		setDespawnDelay(1);
 		
 		health.setHealthMax(80);

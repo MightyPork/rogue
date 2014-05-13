@@ -26,6 +26,7 @@ import mightypork.rogue.screens.LoadingOverlay;
 import mightypork.rogue.screens.game.ScreenGame;
 import mightypork.rogue.screens.menu.ScreenMainMenu;
 import mightypork.rogue.screens.select_world.ScreenSelectWorld;
+import mightypork.rogue.world.Inventory;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.level.Level;
 
@@ -78,6 +79,7 @@ public final class App extends BaseApp {
 		super.registerIonizables();
 		
 		Ion.registerType(Level.ION_MARK, Level.class);
+		Ion.registerType(Inventory.ION_MARK, Inventory.class);
 	}
 	
 	
@@ -132,14 +134,18 @@ public final class App extends BaseApp {
 		bindEventToKey(new ActionRequest(RequestType.FULLSCREEN), Keys.F11);
 		bindEventToKey(new ActionRequest(RequestType.SCREENSHOT), Keys.F2);
 		
-		bindEventToKey(new GameStateRequest(GameState.EXIT), Keys.L_CONTROL, Keys.Q);
-		bindEventToKey(new GameStateRequest(GameState.MAIN_MENU), Keys.L_CONTROL, Keys.M);
+		bindEventToKey(new GameStateRequest(GameState.EXIT), Keys.Q, Keys.MOD_CONTROL);
+		bindEventToKey(new GameStateRequest(GameState.MAIN_MENU), Keys.M, Keys.MOD_CONTROL);
 	}
 	
-	
-	private void bindEventToKey(final BusEvent<?> event, int... keys)
+	private void bindEventToKey(final BusEvent<?> event, int key)
 	{
-		getInput().bindKey(new KeyStroke(keys), new Runnable() {
+		bindEventToKey(event, key, Keys.MOD_NONE);
+	}
+	
+	private void bindEventToKey(final BusEvent<?> event, int key, byte mod)
+	{
+		getInput().bindKey(new KeyStroke(key, mod), new Runnable() {
 			
 			@Override
 			public void run()
