@@ -56,6 +56,12 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 		{
 			if (!isIdle()) return;
 			
+			// annoyed by attacking.
+			if(entity.getLastAttackTime() < 0.5) {
+				lookForTarget();
+				return;
+			}
+			
 			if(entity.pos.isMoving()) return;
 			
 			if(Calc.rand.nextInt(10) == 0) {
@@ -176,7 +182,6 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 				stepTowardsPrey(prey);
 			}
 		}
-		
 	}
 	
 	

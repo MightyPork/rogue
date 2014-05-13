@@ -85,7 +85,17 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 		
 		playerEntity = levels.get(lvl).getEntity(eid);
 		if (playerEntity == null) {
-			throw new RuntimeException("Player entity not found in the world: " + eid + " on floor " + lvl);
+			
+			Log.e("Player entity not found in the world: " + eid + " on floor " + lvl);
+			
+			for(int i=0; i<levels.size(); i++) {
+				Entity ent = levels.get(i).getEntity(eid);
+				if(ent != null) {
+					Log.f3("Player entity was really on floor: "+i);
+				}
+			}
+			
+			throw new RuntimeException();
 		}
 	}
 	

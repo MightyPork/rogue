@@ -366,4 +366,10 @@ public class PlayerFacade {
 	{
 		return world;
 	}
+
+
+	public boolean canGoTo(Step side)
+	{
+		return getEntity().pos.canGoTo(side);
+	}
 }

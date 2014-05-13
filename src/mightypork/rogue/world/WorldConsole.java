@@ -129,9 +129,6 @@ public class WorldConsole implements Updateable {
 	public void msgDie(Entity attacker)
 	{
 		addMessage("You've been defeated by a " + attacker.getVisualName() + "!");
-		
-		addMessage("CTRL+M ... main menu");
-		addMessage("CTRL+N ... new game");
 	}
 	
 	

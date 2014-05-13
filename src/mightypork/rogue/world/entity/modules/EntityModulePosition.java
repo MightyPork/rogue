@@ -160,6 +160,8 @@ public class EntityModulePosition extends EntityModule {
 	
 	public void addStep(Step step)
 	{
+		if (path.isEmpty() && !canGoTo(step)) return;
+		
 		path.add(step);
 	}
 	
@@ -238,6 +240,12 @@ public class EntityModulePosition extends EntityModule {
 	public boolean hasPath()
 	{
 		return isMoving() || !path.isEmpty();
+	}
+	
+	
+	public boolean canGoTo(Step side)
+	{
+		return entity.getPathFinder().isAccessible(getCoord().add(side));
 	}
 	
 }

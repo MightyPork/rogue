@@ -94,11 +94,13 @@ public final class Res {
 		textures.add("nav.button.fg.eat", grid.makeQuad(0, 6));
 		textures.add("nav.button.fg.inventory", grid.makeQuad(1, 6));
 		textures.add("nav.button.fg.attack", grid.makeQuad(2, 6));
-		textures.add("nav.button.fg.options", grid.makeQuad(3, 6));
+		textures.add("nav.button.fg.menu", grid.makeQuad(3, 6));
 		textures.add("nav.button.fg.help", grid.makeQuad(4, 6));
 		textures.add("nav.button.fg.map", grid.makeQuad(5, 6));
 		textures.add("nav.button.fg.pause", grid.makeQuad(6, 6));
 		textures.add("nav.button.fg.magnify", grid.makeQuad(7, 6));
+		textures.add("nav.button.fg.save", grid.makeQuad(7, 5));
+		textures.add("nav.button.fg.load", grid.makeQuad(6, 5));
 		
 		textures.add("inv.slot.base", grid.makeQuad(0, 5));
 		textures.add("inv.slot.selected", grid.makeQuad(1, 5));

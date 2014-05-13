@@ -289,4 +289,13 @@ public abstract class Entity implements IonObjBundled, Updateable, DelegatingCli
 		return modules.values();
 	}
 	
+	
+	public Entity getLastAttacker()
+	{
+		return lastAttacker;
+	}
+	
+	public double getLastAttackTime() {
+		return health.getTimeSinceLastDamage();
+	}
 }

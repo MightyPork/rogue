@@ -35,6 +35,11 @@ public class ScreenSelectWorld extends LayeredScreen {
 	
 	class WorldsLayer extends ScreenLayer {
 		
+		private WorldSlot slot1;
+		private WorldSlot slot2;
+		private WorldSlot slot3;
+
+
 		public WorldsLayer(Screen screen)
 		{
 			super(screen);
@@ -61,18 +66,15 @@ public class ScreenSelectWorld extends LayeredScreen {
 			layout.put(tp = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.YELLOW, "Save slot:"), 0, 0, 1, 1);
 			tp.setPaddingHPerc(0, 20);
 			tp.setShadow(RGB.BLACK_50, tp.height().mul(0.6 / 8D).toVectXY());
+						
+			slot1 = new WorldSlot(root, Paths.SAVE_SLOT_1);
+			layout.put(slot1, 1, 0, 1, 1);
 			
+			slot2 = new WorldSlot(root, Paths.SAVE_SLOT_2);
+			layout.put(slot2, 2, 0, 1, 1);
 			
-			WorldSlot wsl;
-			
-			wsl = new WorldSlot(root, Paths.SAVE_SLOT_1);
-			layout.put(wsl, 1, 0, 1, 1);
-			
-			wsl = new WorldSlot(root, Paths.SAVE_SLOT_2);
-			layout.put(wsl, 2, 0, 1, 1);
-			
-			wsl = new WorldSlot(root, Paths.SAVE_SLOT_3);
-			layout.put(wsl, 3, 0, 1, 1);
+			slot3 = new WorldSlot(root, Paths.SAVE_SLOT_3);
+			layout.put(slot3, 3, 0, 1, 1);
 		}
 		
 		
@@ -82,5 +84,15 @@ public class ScreenSelectWorld extends LayeredScreen {
 			return 2;
 		}
 		
+	
+		@Override
+		protected void onScreenEnter()
+		{
+			super.onScreenEnter();
+			
+			slot1.refresh();
+			slot2.refresh();
+			slot3.refresh();
+		}
 	}
 }

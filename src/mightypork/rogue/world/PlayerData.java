@@ -33,9 +33,9 @@ public class PlayerData implements IonObjBundled {
 	@Override
 	public void load(IonBundle bundle) throws IOException
 	{
-		eid = bundle.get("eid", eid);
-		level = bundle.get("floor", level);
-		selectedWeapon = bundle.get("weapon", selectedWeapon);
+		eid = bundle.get("eid", -1);
+		level = bundle.get("floor", -1);
+		selectedWeapon = bundle.get("weapon", -1);
 		
 		inventory = bundle.get("inv", inventory);
 	}

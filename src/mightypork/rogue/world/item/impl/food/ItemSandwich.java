@@ -26,7 +26,7 @@ public class ItemSandwich extends ItemBaseFood {
 	@Override
 	public int getFoodPoints()
 	{
-		return 6;
+		return 8;
 	}
 	
 	

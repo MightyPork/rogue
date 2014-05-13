@@ -63,9 +63,8 @@ public class EntityBossRat extends Entity {
 	@Override
 	public void onKilled()
 	{
-		getWorld().getConsole().addMessage("YOU DEFEATED THE BOSS RAT");
-		getWorld().getConsole().addMessage("CTRL+M ... main menu");
-		getWorld().getConsole().addMessage("CTRL+N ... new game");
+		getWorld().getConsole().addMessage("~~~ YOU DEFEATED THE BOSS RAT ~~~");
+		getWorld().getConsole().addMessage("TODO: outro");
 	}
 	
 	

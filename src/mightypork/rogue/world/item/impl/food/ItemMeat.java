@@ -26,7 +26,7 @@ public class ItemMeat extends ItemBaseFood {
 	@Override
 	public int getFoodPoints()
 	{
-		return 3;
+		return 4;
 	}
 	
 	

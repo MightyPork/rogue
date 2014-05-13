@@ -139,8 +139,16 @@ public class InvLayer extends ScreenLayer {
 		gl.put(txp2, pos, 0, 1, 1);
 		txp2.setPaddingHPerc(0, 25);
 		
-		bindKey(new KeyStroke(Keys.ESCAPE), screen.actionToggleInv);
-		// TODO needs some rewrite of keys system
+		bindKey(new KeyStroke(Keys.ESCAPE), new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				if(isEnabled()) {
+					screen.actionToggleInv.run();
+				}
+			}
+		});
 		
 		bindKey(new KeyStroke(Keys.E), new Runnable() {
 			

@@ -87,7 +87,7 @@ public abstract class PlayerControl {
 	
 	public boolean canGo(Step side)
 	{
-		return getLevel().getTile(getPlayer().getCoord().add(side)).isWalkable();
+		return getPlayer().canGoTo(side);
 	}
 	
 	

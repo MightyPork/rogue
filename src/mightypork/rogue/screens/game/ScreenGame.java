@@ -14,6 +14,8 @@ import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.rogue.Config;
+import mightypork.rogue.GameStateManager.GameState;
+import mightypork.rogue.events.GameStateRequest;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.events.WorldPauseRequest;
@@ -66,7 +68,7 @@ public class ScreenGame extends LayeredScreen {
 		@Override
 		public void execute()
 		{
-			hudLayer.mm.setVisible(!hudLayer.mm.isVisible());
+			hudLayer.miniMap.setVisible(!hudLayer.miniMap.isVisible());
 		}
 	};
 	
@@ -103,7 +105,7 @@ public class ScreenGame extends LayeredScreen {
 		}
 	};
 
-	public Action actionRestore = new Action() {
+	public Action actionLoad = new Action() {
 		
 		@Override
 		public void execute()
@@ -119,7 +121,17 @@ public class ScreenGame extends LayeredScreen {
 			}
 		}
 	};
-	
+
+	public Action actionMenu = new Action() {
+		
+		@Override
+		public void execute()
+		{
+			// TODO ask to save
+			
+			getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
+		}
+	};
 	/**
 	 * Set gui state (overlay)
 	 * 
@@ -175,7 +187,7 @@ public class ScreenGame extends LayeredScreen {
 		worldLayer.enable(true);
 		worldLayer.setVisible(true);
 		
-		// TODO temporary here ↓
+		// TODO temporary, remove
 		bindKey(new KeyStroke(Keys.N, Keys.MOD_CONTROL), new Runnable() {
 			
 			@Override
@@ -195,7 +207,9 @@ public class ScreenGame extends LayeredScreen {
 		bindKey(new KeyStroke(Keys.M), actionToggleMinimap);
 		bindKey(new KeyStroke(Keys.Z), actionToggleZoom);
 
-		bindKey(new KeyStroke(Keys.R, Keys.MOD_CONTROL), actionRestore);
+		bindKey(new KeyStroke(Keys.R, Keys.MOD_CONTROL), actionLoad);
+		bindKey(new KeyStroke(Keys.L, Keys.MOD_CONTROL), actionLoad);
+		
 		bindKey(new KeyStroke(Keys.S, Keys.MOD_CONTROL), actionSave);
 		
 		// add as actions - enableables.
@@ -208,7 +222,8 @@ public class ScreenGame extends LayeredScreen {
 		worldActions.add(actionToggleZoom);
 		
 		worldActions.add(actionSave);
-		worldActions.add(actionRestore);
+		worldActions.add(actionLoad);
+		worldActions.add(actionMenu);
 		
 		worldActions.enable(true);
 		

@@ -34,7 +34,7 @@ public class HudLayer extends ScreenLayer {
 		}
 	};
 	
-	protected Minimap mm;
+	protected Minimap miniMap;
 	
 	private final ScreenGame gameScreen;
 	
@@ -70,9 +70,9 @@ public class HudLayer extends ScreenLayer {
 	
 	private void buildMinimap()
 	{
-		mm = new Minimap();
-		mm.setRect(root.shrink(root.width().perc(5), root.height().perc(15)));
-		root.add(mm);
+		miniMap = new Minimap();
+		miniMap.setRect(root.shrink(root.width().perc(5), root.height().perc(15)));
+		root.add(miniMap);
 	}
 	
 	
@@ -130,12 +130,22 @@ public class HudLayer extends ScreenLayer {
 		// TODO actions
 		//nav.addLeft(new NavButton(Res.txq("nav.button.fg.options")));
 		//nav.addLeft(new NavButton(Res.txq("nav.button.fg.help")));
+
+		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.menu")));
+		btn.setAction(gameScreen.actionMenu);
+		
+		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.save")));
+		btn.setAction(gameScreen.actionSave);
+		
+		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.load")));
+		btn.setAction(gameScreen.actionLoad);
 		
 		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.map")));
 		btn.setAction(gameScreen.actionToggleMinimap);
 		
 		nav.addLeft(btn = new NavButton(Res.txq("nav.button.fg.magnify")));
 		btn.setAction(gameScreen.actionToggleZoom);
+		
 	}
 	
 	

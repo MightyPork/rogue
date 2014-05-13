@@ -93,23 +93,16 @@ public class WorldProvider extends RootBusNode {
 		if (world == null) {
 			throw new IllegalStateException("Trying to save a NULL world.");
 		}
+		if (file == null) {
+			throw new IllegalStateException("Trying to save world to a NULL file.");
+		}
 		Ion.toFile(file, world);
 	}
 	
 	
 	public void saveWorld() throws IOException
 	{
-		if (world == null) {
-			throw new IllegalStateException("Trying to save a NULL world.");
-		}
-		
-		final File f = world.getSaveFile();
-		
-		if (f == null) {
-			throw new IllegalStateException("Trying to save world to a NULL file.");
-		}
-		
-		Ion.toFile(f, world);
+		saveWorld(world.getSaveFile());
 	}
 	
 	

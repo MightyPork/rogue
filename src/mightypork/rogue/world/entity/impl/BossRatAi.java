@@ -29,7 +29,7 @@ public class BossRatAi extends GrayRatAi {
 	@Override
 	protected int getAttackStrength()
 	{
-		return Calc.randInt(3, 11);
+		return Calc.randInt(5, 11);
 	}
 	
 	

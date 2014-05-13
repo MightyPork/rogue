@@ -232,7 +232,7 @@ public abstract class PathFinder {
 	 * @param pos tile pos
 	 * @return true if the tile is walkable
 	 */
-	protected abstract boolean isAccessible(Coord pos);
+	public abstract boolean isAccessible(Coord pos);
 	
 	
 	/**
