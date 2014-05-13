@@ -382,7 +382,7 @@ public class Calc {
 		}
 	}
 	
-	private static Random rand = new Random();
+	public static final Random rand = new Random();
 	
 	
 	public static double sphereSurface(double radius)
@@ -670,11 +670,14 @@ public class Calc {
 	
 	public static int randInt(Random rand, int low, int high)
 	{
-		int range = high - low + 1;
-		if (range < 1) range = 1;
+		int range = Math.abs(high - low) + 1;
 		return low + rand.nextInt(range);
 	}
-	
+
+	public static int randInt(int low, int high)
+	{
+		return randInt(rand, low, high);		
+	}
 	
 	/**
 	 * Get ordinal version of numbers (1 = 1st, 5 = 5th etc.)

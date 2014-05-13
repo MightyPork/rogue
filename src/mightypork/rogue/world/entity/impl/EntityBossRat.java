@@ -32,7 +32,7 @@ public class EntityBossRat extends Entity {
 		
 		health.setHealthMax(80);
 		health.setHealth(80);
-		health.setHitCooldownTime(0.35);
+		health.setHitCooldownTime(0.33);
 	}
 	
 	

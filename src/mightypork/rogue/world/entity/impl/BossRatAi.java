@@ -1,6 +1,7 @@
 package mightypork.rogue.world.entity.impl;
 
 
+import mightypork.gamecore.util.math.Calc;
 import mightypork.rogue.world.entity.AiTimer;
 import mightypork.rogue.world.entity.Entity;
 
@@ -21,21 +22,21 @@ public class BossRatAi extends GrayRatAi {
 	{
 		super(entity);
 		
-		setAttackTime(0.6);
+		setAttackTime(0.7);
 	}
 	
 	
 	@Override
 	protected int getAttackStrength()
 	{
-		return 5 + rand.nextInt(4);
+		return Calc.randInt(5, 11);
 	}
 	
 	
 	@Override
 	protected int getPreyAbandonDistance()
 	{
-		return 15 + rand.nextInt(4);
+		return Calc.randInt(15, 18);
 	}
 	
 	

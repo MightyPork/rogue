@@ -1,6 +1,7 @@
 package mightypork.rogue.world.entity.impl;
 
 
+import mightypork.gamecore.util.math.Calc;
 import mightypork.rogue.world.entity.Entity;
 
 
@@ -19,7 +20,7 @@ public class GrayRatAi extends MonsterAi {
 	@Override
 	protected double getScanRadius()
 	{
-		return isSleeping() ? 2 + rand.nextInt(3) : 4 + rand.nextInt(3);
+		return isSleeping() ? Calc.randInt(2, 4) : Calc.randInt(4, 6);
 	}
 	
 	
@@ -33,14 +34,14 @@ public class GrayRatAi extends MonsterAi {
 	@Override
 	protected int getAttackStrength()
 	{
-		return 1 + (rand.nextInt(5) == 0 ? 1 : 0);
+		return 1 + (Calc.rand.nextInt(5) == 0 ? 1 : 0);
 	}
 	
 	
 	@Override
 	protected int getPreyAbandonDistance()
 	{
-		return 8 + rand.nextInt(4);
+		return Calc.randInt(8, 11);
 	}
 	
 	

@@ -43,7 +43,7 @@ public class LevelGenerator {
 			if (rand.nextInt(6) > 0) map.addRoom(Rooms.DEAD_END, false);
 		}
 		
-		for (int i = 0; i < Calc.randInt(rand, 1, level / 3); i++) {
+		for (int i = 0; i < Calc.randInt(rand, 1, (int)Math.ceil(level / 2D)); i++) {
 			map.addRoom(Rooms.TREASURE, false);
 		}
 		
@@ -86,13 +86,13 @@ public class LevelGenerator {
 		}
 		
 		if (level == 4) {
-			map.putItemInMap(Items.HAMMER.createItemDamaged(60), 100);
+			map.putItemInMap(Items.HAMMER.createItemDamaged(40), 100);
 		}
 		
 		// entities - random rats
 		
 		
-		for (int i = 0; i < Calc.randInt(rand, (int) (3 + level * 1.5), 3 + level * 3); i++) {
+		for (int i = 0; i < Calc.randInt(rand, 2 + level * 2, 5 + level * 3); i++) {
 			Entity e;
 			
 			if (level > 2 && rand.nextInt(level - 2 + 1) != 0) {
@@ -101,7 +101,15 @@ public class LevelGenerator {
 				e = Entities.RAT_GRAY.createEntity();
 			}
 			
-			map.putEntityInMap(e, 20);
+			map.putEntityInMap(e, 30);
+			
+			if(rand.nextInt(6+level/2)==0) {
+				map.putItemInMap(Items.CHEESE.createItem(), 10);				
+			}
+			
+			if(rand.nextInt(6)==0) {
+				map.putItemInMap(Items.MEAT.createItem(), 10);				
+			}
 		}
 		
 		

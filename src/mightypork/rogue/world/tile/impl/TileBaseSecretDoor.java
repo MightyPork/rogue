@@ -6,6 +6,7 @@ import java.io.IOException;
 import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.rogue.world.tile.TileModel;
@@ -14,7 +15,7 @@ import mightypork.rogue.world.tile.TileType;
 
 public abstract class TileBaseSecretDoor extends TileBaseDoor {
 	
-	private int clicks = 2 + rand.nextInt(2);
+	private int clicks = Calc.randInt(2, 3);
 	
 	
 	public TileBaseSecretDoor(TileModel model, TxSheet secret, TxSheet closed, TxSheet open)

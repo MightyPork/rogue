@@ -1,5 +1,7 @@
 package mightypork.gamecore.util.math.algo;
 
+import mightypork.gamecore.util.math.Calc;
+
 
 public class Sides {
 	
@@ -66,5 +68,11 @@ public class Sides {
 	public static byte bit(int i)
 	{
 		return (byte) (1 << (7 - i));
+	}
+
+
+	public static Step randomCardinal()
+	{
+		return CARDINAL_SIDES[Calc.randInt(0, 3)];
 	}
 }

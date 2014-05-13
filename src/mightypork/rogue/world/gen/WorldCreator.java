@@ -8,7 +8,7 @@ import mightypork.rogue.world.World;
 
 public class WorldCreator {
 	
-	public static final Random rand = new Random();
+	public static Random rand = new Random();
 	
 	
 	public static World createWorld(long seed)

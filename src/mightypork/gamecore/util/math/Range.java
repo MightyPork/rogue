@@ -19,8 +19,6 @@ public class Range {
 	private double min = 0;
 	private double max = 1;
 	
-	private static Random rand = new Random();
-	
 	
 	/**
 	 * Implicit range constructor 0-1
@@ -76,7 +74,7 @@ public class Range {
 	 */
 	public int randInt()
 	{
-		return (int) (Math.round(min) + rand.nextInt((int) (Math.round(max) - Math.round(min)) + 1));
+		return Calc.randInt(Calc.rand, (int)Math.round(min), (int)Math.round(min));
 	}
 	
 	
@@ -87,7 +85,7 @@ public class Range {
 	 */
 	public double randDouble()
 	{
-		return min + rand.nextDouble() * (max - min);
+		return min + Calc.rand.nextDouble() * (max - min);
 	}
 	
 	

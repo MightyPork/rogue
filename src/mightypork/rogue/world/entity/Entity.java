@@ -34,8 +34,6 @@ public abstract class Entity implements IonObjBundled, Updateable, DelegatingCli
 	private Level level;
 	private final EntityModel model;
 	
-	protected final Random rand = new Random();
-	
 	/** Entity ID */
 	private int entityId = -1;
 	

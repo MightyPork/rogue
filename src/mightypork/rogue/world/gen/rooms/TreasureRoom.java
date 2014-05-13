@@ -27,7 +27,7 @@ public class TreasureRoom extends SecretRoom {
 			map.putItemInArea(Items.ROCK.createItemDamaged(30), min, max, 50);
 		}
 		
-		for (int i = 0; i < Calc.randInt(rand, 0, 2); i++) {
+		for (int i = 0; i < Calc.randInt(rand, 0, 3); i++) {
 			map.putItemInArea(Items.MEAT.createItem(), min, max, 50);
 		}
 		

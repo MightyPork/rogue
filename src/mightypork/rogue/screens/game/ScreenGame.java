@@ -9,6 +9,7 @@ import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.util.math.Calc;
 import mightypork.rogue.Config;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
@@ -28,7 +29,6 @@ public class ScreenGame extends LayeredScreen {
 		WORLD, INV;
 	}
 	
-	private final Random rand = new Random();
 	private InvLayer invLayer;
 	private HudLayer hudLayer;
 	
@@ -44,7 +44,7 @@ public class ScreenGame extends LayeredScreen {
 		public void execute()
 		{
 			final PlayerFacade pl = WorldProvider.get().getPlayer();
-			if (pl.isDead()) return;
+			if (pl.isDead() || pl.getWorld().isPaused()) return;
 			pl.tryToEatSomeFood();
 		}
 	};
@@ -147,7 +147,7 @@ public class ScreenGame extends LayeredScreen {
 			@Override
 			public void run()
 			{
-				WorldProvider.get().createWorld(rand.nextLong());
+				WorldProvider.get().createWorld(Calc.rand.nextLong());
 			}
 		});
 		

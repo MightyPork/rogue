@@ -6,7 +6,9 @@ import java.util.List;
 
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.ion.IonBundle;
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinderProxy;
@@ -205,6 +207,10 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			if (noDoorPath == null) return; // cant reach, give up
 			
 			startChasing(prey);
+		} else {
+			if(Calc.rand.nextBoolean()) {
+				entity.pos.addStep(Sides.randomCardinal());
+			}
 		}
 	}
 	
@@ -317,14 +323,14 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	@DefaultImpl
 	protected double getScanRadius()
 	{
-		return sleeping ? 1 + rand.nextInt(3) : 4 + rand.nextInt(4); // For override
+		return sleeping ? Calc.randInt(1, 3) : Calc.randInt(4, 8); // For override
 	}
 	
 	
 	@DefaultImpl
 	protected int getPreyAbandonDistance()
 	{
-		return 5 + rand.nextInt(4); // For override
+		return Calc.randInt(5, 8); // For override
 	}
 	
 	

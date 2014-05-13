@@ -21,8 +21,6 @@ public abstract class Item implements IonObjBlob {
 	private int amount = 1;
 	private int uses = 1;
 	
-	protected static final Random rand = new Random();
-	
 	
 	public Item(ItemModel model)
 	{

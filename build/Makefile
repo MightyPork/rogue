@@ -22,7 +22,9 @@ $(OUT): $(IN) $(STUB)
 	
 	unzip $(STUB) -d $(TMP_DIR)
 	
-	# export	
+	find $(TMP_DIR) -name "*.xcf" -type f -delete
+	
+	# export
 	(cd $(TMP_DIR); zip -r9 ./pack.zip .)
 	mv -f $(TMP_DIR)/pack.zip $(OUT)
 	chmod +x $(OUT)
@@ -33,6 +35,9 @@ $(OUT): $(IN) $(STUB)
 
 run: $(OUT)
 	java -jar $(OUT)
+
+clean:
+	rm -rf $(OUT)
 
 deploy: $(OUT)
 	cp -f $(OUT) /home/ondra/Dokumenty/Dropbox/Public/Rogue

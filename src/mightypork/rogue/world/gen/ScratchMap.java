@@ -639,7 +639,7 @@ public class ScratchMap {
 	{
 		if (!isIn(pos)) return false;
 		
-		if (pos.dist(enterPoint) < 5) return false; // protected distance.
+		if (pos.dist(enterPoint) < 4) return false; // protected distance.
 		
 		final Tile t = getTile(pos);
 		if (!t.isWalkable()) return false;

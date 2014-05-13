@@ -14,6 +14,7 @@ import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonObjBinary;
 import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Sides;
 import mightypork.gamecore.util.math.algo.Step;
@@ -97,8 +98,6 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 			return true;
 		}
 	};
-	
-	private static final Random rand = new Random();
 	
 	public static final int ION_MARK = 53;
 	private static final Comparator<Entity> ENTITY_RENDER_CMP = new EntityRenderComparator();
@@ -361,13 +360,13 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		
 		// closer
 		for (int i = 0; i < 20; i++) {
-			final Coord c = pos.add(-1 + rand.nextInt(3), -1 + rand.nextInt(3));
+			final Coord c = pos.add(Calc.randInt(-1, 1), Calc.randInt(-1, 1));
 			if (addEntity(entity, c)) return true;
 		}
 		
 		// further
 		for (int i = 0; i < 20; i++) {
-			final Coord c = pos.add(-2 + rand.nextInt(5), -2 + rand.nextInt(5));
+			final Coord c = pos.add(Calc.randInt(-2, 2),Calc.randInt(-2, 2));
 			if (addEntity(entity, c)) return true;
 		}
 		
@@ -699,7 +698,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		if (getTile(coord).dropItem(itm)) return true;
 		
 		for (int i = 0; i < 6; i++) {
-			final Coord c = coord.add(-1 + rand.nextInt(3), -1 + rand.nextInt(3));
+			final Coord c = coord.add(Calc.randInt(-1, 1), Calc.randInt(-1, 1));
 			if (getTile(c).dropItem(itm)) return true;
 		}
 		

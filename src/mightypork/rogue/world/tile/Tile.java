@@ -29,9 +29,6 @@ public abstract class Tile implements BusAccess, IonObjBlob {
 	// tmp extras
 	public final TileGenData genData = new TileGenData();
 	
-	/** RNG for random stuff in tiles */
-	protected static final Random rand = new Random();
-	
 	public final TileModel model;
 	
 	// temporary flag for map.

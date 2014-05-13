@@ -32,7 +32,7 @@ public class EntityGrayRat extends Entity {
 		setDespawnDelay(1);
 		
 		health.setHealthMax(6);
-		health.setHealth(Calc.randInt(rand, 4, 6));
+		health.setHealth(Calc.randInt(4, 6));
 		health.setHitCooldownTime(0.3);
 	}
 	
@@ -67,18 +67,18 @@ public class EntityGrayRat extends Entity {
 	{
 		// drop rat stuff
 		
-		if (rand.nextInt(4) == 0) {
+		if (Calc.rand.nextInt(6) == 0) {
 			getLevel().dropNear(getCoord(), Items.BONE.createItemDamaged(40));
 			return;
 		}
 		
-		if (rand.nextInt(6) == 0) {
-			getLevel().dropNear(getCoord(), Items.MEAT.createItem());
+		if (Calc.rand.nextInt(3) == 0) {
+			getLevel().dropNear(getCoord(), Items.CHEESE.createItem());
 			return;
 		}
 		
-		if (rand.nextInt(3) == 0) {
-			getLevel().dropNear(getCoord(), Items.CHEESE.createItem());
+		if (Calc.rand.nextInt(3) == 0) {
+			getLevel().dropNear(getCoord(), Items.MEAT.createItem());
 			return;
 		}
 	}

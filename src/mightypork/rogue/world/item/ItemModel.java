@@ -20,8 +20,6 @@ public final class ItemModel {
 	public final int id;
 	public final Class<? extends Item> itemClass;
 	
-	public static final Random rand = new Random();
-	
 	
 	public ItemModel(int id, Class<? extends Item> item)
 	{
@@ -68,7 +66,7 @@ public final class ItemModel {
 	public Item createItemDamaged(int minimalHealthPercent)
 	{
 		final Item item = createItem();
-		item.setRemainingUses(Calc.randInt(rand, (int) Math.ceil(item.getMaxUses() * (minimalHealthPercent / 100D)), item.getMaxUses()));
+		item.setRemainingUses(Calc.randInt((int) Math.ceil(item.getMaxUses() * (minimalHealthPercent / 100D)), item.getMaxUses()));
 		return item;
 	}
 }

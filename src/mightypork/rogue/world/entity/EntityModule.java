@@ -18,7 +18,6 @@ import mightypork.gamecore.util.ion.IonObjBundled;
 public abstract class EntityModule implements IonObjBundled, Updateable {
 	
 	protected final Entity entity;
-	protected static final Random rand = new Random();
 	
 	
 	public EntityModule(Entity entity)
