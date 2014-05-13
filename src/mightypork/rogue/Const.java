@@ -9,7 +9,7 @@ package mightypork.rogue;
 public final class Const {
 	
 	// STRINGS
-	public static final int VERSION = 1;
+	public static final int VERSION = 2;
 	
 	public static final String APP_NAME = "Rogue";
 	public static final String TITLEBAR = APP_NAME + " v." + VERSION;
