@@ -178,7 +178,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			sleeping = true;
 		}
 		
-		if (!chasing && !sleeping && !entity.pos.isMoving() && Calc.rand.nextInt(6) == 0) {
+		if (!chasing && !sleeping && !entity.pos.isMoving() && Calc.rand.nextInt(10) == 0) {
 			entity.pos.addStep(Sides.randomCardinal());
 		}
 	}
@@ -349,13 +349,13 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	@DefaultImpl
 	protected boolean shouldRandomlyWake()
 	{
-		return Calc.rand.nextInt(3) == 0;
+		return Calc.rand.nextInt(10) == 0;
 	}
 	
 	
 	@DefaultImpl
 	protected boolean shouldRandomlyFallAsleep()
 	{
-		return Calc.rand.nextInt(5) == 0;
+		return Calc.rand.nextInt(8) == 0;
 	}
 }
