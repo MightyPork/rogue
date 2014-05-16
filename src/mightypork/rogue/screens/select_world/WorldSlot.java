@@ -162,6 +162,7 @@ public class WorldSlot extends ConstraintLayout {
 		
 		if (!file.exists()) {
 			label = "<empty>";
+			worldBundle = null;
 		} else {
 			try {
 				worldBundle = Ion.fromFile(file);
@@ -173,7 +174,8 @@ public class WorldSlot extends ConstraintLayout {
 				delBtn.setVisible(true);
 				delBtn.setEnabled(true);
 				
-			} catch (final IOException e) {
+			} catch (final Exception e) {
+				Log.w("Error loading world save.", e);
 				label = "<corrupt>";
 			}
 		}

@@ -21,7 +21,7 @@ import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.files.InstanceLock;
 import mightypork.gamecore.util.ion.Ion;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
 
 
 /**
@@ -153,7 +153,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	protected void registerIonizables()
 	{
 		Ion.registerType(Coord.ION_MARK, Coord.class);
-		Ion.registerType(Step.ION_MARK, Step.class);
+		Ion.registerType(Move.ION_MARK, Move.class);
 	}
 	
 	

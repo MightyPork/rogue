@@ -2,7 +2,9 @@ package mightypork.rogue.world.tile.impl;
 
 
 import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.world.events.WorldDescendRequest;
+import mightypork.rogue.world.tile.TileColors;
 import mightypork.rogue.world.tile.TileModel;
 
 
@@ -30,5 +32,12 @@ public abstract class TileBaseExit extends TileBaseStairs {
 	public boolean doesCastShadow()
 	{
 		return false;
+	}
+	
+	
+	@Override
+	public Color getMapColor()
+	{
+		return TileColors.EXIT;
 	}
 }

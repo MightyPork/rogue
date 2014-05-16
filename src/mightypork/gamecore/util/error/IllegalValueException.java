@@ -1,6 +1,12 @@
 package mightypork.gamecore.util.error;
 
 
+/**
+ * Thrown when a invalid value is given to a method, or found in a data object /
+ * file etc
+ * 
+ * @author MightyPork
+ */
 public class IllegalValueException extends RuntimeException {
 	
 	public IllegalValueException()
@@ -23,12 +29,6 @@ public class IllegalValueException extends RuntimeException {
 	public IllegalValueException(String message, Throwable cause)
 	{
 		super(message, cause);
-	}
-	
-	
-	public IllegalValueException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
-	{
-		super(message, cause, enableSuppression, writableStackTrace);
 	}
 	
 }

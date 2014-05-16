@@ -620,6 +620,19 @@ public class Calc {
 	 */
 	public static <T> T pick(List<T> list)
 	{
+		return pick(rand, list);
+	}
+	
+	
+	/**
+	 * Pick random element from a given list.
+	 * 
+	 * @param rand RNG
+	 * @param list list of choices
+	 * @return picked element
+	 */
+	public static <T> T pick(Random rand, List<T> list)
+	{
 		if (list.size() == 0) return null;
 		return list.get(rand.nextInt(list.size()));
 	}
@@ -717,5 +730,15 @@ public class Calc {
 		}
 		
 		return out;
+	}
+	
+	
+	public static int countBits(byte b)
+	{
+		int c = 0;
+		for (int i = 0; i < 8; i++) {
+			c += (b >> i) & 1;
+		}
+		return c;
 	}
 }

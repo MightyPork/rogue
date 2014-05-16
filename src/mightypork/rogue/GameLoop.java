@@ -50,7 +50,7 @@ public final class GameLoop extends MainLoop implements ActionRequest.Listener {
 		@Override
 		public void execute()
 		{
-			Res.getEffect("gui.shutter").play(1);
+			Res.getSoundEffect("gui.shutter").play(1);
 			Utils.runAsThread(new TaskTakeScreenshot());
 		}
 	};

@@ -14,6 +14,7 @@ public class Inventory implements IonObjBinary {
 	
 	public static final short ION_MARK = 54;
 	private Item[] items;
+	private int lastAddIndex = 0;
 	
 	
 	public Inventory(int size)
@@ -87,6 +88,8 @@ public class Inventory implements IonObjBinary {
 	 */
 	public Item getItem(int i)
 	{
+		if (i < 0 || i > getSize()) return null;
+		
 		verifyIndex(i);
 		final Item itm = items[i];
 		if (itm == null || itm.isEmpty()) return null;
@@ -112,6 +115,7 @@ public class Inventory implements IonObjBinary {
 	{
 		verifyIndex(i);
 		items[i] = item;
+		lastAddIndex = i;
 	}
 	
 	
@@ -136,7 +140,10 @@ public class Inventory implements IonObjBinary {
 		for (int i = 0; i < getSize(); i++) {
 			final Item itm = getItem(i);
 			if (itm != null) {
-				if (itm.addItem(stored)) return true;
+				if (itm.addItem(stored)) {
+					lastAddIndex = i;
+					return true;
+				}
 			}
 		}
 		
@@ -145,6 +152,7 @@ public class Inventory implements IonObjBinary {
 			final Item itm = getItem(i);
 			if (itm == null) {
 				setItem(i, stored.split(stored.getAmount())); // store a copy, empty the original item.
+				lastAddIndex = i;
 				return true;
 			}
 		}
@@ -164,6 +172,12 @@ public class Inventory implements IonObjBinary {
 			if (itm == null) continue;
 			if (itm.isEmpty()) setItem(i, null);
 		}
+	}
+	
+	
+	public int getLastAddIndex()
+	{
+		return lastAddIndex;
 	}
 	
 	

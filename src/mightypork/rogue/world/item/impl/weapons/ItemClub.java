@@ -19,7 +19,7 @@ public class ItemClub extends ItemBaseWeapon {
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
-		return new QuadItemRenderer(this, Res.txq("item.club"));
+		return new QuadItemRenderer(this, Res.getTxQuad("item.club"));
 	}
 	
 	

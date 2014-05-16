@@ -5,10 +5,10 @@ import java.util.Random;
 
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Sides;
+import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.RoomBuilder;
-import mightypork.rogue.world.gen.RoomDesc;
+import mightypork.rogue.world.gen.RoomEntry;
 import mightypork.rogue.world.gen.ScratchMap;
 import mightypork.rogue.world.gen.TileProtectLevel;
 import mightypork.rogue.world.tile.TileModel;
@@ -17,7 +17,7 @@ import mightypork.rogue.world.tile.TileModel;
 public abstract class AbstractRectRoom implements RoomBuilder {
 	
 	@Override
-	public RoomDesc buildToFit(ScratchMap map, MapTheme theme, Random rand, Coord center)
+	public RoomEntry buildRoom(ScratchMap map, MapTheme theme, Random rand, Coord center)
 	{
 		// half width, half height actually
 		final Coord innerSize = getInnerSize(rand);
@@ -42,7 +42,7 @@ public abstract class AbstractRectRoom implements RoomBuilder {
 		
 		buildExtras(map, theme, rand, min, max);
 		
-		return new RoomDesc(min.add(-1, -1), max);
+		return new RoomEntry(min.add(-1, -1), max);
 	}
 	
 	
@@ -84,7 +84,7 @@ public abstract class AbstractRectRoom implements RoomBuilder {
 					break;
 			}
 			
-			if ((map.findDoors(door) & Sides.MASK_CARDINAL) == 0) {
+			if ((map.findDoors(door) & Moves.BITS_CARDINAL) == 0) {
 				map.set(door, getDoorType(theme, rand));
 				i++; // increment pointer
 			}

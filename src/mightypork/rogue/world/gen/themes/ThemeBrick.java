@@ -56,4 +56,11 @@ public class ThemeBrick implements MapTheme {
 	{
 		return Tiles.BRICK_EXIT;
 	}
+	
+	
+	@Override
+	public TileModel chest()
+	{
+		return Tiles.BRICK_CHEST;
+	}
 }

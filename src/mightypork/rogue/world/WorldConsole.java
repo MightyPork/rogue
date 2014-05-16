@@ -129,7 +129,7 @@ public class WorldConsole implements Updateable {
 	
 	public void msgDie(Entity attacker)
 	{
-		addMessage("You've been defeated by a " + attacker.getVisualName() + "!");
+		addMessage("You've been defeated by " + addArticle(attacker.getVisualName()) + "!");
 	}
 	
 	
@@ -141,7 +141,7 @@ public class WorldConsole implements Updateable {
 	
 	public void msgEat(Item item)
 	{
-		addMessage("You've eaten a " + item.getVisualName() + ".");
+		addMessage("You've eaten " + addArticle(item.getVisualName()) + ".");
 	}
 	
 	
@@ -153,7 +153,7 @@ public class WorldConsole implements Updateable {
 	
 	public void msgEquipWeapon(Item item)
 	{
-		addMessage("You're now wielding " + (item == null ? "NOTHING" : "a " + item.getVisualName()) + ".");
+		addMessage("You're now wielding " + (item == null ? "NOTHING" : addArticle(item.getVisualName())) + ".");
 	}
 	
 	
@@ -165,7 +165,7 @@ public class WorldConsole implements Updateable {
 	
 	public void msgKill(Entity prey)
 	{
-		addMessage("You've killed a " + prey.getVisualName() + ".");
+		addMessage("You've killed " + addArticle(prey.getVisualName()) + ".");
 	}
 	
 	
@@ -183,9 +183,16 @@ public class WorldConsole implements Updateable {
 	
 	public void msgPick(Item item)
 	{
-		addMessage("You've picked up a " + item.getVisualName() + ".");
+		addMessage("You've picked up " + addArticle(item.getVisualName()) + ".");
 		lastPickupItem = item;
 		timeSinceLastPickup = 0;
+	}
+	
+	
+	public void msgDroppedItem(Item item)
+	{
+		addMessage("You've dropped " + addArticle(item.getVisualName()) + ".");
+		lastPickupItem = null;
 	}
 	
 	
@@ -216,5 +223,27 @@ public class WorldConsole implements Updateable {
 	public void msgLoadFailed()
 	{
 		addMessage("Error while loading; See the log for details.");
+	}
+	
+	
+	public void msgOpenChest()
+	{
+		addMessage("You've opened a treasure chest!");
+	}
+	
+	
+	private String addArticle(String name)
+	{
+		switch (Character.toLowerCase(name.charAt(0))) {
+			case 'a':
+			case 'e':
+			case 'i':
+			case 'o':
+			case 'u':
+			case 'y':
+				return "an " + name;
+			default:
+				return "a " + name;
+		}
 	}
 }

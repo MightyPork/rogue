@@ -1,8 +1,10 @@
 package mightypork.gamecore.util.math.algo.pathfinding;
 
 
+import java.util.List;
+
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
 
 
 /**
@@ -51,7 +53,7 @@ public class PathFinderProxy extends PathFinder {
 	
 	
 	@Override
-	protected Step[] getWalkSides()
+	protected List<Move> getWalkSides()
 	{
 		return source.getWalkSides();
 	}

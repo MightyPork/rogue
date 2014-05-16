@@ -27,6 +27,7 @@ public final class Tiles {
 	public static final TileModel BRICK_HIDDEN_DOOR = new TileModel(14, TileBrickSecretDoor.class);
 	public static final TileModel BRICK_ENTRANCE = new TileModel(15, TileBrickEntrance.class);
 	public static final TileModel BRICK_EXIT = new TileModel(16, TileBrickExit.class);
+	public static final TileModel BRICK_CHEST = new TileModel(17, TileBrickChest.class);
 	
 	
 	public static void register(int id, TileModel model)

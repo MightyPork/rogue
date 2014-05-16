@@ -31,9 +31,17 @@ public abstract class TileWithItems extends Tile {
 	@Override
 	public void renderExtra(TileRenderContext context)
 	{
-		if ((isExplored() || !Config.RENDER_UFOG) && !items.isEmpty()) {
+		super.renderExtra(context);
+		
+		if ((isExplored() || !Config.RENDER_UFOG) && hasItem() && shouldRenderItems()) {
 			itemRenderer.render(items, context);
 		}
+	}
+	
+	
+	protected boolean shouldRenderItems()
+	{
+		return true;
 	}
 	
 	

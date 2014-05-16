@@ -37,7 +37,7 @@ public class EntityRendererMobLR extends EntityRenderer {
 	public EntityRendererMobLR(Entity entity, String sheetKey)
 	{
 		this.entity = entity;
-		this.sheet = Res.txs(sheetKey);
+		this.sheet = Res.getTxSheet(sheetKey);
 	}
 	
 	

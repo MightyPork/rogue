@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
@@ -158,7 +158,7 @@ public class PlayerFacade {
 	}
 	
 	
-	public void addPathStep(Step step)
+	public void addPathStep(Move step)
 	{
 		world.playerEntity.pos.addStep(step);
 	}
@@ -400,8 +400,32 @@ public class PlayerFacade {
 	}
 	
 	
-	public boolean canGoTo(Step side)
+	public boolean canGoTo(Move side)
 	{
 		return getEntity().pos.canGoTo(side);
+	}
+	
+	
+	public void dropItem(int itemIndex)
+	{
+		final Item itm = getInventory().getItem(itemIndex);
+		if (itm != null && !itm.isEmpty()) {
+			
+			final Item piece = itm.split(1);
+			getInventory().clean();
+			
+			Coord dropPos;
+			if (world.playerEntity.pos.isMoving()) {
+				dropPos = world.playerEntity.pos.getLastPos();
+			} else {
+				dropPos = getCoord();
+			}
+			
+			if (!getLevel().getTile(dropPos).dropItem(piece)) {
+				getInventory().addItem(piece); // add back
+			} else {
+				world.getConsole().msgDroppedItem(piece);
+			}
+		}
 	}
 }

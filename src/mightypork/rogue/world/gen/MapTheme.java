@@ -30,4 +30,7 @@ public interface MapTheme {
 	
 	
 	TileModel exit();
+	
+	
+	TileModel chest();
 }

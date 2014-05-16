@@ -3,10 +3,11 @@ package mightypork.gamecore.util.math.algo.floodfill;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
 
 
 public abstract class FloodFill {
@@ -17,7 +18,7 @@ public abstract class FloodFill {
 	public abstract boolean canSpreadFrom(Coord pos);
 	
 	
-	public abstract Step[] getSpreadSides();
+	public abstract List<Move> getSpreadSides();
 	
 	
 	/**
@@ -49,7 +50,6 @@ public abstract class FloodFill {
 		
 		activeNodes.add(start);
 		
-		final Step[] sides = getSpreadSides();
 		boolean forceSpreadNext = forceSpreadStart();
 		
 		boolean limitReached = false;
@@ -62,7 +62,7 @@ public abstract class FloodFill {
 			
 			forceSpreadNext = false;
 			
-			for (final Step spr : sides) {
+			for (final Move spr : getSpreadSides()) {
 				final Coord next = current.add(spr);
 				if (activeNodes.contains(next) || foundNodes.contains(next)) continue;
 				

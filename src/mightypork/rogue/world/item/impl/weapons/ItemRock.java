@@ -8,9 +8,9 @@ import mightypork.rogue.world.item.impl.ItemBaseWeapon;
 import mightypork.rogue.world.item.render.QuadItemRenderer;
 
 
-public class ItemStone extends ItemBaseWeapon {
+public class ItemRock extends ItemBaseWeapon {
 	
-	public ItemStone(ItemModel model)
+	public ItemRock(ItemModel model)
 	{
 		super(model);
 	}
@@ -19,7 +19,7 @@ public class ItemStone extends ItemBaseWeapon {
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
-		return new QuadItemRenderer(this, Res.txq("item.stone"));
+		return new QuadItemRenderer(this, Res.getTxQuad("item.stone"));
 	}
 	
 	

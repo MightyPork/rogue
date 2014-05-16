@@ -6,8 +6,8 @@ import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.KeyListener;
-import mightypork.gamecore.util.math.algo.Sides;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
+import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.entity.impl.PlayerEntity;
 import mightypork.rogue.world.events.PlayerStepEndListener;
@@ -17,7 +17,7 @@ import mightypork.rogue.world.gui.MapView;
 public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndListener, KeyListener, Updateable {
 	
 	private static final int[] keys = { Keys.LEFT, Keys.RIGHT, Keys.UP, Keys.DOWN };
-	private static final Step[] sides = { Sides.W, Sides.E, Sides.N, Sides.S };
+	private static final Move[] sides = { Moves.W, Moves.E, Moves.N, Moves.S };
 	
 	
 	public MIPKeyboard(MapView mapView)
@@ -72,7 +72,7 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 		for (int i = 0; i < 4; i++) {
 			if (InputSystem.isKeyDown(keys[i])) {
 				
-				final Step side = sides[i];
+				final Move side = sides[i];
 				if (mapView.plc.canGo(side)) {
 					mapView.plc.go(side);
 					return true;

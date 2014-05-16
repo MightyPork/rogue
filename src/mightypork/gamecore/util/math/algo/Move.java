@@ -16,18 +16,18 @@ import mightypork.gamecore.util.ion.IonOutput;
  * 
  * @author MightyPork
  */
-public class Step implements IonObjBinary, IonObjBundled {
+public class Move implements IonObjBinary, IonObjBundled {
 	
 	public static final int ION_MARK = 254;
 	
-	public static final Step NORTH = new Step(0, -1);
-	public static final Step SOUTH = new Step(0, 1);
-	public static final Step EAST = new Step(1, 0);
-	public static final Step WEST = new Step(-1, 0);
-	public static final Step NONE = new Step(0, 0);
+	public static final Move NORTH = new Move(0, -1);
+	public static final Move SOUTH = new Move(0, 1);
+	public static final Move EAST = new Move(1, 0);
+	public static final Move WEST = new Move(-1, 0);
+	public static final Move NONE = new Move(0, 0);
 	
 	
-	public static Step make(int x, int y)
+	public static Move make(int x, int y)
 	{
 		x = x < 0 ? -1 : x > 0 ? 1 : 0;
 		y = y < 0 ? -1 : y > 0 ? 1 : 0;
@@ -38,20 +38,20 @@ public class Step implements IonObjBinary, IonObjBundled {
 		if (x == 1 && y == 0) return EAST;
 		if (x == 0 && y == 0) return NONE;
 		
-		return new Step(x, y);
+		return new Move(x, y);
 	}
 	
 	private byte x;
 	private byte y;
 	
 	
-	public Step()
+	public Move()
 	{
 		// for ion
 	}
 	
 	
-	public Step(int x, int y)
+	public Move(int x, int y)
 	{
 		this.x = (byte) (x < 0 ? -1 : x > 0 ? 1 : 0);
 		this.y = (byte) (y < 0 ? -1 : y > 0 ? 1 : 0);

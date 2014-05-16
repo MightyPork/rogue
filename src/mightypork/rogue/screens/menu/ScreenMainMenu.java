@@ -64,7 +64,7 @@ public class ScreenMainMenu extends LayeredScreen {
 			root.add(layout);
 			
 			int r = 0;
-			final ImagePainter ip = new ImagePainter(Res.txq("logo"));
+			final ImagePainter ip = new ImagePainter(Res.getTxQuad("logo"));
 			ip.keepAspectRatio();
 			layout.put(ip, r, 0, 4, 1);
 			r += 5;

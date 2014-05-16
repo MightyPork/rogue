@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityType;
@@ -50,25 +50,25 @@ public abstract class PlayerControl {
 	
 	public void goNorth()
 	{
-		go(Step.NORTH);
+		go(Move.NORTH);
 	}
 	
 	
 	public void goSouth()
 	{
-		go(Step.SOUTH);
+		go(Move.SOUTH);
 	}
 	
 	
 	public void goEast()
 	{
-		go(Step.EAST);
+		go(Move.EAST);
 	}
 	
 	
 	public void goWest()
 	{
-		go(Step.WEST);
+		go(Move.WEST);
 	}
 	
 	
@@ -85,7 +85,7 @@ public abstract class PlayerControl {
 	}
 	
 	
-	public boolean canGo(Step side)
+	public boolean canGo(Move side)
 	{
 		return getPlayer().canGoTo(side);
 	}
@@ -97,7 +97,7 @@ public abstract class PlayerControl {
 	 * @param side
 	 * @return
 	 */
-	public boolean clickTile(Step side)
+	public boolean clickTile(Move side)
 	{
 		return doClickTile(getPlayer().getCoord().add(side).toVect());
 	}
@@ -132,14 +132,14 @@ public abstract class PlayerControl {
 	}
 	
 	
-	public void go(Step side)
+	public void go(Move side)
 	{
 		getPlayer().cancelPath();
 		getPlayer().addPathStep(side);
 	}
 	
 	
-	public boolean tryGo(Step e)
+	public boolean tryGo(Move e)
 	{
 		if (!canGo(e)) return false;
 		go(e);

@@ -1,9 +1,11 @@
 package mightypork.rogue.world.entity;
 
 
+import java.util.List;
+
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Sides;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
+import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 
@@ -53,9 +55,9 @@ public class EntityPathFinder extends PathFinder {
 	
 	
 	@Override
-	public Step[] getWalkSides()
+	public List<Move> getWalkSides()
 	{
-		return Sides.CARDINAL_SIDES;
+		return Moves.CARDINAL_SIDES;
 	}
 	
 }

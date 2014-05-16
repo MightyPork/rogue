@@ -87,7 +87,7 @@ public class Coord implements IonObjBundled, IonObjBinary {
 	}
 	
 	
-	public Coord add(Step added)
+	public Coord add(Move added)
 	{
 		return add(added.x(), added.y());
 	}

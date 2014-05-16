@@ -10,7 +10,6 @@ import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.math.Calc;
 import mightypork.rogue.Config;
 import mightypork.rogue.GameStateManager.GameState;
 import mightypork.rogue.events.GameStateRequest;
@@ -32,7 +31,7 @@ public class ScreenGame extends LayeredScreen {
 		WORLD, INV;
 	}
 	
-	private InvLayer invLayer;
+	private InventoryLayer invLayer;
 	private HudLayer hudLayer;
 	
 	private WorldLayer worldLayer;
@@ -131,6 +130,17 @@ public class ScreenGame extends LayeredScreen {
 		}
 	};
 	
+	public Action actionDropLastPickedItem = new Action() {
+		
+		@Override
+		public void execute()
+		{
+			final PlayerFacade pl = WorldProvider.get().getPlayer();
+			if (pl.isDead() || pl.getWorld().isPaused()) return;
+			pl.dropItem(pl.getInventory().getLastAddIndex());
+		}
+	};
+	
 	
 	/**
 	 * Set gui state (overlay)
@@ -175,7 +185,7 @@ public class ScreenGame extends LayeredScreen {
 	{
 		super(app);
 		
-		addLayer(invLayer = new InvLayer(this));
+		addLayer(invLayer = new InventoryLayer(this));
 		invLayer.setEnabled(false);
 		invLayer.setVisible(false);
 		
@@ -187,29 +197,18 @@ public class ScreenGame extends LayeredScreen {
 		worldLayer.setEnabled(true);
 		worldLayer.setVisible(true);
 		
-		// TODO temporary, remove
-		bindKey(new KeyStroke(Keys.N, Keys.MOD_CONTROL), new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				WorldProvider.get().createWorld(Calc.rand.nextLong());
-			}
-		});
-		
 		//pause key
 		bindKey(new KeyStroke(Keys.P), actionTogglePause);
 		bindKey(new KeyStroke(Keys.PAUSE), actionTogglePause);
 		bindKey(new KeyStroke(Keys.SPACE), actionTogglePause);
 		
 		bindKey(new KeyStroke(Keys.I), actionToggleInv);
+		bindKey(new KeyStroke(Keys.D), actionDropLastPickedItem);
 		bindKey(new KeyStroke(Keys.E), actionEat);
 		bindKey(new KeyStroke(Keys.M), actionToggleMinimap);
 		bindKey(new KeyStroke(Keys.Z), actionToggleZoom);
 		
-		bindKey(new KeyStroke(Keys.R, Keys.MOD_CONTROL), actionLoad);
 		bindKey(new KeyStroke(Keys.L, Keys.MOD_CONTROL), actionLoad);
-		
 		bindKey(new KeyStroke(Keys.S, Keys.MOD_CONTROL), actionSave);
 		
 		// add as actions - enableables.
@@ -224,11 +223,12 @@ public class ScreenGame extends LayeredScreen {
 		worldActions.add(actionSave);
 		worldActions.add(actionLoad);
 		worldActions.add(actionMenu);
+		worldActions.add(actionDropLastPickedItem);
 		
 		worldActions.setEnabled(true);
 		
-		// TMP TODO remove
-		bindKey(new KeyStroke(Keys.X), new Runnable() {
+		// CHEAT - X-ray
+		bindKey(new KeyStroke(Keys.F10, Keys.MOD_CONTROL), new Runnable() {
 			
 			@Override
 			public void run()

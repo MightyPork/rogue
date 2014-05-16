@@ -22,7 +22,7 @@ import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemType;
 
 
-public class InvLayer extends ScreenLayer {
+public class InventoryLayer extends ScreenLayer {
 	
 	private static final int SLOT_COUNT = 8;
 	private static final int SLOT_ROW = 4;
@@ -86,7 +86,7 @@ public class InvLayer extends ScreenLayer {
 	}
 	
 	
-	public InvLayer(final ScreenGame screen)
+	public InventoryLayer(final ScreenGame screen)
 	{
 		super(screen);
 		
@@ -200,17 +200,7 @@ public class InvLayer extends ScreenLayer {
 				
 				final int selected = getSelectedSlot();
 				if (selected != -1) {
-					final PlayerFacade pl = WorldProvider.get().getPlayer();
-					final Item itm = pl.getInventory().getItem(selected);
-					if (itm != null && !itm.isEmpty()) {
-						
-						final Item piece = itm.split(1);
-						if (itm.isEmpty()) pl.getInventory().setItem(selected, null);
-						
-						if (!pl.getLevel().getTile(pl.getCoord()).dropItem(piece)) {
-							pl.getInventory().addItem(piece); // add back
-						}
-					}
+					WorldProvider.get().getPlayer().dropItem(selected);
 				}
 			}
 		});

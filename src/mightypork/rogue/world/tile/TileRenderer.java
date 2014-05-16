@@ -4,7 +4,8 @@ package mightypork.rogue.world.tile;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
-import mightypork.gamecore.util.math.algo.Sides;
+import mightypork.gamecore.util.annot.DefaultImpl;
+import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.Res;
 import mightypork.rogue.world.level.render.TileRenderContext;
@@ -44,24 +45,24 @@ public abstract class TileRenderer implements Updateable {
 		this.tile = tile;
 		
 		if (!inited) {
-			SH_N = Res.txq("tile.shadow.n");
-			SH_S = Res.txq("tile.shadow.s");
-			SH_E = Res.txq("tile.shadow.e");
-			SH_W = Res.txq("tile.shadow.w");
-			SH_NW = Res.txq("tile.shadow.nw");
-			SH_NE = Res.txq("tile.shadow.ne");
-			SH_SW = Res.txq("tile.shadow.sw");
-			SH_SE = Res.txq("tile.shadow.se");
+			SH_N = Res.getTxQuad("tile.shadow.n");
+			SH_S = Res.getTxQuad("tile.shadow.s");
+			SH_E = Res.getTxQuad("tile.shadow.e");
+			SH_W = Res.getTxQuad("tile.shadow.w");
+			SH_NW = Res.getTxQuad("tile.shadow.nw");
+			SH_NE = Res.getTxQuad("tile.shadow.ne");
+			SH_SW = Res.getTxQuad("tile.shadow.sw");
+			SH_SE = Res.getTxQuad("tile.shadow.se");
 			
-			UFOG_N = Res.txq("tile.ufog.n");
-			UFOG_S = Res.txq("tile.ufog.s");
-			UFOG_E = Res.txq("tile.ufog.e");
-			UFOG_W = Res.txq("tile.ufog.w");
-			UFOG_NW = Res.txq("tile.ufog.nw");
-			UFOG_NE = Res.txq("tile.ufog.ne");
-			UFOG_SW = Res.txq("tile.ufog.sw");
-			UFOG_SE = Res.txq("tile.ufog.se");
-			UFOG_FULL = Res.txq("tile.ufog.full");
+			UFOG_N = Res.getTxQuad("tile.ufog.n");
+			UFOG_S = Res.getTxQuad("tile.ufog.s");
+			UFOG_E = Res.getTxQuad("tile.ufog.e");
+			UFOG_W = Res.getTxQuad("tile.ufog.w");
+			UFOG_NW = Res.getTxQuad("tile.ufog.nw");
+			UFOG_NE = Res.getTxQuad("tile.ufog.ne");
+			UFOG_SW = Res.getTxQuad("tile.ufog.sw");
+			UFOG_SE = Res.getTxQuad("tile.ufog.se");
+			UFOG_FULL = Res.getTxQuad("tile.ufog.full");
 			inited = true;
 		}
 	}
@@ -78,9 +79,9 @@ public abstract class TileRenderer implements Updateable {
 			shadows = 0; // reset the mask
 			
 			for (int i = 0; i < 8; i++) {
-				final Tile t2 = context.getAdjacentTile(Sides.get(i));
+				final Tile t2 = context.getAdjacentTile(Moves.getSide(i));
 				if (!t2.isNull() && t2.doesCastShadow()) {
-					shadows |= Sides.bit(i);
+					shadows |= Moves.getBit(i);
 				}
 			}
 			
@@ -90,16 +91,22 @@ public abstract class TileRenderer implements Updateable {
 		if (shadows == 0) return;
 		final Rect rect = context.getRect();
 		
-		if ((shadows & Sides.NW_CORNER) == Sides.MASK_NW) Render.quadTextured(rect, SH_NW);
-		if ((shadows & Sides.MASK_N) != 0) Render.quadTextured(rect, SH_N);
-		if ((shadows & Sides.NE_CORNER) == Sides.MASK_NE) Render.quadTextured(rect, SH_NE);
+		if ((shadows & Moves.BITS_NW_CORNER) == Moves.BIT_NW) Render.quadTextured(rect, SH_NW);
+		if ((shadows & Moves.BIT_N) != 0) Render.quadTextured(rect, SH_N);
+		if ((shadows & Moves.BITS_NE_CORNER) == Moves.BIT_NE) Render.quadTextured(rect, SH_NE);
 		
-		if ((shadows & Sides.MASK_W) != 0) Render.quadTextured(rect, SH_W);
-		if ((shadows & Sides.MASK_E) != 0) Render.quadTextured(rect, SH_E);
+		if ((shadows & Moves.BIT_W) != 0) Render.quadTextured(rect, SH_W);
+		if ((shadows & Moves.BIT_E) != 0) Render.quadTextured(rect, SH_E);
 		
-		if ((shadows & Sides.SW_CORNER) == Sides.MASK_SW) Render.quadTextured(rect, SH_SW);
-		if ((shadows & Sides.MASK_S) != 0) Render.quadTextured(rect, SH_S);
-		if ((shadows & Sides.SE_CORNER) == Sides.MASK_SE) Render.quadTextured(rect, SH_SE);
+		if ((shadows & Moves.BITS_SW_CORNER) == Moves.BIT_SW) Render.quadTextured(rect, SH_SW);
+		if ((shadows & Moves.BIT_S) != 0) Render.quadTextured(rect, SH_S);
+		if ((shadows & Moves.BITS_SE_CORNER) == Moves.BIT_SE) Render.quadTextured(rect, SH_SE);
+	}
+	
+	
+	@DefaultImpl
+	public void renderExtra(TileRenderContext context)
+	{
 	}
 	
 	
@@ -117,24 +124,24 @@ public abstract class TileRenderer implements Updateable {
 		byte ufog = 0;
 		
 		for (int i = 0; i < 8; i++) {
-			final Tile t2 = context.getAdjacentTile(Sides.get(i));
+			final Tile t2 = context.getAdjacentTile(Moves.getSide(i));
 			if (t2.isNull() || !t2.isExplored()) {
-				ufog |= Sides.bit(i);
+				ufog |= Moves.getBit(i);
 			}
 		}
 		
 		if (ufog == 0) return;
 		
-		if ((ufog & Sides.NW_CORNER) == Sides.MASK_NW) Render.quadTextured(rect, UFOG_NW);
-		if ((ufog & Sides.MASK_N) != 0) Render.quadTextured(rect, UFOG_N);
-		if ((ufog & Sides.NE_CORNER) == Sides.MASK_NE) Render.quadTextured(rect, UFOG_NE);
+		if ((ufog & Moves.BITS_NW_CORNER) == Moves.BIT_NW) Render.quadTextured(rect, UFOG_NW);
+		if ((ufog & Moves.BIT_N) != 0) Render.quadTextured(rect, UFOG_N);
+		if ((ufog & Moves.BITS_NE_CORNER) == Moves.BIT_NE) Render.quadTextured(rect, UFOG_NE);
 		
-		if ((ufog & Sides.MASK_W) != 0) Render.quadTextured(rect, UFOG_W);
-		if ((ufog & Sides.MASK_E) != 0) Render.quadTextured(rect, UFOG_E);
+		if ((ufog & Moves.BIT_W) != 0) Render.quadTextured(rect, UFOG_W);
+		if ((ufog & Moves.BIT_E) != 0) Render.quadTextured(rect, UFOG_E);
 		
-		if ((ufog & Sides.SW_CORNER) == Sides.MASK_SW) Render.quadTextured(rect, UFOG_SW);
-		if ((ufog & Sides.MASK_S) != 0) Render.quadTextured(rect, UFOG_S);
-		if ((ufog & Sides.SE_CORNER) == Sides.MASK_SE) Render.quadTextured(rect, UFOG_SE);
+		if ((ufog & Moves.BITS_SW_CORNER) == Moves.BIT_SW) Render.quadTextured(rect, UFOG_SW);
+		if ((ufog & Moves.BIT_S) != 0) Render.quadTextured(rect, UFOG_S);
+		if ((ufog & Moves.BITS_SE_CORNER) == Moves.BIT_SE) Render.quadTextured(rect, UFOG_SE);
 		
 	}
 	

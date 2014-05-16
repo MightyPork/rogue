@@ -2,8 +2,6 @@ package mightypork.rogue.world.tile;
 
 
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.PAL16;
-import mightypork.gamecore.util.math.color.pal.RGB;
 
 
 /**
@@ -14,25 +12,25 @@ import mightypork.gamecore.util.math.color.pal.RGB;
 public enum TileType
 {
 	/** No tile */
-	NULL(RGB.NONE, false),
+	NULL(TileColors.NULL, false),
 	/** Floor tile */
-	FLOOR(RGB.GRAY_DARK, true),
+	FLOOR(TileColors.FLOOR, true),
 	/** Wall tile */
-	WALL(RGB.GRAY_LIGHT, false),
+	WALL(TileColors.WALL, false),
 	/** Door/gate tile */
-	DOOR(PAL16.NEWPOOP, true),
+	DOOR(TileColors.DOOR, true),
 	/** Passage (ie secret door) */
-	PASSAGE(RGB.GRAY, true),
+	PASSAGE(TileColors.COLLAPSED_WALL, true),
 	/** Stairs */
-	STAIRS(RGB.CYAN, false);
+	STAIRS(TileColors.WALL, false);
 	
 	private final Color mapColor;
 	private final boolean potentiallyWalkable;
 	
 	
-	private TileType(Color mapColor, boolean potentiallyWalkable)
+	private TileType(Color defaultMapColor, boolean potentiallyWalkable)
 	{
-		this.mapColor = mapColor;
+		this.mapColor = defaultMapColor;
 		this.potentiallyWalkable = potentiallyWalkable;
 	}
 	

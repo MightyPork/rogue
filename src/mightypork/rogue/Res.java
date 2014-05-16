@@ -60,9 +60,8 @@ public final class Res {
 		fonts.loadFont("tinyutf", font = new DeferredFont("/res/font/TinyUnicode2.ttf", Glyphs.basic, 16));
 		font.setDiscardRatio(6 / 16D, 2 / 16D);
 		
-		// aliases based on concrete usage
+		// aliases
 		fonts.addAlias("thick", "press_start");
-		
 		fonts.addAlias("thin", "battlenet");
 		fonts.addAlias("tiny", "tinyutf");
 	}
@@ -135,6 +134,8 @@ public final class Res {
 		textures.add("tile.brick.passage", grid.makeSheet(3, 2, 4, 1));
 		textures.add("tile.brick.stairs.up", grid.makeQuad(0, 6));
 		textures.add("tile.brick.stairs.down", grid.makeQuad(1, 6));
+		textures.add("tile.extra.chest.closed", grid.makeQuad(0, 4));
+		textures.add("tile.extra.chest.open", grid.makeQuad(1, 4));
 		
 		// shadows
 		textures.add("tile.shadow.n", grid.makeQuad(0, 7));
@@ -165,12 +166,14 @@ public final class Res {
 		textures.add("item.meat", grid.makeQuad(0, 0));
 		textures.add("item.club", grid.makeQuad(1, 0));
 		textures.add("item.sword", grid.makeQuad(2, 0));
-		textures.add("item.hammer", grid.makeQuad(3, 0));
+		textures.add("item.axe", grid.makeQuad(3, 0));
 		textures.add("item.stone", grid.makeQuad(4, 0));
 		textures.add("item.bone", grid.makeQuad(5, 0));
 		textures.add("item.cheese", grid.makeQuad(6, 0));
 		textures.add("item.sandwich", grid.makeQuad(7, 0));
 		textures.add("item.heart_piece", grid.makeQuad(0, 1));
+		textures.add("item.knife", grid.makeQuad(1, 1));
+		textures.add("item.twig", grid.makeQuad(2, 1));
 	}
 	
 	
@@ -192,7 +195,7 @@ public final class Res {
 	 * @param key
 	 * @return sheet
 	 */
-	public static TxSheet txs(String key)
+	public static TxSheet getTxSheet(String key)
 	{
 		return textures.getSheet(key);
 	}
@@ -204,19 +207,19 @@ public final class Res {
 	 * @param key
 	 * @return quad
 	 */
-	public static TxQuad txq(String key)
+	public static TxQuad getTxQuad(String key)
 	{
 		return textures.getQuad(key);
 	}
 	
 	
-	public static LoopPlayer getLoop(String key)
+	public static LoopPlayer getSoundLoop(String key)
 	{
 		return sounds.getLoop(key);
 	}
 	
 	
-	public static EffectPlayer getEffect(String key)
+	public static EffectPlayer getSoundEffect(String key)
 	{
 		return sounds.getEffect(key);
 	}

@@ -8,8 +8,8 @@ import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Sides;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
+import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinderProxy;
 import mightypork.rogue.world.entity.AiTimer;
@@ -65,7 +65,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			if (entity.pos.isMoving()) return;
 			
 			if (Calc.rand.nextInt(10) == 0) {
-				entity.pos.addStep(Sides.randomCardinal());
+				entity.pos.addStep(Moves.randomCardinal());
 			}
 		}
 	};
@@ -260,7 +260,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	}
 	
 	
-	private List<Step> getPathToPrey(Entity prey)
+	private List<Move> getPathToPrey(Entity prey)
 	{
 		if (!isPreyValid(prey)) return null;
 		
@@ -280,7 +280,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			return;
 		}
 		
-		final List<Step> preyPath = getPathToPrey(prey);
+		final List<Move> preyPath = getPathToPrey(prey);
 		
 		if (preyPath == null || preyPath.size() > getPreyAbandonDistance()) {
 			stopChasing();

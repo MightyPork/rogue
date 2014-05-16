@@ -15,6 +15,7 @@ import mightypork.gamecore.eventbus.event_flags.ImmediateEvent;
 import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 import mightypork.gamecore.eventbus.events.Destroyable;
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.Utils;
 
 
 /**
@@ -142,10 +143,6 @@ final public class EventBus implements Destroyable, BusAccess {
 	/** Messages queued for delivery */
 	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<>();
 	
-	private volatile boolean sendingDirect = false;
-	
-	private BusEvent<?> lastEvt;
-	
 	
 	/**
 	 * Make a new bus and start it's queue thread.
@@ -180,13 +177,13 @@ final public class EventBus implements Destroyable, BusAccess {
 	{
 		assertLive();
 		
-		final DelayedEvent adelay = event.getClass().getAnnotation(DelayedEvent.class);
+		final DelayedEvent adelay = Utils.getAnnotation(event, DelayedEvent.class);
 		if (adelay != null) {
 			sendDelayed(event, adelay.delay());
 			return;
 		}
 		
-		if (event.getClass().isAnnotationPresent(ImmediateEvent.class)) {
+		if (Utils.hasAnnotation(event, ImmediateEvent.class)) {
 			sendDirect(event);
 			return;
 		}
@@ -364,7 +361,6 @@ final public class EventBus implements Destroyable, BusAccess {
 		
 		for (int i = 0; i < 2; i++) { // two tries.
 		
-//			channels.setBuffering(true);
 			for (final EventChannel<?, ?> b : channels) {
 				if (b.canBroadcast(event)) {
 					accepted = true;
@@ -373,7 +369,6 @@ final public class EventBus implements Destroyable, BusAccess {
 				
 				if (event.isConsumed()) break;
 			}
-//			channels.setBuffering(false);
 			
 			if (!accepted) if (addChannelForEvent(event)) continue;
 			
@@ -388,7 +383,7 @@ final public class EventBus implements Destroyable, BusAccess {
 	private boolean shallLog(BusEvent<?> event)
 	{
 		if (!detailedLogging) return false;
-		if (event.getClass().isAnnotationPresent(NotLoggedEvent.class)) return false;
+		if (Utils.hasAnnotation(event, NotLoggedEvent.class)) return false;
 		
 		return true;
 	}

@@ -10,11 +10,7 @@ import mightypork.rogue.world.item.impl.active.ItemHeartPiece;
 import mightypork.rogue.world.item.impl.food.ItemCheese;
 import mightypork.rogue.world.item.impl.food.ItemMeat;
 import mightypork.rogue.world.item.impl.food.ItemSandwich;
-import mightypork.rogue.world.item.impl.weapons.ItemBone;
-import mightypork.rogue.world.item.impl.weapons.ItemClub;
-import mightypork.rogue.world.item.impl.weapons.ItemHammer;
-import mightypork.rogue.world.item.impl.weapons.ItemStone;
-import mightypork.rogue.world.item.impl.weapons.ItemSword;
+import mightypork.rogue.world.item.impl.weapons.*;
 
 
 /**
@@ -31,10 +27,12 @@ public final class Items {
 	public static final ItemModel BONE = new ItemModel(3, ItemBone.class);
 	public static final ItemModel SANDWICH = new ItemModel(4, ItemSandwich.class);
 	public static final ItemModel CLUB = new ItemModel(5, ItemClub.class);
-	public static final ItemModel HAMMER = new ItemModel(6, ItemHammer.class);
+	public static final ItemModel AXE = new ItemModel(6, ItemAxe.class);
 	public static final ItemModel SWORD = new ItemModel(7, ItemSword.class);
-	public static final ItemModel ROCK = new ItemModel(8, ItemStone.class);
+	public static final ItemModel ROCK = new ItemModel(8, ItemRock.class);
 	public static final ItemModel HEART_PIECE = new ItemModel(9, ItemHeartPiece.class);
+	public static final ItemModel TWIG = new ItemModel(10, ItemTwig.class);
+	public static final ItemModel KNIFE = new ItemModel(11, ItemKnife.class);
 	
 	
 	public static void register(int id, ItemModel model)

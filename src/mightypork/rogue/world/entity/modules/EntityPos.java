@@ -8,7 +8,7 @@ import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.gamecore.util.math.constraints.vect.mutable.VectAnimated;
@@ -128,7 +128,7 @@ class EntityPos implements IonObjBundled, Updateable {
 	}
 	
 	
-	public void walk(Step step, double secs)
+	public void walk(Move step, double secs)
 	{
 		setTo(coord.x + step.x(), coord.y + step.y());
 		walkOffset.setTo(-step.x(), -step.y());

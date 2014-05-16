@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.algo.pathfinding.heuristics.DiagonalHeuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.heuristics.ManhattanHeuristic;
 
@@ -29,24 +29,24 @@ public abstract class PathFinder {
 	private boolean ignoreEnd;
 	
 	
-	public List<Step> findPathRelative(Coord start, Coord end)
+	public List<Move> findPathRelative(Coord start, Coord end)
 	{
 		return findPathRelative(start, end, ignoreStart, ignoreEnd);
 	}
 	
 	
-	public List<Step> findPathRelative(Coord start, Coord end, boolean ignoreStart, boolean ignoreEnd)
+	public List<Move> findPathRelative(Coord start, Coord end, boolean ignoreStart, boolean ignoreEnd)
 	{
 		final List<Coord> path = findPath(start, end, ignoreStart, ignoreEnd);
 		
 		if (path == null) return null;
 		
-		final List<Step> out = new ArrayList<>();
+		final List<Move> out = new ArrayList<>();
 		
 		final Coord current = start.copy();
 		for (final Coord c : path) {
 			if (c.equals(current)) continue;
-			out.add(Step.make(c.x - current.x, c.y - current.y));
+			out.add(Move.make(c.x - current.x, c.y - current.y));
 			current.x = c.x;
 			current.y = c.y;
 		}
@@ -76,8 +76,6 @@ public abstract class PathFinder {
 			open.add(n);
 		}
 		
-		final Step[] walkDirs = getWalkSides();
-		
 		Node current = null;
 		
 		while (true) {
@@ -93,7 +91,7 @@ public abstract class PathFinder {
 				break;
 			}
 			
-			for (final Step go : walkDirs) {
+			for (final Move go : getWalkSides()) {
 				
 				final Coord c = current.pos.add(go);
 				if (!isAccessible(c) && !(c.equals(end) && ignoreEnd) && !(c.equals(start) && ignoreStart)) continue;
@@ -225,7 +223,7 @@ public abstract class PathFinder {
 	protected abstract Heuristic getHeuristic();
 	
 	
-	protected abstract Step[] getWalkSides();
+	protected abstract List<Move> getWalkSides();
 	
 	
 	/**

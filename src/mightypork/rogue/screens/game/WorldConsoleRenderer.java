@@ -69,7 +69,7 @@ public class WorldConsoleRenderer extends BaseComponent {
 			}
 			
 		} catch (final ConcurrentModificationException e) {
-			Log.e(e); // this should not happen anymore
+			Log.e(e); // this should not happen
 		}
 		
 		

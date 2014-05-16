@@ -38,6 +38,7 @@ public class RGB {
 	
 	public static final Color PINK = Color.fromHex(0xFF3FFC);
 	public static final Color ORANGE = Color.fromHex(0xFC4800);
+	public static final Color BROWN = Color.fromHex(0x83501B);
 	
 	public static final Color NONE = Color.rgba(0, 0, 0, 0);
 }

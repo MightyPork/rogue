@@ -10,7 +10,7 @@ import java.util.Set;
 
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;
@@ -22,7 +22,7 @@ public class EntityModulePosition extends EntityModule {
 	private final Coord lastPos = new Coord(0, 0);
 	private boolean walking = false;
 	
-	private final Queue<Step> path = new LinkedList<>();
+	private final Queue<Move> path = new LinkedList<>();
 	private final EntityPos entityPos = new EntityPos();
 	private double stepTime = 0.5;
 	
@@ -136,7 +136,7 @@ public class EntityModulePosition extends EntityModule {
 			
 			walking = true;
 			
-			final Step step = path.poll();
+			final Move step = path.poll();
 			
 			final Coord planned = entityPos.getCoord().add(step.toCoord());
 			
@@ -177,7 +177,7 @@ public class EntityModulePosition extends EntityModule {
 	 * 
 	 * @param step
 	 */
-	public void addStep(Step step)
+	public void addStep(Move step)
 	{
 		if (path.isEmpty() && !canGoTo(step)) return;
 		
@@ -203,7 +203,7 @@ public class EntityModulePosition extends EntityModule {
 	public boolean navigateTo(Coord target)
 	{
 		if (target.equals(getCoord())) return true;
-		final List<Step> newPath = entity.getPathFinder().findPathRelative(entityPos.getCoord(), target);
+		final List<Move> newPath = entity.getPathFinder().findPathRelative(entityPos.getCoord(), target);
 		
 		if (newPath == null) return false;
 		cancelPath();
@@ -228,7 +228,7 @@ public class EntityModulePosition extends EntityModule {
 	 * 
 	 * @param path steps
 	 */
-	public void addSteps(List<Step> path)
+	public void addSteps(List<Move> path)
 	{
 		this.path.addAll(path);
 	}
@@ -284,9 +284,15 @@ public class EntityModulePosition extends EntityModule {
 	}
 	
 	
-	public boolean canGoTo(Step side)
+	public boolean canGoTo(Move side)
 	{
 		return entity.getPathFinder().isAccessible(getCoord().add(side));
+	}
+	
+	
+	public Coord getLastPos()
+	{
+		return lastPos;
 	}
 	
 }

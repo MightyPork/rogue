@@ -2,7 +2,7 @@ package mightypork.rogue.world.level.render;
 
 
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 import mightypork.gamecore.util.math.noise.NoiseGen;
@@ -46,7 +46,7 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	 * @param offset offsets
 	 * @return the tile at that position
 	 */
-	public Tile getAdjacentTile(Step offset)
+	public Tile getAdjacentTile(Move offset)
 	{
 		return map.getTile(pos.add(offset));
 	}

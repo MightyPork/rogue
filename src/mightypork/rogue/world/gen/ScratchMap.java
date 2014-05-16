@@ -10,8 +10,8 @@ import java.util.Set;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Sides;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
+import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.rogue.world.entity.Entity;
@@ -33,7 +33,7 @@ public class ScratchMap {
 	private final int width;
 	private final int height;
 	
-	private final List<RoomDesc> rooms = new ArrayList<>();
+	private final List<RoomEntry> rooms = new ArrayList<>();
 	
 	/** Coords to connect with corridors */
 	private final List<Coord> nodes = new ArrayList<>();
@@ -96,9 +96,9 @@ public class ScratchMap {
 		
 		
 		@Override
-		public Step[] getWalkSides()
+		public List<Move> getWalkSides()
 		{
-			return Sides.CARDINAL_SIDES;
+			return Moves.CARDINAL_SIDES;
 		}
 		
 	};
@@ -136,89 +136,126 @@ public class ScratchMap {
 	}
 	
 	
-	public boolean addRoom(RoomBuilder rb, boolean critical)
+	public void addRoom(RoomBuilder rb, boolean critical) throws WorldGenError
 	{
-		final Coord center = Coord.make(0, 0);
-		
-		int failed = 0;
-		
-		int failed_total = 0;
-		
-		while (true) {
+		try {
+			if (rooms.size() > 0) minimizeBounds();
 			
-			final int sizeX = genMax.x - genMin.x;
-			final int sizeY = genMax.y - genMin.y;
+			final Coord roomPos = Coord.make(0, 0);
 			
-			center.x = genMin.x + rand.nextInt(sizeX);
-			center.y = genMin.y + rand.nextInt(sizeY);
+			int failed = 0;
+			int failed_total = 0;
 			
-			switch (rand.nextInt(4)) {
-				case 0:
-					center.x += (failed_total / 35);
-					break;
-				case 1:
-					center.x -= (failed_total / 35);
-					break;
-				case 2:
-					center.y += (failed_total / 35);
-					break;
-				case 3:
-					center.y -= (failed_total / 35);
-			}
-			
-			final RoomDesc rd = rb.buildToFit(this, theme, rand, center);
-			if (rd != null) {
-				rooms.add(rd);
+			while (true) {
 				
-				genMin.x = Math.min(genMin.x, rd.min.x);
-				genMin.y = Math.min(genMin.y, rd.min.y);
+				final int sizeX = genMax.x - genMin.x;
+				final int sizeY = genMax.y - genMin.y;
 				
-				genMax.x = Math.max(genMax.x, rd.max.x);
-				genMax.y = Math.max(genMax.y, rd.max.y);
-				clampBounds();
+				roomPos.x = genMin.x + rand.nextInt(sizeX + 1);
+				roomPos.y = genMin.y + rand.nextInt(sizeY + 1);
 				
-				nodes.add(center);
-//				Log.f3("Placed room (failed " + failed_total + " x).");
-				
-				return true;
-			} else {
-				failed++;
-				failed_total++;
-				
-				if (failed_total > 1000) {
-					return false;
+				switch (rand.nextInt(4)) {
+					case 0:
+						roomPos.x += (failed_total / 35);
+						break;
+					case 1:
+						roomPos.x -= (failed_total / 35);
+						break;
+					case 2:
+						roomPos.y += (failed_total / 35);
+						break;
+					case 3:
+						roomPos.y -= (failed_total / 35);
 				}
 				
-				if (failed > 300) {
-					Log.w("Faild to build room.");
-					if (critical) {
-						
-						genMin.x -= 5;
-						genMin.y -= 5;
-						genMax.x += 5;
-						genMax.y += 5;
-						clampBounds();
-						
-						failed = 0;
-						Log.f3("Trying again.");
-						continue;
-						
-					} else {
-						return false;
+				final RoomEntry rd = rb.buildRoom(this, theme, rand, roomPos);
+				if (rd != null) {
+					
+					rooms.add(rd);
+					
+					genMin.x = Math.min(genMin.x, rd.min.x);
+					genMin.y = Math.min(genMin.y, rd.min.y);
+					
+					genMax.x = Math.max(genMax.x, rd.max.x);
+					genMax.y = Math.max(genMax.y, rd.max.y);
+					clampBounds();
+					
+					nodes.add(roomPos);
+					
+					return;
+					
+				} else {
+					failed++;
+					failed_total++;
+					
+					if (failed_total > 1000) {
+						throw new WorldGenError("Failed to add a room.");
+					}
+					
+					if (failed > 300) {
+						Log.w("Faild to build room.");
+						if (critical) {
+							
+							// expand gen bounds
+							genMin.x -= 5;
+							genMin.y -= 5;
+							genMax.x += 5;
+							genMax.y += 5;
+							
+							clampBounds();
+							
+							failed = 0;
+							Log.f3("Trying again.");
+							continue;
+							
+						} else {
+							throw new WorldGenError("Failed to add a room.");
+						}
 					}
 				}
 			}
+		} catch (final WorldGenError e) {
+			if (!critical) {
+				Log.w("Could not place a room.", e);
+				return;
+			} else {
+				// rethrow
+				throw e;
+			}
 		}
-		
 	}
 	
 	
+	/**
+	 * Clamp bounds to available area
+	 */
 	private void clampBounds()
 	{
 		genMin.x = Calc.clamp(genMin.x, 0, width - 1);
 		genMin.y = Calc.clamp(genMin.y, 0, height - 1);
 		genMax.x = Calc.clamp(genMax.x, 0, width - 1);
 		genMax.y = Calc.clamp(genMax.y, 0, height - 1);
+	}
+	
+	
+	/**
+	 * Minimize gen bounds based on defined room bounds
+	 */
+	private void minimizeBounds()
+	{
+		final Coord low = Coord.make(width, height);
+		final Coord high = Coord.make(0, 0);
+		
+		for (final RoomEntry rd : rooms) {
+			low.x = Math.min(low.x, rd.min.x);
+			low.y = Math.min(low.y, rd.min.y);
+			
+			high.x = Math.max(high.x, rd.max.x);
+			high.y = Math.max(high.y, rd.max.y);
+		}
+		
+		genMin.setTo(low);
+		genMax.setTo(high);
 	}
 	
 	
@@ -258,11 +295,17 @@ public class ScratchMap {
 	public boolean isClear(Coord min, Coord max)
 	{
 		if (!isIn(min) || !isIn(max)) return false;
-		for (final RoomDesc r : rooms) {
+		for (final RoomEntry r : rooms) {
 			if (r.intersectsWith(min, max)) return false;
 		}
 		
 		return true;
+	}
+	
+	
+	public void protect(Coord pos, TileProtectLevel prot)
+	{
+		protect(pos, pos, prot);
 	}
 	
 	
@@ -327,7 +370,7 @@ public class ScratchMap {
 				}
 			}
 			starts.add(start);
-			start = Calc.pick(nodes);
+			start = Calc.pick(rand, nodes);
 		}
 	}
 	
@@ -377,19 +420,12 @@ public class ScratchMap {
 	}
 	
 	
+	/**
+	 * @return dimensions of the area taken by non-null tiles
+	 */
 	public Coord getNeededSize()
 	{
 		return Coord.make(genMax.x - genMin.x + 1, genMax.y - genMin.y + 1);
-	}
-	
-	
-	public int countBits(byte b)
-	{
-		int c = 0;
-		for (int i = 0; i < 8; i++) {
-			c += (b >> i) & 1;
-		}
-		return c;
 	}
 	
 	
@@ -397,11 +433,11 @@ public class ScratchMap {
 	{
 		byte walls = 0;
 		for (int i = 0; i < 8; i++) {
-			final Coord cc = pos.add(Sides.get(i));
+			final Coord cc = pos.add(Moves.getSide(i));
 			if (!isIn(cc)) continue;
 			
 			if (getTile(cc).isWall()) {
-				walls |= Sides.bit(i);
+				walls |= Moves.getBit(i);
 			}
 		}
 		return walls;
@@ -412,11 +448,11 @@ public class ScratchMap {
 	{
 		byte floors = 0;
 		for (int i = 0; i <= 7; i++) {
-			final Coord cc = pos.add(Sides.get(i));
+			final Coord cc = pos.add(Moves.getSide(i));
 			if (!isIn(cc)) continue;
 			
 			if (getTile(cc).isFloor()) {
-				floors |= Sides.bit(i);
+				floors |= Moves.getBit(i);
 			}
 		}
 		return floors;
@@ -427,11 +463,11 @@ public class ScratchMap {
 	{
 		byte doors = 0;
 		for (int i = 0; i <= 7; i++) {
-			final Coord cc = pos.add(Sides.get(i));
+			final Coord cc = pos.add(Moves.getSide(i));
 			if (!isIn(cc)) continue;
 			
 			if (getTile(cc).isDoor()) {
-				doors |= Sides.bit(i);
+				doors |= Moves.getBit(i);
 			}
 		}
 		return doors;
@@ -442,16 +478,119 @@ public class ScratchMap {
 	{
 		byte nils = 0;
 		for (int i = 0; i <= 7; i++) {
-			final Coord cc = pos.add(Sides.get(i));
+			final Coord cc = pos.add(Moves.getSide(i));
 			
 			if (!isIn(cc) || getTile(cc).isNull()) {
-				nils |= Sides.bit(i);
+				nils |= Moves.getBit(i);
 			}
 		}
 		return nils;
 	}
 	
 	
+	/**
+	 * Fix generator glitches and reduce size to the actual used size
+	 */
+	public void fixGlitches()
+	{
+		final Tile[][] out = new Tile[height][width];
+		
+		// bounds will be adjusted by the actual tiles in the map
+		genMin.x = width;
+		genMin.y = height;
+		genMax.x = 0;
+		genMax.y = 0;
+		
+		final Coord c = Coord.make(0, 0);
+		for (c.x = 0; c.x < width; c.x++) {
+			for (c.y = 0; c.y < height; c.y++) {
+				
+				final Tile t = getTile(c);
+				final boolean isNull = t.isNull();
+				
+				final boolean isDoor = !isNull && t.isDoor();
+				final boolean isFloor = !isNull && t.isFloor();
+				final boolean isWall = !isNull && t.isWall();
+				
+				// bitmasks
+				final byte walls = findWalls(c);
+				final byte nils = findNils(c);
+				final byte floors = findFloors(c);
+				
+				boolean toWall = false;
+				boolean toFloor = false;
+				boolean toNull = false;
+				
+				do {
+					if (isWall && floors == 0) {
+						toNull = true;
+						break;
+					}
+					
+					if (isFloor && (nils & Moves.BITS_CARDINAL) != 0) {
+						toWall = true; // floor with adjacent cardinal null
+						break;
+					}
+					
+					if (isNull && (floors & Moves.BITS_DIAGONAL) != 0) {
+						toWall = true; // null with adjacent diagonal floor
+						break;
+					}
+					
+					if (isDoor) {
+						
+						if (Calc.countBits((byte) (floors & Moves.BITS_CARDINAL)) < 2) {
+							toWall = true;
+							break;
+						}
+						
+						if (Calc.countBits((byte) (walls & Moves.BITS_CARDINAL)) > 2) {
+							toWall = true;
+							break;
+						}
+						
+						if (Calc.countBits((byte) (floors & Moves.BITS_CARDINAL)) > 2) {
+							toFloor = true;
+							break;
+						}
+						
+						if ((floors & Moves.BITS_NW_CORNER) == Moves.BITS_NW_CORNER) toWall = true;
+						if ((floors & Moves.BITS_NE_CORNER) == Moves.BITS_NE_CORNER) toWall = true;
+						if ((floors & Moves.BITS_SW_CORNER) == Moves.BITS_SW_CORNER) toWall = true;
+						if ((floors & Moves.BITS_SE_CORNER) == Moves.BITS_SE_CORNER) toWall = true;
+						
+					}
+				} while (false);
+				
+				if (toNull) {
+					out[c.y][c.x] = Tiles.NULL.createTile();
+				} else if (toWall) {
+					out[c.y][c.x] = theme.wall().createTile();
+				} else if (toFloor) {
+					out[c.y][c.x] = theme.floor().createTile();
+				} else {
+					out[c.y][c.x] = map[c.y][c.x];
+				}
+				
+				if (!out[c.y][c.x].isNull()) {
+					genMin.x = Math.min(genMin.x, c.x);
+					genMin.y = Math.min(genMin.y, c.y);
+					
+					genMax.x = Math.max(genMax.x, c.x);
+					genMax.y = Math.max(genMax.y, c.y);
+				}
+			}
+		}
+		
+		map = out;
+	}
+	
+	
+	/**
+	 * Write tiles and entities into a level
+	 * 
+	 * @param level the level
+	 */
 	public void writeToLevel(Level level)
 	{
 		if (level.getWorld() == null) {
@@ -461,85 +600,6 @@ public class ScratchMap {
 		// make sure no walkable are at edges.
 		final Coord c = Coord.make(0, 0);
 		final Coord c1 = Coord.make(0, 0);
-		
-		if (FIX_GLITCHES) {
-			
-			final Tile[][] out = new Tile[height][width];
-			
-			for (c.x = 0; c.x < width; c.x++) {
-				for (c.y = 0; c.y < height; c.y++) {
-					
-					final Tile t = getTile(c);
-					final boolean isNull = t.isNull();
-					
-					final boolean isDoor = !isNull && t.isDoor();
-					final boolean isFloor = !isNull && t.isFloor();
-					final boolean isWall = !isNull && t.isWall();
-					
-					// bitmasks
-					final byte walls = findWalls(c);
-					final byte nils = findNils(c);
-					final byte floors = findFloors(c);
-					
-					boolean toWall = false;
-					boolean toFloor = false;
-					boolean toNull = false;
-					
-					do {
-						if (isWall && floors == 0) {
-							toNull = true;
-							break;
-						}
-						
-						if (isFloor && (nils & Sides.MASK_CARDINAL) != 0) {
-							toWall = true; // floor with adjacent cardinal null
-							break;
-						}
-						
-						if (isNull && (floors & Sides.MASK_DIAGONAL) != 0) {
-							toWall = true; // null with adjacent diagonal floor
-							break;
-						}
-						
-						if (isDoor) {
-							
-							if (countBits((byte) (floors & Sides.MASK_CARDINAL)) < 2) {
-								toWall = true;
-								break;
-							}
-							
-							if (countBits((byte) (walls & Sides.MASK_CARDINAL)) > 2) {
-								toWall = true;
-								break;
-							}
-							
-							if (countBits((byte) (floors & Sides.MASK_CARDINAL)) > 2) {
-								toFloor = true;
-								break;
-							}
-							
-							if ((floors & Sides.NW_CORNER) == Sides.NW_CORNER) toWall = true;
-							if ((floors & Sides.NE_CORNER) == Sides.NE_CORNER) toWall = true;
-							if ((floors & Sides.SW_CORNER) == Sides.SW_CORNER) toWall = true;
-							if ((floors & Sides.SE_CORNER) == Sides.SE_CORNER) toWall = true;
-							
-						}
-					} while (false);
-					
-					if (toNull) {
-						out[c.y][c.x] = Tiles.NULL.createTile();
-					} else if (toWall) {
-						out[c.y][c.x] = theme.wall().createTile();
-					} else if (toFloor) {
-						out[c.y][c.x] = theme.floor().createTile();
-					} else {
-						out[c.y][c.x] = map[c.y][c.x];
-					}
-				}
-			}
-			
-			map = out;
-		}
 		
 		for (c.x = genMin.x, c1.x = 0; c.x <= genMax.x; c.x++, c1.x++) {
 			for (c.y = genMin.y, c1.y = 0; c.y <= genMax.y; c.y++, c1.y++) {
@@ -582,60 +642,74 @@ public class ScratchMap {
 	}
 	
 	
-	public boolean putItem(Item item, Coord pos)
+	public boolean addItem(Item item, Coord pos)
+	{
+		return addItem(item, pos, true);
+	}
+	
+	
+	public boolean addItem(Item item, Coord pos, boolean canStack)
 	{
 		if (!isIn(pos)) return false;
 		
 		final Tile t = getTile(pos);
+		if (!canStack && t.hasItem()) return false;
 		if (t.dropItem(item)) return true;
 		
 		return false;
 	}
 	
 	
-	public boolean putItemInArea(Item item, Coord min, Coord max, int tries)
+	public boolean addItemInArea(Item item, Coord min, Coord max, int tries)
 	{
 		final Coord pos = Coord.zero();
 		
-		for (int i = 0; i < tries; i++) {
-			pos.x = min.x + rand.nextInt(max.x - min.x);
-			pos.y = min.y + rand.nextInt(max.y - min.y);
-			if (putItem(item, pos)) return true;
+		for (int i = 0; i < tries / 2; i++) {
+			pos.x = Calc.randInt(rand, min.x, max.x);
+			pos.y = Calc.randInt(rand, min.y, max.y);
+			if (addItem(item, pos, false)) return true;
+		}
+		
+		for (int i = 0; i < tries - (tries / 2); i++) {
+			pos.x = Calc.randInt(rand, min.x, max.x);
+			pos.y = Calc.randInt(rand, min.y, max.y);
+			if (addItem(item, pos, true)) return true;
 		}
 		
 		return false;
 	}
 	
 	
-	public boolean putItemInMap(Item item, int tries)
+	public boolean addItemInMap(Item item, int tries)
 	{
-		return putItemInArea(item, genMin, genMax, tries);
+		Log.f3("gen bounds: " + genMin + " -> " + genMax);
+		return addItemInArea(item, genMin, genMax, tries);
 	}
 	
 	
-	public boolean putEntityInArea(Entity entity, Coord min, Coord max, int tries)
+	public boolean addEntityInArea(Entity entity, Coord min, Coord max, int tries)
 	{
 		final Coord pos = Coord.zero();
 		
 		for (int i = 0; i < tries; i++) {
-			pos.x = min.x + rand.nextInt(max.x - min.x);
-			pos.y = min.y + rand.nextInt(max.y - min.y);
+			pos.x = Calc.randInt(rand, min.x, max.x);
+			pos.y = Calc.randInt(rand, min.y, max.y);
 			if (!isIn(pos)) continue;
 			
-			if (putEntity(entity, pos)) return true;
+			if (addEntity(entity, pos)) return true;
 		}
 		
 		return false;
 	}
 	
 	
-	public boolean putEntityInMap(Entity entity, int tries)
+	public boolean addEntityInMap(Entity entity, int tries)
 	{
-		return putEntityInArea(entity, genMin, genMax, tries);
+		return addEntityInArea(entity, genMin, genMax, tries);
 	}
 	
 	
-	public boolean putEntity(Entity entity, Coord pos)
+	public boolean addEntity(Entity entity, Coord pos)
 	{
 		if (!isIn(pos)) return false;
 		

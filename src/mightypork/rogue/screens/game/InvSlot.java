@@ -50,8 +50,8 @@ public class InvSlot extends ClickableComponent {
 	public InvSlot(int index, InvSlot[] allSlots)
 	{
 		super();
-		this.txBase = Res.txq("inv.slot.base");
-		this.txSelected = Res.txq("inv.slot.selected");
+		this.txBase = Res.getTxQuad("inv.slot.base");
+		this.txSelected = Res.getTxQuad("inv.slot.selected");
 		
 		this.index = index;
 		this.slots = allSlots;

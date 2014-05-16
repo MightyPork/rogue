@@ -9,7 +9,7 @@ import mightypork.gamecore.util.math.color.Color;
  * 
  * @author MightyPork
  */
-public interface COMMODORE {
+public interface CMDR {
 	
 	Color BLACK = Color.fromHex(0x040013);
 	Color WHITE = Color.fromHex(0xFFFFFF);

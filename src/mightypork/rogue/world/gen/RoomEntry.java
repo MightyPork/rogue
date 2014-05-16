@@ -5,17 +5,17 @@ import mightypork.gamecore.util.math.algo.Coord;
 
 
 /**
- * Room description
+ * Room description entry for {@link ScratchMap}
  * 
  * @author MightyPork
  */
-public class RoomDesc {
+public class RoomEntry {
 	
 	final Coord min;
 	final Coord max;
 	
 	
-	public RoomDesc(Coord min, Coord max)
+	public RoomEntry(Coord min, Coord max)
 	{
 		super();
 		this.min = min;

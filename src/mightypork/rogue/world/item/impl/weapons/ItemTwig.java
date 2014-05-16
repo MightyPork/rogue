@@ -8,9 +8,9 @@ import mightypork.rogue.world.item.impl.ItemBaseWeapon;
 import mightypork.rogue.world.item.render.QuadItemRenderer;
 
 
-public class ItemHammer extends ItemBaseWeapon {
+public class ItemTwig extends ItemBaseWeapon {
 	
-	public ItemHammer(ItemModel model)
+	public ItemTwig(ItemModel model)
 	{
 		super(model);
 	}
@@ -19,27 +19,27 @@ public class ItemHammer extends ItemBaseWeapon {
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
-		return new QuadItemRenderer(this, Res.txq("item.hammer"));
+		return new QuadItemRenderer(this, Res.getTxQuad("item.twig"));
 	}
 	
 	
 	@Override
 	public int getAttackPoints()
 	{
-		return 4;
+		return 1;
 	}
 	
 	
 	@Override
 	public int getMaxUses()
 	{
-		return 100;
+		return 10;
 	}
 	
 	
 	@Override
 	public String getVisualName()
 	{
-		return "Hammer";
+		return "Twig";
 	}
 }

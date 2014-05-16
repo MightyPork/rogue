@@ -16,8 +16,8 @@ import mightypork.gamecore.util.ion.IonObjBinary;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Sides;
-import mightypork.gamecore.util.math.algo.Step;
+import mightypork.gamecore.util.math.algo.Move;
+import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.algo.floodfill.FloodFill;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.noise.NoiseGen;
@@ -63,9 +63,9 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	private final FloodFill exploreFiller = new FloodFill() {
 		
 		@Override
-		public Step[] getSpreadSides()
+		public List<Move> getSpreadSides()
 		{
-			return Sides.ALL_SIDES;
+			return Moves.ALL_SIDES;
 		}
 		
 		

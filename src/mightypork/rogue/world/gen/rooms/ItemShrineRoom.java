@@ -9,30 +9,33 @@ import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.ScratchMap;
 import mightypork.rogue.world.gen.WorldGenError;
 import mightypork.rogue.world.item.Item;
-import mightypork.rogue.world.item.Items;
 
 
-public class HeartPieceRoom extends SecretRoom {
+public class ItemShrineRoom extends SecretRoom {
+	
+	private final Item item;
+	
+	
+	public ItemShrineRoom(Item item)
+	{
+		this.item = item;
+	}
+	
 	
 	@Override
 	protected int getDoorCount(Random rand)
 	{
-		return Calc.randInt(rand, 1, 3);
+		return Calc.randInt(rand, 1, 4);
 	}
 	
 	
 	@Override
 	protected void buildExtras(ScratchMap map, MapTheme theme, Random rand, Coord min, Coord max)
 	{
-		final Item heart = Items.HEART_PIECE.createItem();
+		final Coord center = min.add(2, 2);
 		
-		if (!map.putItem(heart, min.add(2, 2))) {
-			if (!map.putItemInArea(heart, min, max, 100)) {
-				if (!map.putItemInMap(heart, 100)) {
-					throw new WorldGenError("Could not place heart piece.");
-				}
-				
-			}
+		if (!map.addItem(item, center)) {
+			throw new WorldGenError("Could not place item in chest.");
 		}
 	}
 	

@@ -6,7 +6,7 @@ import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.util.math.Calc.Deg;
 import mightypork.gamecore.util.math.Polar;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Sides;
+import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.entity.impl.PlayerEntity;
 import mightypork.rogue.world.events.PlayerStepEndListener;
@@ -97,16 +97,16 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 		
 		switch (dir) {
 			case 0:
-				return mapView.plc.tryGo(Sides.E);
+				return mapView.plc.tryGo(Moves.E);
 				
 			case 1:
-				return mapView.plc.tryGo(Sides.S);
+				return mapView.plc.tryGo(Moves.S);
 				
 			case 2:
-				return mapView.plc.tryGo(Sides.W);
+				return mapView.plc.tryGo(Moves.W);
 				
 			case 3:
-				return mapView.plc.tryGo(Sides.N);
+				return mapView.plc.tryGo(Moves.N);
 		}
 		
 		return false;

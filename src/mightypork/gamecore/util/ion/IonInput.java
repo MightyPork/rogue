@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.util.error.CorruptedDataException;
+import mightypork.gamecore.util.error.CorruptDataException;
 
 
 /**
@@ -360,7 +360,7 @@ public class IonInput {
 				return readStrings();
 				
 			default:
-				throw new CorruptedDataException("Invalid mark: " + mark);
+				throw new CorruptDataException("Invalid mark: " + mark);
 		}
 	}
 	
@@ -378,7 +378,7 @@ public class IonInput {
 		if (mark == Ion.ENTRY) return true;
 		if (mark == Ion.END) return false;
 		
-		throw new CorruptedDataException("Unexpected mark in sequence: " + mark);
+		throw new CorruptDataException("Unexpected mark in sequence: " + mark);
 	}
 	
 	
@@ -411,7 +411,7 @@ public class IonInput {
 			}
 			return filled;
 		} catch (final ClassCastException e) {
-			throw new CorruptedDataException("Unexpected element type in sequence.", e);
+			throw new CorruptDataException("Unexpected element type in sequence.", e);
 		}
 	}
 	
@@ -448,7 +448,7 @@ public class IonInput {
 			}
 			return filled;
 		} catch (final ClassCastException e) {
-			throw new CorruptedDataException("Unexpected element type in map.", e);
+			throw new CorruptDataException("Unexpected element type in map.", e);
 		}
 	}
 }

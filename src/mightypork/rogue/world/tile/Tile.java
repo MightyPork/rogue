@@ -98,6 +98,8 @@ public abstract class Tile implements BusAccess, IonObjBlob {
 	@DefaultImpl
 	public void renderExtra(TileRenderContext context)
 	{
+		initRenderer();
+		renderer.renderExtra(context);
 	}
 	
 	

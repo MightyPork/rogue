@@ -19,7 +19,7 @@ public class TileBrickEntrance extends TileBaseEntrance {
 	@Override
 	protected TileRenderer makeRenderer()
 	{
-		return new OneFrameTileRenderer(this, Res.txq("tile.brick.stairs.up"));
+		return new OneFrameTileRenderer(this, Res.getTxQuad("tile.brick.stairs.up"));
 	}
 	
 }

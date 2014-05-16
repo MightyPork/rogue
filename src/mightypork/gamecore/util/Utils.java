@@ -1,6 +1,9 @@
 package mightypork.gamecore.util;
 
 
+import java.lang.annotation.Annotation;
+
+
 /**
  * Assorted utils
  * 
@@ -13,5 +16,33 @@ public final class Utils {
 		final Thread t = new Thread(r);
 		t.start();
 		return t;
+	}
+	
+	
+	public static boolean hasAnnotation(Object tested, Class<? extends Annotation> annotation)
+	{
+		return tested.getClass().isAnnotationPresent(annotation);
+	}
+	
+	
+	public static <T extends Annotation> T getAnnotation(Object tested, Class<T> annotation)
+	{
+		return tested.getClass().getAnnotation(annotation);
+	}
+	
+	
+	/**
+	 * Pick first non-null option
+	 * 
+	 * @param options options
+	 * @return the selected option
+	 */
+	public static Object fallback(Object... options)
+	{
+		for (final Object o : options) {
+			if (o != null) return o;
+		}
+		
+		return null; // all null
 	}
 }

@@ -6,14 +6,14 @@ import java.util.Random;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.RoomBuilder;
-import mightypork.rogue.world.gen.RoomDesc;
+import mightypork.rogue.world.gen.RoomEntry;
 import mightypork.rogue.world.gen.ScratchMap;
 
 
 public class DeadEndRoom implements RoomBuilder {
 	
 	@Override
-	public RoomDesc buildToFit(ScratchMap map, MapTheme theme, Random rand, Coord center)
+	public RoomEntry buildRoom(ScratchMap map, MapTheme theme, Random rand, Coord center)
 	{
 		final Coord low = center.add(-1, -1);
 		final Coord high = center;
@@ -21,6 +21,6 @@ public class DeadEndRoom implements RoomBuilder {
 		
 		map.set(center, theme.floor());
 		
-		return new RoomDesc(low, high);
+		return new RoomEntry(low, high);
 	}
 }
