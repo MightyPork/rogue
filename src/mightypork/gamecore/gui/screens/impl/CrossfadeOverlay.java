@@ -15,8 +15,8 @@ import mightypork.rogue.events.ActionRequest.RequestType;
 
 public class CrossfadeOverlay extends Overlay {
 	
-	private static final double T_IN = 0.5;
-	private static final double T_OUT = 0.7;
+	private static final double T_IN = 0.4;
+	private static final double T_OUT = 0.6;
 	
 	NumAnimated alpha = new NumAnimated(0);
 	String requestedScreenName;
@@ -41,7 +41,7 @@ public class CrossfadeOverlay extends Overlay {
 	{
 		super(app);
 		
-		final QuadPainter qp = new QuadPainter(RGB.BLACK);
+		final QuadPainter qp = new QuadPainter(RGB.BLACK); // TODO allow custom colors
 		qp.setRect(root);
 		root.add(qp);
 		

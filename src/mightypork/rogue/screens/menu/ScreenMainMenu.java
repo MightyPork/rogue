@@ -3,12 +3,14 @@ package mightypork.rogue.screens.menu;
 
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.gui.components.layout.GridLayout;
+import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.PAL16;
@@ -59,15 +61,14 @@ public class ScreenMainMenu extends LayeredScreen {
 			bg.setRect(root);
 			root.add(bg);
 			
-			final GridLayout layout = new GridLayout(root, menuBox, 10, 1);
-			layout.enableCaching(true);
-			root.add(layout);
+			final RowLayout rows = new RowLayout(root, menuBox, 10);
+			rows.enableCaching(true);
+			root.add(rows);
 			
-			int r = 0;
 			final ImagePainter ip = new ImagePainter(Res.getTxQuad("logo"));
 			ip.keepAspectRatio();
-			layout.put(ip, r, 0, 4, 1);
-			r += 5;
+			rows.add(ip, 4);
+			rows.skip(1);
 			
 			PushButton btn;
 			
@@ -83,8 +84,8 @@ public class ScreenMainMenu extends LayeredScreen {
 					getEventBus().send(new GameStateRequest(GameState.SELECT_WORLD));
 				}
 			});
-			layout.put(btn, r, 0, 2, 1);
-			r += 3;
+			rows.add(btn, 2);
+			rows.skip(1);
 			
 			/*
 			// bouncy text button
@@ -111,7 +112,17 @@ public class ScreenMainMenu extends LayeredScreen {
 					getEventBus().send(new GameStateRequest(GameState.EXIT));
 				}
 			});
-			layout.put(btn, r, 0, 2, 1);
+			rows.add(btn, 2);
+			
+			
+			bindKey(new KeyStroke(Keys.ESCAPE), new Runnable() {
+				
+				@Override
+				public void run()
+				{
+					getEventBus().send(new GameStateRequest(GameState.EXIT));
+				}
+			});
 		}
 		
 		

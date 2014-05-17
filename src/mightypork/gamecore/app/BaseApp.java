@@ -80,7 +80,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		}
 		
 		// only here it makes sense to log.
-		Log.i("=== Commencing initialization sequence ===");
+		Log.i("=== Starting initialization sequence ===");
 		
 		
 		/*
@@ -145,7 +145,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		initScreens(screenRegistry);
 		
 		postInit();
-		Log.i("=== Initialized sequence completed ===");
+		Log.i("=== Initialization sequence completed ===");
 	}
 	
 	

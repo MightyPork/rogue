@@ -87,16 +87,20 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	@Override
 	public void setVisible(boolean visible)
 	{
-		this.visible = visible;
-		root.setVisible(visible);
+		if (visible != this.visible) {
+			this.visible = visible;
+			root.setVisible(visible);
+		}
 	}
 	
 	
 	@Override
 	public void setEnabled(boolean yes)
 	{
-		this.enabled = yes;
-		root.setEnabled(yes);
+		if (enabled != yes) {
+			this.enabled = yes;
+			root.setEnabled(yes);
+		}
 	}
 	
 	
@@ -188,5 +192,19 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	public void setAlpha(double alpha)
 	{
 		this.alphaMul = Num.make(alpha);
+	}
+	
+	
+	public void show()
+	{
+		setVisible(true);
+		setEnabled(true);
+	}
+	
+	
+	public void hide()
+	{
+		setVisible(false);
+		setEnabled(false);
 	}
 }

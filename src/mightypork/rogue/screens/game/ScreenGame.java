@@ -10,16 +10,22 @@ import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.Config;
 import mightypork.rogue.GameStateManager.GameState;
 import mightypork.rogue.events.GameStateRequest;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
+import mightypork.rogue.world.events.PlayerKilledListener;
 import mightypork.rogue.world.events.WorldPauseRequest;
 import mightypork.rogue.world.events.WorldPauseRequest.PauseAction;
 
 
-public class ScreenGame extends LayeredScreen {
+public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
+	
+	public static final Color COLOR_BTN_GOOD = Color.fromHex(0x28CB2D);
+	public static final Color COLOR_BTN_BAD = Color.fromHex(0xCB2828);
+	public static final Color COLOR_BTN_CANCEL = Color.fromHex(0xFFFB55);
 	
 	/**
 	 * Game gui state.
@@ -28,15 +34,16 @@ public class ScreenGame extends LayeredScreen {
 	 */
 	public enum GScrState
 	{
-		WORLD, INV;
+		WORLD, INV, DEATH, GOTO_MENU, GOTO_QUIT;
 	}
 	
 	private InventoryLayer invLayer;
 	private HudLayer hudLayer;
+	private DeathLayer deathLayer;
 	
 	private WorldLayer worldLayer;
 	
-	private GScrState state = GScrState.WORLD;
+	private GScrState state = null;
 	
 	private final ActionGroup worldActions = new ActionGroup();
 	
@@ -124,9 +131,16 @@ public class ScreenGame extends LayeredScreen {
 		@Override
 		public void execute()
 		{
-			// TODO ask to save
-			
-			getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
+			setState(GScrState.GOTO_MENU);
+		}
+	};
+	
+	public Action actionQuit = new Action() {
+		
+		@Override
+		public void execute()
+		{
+			setState(GScrState.GOTO_QUIT);
 		}
 	};
 	
@@ -140,6 +154,7 @@ public class ScreenGame extends LayeredScreen {
 			pl.dropItem(pl.getInventory().getLastAddIndex());
 		}
 	};
+	private AskSaveLayer askSaveLayer;
 	
 	
 	/**
@@ -160,15 +175,47 @@ public class ScreenGame extends LayeredScreen {
 		if (nstate == GScrState.WORLD) {
 			getEventBus().send(new WorldPauseRequest(PauseAction.RESUME));
 			
-			invLayer.setVisible(false); // hide all extra layers
-			invLayer.setEnabled(false);
+			invLayer.hide();
+			deathLayer.hide();
+			askSaveLayer.hide();
 			
 			worldActions.setEnabled(true);
 		}
 		
 		if (nstate == GScrState.INV) {
-			invLayer.setVisible(true);
-			invLayer.setEnabled(true);
+			invLayer.show();
+		}
+		
+		if (nstate == GScrState.DEATH) {
+			deathLayer.show();
+		}
+		
+		if (nstate == GScrState.GOTO_MENU) {
+			
+			askSaveLayer.setTask(new Runnable() {
+				
+				@Override
+				public void run()
+				{
+					getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
+				}
+			});
+			
+			askSaveLayer.show();
+		}
+		
+		if (nstate == GScrState.GOTO_QUIT) {
+			
+			askSaveLayer.setTask(new Runnable() {
+				
+				@Override
+				public void run()
+				{
+					getEventBus().send(new GameStateRequest(GameState.EXIT));
+				}
+			});
+			
+			askSaveLayer.show();
 		}
 		
 		this.state = nstate;
@@ -186,16 +233,10 @@ public class ScreenGame extends LayeredScreen {
 		super(app);
 		
 		addLayer(invLayer = new InventoryLayer(this));
-		invLayer.setEnabled(false);
-		invLayer.setVisible(false);
-		
+		addLayer(deathLayer = new DeathLayer(this));
 		addLayer(hudLayer = new HudLayer(this));
-		hudLayer.setEnabled(true);
-		hudLayer.setVisible(true);
-		
 		addLayer(worldLayer = new WorldLayer(this));
-		worldLayer.setEnabled(true);
-		worldLayer.setVisible(true);
+		addLayer(askSaveLayer = new AskSaveLayer(this));
 		
 		//pause key
 		bindKey(new KeyStroke(Keys.P), actionTogglePause);
@@ -210,6 +251,8 @@ public class ScreenGame extends LayeredScreen {
 		
 		bindKey(new KeyStroke(Keys.L, Keys.MOD_CONTROL), actionLoad);
 		bindKey(new KeyStroke(Keys.S, Keys.MOD_CONTROL), actionSave);
+		bindKey(new KeyStroke(Keys.Q, Keys.MOD_CONTROL), actionQuit);
+		bindKey(new KeyStroke(Keys.ESCAPE), actionMenu);
 		
 		// add as actions - enableables.
 		worldActions.add(worldLayer);
@@ -223,12 +266,13 @@ public class ScreenGame extends LayeredScreen {
 		worldActions.add(actionSave);
 		worldActions.add(actionLoad);
 		worldActions.add(actionMenu);
+		worldActions.add(actionQuit);
 		worldActions.add(actionDropLastPickedItem);
 		
 		worldActions.setEnabled(true);
 		
 		// CHEAT - X-ray
-		bindKey(new KeyStroke(Keys.F10, Keys.MOD_CONTROL), new Runnable() {
+		bindKey(new KeyStroke(Keys.MULTIPLY, Keys.MOD_CONTROL), new Runnable() {
 			
 			@Override
 			public void run()
@@ -244,6 +288,8 @@ public class ScreenGame extends LayeredScreen {
 	{
 		super.onScreenEnter();
 		WorldProvider.get().setListening(true);
+		
+		setState(GScrState.WORLD);
 	}
 	
 	
@@ -252,5 +298,12 @@ public class ScreenGame extends LayeredScreen {
 	{
 		super.onScreenLeave();
 		WorldProvider.get().setListening(false);
+	}
+	
+	
+	@Override
+	public void onPlayerKilled()
+	{
+		setState(GScrState.DEATH);
 	}
 }

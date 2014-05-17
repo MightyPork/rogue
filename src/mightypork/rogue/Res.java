@@ -118,6 +118,8 @@ public final class Res {
 		// logo
 		texture = textures.loadTexture("/res/img/logo.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		textures.add("logo", texture.makeQuad(Rect.make(0, 0, 0.543, 0.203)));
+		grid = texture.grid(8, 8);
+		textures.add("death", grid.makeQuad(0, 2));
 		
 		
 		// tiles
@@ -171,7 +173,7 @@ public final class Res {
 		textures.add("item.bone", grid.makeQuad(5, 0));
 		textures.add("item.cheese", grid.makeQuad(6, 0));
 		textures.add("item.sandwich", grid.makeQuad(7, 0));
-		textures.add("item.heart_piece", grid.makeQuad(0, 1));
+		textures.add("item.heart", grid.makeQuad(0, 1));
 		textures.add("item.knife", grid.makeQuad(1, 1));
 		textures.add("item.twig", grid.makeQuad(2, 1));
 	}

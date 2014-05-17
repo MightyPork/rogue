@@ -21,7 +21,7 @@ public class ItemHeartPiece extends Item {
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
-		return new QuadItemRenderer(this, Res.getTxQuad("item.heart_piece"));
+		return new QuadItemRenderer(this, Res.getTxQuad("item.heart"));
 	}
 	
 	

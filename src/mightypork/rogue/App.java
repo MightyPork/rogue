@@ -134,8 +134,8 @@ public final class App extends BaseApp {
 		bindEventToKey(new ActionRequest(RequestType.FULLSCREEN), Keys.F11);
 		bindEventToKey(new ActionRequest(RequestType.SCREENSHOT), Keys.F2);
 		
-		bindEventToKey(new GameStateRequest(GameState.EXIT), Keys.Q, Keys.MOD_CONTROL);
-		bindEventToKey(new GameStateRequest(GameState.MAIN_MENU), Keys.M, Keys.MOD_CONTROL);
+		bindEventToKey(new GameStateRequest(GameState.EXIT), Keys.Q, Keys.MOD_SHIFT | Keys.MOD_CONTROL);
+		bindEventToKey(new GameStateRequest(GameState.MAIN_MENU), Keys.M, Keys.MOD_SHIFT | Keys.MOD_CONTROL);
 	}
 	
 	
@@ -145,7 +145,7 @@ public final class App extends BaseApp {
 	}
 	
 	
-	private void bindEventToKey(final BusEvent<?> event, int key, byte mod)
+	private void bindEventToKey(final BusEvent<?> event, int key, int mod)
 	{
 		getInput().bindKey(new KeyStroke(key, mod), new Runnable() {
 			
