@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import mightypork.gamecore.app.BaseApp;
 import mightypork.gamecore.app.MainLoop;
+import mightypork.gamecore.app.MainLoopRequest;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
@@ -24,6 +25,7 @@ import mightypork.rogue.events.GameStateRequest;
 import mightypork.rogue.screens.FpsOverlay;
 import mightypork.rogue.screens.LoadingOverlay;
 import mightypork.rogue.screens.game.ScreenGame;
+import mightypork.rogue.screens.layout_testing.LayoutTestScreen;
 import mightypork.rogue.screens.menu.ScreenMainMenu;
 import mightypork.rogue.screens.select_world.ScreenSelectWorld;
 import mightypork.rogue.world.Inventory;
@@ -121,6 +123,7 @@ public final class App extends BaseApp {
 		screens.addScreen("main_menu", new ScreenMainMenu(this));
 		screens.addScreen("select_world", new ScreenSelectWorld(this));
 		screens.addScreen("game", new ScreenGame(this));
+		screens.addScreen("test.layout", new LayoutTestScreen(this));
 		
 		screens.addOverlay(new FpsOverlay(this));
 		screens.addOverlay(new LoadingOverlay(this));
@@ -168,11 +171,14 @@ public final class App extends BaseApp {
 	@Override
 	protected void postInit()
 	{
-		// TODO tmp
-		//WorldProvider.get().createWorld(Double.doubleToLongBits(Math.random()));
-		
-		//getEventBus().send(new CrossfadeRequest("game", true));
-		
-		getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
+		getEventBus().send(new MainLoopRequest(new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
+				//getEventBus().send(new CrossfadeRequest("test.layout", true));
+			}
+		}));
 	}
 }

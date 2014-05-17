@@ -68,7 +68,7 @@ public class ScreenSelectWorld extends LayeredScreen {
 			TextPainter tp;
 			
 			rows.add(tp = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.YELLOW, "Save slot:"));
-			tp.setPaddingHPerc(0, 20);
+			tp.setVPaddingPercent(20);
 			tp.setShadow(RGB.BLACK_50, tp.height().mul(0.6 / 8D).toVectXY());
 			
 			slot1 = new WorldSlot(root, Paths.SAVE_SLOT_1);

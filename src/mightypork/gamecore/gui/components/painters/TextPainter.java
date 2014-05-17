@@ -3,6 +3,7 @@ package mightypork.gamecore.gui.components.painters;
 
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
+import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.fonts.FontRenderer;
 import mightypork.gamecore.resources.fonts.GLFont;
@@ -17,13 +18,11 @@ import mightypork.rogue.Config;
 
 
 /**
- * Text painting component.<br>
- * Drawing values are obtained through getters, so overriding getters can be
- * used to change parameters dynamically.
+ * Text painting component.
  * 
  * @author MightyPork
  */
-public class TextPainter extends BaseComponent {
+public class TextPainter extends BaseComponent implements DynamicWidthComponent {
 	
 	private final FontRenderer font;
 	private Color color;
@@ -32,7 +31,6 @@ public class TextPainter extends BaseComponent {
 	private boolean shadow;
 	
 	private double yPaddingPerc = 0;
-	private double xPaddingPerc = 0;
 	
 	private Color shadowColor = RGB.BLACK;
 	private Vect shadowOffset = Vect.make(2, 2);
@@ -47,28 +45,30 @@ public class TextPainter extends BaseComponent {
 	}
 	
 	
-	/**
-	 * Constructor for fixed text
-	 * 
-	 * @param font font to use
-	 * @param align text align
-	 * @param color default color
-	 * @param text drawn text
-	 */
+	public TextPainter(GLFont font, Color color, String text)
+	{
+		this(font, AlignX.LEFT, color, new StringWrapper(text));
+	}
+	
+	
+	public TextPainter(GLFont font, Color color, StringProvider text)
+	{
+		this(font, AlignX.LEFT, color, text);
+	}
+	
+	
+	public TextPainter(GLFont font, Color color)
+	{
+		this(font, AlignX.LEFT, color, (StringProvider) null);
+	}
+	
+	
 	public TextPainter(GLFont font, AlignX align, Color color, String text)
 	{
 		this(font, align, color, new StringWrapper(text));
 	}
 	
 	
-	/**
-	 * COnstructor for changeable text.
-	 * 
-	 * @param font font to use
-	 * @param align text align
-	 * @param color default color
-	 * @param text text provider
-	 */
 	public TextPainter(GLFont font, AlignX align, Color color, StringProvider text)
 	{
 		this.font = new FontRenderer(font);
@@ -78,11 +78,6 @@ public class TextPainter extends BaseComponent {
 	}
 	
 	
-	/**
-	 * @param font font to use
-	 * @param align text align
-	 * @param color default color
-	 */
 	public TextPainter(GLFont font, AlignX align, Color color)
 	{
 		this(font, align, color, (StringProvider) null);
@@ -96,10 +91,9 @@ public class TextPainter extends BaseComponent {
 		
 		final String str = text.getString();
 		
-		final Num shrX = height().perc(xPaddingPerc);
 		final Num shrY = height().perc(yPaddingPerc);
 		
-		final Rect rect = getRect().shrink(shrX, shrY);
+		final Rect rect = getRect().shrink(Num.ZERO, shrY);
 		
 		if (shadow) {
 			font.draw(str, rect.round(), align, shadowColor);
@@ -162,9 +156,15 @@ public class TextPainter extends BaseComponent {
 	}
 	
 	
-	public void setPaddingHPerc(double percX, double percY)
+	public void setVPaddingPercent(double percY)
 	{
-		xPaddingPerc = percX;
 		yPaddingPerc = percY;
+	}
+	
+	
+	@Override
+	public double computeWidth(double height)
+	{
+		return font.getWidth(this.text.getString(), height * ((100 - yPaddingPerc * 2) / 100D));
 	}
 }

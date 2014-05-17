@@ -58,7 +58,7 @@ public final class Res {
 		font.setDiscardRatio(3 / 16D, 2 / 16D);
 		
 		fonts.loadFont("tinyutf", font = new DeferredFont("/res/font/TinyUnicode2.ttf", Glyphs.basic, 16));
-		font.setDiscardRatio(6 / 16D, 2 / 16D);
+		font.setDiscardRatio(5 / 16D, 3 / 16D);
 		
 		// aliases
 		fonts.addAlias("thick", "press_start");

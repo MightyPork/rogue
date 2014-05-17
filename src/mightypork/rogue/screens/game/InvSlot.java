@@ -3,7 +3,7 @@ package mightypork.rogue.screens.game;
 
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
-import mightypork.gamecore.gui.components.ClickableComponent;
+import mightypork.gamecore.gui.components.input.ClickableComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;

@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.game;
 
 
-import mightypork.gamecore.gui.components.ClickableComponent;
+import mightypork.gamecore.gui.components.input.ClickableComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.rogue.Res;

@@ -2,10 +2,9 @@ package mightypork.gamecore.gui.components.painters;
 
 
 import mightypork.gamecore.gui.components.BaseComponent;
+import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
 /**
@@ -13,11 +12,9 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
  * 
  * @author MightyPork
  */
-public class ImagePainter extends BaseComponent {
+public class ImagePainter extends BaseComponent implements DynamicWidthComponent {
 	
 	private final TxQuad txQuad;
-	private boolean aspratio = false;
-	private final Rect asprRect;
 	
 	
 	/**
@@ -26,20 +23,19 @@ public class ImagePainter extends BaseComponent {
 	public ImagePainter(TxQuad txQuad)
 	{
 		this.txQuad = txQuad;
-		this.asprRect = ((Rect) this).axisV().grow(height().div(txQuad.uvs.height()).mul(txQuad.uvs.width()).half(), Num.ZERO);;
-	}
-	
-	
-	public void keepAspectRatio()
-	{
-		aspratio = true;
 	}
 	
 	
 	@Override
 	public void renderComponent()
 	{
-		Render.quadTextured(aspratio ? asprRect : this, txQuad);
+		Render.quadTextured(this, txQuad);
 	}
 	
+	
+	@Override
+	public double computeWidth(double height)
+	{
+		return (height / txQuad.uvs.height().value()) * txQuad.uvs.width().value();
+	}
 }

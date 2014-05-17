@@ -3,8 +3,8 @@ package mightypork.rogue.screens.game;
 
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
+import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
 import mightypork.gamecore.gui.components.layout.GridLayout;
-import mightypork.gamecore.gui.components.layout.HorizontalFixedFlowLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.ScreenLayer;
@@ -105,10 +105,10 @@ public class InventoryLayer extends ScreenLayer {
 		
 		final TextPainter txp = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.YELLOW, "Inventory");
 		gl.put(txp, pos, 0, 1, 1);
-		txp.setPaddingHPerc(0, 5);
+		txp.setVPaddingPercent(5);
 		pos += 1;
 		
-		final HorizontalFixedFlowLayout row1 = new HorizontalFixedFlowLayout(root, null, AlignX.LEFT);
+		final FlowColumnLayout row1 = new FlowColumnLayout(root, null, AlignX.LEFT);
 		row1.setElementWidth(row1.height());
 		final ConstraintLayout cl1 = new ConstraintLayout(root);
 		row1.setRect(cl1.axisV().grow(cl1.height().mul(2), Num.ZERO));
@@ -122,7 +122,7 @@ public class InventoryLayer extends ScreenLayer {
 		row1.add(slots[2] = new InvSlot(2, slots));
 		row1.add(slots[3] = new InvSlot(3, slots));
 		
-		final HorizontalFixedFlowLayout row2 = new HorizontalFixedFlowLayout(root, null, AlignX.LEFT);
+		final FlowColumnLayout row2 = new FlowColumnLayout(root, null, AlignX.LEFT);
 		row2.setElementWidth(row2.height());
 		final ConstraintLayout cl2 = new ConstraintLayout(root);
 		row2.setRect(cl2.axisV().grow(cl2.height().mul(2), Num.ZERO));
@@ -137,7 +137,7 @@ public class InventoryLayer extends ScreenLayer {
 		
 		final TextPainter txp2 = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.WHITE, contextStrProv);
 		gl.put(txp2, pos, 0, 1, 1);
-		txp2.setPaddingHPerc(0, 25);
+		txp2.setVPaddingPercent(25);
 		
 		bindKey(new KeyStroke(Keys.ESCAPE), new Runnable() {
 			

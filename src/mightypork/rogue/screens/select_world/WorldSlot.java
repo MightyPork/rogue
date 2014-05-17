@@ -7,6 +7,7 @@ import java.io.IOException;
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
+import mightypork.gamecore.gui.components.input.TextButton;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
@@ -21,7 +22,6 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.Res;
 import mightypork.rogue.events.LoadingOverlayRequest;
-import mightypork.rogue.screens.PushButton;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 
@@ -42,9 +42,9 @@ public class WorldSlot extends ConstraintLayout {
 	
 	private IonBundle worldBundle;
 	
-	private PushButton loadBtn;
+	private TextButton loadBtn;
 	
-	private PushButton delBtn;
+	private TextButton delBtn;
 	
 	
 	public WorldSlot(AppAccess app, File worldFile)
@@ -75,11 +75,11 @@ public class WorldSlot extends ConstraintLayout {
 		
 		final GLFont font = Res.getFont("thick");
 		
-		gridl.put(loadBtn = new PushButton(font, "", RGB.WHITE), 0, 0, 1, 7);
-		loadBtn.textPainter.setPaddingHPerc(0, 20);
+		gridl.put(loadBtn = new TextButton(font, "", RGB.WHITE), 0, 0, 1, 7);
+		loadBtn.textPainter.setVPaddingPercent(20);
 		loadBtn.textPainter.setAlign(AlignX.LEFT);
 		loadBtn.textPainter.setText(lblStrp);
-		loadBtn.disableHover();
+		loadBtn.disableHoverEffect();
 		
 		loadBtn.setAction(new Action() {
 			
@@ -136,10 +136,10 @@ public class WorldSlot extends ConstraintLayout {
 			}
 		});
 		
-		gridl.put(delBtn = new PushButton(font, "X", RGB.RED), 0, 7, 1, 1);
-		delBtn.textPainter.setPaddingHPerc(0, 20);
+		gridl.put(delBtn = new TextButton(font, "X", RGB.RED), 0, 7, 1, 1);
+		delBtn.textPainter.setVPaddingPercent(20);
 		delBtn.textPainter.setAlign(AlignX.RIGHT);
-		delBtn.disableHover();
+		delBtn.disableHoverEffect();
 		
 		delBtn.setAction(new Action() {
 			

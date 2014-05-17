@@ -15,7 +15,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
  * 
  * @author MightyPork
  */
-public class VerticalFixedFlowLayout extends LayoutComponent {
+public class FlowRowLayout extends LayoutComponent {
 	
 	private int row = 0;
 	private Num elementHeight;
@@ -28,7 +28,7 @@ public class VerticalFixedFlowLayout extends LayoutComponent {
 	 * @param elementHeight height of all elements
 	 * @param align component align. Legal values are TOP and BOTTOM.
 	 */
-	public VerticalFixedFlowLayout(AppAccess app, RectBound context, Num elementHeight, AlignY align)
+	public FlowRowLayout(AppAccess app, RectBound context, Num elementHeight, AlignY align)
 	{
 		super(app, context);
 		this.elementHeight = elementHeight;
@@ -48,7 +48,7 @@ public class VerticalFixedFlowLayout extends LayoutComponent {
 	 * @param elementHeight height of all elements
 	 * @param align component align. Legal values are TOP and BOTTOM.
 	 */
-	public VerticalFixedFlowLayout(AppAccess app, Num elementHeight, AlignY align)
+	public FlowRowLayout(AppAccess app, Num elementHeight, AlignY align)
 	{
 		this(app, null, elementHeight, align);
 	}

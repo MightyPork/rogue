@@ -4,7 +4,7 @@ package mightypork.rogue.screens.game;
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.LayoutComponent;
-import mightypork.gamecore.gui.components.layout.HorizontalFixedFlowLayout;
+import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
@@ -14,8 +14,8 @@ import mightypork.rogue.Res;
 
 public class IngameNav extends LayoutComponent {
 	
-	private final HorizontalFixedFlowLayout leftFlow;
-	private final HorizontalFixedFlowLayout rightFlow;
+	private final FlowColumnLayout leftFlow;
+	private final FlowColumnLayout rightFlow;
 	private final Rect paintHelper;
 	
 	private final TxQuad bg;
@@ -32,8 +32,8 @@ public class IngameNav extends LayoutComponent {
 		super(app, context);
 		
 		final Rect shr = this.shrink(height().perc(5));
-		leftFlow = new HorizontalFixedFlowLayout(app, context, shr.height(), AlignX.LEFT);
-		rightFlow = new HorizontalFixedFlowLayout(app, context, shr.height(), AlignX.RIGHT);
+		leftFlow = new FlowColumnLayout(app, context, shr.height(), AlignX.LEFT);
+		rightFlow = new FlowColumnLayout(app, context, shr.height(), AlignX.RIGHT);
 		
 		
 		leftFlow.setRect(shr);

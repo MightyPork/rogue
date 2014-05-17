@@ -15,7 +15,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
  * 
  * @author MightyPork
  */
-public class HorizontalFixedFlowLayout extends LayoutComponent {
+public class FlowColumnLayout extends LayoutComponent {
 	
 	private int col = 0;
 	private Num elementWidth;
@@ -28,7 +28,7 @@ public class HorizontalFixedFlowLayout extends LayoutComponent {
 	 * @param elementWidth width of all elements
 	 * @param align component align. Legal values are LEFT and RIGHT.
 	 */
-	public HorizontalFixedFlowLayout(AppAccess app, RectBound context, Num elementWidth, AlignX align)
+	public FlowColumnLayout(AppAccess app, RectBound context, Num elementWidth, AlignX align)
 	{
 		super(app, context);
 		this.elementWidth = elementWidth;
@@ -48,7 +48,7 @@ public class HorizontalFixedFlowLayout extends LayoutComponent {
 	 * @param elementWidth width of all elements
 	 * @param align component align. Legal values are LEFT and RIGHT.
 	 */
-	public HorizontalFixedFlowLayout(AppAccess app, Num elementWidth, AlignX align)
+	public FlowColumnLayout(AppAccess app, Num elementWidth, AlignX align)
 	{
 		this(app, null, elementWidth, align);
 	}

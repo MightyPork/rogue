@@ -3,7 +3,10 @@ package mightypork.rogue.screens.menu;
 
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.Action;
+import mightypork.gamecore.gui.AlignX;
+import mightypork.gamecore.gui.components.input.TextButton;
 import mightypork.gamecore.gui.components.layout.RowLayout;
+import mightypork.gamecore.gui.components.layout.linear.LinearLayout;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.LayeredScreen;
@@ -19,7 +22,6 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.GameStateManager.GameState;
 import mightypork.rogue.Res;
 import mightypork.rogue.events.GameStateRequest;
-import mightypork.rogue.screens.PushButton;
 
 
 /**
@@ -65,17 +67,17 @@ public class ScreenMainMenu extends LayeredScreen {
 			rows.enableCaching(true);
 			root.add(rows);
 			
-			final ImagePainter ip = new ImagePainter(Res.getTxQuad("logo"));
-			ip.keepAspectRatio();
-			rows.add(ip, 4);
+			final LinearLayout linlayout = new LinearLayout(root, AlignX.CENTER);
+			linlayout.add(new ImagePainter(Res.getTxQuad("logo")));
+			rows.add(linlayout, 4);
 			rows.skip(1);
 			
-			PushButton btn;
+			TextButton btn;
 			
 			final GLFont btnFont = Res.getFont("thick");
 			
 			// world button
-			btn = new PushButton(btnFont, "Play", PAL16.SLIMEGREEN);
+			btn = new TextButton(btnFont, "Play", PAL16.SLIMEGREEN);
 			btn.setAction(new Action() {
 				
 				@Override
@@ -103,7 +105,7 @@ public class ScreenMainMenu extends LayeredScreen {
 			*/
 			
 			// quit button
-			btn = new PushButton(btnFont, "Exit", PAL16.BLOODRED);
+			btn = new TextButton(btnFont, "Exit", PAL16.BLOODRED);
 			btn.setAction(new Action() {
 				
 				@Override

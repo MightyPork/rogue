@@ -1,8 +1,8 @@
-package mightypork.rogue.screens;
+package mightypork.gamecore.gui.components.input;
 
 
 import mightypork.gamecore.gui.AlignX;
-import mightypork.gamecore.gui.components.ClickableComponent;
+import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.resources.fonts.GLFont;
@@ -17,7 +17,7 @@ import mightypork.gamecore.util.math.constraints.vect.mutable.VectVar;
  * 
  * @author MightyPork
  */
-public class PushButton extends ClickableComponent {
+public class TextButton extends ClickableComponent implements DynamicWidthComponent {
 	
 	public final TextPainter textPainter;
 	
@@ -32,14 +32,14 @@ public class PushButton extends ClickableComponent {
 	private boolean hoverMove = true;
 	
 	
-	public PushButton(GLFont font, String text, Color color)
+	public TextButton(GLFont font, String text, Color color)
 	{
 		this.color = color;
 		
 		this.textPainter = new TextPainter(font, AlignX.CENTER, this.color, text);
 		this.textPainter.setRect(this);
 		this.textPainter.setShadow(RGB.BLACK_30, offset);
-		textPainter.setPaddingHPerc(0, 5);
+		textPainter.setVPaddingPercent(5);
 	}
 	
 	
@@ -63,9 +63,16 @@ public class PushButton extends ClickableComponent {
 	/**
 	 * Disable offset change on hover
 	 */
-	public void disableHover()
+	public void disableHoverEffect()
 	{
 		hoverMove = false;
+	}
+	
+	
+	@Override
+	public double computeWidth(double height)
+	{
+		return textPainter.computeWidth(height);
 	}
 	
 }
