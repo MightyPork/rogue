@@ -34,7 +34,7 @@ $(OUT): $(IN) $(STUB)
 	
 
 run: $(OUT)
-	java -jar $(OUT)
+	java -jar $(OUT) -w ../.rogue-save
 
 clean:
 	rm -rf $(OUT)

@@ -112,16 +112,16 @@ public class OsUtils {
 		switch (getOs()) {
 			case linux:
 			case solaris:
-				file = new File(userhome, "." + dirname + '/');
+				file = new File(userhome, dirname + '/');
 				break;
 			
 			case windows:
 				final String appdata = System.getenv("APPDATA");
 				
 				if (appdata != null) {
-					file = new File(appdata, "." + dirname + '/');
+					file = new File(appdata, dirname + '/');
 				} else {
-					file = new File(userhome, "." + dirname + '/');
+					file = new File(userhome, dirname + '/');
 				}
 				
 				break;
