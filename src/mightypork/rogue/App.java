@@ -2,6 +2,7 @@ package mightypork.rogue;
 
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Locale;
 
 import mightypork.gamecore.app.BaseApp;
@@ -18,6 +19,7 @@ import mightypork.gamecore.logging.writers.LogWriter;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.loading.AsyncResourceLoader;
 import mightypork.gamecore.util.ion.Ion;
+import mightypork.gamecore.util.strings.StringUtils;
 import mightypork.rogue.GameStateManager.GameState;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
@@ -47,6 +49,32 @@ public final class App extends BaseApp {
 	 */
 	public static void main(String[] args)
 	{
+		Log.f3(Arrays.toString(args));
+		
+		try {
+			boolean lwd = false;
+			String lwdDir = null;
+			
+			for (int i = 0; i < args.length; i++) {
+				if (args[i].equals("--workdir") || args[i].equals("-w")) {
+					lwd = true;
+					lwdDir = args[i + 1];
+					i++;
+				}
+			}
+			
+			if (!lwd) {
+				Paths.init();
+			} else {
+				Paths.init(lwdDir);
+			}
+			
+		} catch (ArrayIndexOutOfBoundsException e) {
+			Log.e("Malformed arguments.");
+		}
+		
+		Log.i("Using workdir: " + Paths.WORKDIR.getAbsolutePath());
+		
 		(new App()).start();
 	}
 	

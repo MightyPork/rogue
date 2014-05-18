@@ -67,9 +67,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		 */
 		initLock();
 		
-		// hook
-		preInit();
-		
 		/*
 		 * Setup logging
 		 */
@@ -79,8 +76,11 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 			org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
 		}
 		
-		// only here it makes sense to log.
 		Log.i("=== Starting initialization sequence ===");
+		
+		// hook
+		preInit();
+		
 		
 		
 		/*

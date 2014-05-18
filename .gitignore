@@ -7,3 +7,4 @@
 /build/in/*.jar
 *.log
 .attach_pid*
+*~
