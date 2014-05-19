@@ -1,9 +1,7 @@
 package mightypork.gamecore.gui.components.layout.linear;
 
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import mightypork.gamecore.eventbus.clients.ClientList;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
@@ -25,7 +23,8 @@ public abstract class AbstractLinearWrapper extends LinearComponent implements D
 	/**
 	 * @param wrapped wrapped component. Can be null.
 	 */
-	public AbstractLinearWrapper(Component wrapped) {
+	public AbstractLinearWrapper(Component wrapped)
+	{
 		this.wrapped = wrapped;
 		if (wrapped != null) {
 			if (wrapped instanceof LinearComponent) {

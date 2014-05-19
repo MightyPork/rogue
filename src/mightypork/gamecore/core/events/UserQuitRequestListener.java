@@ -7,7 +7,7 @@ package mightypork.gamecore.core.events;
  * @author MightyPork
  */
 public interface UserQuitRequestListener {
-
+	
 	/**
 	 * Intercept quit request.<br>
 	 * Consume the event to abort shutdown (ie. ask user to save)

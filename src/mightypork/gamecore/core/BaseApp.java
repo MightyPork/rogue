@@ -164,7 +164,8 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	}
 	
 	
-	public BaseApp(File workdir, boolean singleInstance) {
+	public BaseApp(File workdir, boolean singleInstance)
+	{
 		WorkDir.init(workdir);
 		
 		Log.i("Using workdir: " + WorkDir.getWorkDir());
@@ -303,7 +304,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	}
 	
 	
-	@DefaultImpl
 	protected void registerIonizables()
 	{
 		Ion.registerType(Coord.ION_MARK, Coord.class);
@@ -359,7 +359,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 * 
 	 * @param screens
 	 */
-	@DefaultImpl
 	protected void initScreens(ScreenRegistry screens)
 	{
 		screens.addOverlay(new CrossfadeOverlay(this));

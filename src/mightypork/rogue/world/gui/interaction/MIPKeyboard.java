@@ -11,10 +11,8 @@ import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.input.events.KeyEvent;
-import mightypork.gamecore.input.events.KeyEventHandler;
+import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
@@ -58,7 +56,8 @@ public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClien
 	}
 	
 	
-	public MIPKeyboard(MapView mapView) {
+	public MIPKeyboard(MapView mapView)
+	{
 		super(mapView);
 		for (int i = 0; i < 4; i++) {
 			

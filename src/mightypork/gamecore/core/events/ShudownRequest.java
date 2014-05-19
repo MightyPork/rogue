@@ -8,8 +8,8 @@ import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 
 
 /**
- * Shutdown request, non-interactive. Shutdown needs to execute on GL thread for display to
- * deinit properly.
+ * Shutdown request, non-interactive. Shutdown needs to execute on GL thread for
+ * display to deinit properly.
  * 
  * @author MightyPork
  */

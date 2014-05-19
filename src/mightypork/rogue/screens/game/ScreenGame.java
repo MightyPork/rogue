@@ -306,6 +306,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		setState(GScrState.DEATH);
 	}
 	
+	
 	@Override
 	public void onQuitRequest(UserQuitRequest event)
 	{

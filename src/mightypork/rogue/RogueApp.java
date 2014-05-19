@@ -63,7 +63,12 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener {
 	@Override
 	protected void initDisplay(DisplaySystem display)
 	{
-		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.<Boolean> getOption("opt.fullscreen"), Const.TITLEBAR);
+		// init based on config
+		final int w = Config.getValue("display.width");
+		final int h = Config.getValue("display.height");
+		final boolean fs = Config.getValue("display.fullscreen");
+		
+		display.createMainWindow(w, h, true, fs, Const.TITLEBAR);
 		display.setTargetFps(Const.FPS_RENDER);
 	}
 	
@@ -124,11 +129,19 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener {
 			}
 		}));
 	}
-
-
+	
+	
 	@Override
 	public void onViewportChanged(ViewportChangeEvent event)
 	{
-		Config.setOption("opt.fullscreen", DisplaySystem.isFullscreen());
+		// save viewport size to config file
+		final boolean fs = DisplaySystem.isFullscreen();
+		
+		Config.setValue("display.fullscreen", fs);
+		
+		if (!fs) {
+			Config.setValue("display.width", DisplaySystem.getWidth());
+			Config.setValue("display.height", DisplaySystem.getHeight());
+		}
 	}
 }

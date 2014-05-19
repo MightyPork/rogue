@@ -125,8 +125,8 @@ public class AskSaveLayer extends ScreenLayer {
 			}
 		};
 		
-		btn1.setAction(save);		
-		btn2.setAction(discard);		
+		btn1.setAction(save);
+		btn2.setAction(discard);
 		btn3.setAction(cancel);
 		
 		bindKey(Config.getKey("general.close"), Edge.RISING, cancel);

@@ -11,7 +11,7 @@ public class PlayerKilledEvent extends BusEvent<PlayerDeathHandler> {
 	protected void handleBy(PlayerDeathHandler handler)
 	{
 		// not dead, discard event.
-		if(!WorldProvider.get().getPlayer().isDead()) return;
+		if (!WorldProvider.get().getPlayer().isDead()) return;
 		
 		handler.onPlayerKilled();
 	}

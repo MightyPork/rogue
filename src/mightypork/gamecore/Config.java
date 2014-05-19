@@ -32,7 +32,8 @@ public class Config {
 	 */
 	public static class KeyOpts {
 		
-		private KeyOpts() {
+		private KeyOpts()
+		{
 		}
 		
 		
@@ -44,7 +45,7 @@ public class Config {
 		
 		public void add(String cfgKey, String dataString, String comment)
 		{
-			KeyProperty kprop = new KeyProperty(prefixKey(cfgKey), KeyStroke.createFromDataString(dataString), comment);
+			final KeyProperty kprop = new KeyProperty(prefixKey(cfgKey), KeyStroke.createFromDataString(dataString), comment);
 			strokes.put(prefixKey(cfgKey), kprop);
 			cfg.putProperty(kprop);
 		}
@@ -66,7 +67,8 @@ public class Config {
 	 */
 	public static class KeyProperty extends Property<KeyStroke> {
 		
-		public KeyProperty(String key, KeyStroke defaultValue, String comment) {
+		public KeyProperty(String key, KeyStroke defaultValue, String comment)
+		{
 			super(key, defaultValue, comment);
 		}
 		
@@ -172,13 +174,17 @@ public class Config {
 	 * @param key
 	 * @return option value
 	 */
-	public static <T> T getOption(String key)
+	public static <T> T getValue(String key)
 	{
-		if (cfg.getProperty(key) == null) {
-			throw new IllegalArgumentException("No such property: " + key);
+		try {
+			if (cfg.getProperty(key) == null) {
+				throw new IllegalArgumentException("No such property: " + key);
+			}
+			
+			return cfg.getValue(key);
+		} catch (final ClassCastException cce) {
+			throw new RuntimeException("Property of incompatible type: " + key);
 		}
-		
-		return cfg.getValue(key);
 	}
 	
 	
@@ -188,15 +194,13 @@ public class Config {
 	 * @param key option key
 	 * @param value value to set
 	 */
-	public static <T> void setOption(String key, T value)
+	public static <T> void setValue(String key, T value)
 	{
 		if (cfg.getProperty(key) == null) {
 			throw new IllegalArgumentException("No such property: " + key);
 		}
 		
 		cfg.setValue(key, value);
-		
-		Log.f3("Setting option: " + key + " = " + value);
 	}
 	
 	

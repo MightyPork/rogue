@@ -2,9 +2,6 @@ package mightypork.gamecore.eventbus.clients;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
-
-import mightypork.gamecore.gui.Enableable;
 
 
 /**
@@ -14,8 +11,9 @@ import mightypork.gamecore.gui.Enableable;
  */
 public class ClientList extends ArrayList<Object> {
 	
-	public ClientList(Object... clients) {
-		for (Object c : clients) {
+	public ClientList(Object... clients)
+	{
+		for (final Object c : clients) {
 			super.add(c);
 		}
 	}

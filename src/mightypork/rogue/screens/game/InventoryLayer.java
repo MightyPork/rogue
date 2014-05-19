@@ -37,7 +37,7 @@ public class InventoryLayer extends ScreenLayer {
 		@Override
 		public String getString()
 		{
-			String s = keyClose+"-close";
+			String s = keyClose + "-close";
 			
 			final int selected = getSelectedSlot();
 			if (selected != -1) {
@@ -46,14 +46,14 @@ public class InventoryLayer extends ScreenLayer {
 				
 				final Item itm = pl.getInventory().getItem(selected);
 				if (itm != null && !itm.isEmpty()) {
-					s = keyDrop+"-drop," + s;
+					s = keyDrop + "-drop," + s;
 					
 					if (itm.getType() == ItemType.FOOD) {
-						s = keyUse+"-eat," + s;
+						s = keyUse + "-eat," + s;
 					}
 					
 					if (itm.getType() == ItemType.WEAPON) {
-						s = keyUse+"-equip," + s;
+						s = keyUse + "-equip," + s;
 					}
 				}
 			} else {
@@ -218,8 +218,8 @@ public class InventoryLayer extends ScreenLayer {
 			}
 		}
 	}
-
-
+	
+	
 	private void setupGridWalkKeys()
 	{
 		

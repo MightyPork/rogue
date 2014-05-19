@@ -67,7 +67,7 @@ public class DeathLayer extends ScreenLayer {
 		btn2.textPainter.setVPaddingPercent(25);
 		linl.add(btn2);
 		
-		Action load = new Action() {
+		final Action load = new Action() {
 			
 			@Override
 			protected void execute()
@@ -81,7 +81,7 @@ public class DeathLayer extends ScreenLayer {
 			}
 		};
 		
-		Action quit = new Action() {
+		final Action quit = new Action() {
 			
 			@Override
 			protected void execute()

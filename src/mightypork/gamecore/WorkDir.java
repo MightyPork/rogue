@@ -47,6 +47,7 @@ public class WorkDir {
 	
 	/**
 	 * Add a path alias (dir or file)
+	 * 
 	 * @param alias path alias
 	 * @param path path relative to workdir
 	 */

@@ -50,7 +50,7 @@ public abstract class ScreenLayer extends Overlay {
 	protected void onScreenLeave()
 	{
 	}
-
+	
 	
 	@Override
 	public boolean isListening()

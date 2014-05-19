@@ -32,7 +32,8 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	/**
 	 * @param app app access
 	 */
-	public ScreenRegistry(AppAccess app) {
+	public ScreenRegistry(AppAccess app)
+	{
 		super(app);
 	}
 	

@@ -139,7 +139,7 @@ public class PropertyManager {
 			props.setProperty(entry.getValue(), pr);
 		}
 		
-		for (final Property<?> entry : entries.values()) {			
+		for (final Property<?> entry : entries.values()) {
 			entry.parse(props.getProperty(entry.getKey()));
 		}
 		

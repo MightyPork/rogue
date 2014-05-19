@@ -28,7 +28,8 @@ public class KeyStroke { //implements Pollable
 	 * @param key key code
 	 * @param mod_mask mods mask
 	 */
-	public KeyStroke(int key, int mod_mask) {
+	public KeyStroke(int key, int mod_mask)
+	{
 		setTo(key, mod_mask);
 	}
 	
@@ -38,7 +39,8 @@ public class KeyStroke { //implements Pollable
 	 * 
 	 * @param key key code
 	 */
-	public KeyStroke(int key) {
+	public KeyStroke(int key)
+	{
 		this(key, Keys.MOD_NONE);
 	}
 	
