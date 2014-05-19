@@ -26,6 +26,9 @@ public class WorldCreator {
 	public static World createWorld(long seed)
 	{
 		synchronized (rand) {
+
+			Log.f2("Generating a new world...");
+			
 			rand.setSeed(seed);
 			final MapTheme theme = new ThemeBrick();
 			
@@ -36,12 +39,15 @@ public class WorldCreator {
 			
 			// build the level rooms
 			for (int floor = 1; floor <= 7; floor++) {
+
+				Log.f3("Placing rooms for level: " + floor);
+				
 				final LevelBuilder lb = prepareFloor(rand.nextLong(), floor, theme, floor == 7);
 				
 				levelBuilders[floor - 1] = lb;
 			}
 			
-			
+			Log.f3("Placing items...");
 			final List<ItemModel> weaponsBasic = new ArrayList<>();
 			weaponsBasic.add(Items.ROCK);
 			weaponsBasic.add(Items.BONE);
@@ -85,8 +91,7 @@ public class WorldCreator {
 			randomFood.add(Items.CHEESE);
 			randomFood.add(Items.MEAT);
 			
-			for (int level = 1; level <= 7; level++) {
-				
+			for (int level = 1; level <= 7; level++) {				
 				final LevelBuilder lb = levelBuilders[level - 1];
 				final Range amount = Range.make(1, level);
 				
@@ -96,7 +101,9 @@ public class WorldCreator {
 			}
 			
 			
-			// place monsters			
+			// place monsters		
+				
+			Log.f3("Placing monsters...");
 			for (int level = 1; level <= 7; level++) {
 				
 				final LevelBuilder lb = levelBuilders[level - 1];
@@ -118,12 +125,17 @@ public class WorldCreator {
 			
 			
 			// compile levels
+			Log.f3("Building levels...");
+			int i=1;
 			for (final LevelBuilder lb : levelBuilders) {
+				Log.f3("Building level "+i);
 				w.addLevel(lb.build(w));
-			}
-			
+				i++;
+			}			
 			
 			w.createPlayer();
+			
+			Log.f2("World generation finished.");
 			
 			return w;
 		}
@@ -131,9 +143,7 @@ public class WorldCreator {
 	
 	
 	public static LevelBuilder prepareFloor(long seed, int floor, MapTheme theme, boolean lastLevel) throws WorldGenError
-	{
-		Log.f3("Generating level: " + floor);
-		
+	{		
 		final LevelBuilder lb = new LevelBuilder(128, theme, seed);
 		
 		lb.addRoom(Rooms.ENTRANCE, BuildOrder.FIRST, true);

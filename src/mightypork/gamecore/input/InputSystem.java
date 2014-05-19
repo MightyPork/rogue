@@ -2,7 +2,8 @@ package mightypork.gamecore.input;
 
 
 import mightypork.gamecore.core.AppAccess;
-import mightypork.gamecore.core.ShudownRequest;
+import mightypork.gamecore.core.events.ShudownRequest;
+import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.input.KeyStroke.Edge;
@@ -139,7 +140,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		}
 		
 		if (Display.isCloseRequested()) {
-			getEventBus().send(new ShudownRequest());
+			getEventBus().send(new UserQuitRequest());
 		}
 	}
 	

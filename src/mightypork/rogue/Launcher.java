@@ -35,9 +35,9 @@ public class Launcher {
 			}
 			
 			if (!localWorkdir) {
-				workdir = OsUtils.getHomeWorkDir(lwdDir);
+				workdir = OsUtils.getHomeWorkDir(".rogue-save");
 			} else {
-				workdir = new File(".rogue-save");
+				workdir = new File(lwdDir);
 			}
 			
 		} catch (final ArrayIndexOutOfBoundsException e) {

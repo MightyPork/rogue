@@ -682,7 +682,6 @@ public class ScratchMap {
 	
 	public boolean addItemInMap(Item item, int tries)
 	{
-		Log.f3("gen bounds: " + genMin + " -> " + genMax);
 		return addItemInArea(item, genMin, genMax, tries);
 	}
 	

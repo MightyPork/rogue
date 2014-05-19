@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import mightypork.gamecore.Config;
 import mightypork.gamecore.Config.ConfigSetup;
+import mightypork.gamecore.Config.KeySetup;
 import mightypork.gamecore.WorkDir;
 import mightypork.gamecore.WorkDir.RouteSetup;
 import mightypork.gamecore.eventbus.EventBus;
@@ -18,8 +19,6 @@ import mightypork.gamecore.eventbus.events.DestroyEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.input.KeyConfig;
-import mightypork.gamecore.input.KeyConfig.KeySetup;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.logging.SlickLogRedirector;
 import mightypork.gamecore.logging.writers.LogWriter;
@@ -51,19 +50,25 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		
 		private String logDir = "log";
 		private String logFilePrefix = "runtime";
+		
 		private String screenshotDir = "screenshots";
+		
 		private int logArchiveCount = 0;
 		private boolean busLogging = false;
+		
 		private String configFile = "settings.cfg";
 		private String configComment = "Main config file";
 		
+		public String lockFile = ".lock";
+		
 		private final List<ResourceSetup> resourceLists = new ArrayList<>();
-		private final List<KeySetup> keyLists = new ArrayList<>();
+		private final List<Config.KeySetup> keyLists = new ArrayList<>();
 		private final List<ConfigSetup> configLists = new ArrayList<>();
 		private final List<RouteSetup> routeLists = new ArrayList<>();
 		
 		private ResourceLoader resourceLoader = new AsyncResourceLoader();
 		private Level logLevel = Level.ALL;
+		public boolean sigleInstance;
 		
 		
 		public void setConfigFile(BaseApp baseApp, String filename, String comment)
@@ -79,7 +84,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		}
 		
 		
-		public void addKeys(KeySetup keys)
+		public void addKeys(Config.KeySetup keys)
 		{
 			keyLists.add(keys);
 		}
@@ -122,6 +127,12 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		{
 			this.screenshotDir = path;
 		}
+		
+		
+		public void setLockFile(String lockFile)
+		{
+			this.lockFile = lockFile;
+		}
 	}
 	
 	// modules
@@ -132,6 +143,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	private MainLoop gameLoop;
 	private ScreenRegistry screenRegistry;
 	private boolean started = false;
+	private boolean lockObtained = false;
 	
 	// init opt holder
 	private final AppInitOptions opt = new AppInitOptions();
@@ -152,13 +164,12 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	}
 	
 	
-	public BaseApp(File workdir, boolean singleInstance)
-	{
+	public BaseApp(File workdir, boolean singleInstance) {
 		WorkDir.init(workdir);
 		
 		Log.i("Using workdir: " + WorkDir.getWorkDir());
 		
-		if (singleInstance) initLock();
+		opt.sigleInstance = singleInstance;
 	}
 	
 	
@@ -184,10 +195,8 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 */
 	protected void initialize()
 	{
-		WorkDir.addPath("screenshots", opt.screenshotDir);
-		WorkDir.addPath("config", opt.configFile);
-		WorkDir.addPath("logs", opt.logDir);
-		
+		if (opt.sigleInstance) initLock();
+		lockObtained = true;
 		
 		for (final RouteSetup rs : opt.routeLists) {
 			WorkDir.registerRoutes(rs);
@@ -195,17 +204,17 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		
 		// apply configurations
 		Config.init(WorkDir.getFile(opt.configFile), opt.configComment);
-		for (final KeySetup l : opt.keyLists) {
-			KeyConfig.registerKeys(l);
-		}
 		
 		// add keys to config
-		Config.registerOptions(KeyConfig.inst());
-		for (final ConfigSetup cfgl : opt.configLists) {
-			Config.registerOptions(cfgl);
+		for (final KeySetup l : opt.keyLists) {
+			Config.registerKeys(l);
+		}
+		
+		// add options to config
+		for (final ConfigSetup c : opt.configLists) {
+			Config.registerOptions(c);
 		}
 		Config.load();
-		
 		
 		/*
 		 * Setup logging
@@ -215,14 +224,11 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		Log.setMainLogger(log);
 		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
 		
-		
 		Log.i("=== Starting initialization sequence ===");
-		
 		
 		// pre-init hook
 		Log.f2("Calling pre-init hook...");
 		preInit();
-		
 		
 		/*
 		 * Event bus
@@ -235,9 +241,8 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		/*
 		 * Ionizables
 		 */
-		Log.f3("initializing ION...");
+		Log.f3("Initializing ION save system...");
 		registerIonizables();
-		
 		
 		/*
 		 * Display
@@ -246,14 +251,12 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		displaySystem = new DisplaySystem(this);
 		initDisplay(displaySystem);
 		
-		
 		/*
 		 * Audio
 		 */
 		Log.f2("Initializing Sound System...");
 		soundSystem = new SoundSystem(this);
 		initSoundSystem(soundSystem);
-		
 		
 		/*
 		 * Input
@@ -262,7 +265,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		inputSystem = new InputSystem(this);
 		initInputSystem(inputSystem);
 		
-		
 		/*
 		 * Prepare main loop
 		 */
@@ -270,7 +272,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		screenRegistry = new ScreenRegistry(this);
 		gameLoop = createMainLoop();
 		gameLoop.setRootRenderable(screenRegistry);
-		
 		
 		/*
 		 * Load resources
@@ -287,7 +288,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		for (final ResourceSetup rl : opt.resourceLists) {
 			Res.load(rl);
 		}
-		
 		
 		/*
 		 * Screen registry
@@ -381,7 +381,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 */
 	private void initLock()
 	{
-		final File lock = WorkDir.getFile(".lock");
+		final File lock = WorkDir.getFile(opt.lockFile);
 		if (!InstanceLock.onFile(lock)) {
 			onLockError();
 			return;
@@ -399,6 +399,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 * Triggered when lock cannot be obtained.<br>
 	 * App should terminate gracefully.
 	 */
+	
 	protected void onLockError()
 	{
 		Log.e("Could not obtain lock file.\nOnly one instance can run at a time.");
@@ -406,7 +407,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		//@formatter:off
 		JOptionPane.showMessageDialog(
 				null,
-				"Another instance is already running.",
+				"Another instance is already running.\n(Delete the "+opt.lockFile +" file in the working directory to override)",
 				"Lock Error",
 				JOptionPane.ERROR_MESSAGE
 		);
@@ -444,9 +445,9 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	}
 	
 	
-	@DefaultImpl
 	protected void beforeShutdown()
 	{
+		if (lockObtained) Config.save();
 	}
 	
 	
@@ -457,7 +458,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	}
 	
 	
-	@DefaultImpl
 	protected void onCrash(Throwable e)
 	{
 		Log.e("The game has crashed.", e);

@@ -1,17 +1,20 @@
-package mightypork.gamecore.core;
+package mightypork.gamecore.core.events;
 
 
+import mightypork.gamecore.core.MainLoop;
 import mightypork.gamecore.eventbus.BusEvent;
+import mightypork.gamecore.eventbus.event_flags.NonConsumableEvent;
 import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 
 
 /**
- * Shutdown request. Shutdown needs to execute on GL thread for display to
+ * Shutdown request, non-interactive. Shutdown needs to execute on GL thread for display to
  * deinit properly.
  * 
  * @author MightyPork
  */
 @SingleReceiverEvent
+@NonConsumableEvent
 public class ShudownRequest extends BusEvent<MainLoop> {
 	
 	@Override

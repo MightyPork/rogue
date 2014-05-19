@@ -4,6 +4,7 @@ package mightypork.rogue.screens.game;
 import java.io.File;
 
 import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.gui.screens.LayeredScreen;
@@ -15,14 +16,15 @@ import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.Const;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
+import mightypork.rogue.screens.RogueScreen;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
-import mightypork.rogue.world.events.PlayerKilledListener;
+import mightypork.rogue.world.events.PlayerDeathHandler;
 import mightypork.rogue.world.events.WorldPauseRequest;
 import mightypork.rogue.world.events.WorldPauseRequest.PauseAction;
 
 
-public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
+public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 	
 	public static final Color COLOR_BTN_GOOD = Color.fromHex(0x28CB2D);
 	public static final Color COLOR_BTN_BAD = Color.fromHex(0xCB2828);
@@ -252,7 +254,6 @@ public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
 		
 		bindKey(new KeyStroke(Keys.L, Keys.MOD_CONTROL), Edge.RISING, actionLoad);
 		bindKey(new KeyStroke(Keys.S, Keys.MOD_CONTROL), Edge.RISING, actionSave);
-		bindKey(new KeyStroke(Keys.Q, Keys.MOD_CONTROL), Edge.RISING, actionQuit);
 		bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, actionMenu);
 		
 		// add as actions - enableables.
@@ -306,5 +307,12 @@ public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
 	public void onPlayerKilled()
 	{
 		setState(GScrState.DEATH);
+	}
+	
+	@Override
+	public void onQuitRequest(UserQuitRequest event)
+	{
+		actionQuit.run();
+		event.consume();
 	}
 }

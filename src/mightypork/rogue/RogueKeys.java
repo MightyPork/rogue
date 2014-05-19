@@ -1,14 +1,15 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.input.KeyConfig.KeyOpts;
-import mightypork.gamecore.input.KeyConfig.KeySetup;
+import mightypork.gamecore.Config;
+import mightypork.gamecore.Config.KeyOpts;
+import mightypork.gamecore.Config.KeySetup;
 
 
-public class RogueKeys implements KeySetup {
+public class RogueKeys implements Config.KeySetup {
 	
 	@Override
-	public void addKeys(KeyOpts keys)
+	public void addKeys(Config.KeyOpts keys)
 	{
 		keys.add("global.quit", "CTRL+Q");
 		keys.add("global.menu", "CTRL+M");

@@ -5,11 +5,11 @@ import java.io.File;
 
 import mightypork.gamecore.Config;
 import mightypork.gamecore.core.BaseApp;
-import mightypork.gamecore.core.MainLoopRequest;
+import mightypork.gamecore.core.events.MainLoopRequest;
+import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.input.KeyConfig;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.events.FullscreenToggleRequest;
@@ -20,7 +20,6 @@ import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.FpsOverlay;
 import mightypork.rogue.screens.LoadingOverlay;
 import mightypork.rogue.screens.game.ScreenGame;
-import mightypork.rogue.screens.layout_testing.LayoutTestScreen;
 import mightypork.rogue.screens.menu.ScreenMainMenu;
 import mightypork.rogue.screens.select_world.ScreenSelectWorld;
 import mightypork.rogue.world.Inventory;
@@ -62,7 +61,7 @@ public final class RogueApp extends BaseApp {
 	@Override
 	protected void initDisplay(DisplaySystem display)
 	{
-		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.<Boolean> get("opt.fullscreen"), Const.TITLEBAR);
+		display.createMainWindow(Const.WINDOW_W, Const.WINDOW_H, true, Config.<Boolean> getOption("opt.fullscreen"), Const.TITLEBAR);
 		display.setTargetFps(Const.FPS_RENDER);
 	}
 	
@@ -80,7 +79,6 @@ public final class RogueApp extends BaseApp {
 		screens.addScreen("main_menu", new ScreenMainMenu(this));
 		screens.addScreen("select_world", new ScreenSelectWorld(this));
 		screens.addScreen("game", new ScreenGame(this));
-		screens.addScreen("test.layout", new LayoutTestScreen(this));
 		
 		screens.addOverlay(new FpsOverlay(this));
 		screens.addOverlay(new LoadingOverlay(this));
@@ -94,14 +92,14 @@ public final class RogueApp extends BaseApp {
 		bindEventToKey(new FullscreenToggleRequest(), "global.fullscreen");
 		bindEventToKey(new ScreenshotRequest(), "global.screenshot");
 		
-		bindEventToKey(new RogueStateRequest(RogueState.EXIT), "global.quit");
+		bindEventToKey(new UserQuitRequest(), "global.quit");
 		bindEventToKey(new RogueStateRequest(RogueState.MAIN_MENU), "global.menu");
 	}
 	
 	
 	private void bindEventToKey(final BusEvent<?> event, String strokeName)
 	{
-		getInput().bindKey(KeyConfig.get(strokeName), Edge.RISING, new Runnable() {
+		getInput().bindKey(Config.getKey(strokeName), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()

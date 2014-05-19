@@ -1,7 +1,7 @@
 package mightypork.rogue.world.events;
 
 
-public interface PlayerKilledListener {
+public interface PlayerDeathHandler {
 	
 	void onPlayerKilled();
 }

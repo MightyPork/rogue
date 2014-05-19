@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import mightypork.gamecore.core.MainLoopRequest;
+import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.events.Destroyable;
 import mightypork.gamecore.logging.Log;

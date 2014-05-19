@@ -23,6 +23,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
+import mightypork.rogue.screens.RogueScreen;
 
 
 /**
@@ -30,7 +31,7 @@ import mightypork.rogue.events.RogueStateRequest;
  * 
  * @author MightyPork
  */
-public class ScreenMainMenu extends LayeredScreen {
+public class ScreenMainMenu extends RogueScreen {
 	
 	
 	public ScreenMainMenu(AppAccess app)

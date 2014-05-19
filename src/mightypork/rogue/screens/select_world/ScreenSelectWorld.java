@@ -20,6 +20,7 @@ import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
+import mightypork.rogue.screens.RogueScreen;
 
 
 /**
@@ -27,7 +28,7 @@ import mightypork.rogue.events.RogueStateRequest;
  * 
  * @author MightyPork
  */
-public class ScreenSelectWorld extends LayeredScreen {
+public class ScreenSelectWorld extends RogueScreen {
 	
 	
 	public ScreenSelectWorld(AppAccess app)
