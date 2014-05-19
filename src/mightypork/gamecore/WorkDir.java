@@ -45,6 +45,11 @@ public class WorkDir {
 	}
 	
 	
+	/**
+	 * Add a path alias (dir or file)
+	 * @param alias path alias
+	 * @param path path relative to workdir
+	 */
 	public static void addPath(String alias, String path)
 	{
 		namedPaths.put(alias, path);
@@ -100,6 +105,9 @@ public class WorkDir {
 	}
 	
 	
+	/**
+	 * @return the workdir File
+	 */
 	public static File getWorkDir()
 	{
 		return workdir;
