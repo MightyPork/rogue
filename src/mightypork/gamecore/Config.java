@@ -13,6 +13,14 @@ import mightypork.gamecore.util.files.config.PropertyManager;
  */
 public class Config {
 	
+	/**
+	 * Config setup. Used to populate the config file.
+	 */
+	public static interface ConfigSetup {
+		
+		void addOptions(PropertyManager prop);
+	}
+	
 	private static PropertyManager cfg;
 	
 	
@@ -22,9 +30,9 @@ public class Config {
 	}
 	
 	
-	public static PropertyManager getProp()
+	public static void registerOptions(ConfigSetup cfgl)
 	{
-		return cfg;
+		cfgl.addOptions(cfg);
 	}
 	
 	

@@ -2,7 +2,7 @@ package mightypork.rogue.screens.select_world;
 
 
 import mightypork.gamecore.WorkDir;
-import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
@@ -19,7 +19,7 @@ import mightypork.gamecore.util.math.color.pal.PAL16;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.RogueStateManager.RogueState;
-import mightypork.rogue.events.GameStateRequest;
+import mightypork.rogue.events.RogueStateRequest;
 
 
 /**
@@ -72,13 +72,13 @@ public class ScreenSelectWorld extends LayeredScreen {
 			tp.setVPaddingPercent(20);
 			tp.setShadow(RGB.BLACK_50, tp.height().mul(0.6 / 8D).toVectXY());
 			
-			slot1 = new WorldSlot(root, WorkDir.getFile("save/slot_1.ion"));
+			slot1 = new WorldSlot(root, WorkDir.getFile("slot1"));
 			rows.add(slot1);
 			
-			slot2 = new WorldSlot(root, WorkDir.getFile("save/slot_2.ion"));
+			slot2 = new WorldSlot(root, WorkDir.getFile("slot2"));
 			rows.add(slot2);
 			
-			slot3 = new WorldSlot(root, WorkDir.getFile("save/slot_3.ion"));
+			slot3 = new WorldSlot(root, WorkDir.getFile("slot3"));
 			rows.add(slot3);
 			
 			// escape to quitn from here
@@ -87,7 +87,7 @@ public class ScreenSelectWorld extends LayeredScreen {
 				@Override
 				public void run()
 				{
-					getEventBus().send(new GameStateRequest(RogueState.MAIN_MENU));
+					getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
 				}
 			});
 			
@@ -96,7 +96,7 @@ public class ScreenSelectWorld extends LayeredScreen {
 				@Override
 				public void run()
 				{
-					getEventBus().send(new GameStateRequest(RogueState.EXIT));
+					getEventBus().send(new RogueStateRequest(RogueState.EXIT));
 				}
 			});
 		}

@@ -1,4 +1,4 @@
-package mightypork.gamecore.app;
+package mightypork.gamecore.core;
 
 
 import mightypork.gamecore.eventbus.clients.BusNode;

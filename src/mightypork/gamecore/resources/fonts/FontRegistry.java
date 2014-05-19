@@ -3,8 +3,8 @@ package mightypork.gamecore.resources.fonts;
 
 import java.util.HashMap;
 
-import mightypork.gamecore.app.AppAccess;
-import mightypork.gamecore.app.LightAppModule;
+import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.AppAccessAdapter;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.fonts.impl.DeferredFont;
 
@@ -16,12 +16,12 @@ import org.newdawn.slick.opengl.Texture;
  * 
  * @author MightyPork
  */
-public class FontBank extends LightAppModule {
+public class FontRegistry extends AppAccessAdapter {
 	
 	/**
 	 * @param app app access
 	 */
-	public FontBank(AppAccess app)
+	public FontRegistry(AppAccess app)
 	{
 		super(app);
 	}

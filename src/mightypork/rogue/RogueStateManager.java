@@ -1,8 +1,8 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.app.AppAccess;
-import mightypork.gamecore.app.AppModule;
+import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.AppModule;
 import mightypork.gamecore.gui.events.CrossfadeRequest;
 import mightypork.gamecore.logging.Log;
 

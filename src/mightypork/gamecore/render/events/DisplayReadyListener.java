@@ -1,4 +1,4 @@
-package mightypork.gamecore.render;
+package mightypork.gamecore.render.events;
 
 
 public interface DisplayReadyListener {

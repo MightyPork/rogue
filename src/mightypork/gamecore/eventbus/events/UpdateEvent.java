@@ -2,7 +2,7 @@ package mightypork.gamecore.eventbus.events;
 
 
 import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.gamecore.eventbus.event_flags.ImmediateEvent;
+import mightypork.gamecore.eventbus.event_flags.DirectEvent;
 import mightypork.gamecore.eventbus.event_flags.NonConsumableEvent;
 import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 
@@ -13,7 +13,7 @@ import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
  * @author MightyPork
  */
 @NotLoggedEvent
-@ImmediateEvent
+@DirectEvent
 @NonConsumableEvent
 public class UpdateEvent extends BusEvent<Updateable> {
 	

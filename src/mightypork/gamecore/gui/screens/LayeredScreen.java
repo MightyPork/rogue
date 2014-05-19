@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.TreeSet;
 
-import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 
 

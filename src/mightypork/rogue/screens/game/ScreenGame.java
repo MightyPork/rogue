@@ -3,7 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.File;
 
-import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.gui.screens.LayeredScreen;
@@ -14,7 +14,7 @@ import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.Const;
 import mightypork.rogue.RogueStateManager.RogueState;
-import mightypork.rogue.events.GameStateRequest;
+import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.events.PlayerKilledListener;
@@ -198,7 +198,7 @@ public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
 				@Override
 				public void run()
 				{
-					getEventBus().send(new GameStateRequest(RogueState.MAIN_MENU));
+					getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
 				}
 			});
 			
@@ -212,7 +212,7 @@ public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
 				@Override
 				public void run()
 				{
-					getEventBus().send(new GameStateRequest(RogueState.EXIT));
+					getEventBus().send(new RogueStateRequest(RogueState.EXIT));
 				}
 			});
 			

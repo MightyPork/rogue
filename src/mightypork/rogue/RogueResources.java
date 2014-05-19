@@ -2,14 +2,14 @@ package mightypork.rogue;
 
 
 import mightypork.gamecore.resources.ResourceSetup;
-import mightypork.gamecore.resources.audio.SoundBank;
-import mightypork.gamecore.resources.fonts.FontBank;
+import mightypork.gamecore.resources.audio.SoundRegistry;
+import mightypork.gamecore.resources.fonts.FontRegistry;
 import mightypork.gamecore.resources.fonts.Glyphs;
 import mightypork.gamecore.resources.fonts.impl.DeferredFont;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.gamecore.resources.textures.GLTexture;
 import mightypork.gamecore.resources.textures.QuadGrid;
-import mightypork.gamecore.resources.textures.TextureBank;
+import mightypork.gamecore.resources.textures.TextureRegistry;
 import mightypork.gamecore.resources.textures.WrapMode;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 
@@ -18,7 +18,7 @@ public class RogueResources implements ResourceSetup {
 	
 	
 	@Override
-	public void addFonts(FontBank fonts)
+	public void addFonts(FontRegistry fonts)
 	{
 		DeferredFont font;
 		
@@ -39,14 +39,14 @@ public class RogueResources implements ResourceSetup {
 	
 	
 	@Override
-	public void addSounds(SoundBank sounds)
+	public void addSounds(SoundRegistry sounds)
 	{
 		sounds.addEffect("gui.shutter", "/res/audio/shutter.ogg", 1, 1);
 	}
 	
 	
 	@Override
-	public void addTextures(TextureBank textures)
+	public void addTextures(TextureRegistry textures)
 	{
 		GLTexture texture;
 		QuadGrid grid;

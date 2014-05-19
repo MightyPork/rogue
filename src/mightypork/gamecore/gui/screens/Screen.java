@@ -1,8 +1,8 @@
 package mightypork.gamecore.gui.screens;
 
 
-import mightypork.gamecore.app.AppAccess;
-import mightypork.gamecore.app.AppSubModule;
+import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.AppSubModule;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.KeyBinder;

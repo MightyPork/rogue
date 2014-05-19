@@ -1,4 +1,4 @@
-package mightypork.gamecore.app;
+package mightypork.gamecore.core;
 
 
 import java.util.Queue;
@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import mightypork.gamecore.eventbus.events.UpdateEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.render.Renderable;
+import mightypork.gamecore.render.TaskTakeScreenshot;
+import mightypork.gamecore.render.events.ScreenshotRequestListener;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.timing.TimerDelta;
 
@@ -16,7 +18,7 @@ import mightypork.gamecore.util.math.timing.TimerDelta;
  * 
  * @author MightyPork
  */
-public abstract class MainLoop extends AppModule implements MainLoopRequestListener {
+public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	
 	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<>();
 	private TimerDelta timer;
@@ -102,10 +104,16 @@ public abstract class MainLoop extends AppModule implements MainLoopRequestListe
 	}
 	
 	
-	@Override
 	public synchronized void queueTask(Runnable request)
 	{
 		taskQueue.add(request);
+	}
+	
+	
+	@Override
+	public void onScreenshotRequest()
+	{
+		queueTask(new TaskTakeScreenshot());
 	}
 	
 }

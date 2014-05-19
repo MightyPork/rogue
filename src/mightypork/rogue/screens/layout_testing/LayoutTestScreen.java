@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.layout_testing;
 
 
-import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.linear.LinearGap;
 import mightypork.gamecore.gui.components.layout.linear.LinearLayout;

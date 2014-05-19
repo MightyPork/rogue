@@ -4,14 +4,32 @@ package mightypork.gamecore.input;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.ConfigSetup;
+import mightypork.gamecore.Config.ConfigSetup;
 import mightypork.gamecore.util.files.config.Property;
 import mightypork.gamecore.util.files.config.PropertyManager;
 
 
 public class KeyConfig implements ConfigSetup {
 	
-	private static KeyConfig inst = new KeyConfig();
+	/**
+	 * Key configurator
+	 */
+	public static interface KeySetup {
+		
+		public void addKeys(KeyOpts keys);
+	}
+	
+	/**
+	 * Key configurator access
+	 */
+	public static class KeyOpts {
+		
+		public void add(String cfgKey, String dataString)
+		{
+			strokes.put(prefixKey(cfgKey), new KeyProperty(prefixKey(cfgKey), KeyStroke.createFromDataString(dataString), null));
+		}
+	}
+	
 	
 	/**
 	 * Key property.<br>
@@ -62,16 +80,28 @@ public class KeyConfig implements ConfigSetup {
 	}
 	
 	
+	private static KeyConfig inst = new KeyConfig();
+	public static KeyOpts keyOpts = new KeyOpts();
+	
 	private static Map<String, KeyProperty> strokes = new HashMap<>();
 	private static PropertyManager prop;
 	
 	
-	public static void addKeyLayout(KeySetup layout)
+	public static void registerKeys(KeySetup layout)
 	{
-		layout.addKeys(inst);
+		layout.addKeys(keyOpts);
 	}
 	
 	
+	public static String prefixKey(String cfgKey)
+	{
+		return "key." + cfgKey;
+	}
+	
+	
+	/**
+	 * Add key options to a config manager
+	 */
 	@Override
 	public void addOptions(PropertyManager prop)
 	{
@@ -83,15 +113,9 @@ public class KeyConfig implements ConfigSetup {
 	}
 	
 	
-	public void add(String cfgKey, String dataString)
-	{
-		strokes.put(cfgKey, new KeyProperty(cfgKey, KeyStroke.createFromDataString(dataString), null));
-	}
-	
-	
 	public static KeyStroke get(String cfgKey)
 	{
-		final KeyProperty kp = strokes.get(cfgKey);
+		final KeyProperty kp = strokes.get(prefixKey(cfgKey));
 		if (kp == null) throw new IllegalArgumentException("No such stroke: " + cfgKey);
 		return kp.getValue();
 	}
@@ -99,7 +123,7 @@ public class KeyConfig implements ConfigSetup {
 	
 	public static void set(String cfgKey, int key, int mod)
 	{
-		final KeyProperty kp = strokes.get(cfgKey);
+		final KeyProperty kp = strokes.get(prefixKey(cfgKey));
 		if (kp == null) throw new IllegalArgumentException("No such stroke: " + cfgKey);
 		
 		kp.getValue().setTo(key, mod);

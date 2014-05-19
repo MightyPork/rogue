@@ -1,14 +1,14 @@
 package mightypork.gamecore.resources;
 
 
-import mightypork.gamecore.app.AppAccess;
-import mightypork.gamecore.resources.audio.SoundBank;
+import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.resources.audio.SoundRegistry;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
-import mightypork.gamecore.resources.fonts.FontBank;
+import mightypork.gamecore.resources.fonts.FontRegistry;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.resources.textures.GLTexture;
-import mightypork.gamecore.resources.textures.TextureBank;
+import mightypork.gamecore.resources.textures.TextureRegistry;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.resources.textures.TxSheet;
 
@@ -20,9 +20,9 @@ import mightypork.gamecore.resources.textures.TxSheet;
  */
 public final class Res {
 	
-	private static TextureBank textures;
-	private static SoundBank sounds;
-	private static FontBank fonts;
+	private static TextureRegistry textures;
+	private static SoundRegistry sounds;
+	private static FontRegistry fonts;
 	
 	private static boolean initialized = false;
 	
@@ -37,9 +37,9 @@ public final class Res {
 		if (initialized) return;
 		initialized = true;
 		
-		textures = new TextureBank(app);
-		sounds = new SoundBank(app);
-		fonts = new FontBank(app);
+		textures = new TextureRegistry(app);
+		sounds = new SoundRegistry(app);
+		fonts = new FontRegistry(app);
 	}
 	
 	

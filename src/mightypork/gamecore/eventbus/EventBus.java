@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.event_flags.DelayedEvent;
-import mightypork.gamecore.eventbus.event_flags.ImmediateEvent;
+import mightypork.gamecore.eventbus.event_flags.DirectEvent;
 import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 import mightypork.gamecore.eventbus.events.Destroyable;
 import mightypork.gamecore.logging.Log;
@@ -183,7 +183,7 @@ final public class EventBus implements Destroyable, BusAccess {
 			return;
 		}
 		
-		if (Utils.hasAnnotation(event, ImmediateEvent.class)) {
+		if (Utils.hasAnnotation(event, DirectEvent.class)) {
 			sendDirect(event);
 			return;
 		}
@@ -342,7 +342,10 @@ final public class EventBus implements Destroyable, BusAccess {
 		assertLive();
 		
 		clients.setBuffering(true);
+		
 		doDispatch(clients, event);
+		event.onDispatchComplete(this);
+		
 		clients.setBuffering(false);
 	}
 	

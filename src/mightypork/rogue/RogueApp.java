@@ -4,20 +4,19 @@ package mightypork.rogue;
 import java.io.File;
 
 import mightypork.gamecore.Config;
-import mightypork.gamecore.app.BaseApp;
-import mightypork.gamecore.app.MainLoop;
-import mightypork.gamecore.app.MainLoopRequest;
+import mightypork.gamecore.core.BaseApp;
+import mightypork.gamecore.core.MainLoopRequest;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyConfig;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.DisplaySystem;
+import mightypork.gamecore.render.events.FullscreenToggleRequest;
+import mightypork.gamecore.render.events.ScreenshotRequest;
 import mightypork.gamecore.util.ion.Ion;
 import mightypork.rogue.RogueStateManager.RogueState;
-import mightypork.rogue.events.ActionRequest;
-import mightypork.rogue.events.ActionRequest.RequestType;
-import mightypork.rogue.events.GameStateRequest;
+import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.FpsOverlay;
 import mightypork.rogue.screens.LoadingOverlay;
 import mightypork.rogue.screens.game.ScreenGame;
@@ -39,6 +38,14 @@ public final class RogueApp extends BaseApp {
 	public RogueApp(File workdir, boolean singleInstance)
 	{
 		super(workdir, singleInstance);
+		
+		opt().addRoutes(new RogueRoutes());
+		opt().addResources(new RogueResources());
+		opt().addKeys(new RogueKeys());
+		opt().addConfig(new RogueConfig());
+		
+		opt().setConfigFile(this, "config.ini", "Rogue config file");
+		opt().setLogOptions("/", "runtime", 5, java.util.logging.Level.ALL);
 	}
 	
 	
@@ -84,11 +91,11 @@ public final class RogueApp extends BaseApp {
 	protected void initInputSystem(InputSystem input)
 	{
 		// this will work only with reusable events (such as requests)
-		bindEventToKey(new ActionRequest(RequestType.FULLSCREEN), "key.global.fullscreen");
-		bindEventToKey(new ActionRequest(RequestType.SCREENSHOT), "key.global.screenshot");
+		bindEventToKey(new FullscreenToggleRequest(), "global.fullscreen");
+		bindEventToKey(new ScreenshotRequest(), "global.screenshot");
 		
-		bindEventToKey(new GameStateRequest(RogueState.EXIT), "key.global.quit");
-		bindEventToKey(new GameStateRequest(RogueState.MAIN_MENU), "key.global.menu");
+		bindEventToKey(new RogueStateRequest(RogueState.EXIT), "global.quit");
+		bindEventToKey(new RogueStateRequest(RogueState.MAIN_MENU), "global.menu");
 	}
 	
 	
@@ -106,13 +113,6 @@ public final class RogueApp extends BaseApp {
 	
 	
 	@Override
-	protected MainLoop createMainLoop()
-	{
-		return new RogueMainLoop(this);
-	}
-	
-	
-	@Override
 	protected void postInit()
 	{
 		getEventBus().send(new MainLoopRequest(new Runnable() {
@@ -120,7 +120,7 @@ public final class RogueApp extends BaseApp {
 			@Override
 			public void run()
 			{
-				getEventBus().send(new GameStateRequest(RogueState.MAIN_MENU));
+				getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
 				//getEventBus().send(new CrossfadeRequest("test.layout", true));
 			}
 		}));

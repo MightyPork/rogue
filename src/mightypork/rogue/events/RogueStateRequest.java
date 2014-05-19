@@ -11,12 +11,12 @@ import mightypork.rogue.RogueStateManager.RogueState;
  * 
  * @author MightyPork
  */
-public class GameStateRequest extends BusEvent<RogueStateManager> {
+public class RogueStateRequest extends BusEvent<RogueStateManager> {
 	
 	final private RogueState requested;
 	
 	
-	public GameStateRequest(RogueState requested)
+	public RogueStateRequest(RogueState requested)
 	{
 		this.requested = requested;
 	}

@@ -13,4 +13,4 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Inherited
 @Documented
-public @interface ImmediateEvent {}
+public @interface DirectEvent {}

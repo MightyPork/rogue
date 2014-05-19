@@ -292,15 +292,18 @@ public class Log {
 	
 	public static String formatMessage(Level level, String message, Throwable throwable, long start_ms)
 	{
+		if (message == null) message = "";
 		
 		final String nl = System.getProperty("line.separator");
 		
-		if (message.equals("\n")) {
-			return nl;
-		}
-		
-		if (message.charAt(0) == '\n') {
-			message = nl + message.substring(1);
+		if (message.length() > 0) {
+			if (message.equals("\n")) {
+				return nl;
+			}
+			
+			if (message.charAt(0) == '\n') {
+				message = nl + message.substring(1);
+			}
 		}
 		
 		final long time_ms = (System.currentTimeMillis() - start_ms);

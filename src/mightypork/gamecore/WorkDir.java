@@ -2,6 +2,8 @@ package mightypork.gamecore;
 
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import mightypork.gamecore.logging.Log;
 
@@ -13,12 +15,45 @@ import mightypork.gamecore.logging.Log;
  */
 public class WorkDir {
 	
+	/**
+	 * Route configurator.
+	 */
+	public static interface RouteSetup {
+		
+		public void addRoutes(RouteOpts routeOpts);
+	}
+	
+	/**
+	 * Route configurator access
+	 */
+	public static class RouteOpts {
+		
+		public void addPath(String alias, String path)
+		{
+			WorkDir.addPath(alias, path);
+		}
+	}
+	
+	public static RouteOpts routeOpts = new RouteOpts();
 	private static File workdir;
+	private static Map<String, String> namedPaths = new HashMap<>();
 	
 	
 	public static void init(File workdir)
 	{
 		WorkDir.workdir = workdir;
+	}
+	
+	
+	public static void addPath(String alias, String path)
+	{
+		namedPaths.put(alias, path);
+	}
+	
+	
+	public static void registerRoutes(RouteSetup rs)
+	{
+		rs.addRoutes(routeOpts);
 	}
 	
 	
@@ -30,9 +65,13 @@ public class WorkDir {
 	 */
 	public static File getDir(String path)
 	{
+		if (namedPaths.containsKey(path)) path = namedPaths.get(path);
+		
 		final File f = new File(workdir, path);
-		if (!f.exists() && !f.mkdirs()) {
-			Log.w("Could not create a directory: " + f);
+		if (!f.exists()) {
+			if (!f.mkdirs()) {
+				Log.w("Could not create a directory: " + f + " (path: " + path + ")");
+			}
 		}
 		
 		return f;
@@ -47,10 +86,14 @@ public class WorkDir {
 	 */
 	public static File getFile(String path)
 	{
+		if (namedPaths.containsKey(path)) path = namedPaths.get(path);
+		
 		final File f = new File(workdir, path);
 		
 		// create the parent dir
-		getDir(f.getParent());
+		if (!f.getParent().equals(workdir)) {
+			f.getParentFile().mkdirs();
+		}
 		
 		return f;
 		
@@ -61,4 +104,5 @@ public class WorkDir {
 	{
 		return workdir;
 	}
+	
 }

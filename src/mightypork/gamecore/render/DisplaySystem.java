@@ -5,10 +5,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.ByteBuffer;
 
-import mightypork.gamecore.app.AppAccess;
-import mightypork.gamecore.app.AppModule;
+import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.AppModule;
 import mightypork.gamecore.gui.events.ViewportChangeEvent;
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.render.events.DisplayReadyEvent;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
@@ -30,6 +31,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	private DisplayMode windowDisplayMode;
 	private int targetFps;
 	private FpsMeter fpsMeter;
+	private boolean fullscreenSwitchRequested;
 	
 	/** Current screen size */
 	private static final Vect screenSize = new Vect() {
@@ -117,6 +119,12 @@ public class DisplaySystem extends AppModule implements RectBound {
 	 */
 	public void switchFullscreen()
 	{
+		fullscreenSwitchRequested = true;
+	}
+	
+	
+	private void doSwitchFullscreen()
+	{
 		try {
 			
 			if (!Display.isFullscreen()) {
@@ -133,7 +141,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 				Display.update();
 			}
 			
-			getEventBus().send(new ViewportChangeEvent(true, Display.isFullscreen(), getSize()));
+			getEventBus().send(new ViewportChangeEvent(getSize()));
 			
 		} catch (final Throwable t) {
 			Log.e("Failed to toggle fullscreen mode.", t);
@@ -153,7 +161,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	 * 
 	 * @return screenshot object
 	 */
-	public Screenshot takeScreenshot()
+	public static Screenshot prepareScreenshot()
 	{
 		glReadBuffer(GL_FRONT);
 		final int width = Display.getWidth();
@@ -235,8 +243,10 @@ public class DisplaySystem extends AppModule implements RectBound {
 	{
 		// handle resize
 		if (Display.wasResized()) {
-			getEventBus().send(new ViewportChangeEvent(false, Display.isFullscreen(), getSize()));
+			getEventBus().send(new ViewportChangeEvent(getSize()));
 		}
+		
+		if (fullscreenSwitchRequested) doSwitchFullscreen();
 		
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

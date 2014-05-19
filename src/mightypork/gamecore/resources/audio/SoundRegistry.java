@@ -4,8 +4,8 @@ package mightypork.gamecore.resources.audio;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.app.AppAccess;
-import mightypork.gamecore.app.LightAppModule;
+import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.AppAccessAdapter;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
 
@@ -15,7 +15,7 @@ import mightypork.gamecore.resources.audio.players.LoopPlayer;
  * 
  * @author MightyPork
  */
-public class SoundBank extends LightAppModule {
+public class SoundRegistry extends AppAccessAdapter {
 	
 	private final Map<String, EffectPlayer> effects = new HashMap<>();
 	private final Map<String, LoopPlayer> loops = new HashMap<>();
@@ -24,7 +24,7 @@ public class SoundBank extends LightAppModule {
 	/**
 	 * @param app app access
 	 */
-	public SoundBank(AppAccess app)
+	public SoundRegistry(AppAccess app)
 	{
 		super(app);
 		if (getSoundSystem() == null) throw new NullPointerException("SoundSystem cannot be null.");

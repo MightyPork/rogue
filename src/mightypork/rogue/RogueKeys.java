@@ -1,23 +1,23 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.input.KeyConfig;
-import mightypork.gamecore.input.KeySetup;
+import mightypork.gamecore.input.KeyConfig.KeyOpts;
+import mightypork.gamecore.input.KeyConfig.KeySetup;
 
 
 public class RogueKeys implements KeySetup {
 	
 	@Override
-	public void addKeys(KeyConfig keys)
+	public void addKeys(KeyOpts keys)
 	{
-		keys.add("key.global.quit", "CTRL+SHIFT+Q");
-		keys.add("key.global.menu", "CTRL+SHIFT+M");
-		keys.add("key.global.screenshot", "F2");
-		keys.add("key.global.fullscreen", "F11");
+		keys.add("global.quit", "CTRL+Q");
+		keys.add("global.menu", "CTRL+M");
+		keys.add("global.screenshot", "F2");
+		keys.add("global.fullscreen", "F11");
 		
-		keys.add("key.general.cancel", "ESC");
-		keys.add("key.general.confirm", "ENTER");
-		keys.add("key.general.yes", "Y");
-		keys.add("key.general.no", "N");
+		keys.add("general.cancel", "ESC");
+		keys.add("general.confirm", "ENTER");
+		keys.add("general.yes", "Y");
+		keys.add("general.no", "N");
 	}
 }

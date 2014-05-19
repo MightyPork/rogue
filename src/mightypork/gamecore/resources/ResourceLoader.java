@@ -20,7 +20,7 @@ public interface ResourceLoader {
 	
 	
 	/**
-	 * Initialize the loader (async loader may start a stread)
+	 * Initialize the loader (Join the bus, start a stread etc)
 	 * 
 	 * @param app app the loader works for. The event bus must already be
 	 *            initialized.

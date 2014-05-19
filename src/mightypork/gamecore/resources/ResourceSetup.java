@@ -1,9 +1,9 @@
 package mightypork.gamecore.resources;
 
 
-import mightypork.gamecore.resources.audio.SoundBank;
-import mightypork.gamecore.resources.fonts.FontBank;
-import mightypork.gamecore.resources.textures.TextureBank;
+import mightypork.gamecore.resources.audio.SoundRegistry;
+import mightypork.gamecore.resources.fonts.FontRegistry;
+import mightypork.gamecore.resources.textures.TextureRegistry;
 
 
 /**
@@ -18,7 +18,7 @@ public interface ResourceSetup {
 	 * 
 	 * @param fonts font registry
 	 */
-	void addFonts(FontBank fonts);
+	void addFonts(FontRegistry fonts);
 	
 	
 	/**
@@ -26,7 +26,7 @@ public interface ResourceSetup {
 	 * 
 	 * @param sounds sound registry
 	 */
-	void addSounds(SoundBank sounds);
+	void addSounds(SoundRegistry sounds);
 	
 	
 	/**
@@ -34,5 +34,5 @@ public interface ResourceSetup {
 	 * 
 	 * @param textures texture registry
 	 */
-	void addTextures(TextureBank textures);
+	void addTextures(TextureRegistry textures);
 }

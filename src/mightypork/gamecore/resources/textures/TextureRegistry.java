@@ -4,8 +4,8 @@ package mightypork.gamecore.resources.textures;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.app.AppAccess;
-import mightypork.gamecore.app.LightAppModule;
+import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.AppAccessAdapter;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.util.error.KeyAlreadyExistsException;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
@@ -17,7 +17,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
  * 
  * @author MightyPork
  */
-public class TextureBank extends LightAppModule {
+public class TextureRegistry extends AppAccessAdapter {
 	
 	private final Map<String, GLTexture> textures = new HashMap<>();
 	private final Map<String, TxSheet> sheets = new HashMap<>();
@@ -26,7 +26,7 @@ public class TextureBank extends LightAppModule {
 	/**
 	 * @param app app access
 	 */
-	public TextureBank(AppAccess app)
+	public TextureRegistry(AppAccess app)
 	{
 		super(app);
 	}

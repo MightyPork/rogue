@@ -1,4 +1,4 @@
-package mightypork.gamecore.app;
+package mightypork.gamecore.core;
 
 
 import mightypork.gamecore.eventbus.EventBus;
@@ -12,7 +12,7 @@ import mightypork.gamecore.resources.audio.SoundSystem;
  * 
  * @author MightyPork
  */
-public class LightAppModule implements AppAccess {
+public class AppAccessAdapter implements AppAccess {
 	
 	private final AppAccess app;
 	
@@ -20,7 +20,7 @@ public class LightAppModule implements AppAccess {
 	/**
 	 * @param app app access
 	 */
-	public LightAppModule(AppAccess app)
+	public AppAccessAdapter(AppAccess app)
 	{
 		if (app == null) throw new NullPointerException("AppAccess instance cannot be null.");
 		

@@ -1,4 +1,4 @@
-package mightypork.gamecore.app;
+package mightypork.gamecore.core;
 
 
 import mightypork.gamecore.eventbus.BusEvent;
@@ -11,7 +11,7 @@ import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
  * @author MightyPork
  */
 @SingleReceiverEvent
-public class MainLoopRequest extends BusEvent<MainLoopRequestListener> {
+public class MainLoopRequest extends BusEvent<MainLoop> {
 	
 	private final Runnable task;
 	
@@ -26,7 +26,7 @@ public class MainLoopRequest extends BusEvent<MainLoopRequestListener> {
 	
 	
 	@Override
-	public void handleBy(MainLoopRequestListener handler)
+	public void handleBy(MainLoop handler)
 	{
 		handler.queueTask(task);
 	}

@@ -16,39 +16,15 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 @NotLoggedEvent
 public class ViewportChangeEvent extends BusEvent<ViewportChangeListener> {
 	
-	private final boolean fullscreen;
 	private final Vect screenSize;
-	private final boolean fsChanged;
 	
 	
 	/**
-	 * @param fsChanged fullscreen change triggered the event
-	 * @param fullscreen is now fullscreen
 	 * @param size new screen size
 	 */
-	public ViewportChangeEvent(boolean fsChanged, boolean fullscreen, Vect size)
+	public ViewportChangeEvent(Vect size)
 	{
-		this.fullscreen = fullscreen;
 		this.screenSize = size;
-		this.fsChanged = fsChanged;
-	}
-	
-	
-	/**
-	 * @return true if screen is now fullscreen
-	 */
-	public boolean isFullscreen()
-	{
-		return fullscreen;
-	}
-	
-	
-	/**
-	 * @return true if event was triggered by fullscreen toggle
-	 */
-	public boolean fullscreenChanged()
-	{
-		return fsChanged;
 	}
 	
 	

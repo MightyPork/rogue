@@ -1,4 +1,4 @@
-package mightypork.gamecore.app;
+package mightypork.gamecore.core;
 
 
 import java.io.File;
@@ -10,15 +10,16 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
 import mightypork.gamecore.Config;
-import mightypork.gamecore.ConfigSetup;
+import mightypork.gamecore.Config.ConfigSetup;
 import mightypork.gamecore.WorkDir;
+import mightypork.gamecore.WorkDir.RouteSetup;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.events.DestroyEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyConfig;
-import mightypork.gamecore.input.KeySetup;
+import mightypork.gamecore.input.KeyConfig.KeySetup;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.logging.SlickLogRedirector;
 import mightypork.gamecore.logging.writers.LogWriter;
@@ -43,6 +44,86 @@ import mightypork.gamecore.util.math.algo.Move;
  */
 public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	
+	/**
+	 * Init options holder class
+	 */
+	public class AppInitOptions {
+		
+		private String logDir = "log";
+		private String logFilePrefix = "runtime";
+		private String screenshotDir = "screenshots";
+		private int logArchiveCount = 0;
+		private boolean busLogging = false;
+		private String configFile = "settings.cfg";
+		private String configComment = "Main config file";
+		
+		private final List<ResourceSetup> resourceLists = new ArrayList<>();
+		private final List<KeySetup> keyLists = new ArrayList<>();
+		private final List<ConfigSetup> configLists = new ArrayList<>();
+		private final List<RouteSetup> routeLists = new ArrayList<>();
+		
+		private ResourceLoader resourceLoader = new AsyncResourceLoader();
+		private Level logLevel = Level.ALL;
+		
+		
+		public void setConfigFile(BaseApp baseApp, String filename, String comment)
+		{
+			configFile = filename;
+			configComment = comment;
+		}
+		
+		
+		public void addConfig(ConfigSetup cfg)
+		{
+			configLists.add(cfg);
+		}
+		
+		
+		public void addKeys(KeySetup keys)
+		{
+			keyLists.add(keys);
+		}
+		
+		
+		public void addRoutes(RouteSetup keys)
+		{
+			routeLists.add(keys);
+		}
+		
+		
+		public void addResources(ResourceSetup res)
+		{
+			resourceLists.add(res);
+		}
+		
+		
+		public void setBusLogging(boolean yes)
+		{
+			busLogging = yes;
+		}
+		
+		
+		public void setLogOptions(String logDir, String filePrefix, int archivedCount, Level logLevel)
+		{
+			this.logDir = logDir;
+			this.logFilePrefix = filePrefix;
+			this.logArchiveCount = archivedCount;
+			this.logLevel = logLevel;
+		}
+		
+		
+		public void setResourceLoader(ResourceLoader resLoader)
+		{
+			resourceLoader = resLoader;
+		}
+		
+		
+		public void setScreenshotDir(String path)
+		{
+			this.screenshotDir = path;
+		}
+	}
+	
 	// modules
 	private InputSystem inputSystem;
 	private DisplaySystem displaySystem;
@@ -50,71 +131,34 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	private EventBus eventBus;
 	private MainLoop gameLoop;
 	private ScreenRegistry screenRegistry;
+	private boolean started = false;
 	
-	private String logDirName = "log";
-	private String logFilePrefix = "runtime";
-	private int logArchiveCount = 0;
-	private boolean busLogging = false;
-	private String configFile = "settings.cfg";
-	private String configComment = "Main config file";
-	private final List<ResourceSetup> resourcesToLoad = new ArrayList<>();
-	private final List<KeySetup> keysToLoad = new ArrayList<>();
-	private final List<ConfigSetup> cfgsToLoad = new ArrayList<>();
-	private ResourceLoader resourceLoader = new AsyncResourceLoader();
-	private Level logLevel = Level.ALL;
+	// init opt holder
+	private final AppInitOptions opt = new AppInitOptions();
+	
+	
+	/**
+	 * Get init options
+	 * 
+	 * @return opt holder
+	 */
+	public AppInitOptions opt()
+	{
+		if (started) {
+			throw new IllegalStateException("Cannot alter init options after starting the App.");
+		}
+		
+		return opt;
+	}
 	
 	
 	public BaseApp(File workdir, boolean singleInstance)
 	{
 		WorkDir.init(workdir);
 		
+		Log.i("Using workdir: " + WorkDir.getWorkDir());
+		
 		if (singleInstance) initLock();
-	}
-	
-	
-	public void setConfigFile(String filename, String comment)
-	{
-		this.configFile = filename;
-		this.configComment = comment;
-	}
-	
-	
-	public void setLogOptions(String logDir, String filePrefix, int archived, Level logLevel)
-	{
-		this.logDirName = logDir;
-		this.logFilePrefix = filePrefix;
-		this.logArchiveCount = archived;
-		this.logLevel = logLevel;
-	}
-	
-	
-	public void setBusLogging(boolean yes)
-	{
-		this.busLogging = yes;
-	}
-	
-	
-	public void addResources(ResourceSetup res)
-	{
-		this.resourcesToLoad.add(res);
-	}
-	
-	
-	public void addKeys(KeySetup keys)
-	{
-		this.keysToLoad.add(keys);
-	}
-	
-	
-	public void addConfig(ConfigSetup cfg)
-	{
-		this.cfgsToLoad.add(cfg);
-	}
-	
-	
-	public void setResourceLoader(ResourceLoader resLoader)
-	{
-		this.resourceLoader = resLoader;
 	}
 	
 	
@@ -125,13 +169,12 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	{
 		Thread.setDefaultUncaughtExceptionHandler(this);
 		
-		Log.i("Using workdir: " + WorkDir.getWorkDir());
-		
 		initialize();
 		
 		Log.i("Starting main loop...");
 		
-		// open first screen		
+		// open first screen	
+		started = true;
 		gameLoop.start();
 	}
 	
@@ -141,13 +184,25 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 */
 	protected void initialize()
 	{
-		Config.init(WorkDir.getFile(configFile), configComment);
-		for (final KeySetup l : keysToLoad) {
-			KeyConfig.addKeyLayout(l);
+		WorkDir.addPath("screenshots", opt.screenshotDir);
+		WorkDir.addPath("config", opt.configFile);
+		WorkDir.addPath("logs", opt.logDir);
+		
+		
+		for (final RouteSetup rs : opt.routeLists) {
+			WorkDir.registerRoutes(rs);
 		}
-		KeyConfig.inst().addOptions(Config.getProp());
-		for (final ConfigSetup cfgl : cfgsToLoad) {
-			cfgl.addOptions(Config.getProp());
+		
+		// apply configurations
+		Config.init(WorkDir.getFile(opt.configFile), opt.configComment);
+		for (final KeySetup l : opt.keyLists) {
+			KeyConfig.registerKeys(l);
+		}
+		
+		// add keys to config
+		Config.registerOptions(KeyConfig.inst());
+		for (final ConfigSetup cfgl : opt.configLists) {
+			Config.registerOptions(cfgl);
 		}
 		Config.load();
 		
@@ -155,8 +210,8 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		/*
 		 * Setup logging
 		 */
-		final LogWriter log = Log.create(logFilePrefix, new File(WorkDir.getDir(logDirName), logFilePrefix + ".log"), logArchiveCount);
-		log.setLevel(logLevel);
+		final LogWriter log = Log.create(opt.logFilePrefix, new File(WorkDir.getDir(opt.logDir), opt.logFilePrefix + ".log"), opt.logArchiveCount);
+		log.setLevel(opt.logLevel);
 		Log.setMainLogger(log);
 		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
 		
@@ -164,22 +219,25 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		Log.i("=== Starting initialization sequence ===");
 		
 		
-		// hook
+		// pre-init hook
 		Log.f2("Calling pre-init hook...");
 		preInit();
+		
 		
 		/*
 		 * Event bus
 		 */
 		Log.f2("Starting Event Bus...");
 		eventBus = new EventBus();
-		eventBus.detailedLogging = busLogging;
+		eventBus.subscribe(this);
+		eventBus.detailedLogging = opt.busLogging;
 		
 		/*
 		 * Ionizables
 		 */
 		Log.f3("initializing ION...");
 		registerIonizables();
+		
 		
 		/*
 		 * Display
@@ -188,6 +246,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		displaySystem = new DisplaySystem(this);
 		initDisplay(displaySystem);
 		
+		
 		/*
 		 * Audio
 		 */
@@ -195,12 +254,14 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		soundSystem = new SoundSystem(this);
 		initSoundSystem(soundSystem);
 		
+		
 		/*
 		 * Input
 		 */
 		Log.f2("Initializing Input System...");
 		inputSystem = new InputSystem(this);
 		initInputSystem(inputSystem);
+		
 		
 		/*
 		 * Prepare main loop
@@ -210,17 +271,23 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		gameLoop = createMainLoop();
 		gameLoop.setRootRenderable(screenRegistry);
 		
+		
 		/*
 		 * Load resources
 		 * 
-		 * Resources should be registered to banks, and AsyncResourceLoader will load them.
+		 * Resources should be registered to registries, and AsyncResourceLoader will load them.
 		 */
 		Log.f1("Loading resources...");
-		resourceLoader.init(this);
+		if (opt.resourceLoader != null) {
+			opt.resourceLoader.init(this);
+		}
+		
 		Res.init(this);
-		for (final ResourceSetup rl : resourcesToLoad) {
+		
+		for (final ResourceSetup rl : opt.resourceLists) {
 			Res.load(rl);
 		}
+		
 		
 		/*
 		 * Screen registry
@@ -303,7 +370,10 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 * 
 	 * @return the game loop.
 	 */
-	protected abstract MainLoop createMainLoop();
+	protected MainLoop createMainLoop()
+	{
+		return new MainLoop(this);
+	}
 	
 	
 	/*
@@ -408,7 +478,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 				getEventBus().destroy();
 			}
 		} catch (final Exception e) {
-			// ignore it
+			Log.e(e);
 		}
 		
 		Log.i("Terminating...");

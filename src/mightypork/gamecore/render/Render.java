@@ -241,7 +241,7 @@ public class Render {
 	{
 		pushed++;
 		
-		if (pushed >= 20) {
+		if (pushed >= 100) {
 			Log.w("Suspicious number of state pushes: " + pushed);
 		}
 		
@@ -528,14 +528,14 @@ public class Render {
 	public static void enterBatchTexturedQuadMode(GLTexture texture)
 	{
 		texture.bind();
-		GL11.glBegin(GL11.GL_QUADS);
+		glBegin(GL11.GL_QUADS);
 		batchTexturedQuadMode = true;
 	}
 	
 	
 	public static void leaveBatchTexturedQuadMode()
 	{
-		GL11.glEnd();
+		glEnd();
 		batchTexturedQuadMode = false;
 	}
 }

@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.components.layout;
 
 
-import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.gamecore.gui.components.LayoutComponent;

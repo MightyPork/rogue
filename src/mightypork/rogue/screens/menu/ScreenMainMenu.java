@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.menu;
 
 
-import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -22,7 +22,7 @@ import mightypork.gamecore.util.math.color.pal.PAL16;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.RogueStateManager.RogueState;
-import mightypork.rogue.events.GameStateRequest;
+import mightypork.rogue.events.RogueStateRequest;
 
 
 /**
@@ -84,7 +84,7 @@ public class ScreenMainMenu extends LayeredScreen {
 				@Override
 				protected void execute()
 				{
-					getEventBus().send(new GameStateRequest(RogueState.SELECT_WORLD));
+					getEventBus().send(new RogueStateRequest(RogueState.SELECT_WORLD));
 				}
 			});
 			rows.add(btn, 2);
@@ -112,7 +112,7 @@ public class ScreenMainMenu extends LayeredScreen {
 				@Override
 				protected void execute()
 				{
-					getEventBus().send(new GameStateRequest(RogueState.EXIT));
+					getEventBus().send(new RogueStateRequest(RogueState.EXIT));
 				}
 			});
 			rows.add(btn, 2);
@@ -123,7 +123,7 @@ public class ScreenMainMenu extends LayeredScreen {
 				@Override
 				public void run()
 				{
-					getEventBus().send(new GameStateRequest(RogueState.EXIT));
+					getEventBus().send(new RogueStateRequest(RogueState.EXIT));
 				}
 			});
 		}

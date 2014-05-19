@@ -1,7 +1,8 @@
 package mightypork.gamecore.gui.screens.impl;
 
 
-import mightypork.gamecore.app.AppAccess;
+import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.ShudownRequest;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.gui.screens.Overlay;
@@ -9,8 +10,6 @@ import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.timing.TimedTask;
-import mightypork.rogue.events.ActionRequest;
-import mightypork.rogue.events.ActionRequest.RequestType;
 
 
 public class CrossfadeOverlay extends Overlay {
@@ -27,7 +26,7 @@ public class CrossfadeOverlay extends Overlay {
 		public void run()
 		{
 			if (requestedScreenName == null) {
-				getEventBus().send(new ActionRequest(RequestType.SHUTDOWN));
+				getEventBus().send(new ShudownRequest());
 			} else {
 				getEventBus().send(new ScreenRequest(requestedScreenName));
 			}
