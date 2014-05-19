@@ -3,6 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.File;
 
+import mightypork.gamecore.Config;
 import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.gui.Action;
@@ -242,19 +243,18 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		addLayer(askSaveLayer = new AskSaveLayer(this));
 		
 		//pause key
-		bindKey(new KeyStroke(Keys.P), Edge.RISING, actionTogglePause);
-		bindKey(new KeyStroke(Keys.PAUSE), Edge.RISING, actionTogglePause);
-		bindKey(new KeyStroke(Keys.SPACE), Edge.RISING, actionTogglePause);
+		bindKey(Config.getKey("game.pause2"), Edge.RISING, actionTogglePause);
+		bindKey(Config.getKey("game.pause"), Edge.RISING, actionTogglePause);
 		
-		bindKey(new KeyStroke(Keys.I), Edge.RISING, actionToggleInv);
-		bindKey(new KeyStroke(Keys.D), Edge.RISING, actionDropLastPickedItem);
-		bindKey(new KeyStroke(Keys.E), Edge.RISING, actionEat);
-		bindKey(new KeyStroke(Keys.M), Edge.RISING, actionToggleMinimap);
-		bindKey(new KeyStroke(Keys.Z), Edge.RISING, actionToggleZoom);
+		bindKey(Config.getKey("game.inventory"), Edge.RISING, actionToggleInv);
+		bindKey(Config.getKey("game.drop"), Edge.RISING, actionDropLastPickedItem);
+		bindKey(Config.getKey("game.eat"), Edge.RISING, actionEat);
+		bindKey(Config.getKey("game.minimap"), Edge.RISING, actionToggleMinimap);
+		bindKey(Config.getKey("game.zoom"), Edge.RISING, actionToggleZoom);
 		
-		bindKey(new KeyStroke(Keys.L, Keys.MOD_CONTROL), Edge.RISING, actionLoad);
-		bindKey(new KeyStroke(Keys.S, Keys.MOD_CONTROL), Edge.RISING, actionSave);
-		bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, actionMenu);
+		bindKey(Config.getKey("game.load"), Edge.RISING, actionLoad);
+		bindKey(Config.getKey("game.save"), Edge.RISING, actionSave);
+		bindKey(Config.getKey("game.quit"), Edge.RISING, actionMenu);
 		
 		// add as actions - enableables.
 		worldActions.add(worldLayer);
@@ -274,7 +274,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		worldActions.setEnabled(true);
 		
 		// CHEAT - X-ray
-		bindKey(new KeyStroke(Keys.NUMPAD_MULTIPLY, Keys.MOD_CONTROL), Edge.RISING, new Runnable() {
+		bindKey(Config.getKey("game.cheat.xray"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()

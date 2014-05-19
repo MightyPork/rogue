@@ -3,6 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.IOException;
 
+import mightypork.gamecore.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -103,7 +104,7 @@ public class AskSaveLayer extends ScreenLayer {
 			}
 		};
 		
-		btn1.setAction(new Action() {
+		final Action save = new Action() {
 			
 			@Override
 			protected void execute()
@@ -115,20 +116,28 @@ public class AskSaveLayer extends ScreenLayer {
 					Log.e(e);
 				}
 			}
-		});
+		};
 		
-		btn2.setAction(new Action() {
+		final Action discard = new Action() {
 			
 			@Override
 			protected void execute()
 			{
 				if (task != null) task.run();
 			}
-		});
+		};
 		
+		btn1.setAction(save);		
+		btn2.setAction(discard);		
 		btn3.setAction(cancel);
 		
-		bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, cancel);
+		bindKey(Config.getKey("general.back"), Edge.RISING, cancel);
+		bindKey(Config.getKey("general.cancel"), Edge.RISING, cancel);
+		
+		bindKey(Config.getKey("general.yes"), Edge.RISING, save);
+		bindKey(Config.getKey("general.confirm"), Edge.RISING, save);
+		
+		bindKey(Config.getKey("general.no"), Edge.RISING, discard);
 		
 		updated.add(numa);
 		updated.add(hideTT);

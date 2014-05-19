@@ -1,6 +1,7 @@
 package mightypork.rogue.screens.select_world;
 
 
+import mightypork.gamecore.Config;
 import mightypork.gamecore.WorkDir;
 import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.gui.AlignX;
@@ -83,21 +84,12 @@ public class ScreenSelectWorld extends RogueScreen {
 			rows.add(slot3);
 			
 			// escape to quitn from here
-			bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, new Runnable() {
+			bindKey(Config.getKey("general.back"), Edge.RISING, new Runnable() {
 				
 				@Override
 				public void run()
 				{
 					getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
-				}
-			});
-			
-			bindKey(new KeyStroke(Keys.Q, Keys.MOD_CONTROL), Edge.RISING, new Runnable() {
-				
-				@Override
-				public void run()
-				{
-					getEventBus().send(new RogueStateRequest(RogueState.EXIT));
 				}
 			});
 		}

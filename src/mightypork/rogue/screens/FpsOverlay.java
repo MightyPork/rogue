@@ -1,6 +1,7 @@
 package mightypork.rogue.screens;
 
 
+import mightypork.gamecore.Config;
 import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
@@ -35,7 +36,7 @@ public class FpsOverlay extends Overlay {
 		/*
 		 * Toggle key: F3
 		 */
-		bindKey(new KeyStroke(Keys.F3), Edge.RISING, new Action() {
+		bindKey(Config.getKey("global.fps_meter"), Edge.RISING, new Action() {
 			
 			@Override
 			public void execute()

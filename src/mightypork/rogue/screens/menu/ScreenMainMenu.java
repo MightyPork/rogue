@@ -1,7 +1,9 @@
 package mightypork.rogue.screens.menu;
 
 
+import mightypork.gamecore.Config;
 import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -113,18 +115,18 @@ public class ScreenMainMenu extends RogueScreen {
 				@Override
 				protected void execute()
 				{
-					getEventBus().send(new RogueStateRequest(RogueState.EXIT));
+					getEventBus().send(new UserQuitRequest());
 				}
 			});
 			rows.add(btn, 2);
 			
 			
-			bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, new Runnable() {
+			bindKey(Config.getKey("general.back"), Edge.RISING, new Runnable() {
 				
 				@Override
 				public void run()
 				{
-					getEventBus().send(new RogueStateRequest(RogueState.EXIT));
+					getEventBus().send(new UserQuitRequest());
 				}
 			});
 		}
