@@ -81,6 +81,7 @@ public final class RogueMainLoop extends MainLoop implements ActionRequest.Liste
 		}
 	};
 	
+	// TODO factor into gamecore
 	private class TaskTakeScreenshot implements Runnable {
 		
 		private final Screenshot scr;
