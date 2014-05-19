@@ -14,6 +14,8 @@ import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.events.FullscreenToggleRequest;
 import mightypork.gamecore.render.events.ScreenshotRequest;
+import mightypork.gamecore.render.events.ViewportChangeEvent;
+import mightypork.gamecore.render.events.ViewportChangeListener;
 import mightypork.gamecore.util.ion.Ion;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
@@ -32,7 +34,7 @@ import mightypork.rogue.world.level.Level;
  * 
  * @author MightyPork
  */
-public final class RogueApp extends BaseApp {
+public final class RogueApp extends BaseApp implements ViewportChangeListener {
 	
 	public RogueApp(File workdir, boolean singleInstance)
 	{
@@ -121,5 +123,12 @@ public final class RogueApp extends BaseApp {
 				//getEventBus().send(new CrossfadeRequest("test.layout", true));
 			}
 		}));
+	}
+
+
+	@Override
+	public void onViewportChanged(ViewportChangeEvent event)
+	{
+		Config.setOption("opt.fullscreen", DisplaySystem.isFullscreen());
 	}
 }

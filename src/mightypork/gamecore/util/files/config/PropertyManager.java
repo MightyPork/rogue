@@ -128,8 +128,6 @@ public class PropertyManager {
 		props.cfgBlankRowBetweenSections = cfgSeparateSections;
 		props.cfgBlankRowBeforeComment = cfgNewlineBeforeComments;
 		
-		final ArrayList<String> keyList = new ArrayList<>();
-		
 		// rename keys
 		for (final Entry<String, String> entry : renameTable.entrySet()) {
 			
@@ -141,28 +139,8 @@ public class PropertyManager {
 			props.setProperty(entry.getValue(), pr);
 		}
 		
-		// validate entries one by one, replace with default when needed
-		for (final Property<?> entry : entries.values()) {
-			keyList.add(entry.getKey());
-			
-			final String propOrig = props.getProperty(entry.getKey());
-			
-			entry.parse(propOrig);
-			
-			if (entry.getComment() != null) {
-				props.setKeyComment(entry.getKey(), entry.getComment());
-			}
-			
-			if (propOrig == null || !entry.toString().equals(propOrig)) {
-				props.setProperty(entry.getKey(), entry.toString());
-			}
-		}
-		
-		// removed unused props
-		for (final String propname : props.keySet().toArray(new String[props.size()])) {
-			if (!keyList.contains(propname)) {
-				props.remove(propname);
-			}
+		for (final Property<?> entry : entries.values()) {			
+			entry.parse(props.getProperty(entry.getKey()));
 		}
 		
 		renameTable.clear();
@@ -172,6 +150,26 @@ public class PropertyManager {
 	public void save()
 	{
 		try {
+			final ArrayList<String> keyList = new ArrayList<>();
+			
+			// validate entries one by one, replace with default when needed
+			for (final Property<?> entry : entries.values()) {
+				keyList.add(entry.getKey());
+				
+				if (entry.getComment() != null) {
+					props.setKeyComment(entry.getKey(), entry.getComment());
+				}
+				
+				props.setProperty(entry.getKey(), entry.toString());
+			}
+			
+			// removed unused props
+			for (final String propname : props.keySet().toArray(new String[props.size()])) {
+				if (!keyList.contains(propname)) {
+					props.remove(propname);
+				}
+			}
+			
 			props.store(new FileOutputStream(file), fileComment);
 		} catch (final IOException ioe) {
 			ioe.printStackTrace();

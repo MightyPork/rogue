@@ -10,10 +10,10 @@ import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.core.AppModule;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.ScreenRequestListener;
-import mightypork.gamecore.gui.events.ViewportChangeEvent;
-import mightypork.gamecore.gui.events.ViewportChangeListener;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.Renderable;
+import mightypork.gamecore.render.events.ViewportChangeEvent;
+import mightypork.gamecore.render.events.ViewportChangeListener;
 import mightypork.gamecore.util.annot.DefaultImpl;
 
 
