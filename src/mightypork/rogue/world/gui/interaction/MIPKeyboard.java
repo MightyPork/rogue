@@ -1,9 +1,18 @@
 package mightypork.rogue.world.gui.interaction;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import mightypork.gamecore.Config;
+import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.input.InputSystem;
+import mightypork.gamecore.input.KeyBindingPool;
+import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.KeyEventHandler;
 import mightypork.gamecore.util.math.algo.Move;
@@ -14,15 +23,55 @@ import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
 
 
-public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndListener, KeyEventHandler, Updateable {
+public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClient, PlayerStepEndListener, Updateable {
 	
-	private static final int[] keys = { Keys.LEFT, Keys.RIGHT, Keys.UP, Keys.DOWN };
+	//@formatter:off
+	private static final KeyStroke[] keys = {
+		Config.getKey("game.walk.left"),
+		Config.getKey("game.walk.right"),
+		Config.getKey("game.walk.up"),
+		Config.getKey("game.walk.down")
+	};
+	
 	private static final Move[] sides = { Moves.W, Moves.E, Moves.N, Moves.S };
+	//@formatter:on
 	
+	private final KeyBindingPool kbp = new KeyBindingPool();
+	private final List<Object> clients = new ArrayList<>();
 	
-	public MIPKeyboard(MapView mapView)
 	{
+		clients.add(kbp);
+	}
+	
+	
+	@Override
+	public boolean doesDelegate()
+	{
+		return true;
+	}
+	
+	
+	@Override
+	public Collection<?> getChildClients()
+	{
+		return clients;
+	}
+	
+	
+	public MIPKeyboard(MapView mapView) {
 		super(mapView);
+		for (int i = 0; i < 4; i++) {
+			
+			final int j = i;
+			kbp.bindKey(keys[i], Edge.RISING, new Runnable() {
+				
+				@Override
+				public void run()
+				{
+					clickSide(sides[j]);
+				}
+			});
+		}
 	}
 	
 	
@@ -40,22 +89,27 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 	}
 	
 	
-	@Override
-	public void receive(KeyEvent evt)
+//	@Override
+//	public void receive(KeyEvent evt)
+//	{
+//		
+//		if (evt.isDown() || mapView.plc.getPlayer().isMoving()) return; // not interested
+//			
+//		if (InputSystem.getActiveModKeys() != Keys.MOD_NONE) return;
+//		
+//		for (int i = 0; i < 4; i++) {
+//			if (evt.getKey() == keys[i].getKey()) {
+//				mapView.plc.clickTile(sides[i]);
+//			}
+//		}
+//	}
+	
+	private void clickSide(Move side)
 	{
 		if (isImmobile()) {
 			return;
 		}
-		
-		if (evt.isDown() || mapView.plc.getPlayer().isMoving()) return; // not interested
-		
-		if (InputSystem.getActiveModKeys() != Keys.MOD_NONE) return;
-		
-		for (int i = 0; i < 4; i++) {
-			if (evt.getKey() == keys[i]) {
-				mapView.plc.clickTile(sides[i]);
-			}
-		}
+		mapView.plc.clickTile(side);
 	}
 	
 	
@@ -65,12 +119,10 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 		
 		if (mapView.plc.getPlayer().getMoveProgress() < 0.8) return false;
 		
-		
 		if (InputSystem.getActiveModKeys() != Keys.MOD_NONE) return false;
 		
-		
 		for (int i = 0; i < 4; i++) {
-			if (InputSystem.isKeyDown(keys[i])) {
+			if (keys[i].isDown()) {
 				
 				final Move side = sides[i];
 				if (mapView.plc.canGo(side)) {

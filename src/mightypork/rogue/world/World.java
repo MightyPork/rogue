@@ -12,6 +12,7 @@ import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.error.CorruptDataException;
 import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.algo.Coord;
@@ -92,10 +93,11 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 				final Entity ent = levels.get(i).getEntity(eid);
 				if (ent != null) {
 					Log.f3("Player entity was really on floor: " + i);
+					break;
 				}
 			}
 			
-			throw new RuntimeException();
+			throw new CorruptDataException("Player not found in world.");
 		}
 	}
 	

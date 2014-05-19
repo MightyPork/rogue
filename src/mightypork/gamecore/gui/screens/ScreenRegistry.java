@@ -32,8 +32,7 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	/**
 	 * @param app app access
 	 */
-	public ScreenRegistry(AppAccess app)
-	{
+	public ScreenRegistry(AppAccess app) {
 		super(app);
 	}
 	
@@ -41,6 +40,7 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	/**
 	 * Add a screen
 	 * 
+	 * @param name screen key for calling
 	 * @param screen added screen
 	 */
 	public void addScreen(String name, Screen screen)

@@ -1,7 +1,6 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.util.math.constraints.Pollable;
 import mightypork.gamecore.util.strings.StringUtils;
 
 import org.lwjgl.input.Keyboard;
@@ -12,8 +11,8 @@ import org.lwjgl.input.Keyboard;
  * 
  * @author MightyPork
  */
-public class KeyStroke  { //implements Pollable
-	
+public class KeyStroke { //implements Pollable
+
 	public static enum Edge
 	{
 		FALLING, RISING;
@@ -22,8 +21,6 @@ public class KeyStroke  { //implements Pollable
 	private int mod;
 	private int key;
 	
-//	private boolean wasDown;
-	
 	
 	/**
 	 * KeyStroke
@@ -31,8 +28,7 @@ public class KeyStroke  { //implements Pollable
 	 * @param key key code
 	 * @param mod_mask mods mask
 	 */
-	public KeyStroke(int key, int mod_mask)
-	{
+	public KeyStroke(int key, int mod_mask) {
 		setTo(key, mod_mask);
 	}
 	
@@ -42,8 +38,7 @@ public class KeyStroke  { //implements Pollable
 	 * 
 	 * @param key key code
 	 */
-	public KeyStroke(int key)
-	{
+	public KeyStroke(int key) {
 		this(key, Keys.MOD_NONE);
 	}
 	
@@ -64,41 +59,7 @@ public class KeyStroke  { //implements Pollable
 	{
 		this.key = key;
 		this.mod = mod_mask | Keys.keyToMod(key); // for mods alone
-//		this.wasDown = (InputSystem.isReady() ? isDown() : false);
 	}
-	
-	
-//	/**
-//	 * Set current state as the last state (ignore it on next trigger event)
-//	 */
-//	@Override
-//	public void poll()
-//	{
-//		wasDown = isDown();
-//	}
-	
-	
-//	public boolean tryTrigger(Edge edge)
-//	{
-//		final boolean down = isDown() && !wasDown;
-//		final boolean up = !isDown() && wasDown;
-//		
-//		boolean retval = false;
-//		
-//		switch (edge) {
-//			case FALLING:
-//				retval = !wasDown && down;
-//				break;
-//			
-//			case RISING:
-//				retval = wasDown && up;
-//				break;
-//		}
-//		
-//		wasDown = isDown();
-//		
-//		return retval;
-//	}
 	
 	
 	public String toDataString()
@@ -130,12 +91,10 @@ public class KeyStroke  { //implements Pollable
 			final String keyStr = StringUtils.fromLastChar(dataString1, '+');
 			final String modStr = StringUtils.toLastChar(dataString1, '+');
 			
-			this.key = Keys.keyFromString(keyStr);
-			this.mod = Keys.modFromString(modStr);
+			setTo(Keys.keyFromString(keyStr), Keys.modFromString(modStr));
 			
 		} else {
-			this.key = Keys.keyFromString(dataString1);
-			this.mod = Keys.MOD_NONE;
+			setTo(Keys.keyFromString(dataString1), Keys.MOD_NONE);
 		}
 	}
 	

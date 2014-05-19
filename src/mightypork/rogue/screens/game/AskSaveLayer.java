@@ -12,9 +12,7 @@ import mightypork.gamecore.gui.components.layout.linear.LinearLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
@@ -131,7 +129,7 @@ public class AskSaveLayer extends ScreenLayer {
 		btn2.setAction(discard);		
 		btn3.setAction(cancel);
 		
-		bindKey(Config.getKey("general.back"), Edge.RISING, cancel);
+		bindKey(Config.getKey("general.close"), Edge.RISING, cancel);
 		bindKey(Config.getKey("general.cancel"), Edge.RISING, cancel);
 		
 		bindKey(Config.getKey("general.yes"), Edge.RISING, save);
@@ -162,5 +160,4 @@ public class AskSaveLayer extends ScreenLayer {
 			hideTT.stop();
 		}
 	}
-	
 }

@@ -111,6 +111,11 @@ public class WorldProvider extends RootBusNode {
 		if (file == null) {
 			throw new IllegalStateException("Trying to save world to a NULL file.");
 		}
+		
+		if(world.getPlayer().isDead()) {
+			throw new IllegalStateException("Cannot save, player is dead.");
+		}
+		
 		Ion.toFile(file, world);
 	}
 	

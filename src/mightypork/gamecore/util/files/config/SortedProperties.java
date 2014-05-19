@@ -292,7 +292,7 @@ public class SortedProperties extends java.util.Properties {
 			sb.append(c);
 		}
 		
-		final String read = sb.toString();
+		String read = sb.toString().replaceAll("(#|;|//|--)[^\n]*\n", "\n");
 		
 		final String inputString = escapifyStr(read);
 		final byte[] bs = inputString.getBytes("ISO-8859-1");

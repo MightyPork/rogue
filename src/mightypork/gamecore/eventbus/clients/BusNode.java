@@ -48,7 +48,7 @@ public abstract class BusNode implements BusAccess, ClientHub {
 	
 	
 	@Override
-	public final boolean isListening()
+	public boolean isListening()
 	{
 		return listening;
 	}

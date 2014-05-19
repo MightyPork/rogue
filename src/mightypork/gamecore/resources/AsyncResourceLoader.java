@@ -23,7 +23,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 	private final LinkedBlockingQueue<DeferredResource> toLoad = new LinkedBlockingQueue<>();
 	private volatile boolean stopped;
 	private BusAccess app;
-	private volatile boolean mainLoopQueuing = false;
+	private volatile boolean mainLoopQueuing = true;
 	
 	
 	@Override

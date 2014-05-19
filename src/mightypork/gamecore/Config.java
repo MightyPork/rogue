@@ -119,7 +119,7 @@ public class Config {
 	public static void init(File file, String comment)
 	{
 		cfg = new PropertyManager(file, comment);
-		cfg.cfgNewlineBeforeComments(false);
+		cfg.cfgNewlineBeforeComments(true);
 		cfg.cfgSeparateSections(true);
 	}
 	

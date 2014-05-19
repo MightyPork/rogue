@@ -18,7 +18,7 @@ public class Launcher {
 	 */
 	public static void main(String[] args)
 	{
-		Log.f3(Arrays.toString(args));
+		Log.f3("Arguments: " + Arrays.toString(args));
 		
 		File workdir = null;
 		
@@ -47,7 +47,7 @@ public class Launcher {
 		final BaseApp app = new RogueApp(workdir, true);
 		
 		// configure the app
-		app.opt().setBusLogging(true);
+		app.opt().setBusLogging(false);
 		
 		app.start();
 	}

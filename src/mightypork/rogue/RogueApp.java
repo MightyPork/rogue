@@ -93,7 +93,6 @@ public final class RogueApp extends BaseApp {
 		bindEventToKey(new ScreenshotRequest(), "global.screenshot");
 		
 		bindEventToKey(new UserQuitRequest(), "global.quit");
-		bindEventToKey(new RogueStateRequest(RogueState.MAIN_MENU), "global.menu");
 	}
 	
 	

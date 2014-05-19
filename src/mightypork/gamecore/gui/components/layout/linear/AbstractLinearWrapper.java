@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import mightypork.gamecore.eventbus.clients.ClientList;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.gamecore.gui.components.LinearComponent;
@@ -18,14 +19,13 @@ import mightypork.gamecore.gui.components.LinearComponent;
 public abstract class AbstractLinearWrapper extends LinearComponent implements DelegatingClient {
 	
 	protected final Component wrapped;
-	private final List<Component> list;
+	private final ClientList list;
 	
 	
 	/**
 	 * @param wrapped wrapped component. Can be null.
 	 */
-	public AbstractLinearWrapper(Component wrapped)
-	{
+	public AbstractLinearWrapper(Component wrapped) {
 		this.wrapped = wrapped;
 		if (wrapped != null) {
 			if (wrapped instanceof LinearComponent) {
@@ -36,8 +36,7 @@ public abstract class AbstractLinearWrapper extends LinearComponent implements D
 			}
 		}
 		
-		list = new ArrayList<>(1);
-		list.add(wrapped);
+		list = new ClientList(wrapped);
 	}
 	
 	

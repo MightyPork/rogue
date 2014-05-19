@@ -2,7 +2,6 @@ package mightypork.gamecore.input;
 
 
 import mightypork.gamecore.core.AppAccess;
-import mightypork.gamecore.core.events.ShudownRequest;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.eventbus.events.Updateable;

@@ -166,8 +166,9 @@ public class Keys {
 		loadAliasMap.put("BACKSPACE", "BACK");
 		
 		saveAliasMap.put("RETURN", "ENTER");
-		saveAliasMap.put("NEXT", "PAGE_DOWN");
-		saveAliasMap.put("PRIOR", "PAGE_UP");
+		saveAliasMap.put("ESCAPE", "ESC");
+		saveAliasMap.put("NEXT", "PGDN");
+		saveAliasMap.put("PRIOR", "PGUP");
 		saveAliasMap.put("DIVIDE", "NUMPAD_DIVIDE");
 		saveAliasMap.put("MULTIPLY", "NUMPAD_MULTIPLY");
 		saveAliasMap.put("ADD", "NUMPAD_ADD");

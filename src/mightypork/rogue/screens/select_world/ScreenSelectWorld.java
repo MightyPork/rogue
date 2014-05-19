@@ -8,12 +8,9 @@ import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.PAL16;
@@ -84,7 +81,7 @@ public class ScreenSelectWorld extends RogueScreen {
 			rows.add(slot3);
 			
 			// escape to quitn from here
-			bindKey(Config.getKey("general.back"), Edge.RISING, new Runnable() {
+			bindKey(Config.getKey("general.close"), Edge.RISING, new Runnable() {
 				
 				@Override
 				public void run()

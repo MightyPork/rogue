@@ -11,12 +11,9 @@ import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.layout.linear.LinearLayout;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
-import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.Color;
@@ -121,7 +118,7 @@ public class ScreenMainMenu extends RogueScreen {
 			rows.add(btn, 2);
 			
 			
-			bindKey(Config.getKey("general.back"), Edge.RISING, new Runnable() {
+			bindKey(Config.getKey("general.close"), Edge.RISING, new Runnable() {
 				
 				@Override
 				public void run()

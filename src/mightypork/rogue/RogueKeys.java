@@ -3,7 +3,6 @@ package mightypork.rogue;
 
 import mightypork.gamecore.Config;
 import mightypork.gamecore.Config.KeyOpts;
-import mightypork.gamecore.Config.KeySetup;
 
 
 public class RogueKeys implements Config.KeySetup {
@@ -12,12 +11,11 @@ public class RogueKeys implements Config.KeySetup {
 	public void addKeys(KeyOpts keys)
 	{
 		keys.add("global.quit", "CTRL+Q", "Quit the game");
-		keys.add("global.menu", "CTRL+M", "Direct jump to main menu");
 		keys.add("global.screenshot", "F2", "Take screenshot (save into working directory)");
 		keys.add("global.fullscreen", "F11", "Toggle fullscreen");
 		keys.add("global.fps_meter", "F3", "Toggle FPS meter overlay");
 		
-		keys.add("general.back", "ESC", "Leave a dialog or screen");
+		keys.add("general.close", "ESC", "Leave a dialog or screen");
 		keys.add("general.cancel", "ESC", "\"Cancel\" option in dialogs");
 		keys.add("general.confirm", "ENTER", "\"Confirm\" option in dialogs");
 		keys.add("general.yes", "Y", "\"Yes\" option in dialogs");
@@ -32,6 +30,11 @@ public class RogueKeys implements Config.KeySetup {
 		keys.add("game.drop", "D", "Drop last picked item");
 		keys.add("game.inventory", "I", "Toggle inventory view");
 		keys.add("game.pause", "P", "Pause the game");
+		
+		keys.add("game.walk.up", "UP", "Walk north");
+		keys.add("game.walk.down", "DOWN", "Walk south");
+		keys.add("game.walk.left", "LEFT", "Walk west");
+		keys.add("game.walk.right", "RIGHT", "Walk east");
 		
 		keys.add("game.cheat.xray", "CTRL+SHIFT+X", "Cheat to see unexplored tiles");
 		

@@ -11,7 +11,6 @@ import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
@@ -31,7 +30,7 @@ public class InventoryLayer extends ScreenLayer {
 	
 	private final KeyStroke keyUse = Config.getKey("game.inv.use");
 	private final KeyStroke keyDrop = Config.getKey("game.inv.drop");
-	private final KeyStroke keyClose = Config.getKey("general.back");
+	private final KeyStroke keyClose = Config.getKey("general.close");
 	
 	private final StringProvider contextStrProv = new StringProvider() {
 		
@@ -150,9 +149,7 @@ public class InventoryLayer extends ScreenLayer {
 			@Override
 			public void run()
 			{
-				System.out.println("test1");
 				if (isEnabled()) {
-					System.out.println("test2");
 					screen.actionToggleInv.run();
 				}
 			}

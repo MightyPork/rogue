@@ -1,28 +1,25 @@
 package mightypork.gamecore.gui.components.input;
 
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
+import mightypork.gamecore.eventbus.clients.ClientList;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
+import mightypork.gamecore.eventbus.clients.DelegatingList;
 import mightypork.gamecore.gui.components.Component;
 
 
 public class ClickableWrapper extends ClickableComponent implements DelegatingClient {
 	
-	
 	private final Component wrapped;
-	private final List<Component> list;
+	private final ClientList list;
 	
 	
-	public ClickableWrapper(Component wrapped)
-	{
+	public ClickableWrapper(Component wrapped) {
 		this.wrapped = wrapped;
 		wrapped.setRect(this);
 		
-		list = new ArrayList<>(1);
-		list.add(wrapped);
+		list = new ClientList(wrapped);
 	}
 	
 	

@@ -3,6 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.IOException;
 
+import mightypork.gamecore.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -13,6 +14,7 @@ import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
@@ -65,7 +67,7 @@ public class DeathLayer extends ScreenLayer {
 		btn2.textPainter.setVPaddingPercent(25);
 		linl.add(btn2);
 		
-		btn1.setAction(new Action() {
+		Action load = new Action() {
 			
 			@Override
 			protected void execute()
@@ -77,16 +79,23 @@ public class DeathLayer extends ScreenLayer {
 					Log.e(e);
 				}
 			}
-		});
+		};
 		
-		btn2.setAction(new Action() {
+		Action quit = new Action() {
 			
 			@Override
 			protected void execute()
 			{
 				getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
 			}
-		});
+		};
+		
+		btn1.setAction(load);
+		btn2.setAction(quit);
+		
+		bindKey(Config.getKey("game.load"), Edge.RISING, load);
+		bindKey(Config.getKey("general.confirm"), Edge.RISING, load);
+		bindKey(Config.getKey("general.close"), Edge.RISING, quit);
 	}
 	
 	
