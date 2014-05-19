@@ -64,9 +64,11 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 	
 	public Action actionToggleInv = new Action() {
 		
+		
 		@Override
 		public void execute()
 		{
+			System.out.println("Toggle inv action");
 			setState(getState() == GScrState.INV ? GScrState.WORLD : GScrState.INV);
 		}
 	};
@@ -242,8 +244,6 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		addLayer(worldLayer = new WorldLayer(this));
 		addLayer(askSaveLayer = new AskSaveLayer(this));
 		
-		//pause key
-		bindKey(Config.getKey("game.pause2"), Edge.RISING, actionTogglePause);
 		bindKey(Config.getKey("game.pause"), Edge.RISING, actionTogglePause);
 		
 		bindKey(Config.getKey("game.inventory"), Edge.RISING, actionToggleInv);
@@ -268,7 +268,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		worldActions.add(actionSave);
 		worldActions.add(actionLoad);
 		worldActions.add(actionMenu);
-		worldActions.add(actionQuit);
+//		worldActions.add(actionQuit);
 		worldActions.add(actionDropLastPickedItem);
 		
 		worldActions.setEnabled(true);

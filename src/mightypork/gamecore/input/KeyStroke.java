@@ -12,7 +12,7 @@ import org.lwjgl.input.Keyboard;
  * 
  * @author MightyPork
  */
-public class KeyStroke implements Pollable {
+public class KeyStroke  { //implements Pollable
 	
 	public static enum Edge
 	{
@@ -22,7 +22,7 @@ public class KeyStroke implements Pollable {
 	private int mod;
 	private int key;
 	
-	private boolean wasDown;
+//	private boolean wasDown;
 	
 	
 	/**
@@ -64,41 +64,41 @@ public class KeyStroke implements Pollable {
 	{
 		this.key = key;
 		this.mod = mod_mask | Keys.keyToMod(key); // for mods alone
-		this.wasDown = (InputSystem.isReady() ? isDown() : false);
+//		this.wasDown = (InputSystem.isReady() ? isDown() : false);
 	}
 	
 	
-	/**
-	 * Set current state as the last state (ignore it on next trigger event)
-	 */
-	@Override
-	public void poll()
-	{
-		wasDown = isDown();
-	}
+//	/**
+//	 * Set current state as the last state (ignore it on next trigger event)
+//	 */
+//	@Override
+//	public void poll()
+//	{
+//		wasDown = isDown();
+//	}
 	
 	
-	public boolean tryTrigger(Edge edge)
-	{
-		final boolean down = isDown() && !wasDown;
-		final boolean up = !isDown() && wasDown;
-		
-		boolean retval = false;
-		
-		switch (edge) {
-			case FALLING:
-				retval = !wasDown && down;
-				break;
-			
-			case RISING:
-				retval = wasDown && up;
-				break;
-		}
-		
-		wasDown = isDown();
-		
-		return retval;
-	}
+//	public boolean tryTrigger(Edge edge)
+//	{
+//		final boolean down = isDown() && !wasDown;
+//		final boolean up = !isDown() && wasDown;
+//		
+//		boolean retval = false;
+//		
+//		switch (edge) {
+//			case FALLING:
+//				retval = !wasDown && down;
+//				break;
+//			
+//			case RISING:
+//				retval = wasDown && up;
+//				break;
+//		}
+//		
+//		wasDown = isDown();
+//		
+//		return retval;
+//	}
 	
 	
 	public String toDataString()

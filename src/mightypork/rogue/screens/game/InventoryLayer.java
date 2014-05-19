@@ -1,6 +1,7 @@
 package mightypork.rogue.screens.game;
 
 
+import mightypork.gamecore.Config;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
@@ -28,12 +29,16 @@ public class InventoryLayer extends ScreenLayer {
 	private static final int SLOT_COUNT = 8;
 	private static final int SLOT_ROW = 4;
 	
+	private final KeyStroke keyUse = Config.getKey("game.inv.use");
+	private final KeyStroke keyDrop = Config.getKey("game.inv.drop");
+	private final KeyStroke keyClose = Config.getKey("general.back");
+	
 	private final StringProvider contextStrProv = new StringProvider() {
 		
 		@Override
 		public String getString()
 		{
-			String s = "ESC-close";
+			String s = keyClose+"-close";
 			
 			final int selected = getSelectedSlot();
 			if (selected != -1) {
@@ -42,14 +47,14 @@ public class InventoryLayer extends ScreenLayer {
 				
 				final Item itm = pl.getInventory().getItem(selected);
 				if (itm != null && !itm.isEmpty()) {
-					s = "D-drop," + s;
+					s = keyDrop+"-drop," + s;
 					
 					if (itm.getType() == ItemType.FOOD) {
-						s = "E-eat," + s;
+						s = keyUse+"-eat," + s;
 					}
 					
 					if (itm.getType() == ItemType.WEAPON) {
-						s = "E-equip," + s;
+						s = keyUse+"-equip," + s;
 					}
 				}
 			} else {
@@ -140,18 +145,20 @@ public class InventoryLayer extends ScreenLayer {
 		gl.put(txp2, pos, 0, 1, 1);
 		txp2.setVPaddingPercent(25);
 		
-		bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, new Runnable() {
+		bindKey(keyClose, Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
 			{
+				System.out.println("test1");
 				if (isEnabled()) {
+					System.out.println("test2");
 					screen.actionToggleInv.run();
 				}
 			}
 		});
 		
-		bindKey(new KeyStroke(Keys.E), Edge.RISING, new Runnable() {
+		bindKey(keyUse, Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -160,39 +167,11 @@ public class InventoryLayer extends ScreenLayer {
 				
 				if (WorldProvider.get().getPlayer().isDead()) return;
 				
-				final int selected = getSelectedSlot();
-				if (selected != -1) {
-					
-					final World world = WorldProvider.get().getWorld();
-					final PlayerFacade pl = WorldProvider.get().getPlayer();
-					final Item itm = pl.getInventory().getItem(selected);
-					
-					if (itm != null && !itm.isEmpty()) {
-						
-						final ItemType type = itm.getType();
-						
-						if (type == ItemType.FOOD) {
-							
-							if (pl.eatFood(itm)) {
-								pl.getInventory().clean();
-							}
-							
-						} else if (type == ItemType.WEAPON) {
-							
-							if (pl.getSelectedWeaponIndex() == selected) {
-								pl.selectWeapon(-1);
-							} else {
-								pl.selectWeapon(selected);
-							}
-							world.getConsole().msgEquipWeapon(pl.getSelectedWeapon());
-							
-						}
-					}
-				}
+				useSelectedItem();
 			}
 		});
 		
-		bindKey(new KeyStroke(Keys.D), Edge.RISING, new Runnable() {
+		bindKey(keyDrop, Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -210,10 +189,44 @@ public class InventoryLayer extends ScreenLayer {
 	}
 	
 	
+	protected void useSelectedItem()
+	{
+		final int selected = getSelectedSlot();
+		if (selected != -1) {
+			
+			final World world = WorldProvider.get().getWorld();
+			final PlayerFacade pl = WorldProvider.get().getPlayer();
+			final Item itm = pl.getInventory().getItem(selected);
+			
+			if (itm != null && !itm.isEmpty()) {
+				
+				final ItemType type = itm.getType();
+				
+				if (type == ItemType.FOOD) {
+					
+					if (pl.eatFood(itm)) {
+						pl.getInventory().clean();
+					}
+					
+				} else if (type == ItemType.WEAPON) {
+					
+					if (pl.getSelectedWeaponIndex() == selected) {
+						pl.selectWeapon(-1);
+					} else {
+						pl.selectWeapon(selected);
+					}
+					world.getConsole().msgEquipWeapon(pl.getSelectedWeapon());
+					
+				}
+			}
+		}
+	}
+
+
 	private void setupGridWalkKeys()
 	{
 		
-		bindKey(new KeyStroke(Keys.LEFT), Edge.RISING, new Runnable() {
+		bindKey(Config.getKey("game.inv.move.left"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -230,7 +243,7 @@ public class InventoryLayer extends ScreenLayer {
 			};
 		});
 		
-		bindKey(new KeyStroke(Keys.RIGHT), Edge.RISING, new Runnable() {
+		bindKey(Config.getKey("game.inv.move.right"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -247,7 +260,7 @@ public class InventoryLayer extends ScreenLayer {
 			};
 		});
 		
-		bindKey(new KeyStroke(Keys.UP), Edge.RISING, new Runnable() {
+		bindKey(Config.getKey("game.inv.move.up"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -264,7 +277,7 @@ public class InventoryLayer extends ScreenLayer {
 			};
 		});
 		
-		bindKey(new KeyStroke(Keys.DOWN), Edge.RISING, new Runnable() {
+		bindKey(Config.getKey("game.inv.move.down"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()

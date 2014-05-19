@@ -35,7 +35,7 @@ public class TaskTakeScreenshot implements Runnable {
 		File file;
 		int index = 0;
 		while (true) {
-			file = new File(WorkDir.getDir("screenshots"), fname + (index > 0 ? "-" + index : "") + ".png");
+			file = new File(WorkDir.getDir("_screenshot_dir"), fname + (index > 0 ? "-" + index : "") + ".png");
 			if (!file.exists()) break;
 			index++;
 		}

@@ -9,6 +9,7 @@ import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.render.TaskTakeScreenshot;
 import mightypork.gamecore.render.events.ScreenshotRequestListener;
+import mightypork.gamecore.util.Utils;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.timing.TimerDelta;
 
@@ -113,7 +114,15 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	@Override
 	public void onScreenshotRequest()
 	{
-		queueTask(new TaskTakeScreenshot());
+		// ensure it's started in main thread
+		queueTask(new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				Utils.runAsThread(new TaskTakeScreenshot());
+			}
+		});
 	}
 	
 }

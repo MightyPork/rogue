@@ -43,8 +43,8 @@ public final class RogueApp extends BaseApp {
 		opt().addKeys(new RogueKeys());
 		opt().addConfig(new RogueConfig());
 		
-		opt().setConfigFile(this, "config.ini", "Rogue config file");
-		opt().setLogOptions("/", "runtime", 5, java.util.logging.Level.ALL);
+		opt().setConfigFile("config.ini", "Rogue config file");
+		opt().setLogOptions("logs", "runtime", 5, java.util.logging.Level.ALL);
 	}
 	
 	

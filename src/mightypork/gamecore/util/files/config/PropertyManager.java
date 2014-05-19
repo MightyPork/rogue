@@ -13,9 +13,7 @@ import mightypork.gamecore.util.objects.Convert;
 
 
 /**
- * Property manager with advanced formatting and value checking.<br>
- * Methods starting with put are for filling. Most of the others are shortcuts
- * to getters.
+ * Property manager with advanced formatting and value checking.
  * 
  * @author MightyPork
  */
@@ -83,10 +81,9 @@ public class PropertyManager {
 	
 	/** put newline before entry comments */
 	private boolean cfgNewlineBeforeComments = true;
+	
 	/** Put newline between sections. */
 	private boolean cfgSeparateSections = true;
-	/** Force save, even if nothing changed (used to save changed comments) */
-	private boolean cfgForceSave;
 	
 	private final File file;
 	private String fileComment = "";
@@ -116,7 +113,6 @@ public class PropertyManager {
 	 */
 	public void load()
 	{
-		boolean needsSave = false;
 		if (!file.getParentFile().mkdirs()) {
 			if (!file.getParentFile().exists()) {
 				throw new RuntimeException("Cound not create config file.");
@@ -126,7 +122,6 @@ public class PropertyManager {
 		try(FileInputStream fis = new FileInputStream(file)) {
 			props.load(fis);
 		} catch (final IOException e) {
-			needsSave = true;
 			props = new SortedProperties();
 		}
 		
@@ -144,7 +139,6 @@ public class PropertyManager {
 			
 			props.remove(entry.getKey());
 			props.setProperty(entry.getValue(), pr);
-			needsSave = true;
 		}
 		
 		// validate entries one by one, replace with default when needed
@@ -161,8 +155,6 @@ public class PropertyManager {
 			
 			if (propOrig == null || !entry.toString().equals(propOrig)) {
 				props.setProperty(entry.getKey(), entry.toString());
-				
-				needsSave = true;
 			}
 		}
 		
@@ -170,13 +162,7 @@ public class PropertyManager {
 		for (final String propname : props.keySet().toArray(new String[props.size()])) {
 			if (!keyList.contains(propname)) {
 				props.remove(propname);
-				needsSave = true;
 			}
-		}
-		
-		// save if needed
-		if (needsSave || cfgForceSave) {
-			save();
 		}
 		
 		renameTable.clear();
@@ -212,21 +198,12 @@ public class PropertyManager {
 	
 	
 	/**
-	 * @param forceSave save even if unchanged.
-	 */
-	public void cfgForceSave(boolean forceSave)
-	{
-		this.cfgForceSave = forceSave;
-	}
-	
-	
-	/**
 	 * Get a property entry (rarely used)
 	 * 
 	 * @param k key
 	 * @return the entry
 	 */
-	private Property<?> getProperty(String k)
+	public Property<?> getProperty(String k)
 	{
 		try {
 			return entries.get(k);
@@ -356,7 +333,6 @@ public class PropertyManager {
 	/**
 	 * Add a range property
 	 * 
-	 * @param n key
 	 * @param prop property to put
 	 */
 	public <T> void putProperty(Property<T> prop)

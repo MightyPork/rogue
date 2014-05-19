@@ -9,30 +9,37 @@ import mightypork.gamecore.Config.KeySetup;
 public class RogueKeys implements Config.KeySetup {
 	
 	@Override
-	public void addKeys(Config.KeyOpts keys)
+	public void addKeys(KeyOpts keys)
 	{
-		keys.add("global.quit", "CTRL+Q");
-		keys.add("global.menu", "CTRL+M");
-		keys.add("global.screenshot", "F2");
-		keys.add("global.fullscreen", "F11");
-		keys.add("global.fps_meter", "F3");
-
-		keys.add("general.back", "ESC"); // leave a dialog / screen
-		keys.add("general.cancel", "ESC"); // cancel operation
-		keys.add("general.confirm", "ENTER"); // confirm default option
-		keys.add("general.yes", "Y"); // answer YES
-		keys.add("general.no", "N"); // answer NO
+		keys.add("global.quit", "CTRL+Q", "Quit the game");
+		keys.add("global.menu", "CTRL+M", "Direct jump to main menu");
+		keys.add("global.screenshot", "F2", "Take screenshot (save into working directory)");
+		keys.add("global.fullscreen", "F11", "Toggle fullscreen");
+		keys.add("global.fps_meter", "F3", "Toggle FPS meter overlay");
 		
-		keys.add("game.quit", "ESC");
-		keys.add("game.save", "CTRL+S");
-		keys.add("game.load", "CTRL+L");
-		keys.add("game.zoom", "Z");
-		keys.add("game.minimap", "M");
-		keys.add("game.eat", "E");
-		keys.add("game.drop", "D");
-		keys.add("game.inventory", "I");
-		keys.add("game.pause", "P");
-		keys.add("game.pause2", "SPACE");
-		keys.add("game.cheat.xray", "CTRL+SHIFT+X");
+		keys.add("general.back", "ESC", "Leave a dialog or screen");
+		keys.add("general.cancel", "ESC", "\"Cancel\" option in dialogs");
+		keys.add("general.confirm", "ENTER", "\"Confirm\" option in dialogs");
+		keys.add("general.yes", "Y", "\"Yes\" option in dialogs");
+		keys.add("general.no", "N", "\"No\" option in dialogs");
+		
+		keys.add("game.quit", "ESC", "Quit to menu");
+		keys.add("game.save", "CTRL+S", "Save to file");
+		keys.add("game.load", "CTRL+L", "Load from file");
+		keys.add("game.zoom", "Z", "Toggle zoom");
+		keys.add("game.minimap", "M", "Toggle minimap");
+		keys.add("game.eat", "E", "Eat smallest food item");
+		keys.add("game.drop", "D", "Drop last picked item");
+		keys.add("game.inventory", "I", "Toggle inventory view");
+		keys.add("game.pause", "P", "Pause the game");
+		
+		keys.add("game.cheat.xray", "CTRL+SHIFT+X", "Cheat to see unexplored tiles");
+		
+		keys.add("game.inv.use", "E", "Use (eat or equip) the selected item");
+		keys.add("game.inv.drop", "D", "Drop the selected item");
+		keys.add("game.inv.move.left", "LEFT", "Move inventory cursor left");
+		keys.add("game.inv.move.right", "RIGHT", "Move inventory cursor right");
+		keys.add("game.inv.move.up", "UP", "Move inventory cursor up");
+		keys.add("game.inv.move.down", "DOWN", "Move inventory cursor down");
 	}
 }

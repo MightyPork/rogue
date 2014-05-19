@@ -17,6 +17,7 @@ public class KeyBinding implements KeyEventHandler, InputReadyListener {
 	private final KeyStroke keystroke;
 	private Runnable handler;
 	private final Edge edge;
+	private boolean wasDown = false;
 	
 	
 	/**
@@ -24,13 +25,12 @@ public class KeyBinding implements KeyEventHandler, InputReadyListener {
 	 * @param stroke trigger keystroke
 	 * @param handler action
 	 */
-	public KeyBinding(KeyStroke stroke, Edge edge, Runnable handler)
-	{
+	public KeyBinding(KeyStroke stroke, Edge edge, Runnable handler) {
 		this.keystroke = stroke;
 		this.handler = handler;
 		this.edge = edge;
 		
-		if (InputSystem.isReady()) keystroke.poll();
+		if (InputSystem.isReady()) wasDown = stroke.isDown();
 	}
 	
 	
@@ -58,8 +58,15 @@ public class KeyBinding implements KeyEventHandler, InputReadyListener {
 	@Override
 	public void receive(KeyEvent event)
 	{
+		boolean nowDown = keystroke.isDown();
+		
+		boolean trigger = false;
+		trigger |= (edge == Edge.FALLING && (!wasDown && nowDown));
+		trigger |= (edge == Edge.RISING && (wasDown && !nowDown));
+		wasDown = nowDown;
+		
 		// run handler when event was met
-		if (keystroke.tryTrigger(edge)) {
+		if (trigger) {
 			handler.run();
 		}
 	}
@@ -68,7 +75,7 @@ public class KeyBinding implements KeyEventHandler, InputReadyListener {
 	@Override
 	public void onInputReady()
 	{
-		keystroke.poll();
+		wasDown = keystroke.isDown();
 	}
 	
 }

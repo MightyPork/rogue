@@ -71,7 +71,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		public boolean sigleInstance;
 		
 		
-		public void setConfigFile(BaseApp baseApp, String filename, String comment)
+		public void setConfigFile(String filename, String comment)
 		{
 			configFile = filename;
 			configComment = comment;
@@ -201,6 +201,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		for (final RouteSetup rs : opt.routeLists) {
 			WorkDir.registerRoutes(rs);
 		}
+		WorkDir.addPath("_screenshot_dir", opt.screenshotDir);
 		
 		// apply configurations
 		Config.init(WorkDir.getFile(opt.configFile), opt.configComment);

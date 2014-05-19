@@ -246,7 +246,10 @@ public class DisplaySystem extends AppModule implements RectBound {
 			getEventBus().send(new ViewportChangeEvent(getSize()));
 		}
 		
-		if (fullscreenSwitchRequested) doSwitchFullscreen();
+		if (fullscreenSwitchRequested) {
+			fullscreenSwitchRequested = false;
+			doSwitchFullscreen();
+		}
 		
 		glLoadIdentity();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
