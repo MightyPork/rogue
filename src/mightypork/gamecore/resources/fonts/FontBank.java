@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.app.LightAppModule;
-import mightypork.gamecore.resources.events.ResourceLoadRequest;
+import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.fonts.impl.DeferredFont;
 
 import org.newdawn.slick.opengl.Texture;
@@ -36,7 +36,7 @@ public class FontBank extends LightAppModule {
 	 * @param key font key
 	 * @param font font instance
 	 */
-	public void loadFont(String key, DeferredFont font)
+	public void addFont(String key, DeferredFont font)
 	{
 		getEventBus().send(new ResourceLoadRequest(font));
 		

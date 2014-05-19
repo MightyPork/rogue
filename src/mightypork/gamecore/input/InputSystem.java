@@ -4,6 +4,8 @@ package mightypork.gamecore.input;
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.gamecore.input.KeyStroke.Edge;
+import mightypork.gamecore.input.events.InputReadyEvent;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseMotionEvent;
@@ -64,6 +66,8 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		// global keybindings
 		keybindings = new KeyBindingPool();
 		addChildClient(keybindings);
+		
+		getEventBus().send(new InputReadyEvent());
 	}
 	
 	
@@ -91,9 +95,9 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	
 	
 	@Override
-	public final void bindKey(KeyStroke stroke, Runnable task)
+	public final void bindKey(KeyStroke stroke, Edge edge, Runnable task)
 	{
-		keybindings.bindKey(stroke, task);
+		keybindings.bindKey(stroke, edge, task);
 	}
 	
 	
@@ -217,7 +221,10 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
-	public static int getModifierKeys()
+	/**
+	 * @return bit mask of active mod keys
+	 */
+	public static int getActiveModKeys()
 	{
 		int mods = 0;
 		
@@ -238,5 +245,11 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		}
 		
 		return mods;
+	}
+	
+	
+	public static boolean isReady()
+	{
+		return inited;
 	}
 }

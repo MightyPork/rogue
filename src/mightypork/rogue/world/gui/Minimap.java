@@ -3,7 +3,7 @@ package mightypork.rogue.world.gui;
 
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
-import mightypork.gamecore.input.events.MouseButtonListener;
+import mightypork.gamecore.input.events.MouseButtonHandler;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.color.Color;
@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.mutable.RectMutable;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.Config;
+import mightypork.rogue.Const;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.level.Level;
@@ -21,7 +21,7 @@ import mightypork.rogue.world.tile.Tile;
 import org.lwjgl.opengl.GL11;
 
 
-public class Minimap extends InputComponent implements MouseButtonListener {
+public class Minimap extends InputComponent implements MouseButtonHandler {
 	
 	private final RectMutable bounds = Rect.makeVar();
 	private int unit = 0;
@@ -56,7 +56,7 @@ public class Minimap extends InputComponent implements MouseButtonListener {
 			for (pos.x = 0, point.x = tl.xi(); pos.x < lw; pos.x++, point.x += unit) {
 				
 				final Tile t = lvl.getTile(pos);
-				if (t.isNull() || (!t.isExplored() && Config.RENDER_UFOG)) continue;
+				if (t.isNull() || (!t.isExplored() && Const.RENDER_UFOG)) continue;
 				
 				final Color clr = t.getMapColor();
 				

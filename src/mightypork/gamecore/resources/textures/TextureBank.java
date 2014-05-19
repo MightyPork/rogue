@@ -6,8 +6,9 @@ import java.util.Map;
 
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.app.LightAppModule;
-import mightypork.gamecore.resources.events.ResourceLoadRequest;
+import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.util.error.KeyAlreadyExistsException;
+import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
 /**
@@ -32,31 +33,33 @@ public class TextureBank extends LightAppModule {
 	
 	
 	/**
-	 * Load a texture from resource, with the resource-path as a name.
+	 * Load a texture from resource, without a key. This texture will not be
+	 * added to the bank.
 	 * 
 	 * @param resourcePath resource path of the texture
 	 * @param filter
 	 * @param wrap
 	 * @return texture reference
 	 */
-	public GLTexture loadTexture(String resourcePath, FilterMode filter, WrapMode wrap)
+	public GLTexture addTexture(String resourcePath, FilterMode filter, WrapMode wrap)
 	{
-		return loadTexture(resourcePath, resourcePath, filter, wrap);
+		return addTexture(resourcePath, resourcePath, filter, wrap);
 	}
 	
 	
 	/**
-	 * Load a texture from resource
+	 * Load a texture from resource; if key is not null, the texture will be
+	 * added to the bank.
 	 * 
-	 * @param key texture key
+	 * @param key texture key, can be null.
 	 * @param resourcePath resource path of the texture
 	 * @param filter
 	 * @param wrap
 	 * @return texture reference
 	 */
-	public GLTexture loadTexture(String key, String resourcePath, FilterMode filter, WrapMode wrap)
+	public GLTexture addTexture(String key, String resourcePath, FilterMode filter, WrapMode wrap)
 	{
-		if (textures.containsKey(key)) throw new KeyAlreadyExistsException();
+		if (key != null) if (textures.containsKey(key)) throw new KeyAlreadyExistsException();
 		
 		final DeferredTexture texture = new DeferredTexture(resourcePath);
 		texture.setFilter(filter);
@@ -64,7 +67,10 @@ public class TextureBank extends LightAppModule {
 		
 		getEventBus().send(new ResourceLoadRequest(texture));
 		
-		textures.put(key, texture);
+		if (key != null) {
+			textures.put(key, texture);
+			add(key, texture.makeQuad(Rect.ONE));
+		}
 		
 		return texture;
 	}

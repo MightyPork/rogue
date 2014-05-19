@@ -3,8 +3,8 @@ package mightypork.gamecore.resources.textures;
 
 import mightypork.gamecore.logging.LogAlias;
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.resources.loading.DeferredResource;
-import mightypork.gamecore.resources.loading.MustLoadInMainThread;
+import mightypork.gamecore.resources.BaseDeferredResource;
+import mightypork.gamecore.resources.MustLoadInMainThread;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 import org.lwjgl.opengl.GL11;
@@ -17,7 +17,7 @@ import org.lwjgl.opengl.GL11;
  */
 @LogAlias(name = "Texture")
 @MustLoadInMainThread
-public class DeferredTexture extends DeferredResource implements GLTexture {
+public class DeferredTexture extends BaseDeferredResource implements GLTexture {
 	
 	public static DeferredTexture lastBind = null;
 	

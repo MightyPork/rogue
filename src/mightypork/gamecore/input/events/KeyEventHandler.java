@@ -6,7 +6,7 @@ package mightypork.gamecore.input.events;
  * 
  * @author MightyPork
  */
-public interface KeyListener {
+public interface KeyEventHandler {
 	
 	/**
 	 * Handle an event

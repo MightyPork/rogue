@@ -7,19 +7,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import mightypork.gamecore.WorkDir;
 import mightypork.gamecore.app.BaseApp;
 import mightypork.gamecore.app.MainLoop;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.Screenshot;
+import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.Utils;
 import mightypork.rogue.events.ActionRequest;
 import mightypork.rogue.events.ActionRequest.RequestType;
 
 
-public final class GameLoop extends MainLoop implements ActionRequest.Listener {
+public final class RogueMainLoop extends MainLoop implements ActionRequest.Listener {
 	
-	public GameLoop(BaseApp app)
+	public RogueMainLoop(BaseApp app)
 	{
 		super(app);
 	}
@@ -100,7 +102,7 @@ public final class GameLoop extends MainLoop implements ActionRequest.Listener {
 			File file;
 			int index = 0;
 			while (true) {
-				file = new File(Paths.SCREENSHOTS, fname + (index > 0 ? "-" + index : "") + ".png");
+				file = new File(WorkDir.getDir("screenshots"), fname + (index > 0 ? "-" + index : "") + ".png");
 				if (!file.exists()) break;
 				index++;
 			}

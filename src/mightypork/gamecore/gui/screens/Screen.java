@@ -8,6 +8,7 @@ import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.Renderable;
@@ -50,9 +51,9 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 	
 	
 	@Override
-	public final void bindKey(KeyStroke stroke, Runnable task)
+	public final void bindKey(KeyStroke stroke, Edge edge, Runnable task)
 	{
-		keybindings.bindKey(stroke, task);
+		keybindings.bindKey(stroke, edge, task);
 	}
 	
 	

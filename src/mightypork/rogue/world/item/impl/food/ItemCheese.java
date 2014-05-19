@@ -1,7 +1,7 @@
 package mightypork.rogue.world.item.impl.food;
 
 
-import mightypork.rogue.Res;
+import mightypork.gamecore.resources.Res;
 import mightypork.rogue.world.item.ItemModel;
 import mightypork.rogue.world.item.ItemRenderer;
 import mightypork.rogue.world.item.impl.ItemBaseFood;

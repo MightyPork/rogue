@@ -1,8 +1,10 @@
 package mightypork.gamecore.input;
 
 
+import mightypork.gamecore.input.KeyStroke.Edge;
+import mightypork.gamecore.input.events.InputReadyListener;
 import mightypork.gamecore.input.events.KeyEvent;
-import mightypork.gamecore.input.events.KeyListener;
+import mightypork.gamecore.input.events.KeyEventHandler;
 
 
 /**
@@ -10,23 +12,25 @@ import mightypork.gamecore.input.events.KeyListener;
  * 
  * @author MightyPork
  */
-public class KeyBinding implements KeyListener {
+public class KeyBinding implements KeyEventHandler, InputReadyListener {
 	
 	private final KeyStroke keystroke;
 	private Runnable handler;
-	private boolean wasActive = false;
+	private final Edge edge;
 	
 	
 	/**
+	 * @param edge trigger edge
 	 * @param stroke trigger keystroke
 	 * @param handler action
 	 */
-	public KeyBinding(KeyStroke stroke, Runnable handler)
+	public KeyBinding(KeyStroke stroke, Edge edge, Runnable handler)
 	{
 		this.keystroke = stroke;
 		this.handler = handler;
+		this.edge = edge;
 		
-		wasActive = keystroke.isActive();
+		if (InputSystem.isReady()) keystroke.poll();
 	}
 	
 	
@@ -54,18 +58,17 @@ public class KeyBinding implements KeyListener {
 	@Override
 	public void receive(KeyEvent event)
 	{
-		/*Log.f3("evt k="+event.getKey()+", c="+(int)event.getChar());
-		
-		// ignore unrelated events
-		if (!keystroke.getKeys().contains(event.getKey())) return;
-		*/
-		
 		// run handler when event was met
-		if (keystroke.isActive() && !wasActive) {
+		if (keystroke.tryTrigger(edge)) {
 			handler.run();
 		}
-		
-		wasActive = keystroke.isActive();
+	}
+	
+	
+	@Override
+	public void onInputReady()
+	{
+		keystroke.poll();
 	}
 	
 }

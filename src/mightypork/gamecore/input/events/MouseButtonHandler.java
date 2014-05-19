@@ -2,16 +2,16 @@ package mightypork.gamecore.input.events;
 
 
 /**
- * {@link MouseMotionEvent} listener
+ * {@link MouseButtonEvent} listener
  * 
  * @author MightyPork
  */
-public interface MouseMotionListener {
+public interface MouseButtonHandler {
 	
 	/**
 	 * Handle an event
 	 * 
 	 * @param event event
 	 */
-	void receive(MouseMotionEvent event);
+	void receive(MouseButtonEvent event);
 }

@@ -7,20 +7,20 @@ import mightypork.gamecore.gui.events.CrossfadeRequest;
 import mightypork.gamecore.logging.Log;
 
 
-public class GameStateManager extends AppModule {
+public class RogueStateManager extends AppModule {
 	
-	public GameStateManager(AppAccess app)
+	public RogueStateManager(AppAccess app)
 	{
 		super(app);
 	}
 	
-	public static enum GameState
+	public static enum RogueState
 	{
 		MAIN_MENU, SELECT_WORLD, PLAY_WORLD, EXIT
 	}
 	
 	
-	public void triggerAction(GameState state)
+	public void triggerAction(RogueState state)
 	{
 		switch (state) {
 			case MAIN_MENU:

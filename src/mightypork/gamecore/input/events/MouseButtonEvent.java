@@ -14,7 +14,7 @@ import mightypork.gamecore.util.math.constraints.vect.VectConst;
  * @author MightyPork
  */
 @NotLoggedEvent
-public class MouseButtonEvent extends BusEvent<MouseButtonListener> {
+public class MouseButtonEvent extends BusEvent<MouseButtonHandler> {
 	
 	public static final int BUTTON_LEFT = 0;
 	public static final int BUTTON_MIDDLE = 1;
@@ -119,7 +119,7 @@ public class MouseButtonEvent extends BusEvent<MouseButtonListener> {
 	
 	
 	@Override
-	public void handleBy(MouseButtonListener handler)
+	public void handleBy(MouseButtonHandler handler)
 	{
 		handler.receive(this);
 	}

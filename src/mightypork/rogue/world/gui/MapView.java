@@ -9,7 +9,7 @@ import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
-import mightypork.gamecore.input.events.MouseButtonListener;
+import mightypork.gamecore.input.events.MouseButtonHandler;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.Color;
@@ -32,7 +32,7 @@ import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
  * 
  * @author MightyPork
  */
-public class MapView extends InputComponent implements DelegatingClient, MouseButtonListener, Updateable, WorldAscendRequestListener,
+public class MapView extends InputComponent implements DelegatingClient, MouseButtonHandler, Updateable, WorldAscendRequestListener,
 		WorldDescendRequestListener {
 	
 	private static final double transition_time = 0.8;

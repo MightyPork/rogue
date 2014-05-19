@@ -14,11 +14,11 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.rogue.GameStateManager.GameState;
-import mightypork.rogue.Res;
+import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.GameStateRequest;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;
 import mightypork.rogue.world.WorldProvider;
@@ -84,7 +84,7 @@ public class DeathLayer extends ScreenLayer {
 			@Override
 			protected void execute()
 			{
-				getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
+				getEventBus().send(new GameStateRequest(RogueState.MAIN_MENU));
 			}
 		});
 	}

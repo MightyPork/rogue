@@ -1,63 +1,34 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.app.BaseApp;
+import mightypork.gamecore.resources.ResourceSetup;
 import mightypork.gamecore.resources.audio.SoundBank;
-import mightypork.gamecore.resources.audio.players.EffectPlayer;
-import mightypork.gamecore.resources.audio.players.LoopPlayer;
 import mightypork.gamecore.resources.fonts.FontBank;
-import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.resources.fonts.Glyphs;
 import mightypork.gamecore.resources.fonts.impl.DeferredFont;
-import mightypork.gamecore.resources.textures.*;
+import mightypork.gamecore.resources.textures.FilterMode;
+import mightypork.gamecore.resources.textures.GLTexture;
+import mightypork.gamecore.resources.textures.QuadGrid;
+import mightypork.gamecore.resources.textures.TextureBank;
+import mightypork.gamecore.resources.textures.WrapMode;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
-/**
- * Static resource repository
- * 
- * @author MightyPork
- */
-public final class Res {
-	
-	private static TextureBank textures;
-	private static SoundBank sounds;
-	private static FontBank fonts;
-	
-	private static boolean initialized = false;
+public class RogueResources implements ResourceSetup {
 	
 	
-	/**
-	 * Load on behalf of given base app
-	 * 
-	 * @param app app access
-	 */
-	public static void load(BaseApp app)
-	{
-		if (initialized) return;
-		initialized = true;
-		
-		textures = new TextureBank(app);
-		sounds = new SoundBank(app);
-		fonts = new FontBank(app);
-		
-		loadSounds();
-		loadFonts();
-		loadTextures();
-	}
-	
-	
-	private static void loadFonts()
+	@Override
+	public void addFonts(FontBank fonts)
 	{
 		DeferredFont font;
 		
 		//fonts.loadFont("polygon_pixel", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16));
-		fonts.loadFont("press_start", font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
+		fonts.addFont("press_start", font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
 		
-		fonts.loadFont("battlenet", font = new DeferredFont("/res/font/battlenet.ttf", Glyphs.basic, 16));
+		fonts.addFont("battlenet", font = new DeferredFont("/res/font/battlenet.ttf", Glyphs.basic, 16));
 		font.setDiscardRatio(3 / 16D, 2 / 16D);
 		
-		fonts.loadFont("tinyutf", font = new DeferredFont("/res/font/TinyUnicode2.ttf", Glyphs.basic, 16));
+		fonts.addFont("tinyutf", font = new DeferredFont("/res/font/TinyUnicode2.ttf", Glyphs.basic, 16));
 		font.setDiscardRatio(5 / 16D, 3 / 16D);
 		
 		// aliases
@@ -67,13 +38,21 @@ public final class Res {
 	}
 	
 	
-	private static void loadTextures()
+	@Override
+	public void addSounds(SoundBank sounds)
+	{
+		sounds.addEffect("gui.shutter", "/res/audio/shutter.ogg", 1, 1);
+	}
+	
+	
+	@Override
+	public void addTextures(TextureBank textures)
 	{
 		GLTexture texture;
 		QuadGrid grid;
 		
 		// gui
-		texture = textures.loadTexture("/res/img/gui.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.addTexture("/res/img/gui.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		
 		// small gui elements
 		grid = texture.grid(32, 32);
@@ -106,7 +85,7 @@ public final class Res {
 		
 		
 		// sprites
-		texture = textures.loadTexture("/res/img/sprites.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.addTexture("/res/img/sprites.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
 		textures.add("sprite.player", grid.makeSheet(0, 0, 4, 1));
 		textures.add("sprite.rat.gray", grid.makeSheet(0, 1, 4, 1));
@@ -116,14 +95,14 @@ public final class Res {
 		
 		
 		// logo
-		texture = textures.loadTexture("/res/img/logo.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.addTexture("/res/img/logo.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		textures.add("logo", texture.makeQuad(Rect.make(0, 0, 0.543, 0.203)));
 		grid = texture.grid(8, 8);
 		textures.add("death", grid.makeQuad(0, 2));
 		
 		
 		// tiles
-		texture = textures.loadTexture("tiles", "/res/img/tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.addTexture("tiles", "/res/img/tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
 		
 		textures.add("tile.brick.floor", grid.makeSheet(0, 1, 5, 1));
@@ -163,7 +142,7 @@ public final class Res {
 		textures.add("tile.ufog.full", grid.makeQuad(6, 7));
 		
 		
-		texture = textures.loadTexture("items", "/res/img/items.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.addTexture("items", "/res/img/items.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
 		textures.add("item.meat", grid.makeQuad(0, 0));
 		textures.add("item.club", grid.makeQuad(1, 0));
@@ -176,60 +155,6 @@ public final class Res {
 		textures.add("item.heart", grid.makeQuad(0, 1));
 		textures.add("item.knife", grid.makeQuad(1, 1));
 		textures.add("item.twig", grid.makeQuad(2, 1));
-	}
-	
-	
-	private static void loadSounds()
-	{
-		sounds.addEffect("gui.shutter", "/res/audio/shutter.ogg", 1, 1);
-	}
-	
-	
-	public static GLTexture getTexture(String key)
-	{
-		return textures.getTexture(key);
-	}
-	
-	
-	/**
-	 * Get a texture sheet by key
-	 * 
-	 * @param key
-	 * @return sheet
-	 */
-	public static TxSheet getTxSheet(String key)
-	{
-		return textures.getSheet(key);
-	}
-	
-	
-	/**
-	 * Get a texture quad by key
-	 * 
-	 * @param key
-	 * @return quad
-	 */
-	public static TxQuad getTxQuad(String key)
-	{
-		return textures.getQuad(key);
-	}
-	
-	
-	public static LoopPlayer getSoundLoop(String key)
-	{
-		return sounds.getLoop(key);
-	}
-	
-	
-	public static EffectPlayer getSoundEffect(String key)
-	{
-		return sounds.getEffect(key);
-	}
-	
-	
-	public static GLFont getFont(String key)
-	{
-		return fonts.getFont(key);
 	}
 	
 }

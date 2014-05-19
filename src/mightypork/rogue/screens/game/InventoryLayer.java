@@ -9,12 +9,13 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.strings.StringProvider;
-import mightypork.rogue.Res;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
@@ -139,7 +140,7 @@ public class InventoryLayer extends ScreenLayer {
 		gl.put(txp2, pos, 0, 1, 1);
 		txp2.setVPaddingPercent(25);
 		
-		bindKey(new KeyStroke(Keys.ESCAPE), new Runnable() {
+		bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -150,7 +151,7 @@ public class InventoryLayer extends ScreenLayer {
 			}
 		});
 		
-		bindKey(new KeyStroke(Keys.E), new Runnable() {
+		bindKey(new KeyStroke(Keys.E), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -191,7 +192,7 @@ public class InventoryLayer extends ScreenLayer {
 			}
 		});
 		
-		bindKey(new KeyStroke(Keys.D), new Runnable() {
+		bindKey(new KeyStroke(Keys.D), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -212,7 +213,7 @@ public class InventoryLayer extends ScreenLayer {
 	private void setupGridWalkKeys()
 	{
 		
-		bindKey(new KeyStroke(Keys.LEFT), new Runnable() {
+		bindKey(new KeyStroke(Keys.LEFT), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -229,7 +230,7 @@ public class InventoryLayer extends ScreenLayer {
 			};
 		});
 		
-		bindKey(new KeyStroke(Keys.RIGHT), new Runnable() {
+		bindKey(new KeyStroke(Keys.RIGHT), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -246,7 +247,7 @@ public class InventoryLayer extends ScreenLayer {
 			};
 		});
 		
-		bindKey(new KeyStroke(Keys.UP), new Runnable() {
+		bindKey(new KeyStroke(Keys.UP), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -263,7 +264,7 @@ public class InventoryLayer extends ScreenLayer {
 			};
 		});
 		
-		bindKey(new KeyStroke(Keys.DOWN), new Runnable() {
+		bindKey(new KeyStroke(Keys.DOWN), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()

@@ -1,4 +1,4 @@
-package mightypork.gamecore.resources.loading;
+package mightypork.gamecore.resources;
 
 
 import java.util.concurrent.ExecutorService;
@@ -9,8 +9,6 @@ import mightypork.gamecore.app.MainLoopRequest;
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.events.Destroyable;
 import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.resources.events.ResourceLoadRequestListener;
-import mightypork.gamecore.util.annot.FactoryMethod;
 
 
 /**
@@ -18,29 +16,24 @@ import mightypork.gamecore.util.annot.FactoryMethod;
  * 
  * @author MightyPork
  */
-public class AsyncResourceLoader extends Thread implements ResourceLoadRequestListener, Destroyable {
-	
-	/**
-	 * Start a new loader thread.
-	 * 
-	 * @param app app access
-	 * @return the launched thread
-	 */
-	@FactoryMethod
-	public static AsyncResourceLoader launch(BusAccess app)
-	{
-		final AsyncResourceLoader loader = new AsyncResourceLoader(app);
-		loader.setDaemon(true);
-		loader.start();
-		return loader;
-	}
+public class AsyncResourceLoader extends Thread implements ResourceLoader, Destroyable {
 	
 	private final ExecutorService exs = Executors.newCachedThreadPool();
 	
-	private final LinkedBlockingQueue<Deferred> toLoad = new LinkedBlockingQueue<>();
+	private final LinkedBlockingQueue<DeferredResource> toLoad = new LinkedBlockingQueue<>();
 	private volatile boolean stopped;
-	private final BusAccess app;
+	private BusAccess app;
 	private volatile boolean mainLoopQueuing = false;
+	
+	
+	@Override
+	public synchronized void init(BusAccess app)
+	{
+		this.app = app;
+		app.getEventBus().subscribe(this);
+		setDaemon(true);
+		super.start();
+	}
 	
 	
 	public void enableMainLoopQueuing(boolean yes)
@@ -52,16 +45,14 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequestLi
 	/**
 	 * @param app app acceess
 	 */
-	public AsyncResourceLoader(BusAccess app)
+	public AsyncResourceLoader()
 	{
 		super("Deferred loader");
-		this.app = app;
-		app.getEventBus().subscribe(this);
 	}
 	
 	
 	@Override
-	public void loadResource(final Deferred resource)
+	public void loadResource(final DeferredResource resource)
 	{
 		if (resource.isLoaded()) return;
 		
@@ -98,7 +89,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoadRequestLi
 		while (!stopped) {
 			
 			try {
-				final Deferred def = toLoad.take();
+				final DeferredResource def = toLoad.take();
 				if (def == null) continue;
 				
 				if (!def.isLoaded()) {

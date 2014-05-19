@@ -5,8 +5,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.events.KeyEvent;
-import mightypork.gamecore.input.events.KeyListener;
+import mightypork.gamecore.input.events.KeyEventHandler;
 import mightypork.gamecore.logging.Log;
 
 
@@ -15,7 +16,7 @@ import mightypork.gamecore.logging.Log;
  * 
  * @author MightyPork
  */
-public class KeyBindingPool implements KeyBinder, KeyListener {
+public class KeyBindingPool implements KeyBinder, KeyEventHandler {
 	
 	private final Set<KeyBinding> bindings = new HashSet<>();
 	
@@ -27,7 +28,7 @@ public class KeyBindingPool implements KeyBinder, KeyListener {
 	 * @param task handler
 	 */
 	@Override
-	public void bindKey(KeyStroke stroke, Runnable task)
+	public void bindKey(KeyStroke stroke, Edge edge, Runnable task)
 	{
 		for (final KeyBinding kb : bindings) {
 			if (kb.matches(stroke)) {
@@ -37,7 +38,7 @@ public class KeyBindingPool implements KeyBinder, KeyListener {
 			}
 		}
 		
-		bindings.add(new KeyBinding(stroke, task));
+		bindings.add(new KeyBinding(stroke, edge, task));
 	}
 	
 	

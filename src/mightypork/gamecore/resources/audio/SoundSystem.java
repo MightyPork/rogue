@@ -8,9 +8,9 @@ import java.util.Set;
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
-import mightypork.gamecore.resources.events.ResourceLoadRequest;
 import mightypork.gamecore.util.math.Calc.Buffers;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.constraints.vect.mutable.VectVar;
@@ -87,6 +87,8 @@ public class SoundSystem extends RootBusNode implements Updateable {
 			setListener(INITIAL_LISTENER_POS);
 			
 			soundSystemInited = true;
+			
+			getEventBus().send(new AudioReadyEvent());
 		}
 	}
 	

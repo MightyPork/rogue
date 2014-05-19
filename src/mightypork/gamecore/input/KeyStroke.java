@@ -1,6 +1,9 @@
 package mightypork.gamecore.input;
 
 
+import mightypork.gamecore.util.math.constraints.Pollable;
+import mightypork.gamecore.util.strings.StringUtils;
+
 import org.lwjgl.input.Keyboard;
 
 
@@ -9,37 +12,28 @@ import org.lwjgl.input.Keyboard;
  * 
  * @author MightyPork
  */
-public class KeyStroke {
+public class KeyStroke implements Pollable {
 	
-	private final int mod;
-	private final int key;
-	private final boolean fallingEdge;
+	public static enum Edge
+	{
+		FALLING, RISING;
+	}
+	
+	private int mod;
+	private int key;
+	
+	private boolean wasDown;
 	
 	
 	/**
 	 * KeyStroke
 	 * 
-	 * @param fallingEdge true for falling edge, up for rising edge
-	 * @param mod_mask mods mask
 	 * @param key key code
-	 */
-	public KeyStroke(boolean fallingEdge, int key, int mod_mask)
-	{
-		this.fallingEdge = fallingEdge;
-		this.key = key;
-		this.mod = mod_mask;
-	}
-	
-	
-	/**
-	 * Rising edge keystroke
-	 * 
 	 * @param mod_mask mods mask
-	 * @param key key code
 	 */
 	public KeyStroke(int key, int mod_mask)
 	{
-		this(false, key, mod_mask);
+		setTo(key, mod_mask);
 	}
 	
 	
@@ -50,50 +44,118 @@ public class KeyStroke {
 	 */
 	public KeyStroke(int key)
 	{
-		this(false, key, Keys.MOD_NONE);
+		this(key, Keys.MOD_NONE);
 	}
 	
 	
 	/**
-	 * @return true if the keystroke is currently satisfied (keys pressed)
+	 * @return true if the keystroke is currently down & modifiers match.
 	 */
-	public boolean isActive()
+	public boolean isDown()
 	{
 		boolean st = Keyboard.isKeyDown(key);
-		st &= (InputSystem.getModifierKeys() == mod);
+		st &= (InputSystem.getActiveModKeys() == mod);
 		
-		return fallingEdge ? st : !st;
+		return st;
+	}
+	
+	
+	public void setTo(int key, int mod_mask)
+	{
+		this.key = key;
+		this.mod = mod_mask | Keys.keyToMod(key); // for mods alone
+		this.wasDown = (InputSystem.isReady() ? isDown() : false);
+	}
+	
+	
+	/**
+	 * Set current state as the last state (ignore it on next trigger event)
+	 */
+	@Override
+	public void poll()
+	{
+		wasDown = isDown();
+	}
+	
+	
+	public boolean tryTrigger(Edge edge)
+	{
+		final boolean down = isDown() && !wasDown;
+		final boolean up = !isDown() && wasDown;
+		
+		boolean retval = false;
+		
+		switch (edge) {
+			case FALLING:
+				retval = !wasDown && down;
+				break;
+			
+			case RISING:
+				retval = wasDown && up;
+				break;
+		}
+		
+		wasDown = isDown();
+		
+		return retval;
+	}
+	
+	
+	public String toDataString()
+	{
+		String s = "";
+		
+		if (mod != Keys.MOD_NONE) s = Keys.modToString(mod);
+		
+		s += Keys.keyToString(key);
+		
+		return s;
+	}
+	
+	
+	public static KeyStroke createFromDataString(String dataString)
+	{
+		final KeyStroke ks = new KeyStroke(Keys.NONE, Keys.MOD_NONE);
+		ks.fromDataString(dataString);
+		return ks;
+	}
+	
+	
+	public void fromDataString(String dataString)
+	{
+		final String dataString1 = dataString.toUpperCase().replace('-', '+').replaceAll("[^A-Z0-9_+]", "");
+		
+		if (dataString1.contains("+")) {
+			
+			final String keyStr = StringUtils.fromLastChar(dataString1, '+');
+			final String modStr = StringUtils.toLastChar(dataString1, '+');
+			
+			this.key = Keys.keyFromString(keyStr);
+			this.mod = Keys.modFromString(modStr);
+			
+		} else {
+			this.key = Keys.keyFromString(dataString1);
+			this.mod = Keys.MOD_NONE;
+		}
+	}
+	
+	
+	public int getKey()
+	{
+		return key;
+	}
+	
+	
+	public int getMod()
+	{
+		return mod;
 	}
 	
 	
 	@Override
 	public String toString()
 	{
-		String s = "(";
-		
-		if ((mod & Keys.MOD_CONTROL) != 0) {
-			s += "CTRL+";
-		}
-		
-		if ((mod & Keys.MOD_ALT) != 0) {
-			s += "ALT+";
-		}
-		
-		if ((mod & Keys.MOD_SHIFT) != 0) {
-			s += "SHIFT+";
-		}
-		
-		if ((mod & Keys.MOD_META) != 0) {
-			s += "META+";
-		}
-		
-		s += Keyboard.getKeyName(key);
-		
-		s += fallingEdge ? ",DOWN" : ",UP";
-		
-		s += ")";
-		
-		return s;
+		return toDataString();
 	}
 	
 	
@@ -102,7 +164,6 @@ public class KeyStroke {
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (fallingEdge ? 1231 : 1237);
 		result = prime * result + key;
 		result = prime * result + mod;
 		return result;
@@ -116,7 +177,6 @@ public class KeyStroke {
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
 		final KeyStroke other = (KeyStroke) obj;
-		if (fallingEdge != other.fallingEdge) return false;
 		if (key != other.key) return false;
 		if (mod != other.mod) return false;
 		return true;

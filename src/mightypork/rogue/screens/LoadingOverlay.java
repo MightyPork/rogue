@@ -6,6 +6,7 @@ import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Overlay;
+import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.Utils;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.pal.PAL16;
@@ -15,7 +16,6 @@ import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.timing.TimedTask;
 import mightypork.gamecore.util.strings.StringProvider;
-import mightypork.rogue.Res;
 
 
 /**

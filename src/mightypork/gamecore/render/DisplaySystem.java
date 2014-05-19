@@ -104,6 +104,8 @@ public class DisplaySystem extends AppModule implements RectBound {
 				Display.update();
 			}
 			
+			getEventBus().send(new DisplayReadyEvent());
+			
 		} catch (final LWJGLException e) {
 			throw new RuntimeException("Could not initialize screen", e);
 		}

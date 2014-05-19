@@ -1,4 +1,4 @@
-package mightypork.gamecore.resources.loading;
+package mightypork.gamecore.resources;
 
 
 /**
@@ -6,7 +6,7 @@ package mightypork.gamecore.resources.loading;
  * 
  * @author MightyPork
  */
-public interface Deferred {
+public interface DeferredResource {
 	
 	/**
 	 * Load the actual resource, if not loaded yet.

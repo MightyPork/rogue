@@ -8,11 +8,12 @@ import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.rogue.Config;
-import mightypork.rogue.GameStateManager.GameState;
+import mightypork.rogue.Const;
+import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.GameStateRequest;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
@@ -197,7 +198,7 @@ public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
 				@Override
 				public void run()
 				{
-					getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
+					getEventBus().send(new GameStateRequest(RogueState.MAIN_MENU));
 				}
 			});
 			
@@ -211,7 +212,7 @@ public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
 				@Override
 				public void run()
 				{
-					getEventBus().send(new GameStateRequest(GameState.EXIT));
+					getEventBus().send(new GameStateRequest(RogueState.EXIT));
 				}
 			});
 			
@@ -239,20 +240,20 @@ public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
 		addLayer(askSaveLayer = new AskSaveLayer(this));
 		
 		//pause key
-		bindKey(new KeyStroke(Keys.P), actionTogglePause);
-		bindKey(new KeyStroke(Keys.PAUSE), actionTogglePause);
-		bindKey(new KeyStroke(Keys.SPACE), actionTogglePause);
+		bindKey(new KeyStroke(Keys.P), Edge.RISING, actionTogglePause);
+		bindKey(new KeyStroke(Keys.PAUSE), Edge.RISING, actionTogglePause);
+		bindKey(new KeyStroke(Keys.SPACE), Edge.RISING, actionTogglePause);
 		
-		bindKey(new KeyStroke(Keys.I), actionToggleInv);
-		bindKey(new KeyStroke(Keys.D), actionDropLastPickedItem);
-		bindKey(new KeyStroke(Keys.E), actionEat);
-		bindKey(new KeyStroke(Keys.M), actionToggleMinimap);
-		bindKey(new KeyStroke(Keys.Z), actionToggleZoom);
+		bindKey(new KeyStroke(Keys.I), Edge.RISING, actionToggleInv);
+		bindKey(new KeyStroke(Keys.D), Edge.RISING, actionDropLastPickedItem);
+		bindKey(new KeyStroke(Keys.E), Edge.RISING, actionEat);
+		bindKey(new KeyStroke(Keys.M), Edge.RISING, actionToggleMinimap);
+		bindKey(new KeyStroke(Keys.Z), Edge.RISING, actionToggleZoom);
 		
-		bindKey(new KeyStroke(Keys.L, Keys.MOD_CONTROL), actionLoad);
-		bindKey(new KeyStroke(Keys.S, Keys.MOD_CONTROL), actionSave);
-		bindKey(new KeyStroke(Keys.Q, Keys.MOD_CONTROL), actionQuit);
-		bindKey(new KeyStroke(Keys.ESCAPE), actionMenu);
+		bindKey(new KeyStroke(Keys.L, Keys.MOD_CONTROL), Edge.RISING, actionLoad);
+		bindKey(new KeyStroke(Keys.S, Keys.MOD_CONTROL), Edge.RISING, actionSave);
+		bindKey(new KeyStroke(Keys.Q, Keys.MOD_CONTROL), Edge.RISING, actionQuit);
+		bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, actionMenu);
 		
 		// add as actions - enableables.
 		worldActions.add(worldLayer);
@@ -272,12 +273,12 @@ public class ScreenGame extends LayeredScreen implements PlayerKilledListener {
 		worldActions.setEnabled(true);
 		
 		// CHEAT - X-ray
-		bindKey(new KeyStroke(Keys.MULTIPLY, Keys.MOD_CONTROL), new Runnable() {
+		bindKey(new KeyStroke(Keys.NUMPAD_MULTIPLY, Keys.MOD_CONTROL), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
 			{
-				Config.RENDER_UFOG ^= true;
+				Const.RENDER_UFOG ^= true;
 			}
 		});
 	}

@@ -13,7 +13,7 @@ import org.lwjgl.input.Keyboard;
  * @author MightyPork
  */
 @NotLoggedEvent
-public class KeyEvent extends BusEvent<KeyListener> {
+public class KeyEvent extends BusEvent<KeyEventHandler> {
 	
 	private final int key;
 	private final boolean down;
@@ -70,7 +70,7 @@ public class KeyEvent extends BusEvent<KeyListener> {
 	
 	
 	@Override
-	public void handleBy(KeyListener keh)
+	public void handleBy(KeyEventHandler keh)
 	{
 		keh.receive(this);
 	}

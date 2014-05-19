@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import mightypork.gamecore.logging.LogAlias;
-import mightypork.gamecore.resources.loading.DeferredResource;
+import mightypork.gamecore.resources.BaseDeferredResource;
 import mightypork.gamecore.util.files.FileUtils;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 
@@ -19,7 +19,7 @@ import org.newdawn.slick.openal.SoundStore;
  * @author MightyPork
  */
 @LogAlias(name = "Audio")
-public class DeferredAudio extends DeferredResource {
+public class DeferredAudio extends BaseDeferredResource {
 	
 	private enum PlayMode
 	{

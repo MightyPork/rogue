@@ -1,7 +1,7 @@
 package mightypork.rogue.world.item.impl.active;
 
 
-import mightypork.rogue.Res;
+import mightypork.gamecore.resources.Res;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemModel;

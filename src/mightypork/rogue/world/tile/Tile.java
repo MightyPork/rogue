@@ -11,7 +11,7 @@ import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonObjBlob;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.rogue.Config;
+import mightypork.rogue.Const;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
@@ -53,7 +53,7 @@ public abstract class Tile implements BusAccess, IonObjBlob {
 	@DefaultImpl
 	public void renderTile(TileRenderContext context)
 	{
-		if (!isExplored() && Config.RENDER_UFOG) return;
+		if (!isExplored() && Const.RENDER_UFOG) return;
 		
 		initRenderer();
 		

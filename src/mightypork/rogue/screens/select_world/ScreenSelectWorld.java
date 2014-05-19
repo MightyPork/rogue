@@ -1,6 +1,7 @@
 package mightypork.rogue.screens.select_world;
 
 
+import mightypork.gamecore.WorkDir;
 import mightypork.gamecore.app.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.RowLayout;
@@ -10,14 +11,14 @@ import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.PAL16;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.rogue.GameStateManager.GameState;
-import mightypork.rogue.Paths;
-import mightypork.rogue.Res;
+import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.GameStateRequest;
 
 
@@ -71,31 +72,31 @@ public class ScreenSelectWorld extends LayeredScreen {
 			tp.setVPaddingPercent(20);
 			tp.setShadow(RGB.BLACK_50, tp.height().mul(0.6 / 8D).toVectXY());
 			
-			slot1 = new WorldSlot(root, Paths.SAVE_SLOT_1);
+			slot1 = new WorldSlot(root, WorkDir.getFile("save/slot_1.ion"));
 			rows.add(slot1);
 			
-			slot2 = new WorldSlot(root, Paths.SAVE_SLOT_2);
+			slot2 = new WorldSlot(root, WorkDir.getFile("save/slot_2.ion"));
 			rows.add(slot2);
 			
-			slot3 = new WorldSlot(root, Paths.SAVE_SLOT_3);
+			slot3 = new WorldSlot(root, WorkDir.getFile("save/slot_3.ion"));
 			rows.add(slot3);
 			
 			// escape to quitn from here
-			bindKey(new KeyStroke(Keys.ESCAPE), new Runnable() {
+			bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, new Runnable() {
 				
 				@Override
 				public void run()
 				{
-					getEventBus().send(new GameStateRequest(GameState.MAIN_MENU));
+					getEventBus().send(new GameStateRequest(RogueState.MAIN_MENU));
 				}
 			});
 			
-			bindKey(new KeyStroke(Keys.Q, Keys.MOD_CONTROL), new Runnable() {
+			bindKey(new KeyStroke(Keys.Q, Keys.MOD_CONTROL), Edge.RISING, new Runnable() {
 				
 				@Override
 				public void run()
 				{
-					getEventBus().send(new GameStateRequest(GameState.EXIT));
+					getEventBus().send(new GameStateRequest(RogueState.EXIT));
 				}
 			});
 		}

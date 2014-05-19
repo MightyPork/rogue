@@ -14,6 +14,7 @@ import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.color.Color;
@@ -64,9 +65,9 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	
 	
 	@Override
-	public final void bindKey(KeyStroke stroke, Runnable task)
+	public final void bindKey(KeyStroke stroke, Edge edge, Runnable task)
 	{
-		keybindings.bindKey(stroke, task);
+		keybindings.bindKey(stroke, edge, task);
 	}
 	
 	

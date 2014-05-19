@@ -5,7 +5,7 @@ import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.input.events.KeyEvent;
-import mightypork.gamecore.input.events.KeyListener;
+import mightypork.gamecore.input.events.KeyEventHandler;
 import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
@@ -14,7 +14,7 @@ import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
 
 
-public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndListener, KeyListener, Updateable {
+public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndListener, KeyEventHandler, Updateable {
 	
 	private static final int[] keys = { Keys.LEFT, Keys.RIGHT, Keys.UP, Keys.DOWN };
 	private static final Move[] sides = { Moves.W, Moves.E, Moves.N, Moves.S };
@@ -49,7 +49,7 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 		
 		if (evt.isDown() || mapView.plc.getPlayer().isMoving()) return; // not interested
 		
-		if (InputSystem.getModifierKeys() != Keys.MOD_NONE) return;
+		if (InputSystem.getActiveModKeys() != Keys.MOD_NONE) return;
 		
 		for (int i = 0; i < 4; i++) {
 			if (evt.getKey() == keys[i]) {
@@ -66,7 +66,7 @@ public class MIPKeyboard extends MapInteractionPlugin implements PlayerStepEndLi
 		if (mapView.plc.getPlayer().getMoveProgress() < 0.8) return false;
 		
 		
-		if (InputSystem.getModifierKeys() != Keys.MOD_NONE) return false;
+		if (InputSystem.getActiveModKeys() != Keys.MOD_NONE) return false;
 		
 		
 		for (int i = 0; i < 4; i++) {

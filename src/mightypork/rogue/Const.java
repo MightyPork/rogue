@@ -9,7 +9,7 @@ package mightypork.rogue;
 public final class Const {
 	
 	// STRINGS
-	public static final int VERSION = 3;
+	public static final int VERSION = 4;
 	
 	public static final String APP_NAME = "Rogue";
 	public static final String TITLEBAR = APP_NAME + " v." + VERSION;
@@ -20,4 +20,7 @@ public final class Const {
 	// INITIAL WINDOW SIZE
 	public static final int WINDOW_W = 1024;
 	public static final int WINDOW_H = 768;
+	
+	/** Render dark in unknown area & skip invisible stuff */
+	public static boolean RENDER_UFOG = true;
 }

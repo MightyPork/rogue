@@ -1,7 +1,7 @@
 package mightypork.rogue.world.tile.impl.brick;
 
 
-import mightypork.rogue.Res;
+import mightypork.gamecore.resources.Res;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.impl.TileBasePassage;
 

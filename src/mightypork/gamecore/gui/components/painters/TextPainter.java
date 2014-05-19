@@ -14,7 +14,6 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.gamecore.util.strings.StringWrapper;
-import mightypork.rogue.Config;
 
 
 /**
@@ -24,6 +23,7 @@ import mightypork.rogue.Config;
  */
 public class TextPainter extends BaseComponent implements DynamicWidthComponent {
 	
+	private static final boolean DEBUG_FONT_RENDER = false;
 	private final FontRenderer font;
 	private Color color;
 	private AlignX align;
@@ -102,7 +102,7 @@ public class TextPainter extends BaseComponent implements DynamicWidthComponent 
 		final Rect r = (shadow ? rect.move(shadowOffset.neg()) : rect).round();
 		font.draw(str, r, align, color);
 		
-		if (Config.DEBUG_FONT_RENDER) Render.quadColor(r, RGB.PINK.withAlpha(0.4));
+		if (DEBUG_FONT_RENDER) Render.quadColor(r, RGB.PINK.withAlpha(0.4));
 	}
 	
 	

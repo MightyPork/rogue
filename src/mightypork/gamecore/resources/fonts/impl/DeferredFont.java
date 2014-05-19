@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import mightypork.gamecore.logging.LogAlias;
+import mightypork.gamecore.resources.BaseDeferredResource;
+import mightypork.gamecore.resources.MustLoadInMainThread;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.resources.loading.DeferredResource;
-import mightypork.gamecore.resources.loading.MustLoadInMainThread;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.gamecore.util.files.FileUtils;
 import mightypork.gamecore.util.math.color.Color;
@@ -23,7 +23,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
  */
 @MustLoadInMainThread
 @LogAlias(name = "Font")
-public class DeferredFont extends DeferredResource implements GLFont {
+public class DeferredFont extends BaseDeferredResource implements GLFont {
 	
 	public static enum FontStyle
 	{

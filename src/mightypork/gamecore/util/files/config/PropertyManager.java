@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import mightypork.gamecore.util.math.Range;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.gamecore.util.objects.Convert;
 
 
@@ -24,35 +21,6 @@ import mightypork.gamecore.util.objects.Convert;
  */
 public class PropertyManager {
 	
-	private abstract class Property<T> {
-		
-		public String comment;
-		public String key;
-		
-		public T value;
-		public T defaultValue;
-		
-		
-		public Property(String key, T defaultValue, String comment)
-		{
-			super();
-			this.comment = comment;
-			this.key = key;
-			this.defaultValue = defaultValue;
-			this.value = defaultValue;
-		}
-		
-		
-		public abstract void parse(String string);
-		
-		
-		@Override
-		public String toString()
-		{
-			return Convert.toString(value);
-		}
-	}
-	
 	private class BooleanProperty extends Property<Boolean> {
 		
 		public BooleanProperty(String key, Boolean defaultValue, String comment)
@@ -62,9 +30,9 @@ public class PropertyManager {
 		
 		
 		@Override
-		public void parse(String string)
+		public Boolean decode(String string, Boolean defval)
 		{
-			value = Convert.toBoolean(string, defaultValue);
+			return Convert.toBoolean(string, defval);
 		}
 	}
 	
@@ -77,9 +45,9 @@ public class PropertyManager {
 		
 		
 		@Override
-		public void parse(String string)
+		public Integer decode(String string, Integer defval)
 		{
-			value = Convert.toInteger(string, defaultValue);
+			return Convert.toInteger(string, defval);
 		}
 	}
 	
@@ -92,9 +60,9 @@ public class PropertyManager {
 		
 		
 		@Override
-		public void parse(String string)
+		public Double decode(String string, Double defval)
 		{
-			value = Convert.toDouble(string, defaultValue);
+			return Convert.toDouble(string, defval);
 		}
 	}
 	
@@ -107,39 +75,9 @@ public class PropertyManager {
 		
 		
 		@Override
-		public void parse(String string)
+		public String decode(String string, String defval)
 		{
-			value = Convert.toString(string, defaultValue);
-		}
-	}
-	
-	private class RangeProperty extends Property<Range> {
-		
-		public RangeProperty(String key, Range defaultValue, String comment)
-		{
-			super(key, defaultValue, comment);
-		}
-		
-		
-		@Override
-		public void parse(String string)
-		{
-			value = Convert.toRange(string, defaultValue);
-		}
-	}
-	
-	private class CoordProperty extends Property<Vect> {
-		
-		public CoordProperty(String key, Vect defaultValue, String comment)
-		{
-			super(key, defaultValue, comment);
-		}
-		
-		
-		@Override
-		public void parse(String string)
-		{
-			value = Convert.toVect(string, defaultValue);
+			return Convert.toString(string, defval);
 		}
 	}
 	
@@ -155,7 +93,6 @@ public class PropertyManager {
 	
 	private final TreeMap<String, Property<?>> entries;
 	private final TreeMap<String, String> renameTable;
-	private final TreeMap<String, String> overrideValues;
 	private SortedProperties props = new SortedProperties();
 	
 	
@@ -169,7 +106,6 @@ public class PropertyManager {
 	{
 		this.file = file;
 		this.entries = new TreeMap<>();
-		this.overrideValues = new TreeMap<>();
 		this.renameTable = new TreeMap<>();
 		this.fileComment = comment;
 	}
@@ -178,7 +114,7 @@ public class PropertyManager {
 	/**
 	 * Load, fix and write to file.
 	 */
-	public void apply()
+	public void load()
 	{
 		boolean needsSave = false;
 		if (!file.getParentFile().mkdirs()) {
@@ -201,38 +137,30 @@ public class PropertyManager {
 		
 		// rename keys
 		for (final Entry<String, String> entry : renameTable.entrySet()) {
-			if (props.getProperty(entry.getKey()) == null) {
-				continue;
-			}
-			props.setProperty(entry.getValue(), props.getProperty(entry.getKey()));
+			
+			final String pr = props.getProperty(entry.getKey());
+			
+			if (pr == null) continue;
+			
 			props.remove(entry.getKey());
-			needsSave = true;
-		}
-		
-		// set the override values into the freshly loaded properties file
-		for (final Entry<String, String> entry : overrideValues.entrySet()) {
-			props.setProperty(entry.getKey(), entry.getValue());
+			props.setProperty(entry.getValue(), pr);
 			needsSave = true;
 		}
 		
 		// validate entries one by one, replace with default when needed
 		for (final Property<?> entry : entries.values()) {
-			keyList.add(entry.key);
+			keyList.add(entry.getKey());
 			
-			final String propOrig = props.getProperty(entry.key);
+			final String propOrig = props.getProperty(entry.getKey());
 			
 			entry.parse(propOrig);
 			
-			if (!entry.toString().equals(propOrig)) {
-				needsSave = true;
-			}
-			
-			if (entry.comment != null) {
-				props.setKeyComment(entry.key, entry.comment);
+			if (entry.getComment() != null) {
+				props.setKeyComment(entry.getKey(), entry.getComment());
 			}
 			
 			if (propOrig == null || !entry.toString().equals(propOrig)) {
-				props.setProperty(entry.key, entry.toString());
+				props.setProperty(entry.getKey(), entry.toString());
 				
 				needsSave = true;
 			}
@@ -244,20 +172,24 @@ public class PropertyManager {
 				props.remove(propname);
 				needsSave = true;
 			}
-			
 		}
 		
 		// save if needed
 		if (needsSave || cfgForceSave) {
-			try {
-				props.store(new FileOutputStream(file), fileComment);
-			} catch (final IOException ioe) {
-				ioe.printStackTrace();
-			}
+			save();
 		}
 		
-		overrideValues.clear();
 		renameTable.clear();
+	}
+	
+	
+	public void save()
+	{
+		try {
+			props.store(new FileOutputStream(file), fileComment);
+		} catch (final IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 	
 	
@@ -291,13 +223,13 @@ public class PropertyManager {
 	/**
 	 * Get a property entry (rarely used)
 	 * 
-	 * @param n key
+	 * @param k key
 	 * @return the entry
 	 */
-	private Property<?> get(String n)
+	private Property<?> getProperty(String k)
 	{
 		try {
-			return entries.get(n);
+			return entries.get(k);
 		} catch (final Throwable t) {
 			return null;
 		}
@@ -307,137 +239,117 @@ public class PropertyManager {
 	/**
 	 * Get boolean property
 	 * 
-	 * @param n key
+	 * @param k key
 	 * @return the boolean found, or false
 	 */
-	public Boolean getBoolean(String n)
+	public Boolean getBoolean(String k)
 	{
-		return Convert.toBoolean(get(n).value);
+		return Convert.toBoolean(getProperty(k).getValue());
 	}
 	
 	
 	/**
 	 * Get numeric property
 	 * 
-	 * @param n key
+	 * @param k key
 	 * @return the int found, or null
 	 */
-	public Integer getInteger(String n)
+	public Integer getInteger(String k)
 	{
-		return Convert.toInteger(get(n).value);
+		return Convert.toInteger(getProperty(k).getValue());
 	}
 	
 	
 	/**
 	 * Get numeric property as double
 	 * 
-	 * @param n key
+	 * @param k key
 	 * @return the double found, or null
 	 */
-	public Double getDouble(String n)
+	public Double getDouble(String k)
 	{
-		return Convert.toDouble(get(n).value);
+		return Convert.toDouble(getProperty(k).getValue());
 	}
 	
 	
 	/**
 	 * Get string property
 	 * 
-	 * @param n key
+	 * @param k key
 	 * @return the string found, or null
 	 */
-	public String getString(String n)
+	public String getString(String k)
 	{
-		return Convert.toString(get(n).value);
+		return Convert.toString(getProperty(k).getValue());
 	}
 	
 	
 	/**
-	 * Get range property
+	 * Get arbitrary property. Make sure it's of the right type!
 	 * 
-	 * @param n key
-	 * @return the range found, or null
+	 * @param k key
+	 * @return the prioperty found
 	 */
-	public Range getRange(String n)
+	@SuppressWarnings("unchecked")
+	public <T> T getValue(String k)
 	{
-		return Convert.toRange(get(n).value);
-	}
-	
-	
-	/**
-	 * Get coord property
-	 * 
-	 * @param n key
-	 * @return the coord found, or null
-	 */
-	public VectConst getCoord(String n)
-	{
-		return Convert.toVect(get(n).value);
+		try {
+			return ((Property<T>) getProperty(k)).getValue();
+		} catch (final ClassCastException e) {
+			return null;
+		}
 	}
 	
 	
 	/**
 	 * Add a boolean property
 	 * 
-	 * @param n key
+	 * @param k key
 	 * @param d default value
 	 * @param comment the in-file comment
 	 */
-	public void putBoolean(String n, boolean d, String comment)
+	public void putBoolean(String k, boolean d, String comment)
 	{
-		entries.put(n, new BooleanProperty(n, d, comment));
+		putProperty(new BooleanProperty(k, d, comment));
 	}
 	
 	
 	/**
 	 * Add a numeric property (double)
 	 * 
-	 * @param n key
+	 * @param k key
 	 * @param d default value
 	 * @param comment the in-file comment
 	 */
-	public void putDouble(String n, double d, String comment)
+	public void putDouble(String k, double d, String comment)
 	{
-		entries.put(n, new DoubleProperty(n, d, comment));
+		putProperty(new DoubleProperty(k, d, comment));
 	}
 	
 	
 	/**
 	 * Add a numeric property
 	 * 
-	 * @param n key
+	 * @param k key
 	 * @param d default value
 	 * @param comment the in-file comment
 	 */
-	public void putInteger(String n, int d, String comment)
+	public void putInteger(String k, int d, String comment)
 	{
-		entries.put(n, new IntegerProperty(n, d, comment));
+		putProperty(new IntegerProperty(k, d, comment));
 	}
 	
 	
 	/**
 	 * Add a string property
 	 * 
-	 * @param n key
+	 * @param k key
 	 * @param d default value
 	 * @param comment the in-file comment
 	 */
-	public void putString(String n, String d, String comment)
+	public void putString(String k, String d, String comment)
 	{
-		entries.put(n, new StringProperty(n, d, comment));
-	}
-	
-	
-	/**
-	 * Add a coord property
-	 * 
-	 * @param n key
-	 * @param d default value
-	 * @param comment the in-file comment
-	 */
-	public void putCoord(String n, Vect d, String comment)
-	{
-		entries.put(n, new CoordProperty(n, d, comment));
+		putProperty(new StringProperty(k, d, comment));
 	}
 	
 	
@@ -445,17 +357,16 @@ public class PropertyManager {
 	 * Add a range property
 	 * 
 	 * @param n key
-	 * @param d default value
-	 * @param comment the in-file comment
+	 * @param prop property to put
 	 */
-	public void putRange(String n, Range d, String comment)
+	public <T> void putProperty(Property<T> prop)
 	{
-		entries.put(n, new RangeProperty(n, d, comment));
+		entries.put(prop.getKey(), prop);
 	}
 	
 	
 	/**
-	 * Rename key before doing "apply"; value is preserved
+	 * Rename key before loading; value is preserved
 	 * 
 	 * @param oldKey old key
 	 * @param newKey new key
@@ -468,16 +379,20 @@ public class PropertyManager {
 	
 	
 	/**
-	 * Set value saved to certain key; use to save runtime-changed configuration
-	 * values.
+	 * Set value saved to certain key.
 	 * 
 	 * @param key key
 	 * @param value the saved value
 	 */
 	public void setValue(String key, Object value)
 	{
-		overrideValues.put(key, value.toString());
-		return;
+		getProperty(key).setValue(value);
+	}
+	
+	
+	public void setFileComment(String fileComment)
+	{
+		this.fileComment = fileComment;
 	}
 	
 }

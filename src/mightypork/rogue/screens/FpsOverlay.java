@@ -7,14 +7,15 @@ import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Overlay;
 import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.strings.StringProvider;
-import mightypork.rogue.Res;
 
 
 /**
@@ -34,7 +35,7 @@ public class FpsOverlay extends Overlay {
 		/*
 		 * Toggle key: F3
 		 */
-		bindKey(new KeyStroke(Keys.F3), new Action() {
+		bindKey(new KeyStroke(Keys.F3), Edge.RISING, new Action() {
 			
 			@Override
 			public void execute()

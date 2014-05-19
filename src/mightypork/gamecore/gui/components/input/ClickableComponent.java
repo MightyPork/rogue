@@ -5,10 +5,10 @@ import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionTrigger;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
-import mightypork.gamecore.input.events.MouseButtonListener;
+import mightypork.gamecore.input.events.MouseButtonHandler;
 
 
-public abstract class ClickableComponent extends InputComponent implements ActionTrigger, MouseButtonListener {
+public abstract class ClickableComponent extends InputComponent implements ActionTrigger, MouseButtonHandler {
 	
 	protected boolean btnDownOver;
 	private Action action;

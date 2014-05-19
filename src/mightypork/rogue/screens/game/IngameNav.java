@@ -6,10 +6,10 @@ import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.LayoutComponent;
 import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
 import mightypork.gamecore.render.Render;
+import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
-import mightypork.rogue.Res;
 
 
 public class IngameNav extends LayoutComponent {

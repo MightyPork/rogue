@@ -13,7 +13,7 @@ import mightypork.gamecore.util.math.constraints.vect.VectConst;
  * @author MightyPork
  */
 @NotLoggedEvent
-public class MouseMotionEvent extends BusEvent<MouseMotionListener> {
+public class MouseMotionEvent extends BusEvent<MouseMotionHandler> {
 	
 	private final VectConst move;
 	private final VectConst pos;
@@ -49,7 +49,7 @@ public class MouseMotionEvent extends BusEvent<MouseMotionListener> {
 	
 	
 	@Override
-	public void handleBy(MouseMotionListener keh)
+	public void handleBy(MouseMotionHandler keh)
 	{
 		keh.receive(this);
 	}

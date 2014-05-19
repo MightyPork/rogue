@@ -1,4 +1,4 @@
-package mightypork.gamecore.resources.loading;
+package mightypork.gamecore.resources;
 
 
 import mightypork.gamecore.eventbus.events.Destroyable;
@@ -12,7 +12,7 @@ import mightypork.gamecore.logging.LogAlias;
  * @author MightyPork
  */
 @LogAlias(name = "Resource")
-public abstract class DeferredResource implements Deferred, Destroyable {
+public abstract class BaseDeferredResource implements DeferredResource, Destroyable {
 	
 	private final String resource;
 	private volatile boolean loadFailed = false;
@@ -23,7 +23,7 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 	 * @param resource resource path / name; this string is later used in
 	 *            loadResource()
 	 */
-	public DeferredResource(String resource)
+	public BaseDeferredResource(String resource)
 	{
 		this.resource = resource;
 	}
@@ -33,11 +33,9 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 	public synchronized final void load()
 	{
 		if (loadFailed) return;
-		
 		if (loadAttempted) return;
 		
 		loadAttempted = true;
-		
 		loadFailed = false;
 		
 		try {
@@ -118,8 +116,8 @@ public abstract class DeferredResource implements Deferred, Destroyable {
 	{
 		if (this == obj) return true;
 		if (obj == null) return false;
-		if (!(obj instanceof DeferredResource)) return false;
-		final DeferredResource other = (DeferredResource) obj;
+		if (!(obj instanceof BaseDeferredResource)) return false;
+		final BaseDeferredResource other = (BaseDeferredResource) obj;
 		if (resource == null) {
 			if (other.resource != null) return false;
 		} else if (!resource.equals(other.resource)) return false;

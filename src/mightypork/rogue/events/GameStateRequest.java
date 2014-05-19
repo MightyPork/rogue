@@ -2,8 +2,8 @@ package mightypork.rogue.events;
 
 
 import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.rogue.GameStateManager;
-import mightypork.rogue.GameStateManager.GameState;
+import mightypork.rogue.RogueStateManager;
+import mightypork.rogue.RogueStateManager.RogueState;
 
 
 /**
@@ -11,19 +11,19 @@ import mightypork.rogue.GameStateManager.GameState;
  * 
  * @author MightyPork
  */
-public class GameStateRequest extends BusEvent<GameStateManager> {
+public class GameStateRequest extends BusEvent<RogueStateManager> {
 	
-	final private GameState requested;
+	final private RogueState requested;
 	
 	
-	public GameStateRequest(GameState requested)
+	public GameStateRequest(RogueState requested)
 	{
 		this.requested = requested;
 	}
 	
 	
 	@Override
-	protected void handleBy(GameStateManager handler)
+	protected void handleBy(RogueStateManager handler)
 	{
 		handler.triggerAction(requested);
 	}

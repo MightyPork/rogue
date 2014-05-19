@@ -12,15 +12,16 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke;
+import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.timing.TimedTask;
-import mightypork.rogue.Res;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;
 import mightypork.rogue.world.WorldProvider;
 
@@ -127,7 +128,7 @@ public class AskSaveLayer extends ScreenLayer {
 		
 		btn3.setAction(cancel);
 		
-		bindKey(new KeyStroke(Keys.ESCAPE), cancel);
+		bindKey(new KeyStroke(Keys.ESCAPE), Edge.RISING, cancel);
 		
 		updated.add(numa);
 		updated.add(hideTT);

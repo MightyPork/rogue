@@ -3,19 +3,30 @@ package mightypork.gamecore.app;
 
 import java.io.File;
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
+import mightypork.gamecore.Config;
+import mightypork.gamecore.ConfigSetup;
+import mightypork.gamecore.WorkDir;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.events.DestroyEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 import mightypork.gamecore.input.InputSystem;
+import mightypork.gamecore.input.KeyConfig;
+import mightypork.gamecore.input.KeySetup;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.logging.SlickLogRedirector;
 import mightypork.gamecore.logging.writers.LogWriter;
 import mightypork.gamecore.render.DisplaySystem;
+import mightypork.gamecore.resources.AsyncResourceLoader;
+import mightypork.gamecore.resources.Res;
+import mightypork.gamecore.resources.ResourceLoader;
+import mightypork.gamecore.resources.ResourceSetup;
 import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.files.InstanceLock;
@@ -40,6 +51,72 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	private MainLoop gameLoop;
 	private ScreenRegistry screenRegistry;
 	
+	private String logDirName = "log";
+	private String logFilePrefix = "runtime";
+	private int logArchiveCount = 0;
+	private boolean busLogging = false;
+	private String configFile = "settings.cfg";
+	private String configComment = "Main config file";
+	private final List<ResourceSetup> resourcesToLoad = new ArrayList<>();
+	private final List<KeySetup> keysToLoad = new ArrayList<>();
+	private final List<ConfigSetup> cfgsToLoad = new ArrayList<>();
+	private ResourceLoader resourceLoader = new AsyncResourceLoader();
+	private Level logLevel = Level.ALL;
+	
+	
+	public BaseApp(File workdir, boolean singleInstance)
+	{
+		WorkDir.init(workdir);
+		
+		if (singleInstance) initLock();
+	}
+	
+	
+	public void setConfigFile(String filename, String comment)
+	{
+		this.configFile = filename;
+		this.configComment = comment;
+	}
+	
+	
+	public void setLogOptions(String logDir, String filePrefix, int archived, Level logLevel)
+	{
+		this.logDirName = logDir;
+		this.logFilePrefix = filePrefix;
+		this.logArchiveCount = archived;
+		this.logLevel = logLevel;
+	}
+	
+	
+	public void setBusLogging(boolean yes)
+	{
+		this.busLogging = yes;
+	}
+	
+	
+	public void addResources(ResourceSetup res)
+	{
+		this.resourcesToLoad.add(res);
+	}
+	
+	
+	public void addKeys(KeySetup keys)
+	{
+		this.keysToLoad.add(keys);
+	}
+	
+	
+	public void addConfig(ConfigSetup cfg)
+	{
+		this.cfgsToLoad.add(cfg);
+	}
+	
+	
+	public void setResourceLoader(ResourceLoader resLoader)
+	{
+		this.resourceLoader = resLoader;
+	}
+	
 	
 	/**
 	 * Start the application
@@ -47,6 +124,8 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	public final void start()
 	{
 		Thread.setDefaultUncaughtExceptionHandler(this);
+		
+		Log.i("Using workdir: " + WorkDir.getWorkDir());
 		
 		initialize();
 		
@@ -62,42 +141,45 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 */
 	protected void initialize()
 	{
-		/*
-		 *  Lock working directory
-		 */
-		initLock();
+		Config.init(WorkDir.getFile(configFile), configComment);
+		for (final KeySetup l : keysToLoad) {
+			KeyConfig.addKeyLayout(l);
+		}
+		KeyConfig.inst().addOptions(Config.getProp());
+		for (final ConfigSetup cfgl : cfgsToLoad) {
+			cfgl.addOptions(Config.getProp());
+		}
+		Config.load();
+		
 		
 		/*
 		 * Setup logging
 		 */
-		final LogWriter log = createLog();
-		if (log != null) {
-			Log.setMainLogger(log);
-			org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
-		}
+		final LogWriter log = Log.create(logFilePrefix, new File(WorkDir.getDir(logDirName), logFilePrefix + ".log"), logArchiveCount);
+		log.setLevel(logLevel);
+		Log.setMainLogger(log);
+		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
+		
 		
 		Log.i("=== Starting initialization sequence ===");
 		
+		
 		// hook
+		Log.f2("Calling pre-init hook...");
 		preInit();
-		
-		
-		
-		/*
-		 * Ionizables
-		 */
-		Log.f3("initializing ION...");
-		registerIonizables();
-		
 		
 		/*
 		 * Event bus
 		 */
 		Log.f2("Starting Event Bus...");
 		eventBus = new EventBus();
+		eventBus.detailedLogging = busLogging;
 		
-		Log.f3("Registering channels...");
-		initBus(eventBus);
+		/*
+		 * Ionizables
+		 */
+		Log.f3("initializing ION...");
+		registerIonizables();
 		
 		/*
 		 * Display
@@ -134,7 +216,11 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		 * Resources should be registered to banks, and AsyncResourceLoader will load them.
 		 */
 		Log.f1("Loading resources...");
-		initResources();
+		resourceLoader.init(this);
+		Res.init(this);
+		for (final ResourceSetup rl : resourcesToLoad) {
+			Res.load(rl);
+		}
 		
 		/*
 		 * Screen registry
@@ -177,20 +263,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	
 	
 	/**
-	 * Create and configure a log (using {@link Log})
-	 * 
-	 * @return new log instance
-	 */
-	@DefaultImpl
-	protected LogWriter createLog()
-	{
-		final LogWriter log = Log.create("runtime", new File("runtime.log"));
-		log.setLevel(Level.ALL);
-		return log;
-	}
-	
-	
-	/**
 	 * Create window and configure display system
 	 * 
 	 * @param display
@@ -198,7 +270,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	@DefaultImpl
 	protected void initDisplay(DisplaySystem display)
 	{
-		display.createMainWindow(800, 600, true, false, "BaseApp using LWJGL display.");
+		display.createMainWindow(800, 600, true, false, "LWJGL game");
 		display.setTargetFps(60);
 	}
 	
@@ -210,26 +282,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 */
 	@DefaultImpl
 	protected void initSoundSystem(SoundSystem audio)
-	{
-	}
-	
-	
-	/**
-	 * Configure input system (ie. define global keystrokes)
-	 * 
-	 * @param input
-	 */
-	@DefaultImpl
-	protected void initInputSystem(InputSystem input)
-	{
-	}
-	
-	
-	/**
-	 * Initialize resource banks.
-	 */
-	@DefaultImpl
-	protected void initResources()
 	{
 	}
 	
@@ -254,34 +306,22 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	protected abstract MainLoop createMainLoop();
 	
 	
-	/**
-	 * Initialize event bus. Usually, no action is needed, since the bus
-	 * automatically recognizes new event types.
-	 * 
-	 * @param bus
-	 */
-	@DefaultImpl
-	protected void initBus(EventBus bus)
-	{
-	}
-	
-	
 	/*
 	 * Try to obtain lock.
 	 */
 	private void initLock()
 	{
-		final File lockFile = getLockFile();
-		
-		if (lockFile == null) {
-			// lock off
-			return;
-		}
-		
-		if (!InstanceLock.onFile(lockFile)) {
+		final File lock = WorkDir.getFile(".lock");
+		if (!InstanceLock.onFile(lock)) {
 			onLockError();
 			return;
 		}
+	}
+	
+	
+	@DefaultImpl
+	protected void initInputSystem(InputSystem input)
+	{
 	}
 	
 	
@@ -303,18 +343,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		//@formatter:on
 		
 		shutdown();
-	}
-	
-	
-	/**
-	 * Get lock file path; Used to enforce single-instance policy.
-	 * 
-	 * @return lock file, or null to disable lock.
-	 */
-	@DefaultImpl
-	protected File getLockFile()
-	{
-		return new File(".lock");
 	}
 	
 	

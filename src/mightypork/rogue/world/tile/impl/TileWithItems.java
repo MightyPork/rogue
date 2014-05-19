@@ -6,7 +6,7 @@ import java.util.Stack;
 
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
-import mightypork.rogue.Config;
+import mightypork.rogue.Const;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.Items;
 import mightypork.rogue.world.level.render.TileRenderContext;
@@ -33,7 +33,7 @@ public abstract class TileWithItems extends Tile {
 	{
 		super.renderExtra(context);
 		
-		if ((isExplored() || !Config.RENDER_UFOG) && hasItem() && shouldRenderItems()) {
+		if ((isExplored() || !Const.RENDER_UFOG) && hasItem() && shouldRenderItems()) {
 			itemRenderer.render(items, context);
 		}
 	}

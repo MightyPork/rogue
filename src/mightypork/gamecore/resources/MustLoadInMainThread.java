@@ -1,4 +1,4 @@
-package mightypork.gamecore.resources.loading;
+package mightypork.gamecore.resources;
 
 
 import java.lang.annotation.*;
