@@ -2,6 +2,7 @@ package mightypork.gamecore.core;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
@@ -226,7 +227,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		 * Setup logging
 		 */
 		final LogWriter log = Log.create(opt.logFilePrefix, new File(WorkDir.getDir(opt.logDir), opt.logFilePrefix + ".log"), opt.logArchiveCount);
-		Log.setMainLogger(log);	
+		Log.setMainLogger(log);
 		Log.setLevel(opt.logLevel);
 		Log.setSysoutLevel(opt.logLevel);
 		
@@ -322,7 +323,12 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		txt += " Runtime ....... " + System.getProperty("java.runtime.name") + "\n";
 		txt += " Java .......... " + System.getProperty("java.version") + "\n";
 		txt += " Launch path ... " + System.getProperty("user.dir") + "\n";
-		txt += " Workdir ....... " + WorkDir.getWorkDir().getAbsolutePath() + "\n";
+		
+		try {
+			txt += " Workdir ....... " + WorkDir.getWorkDir().getCanonicalPath() + "\n";
+		} catch (IOException e) {
+			Log.e(e);
+		}
 		
 		Log.i(txt);
 	}
