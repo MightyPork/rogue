@@ -64,8 +64,8 @@ public class SimpleLog implements LogWriter {
 		FileHandler handler = null;
 		try {
 			handler = new FileHandler(getFile().getPath());
-		} catch (final Exception e) {
-			throw new RuntimeException("Failed to init log.", e);
+		} catch (final Throwable t) {
+			throw new RuntimeException("Failed to init log.", t);
 		}
 		
 		handler.setFormatter(new LogFormatter());

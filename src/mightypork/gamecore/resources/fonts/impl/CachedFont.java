@@ -272,8 +272,8 @@ public class CachedFont implements GLFont {
 			
 			imag = null;
 			
-		} catch (final Exception e) {
-			Log.e("Failed to load font.", e);
+		} catch (final Throwable t) {
+			Log.e("Failed to load font.", t);
 		}
 	}
 	
@@ -325,8 +325,8 @@ public class CachedFont implements GLFont {
 			GLU.gluBuild2DMipmaps(GL_TEXTURE_2D, internalFormat, width, height, format, GL_UNSIGNED_BYTE, byteBuffer);
 			return textureId.get(0);
 			
-		} catch (final Exception e) {
-			Log.e("Failed to load font.", e);
+		} catch (final Throwable t) {
+			Log.e("Failed to load font.", t);
 		}
 		
 		return -1;

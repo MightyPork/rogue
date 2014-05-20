@@ -115,8 +115,8 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	{
 		fireLayoutUpdateEvent();
 	}
-
-
+	
+	
 	private void fireLayoutUpdateEvent()
 	{
 		getEventBus().sendDirectToChildren(this, new LayoutChangeEvent());

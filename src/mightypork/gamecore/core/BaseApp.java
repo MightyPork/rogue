@@ -133,6 +133,12 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		{
 			this.lockFile = lockFile;
 		}
+		
+		
+		public void setLogLevel(Level logLevel)
+		{
+			this.logLevel = logLevel;
+		}
 	}
 	
 	// modules
@@ -167,8 +173,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	public BaseApp(File workdir, boolean singleInstance)
 	{
 		WorkDir.init(workdir);
-		
-		Log.i("Using workdir: " + WorkDir.getWorkDir());
 		
 		opt.sigleInstance = singleInstance;
 	}
@@ -222,9 +226,14 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		 * Setup logging
 		 */
 		final LogWriter log = Log.create(opt.logFilePrefix, new File(WorkDir.getDir(opt.logDir), opt.logFilePrefix + ".log"), opt.logArchiveCount);
-		log.setLevel(opt.logLevel);
-		Log.setMainLogger(log);
+		Log.setMainLogger(log);	
+		Log.setLevel(opt.logLevel);
+		Log.setSysoutLevel(opt.logLevel);
+		
+		// connect slickutil to the logger
 		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
+		logSystemInfo();
+		
 		
 		Log.i("=== Starting initialization sequence ===");
 		
@@ -301,6 +310,21 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		
 		postInit();
 		Log.i("=== Initialization sequence completed ===");
+	}
+	
+	
+	private void logSystemInfo()
+	{
+		String txt = "";
+		
+		txt += "\n### SYSTEM INFO ###\n\n";
+		txt += " Platform ...... " + System.getProperty("os.name") + "\n";
+		txt += " Runtime ....... " + System.getProperty("java.runtime.name") + "\n";
+		txt += " Java .......... " + System.getProperty("java.version") + "\n";
+		txt += " Launch path ... " + System.getProperty("user.dir") + "\n";
+		txt += " Workdir ....... " + WorkDir.getWorkDir().getAbsolutePath() + "\n";
+		
+		Log.i(txt);
 	}
 	
 	
@@ -477,7 +501,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 				getEventBus().send(new DestroyEvent());
 				getEventBus().destroy();
 			}
-		} catch (final Exception e) {
+		} catch (final Throwable e) {
 			Log.e(e);
 		}
 		

@@ -290,7 +290,7 @@ final public class EventBus implements Destroyable, BusAccess {
 	{
 		try {
 			if (detailedLogging) {
-				Log.f2(logMark + "Setting up channel for new event type: " + Log.str(event.getClass()));
+				Log.f3(logMark + "Setting up channel for new event type: " + Log.str(event.getClass()));
 			}
 			
 			final Class<?> listener = getEventListenerClass(event);
@@ -302,7 +302,7 @@ final public class EventBus implements Destroyable, BusAccess {
 				//channels.flush();
 				
 				if (detailedLogging) {
-					Log.f2(logMark + "Created new channel: " + Log.str(event.getClass()) + " -> " + Log.str(listener));
+					Log.f3(logMark + "Created new channel: " + Log.str(event.getClass()) + " -> " + Log.str(listener));
 				}
 				
 				return true;

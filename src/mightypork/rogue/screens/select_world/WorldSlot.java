@@ -111,8 +111,8 @@ public class WorldSlot extends ConstraintLayout {
 								
 								getEventBus().send(new ScreenRequest("game"));
 								
-							} catch (final Exception e) {
-								Log.e("Could not create & save the world.", e);
+							} catch (final IOException t) {
+								Log.e("Could not create & save the world.", t);
 							}
 							
 						} else {

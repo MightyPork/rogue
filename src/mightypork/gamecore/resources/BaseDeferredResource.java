@@ -1,6 +1,8 @@
 package mightypork.gamecore.resources;
 
 
+import java.io.IOException;
+
 import mightypork.gamecore.eventbus.events.Destroyable;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.logging.LogAlias;
@@ -46,9 +48,9 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 			Log.f3("<RES> Loading: " + this);
 			loadResource(resource);
 			Log.f3("<RES> Loaded: " + this);
-		} catch (final Exception e) {
+		} catch (final Throwable t) {
 			loadFailed = true;
-			Log.e("<RES> Failed to load: " + this, e);
+			Log.e("<RES> Failed to load: " + this, t);
 		}
 	}
 	
@@ -84,10 +86,10 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 	 * Load the resource. Called from load() - once only.
 	 * 
 	 * @param resource the path / name of a resource
-	 * @throws Exception when some problem prevented the resource from being
+	 * @throws IOException when some problem prevented the resource from being
 	 *             loaded.
 	 */
-	protected abstract void loadResource(String resource) throws Exception;
+	protected abstract void loadResource(String resource) throws IOException;
 	
 	
 	@Override

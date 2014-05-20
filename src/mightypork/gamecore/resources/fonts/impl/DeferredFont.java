@@ -114,7 +114,7 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	
 	
 	@Override
-	protected synchronized final void loadResource(String path) throws FontFormatException, IOException
+	protected synchronized final void loadResource(String path) throws IOException
 	{
 		final Font awtFont = getAwtFont(path, (float) size, style.numval);
 		
@@ -130,10 +130,9 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	 * @param size font size (pt)
 	 * @param style font style
 	 * @return the {@link Font}
-	 * @throws FontFormatException
 	 * @throws IOException
 	 */
-	protected Font getAwtFont(String resource, float size, int style) throws FontFormatException, IOException
+	protected Font getAwtFont(String resource, float size, int style) throws IOException
 	{
 		try(InputStream in = FileUtils.getResource(resource)) {
 			
@@ -143,6 +142,8 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 			awtFont = awtFont.deriveFont(style);
 			
 			return awtFont;
+		} catch (final FontFormatException e) {
+			throw new IOException("Could not load font,  bad format.", e);
 		}
 	}
 	

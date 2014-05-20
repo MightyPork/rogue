@@ -2,7 +2,6 @@ package mightypork.gamecore.resources.fonts.impl;
 
 
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.io.IOException;
 
 import mightypork.gamecore.logging.LogAlias;
@@ -34,7 +33,7 @@ public class DeferredFontNative extends DeferredFont {
 	
 	
 	@Override
-	protected Font getAwtFont(String resource, float size, int style) throws FontFormatException, IOException
+	protected Font getAwtFont(String resource, float size, int style) throws IOException
 	{
 		return new Font(resource, style, (int) size);
 	}

@@ -107,7 +107,8 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		{
 			super(screen);
 			
-			TextPainter help = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, RGB.WHITE.withAlpha(txProceedAlpha.mul(0.3)), "Space / click to proceed.");
+			final TextPainter help = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, RGB.WHITE.withAlpha(txProceedAlpha.mul(0.3)),
+					"Space / click to proceed.");
 			help.setRect(root.bottomEdge().growUp(root.height().perc(4)));
 			help.setVPaddingPercent(5);
 			root.add(help);

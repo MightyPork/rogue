@@ -3,6 +3,7 @@ package mightypork.rogue;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import mightypork.gamecore.core.BaseApp;
 import mightypork.gamecore.logging.Log;
@@ -20,6 +21,8 @@ public class Launcher {
 	{
 		Log.f3("Arguments: " + Arrays.toString(args));
 		
+		boolean verbose = false;
+		
 		File workdir = null;
 		
 		try {
@@ -27,10 +30,18 @@ public class Launcher {
 			String lwdDir = null;
 			
 			for (int i = 0; i < args.length; i++) {
-				if (args[i].equals("--workdir") || args[i].equals("-w")) {
+				final String arg = args[i];
+				
+				if (arg.equals("--workdir") || arg.equals("-w")) {
 					localWorkdir = true;
 					lwdDir = args[i + 1];
 					i++;
+					continue;
+				}
+				
+				if (arg.equals("--verbose") || arg.equals("-v")) {
+					verbose = true;
+					continue;
 				}
 			}
 			
@@ -46,8 +57,7 @@ public class Launcher {
 		
 		final BaseApp app = new RogueApp(workdir, true);
 		
-		// configure the app
-		app.opt().setBusLogging(false);
+		app.opt().setLogLevel(verbose ? Level.ALL : Level.FINER);
 		
 		app.start();
 	}

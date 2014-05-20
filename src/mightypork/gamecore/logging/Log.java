@@ -346,7 +346,7 @@ public class Log {
 		
 		try {
 			hasToString = (o.getClass().getMethod("toString").getDeclaringClass() != Object.class);
-		} catch (final Exception e) {
+		} catch (final Throwable t) {
 			// oh well..
 		}
 		

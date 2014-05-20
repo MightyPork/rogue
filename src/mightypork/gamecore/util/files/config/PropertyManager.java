@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.objects.Convert;
 
 
@@ -170,7 +171,10 @@ public class PropertyManager {
 				}
 			}
 			
-			props.store(new FileOutputStream(file), fileComment);
+			try(FileOutputStream fos = new FileOutputStream(file)) {
+				
+				props.store(fos, fileComment);
+			}
 		} catch (final IOException ioe) {
 			ioe.printStackTrace();
 		}
@@ -205,7 +209,8 @@ public class PropertyManager {
 	{
 		try {
 			return entries.get(k);
-		} catch (final Throwable t) {
+		} catch (final Exception e) {
+			Log.w(e);
 			return null;
 		}
 	}

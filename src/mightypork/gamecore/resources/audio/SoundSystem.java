@@ -8,6 +8,7 @@ import java.util.Set;
 import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
@@ -82,13 +83,18 @@ public class SoundSystem extends RootBusNode implements Updateable {
 		super(app);
 		
 		if (!soundSystemInited) {
-			SoundStore.get().setMaxSources(MAX_SOURCES);
-			SoundStore.get().init();
-			setListener(INITIAL_LISTENER_POS);
-			
 			soundSystemInited = true;
 			
-			getEventBus().send(new AudioReadyEvent());
+			try {
+				SoundStore.get().setMaxSources(MAX_SOURCES);
+				SoundStore.get().init();
+				setListener(INITIAL_LISTENER_POS);
+				
+				
+				getEventBus().send(new AudioReadyEvent());
+			} catch (final Throwable t) {
+				Log.e("Error initializing sound system.", t);
+			}
 		}
 	}
 	

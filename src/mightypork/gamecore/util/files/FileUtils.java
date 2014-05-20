@@ -189,20 +189,12 @@ public class FileUtils {
 	 */
 	public static List<File> listDirectory(File dir, FileFilter filter)
 	{
-		try {
-			dir.mkdir();
-		} catch (final RuntimeException e) {
-			Log.e("Error creating folder " + dir, e);
-		}
+		dir.mkdir();
 		
 		final List<File> list = new ArrayList<>();
 		
-		try {
-			for (final File f : dir.listFiles(filter)) {
-				list.add(f);
-			}
-		} catch (final Exception e) {
-			Log.e("Error listing folder " + dir, e);
+		for (final File f : dir.listFiles(filter)) {
+			list.add(f);
 		}
 		
 		return list;

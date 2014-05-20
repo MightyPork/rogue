@@ -87,7 +87,7 @@ public class WorldCreator {
 			
 			for (int level = 1; level <= 7; level++) {
 				final LevelBuilder lb = levelBuilders[level - 1];
-				final Range amount = Range.make(level/2D, level*2);
+				final Range amount = Range.make(level / 2D, level * 2);
 				
 				for (int i = 0; i < amount.randInt(rand); i++) {
 					lb.addItem(Calc.pick(rand, randomFood).createItem(), false);
@@ -140,7 +140,7 @@ public class WorldCreator {
 		
 		lb.addRoom(Rooms.ENTRANCE, BuildOrder.FIRST, true);
 		
-		lb.addRoom(Rooms.BASIC, Range.make(floor/2, 2 + floor), BuildOrder.MIDDLE, false);
+		lb.addRoom(Rooms.BASIC, Range.make(floor / 2, 2 + floor), BuildOrder.MIDDLE, false);
 		lb.addRoom(Rooms.DEAD_END, Range.make(1, floor), BuildOrder.MIDDLE, false);
 		lb.addRoom(Rooms.STORAGE, Range.make(1, Math.ceil(floor / 3D)), BuildOrder.MIDDLE, false);
 		
