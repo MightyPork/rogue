@@ -61,17 +61,17 @@ public class WorldCreator {
 			final List<ItemModel> weaponsGood = new ArrayList<>();
 			weaponsGood.add(Items.AXE);
 			weaponsGood.add(Items.SWORD);
-			weaponsBasic.add(Items.KNIFE);
+			weaponsGood.add(Items.KNIFE);
 			
 			
-			for (int i = 0; i < Calc.randInt(rand, 10, 15); i++) {
+			for (int i = 0; i < Calc.randInt(rand, 8, 13); i++) {
 				final Item item = Calc.pick(rand, weaponsBasic).createItemDamaged(50);
 				final LevelBuilder lb = levelBuilders[-1 + Calc.randInt(1, 7)];
 				lb.addItem(item, false);
 			}
 			
 			
-			for (int i = 0; i < Calc.randInt(rand, 1, 3); i++) {
+			for (int i = 0; i < Calc.randInt(rand, 1, 2); i++) {
 				final Item item = Calc.pick(rand, weaponsMedium).createItemDamaged(60);
 				final LevelBuilder lb = levelBuilders[-1 + Calc.randInt(1, 3)];
 				lb.addItem(item, false);
@@ -149,8 +149,8 @@ public class WorldCreator {
 		lb.addRoom(Rooms.ENTRANCE, BuildOrder.FIRST, true);
 		
 		lb.addRoom(Rooms.BASIC, Range.make(1 + floor, 1 + floor * 1.5), BuildOrder.MIDDLE, false);
-		lb.addRoom(Rooms.DEAD_END, Range.make(0, 1 + floor * 0.6), BuildOrder.MIDDLE, false);
-		lb.addRoom(Rooms.STORAGE, Range.make(1, Math.ceil(floor / 2D)), BuildOrder.MIDDLE, false);
+		lb.addRoom(Rooms.DEAD_END, Range.make(0, 1 + floor), BuildOrder.MIDDLE, false);
+		lb.addRoom(Rooms.STORAGE, Range.make(1, Math.ceil(floor / 3D)), BuildOrder.MIDDLE, false);
 		
 		if (lastLevel) lb.addRoom(Rooms.BOSS, BuildOrder.LAST, true);
 		if (!lastLevel) lb.addRoom(Rooms.EXIT, BuildOrder.LAST, true);
