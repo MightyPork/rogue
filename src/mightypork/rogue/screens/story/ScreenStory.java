@@ -8,21 +8,18 @@ import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.layout.linear.LinearLayout;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
-import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.gui.screens.impl.FadingLayer;
 import mightypork.gamecore.gui.screens.impl.LayerColor;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.input.KeyStroke.Edge;
+import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonHandler;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
@@ -36,16 +33,16 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 	
 	private class LayerSlide extends ScreenLayer {
 		
-		private TextPainter tp1;
-		private TextPainter tp2;
-		private ImagePainter img;
-		private NumAnimated layerAlpha = new NumAnimated(0, Easing.LINEAR, 0.8);
-		private NumAnimated tx1alpha = new NumAnimated(0, Easing.LINEAR, 1);
-		private NumAnimated tx2alpha = new NumAnimated(0, Easing.LINEAR, 1);
+		private final TextPainter tp1;
+		private final TextPainter tp2;
+		private final ImagePainter img;
+		private final NumAnimated layerAlpha = new NumAnimated(0, Easing.LINEAR, 0.8);
+		private final NumAnimated tx1alpha = new NumAnimated(0, Easing.LINEAR, 1);
+		private final NumAnimated tx2alpha = new NumAnimated(0, Easing.LINEAR, 1);
 		
 		private String nextImg, nextT1, nextT2;
 		
-		private TimedTask ttNextSlide = new TimedTask() {
+		private final TimedTask ttNextSlide = new TimedTask() {
 			
 			@Override
 			public void run()
@@ -63,7 +60,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 			}
 		};
 		
-		private TimedTask ttText1 = new TimedTask() {
+		private final TimedTask ttText1 = new TimedTask() {
 			
 			@Override
 			public void run()
@@ -77,7 +74,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 			}
 		};
 		
-		private TimedTask ttText2 = new TimedTask() {
+		private final TimedTask ttText2 = new TimedTask() {
 			
 			@Override
 			public void run()
@@ -91,7 +88,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 			}
 		};
 		
-		private TimedTask ttFinish = new TimedTask() {
+		private final TimedTask ttFinish = new TimedTask() {
 			
 			@Override
 			public void run()
@@ -107,12 +104,12 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		{
 			super(screen);
 			
-			Rect contentRect = root.shrink(Num.ZERO, root.height().perc(3));
-			RowLayout rl = new RowLayout(root, 9);
+			final Rect contentRect = root.shrink(Num.ZERO, root.height().perc(3));
+			final RowLayout rl = new RowLayout(root, 9);
 			rl.setRect(contentRect);
 			root.add(rl);
 			
-			LinearLayout ll = new LinearLayout(root, AlignX.CENTER);
+			final LinearLayout ll = new LinearLayout(root, AlignX.CENTER);
 			rl.add(ll, 7);
 			img = new ImagePainter(Res.getTxQuad("story_1"));
 			ll.add(img);
@@ -158,7 +155,8 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 			layerAlpha.fadeOut();
 			ttNextSlide.start(1);
 		}
-
+		
+		
 		public void reset()
 		{
 			ttFinish.stop();
@@ -172,7 +170,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 	
 	private LayerSlide slideLayer;
 	
-	private Action next = new Action() {
+	private final Action next = new Action() {
 		
 		@Override
 		protected void execute()
@@ -181,7 +179,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		}
 	};
 	
-	private Action prev = new Action() {
+	private final Action prev = new Action() {
 		
 		@Override
 		protected void execute()
@@ -191,7 +189,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		}
 	};
 	
-	private Action close = new Action() {
+	private final Action close = new Action() {
 		
 		@Override
 		protected void execute()

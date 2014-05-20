@@ -14,17 +14,26 @@ import mightypork.rogue.RogueStateManager.RogueState;
 public class RogueStateRequest extends BusEvent<RogueStateManager> {
 	
 	final private RogueState requested;
+	private final boolean fromDark;
 	
 	
 	public RogueStateRequest(RogueState requested)
 	{
 		this.requested = requested;
+		this.fromDark = false;
+	}
+	
+	
+	public RogueStateRequest(RogueState requested, boolean fromDark)
+	{
+		this.requested = requested;
+		this.fromDark = fromDark;
 	}
 	
 	
 	@Override
 	protected void handleBy(RogueStateManager handler)
 	{
-		handler.triggerAction(requested);
+		handler.triggerAction(requested, fromDark);
 	}
 }

@@ -16,7 +16,7 @@ public class LayerColor extends ScreenLayer {
 	{
 		super(screen);
 		
-		QuadPainter qp = new QuadPainter(color);
+		final QuadPainter qp = new QuadPainter(color);
 		qp.setRect(root);
 		root.add(qp);
 		this.zIndex = zIndex;

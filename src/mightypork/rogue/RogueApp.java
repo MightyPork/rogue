@@ -9,7 +9,6 @@ import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
-import mightypork.gamecore.gui.screens.impl.CrossfadeRequest;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.DisplaySystem;
@@ -129,8 +128,12 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 			@Override
 			public void run()
 			{
-				//getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
-				getEventBus().send(new CrossfadeRequest("story", true));
+				if (Config.getValue("opt.show_story")) {
+					Config.setValue("opt.show_story", false);
+					getEventBus().send(new RogueStateRequest(RogueState.STORY, true));
+				} else {
+					getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU, true));
+				}
 			}
 		}));
 	}

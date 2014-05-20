@@ -3,7 +3,6 @@ package mightypork.gamecore.gui.screens;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashSet;
 
 import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.core.AppSubModule;

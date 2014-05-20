@@ -20,23 +20,23 @@ public class RogueStateManager extends AppModule {
 	}
 	
 	
-	public void triggerAction(RogueState state)
+	public void triggerAction(RogueState state, boolean fromDark)
 	{
 		switch (state) {
 			case MAIN_MENU:
-				getEventBus().send(new CrossfadeRequest("main_menu"));
+				getEventBus().send(new CrossfadeRequest("main_menu", fromDark));
 				break;
 			
 			case SELECT_WORLD:
-				getEventBus().send(new CrossfadeRequest("select_world"));
+				getEventBus().send(new CrossfadeRequest("select_world", fromDark));
 				break;
 			
 			case PLAY_WORLD:
-				getEventBus().send(new CrossfadeRequest("game"));
+				getEventBus().send(new CrossfadeRequest("game", fromDark));
 				break;
 			
 			case STORY:
-				getEventBus().send(new CrossfadeRequest("story"));
+				getEventBus().send(new CrossfadeRequest("story", fromDark));
 				break;
 			
 			case EXIT:
