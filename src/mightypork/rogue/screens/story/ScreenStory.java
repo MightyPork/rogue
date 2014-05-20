@@ -20,6 +20,7 @@ import mightypork.gamecore.input.events.MouseButtonHandler;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.Color;
+import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
@@ -83,7 +84,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 					ttFinish.run();
 				} else {
 					tx2alpha.fadeIn();
-					ttFinish.start(2);
+					ttFinish.start(5);
 				}
 			}
 		};
@@ -93,7 +94,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 			@Override
 			public void run()
 			{
-				System.out.println("Slide finished.");
+				//next.run();
 			}
 		};
 		
@@ -104,7 +105,12 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		{
 			super(screen);
 			
-			final Rect contentRect = root.shrink(Num.ZERO, root.height().perc(3));
+			TextPainter help = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, RGB.WHITE.withAlpha(0.3), "Space / click to proceed.");
+			help.setRect(root.bottomEdge().growUp(root.height().perc(4)));
+			help.setVPaddingPercent(5);
+			root.add(help);
+			
+			final Rect contentRect = root.shrink(Num.ZERO, Num.ZERO, root.height().perc(2), root.height().perc(6));
 			final RowLayout rl = new RowLayout(root, 9);
 			rl.setRect(contentRect);
 			root.add(rl);
@@ -116,11 +122,11 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 			
 			tp1 = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, textColor.withAlpha(tx1alpha), "");
 			rl.add(tp1);
-			tp1.setVPaddingPercent(20);
+			tp1.setVPaddingPercent(19);
 			
 			tp2 = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, textColor.withAlpha(tx2alpha), "");
 			rl.add(tp2);
-			tp2.setVPaddingPercent(20);
+			tp2.setVPaddingPercent(19);
 			
 			updated.add(layerAlpha);
 			updated.add(tx1alpha);
