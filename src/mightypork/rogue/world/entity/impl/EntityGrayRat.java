@@ -30,8 +30,8 @@ public class EntityGrayRat extends Entity {
 		
 		setDespawnDelay(1);
 		
-		health.setHealthMax(6);
-		health.setHealth(Calc.randInt(4, 6));
+		health.setHealthMax(7);
+		health.setHealth(Calc.randInt(4, 7));
 		health.setHitCooldownTime(0.3);
 	}
 	

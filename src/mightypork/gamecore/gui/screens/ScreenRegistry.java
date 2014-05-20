@@ -83,6 +83,9 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 		toShow.setActive(true);
 		
 		active = toShow;
+		
+		// update layout for screen
+		fireLayoutUpdateEvent();
 	}
 	
 	
@@ -109,6 +112,12 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	
 	@Override
 	public void onViewportChanged(ViewportChangeEvent event)
+	{
+		fireLayoutUpdateEvent();
+	}
+
+
+	private void fireLayoutUpdateEvent()
 	{
 		getEventBus().sendDirectToChildren(this, new LayoutChangeEvent());
 	}

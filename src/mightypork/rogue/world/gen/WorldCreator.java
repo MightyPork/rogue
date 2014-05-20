@@ -53,38 +53,32 @@ public class WorldCreator {
 			weaponsBasic.add(Items.BONE);
 			weaponsBasic.add(Items.TWIG);
 			
-			
 			final List<ItemModel> weaponsMedium = new ArrayList<>();
 			weaponsMedium.add(Items.CLUB);
-			
+			weaponsMedium.add(Items.KNIFE);
 			
 			final List<ItemModel> weaponsGood = new ArrayList<>();
 			weaponsGood.add(Items.AXE);
 			weaponsGood.add(Items.SWORD);
-			weaponsGood.add(Items.KNIFE);
 			
-			
-			for (int i = 0; i < Calc.randInt(rand, 8, 13); i++) {
-				final Item item = Calc.pick(rand, weaponsBasic).createItemDamaged(50);
+			for (int i = 0; i < Calc.randInt(rand, 12, 20); i++) {
+				final Item item = Calc.pick(rand, weaponsBasic).createItemDamaged(40);
 				final LevelBuilder lb = levelBuilders[-1 + Calc.randInt(1, 7)];
 				lb.addItem(item, false);
 			}
 			
-			
-			for (int i = 0; i < Calc.randInt(rand, 1, 2); i++) {
-				final Item item = Calc.pick(rand, weaponsMedium).createItemDamaged(60);
-				final LevelBuilder lb = levelBuilders[-1 + Calc.randInt(1, 3)];
-				lb.addItem(item, false);
-			}
-			
-			
-			for (int i = 0; i < Calc.randInt(rand, 2, 3); i++) {
-				final Item item = Calc.pick(rand, weaponsGood).createItemDamaged(60);
-				final LevelBuilder lb = levelBuilders[-1 + Calc.randInt(3, 7)];
-				
+			for (int i = 0; i < Calc.randInt(rand, 2, 4); i++) {
+				final Item item = Calc.pick(rand, weaponsMedium).createItemDamaged(40);
+				final LevelBuilder lb = levelBuilders[-1 + Calc.randInt(3, 5)];
 				lb.addRoom(Rooms.treasure(item), BuildOrder.MIDDLE, true);
 			}
 			
+			for (int i = 0; i < Calc.randInt(rand, 2, 4); i++) {
+				final Item item = Calc.pick(rand, weaponsGood).createItemDamaged(50);
+				final LevelBuilder lb = levelBuilders[-1 + Calc.randInt(4, 7)];
+				
+				lb.addRoom(Rooms.treasure(item), BuildOrder.LAST, true);
+			}
 			
 			// place random foods
 			final List<ItemModel> randomFood = new ArrayList<>();
@@ -93,13 +87,12 @@ public class WorldCreator {
 			
 			for (int level = 1; level <= 7; level++) {
 				final LevelBuilder lb = levelBuilders[level - 1];
-				final Range amount = Range.make(1, level);
+				final Range amount = Range.make(1, level+2);
 				
 				for (int i = 0; i < amount.randInt(rand); i++) {
 					lb.addItem(Calc.pick(rand, randomFood).createItem(), false);
 				}
 			}
-			
 			
 			// place monsters		
 			
@@ -108,12 +101,12 @@ public class WorldCreator {
 				
 				final LevelBuilder lb = levelBuilders[level - 1];
 				
-				final Range amount = Range.make(2 + level * 2, 5 + level * 3.5);
+				final Range amount = Range.make(3 + (level) * 2, 3 + level * 3);
 				
 				for (int i = 0; i < amount.randInt(rand); i++) {
 					Entity e;
 					
-					if (level > 2 && rand.nextInt(7 - level + 1) == 0) {
+					if (level >= 2 && Calc.randInt(rand, 0, (int) (3.5 - (level / 2D))) == 0) {
 						e = Entities.RAT_BROWN.createEntity();
 					} else {
 						e = Entities.RAT_GRAY.createEntity();
@@ -122,7 +115,6 @@ public class WorldCreator {
 					lb.addEntity(e, false);
 				}
 			}
-			
 			
 			// compile levels
 			Log.f3("Building levels...");
@@ -148,8 +140,8 @@ public class WorldCreator {
 		
 		lb.addRoom(Rooms.ENTRANCE, BuildOrder.FIRST, true);
 		
-		lb.addRoom(Rooms.BASIC, Range.make(1 + floor, 1 + floor * 1.5), BuildOrder.MIDDLE, false);
-		lb.addRoom(Rooms.DEAD_END, Range.make(0, 1 + floor), BuildOrder.MIDDLE, false);
+		lb.addRoom(Rooms.BASIC, Range.make(floor+1, 2 + floor * 1.5), BuildOrder.MIDDLE, false);
+		lb.addRoom(Rooms.DEAD_END, Range.make(2, 1 + floor*1), BuildOrder.MIDDLE, false);
 		lb.addRoom(Rooms.STORAGE, Range.make(1, Math.ceil(floor / 3D)), BuildOrder.MIDDLE, false);
 		
 		if (lastLevel) lb.addRoom(Rooms.BOSS, BuildOrder.LAST, true);

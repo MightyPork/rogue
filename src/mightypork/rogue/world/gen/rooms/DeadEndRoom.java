@@ -16,7 +16,7 @@ public class DeadEndRoom implements RoomBuilder {
 	public RoomEntry buildRoom(ScratchMap map, MapTheme theme, Random rand, Coord center)
 	{
 		final Coord low = center.add(-1, -1);
-		final Coord high = center;
+		final Coord high = center.add(1, 1);
 		if (!map.isClear(low, high)) return null;
 		
 		map.set(center, theme.floor());

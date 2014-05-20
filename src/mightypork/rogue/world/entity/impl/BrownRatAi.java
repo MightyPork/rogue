@@ -26,7 +26,7 @@ public class BrownRatAi extends GrayRatAi {
 	@Override
 	protected int getAttackStrength()
 	{
-		return Calc.randInt(1, 4);
+		return Calc.randInt(2, 4);
 	}
 	
 	

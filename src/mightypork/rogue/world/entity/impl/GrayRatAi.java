@@ -47,6 +47,6 @@ public class GrayRatAi extends MonsterAi {
 	@Override
 	protected double getStepTime()
 	{
-		return isIdle() ? 0.7 : 0.5;
+		return isIdle() ? 0.7 : 0.34;
 	}
 }
