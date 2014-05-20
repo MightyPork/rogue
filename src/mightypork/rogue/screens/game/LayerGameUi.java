@@ -12,9 +12,10 @@ import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.gui.Minimap;
+import mightypork.rogue.world.gui.WorldConsoleRenderer;
 
 
-public class HudLayer extends ScreenLayer {
+public class LayerGameUi extends ScreenLayer {
 	
 	private final Num playerHealthTotal = new Num() {
 		
@@ -39,7 +40,7 @@ public class HudLayer extends ScreenLayer {
 	private final ScreenGame gameScreen;
 	
 	
-	public HudLayer(ScreenGame screen)
+	public LayerGameUi(ScreenGame screen)
 	{
 		super(screen);
 		this.gameScreen = screen;
@@ -152,7 +153,7 @@ public class HudLayer extends ScreenLayer {
 	@Override
 	public int getZIndex()
 	{
-		return 100;
+		return 101;
 	}
 	
 	

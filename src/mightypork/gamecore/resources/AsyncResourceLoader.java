@@ -42,9 +42,6 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 	}
 	
 	
-	/**
-	 * @param app app acceess
-	 */
 	public AsyncResourceLoader()
 	{
 		super("Deferred loader");

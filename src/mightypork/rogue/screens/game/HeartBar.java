@@ -22,14 +22,6 @@ public class HeartBar extends BaseComponent {
 	private final Rect heart;
 	
 	
-	/**
-	 * @param total
-	 * @param active
-	 * @param img_on
-	 * @param img_half
-	 * @param img_off
-	 * @param align
-	 */
 	public HeartBar(Num total, Num active, TxQuad img_on, TxQuad img_half, TxQuad img_off, AlignX align)
 	{
 		super();

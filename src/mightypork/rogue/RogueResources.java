@@ -99,6 +99,13 @@ public class RogueResources implements ResourceSetup {
 		textures.add("logo", texture.makeQuad(Rect.make(0, 0, 0.543, 0.203)));
 		grid = texture.grid(8, 8);
 		textures.add("death", grid.makeQuad(0, 2));
+		textures.add("death2", grid.makeQuad(1, 2, 1.5, 1));
+		textures.add("win", grid.makeQuad(2.5, 2, 1.5, 1));
+		
+		grid = texture.grid(8, 4);
+		textures.add("story_1", grid.makeQuad(0, 2, 3, 1));
+		textures.add("story_2", grid.makeQuad(3, 2, 3, 1));
+		textures.add("story_3", grid.makeQuad(0, 3, 3, 1));
 		
 		
 		// tiles

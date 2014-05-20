@@ -105,6 +105,11 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	}
 	
 	
+	/**
+	 * Add a task to queue to be executed in the main loop (OpenGL thread)
+	 * 
+	 * @param request task
+	 */
 	public synchronized void queueTask(Runnable request)
 	{
 		taskQueue.add(request);

@@ -2,6 +2,8 @@ package mightypork.gamecore.util;
 
 
 import java.lang.annotation.Annotation;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -44,5 +46,11 @@ public final class Utils {
 		}
 		
 		return null; // all null
+	}
+	
+	
+	public static String getTime(String format)
+	{
+		return (new SimpleDateFormat(format)).format(new Date());
 	}
 }

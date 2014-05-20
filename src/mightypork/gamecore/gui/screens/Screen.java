@@ -22,7 +22,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
  * 
  * @author MightyPork
  */
-public abstract class Screen extends AppSubModule implements Renderable, RectBound, AppAccess, KeyBinder, LayoutChangeListener {
+public abstract class Screen extends AppSubModule implements Renderable, RectBound, KeyBinder, LayoutChangeListener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	

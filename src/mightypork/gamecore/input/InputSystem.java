@@ -26,8 +26,7 @@ import org.lwjgl.opengl.Display;
  */
 public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	
-	// listeners
-	private final KeyBindingPool keybindings;
+	private static boolean inited = false;
 	
 	/** Current mouse position */
 	private static final Vect mousePos = new Vect() {
@@ -50,7 +49,10 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		}
 	};
 	
-	private static boolean inited = false;
+	private final KeyBindingPool keybindings;
+	
+	private final VectVar mouseMove = Vect.makeVar();
+	private final VectVar mouseLastPos = Vect.makeVar();
 	
 	
 	/**
@@ -106,15 +108,11 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		keybindings.unbindKey(stroke);
 	}
 	
-	// counters as fields to save memory.
-	private final VectVar mouseMove = Vect.makeVar();
-	private final VectVar mouseLastPos = Vect.makeVar();
-	
 	
 	@Override
 	public synchronized void update(double delta)
 	{
-		// was destroyed
+		// was destroyed or not initialized
 		if (!Display.isCreated()) return;
 		if (!Mouse.isCreated()) return;
 		if (!Keyboard.isCreated()) return;
@@ -208,12 +206,24 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
+	/**
+	 * Check if key is down
+	 * 
+	 * @param key key to check (constant from the {@link Keys} class)
+	 * @return is down
+	 */
 	public static boolean isKeyDown(int key)
 	{
 		return Keyboard.isKeyDown(key);
 	}
 	
 	
+	/**
+	 * Check mouse button state
+	 * 
+	 * @param button button to test (0 left, 1 right, 2 middle)
+	 * @return button is down
+	 */
 	public static boolean isMouseButtonDown(int button)
 	{
 		return Mouse.isButtonDown(button);
@@ -247,6 +257,9 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	}
 	
 	
+	/**
+	 * @return true if the system is initialized
+	 */
 	public static boolean isReady()
 	{
 		return inited;

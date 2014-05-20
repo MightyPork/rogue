@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.Polar;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.world.entity.impl.PlayerEntity;
+import mightypork.rogue.world.entity.impl.EntityPlayer;
 import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
 import mightypork.rogue.world.tile.Tile;
@@ -114,7 +114,7 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 	
 	
 	@Override
-	public void onStepFinished(PlayerEntity player)
+	public void onStepFinished(EntityPlayer player)
 	{
 		if (isImmobile()) return;
 		

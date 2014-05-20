@@ -8,6 +8,7 @@ import mightypork.rogue.world.entity.EntityPathFinder;
 import mightypork.rogue.world.entity.EntityRenderer;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
+import mightypork.rogue.world.events.GameWinEvent;
 
 
 public class EntityBossRat extends Entity {
@@ -63,8 +64,8 @@ public class EntityBossRat extends Entity {
 	@Override
 	public void onKilled()
 	{
-		getWorld().getConsole().addMessage("~~~ YOU DEFEATED THE BOSS RAT ~~~");
-		getWorld().getConsole().addMessage("TODO: outro");
+		// send kill event to listeners, after the entity has despawned (disappeared)
+		getWorld().getEventBus().sendDelayed(new GameWinEvent(), getDespawnDelay() * 1.5); // dramatic pause
 	}
 	
 	

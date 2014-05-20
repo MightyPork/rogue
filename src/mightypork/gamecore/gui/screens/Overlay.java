@@ -1,6 +1,7 @@
 package mightypork.gamecore.gui.screens;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
@@ -43,10 +44,10 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	protected final Vect mouse;
 	
 	/** Extra rendered items (outside root) */
-	protected final Collection<Renderable> rendered = new LinkedHashSet<>();
+	protected final Collection<Renderable> rendered = new ArrayList<>();
 	
 	/** Extra updated items (outside root - those can just implement Updateable) */
-	protected final Collection<Updateable> updated = new LinkedHashSet<>();
+	protected final Collection<Updateable> updated = new ArrayList<>();
 	private Num alphaMul = Num.ONE;
 	
 	
@@ -207,5 +208,19 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	{
 		setVisible(false);
 		setEnabled(false);
+	}
+	
+	
+	@Override
+	public boolean isListening()
+	{
+		return (isVisible() || isEnabled());
+	}
+	
+	
+	@Override
+	public boolean doesDelegate()
+	{
+		return isListening();
 	}
 }

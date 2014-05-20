@@ -14,7 +14,7 @@ import mightypork.gamecore.resources.textures.TxQuad;
  */
 public class ImagePainter extends BaseComponent implements DynamicWidthComponent {
 	
-	private final TxQuad txQuad;
+	private TxQuad txQuad;
 	
 	
 	/**
@@ -37,5 +37,11 @@ public class ImagePainter extends BaseComponent implements DynamicWidthComponent
 	public double computeWidth(double height)
 	{
 		return (height / txQuad.uvs.height().value()) * txQuad.uvs.width().value();
+	}
+	
+	
+	public void setTxQuad(TxQuad txQuad)
+	{
+		this.txQuad = txQuad;
 	}
 }

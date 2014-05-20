@@ -16,7 +16,7 @@ import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.rogue.world.entity.impl.PlayerEntity;
+import mightypork.rogue.world.entity.impl.EntityPlayer;
 import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
 
@@ -59,6 +59,8 @@ public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClien
 	public MIPKeyboard(MapView mapView)
 	{
 		super(mapView);
+		
+		// bind keys
 		for (int i = 0; i < 4; i++) {
 			
 			final int j = i;
@@ -75,7 +77,7 @@ public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClien
 	
 	
 	@Override
-	public void onStepFinished(PlayerEntity player)
+	public void onStepFinished(EntityPlayer player)
 	{
 		walkByKey();
 	}
@@ -88,26 +90,10 @@ public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClien
 	}
 	
 	
-//	@Override
-//	public void receive(KeyEvent evt)
-//	{
-//		
-//		if (evt.isDown() || mapView.plc.getPlayer().isMoving()) return; // not interested
-//			
-//		if (InputSystem.getActiveModKeys() != Keys.MOD_NONE) return;
-//		
-//		for (int i = 0; i < 4; i++) {
-//			if (evt.getKey() == keys[i].getKey()) {
-//				mapView.plc.clickTile(sides[i]);
-//			}
-//		}
-//	}
-	
 	private void clickSide(Move side)
 	{
-		if (isImmobile()) {
-			return;
-		}
+		if (isImmobile() || getPlayer().isMoving()) return;
+		
 		mapView.plc.clickTile(side);
 	}
 	

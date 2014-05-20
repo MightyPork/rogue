@@ -1,9 +1,8 @@
-package mightypork.gamecore.gui.events;
+package mightypork.gamecore.gui.screens.impl;
 
 
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
-import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 
 
 /**

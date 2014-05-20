@@ -242,6 +242,6 @@ public abstract class Color {
 	
 	public Color withAlpha(Num multiplier)
 	{
-		return new ColorAlphaAdjuster(this, Num.make(multiplier));
+		return new ColorAlphaAdjuster(this, multiplier);
 	}
 }

@@ -9,12 +9,12 @@ import mightypork.rogue.world.gui.interaction.MIPKeyboard;
 import mightypork.rogue.world.gui.interaction.MIPMouse;
 
 
-public class WorldLayer extends ScreenLayer {
+public class LayerMapView extends ScreenLayer {
 	
 	protected final MapView map;
 	
 	
-	public WorldLayer(Screen screen)
+	public LayerMapView(Screen screen)
 	{
 		super(screen);
 		
@@ -44,7 +44,7 @@ public class WorldLayer extends ScreenLayer {
 	@Override
 	public int getEventPriority()
 	{
-		return 0;
+		return 100;
 	}
 	
 }

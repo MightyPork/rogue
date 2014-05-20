@@ -17,12 +17,13 @@ import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.RogueScreen;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
+import mightypork.rogue.world.events.GameWinHandler;
 import mightypork.rogue.world.events.PlayerDeathHandler;
 import mightypork.rogue.world.events.WorldPauseRequest;
 import mightypork.rogue.world.events.WorldPauseRequest.PauseAction;
 
 
-public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
+public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameWinHandler {
 	
 	public static final Color COLOR_BTN_GOOD = Color.fromHex(0x28CB2D);
 	public static final Color COLOR_BTN_BAD = Color.fromHex(0xCB2828);
@@ -35,14 +36,15 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 	 */
 	public enum GScrState
 	{
-		WORLD, INV, DEATH, GOTO_MENU, GOTO_QUIT;
+		WORLD, INV, DEATH, WIN, GOTO_MENU, GOTO_QUIT;
 	}
 	
-	private InventoryLayer invLayer;
-	private HudLayer hudLayer;
-	private DeathLayer deathLayer;
+	private LayerInv invLayer;
+	private LayerGameUi hudLayer;
+	private LayerDeath deathLayer;
+	private LayerWin winLayer;
 	
-	private WorldLayer worldLayer;
+	private LayerMapView worldLayer;
 	
 	private GScrState state = null;
 	
@@ -65,7 +67,6 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		@Override
 		public void execute()
 		{
-			System.out.println("Toggle inv action");
 			setState(getState() == GScrState.INV ? GScrState.WORLD : GScrState.INV);
 		}
 	};
@@ -102,6 +103,8 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		@Override
 		public void execute()
 		{
+			if (WorldProvider.get().getWorld().isGameOver()) return;
+			
 			try {
 				WorldProvider.get().saveWorld();
 				WorldProvider.get().getWorld().getConsole().msgWorldSaved();
@@ -117,6 +120,8 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		@Override
 		public void execute()
 		{
+			if (WorldProvider.get().getWorld().isGameOver()) return;
+			
 			try {
 				final File f = WorldProvider.get().getWorld().getSaveFile();
 				WorldProvider.get().loadWorld(f);
@@ -157,7 +162,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 			pl.dropItem(pl.getInventory().getLastAddIndex());
 		}
 	};
-	private AskSaveLayer askSaveLayer;
+	private LayerAskSave askSaveLayer;
 	
 	
 	/**
@@ -169,56 +174,58 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 	{
 		if (this.state == nstate) return;
 		
-		if (nstate != GScrState.WORLD) { // leaving world.
+		final boolean gameOver = WorldProvider.get().getWorld().isGameOver();
+		
+		if (nstate != GScrState.WORLD && state == GScrState.WORLD) { // leaving world.
 			getEventBus().send(new WorldPauseRequest(PauseAction.PAUSE));
 			
 			worldActions.setEnabled(false); // disable world actions
 		}
 		
-		if (nstate == GScrState.WORLD) {
-			getEventBus().send(new WorldPauseRequest(PauseAction.RESUME));
-			
-			invLayer.hide();
-			deathLayer.hide();
-			askSaveLayer.hide();
-			
-			worldActions.setEnabled(true);
-		}
 		
-		if (nstate == GScrState.INV) {
-			invLayer.show();
-		}
+		if (nstate != GScrState.DEATH) deathLayer.hide();
+		if (nstate != GScrState.WIN) winLayer.hide();
+		if (nstate != GScrState.INV) invLayer.hide();
+		if (nstate != GScrState.GOTO_MENU && nstate != GScrState.GOTO_QUIT) askSaveLayer.hide();
 		
-		if (nstate == GScrState.DEATH) {
-			deathLayer.show();
-		}
-		
-		if (nstate == GScrState.GOTO_MENU) {
+		Runnable task;
+		switch (nstate) {
+			case WORLD:
+				getEventBus().send(new WorldPauseRequest(PauseAction.RESUME));
+				worldActions.setEnabled(true);
+				break;
 			
-			askSaveLayer.setTask(new Runnable() {
+			case INV:
+				invLayer.show();
+				break;
+			
+			case DEATH:
+				deathLayer.show();
+				break;
+			
+			case WIN:
+				winLayer.show();
+				break;
+			
+			case GOTO_MENU:
+			case GOTO_QUIT:
+				final RogueState goal = (nstate == GScrState.GOTO_MENU) ? RogueState.MAIN_MENU : RogueState.EXIT;
 				
-				@Override
-				public void run()
-				{
-					getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
-				}
-			});
-			
-			askSaveLayer.show();
-		}
-		
-		if (nstate == GScrState.GOTO_QUIT) {
-			
-			askSaveLayer.setTask(new Runnable() {
+				task = new Runnable() {
+					
+					@Override
+					public void run()
+					{
+						getEventBus().send(new RogueStateRequest(goal));
+					}
+				};
 				
-				@Override
-				public void run()
-				{
-					getEventBus().send(new RogueStateRequest(RogueState.EXIT));
+				if (gameOver) {
+					task.run();
+				} else {
+					askSaveLayer.setTask(task);
+					askSaveLayer.show();
 				}
-			});
-			
-			askSaveLayer.show();
 		}
 		
 		this.state = nstate;
@@ -235,11 +242,12 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 	{
 		super(app);
 		
-		addLayer(invLayer = new InventoryLayer(this));
-		addLayer(deathLayer = new DeathLayer(this));
-		addLayer(hudLayer = new HudLayer(this));
-		addLayer(worldLayer = new WorldLayer(this));
-		addLayer(askSaveLayer = new AskSaveLayer(this));
+		addLayer(invLayer = new LayerInv(this));
+		addLayer(deathLayer = new LayerDeath(this));
+		addLayer(winLayer = new LayerWin(this));
+		addLayer(hudLayer = new LayerGameUi(this));
+		addLayer(worldLayer = new LayerMapView(this));
+		addLayer(askSaveLayer = new LayerAskSave(this));
 		
 		bindKey(Config.getKey("game.pause"), Edge.RISING, actionTogglePause);
 		
@@ -253,6 +261,15 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		bindKey(Config.getKey("game.save"), Edge.RISING, actionSave);
 		bindKey(Config.getKey("game.quit"), Edge.RISING, actionMenu);
 		
+//		bindKey(new KeyStroke(Keys.W), Edge.RISING, new Runnable() {
+//			
+//			@Override
+//			public void run()
+//			{
+//				setState(GScrState.WIN);
+//			}
+//		});
+		
 		// add as actions - enableables.
 		worldActions.add(worldLayer);
 		worldActions.add(hudLayer);
@@ -265,7 +282,6 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		worldActions.add(actionSave);
 		worldActions.add(actionLoad);
 		worldActions.add(actionMenu);
-//		worldActions.add(actionQuit);
 		worldActions.add(actionDropLastPickedItem);
 		
 		worldActions.setEnabled(true);
@@ -289,6 +305,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 		WorldProvider.get().setListening(true);
 		
 		setState(GScrState.WORLD);
+		hideAllPopups();
 	}
 	
 	
@@ -300,6 +317,15 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 	}
 	
 	
+	private void hideAllPopups()
+	{
+		invLayer.hideImmediate();
+		deathLayer.hideImmediate();
+		winLayer.hideImmediate();
+		askSaveLayer.hideImmediate();
+	}
+	
+	
 	@Override
 	public void onPlayerKilled()
 	{
@@ -308,8 +334,19 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler {
 	
 	
 	@Override
+	public void onGameWon()
+	{
+		setState(GScrState.WIN);
+	}
+	
+	
+	@Override
 	public void onQuitRequest(UserQuitRequest event)
 	{
+		// if player is dead, don't ask don't ask for save		
+		final PlayerFacade pl = WorldProvider.get().getPlayer();
+		if (pl.isDead()) return;
+		
 		actionQuit.run();
 		event.consume();
 	}

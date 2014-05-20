@@ -3,12 +3,10 @@ package mightypork.gamecore.render;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import mightypork.gamecore.WorkDir;
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.Utils;
 
 import org.newdawn.slick.opengl.GLUtils;
 
@@ -28,8 +26,7 @@ public class TaskTakeScreenshot implements Runnable {
 	@Override
 	public void run()
 	{
-		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-		final String fname = df.format(new Date());
+		final String fname = Utils.getTime("yyyy-MM-dd_HH-mm-ss");
 		
 		// generate unique filename
 		File file;

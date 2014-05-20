@@ -9,13 +9,16 @@ import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
+import mightypork.gamecore.gui.screens.impl.CrossfadeRequest;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.events.FullscreenToggleRequest;
 import mightypork.gamecore.render.events.ScreenshotRequest;
+import mightypork.gamecore.render.events.ScreenshotRequestListener;
 import mightypork.gamecore.render.events.ViewportChangeEvent;
 import mightypork.gamecore.render.events.ViewportChangeListener;
+import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.ion.Ion;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
@@ -24,6 +27,7 @@ import mightypork.rogue.screens.LoadingOverlay;
 import mightypork.rogue.screens.game.ScreenGame;
 import mightypork.rogue.screens.menu.ScreenMainMenu;
 import mightypork.rogue.screens.select_world.ScreenSelectWorld;
+import mightypork.rogue.screens.story.ScreenStory;
 import mightypork.rogue.world.Inventory;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.level.Level;
@@ -34,7 +38,7 @@ import mightypork.rogue.world.level.Level;
  * 
  * @author MightyPork
  */
-public final class RogueApp extends BaseApp implements ViewportChangeListener {
+public final class RogueApp extends BaseApp implements ViewportChangeListener, ScreenshotRequestListener {
 	
 	public RogueApp(File workdir, boolean singleInstance)
 	{
@@ -86,6 +90,7 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener {
 		screens.addScreen("main_menu", new ScreenMainMenu(this));
 		screens.addScreen("select_world", new ScreenSelectWorld(this));
 		screens.addScreen("game", new ScreenGame(this));
+		screens.addScreen("story", new ScreenStory(this));
 		
 		screens.addOverlay(new FpsOverlay(this));
 		screens.addOverlay(new LoadingOverlay(this));
@@ -124,8 +129,8 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener {
 			@Override
 			public void run()
 			{
-				getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
-				//getEventBus().send(new CrossfadeRequest("test.layout", true));
+				//getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
+				getEventBus().send(new CrossfadeRequest("story", true));
 			}
 		}));
 	}
@@ -143,5 +148,13 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener {
 			Config.setValue("display.width", DisplaySystem.getWidth());
 			Config.setValue("display.height", DisplaySystem.getHeight());
 		}
+	}
+	
+	
+	@Override
+	public void onScreenshotRequest()
+	{
+		// screenshot sound
+		Res.getSoundEffect("gui.shutter").play(0.8);
 	}
 }

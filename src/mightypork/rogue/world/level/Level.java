@@ -25,7 +25,7 @@ import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityType;
-import mightypork.rogue.world.entity.impl.PlayerEntity;
+import mightypork.rogue.world.entity.impl.EntityPlayer;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
@@ -257,7 +257,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 			ent.setLevel(this);
 			occupyTile(ent.getCoord());
 			entityMap.put(ent.getEntityId(), ent);
-			if (ent instanceof PlayerEntity) {
+			if (ent instanceof EntityPlayer) {
 				playerCount++;
 			}
 		}
@@ -400,7 +400,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		
 		entityMap.put(entity.getEntityId(), entity);
 		entityList.add(entity);
-		if (entity instanceof PlayerEntity) playerCount++;
+		if (entity instanceof EntityPlayer) playerCount++;
 		
 		// join to level & world
 		occupyTile(entity.getCoord());
@@ -431,7 +431,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	{
 		final Entity removed = entityMap.remove(eid);
 		if (removed == null) throw new NullPointerException("No such entity in level: " + eid);
-		if (removed instanceof PlayerEntity) playerCount--;
+		if (removed instanceof EntityPlayer) playerCount--;
 		entityList.remove(removed);
 		
 		// upon kill, entities free tile themselves.

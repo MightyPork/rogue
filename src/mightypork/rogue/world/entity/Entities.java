@@ -9,7 +9,7 @@ import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.entity.impl.EntityBossRat;
 import mightypork.rogue.world.entity.impl.EntityBrownRat;
 import mightypork.rogue.world.entity.impl.EntityGrayRat;
-import mightypork.rogue.world.entity.impl.PlayerEntity;
+import mightypork.rogue.world.entity.impl.EntityPlayer;
 
 
 /**
@@ -21,7 +21,7 @@ public final class Entities {
 	
 	private static final EntityModel[] entities = new EntityModel[256];
 	
-	public static final EntityModel PLAYER = new EntityModel(1, PlayerEntity.class);
+	public static final EntityModel PLAYER = new EntityModel(1, EntityPlayer.class);
 	public static final EntityModel RAT_GRAY = new EntityModel(2, EntityGrayRat.class);
 	public static final EntityModel RAT_BROWN = new EntityModel(3, EntityBrownRat.class);
 	public static final EntityModel RAT_BOSS = new EntityModel(4, EntityBossRat.class);

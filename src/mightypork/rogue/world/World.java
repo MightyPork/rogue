@@ -19,6 +19,8 @@ import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.timing.Pauseable;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.events.GameWinHandler;
+import mightypork.rogue.world.events.PlayerDeathHandler;
 import mightypork.rogue.world.level.Level;
 
 
@@ -27,7 +29,7 @@ import mightypork.rogue.world.level.Level;
  * 
  * @author MightyPork
  */
-public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable, Updateable {
+public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable, Updateable, PlayerDeathHandler, GameWinHandler {
 	
 	// not saved stuffs
 	private final PlayerFacade playerFacade = new PlayerFacade(this);
@@ -36,6 +38,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	Entity playerEntity;
 	private BusAccess bus;
 	private int pauseDepth = 0;
+	private boolean gameOver = false;
 	
 	/** List of world's levels */
 	final ArrayList<Level> levels = new ArrayList<>();
@@ -259,5 +262,25 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	public File getSaveFile()
 	{
 		return saveFile;
+	}
+	
+	
+	@Override
+	public void onGameWon()
+	{
+		gameOver = true;
+	}
+	
+	
+	@Override
+	public void onPlayerKilled()
+	{
+		gameOver = true;
+	}
+	
+	
+	public boolean isGameOver()
+	{
+		return gameOver || getPlayer().isDead();
 	}
 }

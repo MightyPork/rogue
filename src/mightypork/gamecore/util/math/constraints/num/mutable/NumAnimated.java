@@ -37,11 +37,11 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	protected Easing easingIn = Easing.LINEAR;
 	
 	/** Default duration (seconds) */
-	private double defaultDuration = 0;
+	private double defaultDuration = 1;
 	
 	
 	/**
-	 * Create linear animator
+	 * With linear easing
 	 * 
 	 * @param value initial value
 	 */
@@ -75,6 +75,37 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	{
 		this(value);
 		setEasing(easingIn, easingOut);
+	}
+	
+	
+	/**
+	 * Create animator with easing
+	 * 
+	 * @param value initial value
+	 * @param easing easing function
+	 * @param defaultDuration default fade duration
+	 */
+	public NumAnimated(double value, Easing easing, double defaultDuration)
+	{
+		this(value);
+		setEasing(easing);
+		setDefaultDuration(defaultDuration);
+	}
+	
+	
+	/**
+	 * Create animator with easing
+	 * 
+	 * @param value initial value
+	 * @param easingIn easing function (fade in)
+	 * @param easingOut easing function (fade out)
+	 * @param defaultDuration default fade duration
+	 */
+	public NumAnimated(double value, Easing easingIn, Easing easingOut, double defaultDuration)
+	{
+		this(value);
+		setEasing(easingIn, easingOut);
+		setDefaultDuration(defaultDuration);
 	}
 	
 	
@@ -228,7 +259,7 @@ public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	{
 		from = to = value;
 		elapsedTime = 0;
-		duration = defaultDuration;
+		duration = 0;
 	}
 	
 	

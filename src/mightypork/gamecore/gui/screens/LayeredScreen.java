@@ -1,9 +1,11 @@
 package mightypork.gamecore.gui.screens;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.TreeSet;
+import java.util.List;
 
 import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
@@ -39,25 +41,8 @@ public abstract class LayeredScreen extends Screen {
 		
 	}
 	
-	private final Collection<ScreenLayer> layersByZIndex = new TreeSet<>(new Comparator<Overlay>() {
-		
-		@Override
-		public int compare(Overlay o1, Overlay o2)
-		{
-			return o1.getZIndex() - o2.getZIndex();
-		}
-		
-	});
-	
-	private final Collection<ScreenLayer> layersByEventPriority = new TreeSet<>(new Comparator<Overlay>() {
-		
-		@Override
-		public int compare(Overlay o1, Overlay o2)
-		{
-			return o2.getEventPriority() - o1.getEventPriority();
-		}
-		
-	});
+	private final List<ScreenLayer> layersByZIndex = new ArrayList<>();
+	private final List<ScreenLayer> layersByEventPriority = new ArrayList<>();
 	
 	private final LayersClient layersClient = new LayersClient();
 	
@@ -90,6 +75,26 @@ public abstract class LayeredScreen extends Screen {
 	{
 		this.layersByZIndex.add(layer);
 		this.layersByEventPriority.add(layer);
+		
+		Collections.sort(layersByEventPriority, new Comparator<Overlay>() {
+			
+			@Override
+			public int compare(Overlay o1, Overlay o2)
+			{
+				return o2.getEventPriority() - o1.getEventPriority();
+			}
+			
+		});
+		
+		Collections.sort(layersByZIndex, new Comparator<Overlay>() {
+			
+			@Override
+			public int compare(Overlay o1, Overlay o2)
+			{
+				return o1.getZIndex() - o2.getZIndex();
+			}
+			
+		});
 	}
 	
 	

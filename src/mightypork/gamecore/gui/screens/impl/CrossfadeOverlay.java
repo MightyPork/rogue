@@ -12,6 +12,11 @@ import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.timing.TimedTask;
 
 
+/**
+ * Overlay used for cross-fading between screens
+ * 
+ * @author MightyPork
+ */
 public class CrossfadeOverlay extends Overlay {
 	
 	private static final double T_IN = 0.4;

@@ -64,7 +64,7 @@ public class ScreenMainMenu extends RogueScreen {
 			bg.setRect(root);
 			root.add(bg);
 			
-			final RowLayout rows = new RowLayout(root, menuBox, 10);
+			final RowLayout rows = new RowLayout(root, menuBox, 13);
 			rows.enableCaching(true);
 			root.add(rows);
 			
@@ -90,20 +90,18 @@ public class ScreenMainMenu extends RogueScreen {
 			rows.add(btn, 2);
 			rows.skip(1);
 			
-			/*
-			// bouncy text button
-			btn = new MenuButton("Bouncy", PAL16.CLOUDBLUE);
+			
+			btn = new TextButton(btnFont, "Story", PAL16.CLOUDBLUE);
 			btn.setAction(new Action() {
 				
 				@Override
 				protected void execute()
 				{
-					getEventBus().send(new CrossfadeRequest("test.bouncy"));
+					getEventBus().send(new RogueStateRequest(RogueState.STORY));
 				}
 			});
-			layout.put(btn, r, 0, 2, 1);
-			r += 3;
-			*/
+			rows.add(btn, 2);
+			rows.skip(1);
 			
 			// quit button
 			btn = new TextButton(btnFont, "Exit", PAL16.BLOODRED);

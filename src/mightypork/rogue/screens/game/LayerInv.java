@@ -8,7 +8,7 @@ import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
 import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.gui.screens.impl.FadingLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.resources.Res;
@@ -16,6 +16,7 @@ import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.strings.StringProvider;
+import mightypork.rogue.screens.game.ScreenGame.GScrState;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
@@ -23,7 +24,7 @@ import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemType;
 
 
-public class InventoryLayer extends ScreenLayer {
+public class LayerInv extends FadingLayer {
 	
 	private static final int SLOT_COUNT = 8;
 	private static final int SLOT_ROW = 4;
@@ -65,6 +66,7 @@ public class InventoryLayer extends ScreenLayer {
 	};
 	
 	private final InvSlot[] slots = new InvSlot[SLOT_COUNT];
+	private ScreenGame gscreen;
 	
 	
 	private int getSelectedSlot()
@@ -91,9 +93,19 @@ public class InventoryLayer extends ScreenLayer {
 	}
 	
 	
-	public InventoryLayer(final ScreenGame screen)
+	@Override
+	protected void onHideFinished()
+	{
+		if (gscreen.getState() == GScrState.INV) {
+			gscreen.actionToggleInv.run();
+		}
+	}
+	
+	
+	public LayerInv(final ScreenGame screen)
 	{
 		super(screen);
+		this.gscreen = screen;
 		
 		final Rect fg = root.shrink(root.height().perc(15));
 		
@@ -149,9 +161,8 @@ public class InventoryLayer extends ScreenLayer {
 			@Override
 			public void run()
 			{
-				if (isEnabled()) {
-					screen.actionToggleInv.run();
-				}
+				if (!isEnabled()) return;
+				hide();
 			}
 		});
 		
@@ -237,7 +248,7 @@ public class InventoryLayer extends ScreenLayer {
 				}
 				
 				selectSlot((SLOT_COUNT + (sel - 1)) % SLOT_COUNT);
-			};
+			}
 		});
 		
 		bindKey(Config.getKey("game.inv.move.right"), Edge.RISING, new Runnable() {
@@ -254,7 +265,7 @@ public class InventoryLayer extends ScreenLayer {
 				}
 				
 				selectSlot((SLOT_COUNT + (sel + 1)) % SLOT_COUNT);
-			};
+			}
 		});
 		
 		bindKey(Config.getKey("game.inv.move.up"), Edge.RISING, new Runnable() {
@@ -271,7 +282,7 @@ public class InventoryLayer extends ScreenLayer {
 				}
 				
 				selectSlot((SLOT_COUNT + (sel - SLOT_ROW)) % SLOT_COUNT);
-			};
+			}
 		});
 		
 		bindKey(Config.getKey("game.inv.move.down"), Edge.RISING, new Runnable() {
@@ -288,7 +299,7 @@ public class InventoryLayer extends ScreenLayer {
 				}
 				
 				selectSlot((sel + SLOT_ROW) % SLOT_COUNT);
-			};
+			}
 		});
 	}
 	
@@ -296,7 +307,7 @@ public class InventoryLayer extends ScreenLayer {
 	@Override
 	public int getZIndex()
 	{
-		return 200;
+		return 300;
 	}
 	
 }

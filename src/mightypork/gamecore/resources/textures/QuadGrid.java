@@ -35,7 +35,7 @@ public class QuadGrid {
 	 * @param y y coordinate (cells)
 	 * @return the quad
 	 */
-	public TxQuad makeQuad(int x, int y)
+	public TxQuad makeQuad(double x, double y)
 	{
 		if (x < 0 || x >= txWidth || y < 0 || y >= txHeight) {
 			throw new IndexOutOfBoundsException("Requested invalid txquad coordinates.");
@@ -78,7 +78,7 @@ public class QuadGrid {
 	 * @param height height (cells)
 	 * @return the sheet
 	 */
-	public TxSheet makeSheet(int x, int y, int width, int height)
+	public TxSheet makeSheet(double x, double y, double width, double height)
 	{
 		if (x < 0 || x >= txWidth || y < 0 || y >= txHeight) {
 			throw new IndexOutOfBoundsException("Requested invalid txquad coordinates.");

@@ -114,9 +114,9 @@ public class TxQuad {
 	 * @param height sheet height
 	 * @return sheet
 	 */
-	public TxSheet makeSheet(int width, int height)
+	public TxSheet makeSheet(double width, double height)
 	{
-		return new TxSheet(this, width, height);
+		return new TxSheet(this, (int) Math.round(width), (int) Math.round(height));
 	}
 	
 	

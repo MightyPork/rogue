@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.ion.Ion;
 import mightypork.rogue.world.gen.WorldCreator;
 import mightypork.rogue.world.level.Level;
@@ -63,18 +64,10 @@ public class WorldProvider extends RootBusNode {
 	 */
 	public World createWorld(long seed)
 	{
+		Log.f2("Creating a new world with seed " + seed);
 		final World w = WorldCreator.createWorld(seed);
 		setWorld(w);
 		return w;
-	}
-	
-	
-	/**
-	 * Destroy world, set to null.
-	 */
-	public void destroyWorld()
-	{
-		setWorld(null);
 	}
 	
 	
@@ -98,6 +91,7 @@ public class WorldProvider extends RootBusNode {
 	
 	public void loadWorld(File file) throws IOException
 	{
+		Log.f2("Loading world from: " + file);
 		setWorld(Ion.fromFile(file, World.class));
 		world.setSaveFile(file);
 	}
@@ -112,10 +106,11 @@ public class WorldProvider extends RootBusNode {
 			throw new IllegalStateException("Trying to save world to a NULL file.");
 		}
 		
-		if (world.getPlayer().isDead()) {
+		if (world.isGameOver()) {
 			throw new IllegalStateException("Cannot save, player is dead.");
 		}
 		
+		Log.f2("Saving world to: " + file);
 		Ion.toFile(file, world);
 	}
 	

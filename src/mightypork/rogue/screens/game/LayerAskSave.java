@@ -11,33 +11,20 @@ import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.layout.linear.LinearLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.gui.screens.impl.FadingLayer;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
-import mightypork.gamecore.util.math.timing.TimedTask;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;
 import mightypork.rogue.world.WorldProvider;
 
 
-public class AskSaveLayer extends ScreenLayer {
+public class LayerAskSave extends FadingLayer {
 	
 	public Runnable task;
-	
-	NumAnimated numa = new NumAnimated(0, Easing.QUADRATIC_OUT);
-	TimedTask hideTT = new TimedTask() {
-		
-		@Override
-		public void run()
-		{
-			gscreen.setState(GScrState.WORLD); // go back..
-		}
-	};
 	
 	private final ScreenGame gscreen;
 	
@@ -48,7 +35,16 @@ public class AskSaveLayer extends ScreenLayer {
 	}
 	
 	
-	public AskSaveLayer(final ScreenGame screen)
+	@Override
+	protected void onHideFinished()
+	{
+		if (gscreen.getState() != GScrState.WORLD) {
+			gscreen.setState(GScrState.WORLD); // go back..
+		}
+	}
+	
+	
+	public LayerAskSave(final ScreenGame screen)
 	{
 		super(screen);
 		this.gscreen = screen;
@@ -95,10 +91,7 @@ public class AskSaveLayer extends ScreenLayer {
 			@Override
 			protected void execute()
 			{
-				if (numa.isFinished()) {
-					numa.fadeOut(0.3);
-					hideTT.start(0.3);
-				}
+				hide();
 			}
 		};
 		
@@ -136,28 +129,19 @@ public class AskSaveLayer extends ScreenLayer {
 		bindKey(Config.getKey("general.confirm"), Edge.RISING, save);
 		
 		bindKey(Config.getKey("general.no"), Edge.RISING, discard);
-		
-		updated.add(numa);
-		updated.add(hideTT);
-		
-		setAlpha(numa);
 	}
 	
 	
 	@Override
 	public int getZIndex()
 	{
-		return 301;
+		return 300;
 	}
 	
 	
 	@Override
-	public void show()
+	public void update(double delta)
 	{
-		if (!isVisible()) {
-			super.show();
-			numa.fadeIn(0.3);
-			hideTT.stop();
-		}
+		super.update(delta);
 	}
 }

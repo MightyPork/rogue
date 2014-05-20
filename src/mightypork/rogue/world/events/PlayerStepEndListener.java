@@ -1,10 +1,10 @@
 package mightypork.rogue.world.events;
 
 
-import mightypork.rogue.world.entity.impl.PlayerEntity;
+import mightypork.rogue.world.entity.impl.EntityPlayer;
 
 
 public interface PlayerStepEndListener {
 	
-	void onStepFinished(PlayerEntity player);
+	void onStepFinished(EntityPlayer player);
 }

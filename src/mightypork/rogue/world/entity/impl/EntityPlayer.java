@@ -12,7 +12,7 @@ import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.tile.Tile;
 
 
-public class PlayerEntity extends Entity {
+public class EntityPlayer extends Entity {
 	
 	class PlayerAi extends EntityModule implements EntityMoveListener {
 		
@@ -63,7 +63,7 @@ public class PlayerEntity extends Entity {
 		
 		private void fireEvt()
 		{
-			getWorld().getEventBus().send(new PlayerStepEndEvent(PlayerEntity.this));
+			getWorld().getEventBus().send(new PlayerStepEndEvent(EntityPlayer.this));
 		}
 		
 		
@@ -81,7 +81,7 @@ public class PlayerEntity extends Entity {
 	private final PlayerAi ai = new PlayerAi(this);
 	
 	
-	public PlayerEntity(EntityModel model, int eid)
+	public EntityPlayer(EntityModel model, int eid)
 	{
 		super(model, eid);
 		
@@ -139,7 +139,6 @@ public class PlayerEntity extends Entity {
 		getWorld().getEventBus().sendDelayed(new PlayerKilledEvent(), getDespawnDelay());
 		
 		getWorld().getConsole().msgDie(lastAttacker);
-		
 	}
 	
 	
