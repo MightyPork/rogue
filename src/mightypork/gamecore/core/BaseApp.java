@@ -70,6 +70,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		private ResourceLoader resourceLoader = new AsyncResourceLoader();
 		private Level logLevel = Level.ALL;
 		public boolean sigleInstance;
+		private Level logSoutLevel;
 		
 		
 		public void setConfigFile(String filename, String comment)
@@ -136,9 +137,10 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		}
 		
 		
-		public void setLogLevel(Level logLevel)
+		public void setLogLevel(Level logLevel, Level soutLevel)
 		{
 			this.logLevel = logLevel;
+			this.logSoutLevel = soutLevel;
 		}
 	}
 	
@@ -229,7 +231,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		final LogWriter log = Log.create(opt.logFilePrefix, new File(WorkDir.getDir(opt.logDir), opt.logFilePrefix + ".log"), opt.logArchiveCount);
 		Log.setMainLogger(log);
 		Log.setLevel(opt.logLevel);
-		Log.setSysoutLevel(opt.logLevel);
+		Log.setSysoutLevel(opt.logSoutLevel);
 		
 		// connect slickutil to the logger
 		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));

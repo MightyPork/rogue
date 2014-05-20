@@ -37,10 +37,9 @@ Manual on [Google Drive](https://docs.google.com/document/d/1Ak9oVOnCKSqWux4Hm_-
 
 ## BUILDING FROM SOURCE
 
-1. Export a jar with the `mightypork.*` packages and the `res` folder into `./build/in/build.jar`
-2. CD into `./build`
-3. Run `make` to create a stand-alone executable jar in `./build/out/release.jar`
-4. Use `make run` to execute it
+1. Export a jar with the `mightypork.*` packages and the `res` folder into `build/in/build.jar`
+2. Run `make` to create a stand-alone executable jar in `build/out/release.jar`
+3. Use `make run` to execute it
 
 
 

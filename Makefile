@@ -1,14 +1,16 @@
-STUB = ./stub.jar
+STUB = ./build/stub.jar
 
-IN_DIR = ./in
+IN_DIR = ./build/in
 IN = $(IN_DIR)/build.jar
 
-OUT_DIR = ./out
+OUT_DIR = ./build/out
 OUT = $(OUT_DIR)/release.jar
 
-TMP_DIR = ./tmp
+TMP_DIR = ./build/tmp
 
-all: $(OUT)
+all: build
+
+build: $(OUT)
 
 $(OUT): $(IN) $(STUB)
 	# clean
@@ -31,13 +33,19 @@ $(OUT): $(IN) $(STUB)
 
 	# clean
 	rm -rf $(TMP_DIR)
-	
+
 
 run: $(OUT)
-	java -jar $(OUT) -w ../.rogue-save
-
-clean:
-	rm -rf $(OUT)
+	java -jar $(OUT) -w .rogue-save
+	
+debug: $(OUT)
+	java -jar $(OUT) -w .rogue-save --verbose
+	
+runs: $(OUT)
+	java -jar $(OUT) -w .rogue-save --silent
+	
+runh: $(OUT)
+	java -jar $(OUT) -w .rogue-save --help
 
 deploy: $(OUT)
-	cp -f $(OUT) /home/ondra/Dokumenty/Dropbox/Public/Rogue
+	cp -f $(OUT) /home/ondra/Dropbox/Public/Rogue

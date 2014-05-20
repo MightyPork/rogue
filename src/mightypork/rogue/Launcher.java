@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.logging.Level;
 
 import mightypork.gamecore.core.BaseApp;
-import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.files.OsUtils;
 
 
@@ -19,9 +18,10 @@ public class Launcher {
 	 */
 	public static void main(String[] args)
 	{
-		Log.f3("Arguments: " + Arrays.toString(args));
+		System.out.println("argv = " + Arrays.toString(args)+"\n");
 		
-		boolean verbose = false;
+		Level llSyso = Level.FINER;
+		Level llFile = Level.ALL;
 		
 		File workdir = null;
 		
@@ -37,11 +37,27 @@ public class Launcher {
 					lwdDir = args[i + 1];
 					i++;
 					continue;
-				}
-				
-				if (arg.equals("--verbose") || arg.equals("-v")) {
-					verbose = true;
+					
+				} else if (arg.equals("--silent") || arg.equals("-s")) {
+					llSyso = Level.OFF;
 					continue;
+					
+				} else if (arg.equals("--warnings") || arg.equals("-e")) {
+					llSyso = Level.WARNING;
+					continue;
+					
+				} else if (arg.equals("--verbose") || arg.equals("-v")) {
+					llSyso = Level.ALL;
+					continue;
+					
+				} else if (arg.equals("--help") || arg.equals("-h")) {
+					printHelp();
+					System.exit(0);
+					
+				} else {
+					System.err.println("Unknown argument: " + arg);
+					printHelp();
+					System.exit(1);
 				}
 			}
 			
@@ -51,14 +67,32 @@ public class Launcher {
 				workdir = new File(lwdDir);
 			}
 			
-		} catch (final ArrayIndexOutOfBoundsException e) {
-			Log.e("Malformed arguments.");
+		} catch (final Exception e) {
+			System.out.println("Error parsing arguments:");
+			e.printStackTrace();
+			printHelp();
+			System.exit(1);
 		}
 		
 		final BaseApp app = new RogueApp(workdir, true);
 		
-		app.opt().setLogLevel(verbose ? Level.ALL : Level.FINER);
-		
+		app.opt().setLogLevel(llFile, llSyso);
+	
+		System.out.println("\nStarting the game...\n");
 		app.start();
+	}
+	
+	
+	private static void printHelp()
+	{
+		//@formatter:off
+		System.out.println(
+				"Arguments:\n" +
+				"\t--workdir <path>, -w <path> .... specify working directory\n" +
+				"\t--verbose, -v .................. print all messages\n" +
+				"\t--silent, -s ................... print no messages\n" +
+				"\t--warnings, -e ................. print only warning and error messages\n" +
+				"\t--help, -h ..................... show this help\n");
+		//@formatter:on
 	}
 }
