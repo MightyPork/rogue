@@ -19,7 +19,7 @@ public class EntityModuleHealth extends EntityModule {
 	
 	protected int health = 1;
 	protected int maxHealth = 1;
-	private double hitCooldownTime = 0.3;
+	private double hitCooldownTime = 0.36;
 	protected boolean dead = false;
 	
 	private double timeSinceLastDamage = Integer.MAX_VALUE;

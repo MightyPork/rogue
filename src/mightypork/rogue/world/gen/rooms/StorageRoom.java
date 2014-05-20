@@ -15,10 +15,15 @@ public class StorageRoom extends SecretRoom {
 	@Override
 	protected void buildExtras(ScratchMap map, MapTheme theme, Random rand, Coord min, Coord max)
 	{
-		int maxStuff = Calc.randInt(rand,  2, 5);
+		int maxStuff = Calc.randInt(rand,  3, 5);
 		
 		for (int i = 0; i < Calc.randInt(rand, 0, 2); i++) {
 			map.addItemInArea(Items.MEAT.createItem(), min, max, 50);
+			if (--maxStuff == 0) return;
+		}
+		
+		for (int i = 0; i < Calc.randInt(rand, 0, 2); i++) {
+			map.addItemInArea(Items.CHEESE.createItem(), min, max, 50);
 			if (--maxStuff == 0) return;
 		}
 		
@@ -42,11 +47,6 @@ public class StorageRoom extends SecretRoom {
 			if (--maxStuff == 0) return;
 		}
 		
-		
-		for (int i = 0; i < Calc.randInt(rand, 0, 2); i++) {
-			map.addItemInArea(Items.CHEESE.createItem(), min, max, 50);
-			if (--maxStuff == 0) return;
-		}
 		
 	}
 }

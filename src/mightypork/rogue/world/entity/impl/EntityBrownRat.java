@@ -30,9 +30,8 @@ public class EntityBrownRat extends Entity {
 		
 		setDespawnDelay(1);
 		
-		health.setHealthMax(18);
-		health.setHealth(Calc.randInt(12, 18)); // tougher to kill
-		health.setHitCooldownTime(0.35); // a bit longer than gray rat
+		health.setHealthMax(16);
+		health.setHealth(Calc.randInt(10, 16)); // tougher to kill
 	}
 	
 	

@@ -32,7 +32,6 @@ public class EntityGrayRat extends Entity {
 		
 		health.setHealthMax(7);
 		health.setHealth(Calc.randInt(4, 7));
-		health.setHitCooldownTime(0.3);
 	}
 	
 	

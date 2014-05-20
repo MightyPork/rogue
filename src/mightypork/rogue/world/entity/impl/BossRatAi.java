@@ -22,14 +22,14 @@ public class BossRatAi extends GrayRatAi {
 	{
 		super(entity);
 		
-		setAttackTime(0.2);
+		setAttackTime(0.3);
 	}
 	
 	
 	@Override
 	protected int getAttackStrength()
 	{
-		return Calc.randInt(1, 6);
+		return Calc.randInt(2, 3);
 	}
 	
 	
@@ -52,6 +52,6 @@ public class BossRatAi extends GrayRatAi {
 	@Override
 	protected double getStepTime()
 	{
-		return isIdle() ? 0.6 : 0.37;
+		return isIdle() ? 0.6 : 0.4;
 	}
 }

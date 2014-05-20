@@ -15,7 +15,7 @@ public abstract class SecretRoom extends AbstractRectRoom {
 	@Override
 	protected TileModel getDoorType(MapTheme theme, Random rand)
 	{
-		return theme.secretDoor();
+		return rand.nextInt(5) == 0 ? theme.passage() : theme.secretDoor();
 	}
 	
 	

@@ -8,19 +8,33 @@ import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.RoomBuilder;
 import mightypork.rogue.world.gen.RoomEntry;
 import mightypork.rogue.world.gen.ScratchMap;
+import mightypork.rogue.world.gen.TileProtectLevel;
+import mightypork.rogue.world.tile.TileModel;
 
 
-public class DeadEndRoom implements RoomBuilder {
-	
+public class DeadEndRoom extends AbstractRectRoom {
+
 	@Override
-	public RoomEntry buildRoom(ScratchMap map, MapTheme theme, Random rand, Coord center)
+	protected Coord getInnerSize(Random rand)
 	{
-		final Coord low = center.add(-1, -1);
-		final Coord high = center.add(1, 1);
-		if (!map.isClear(low, high)) return null;
-		
-		map.set(center, theme.floor());
-		
-		return new RoomEntry(low, high);
+		return Coord.make(1,1);
+	}
+
+	@Override
+	protected TileProtectLevel getWallProtectionLevel()
+	{
+		return TileProtectLevel.STRONG;
+	}
+
+	@Override
+	protected TileModel getDoorType(MapTheme theme, Random rand)
+	{
+		return theme.floor();
+	}
+
+	@Override
+	protected int getDoorCount(Random rand)
+	{
+		return 1;
 	}
 }

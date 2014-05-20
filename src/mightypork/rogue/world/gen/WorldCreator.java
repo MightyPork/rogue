@@ -68,13 +68,13 @@ public class WorldCreator {
 			}
 			
 			for (int i = 0; i < Calc.randInt(rand, 2, 4); i++) {
-				final Item item = Calc.pick(rand, weaponsMedium).createItemDamaged(40);
+				final Item item = Calc.pick(rand, weaponsMedium).createItemDamaged(50);
 				final LevelBuilder lb = levelBuilders[-1 + Calc.randInt(3, 5)];
 				lb.addRoom(Rooms.treasure(item), BuildOrder.MIDDLE, true);
 			}
 			
 			for (int i = 0; i < Calc.randInt(rand, 2, 4); i++) {
-				final Item item = Calc.pick(rand, weaponsGood).createItemDamaged(50);
+				final Item item = Calc.pick(rand, weaponsGood).createItemDamaged(60);
 				final LevelBuilder lb = levelBuilders[-1 + Calc.randInt(4, 7)];
 				
 				lb.addRoom(Rooms.treasure(item), BuildOrder.LAST, true);
@@ -87,7 +87,7 @@ public class WorldCreator {
 			
 			for (int level = 1; level <= 7; level++) {
 				final LevelBuilder lb = levelBuilders[level - 1];
-				final Range amount = Range.make(1, level+2);
+				final Range amount = Range.make(level/2D, level*2);
 				
 				for (int i = 0; i < amount.randInt(rand); i++) {
 					lb.addItem(Calc.pick(rand, randomFood).createItem(), false);
@@ -140,15 +140,17 @@ public class WorldCreator {
 		
 		lb.addRoom(Rooms.ENTRANCE, BuildOrder.FIRST, true);
 		
-		lb.addRoom(Rooms.BASIC, Range.make(floor+1, 2 + floor * 1.5), BuildOrder.MIDDLE, false);
-		lb.addRoom(Rooms.DEAD_END, Range.make(2, 1 + floor*1), BuildOrder.MIDDLE, false);
+		lb.addRoom(Rooms.BASIC, Range.make(floor/2, 2 + floor), BuildOrder.MIDDLE, false);
+		lb.addRoom(Rooms.DEAD_END, Range.make(1, floor), BuildOrder.MIDDLE, false);
 		lb.addRoom(Rooms.STORAGE, Range.make(1, Math.ceil(floor / 3D)), BuildOrder.MIDDLE, false);
 		
 		if (lastLevel) lb.addRoom(Rooms.BOSS, BuildOrder.LAST, true);
 		if (!lastLevel) lb.addRoom(Rooms.EXIT, BuildOrder.LAST, true);
 		
-		final RoomBuilder heartRoom = Rooms.shrine(Items.HEART_PIECE.createItem());
-		lb.addRoom(heartRoom, BuildOrder.LAST, true);
+		if (floor % 2 == 0) {
+			final RoomBuilder heartRoom = Rooms.shrine(Items.HEART_PIECE.createItem());
+			lb.addRoom(heartRoom, BuildOrder.LAST, true);
+		}
 		
 		return lb;
 	}
