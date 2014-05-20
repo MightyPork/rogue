@@ -37,9 +37,10 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		private final TextPainter tp1;
 		private final TextPainter tp2;
 		private final ImagePainter img;
-		private final NumAnimated layerAlpha = new NumAnimated(0, Easing.LINEAR, 0.8);
-		private final NumAnimated tx1alpha = new NumAnimated(0, Easing.LINEAR, 1);
-		private final NumAnimated tx2alpha = new NumAnimated(0, Easing.LINEAR, 1);
+		private final NumAnimated layerAlpha = new NumAnimated(0, Easing.QUARTIC_OUT, 0.6);
+		private final NumAnimated tx1alpha = new NumAnimated(0, Easing.BOUNCE_OUT, 1);
+		private final NumAnimated tx2alpha = new NumAnimated(0, Easing.BOUNCE_OUT, 1);
+		private final NumAnimated txProceedAlpha = new NumAnimated(0, Easing.CIRC_OUT, 1);
 		
 		private String nextImg, nextT1, nextT2;
 		
@@ -54,6 +55,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 				
 				tx1alpha.setTo(0);
 				tx2alpha.setTo(0);
+				txProceedAlpha.setTo(0);
 				
 				layerAlpha.setTo(0);
 				layerAlpha.fadeIn();
@@ -84,7 +86,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 					ttFinish.run();
 				} else {
 					tx2alpha.fadeIn();
-					ttFinish.start(5);
+					ttFinish.start(1.2);
 				}
 			}
 		};
@@ -94,7 +96,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 			@Override
 			public void run()
 			{
-				//next.run();
+				txProceedAlpha.fadeIn();
 			}
 		};
 		
@@ -105,7 +107,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		{
 			super(screen);
 			
-			TextPainter help = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, RGB.WHITE.withAlpha(0.3), "Space / click to proceed.");
+			TextPainter help = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, RGB.WHITE.withAlpha(txProceedAlpha.mul(0.3)), "Space / click to proceed.");
 			help.setRect(root.bottomEdge().growUp(root.height().perc(4)));
 			help.setVPaddingPercent(5);
 			root.add(help);
@@ -129,8 +131,10 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 			tp2.setVPaddingPercent(19);
 			
 			updated.add(layerAlpha);
+			updated.add(txProceedAlpha);
 			updated.add(tx1alpha);
 			updated.add(tx2alpha);
+			
 			updated.add(ttText1);
 			updated.add(ttText2);
 			updated.add(ttFinish);
