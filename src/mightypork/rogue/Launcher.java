@@ -46,7 +46,7 @@ public class Launcher {
 					llSyso = Level.WARNING;
 					continue;
 					
-				} else if (arg.equals("--verbose") || arg.equals("-v")) {
+				} else if (arg.equals("--debug") || arg.equals("--verbose") || arg.equals("-v")) {
 					llSyso = Level.ALL;
 					continue;
 					
@@ -89,7 +89,7 @@ public class Launcher {
 		System.out.println(
 				"Arguments:\n" +
 				"\t--workdir <path>, -w <path> .... specify working directory\n" +
-				"\t--verbose, -v .................. print all messages\n" +
+				"\t--verbose, --debug, -v ......... print all messages\n" +
 				"\t--silent, -s ................... print no messages\n" +
 				"\t--warnings, -e ................. print only warning and error messages\n" +
 				"\t--help, -h ..................... show this help\n");
