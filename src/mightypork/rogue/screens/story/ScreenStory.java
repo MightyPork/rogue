@@ -234,7 +234,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 				break;
 			
 			case 1:
-				slideLayer.showSlide("story_2", "'Guess I'll go get some booze", "from the cellar.");
+				slideLayer.showSlide("story_2", "'Guess I'll go get some beer", "from the cellar.");
 				break;
 			
 			case 2:
