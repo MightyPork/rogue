@@ -18,7 +18,7 @@ public class Launcher {
 	 */
 	public static void main(String[] args)
 	{
-		System.out.println("argv = " + Arrays.toString(args)+"\n");
+//		System.out.println("argv = " + Arrays.toString(args)+"\n");
 		
 		Level llSyso = Level.FINER;
 		Level llFile = Level.ALL;
@@ -78,7 +78,6 @@ public class Launcher {
 		
 		app.opt().setLogLevel(llFile, llSyso);
 	
-		System.out.println("\nStarting the game...\n");
 		app.start();
 	}
 	

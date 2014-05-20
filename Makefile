@@ -39,13 +39,7 @@ run: $(OUT)
 	java -jar $(OUT) -w .rogue-save
 	
 debug: $(OUT)
-	java -jar $(OUT) -w .rogue-save --verbose
-	
-runs: $(OUT)
-	java -jar $(OUT) -w .rogue-save --silent
-	
-runh: $(OUT)
-	java -jar $(OUT) -w .rogue-save --help
+	java -jar $(OUT) -w .rogue-save --debug
 
 deploy: $(OUT)
 	cp -f $(OUT) /home/ondra/Dropbox/Public/Rogue
