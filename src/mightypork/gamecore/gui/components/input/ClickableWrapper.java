@@ -38,24 +38,27 @@ public class ClickableWrapper extends ClickableComponent implements DelegatingCl
 	
 	
 	@Override
-	public boolean isEnabled()
+	protected void renderComponent()
 	{
-		return super.isEnabled() && wrapped.isEnabled();
+		wrapped.render();
 	}
 	
 	
 	@Override
 	public void setEnabled(boolean yes)
 	{
-		super.setEnabled(yes);
-		wrapped.setEnabled(yes);
+		if (yes != super.isDirectlyEnabled()) {
+			super.setEnabled(yes);
+			wrapped.setIndirectlyEnabled(yes);
+		}
 	}
 	
 	
 	@Override
-	protected void renderComponent()
+	public void setIndirectlyEnabled(boolean yes)
 	{
-		wrapped.render();
+		super.setIndirectlyEnabled(yes);
+		wrapped.setIndirectlyEnabled(yes);
 	}
 	
 }

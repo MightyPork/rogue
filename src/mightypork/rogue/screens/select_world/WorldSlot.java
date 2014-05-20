@@ -146,7 +146,8 @@ public class WorldSlot extends ConstraintLayout {
 			@Override
 			protected void execute()
 			{
-				file.delete();
+				Log.f3("Trying to delete: " + file);
+				if (!file.delete()) Log.w("Could not delete save file: " + file);
 				refresh();
 			}
 		});
@@ -164,16 +165,17 @@ public class WorldSlot extends ConstraintLayout {
 			label = "<empty>";
 			worldBundle = null;
 		} else {
+			
+			delBtn.setVisible(true);
+			delBtn.setEnabled(true);
+			
 			try {
 				worldBundle = Ion.fromFile(file);
 				final int lvl = worldBundle.get("meta.last_level", -1);
 				
-				if (lvl == -1) throw new RuntimeException(); // let the catch block handle it
+				if (lvl == -1) throw new RuntimeException("Invalid save format."); // let the catch block handle it
 				
 				label = "Level " + (lvl + 1);
-				delBtn.setVisible(true);
-				delBtn.setEnabled(true);
-				
 			} catch (final Exception e) {
 				Log.w("Error loading world save.", e);
 				label = "<corrupt>";

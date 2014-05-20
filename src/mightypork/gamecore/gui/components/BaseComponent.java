@@ -26,8 +26,9 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	
 	private Rect source;
 	private boolean visible = true;
+	private boolean enabled = true;
+	private int indirectDisableLevel = 0;
 	
-	private int disableLevel = 0;
 	private Num alphaMul = Num.ONE;
 	
 	
@@ -94,7 +95,8 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	}
 	
 	
-	protected boolean isMouseOver()
+	@Override
+	public final boolean isMouseOver()
 	{
 		return InputSystem.getMousePos().isInside(this);
 	}
@@ -116,29 +118,52 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	@Override
 	public void setEnabled(boolean yes)
 	{
-		if (yes) {
-			if (disableLevel > 0) disableLevel--;
-		} else {
-			disableLevel++;
-		}
+		enabled = yes;
 	}
 	
 	
 	@Override
 	public boolean isEnabled()
 	{
-		return disableLevel == 0;
+		return enabled && isIndirectlyEnabled();
 	}
 	
 	
-	public void setAlpha(Num alpha)
+	@Override
+	public final void setAlpha(Num alpha)
 	{
 		this.alphaMul = alpha;
 	}
 	
 	
-	public void setAlpha(double alpha)
+	@Override
+	public final void setAlpha(double alpha)
 	{
 		this.alphaMul = Num.make(alpha);
+	}
+	
+	
+	@Override
+	public void setIndirectlyEnabled(boolean yes)
+	{
+		if (!yes) {
+			indirectDisableLevel++;
+		} else {
+			if (indirectDisableLevel > 0) indirectDisableLevel--;
+		}
+	}
+	
+	
+	@Override
+	public boolean isIndirectlyEnabled()
+	{
+		return indirectDisableLevel == 0;
+	}
+	
+	
+	@Override
+	public boolean isDirectlyEnabled()
+	{
+		return enabled;
 	}
 }

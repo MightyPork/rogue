@@ -11,6 +11,7 @@ import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke.Edge;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.PAL16;
@@ -104,6 +105,7 @@ public class ScreenSelectWorld extends RogueScreen {
 		{
 			super.onScreenEnter();
 			
+			Log.f3("Refreshing save slots");
 			slot1.refresh();
 			slot2.refresh();
 			slot3.refresh();

@@ -6,6 +6,7 @@ import java.io.File;
 import mightypork.gamecore.Config;
 import mightypork.gamecore.core.BaseApp;
 import mightypork.gamecore.core.events.MainLoopRequest;
+import mightypork.gamecore.core.events.ShudownRequest;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
@@ -105,6 +106,7 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 		bindEventToKey(new ScreenshotRequest(), "global.screenshot");
 		
 		bindEventToKey(new UserQuitRequest(), "global.quit");
+		bindEventToKey(new ShudownRequest(), "global.quit_force");
 	}
 	
 	

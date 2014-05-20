@@ -16,8 +16,6 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 
 public abstract class LayoutComponent extends BaseComponent implements ClientHub, AppAccess {
 	
-	private boolean enabled;
-	
 	private final AppSubModule subModule;
 	final LinkedList<Component> components = new LinkedList<>();
 	
@@ -109,9 +107,12 @@ public abstract class LayoutComponent extends BaseComponent implements ClientHub
 	@Override
 	public void setEnabled(boolean yes)
 	{
-		super.setEnabled(yes);
-		for (final Component c : components) {
-			c.setEnabled(yes);
+		if (isDirectlyEnabled() != yes) {
+			super.setEnabled(yes);
+			
+			for (final Component c : components) {
+				c.setIndirectlyEnabled(yes);
+			}
 		}
 	}
 	
@@ -148,4 +149,14 @@ public abstract class LayoutComponent extends BaseComponent implements ClientHub
 		}
 	}
 	
+	
+	@Override
+	public void setIndirectlyEnabled(boolean yes)
+	{
+		super.setIndirectlyEnabled(yes);
+		
+		for (final Component cmp : components) {
+			cmp.setIndirectlyEnabled(yes);
+		}
+	}
 }

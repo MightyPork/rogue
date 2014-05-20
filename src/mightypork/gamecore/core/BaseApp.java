@@ -326,7 +326,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		
 		try {
 			txt += " Workdir ....... " + WorkDir.getWorkDir().getCanonicalPath() + "\n";
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Log.e(e);
 		}
 		

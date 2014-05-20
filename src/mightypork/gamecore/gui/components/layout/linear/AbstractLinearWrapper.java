@@ -58,4 +58,22 @@ public abstract class AbstractLinearWrapper extends LinearComponent implements D
 	{
 		return true;
 	}
+	
+	
+	@Override
+	public void setEnabled(boolean yes)
+	{
+		if (yes != super.isDirectlyEnabled()) {
+			super.setEnabled(yes);
+			wrapped.setIndirectlyEnabled(yes);
+		}
+	}
+	
+	
+	@Override
+	public void setIndirectlyEnabled(boolean yes)
+	{
+		super.setIndirectlyEnabled(yes);
+		wrapped.setIndirectlyEnabled(yes);
+	}
 }

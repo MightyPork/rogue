@@ -11,6 +11,8 @@ public class RogueKeys implements Config.KeySetup {
 	public void addKeys(KeyOpts keys)
 	{
 		keys.add("global.quit", "CTRL+Q", "Quit the game");
+		keys.add("global.quit_force", "CTRL+SHIFT+Q", "Quit the game without asking, low-level");
+		
 		keys.add("global.screenshot", "F2", "Take screenshot (save into working directory)");
 		keys.add("global.fullscreen", "F11", "Toggle fullscreen");
 		keys.add("global.fps_meter", "F3", "Toggle FPS meter overlay");

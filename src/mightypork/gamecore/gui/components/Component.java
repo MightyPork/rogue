@@ -3,6 +3,7 @@ package mightypork.gamecore.gui.components;
 
 import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.Hideable;
+import mightypork.gamecore.util.math.constraints.num.Num;
 
 
 /**
@@ -24,4 +25,22 @@ public interface Component extends Enableable, Hideable, PluggableRenderable {
 	 * constraints derived from it.
 	 */
 	void updateLayout();
+	
+	
+	boolean isMouseOver();
+	
+	
+	void setAlpha(Num alpha);
+	
+	
+	void setAlpha(double alpha);
+	
+	
+	void setIndirectlyEnabled(boolean yes);
+	
+	
+	boolean isIndirectlyEnabled();
+	
+	
+	boolean isDirectlyEnabled();
 }

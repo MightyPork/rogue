@@ -116,7 +116,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 	@Override
 	public void destroy()
 	{
-		Log.i("Stopping resource loader thread.");
+		Log.f3("Stopping resource loader thread.");
 		stopped = true;
 		exs.shutdownNow();
 	}
