@@ -23,6 +23,7 @@ public class Launcher {
 		final Level llFile = Level.ALL;
 		
 		File workdir = null;
+		boolean logBus = false;
 		
 		try {
 			boolean localWorkdir = false;
@@ -41,17 +42,20 @@ public class Launcher {
 					llSyso = Level.OFF;
 					continue;
 					
-				} else if (arg.equals("--warnings") || arg.equals("-e")) {
+				} else if (arg.equals("--warn") || arg.equals("-e")) {
 					llSyso = Level.WARNING;
 					continue;
 					
-				} else if (arg.equals("--debug") || arg.equals("--verbose") || arg.equals("-v")) {
+				} else if (arg.equals("--verbose") || arg.equals("-v")) {
 					llSyso = Level.ALL;
 					continue;
 					
 				} else if (arg.equals("--help") || arg.equals("-h")) {
 					printHelp();
 					System.exit(0);
+					
+				} else if (arg.equals("--debug-bus")) {
+					logBus = true;
 					
 				} else {
 					System.err.println("Unknown argument: " + arg);
@@ -76,7 +80,7 @@ public class Launcher {
 		final BaseApp app = new RogueApp(workdir, true);
 		
 		app.opt().setLogLevel(llFile, llSyso);
-		app.opt().setBusLogging(false);//TODO temporary
+		app.opt().setBusLogging(logBus);
 		
 		app.start();
 	}

@@ -39,7 +39,7 @@ run: $(OUT)
 	java -jar $(OUT) -w .rogue-save
 	
 debug: $(OUT)
-	java -jar $(OUT) -w .rogue-save --debug
+	java -jar $(OUT) -w .rogue-save --verbose --debug-bus
 	
 stats:
 	@-echo "Commits:" `git rev-list HEAD --count`
