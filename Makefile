@@ -40,6 +40,11 @@ run: $(OUT)
 	
 debug: $(OUT)
 	java -jar $(OUT) -w .rogue-save --debug
+	
+stats:
+	@-echo "Commits:" `git rev-list HEAD --count`
+	@-echo "Files:" `find src -type f -print | wc -l`
+	@-echo "Lines:" `(find src -name '*.java' -print0 | xargs -0 cat ) | wc -l`
 
 deploy: $(OUT)
 	cp -f $(OUT) /home/ondra/Dropbox/Public/Rogue
