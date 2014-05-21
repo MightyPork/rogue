@@ -5,7 +5,7 @@ import mightypork.gamecore.resources.ResourceSetup;
 import mightypork.gamecore.resources.audio.SoundRegistry;
 import mightypork.gamecore.resources.fonts.FontRegistry;
 import mightypork.gamecore.resources.fonts.Glyphs;
-import mightypork.gamecore.resources.fonts.impl.DeferredFont;
+import mightypork.gamecore.resources.fonts.impl.LazyFont;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.gamecore.resources.textures.GLTexture;
 import mightypork.gamecore.resources.textures.QuadGrid;
@@ -20,15 +20,15 @@ public class RogueResources implements ResourceSetup {
 	@Override
 	public void addFonts(FontRegistry fonts)
 	{
-		DeferredFont font;
+		LazyFont font;
 		
 		//fonts.loadFont("polygon_pixel", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16));
-		fonts.addFont("press_start", font = new DeferredFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
+		fonts.addFont("press_start", font = new LazyFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
 		
-		fonts.addFont("battlenet", font = new DeferredFont("/res/font/battlenet.ttf", Glyphs.basic, 16));
+		fonts.addFont("battlenet", font = new LazyFont("/res/font/battlenet.ttf", Glyphs.basic, 16));
 		font.setDiscardRatio(3 / 16D, 2 / 16D);
 		
-		fonts.addFont("tinyutf", font = new DeferredFont("/res/font/TinyUnicode2.ttf", Glyphs.basic, 16));
+		fonts.addFont("tinyutf", font = new LazyFont("/res/font/TinyUnicode2.ttf", Glyphs.basic, 16));
 		font.setDiscardRatio(5 / 16D, 3 / 16D);
 		
 		// aliases

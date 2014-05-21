@@ -3,8 +3,8 @@ package mightypork.gamecore.resources.textures;
 
 import mightypork.gamecore.logging.LogAlias;
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.resources.BaseDeferredResource;
-import mightypork.gamecore.resources.MustLoadInMainThread;
+import mightypork.gamecore.resources.BaseLazyResource;
+import mightypork.gamecore.resources.TextureBasedResource;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 import org.lwjgl.opengl.GL11;
@@ -16,10 +16,10 @@ import org.lwjgl.opengl.GL11;
  * @author MightyPork
  */
 @LogAlias(name = "Texture")
-@MustLoadInMainThread
-public class DeferredTexture extends BaseDeferredResource implements GLTexture {
+@TextureBasedResource
+public class LazyTexture extends BaseLazyResource implements GLTexture {
 	
-	public static DeferredTexture lastBind = null;
+	public static LazyTexture lastBind = null;
 	
 	private org.newdawn.slick.opengl.Texture backingTexture;
 	private FilterMode filter = FilterMode.NEAREST;
@@ -31,7 +31,7 @@ public class DeferredTexture extends BaseDeferredResource implements GLTexture {
 	/**
 	 * @param resourcePath resource path
 	 */
-	public DeferredTexture(String resourcePath)
+	public LazyTexture(String resourcePath)
 	{
 		super(resourcePath);
 	}

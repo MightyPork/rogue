@@ -6,7 +6,7 @@ import java.util.HashMap;
 import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.core.AppAccessAdapter;
 import mightypork.gamecore.resources.ResourceLoadRequest;
-import mightypork.gamecore.resources.fonts.impl.DeferredFont;
+import mightypork.gamecore.resources.fonts.impl.LazyFont;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -31,12 +31,12 @@ public class FontRegistry extends AppAccessAdapter {
 	
 	
 	/**
-	 * Load a {@link DeferredFont}
+	 * Load a {@link LazyFont}
 	 * 
 	 * @param key font key
 	 * @param font font instance
 	 */
-	public void addFont(String key, DeferredFont font)
+	public void addFont(String key, LazyFont font)
 	{
 		getEventBus().send(new ResourceLoadRequest(font));
 		

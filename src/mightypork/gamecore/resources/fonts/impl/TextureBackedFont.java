@@ -20,8 +20,8 @@ import java.util.Map;
 
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.resources.textures.DeferredTexture;
 import mightypork.gamecore.resources.textures.FilterMode;
+import mightypork.gamecore.resources.textures.LazyTexture;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
@@ -41,7 +41,7 @@ import org.newdawn.slick.opengl.GLUtils;
  * @author David Aaron Muhar (bobjob)
  * @author MightyPork
  */
-public class CachedFont implements GLFont {
+public class TextureBackedFont implements GLFont {
 	
 	private class CharTile {
 		
@@ -90,7 +90,7 @@ public class CachedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars)
+	public TextureBackedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars)
 	{
 		this(font, antialias, filter, (" " + chars).toCharArray());
 	}
@@ -104,7 +104,7 @@ public class CachedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public CachedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars)
+	public TextureBackedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars)
 	{
 		GLUtils.checkGLContext();
 		
@@ -379,7 +379,7 @@ public class CachedFont implements GLFont {
 	{
 		GLUtils.checkGLContext();
 		
-		DeferredTexture.lastBind = null; // needs rebind.
+		LazyTexture.lastBind = null; // needs rebind.
 		
 		// PUSH
 		glPushAttrib(GL_ENABLE_BIT);

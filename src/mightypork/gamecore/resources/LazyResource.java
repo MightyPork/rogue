@@ -6,7 +6,7 @@ package mightypork.gamecore.resources;
  * 
  * @author MightyPork
  */
-public interface DeferredResource {
+public interface LazyResource {
 	
 	/**
 	 * Load the actual resource, if not loaded yet.

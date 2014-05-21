@@ -14,7 +14,7 @@ import mightypork.gamecore.resources.textures.FilterMode;
  * @author MightyPork
  */
 @LogAlias(name = "FontNative")
-public class DeferredFontNative extends DeferredFont {
+public class LazyFontNative extends LazyFont {
 	
 	/**
 	 * A font from OS, found by name
@@ -26,7 +26,7 @@ public class DeferredFontNative extends DeferredFont {
 	 * @param antialias use antialiasing when drawn on the cache texture
 	 * @param filter GL filtering mode
 	 */
-	public DeferredFontNative(String fontName, String extraChars, double size, FontStyle style, boolean antialias, FilterMode filter)
+	public LazyFontNative(String fontName, String extraChars, double size, FontStyle style, boolean antialias, FilterMode filter)
 	{
 		super(fontName, extraChars, size, style, antialias, filter);
 	}

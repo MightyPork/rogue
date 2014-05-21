@@ -15,4 +15,4 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Inherited
 @Documented
-public @interface MustLoadInMainThread {}
+public @interface TextureBasedResource {}

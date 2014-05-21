@@ -6,7 +6,9 @@ import java.util.HashSet;
 
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.clients.ToggleableClient;
+import mightypork.gamecore.eventbus.event_flags.NonRejectableEvent;
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.util.Utils;
 
 
 /**
@@ -78,9 +80,11 @@ class EventChannel<EVENT extends BusEvent<CLIENT>, CLIENT> {
 			}
 			processed.add(client);
 			
+			final boolean must_deliver = Utils.hasAnnotation(event, NonRejectableEvent.class);
+			
 			// opt-out
 			if (client instanceof ToggleableClient) {
-				if (!((ToggleableClient) client).isListening()) continue;
+				if (!must_deliver && !((ToggleableClient) client).isListening()) continue;
 			}
 			
 			sendTo(client, event);
@@ -89,7 +93,7 @@ class EventChannel<EVENT extends BusEvent<CLIENT>, CLIENT> {
 			
 			// pass on to delegated clients
 			if (client instanceof DelegatingClient) {
-				if (((DelegatingClient) client).doesDelegate()) {
+				if (must_deliver || ((DelegatingClient) client).doesDelegate()) {
 					
 					final Collection<?> children = ((DelegatingClient) client).getChildClients();
 					

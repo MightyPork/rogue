@@ -83,9 +83,6 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 		toShow.setActive(true);
 		
 		active = toShow;
-		
-		// update layout for screen
-		fireLayoutUpdateEvent();
 	}
 	
 	

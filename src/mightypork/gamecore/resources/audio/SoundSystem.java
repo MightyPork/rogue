@@ -72,7 +72,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	private final Volume loopsVolume = new JointVolume(masterVolume);
 	
 	private final Set<LoopPlayer> loopPlayers = new HashSet<>();
-	private final Set<DeferredAudio> resources = new HashSet<>();
+	private final Set<LazyAudio> resources = new HashSet<>();
 	
 	
 	/**
@@ -102,7 +102,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	@Override
 	public void deinit()
 	{
-		for (final DeferredAudio r : resources) {
+		for (final LazyAudio r : resources) {
 			r.destroy();
 		}
 		
@@ -154,15 +154,15 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	
 	
 	/**
-	 * Create {@link DeferredAudio} for a resource
+	 * Create {@link LazyAudio} for a resource
 	 * 
 	 * @param res a resource name
 	 * @return the resource
 	 * @throws IllegalArgumentException if resource is already registered
 	 */
-	private DeferredAudio getResource(String res)
+	private LazyAudio getResource(String res)
 	{
-		final DeferredAudio a = new DeferredAudio(res);
+		final LazyAudio a = new LazyAudio(res);
 		getEventBus().send(new ResourceLoadRequest(a));
 		
 		if (resources.contains(a)) throw new IllegalArgumentException("Sound resource " + res + " is already registered.");

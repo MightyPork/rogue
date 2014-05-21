@@ -16,7 +16,7 @@ public interface ResourceLoader {
 	 * 
 	 * @param resource
 	 */
-	void loadResource(DeferredResource resource);
+	void loadResource(LazyResource resource);
 	
 	
 	/**

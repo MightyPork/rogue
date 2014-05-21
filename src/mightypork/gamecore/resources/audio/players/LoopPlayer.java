@@ -2,7 +2,7 @@ package mightypork.gamecore.resources.audio.players;
 
 
 import mightypork.gamecore.eventbus.events.Updateable;
-import mightypork.gamecore.resources.audio.DeferredAudio;
+import mightypork.gamecore.resources.audio.LazyAudio;
 import mightypork.gamecore.resources.audio.Volume;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.timing.Pauseable;
@@ -40,7 +40,7 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	 * @param baseGain base gain (volume multiplier)
 	 * @param volume volume control
 	 */
-	public LoopPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume)
+	public LoopPlayer(LazyAudio track, double basePitch, double baseGain, Volume volume)
 	{
 		super(track, (float) basePitch, (float) baseGain, volume);
 		

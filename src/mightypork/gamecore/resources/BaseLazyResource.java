@@ -14,7 +14,7 @@ import mightypork.gamecore.logging.LogAlias;
  * @author MightyPork
  */
 @LogAlias(name = "Resource")
-public abstract class BaseDeferredResource implements DeferredResource, Destroyable {
+public abstract class BaseLazyResource implements LazyResource, Destroyable {
 	
 	private final String resource;
 	private volatile boolean loadFailed = false;
@@ -25,7 +25,7 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 	 * @param resource resource path / name; this string is later used in
 	 *            loadResource()
 	 */
-	public BaseDeferredResource(String resource)
+	public BaseLazyResource(String resource)
 	{
 		this.resource = resource;
 	}
@@ -118,8 +118,8 @@ public abstract class BaseDeferredResource implements DeferredResource, Destroya
 	{
 		if (this == obj) return true;
 		if (obj == null) return false;
-		if (!(obj instanceof BaseDeferredResource)) return false;
-		final BaseDeferredResource other = (BaseDeferredResource) obj;
+		if (!(obj instanceof BaseLazyResource)) return false;
+		final BaseLazyResource other = (BaseLazyResource) obj;
 		if (resource == null) {
 			if (other.resource != null) return false;
 		} else if (!resource.equals(other.resource)) return false;

@@ -49,11 +49,28 @@ public interface GLFont {
 	int getFontSize();
 	
 	
+	/**
+	 * Set what vertical ratio of the font size is blank and should be cut off
+	 * when rendering
+	 * 
+	 * @param top top ratio (0-1)
+	 * @param bottom bottom ratio (0-1)
+	 */
 	void setDiscardRatio(double top, double bottom);
 	
 	
+	/**
+	 * Get top discard ratio (blank unused space)
+	 * 
+	 * @return ratio
+	 */
 	double getTopDiscardRatio();
 	
 	
+	/**
+	 * Get bottom discard ratio (blank unused space)
+	 * 
+	 * @return ratio
+	 */
 	double getBottomDiscardRatio();
 }

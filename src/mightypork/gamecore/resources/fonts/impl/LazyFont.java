@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import mightypork.gamecore.logging.LogAlias;
-import mightypork.gamecore.resources.BaseDeferredResource;
-import mightypork.gamecore.resources.MustLoadInMainThread;
+import mightypork.gamecore.resources.BaseLazyResource;
+import mightypork.gamecore.resources.TextureBasedResource;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.gamecore.util.files.FileUtils;
@@ -21,9 +21,9 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
  * 
  * @author MightyPork
  */
-@MustLoadInMainThread
+@TextureBasedResource
 @LogAlias(name = "Font")
-public class DeferredFont extends BaseDeferredResource implements GLFont {
+public class LazyFont extends BaseLazyResource implements GLFont {
 	
 	public static enum FontStyle
 	{
@@ -56,7 +56,7 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	 * @param chars chars to load; null to load basic chars only
 	 * @param size size (px)
 	 */
-	public DeferredFont(String resourcePath, String chars, double size)
+	public LazyFont(String resourcePath, String chars, double size)
 	{
 		this(resourcePath, chars, size, FontStyle.PLAIN, false, FilterMode.NEAREST);
 	}
@@ -72,7 +72,7 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	 * @param antialias use antialiasing for caching texture
 	 * @param filter gl filtering mode
 	 */
-	public DeferredFont(String resourcePath, String chars, double size, FontStyle style, boolean antialias, FilterMode filter)
+	public LazyFont(String resourcePath, String chars, double size, FontStyle style, boolean antialias, FilterMode filter)
 	{
 		super(resourcePath);
 		this.size = size;
@@ -118,7 +118,7 @@ public class DeferredFont extends BaseDeferredResource implements GLFont {
 	{
 		final Font awtFont = getAwtFont(path, (float) size, style.numval);
 		
-		font = new CachedFont(awtFont, antialias, filter, chars);
+		font = new TextureBackedFont(awtFont, antialias, filter, chars);
 		font.setDiscardRatio(discardTop, discardBottom);
 	}
 	

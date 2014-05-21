@@ -2,7 +2,6 @@ package mightypork.rogue;
 
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.logging.Level;
 
 import mightypork.gamecore.core.BaseApp;
@@ -21,7 +20,7 @@ public class Launcher {
 //		System.out.println("argv = " + Arrays.toString(args)+"\n");
 		
 		Level llSyso = Level.FINER;
-		Level llFile = Level.ALL;
+		final Level llFile = Level.ALL;
 		
 		File workdir = null;
 		
@@ -77,7 +76,7 @@ public class Launcher {
 		final BaseApp app = new RogueApp(workdir, true);
 		
 		app.opt().setLogLevel(llFile, llSyso);
-	
+		
 		app.start();
 	}
 	

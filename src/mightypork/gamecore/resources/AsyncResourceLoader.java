@@ -20,7 +20,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 	
 	private final ExecutorService exs = Executors.newCachedThreadPool();
 	
-	private final LinkedBlockingQueue<DeferredResource> toLoad = new LinkedBlockingQueue<>();
+	private final LinkedBlockingQueue<LazyResource> toLoad = new LinkedBlockingQueue<>();
 	private volatile boolean stopped;
 	private BusAccess app;
 	private volatile boolean mainLoopQueuing = true;
@@ -49,12 +49,12 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 	
 	
 	@Override
-	public void loadResource(final DeferredResource resource)
+	public void loadResource(final LazyResource resource)
 	{
 		if (resource.isLoaded()) return;
 		
 		// textures & fonts needs to be loaded in main thread
-		if (resource.getClass().isAnnotationPresent(MustLoadInMainThread.class)) {
+		if (resource.getClass().isAnnotationPresent(TextureBasedResource.class)) {
 			
 			if (!mainLoopQueuing) {
 				Log.f3("<LOADER> Cannot load async: " + Log.str(resource));
@@ -86,7 +86,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 		while (!stopped) {
 			
 			try {
-				final DeferredResource def = toLoad.take();
+				final LazyResource def = toLoad.take();
 				if (def == null) continue;
 				
 				if (!def.isLoaded()) {

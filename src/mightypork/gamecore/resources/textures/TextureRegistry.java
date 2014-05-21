@@ -61,7 +61,7 @@ public class TextureRegistry extends AppAccessAdapter {
 	{
 		if (key != null) if (textures.containsKey(key)) throw new KeyAlreadyExistsException();
 		
-		final DeferredTexture texture = new DeferredTexture(resourcePath);
+		final LazyTexture texture = new LazyTexture(resourcePath);
 		texture.setFilter(filter);
 		texture.setWrap(wrap);
 		
