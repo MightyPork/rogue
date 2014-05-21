@@ -127,6 +127,8 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	@Override
 	protected void postInit()
 	{
+		
+		
 		getEventBus().send(new MainLoopRequest(new Runnable() {
 			
 			@Override
@@ -165,10 +167,11 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 		Res.getSoundEffect("gui.shutter").play(0.8);
 	}
 	
+	
 	@Override
 	protected void writeLogHeader()
 	{
-		Log.i("## Starting Rogue v."+Const.VERSION+" ##");
+		Log.i("## Starting Rogue v." + Const.VERSION + " ##");
 		super.writeLogHeader();
 	}
 }

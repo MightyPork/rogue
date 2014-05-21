@@ -76,6 +76,7 @@ public class Launcher {
 		final BaseApp app = new RogueApp(workdir, true);
 		
 		app.opt().setLogLevel(llFile, llSyso);
+		app.opt().setBusLogging(false);//TODO temporary
 		
 		app.start();
 	}

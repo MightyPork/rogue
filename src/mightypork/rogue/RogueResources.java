@@ -41,7 +41,35 @@ public class RogueResources implements ResourceSetup {
 	@Override
 	public void addSounds(SoundRegistry sounds)
 	{
-		sounds.addEffect("gui.shutter", "/res/audio/shutter.ogg", 1, 1);
+		
+		//sounds.addLoop("music.dungeon", "/res/audio/music/Lightless_Dawn.ogg", 1, 1, 3, 1.5);
+		sounds.addLoop("music.menu", "/res/audio/music/Home_Base_Groove.ogg", 1, 0.7, 3, 1.5);
+		sounds.addLoop("music.dungeon", "/res/audio/music/8bit_Dungeon_Level.ogg", 1, 0.6, 3, 1.5);
+		//sounds.addLoop("music.dungeon2.boss", "/res/audio/music/8bit_Dungeon_Boss.ogg", 1, 0.6, 3, 1.5);
+		
+		sounds.addEffect("gui.shutter", "/res/audio/effects/shutter.ogg", 1, 1);
+		sounds.addEffect("gui.click", "/res/audio/effects/click.ogg", 1, 1);
+		
+		sounds.addEffect("game.win", "/res/audio/effects/win.ogg", 1, 0.7);
+		sounds.addEffect("game.lose", "/res/audio/effects/lose.ogg", 1, 1);
+		
+		sounds.addEffect("item.drop", "/res/audio/effects/drop.ogg", 1, 1);
+		sounds.addEffect("item.pickup", "/res/audio/effects/pickup.ogg", 1, 1);
+		sounds.addEffect("item.break", "/res/audio/effects/break.ogg", 1, 1);
+		
+		sounds.addEffect("player.eat", "/res/audio/effects/eat.ogg", 1, 1);
+		sounds.addEffect("player.hurt", "/res/audio/effects/hurt.ogg", 1, 1);
+		
+		sounds.addEffect("crate.open", "/res/audio/effects/crate.ogg", 1, 1);
+		
+		sounds.addEffect("door.open", "/res/audio/effects/door.ogg", 1, 1);
+		sounds.addEffect("door.close", "/res/audio/effects/door.ogg", 0.8, 1);
+		
+		sounds.addEffect("rat.sqeak1", "/res/audio/effects/mouse1.ogg", 1, 1);
+		sounds.addEffect("rat.sqeak2", "/res/audio/effects/mouse2.ogg", 1, 1);
+		sounds.addEffect("rat.sqeak3", "/res/audio/effects/mouse3.ogg", 1, 1);
+		sounds.addEffect("rat.sqeak4", "/res/audio/effects/mouse4.ogg", 1, 1);
+		sounds.addEffect("rat.sqeak5", "/res/audio/effects/mouse5.ogg", 1, 1);
 	}
 	
 	

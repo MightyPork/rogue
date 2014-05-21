@@ -33,13 +33,6 @@ import mightypork.rogue.screens.RogueScreen;
 public class ScreenMainMenu extends RogueScreen {
 	
 	
-	public ScreenMainMenu(AppAccess app)
-	{
-		super(app);
-		
-		addLayer(new MenuLayer(this));
-	}
-	
 	/**
 	 * The layer
 	 * 
@@ -133,5 +126,22 @@ public class ScreenMainMenu extends RogueScreen {
 			return 2;
 		}
 		
+	}
+
+	
+	public ScreenMainMenu(AppAccess app)
+	{
+		super(app);
+		
+		addLayer(new MenuLayer(this));
+	}
+	
+	@Override
+	protected void onScreenEnter()
+	{
+		super.onScreenEnter();
+
+		getSoundSystem().fadeOutAllLoops();
+		Res.getSoundLoop("music.menu").fadeIn();
 	}
 }
