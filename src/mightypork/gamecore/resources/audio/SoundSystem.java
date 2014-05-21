@@ -5,7 +5,7 @@ import java.nio.FloatBuffer;
 import java.util.HashSet;
 import java.util.Set;
 
-import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.logging.Log;

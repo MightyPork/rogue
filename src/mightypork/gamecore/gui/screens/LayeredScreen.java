@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
 
 

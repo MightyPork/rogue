@@ -4,8 +4,8 @@ package mightypork.gamecore.resources.audio;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.core.AppAccess;
-import mightypork.gamecore.core.AppAccessAdapter;
+import mightypork.gamecore.core.modules.AppAccess;
+import mightypork.gamecore.core.modules.AppAccessAdapter;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
 

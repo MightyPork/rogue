@@ -3,9 +3,9 @@ package mightypork.rogue.screens.game;
 
 import java.io.File;
 
-import mightypork.gamecore.Config;
-import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.Config;
 import mightypork.gamecore.core.events.UserQuitRequest;
+import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.input.KeyStroke.Edge;

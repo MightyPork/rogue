@@ -1,8 +1,8 @@
 package mightypork.gamecore.gui.screens.impl;
 
 
-import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.core.events.ShudownRequest;
+import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.gui.screens.Overlay;

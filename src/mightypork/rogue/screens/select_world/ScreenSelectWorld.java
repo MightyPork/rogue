@@ -1,9 +1,9 @@
 package mightypork.rogue.screens.select_world;
 
 
-import mightypork.gamecore.Config;
-import mightypork.gamecore.WorkDir;
-import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.Config;
+import mightypork.gamecore.core.WorkDir;
+import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;

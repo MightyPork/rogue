@@ -3,15 +3,16 @@ package mightypork.rogue;
 
 import java.io.File;
 
-import mightypork.gamecore.Config;
-import mightypork.gamecore.core.BaseApp;
+import mightypork.gamecore.core.Config;
 import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.core.events.ShudownRequest;
 import mightypork.gamecore.core.events.UserQuitRequest;
+import mightypork.gamecore.core.modules.BaseApp;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke.Edge;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.events.FullscreenToggleRequest;
 import mightypork.gamecore.render.events.ScreenshotRequest;
@@ -162,5 +163,12 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	{
 		// screenshot sound
 		Res.getSoundEffect("gui.shutter").play(0.8);
+	}
+	
+	@Override
+	protected void writeLogHeader()
+	{
+		Log.i("## Starting Rogue v."+Const.VERSION+" ##");
+		super.writeLogHeader();
 	}
 }

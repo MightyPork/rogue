@@ -1,9 +1,9 @@
 package mightypork.rogue.screens;
 
 
-import mightypork.gamecore.core.AppAccess;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.core.events.UserQuitRequestListener;
+import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.screens.LayeredScreen;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.rogue.RogueStateManager.RogueState;

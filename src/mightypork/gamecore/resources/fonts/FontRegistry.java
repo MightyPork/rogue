@@ -3,8 +3,8 @@ package mightypork.gamecore.resources.fonts;
 
 import java.util.HashMap;
 
-import mightypork.gamecore.core.AppAccess;
-import mightypork.gamecore.core.AppAccessAdapter;
+import mightypork.gamecore.core.modules.AppAccess;
+import mightypork.gamecore.core.modules.AppAccessAdapter;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.fonts.impl.LazyFont;
 

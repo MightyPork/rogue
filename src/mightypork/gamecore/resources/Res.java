@@ -1,7 +1,7 @@
 package mightypork.gamecore.resources;
 
 
-import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.resources.audio.SoundRegistry;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;

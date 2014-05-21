@@ -1,8 +1,8 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.Config;
-import mightypork.gamecore.Config.KeyOpts;
+import mightypork.gamecore.core.Config;
+import mightypork.gamecore.core.Config.KeyOpts;
 
 
 public class RogueKeys implements Config.KeySetup {

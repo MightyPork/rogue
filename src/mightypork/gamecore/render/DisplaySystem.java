@@ -5,8 +5,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.ByteBuffer;
 
-import mightypork.gamecore.core.AppAccess;
-import mightypork.gamecore.core.AppModule;
+import mightypork.gamecore.core.modules.AppAccess;
+import mightypork.gamecore.core.modules.AppModule;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.events.DisplayReadyEvent;
 import mightypork.gamecore.render.events.ViewportChangeEvent;

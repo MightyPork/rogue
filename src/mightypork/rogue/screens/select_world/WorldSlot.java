@@ -4,7 +4,7 @@ package mightypork.rogue.screens.select_world;
 import java.io.File;
 import java.io.IOException;
 
-import mightypork.gamecore.core.AppAccess;
+import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;

@@ -4,8 +4,8 @@ package mightypork.gamecore.gui.components;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import mightypork.gamecore.core.AppAccess;
-import mightypork.gamecore.core.AppSubModule;
+import mightypork.gamecore.core.modules.AppAccess;
+import mightypork.gamecore.core.modules.AppSubModule;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.clients.ClientHub;
 import mightypork.gamecore.input.InputSystem;

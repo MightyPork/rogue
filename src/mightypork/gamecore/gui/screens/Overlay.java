@@ -4,8 +4,8 @@ package mightypork.gamecore.gui.screens;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import mightypork.gamecore.core.AppAccess;
-import mightypork.gamecore.core.AppSubModule;
+import mightypork.gamecore.core.modules.AppAccess;
+import mightypork.gamecore.core.modules.AppSubModule;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.Hideable;

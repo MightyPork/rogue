@@ -4,7 +4,7 @@ package mightypork.gamecore.render;
 import java.io.File;
 import java.io.IOException;
 
-import mightypork.gamecore.WorkDir;
+import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.Utils;
 
