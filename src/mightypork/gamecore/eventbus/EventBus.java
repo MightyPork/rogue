@@ -4,6 +4,9 @@ package mightypork.gamecore.eventbus;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
@@ -132,13 +135,13 @@ final public class EventBus implements Destroyable, BusAccess {
 	private final QueuePollingThread busThread;
 	
 	/** Registered clients */
-	private final BufferedHashSet<Object> clients = new BufferedHashSet<>();
+	private final Set<Object> clients = Collections.newSetFromMap(new ConcurrentHashMap<Object,Boolean>());
 	
 	/** Whether the bus was destroyed */
 	private boolean dead = false;
 	
 	/** Message channels */
-	private final ConcurrentLinkedDeque<EventChannel<?, ?>> channels = new ConcurrentLinkedDeque<>();
+	private final Set<EventChannel<?, ?>> channels = Collections.newSetFromMap(new ConcurrentHashMap<EventChannel<?, ?>,Boolean>());
 	
 	/** Messages queued for delivery */
 	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<>();
@@ -341,12 +344,8 @@ final public class EventBus implements Destroyable, BusAccess {
 	{
 		assertLive();
 		
-		clients.setBuffering(true);
-		
 		doDispatch(clients, event);
 		event.onDispatchComplete(this);
-		
-		clients.setBuffering(false);
 	}
 	
 	
