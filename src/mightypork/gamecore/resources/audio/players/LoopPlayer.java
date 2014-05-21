@@ -98,6 +98,8 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 		
 		sourceID = getAudio().resumeLoop();
 		paused = false;
+		
+		adjustGain(getGain(fadeAnim.value()));
 	}
 	
 	
@@ -112,11 +114,17 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 		
 		final double gain = getGain(fadeAnim.value());
 		if (!paused && gain != lastUpdateGain) {
-			AL10.alSourcef(sourceID, AL10.AL_GAIN, (float) gain);
+			adjustGain(gain);
 			lastUpdateGain = gain;
 		}
 		
 		if (gain == 0 && !paused) pause(); // pause on zero volume
+	}
+	
+	
+	private void adjustGain(double gain)
+	{
+		AL10.alSourcef(sourceID, AL10.AL_GAIN, (float) gain);
 	}
 	
 	
@@ -129,6 +137,7 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	{
 		if (!hasAudio()) return;
 		
+		if (isPaused()) fadeAnim.setTo(0);
 		resume();
 		fadeAnim.fadeIn(secs);
 	}
@@ -142,7 +151,7 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	public void fadeOut(double secs)
 	{
 		if (!hasAudio()) return;
-		
+		if (isPaused()) return;
 		fadeAnim.fadeOut(secs);
 	}
 	

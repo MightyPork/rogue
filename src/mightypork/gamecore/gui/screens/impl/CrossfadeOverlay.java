@@ -67,6 +67,11 @@ public class CrossfadeOverlay extends Overlay {
 	{
 		requestedScreenName = screen;
 		
+		if(screen == null) {
+			// going for halt
+			getSoundSystem().fadeOutAllLoops();
+		}
+		
 		if (fromDark) {
 			alpha.setTo(1);
 			revealTask.run();

@@ -5,6 +5,7 @@ import mightypork.gamecore.core.modules.MainLoop;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.eventbus.event_flags.NonConsumableEvent;
 import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
+import mightypork.gamecore.resources.audio.SoundSystem;
 
 
 /**
@@ -27,6 +28,6 @@ public class ShudownRequest extends BusEvent<MainLoop> {
 			{
 				handler.shutdown();
 			}
-		});
+		}, true);
 	}
 }

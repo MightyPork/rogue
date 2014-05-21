@@ -94,8 +94,8 @@ public final class Res {
 	public static void load(ResourceSetup binder)
 	{
 		binder.addFonts(fonts);
-		binder.addSounds(sounds);
 		binder.addTextures(textures);
+		binder.addSounds(sounds);
 	}
 	
 }

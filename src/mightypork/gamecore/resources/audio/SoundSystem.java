@@ -2,7 +2,9 @@ package mightypork.gamecore.resources.audio;
 
 
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import mightypork.gamecore.core.modules.AppAccess;
@@ -71,8 +73,8 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	private final Volume effectsVolume = new JointVolume(masterVolume);
 	private final Volume loopsVolume = new JointVolume(masterVolume);
 	
-	private final Set<LoopPlayer> loopPlayers = new HashSet<>();
-	private final Set<LazyAudio> resources = new HashSet<>();
+	private final List<LoopPlayer> loopPlayers = new ArrayList<>();
+	private final List<LazyAudio> resources = new ArrayList<>();
 	
 	
 	/**
@@ -130,7 +132,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	 */
 	public EffectPlayer createEffect(String resource, double pitch, double gain)
 	{
-		return new EffectPlayer(getResource(resource), pitch, gain, effectsVolume);
+		return new EffectPlayer(createResource(resource), pitch, gain, effectsVolume);
 	}
 	
 	
@@ -146,7 +148,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	 */
 	public LoopPlayer createLoop(String resource, double pitch, double gain, double fadeIn, double fadeOut)
 	{
-		final LoopPlayer p = new LoopPlayer(getResource(resource), pitch, gain, loopsVolume);
+		final LoopPlayer p = new LoopPlayer(createResource(resource), pitch, gain, loopsVolume);
 		p.setFadeTimes(fadeIn, fadeOut);
 		loopPlayers.add(p);
 		return p;
@@ -160,12 +162,10 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	 * @return the resource
 	 * @throws IllegalArgumentException if resource is already registered
 	 */
-	private LazyAudio getResource(String res)
+	private LazyAudio createResource(String res)
 	{
-		final LazyAudio a = new LazyAudio(res);
+		final LazyAudio a = new LazyAudio(res);		
 		getEventBus().send(new ResourceLoadRequest(a));
-		
-		if (resources.contains(a)) throw new IllegalArgumentException("Sound resource " + res + " is already registered.");
 		resources.add(a);
 		return a;
 	}

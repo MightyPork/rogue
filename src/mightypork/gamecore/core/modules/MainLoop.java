@@ -1,14 +1,18 @@
 package mightypork.gamecore.core.modules;
 
 
+import java.util.Deque;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mightypork.gamecore.eventbus.events.UpdateEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
+import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.render.TaskTakeScreenshot;
 import mightypork.gamecore.render.events.ScreenshotRequestListener;
+import mightypork.gamecore.resources.Profiler;
 import mightypork.gamecore.util.Utils;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.timing.TimerDelta;
@@ -21,7 +25,10 @@ import mightypork.gamecore.util.math.timing.TimerDelta;
  */
 public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	
-	private final Queue<Runnable> taskQueue = new ConcurrentLinkedQueue<>();
+	private static final double MAX_TIME_TASKS = 1 / 30D; // (avoid queue from hogging timing)
+	private static final double MAX_DELTA = 1 / 20D; // (skip huge gaps caused by loading resources etc)
+	
+	private final Deque<Runnable> tasks = new ConcurrentLinkedDeque<>();
 	private TimerDelta timer;
 	private Renderable rootRenderable;
 	private volatile boolean running = true;
@@ -58,11 +65,23 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 		while (running) {
 			getDisplay().beginFrame();
 			
-			getEventBus().sendDirect(new UpdateEvent(timer.getDelta()));
+			double delta = timer.getDelta();
+			if (delta > MAX_DELTA) {
+				Log.f3("(timing) Cropping delta: was " + delta + " , limit " + MAX_DELTA);
+				delta = MAX_DELTA;
+			}
+			
+			getEventBus().sendDirect(new UpdateEvent(delta));
 			
 			Runnable r;
-			while ((r = taskQueue.poll()) != null) {
+			long t = Profiler.begin();
+			while ((r = tasks.poll()) != null) {
+				Log.f3(" * Main loop task.");
 				r.run();
+				if (Profiler.end(t) > MAX_TIME_TASKS) {
+					Log.f3("! Postponing main loop tasks to next cycle.");
+					break;
+				}
 			}
 			
 			beforeRender();
@@ -109,10 +128,15 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	 * Add a task to queue to be executed in the main loop (OpenGL thread)
 	 * 
 	 * @param request task
+	 * @param priority if true, skip other tasks
 	 */
-	public synchronized void queueTask(Runnable request)
+	public synchronized void queueTask(Runnable request, boolean priority)
 	{
-		taskQueue.add(request);
+		if (priority) {
+			tasks.addFirst(request);
+		} else {
+			tasks.addLast(request);
+		}
 	}
 	
 	
@@ -127,7 +151,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 			{
 				Utils.runAsThread(new TaskTakeScreenshot());
 			}
-		});
+		}, false);
 	}
 	
 }

@@ -18,7 +18,7 @@ import mightypork.gamecore.logging.Log;
  */
 public class AsyncResourceLoader extends Thread implements ResourceLoader, Destroyable {
 	
-	private final ExecutorService exs = Executors.newCachedThreadPool();
+	private final ExecutorService exs = Executors.newFixedThreadPool(2);
 	
 	private final LinkedBlockingQueue<LazyResource> toLoad = new LinkedBlockingQueue<>();
 	private volatile boolean stopped;
@@ -57,9 +57,9 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 		if (resource.getClass().isAnnotationPresent(TextureBasedResource.class)) {
 			
 			if (!mainLoopQueuing) {
-				Log.f3("<LOADER> Cannot load async: " + Log.str(resource));
+				// just let it be
 			} else {
-				Log.f3("<LOADER> Delegating to main thread:\n    " + Log.str(resource));
+				Log.f3("(loader) Delegating to main thread: " + Log.str(resource));
 				
 				app.getEventBus().send(new MainLoopRequest(new Runnable() {
 					
@@ -68,7 +68,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 					{
 						resource.load();
 					}
-				}));
+				}, false));
 			}
 			
 			return;
@@ -91,14 +91,16 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 				
 				if (!def.isLoaded()) {
 					
-					Log.f3("<LOADER> Loading: " + Log.str(def));
+					Log.f3("(loader) Scheduling... " + Log.str(def));
 					
 					exs.submit(new Runnable() {
 						
 						@Override
 						public void run()
 						{
-							def.load();
+							if(!def.isLoaded()) {
+								def.load();
+							}
 						}
 					});
 				}

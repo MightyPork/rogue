@@ -1,8 +1,8 @@
 /bin/
 /target/
+/~local/
 /.rogue-save/
-/build/.rogue-save/
-/build/out/.rogue-save/
+/build/
 /build/out/*.jar
 /build/in/*.jar
 *.log

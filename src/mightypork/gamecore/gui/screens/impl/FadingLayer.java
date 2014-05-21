@@ -3,6 +3,7 @@ package mightypork.gamecore.gui.screens.impl;
 
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
+import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.timing.TimedTask;
@@ -73,6 +74,7 @@ public abstract class FadingLayer extends ScreenLayer {
 	/**
 	 * Called after the fade-out was completed
 	 */
+	@DefaultImpl
 	protected void onHideFinished()
 	{
 	}
@@ -81,6 +83,7 @@ public abstract class FadingLayer extends ScreenLayer {
 	/**
 	 * Called after the fade-in was completed
 	 */
+	@DefaultImpl
 	protected void onShowFinished()
 	{
 	}
@@ -98,6 +101,7 @@ public abstract class FadingLayer extends ScreenLayer {
 			super.show();
 			numa.fadeIn();
 			hideTimer.stop();
+			showTimer.start(numa.getDefaultDuration());
 			
 			fadingOut = false;
 			fadingIn = true;

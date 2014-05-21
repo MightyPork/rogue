@@ -6,6 +6,8 @@ import java.io.IOException;
 import mightypork.gamecore.eventbus.events.Destroyable;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.logging.LogAlias;
+import mightypork.gamecore.util.math.Calc;
+import mightypork.gamecore.util.strings.StringUtils;
 
 
 /**
@@ -45,12 +47,14 @@ public abstract class BaseLazyResource implements LazyResource, Destroyable {
 				throw new NullPointerException("Resource string cannot be null for non-null resource.");
 			}
 			
-			Log.f3("<RES> Loading: " + this);
+			long time = Profiler.begin();
+			Log.f3("(res) + Load: " + this);
 			loadResource(resource);
-			Log.f3("<RES> Loaded: " + this);
+			Log.f3("(res) - Done: " + this + " in " + Profiler.endStr(time));
+			
 		} catch (final Throwable t) {
 			loadFailed = true;
-			Log.e("<RES> Failed to load: " + this, t);
+			Log.e("(res) Failed to load: " + this, t);
 		}
 	}
 	
@@ -74,7 +78,7 @@ public abstract class BaseLazyResource implements LazyResource, Destroyable {
 		} else {
 			if (loadFailed) return false;
 			
-			Log.f3("<RES> (!) Loading on access: " + this);
+			Log.f3("(res) !! Loading on access: " + this);
 			load();
 		}
 		
@@ -99,7 +103,7 @@ public abstract class BaseLazyResource implements LazyResource, Destroyable {
 	@Override
 	public String toString()
 	{
-		return Log.str(getClass()) + "(\"" + resource + "\")";
+		return StringUtils.fromLastChar(resource, '/');
 	}
 	
 	
