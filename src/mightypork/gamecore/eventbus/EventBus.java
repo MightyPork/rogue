@@ -107,7 +107,7 @@ final public class EventBus implements Destroyable, BusAccess {
 		
 	}
 	
-	static final String logMark = "<BUS> ";
+	static final String logMark = "(bus) ";
 	
 	
 	private static Class<?> getEventListenerClass(BusEvent<?> event)
