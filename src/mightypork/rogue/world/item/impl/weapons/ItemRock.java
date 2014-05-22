@@ -33,7 +33,7 @@ public class ItemRock extends ItemBaseWeapon {
 	@Override
 	public int getMaxUses()
 	{
-		return 30;
+		return 35;
 	}
 	
 	
