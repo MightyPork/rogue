@@ -4,6 +4,7 @@ package mightypork.rogue.world.item;
 import java.io.IOException;
 import java.util.Collection;
 
+import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.ion.IonInput;
 import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.rogue.world.item.impl.active.ItemHeartPiece;
@@ -64,9 +65,8 @@ public final class Items {
 	public static Item loadItem(IonInput in) throws IOException
 	{
 		final int id = in.readIntByte();
-		
 		final ItemModel model = get(id);
-		return model.loadItem(in);
+		return model.loadItem(in.readBundle());
 	}
 	
 	
@@ -75,7 +75,10 @@ public final class Items {
 		final ItemModel model = item.getModel();
 		
 		out.writeIntByte(model.id);
-		model.saveItem(out, item);
+		
+		IonBundle ib = new IonBundle();
+		model.saveItem(ib, item);
+		out.writeBundle(ib);
 	}
 	
 	
