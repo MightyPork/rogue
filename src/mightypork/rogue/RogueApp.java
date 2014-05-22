@@ -139,7 +139,7 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 					getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU, true));
 				}
 			}
-		}, true));
+		}, false));
 	}
 	
 	

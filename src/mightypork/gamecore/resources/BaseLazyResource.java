@@ -36,8 +36,12 @@ public abstract class BaseLazyResource implements LazyResource, Destroyable {
 	@Override
 	public synchronized final void load()
 	{
-		if (loadFailed) return;
-		if (loadAttempted) return;
+		if (!loadFailed && loadAttempted) return;
+		
+//		
+//		if (loadFailed) return;
+//		if (loadAttempted) return;
+//		
 		
 		loadAttempted = true;
 		loadFailed = false;
