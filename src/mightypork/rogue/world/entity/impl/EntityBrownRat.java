@@ -65,12 +65,12 @@ public class EntityBrownRat extends Entity {
 	{
 		// drop rat stuff
 		
-		if (Calc.rand.nextInt(2) == 0) {
+		if (Calc.rand.nextInt(2) != 0) {
 			getLevel().dropNear(getCoord(), Items.MEAT.createItem());
 			return;
 		}
 		
-		if (Calc.rand.nextInt(4) == 0) {
+		if (Calc.rand.nextInt(3) == 0) {
 			getLevel().dropNear(getCoord(), Items.CHEESE.createItem());
 			return;
 		}

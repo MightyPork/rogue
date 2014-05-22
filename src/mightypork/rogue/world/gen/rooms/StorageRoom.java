@@ -17,12 +17,15 @@ public class StorageRoom extends SecretRoom {
 	{
 		int maxStuff = Calc.randInt(rand, 3, 5);
 		
-		for (int i = 0; i < Calc.randInt(rand, 0, 2); i++) {
+		// at least one meat or cheese.
+		boolean oneMeat = rand.nextBoolean();
+		
+		for (int i = 0; i < Calc.randInt(rand, oneMeat ? 1 : 0, 3); i++) {
 			map.addItemInArea(Items.MEAT.createItem(), min, max, 50);
 			if (--maxStuff == 0) return;
 		}
 		
-		for (int i = 0; i < Calc.randInt(rand, 0, 2); i++) {
+		for (int i = 0; i < Calc.randInt(rand, oneMeat ? 0 : 1, 2); i++) {
 			map.addItemInArea(Items.CHEESE.createItem(), min, max, 50);
 			if (--maxStuff == 0) return;
 		}

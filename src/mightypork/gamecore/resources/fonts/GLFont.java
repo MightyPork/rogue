@@ -1,6 +1,7 @@
 package mightypork.gamecore.resources.fonts;
 
 
+import mightypork.gamecore.resources.TextureBasedResource;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 

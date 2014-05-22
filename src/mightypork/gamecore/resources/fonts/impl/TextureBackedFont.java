@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import mightypork.gamecore.logging.Log;
+import mightypork.gamecore.resources.TextureBasedResource;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.gamecore.resources.textures.LazyTexture;
