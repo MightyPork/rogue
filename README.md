@@ -1,6 +1,16 @@
 # Rogue - Savage Rats
 
-Manual on [Google Drive](https://docs.google.com/document/d/1Ak9oVOnCKSqWux4Hm_-efDYTj4uewf5MtR_Zmys7goQ)
+Manual on [Google Drive](http://goo.gl/AU0IdI)
+
+---
+
+The package `mightypork.gamecore` contains the framework part of the project.
+
+It is not yet ready to be published on it's own, but you can have a look at the 
+source if you're interested. The actual library repo will be set up later, with 
+more polished code, better docs, and cleaner hierarchy.
+
+---
 
 ## Description
 
@@ -37,7 +47,8 @@ Manual on [Google Drive](https://docs.google.com/document/d/1Ak9oVOnCKSqWux4Hm_-
 
 ## BUILDING FROM SOURCE
 
-1. Export a jar with the `mightypork.*` packages and the `res` folder into `build/in/build.jar`
+1. Export a jar with the `mightypork.*` packages and the `res` folder into 
+`build/in/build.jar`
 2. Run `make` to create a stand-alone executable jar in `build/out/release.jar`
 3. Use `make run` to execute it
 
