@@ -55,8 +55,13 @@ more polished code, better docs, and cleaner hierarchy.
 
 ## BUILDING FROM SOURCE
 
-1. Export a jar with the `mightypork.*` packages and the `res` folder into 
-`build/in/build.jar`
+1. Export a jar with the following (all compiled sources and res) into `build/in/build.jar`:
+   - `mightypork.gamecore.*`
+   - `mightypork.rogue.*`
+   - `mightypork.ion.*`
+   - `mightypork.dynmath.*`
+   - `res` folder with Rogue resources
+
 2. Run `make` to create a stand-alone executable jar in `build/out/release.jar`
 3. Use `make run` to execute it
 
