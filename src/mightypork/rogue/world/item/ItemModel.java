@@ -3,17 +3,14 @@ package mightypork.rogue.world.item;
 
 import java.io.IOException;
 
-import mightypork.gamecore.util.ion.Ion;
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.Calc;
+import mightypork.ion.IonBundle;
 
 
 /**
  * Item model (builder)
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public final class ItemModel {
 	

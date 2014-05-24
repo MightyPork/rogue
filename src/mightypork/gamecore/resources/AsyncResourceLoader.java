@@ -14,7 +14,7 @@ import mightypork.gamecore.logging.Log;
 /**
  * Asynchronous resource loading thread.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class AsyncResourceLoader extends Thread implements ResourceLoader, Destroyable {
 	
@@ -98,7 +98,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 						@Override
 						public void run()
 						{
-							if(!def.isLoaded()) {
+							if (!def.isLoaded()) {
 								def.load();
 							}
 						}

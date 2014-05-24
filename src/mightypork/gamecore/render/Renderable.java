@@ -4,7 +4,7 @@ package mightypork.gamecore.render;
 /**
  * Can be rendered
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface Renderable {
 	

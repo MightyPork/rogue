@@ -9,7 +9,7 @@ import mightypork.gamecore.resources.textures.TextureRegistry;
 /**
  * Resource binder; used by apps to specify what resources are to be loaded.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface ResourceSetup {
 	

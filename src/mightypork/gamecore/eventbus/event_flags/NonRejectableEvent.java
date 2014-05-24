@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 /**
  * Event that is forcibly delivered to all clients (bypass Toggleable etc)
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

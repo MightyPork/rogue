@@ -27,7 +27,7 @@ import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
  * zero delay.
  * </p>
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  * @param <HANDLER> handler type
  */
 public abstract class BusEvent<HANDLER> {

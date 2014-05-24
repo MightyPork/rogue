@@ -9,7 +9,7 @@ import org.lwjgl.input.Keyboard;
 /**
  * Key stroke trigger
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class KeyStroke { //implements Pollable
 

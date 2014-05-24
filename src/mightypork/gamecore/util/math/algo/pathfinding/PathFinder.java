@@ -16,7 +16,7 @@ import mightypork.gamecore.util.math.algo.pathfinding.heuristics.ManhattanHeuris
 /**
  * A* pathfinder
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class PathFinder {
 	

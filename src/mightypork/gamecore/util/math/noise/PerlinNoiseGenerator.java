@@ -27,7 +27,7 @@ import java.util.Random;
  * space by just setting the un-needed dimensions to a fixed value.
  * 
  * @author Justin Couch
- * @edited by MightyPork
+ * @edited by Ondřej Hruška
  * @version $Revision: 1.4 $
  * @source http://code.j3d.org/download.html
  */

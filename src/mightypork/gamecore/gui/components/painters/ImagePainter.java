@@ -10,7 +10,7 @@ import mightypork.gamecore.resources.textures.TxQuad;
 /**
  * Draws image in given rect
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class ImagePainter extends BaseComponent implements DynamicWidthComponent {
 	

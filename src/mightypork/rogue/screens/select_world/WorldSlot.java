@@ -2,7 +2,6 @@ package mightypork.rogue.screens.select_world;
 
 
 import java.io.File;
-import java.io.IOException;
 
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
@@ -15,12 +14,12 @@ import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.util.ion.Ion;
-import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.strings.StringProvider;
+import mightypork.ion.Ion;
+import mightypork.ion.IonBundle;
 import mightypork.rogue.events.LoadingOverlayRequest;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
@@ -111,7 +110,7 @@ public class WorldSlot extends ConstraintLayout {
 								
 								getEventBus().send(new ScreenRequest("game"));
 								
-							} catch (final IOException t) {
+							} catch (final Exception t) {
 								Log.e("Could not create & save the world.", t);
 							}
 							
@@ -120,12 +119,12 @@ public class WorldSlot extends ConstraintLayout {
 							try {
 								w = new World();
 								w.setSaveFile(file);
-								w.load(worldBundle);
+								w.load((IonBundle) worldBundle.get("world"));
 								WorldProvider.get().setWorld(w);
 								
 								getEventBus().send(new ScreenRequest("game"));
 								
-							} catch (final IOException e) {
+							} catch (final Exception e) {
 								Log.e("Could not load the world.", e);
 							}
 						}
@@ -171,7 +170,7 @@ public class WorldSlot extends ConstraintLayout {
 			
 			try {
 				worldBundle = Ion.fromFile(file);
-				final int lvl = worldBundle.get("meta.last_level", -1);
+				final int lvl = worldBundle.get("level", -1);
 				
 				if (lvl == -1) throw new RuntimeException("Invalid save format."); // let the catch block handle it
 				

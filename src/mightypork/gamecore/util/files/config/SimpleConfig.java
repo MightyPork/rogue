@@ -20,7 +20,7 @@ import mightypork.gamecore.util.files.FileUtils;
  * lines with "=" must have "key = value" format, or a warning is logged.<br>
  * use "NULL" to create empty value.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class SimpleConfig {
 	

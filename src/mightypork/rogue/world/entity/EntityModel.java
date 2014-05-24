@@ -3,16 +3,16 @@ package mightypork.rogue.world.entity;
 
 import java.io.IOException;
 
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonOutput;
 import mightypork.rogue.world.World;
 
 
 /**
  * Entity model - builder
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public final class EntityModel {
 	

@@ -10,7 +10,7 @@ import mightypork.gamecore.util.math.constraints.vect.VectConst;
 /**
  * Mouse moved
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @NotLoggedEvent
 public class MouseMotionEvent extends BusEvent<MouseMotionHandler> {

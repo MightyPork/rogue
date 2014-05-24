@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 /**
  * Handled only by the first client, then discarded.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

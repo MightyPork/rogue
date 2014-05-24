@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 /**
  * {@link TxQuad} and {@link TxSheet} building utility
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class QuadGrid {
 	

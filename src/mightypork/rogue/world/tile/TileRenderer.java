@@ -15,7 +15,7 @@ import mightypork.rogue.world.tile.render.NullTileRenderer;
 /**
  * Renderer for a tile; each tile has own renderer.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class TileRenderer implements Updateable {
 	

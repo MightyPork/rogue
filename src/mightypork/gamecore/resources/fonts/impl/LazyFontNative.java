@@ -11,7 +11,7 @@ import mightypork.gamecore.resources.textures.FilterMode;
 /**
  * Font obtained from the OS
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @LogAlias(name = "FontNative")
 public class LazyFontNative extends LazyFont {

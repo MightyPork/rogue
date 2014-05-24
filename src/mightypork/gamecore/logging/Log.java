@@ -19,7 +19,7 @@ import mightypork.gamecore.util.strings.StringUtils;
 /**
  * A log.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class Log {
 	

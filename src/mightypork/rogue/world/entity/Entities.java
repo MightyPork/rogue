@@ -4,8 +4,8 @@ package mightypork.rogue.world.entity;
 import java.io.IOException;
 import java.util.Collection;
 
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonOutput;
 import mightypork.rogue.world.entity.impl.EntityBossRat;
 import mightypork.rogue.world.entity.impl.EntityBrownRat;
 import mightypork.rogue.world.entity.impl.EntityGrayRat;
@@ -15,7 +15,7 @@ import mightypork.rogue.world.entity.impl.EntityPlayer;
 /**
  * Entity registry
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public final class Entities {
 	

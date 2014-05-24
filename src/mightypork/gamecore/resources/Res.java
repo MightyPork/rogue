@@ -16,7 +16,7 @@ import mightypork.gamecore.resources.textures.TxSheet;
 /**
  * Static resource repository
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public final class Res {
 	

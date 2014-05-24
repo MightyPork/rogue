@@ -13,7 +13,7 @@ import mightypork.rogue.world.tile.Tile;
 /**
  * Context for tile rendering.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public final class TileRenderContext extends MapRenderContext implements RectBound {
 	

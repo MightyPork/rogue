@@ -8,12 +8,9 @@ import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
-import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.Const;
 import mightypork.rogue.RogueStateManager.RogueState;
@@ -36,7 +33,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 	/**
 	 * Game gui state.
 	 * 
-	 * @author MightyPork
+	 * @author Ondřej Hruška
 	 */
 	public enum GScrState
 	{
@@ -311,7 +308,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		setState(GScrState.WORLD);
 		hideAllPopups();
 		
-		getSoundSystem().fadeOutAllLoops();		
+		getSoundSystem().fadeOutAllLoops();
 		Res.getSoundLoop("music.dungeon").fadeIn();
 	}
 	

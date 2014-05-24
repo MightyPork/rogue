@@ -8,7 +8,7 @@ import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 /**
  * Request to change screen
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @SingleReceiverEvent
 public class ScreenRequest extends BusEvent<ScreenRequestListener> {

@@ -4,7 +4,7 @@ package mightypork.gamecore.util.error;
 /**
  * Thrown by a map-like class when the key specified is already taken.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class KeyAlreadyExistsException extends RuntimeException {
 	

@@ -10,7 +10,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 /**
  * Layout for components with arbitrary constraints.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class ConstraintLayout extends LayoutComponent {
 	

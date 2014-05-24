@@ -10,7 +10,7 @@ import mightypork.gamecore.util.math.constraints.vect.proxy.VectAdapter;
  * Rect proxy with abstract method for plugging in / generating rect
  * dynamically.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class RectAdapter extends Rect {
 	

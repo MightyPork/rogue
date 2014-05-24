@@ -11,7 +11,7 @@ import mightypork.gamecore.logging.Log;
 /**
  * Static application workdir accessor.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class WorkDir {
 	

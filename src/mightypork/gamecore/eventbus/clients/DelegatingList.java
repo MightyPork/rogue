@@ -9,7 +9,7 @@ import mightypork.gamecore.gui.Enableable;
 /**
  * Basic delegating client
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class DelegatingList extends ClientList implements DelegatingClient, Enableable {
 	

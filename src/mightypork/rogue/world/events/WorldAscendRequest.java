@@ -7,7 +7,7 @@ import mightypork.gamecore.eventbus.BusEvent;
 /**
  * Player wants to go up
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class WorldAscendRequest extends BusEvent<WorldAscendRequestListener> {
 	

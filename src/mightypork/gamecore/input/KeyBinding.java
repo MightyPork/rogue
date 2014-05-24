@@ -10,7 +10,7 @@ import mightypork.gamecore.input.events.KeyEventHandler;
 /**
  * Key binding, trigger activated by a keystroke event
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class KeyBinding implements KeyEventHandler, InputReadyListener {
 	

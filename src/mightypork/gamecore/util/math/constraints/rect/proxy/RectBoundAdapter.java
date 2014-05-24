@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 /**
  * Pluggable rect bound adapter
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class RectBoundAdapter extends RectAdapter implements PluggableRectBound {
 	

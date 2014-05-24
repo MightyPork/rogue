@@ -7,7 +7,7 @@ import mightypork.rogue.world.gen.TileProtectLevel;
 /**
  * Data storage for world generator
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class TileGenData {
 	

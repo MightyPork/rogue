@@ -12,7 +12,7 @@ import mightypork.gamecore.gui.components.LinearComponent;
 /**
  * Converts a component into a linear component
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class AbstractLinearWrapper extends LinearComponent implements DelegatingClient {
 	

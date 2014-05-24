@@ -7,10 +7,10 @@ import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonObjBlob;
-import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.color.Color;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonObjBinary;
+import mightypork.ion.IonOutput;
 import mightypork.rogue.Const;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.item.Item;
@@ -21,9 +21,9 @@ import mightypork.rogue.world.level.render.TileRenderContext;
 /**
  * Tile data bundle. Client only renders.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
-public abstract class Tile implements BusAccess, IonObjBlob {
+public abstract class Tile implements BusAccess, IonObjBinary {
 	
 	// tmp extras
 	public final TileGenData genData = new TileGenData();

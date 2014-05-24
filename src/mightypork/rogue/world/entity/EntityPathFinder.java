@@ -13,7 +13,7 @@ import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 /**
  * Basic Pathfinder implementation for entities
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class EntityPathFinder extends PathFinder {
 	

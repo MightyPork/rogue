@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.color.Color;
 /**
  * Kinds of tiles
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public enum TileType
 {

@@ -1,17 +1,15 @@
 package mightypork.rogue.world;
 
 
-import java.io.IOException;
-
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonObjBundled;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.item.Item;
 
 
 /**
  * Player information stored in world.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class PlayerData implements IonObjBundled {
 	
@@ -31,7 +29,7 @@ public class PlayerData implements IonObjBundled {
 	
 	
 	@Override
-	public void load(IonBundle bundle) throws IOException
+	public void load(IonBundle bundle)
 	{
 		eid = bundle.get("eid", -1);
 		level = bundle.get("floor", -1);
@@ -42,7 +40,7 @@ public class PlayerData implements IonObjBundled {
 	
 	
 	@Override
-	public void save(IonBundle bundle) throws IOException
+	public void save(IonBundle bundle)
 	{
 		bundle.put("eid", eid);
 		bundle.put("floor", level);

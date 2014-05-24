@@ -4,24 +4,24 @@ package mightypork.gamecore.util.math.algo;
 import java.io.IOException;
 
 import mightypork.gamecore.util.annot.FactoryMethod;
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonObjBinary;
-import mightypork.gamecore.util.ion.IonObjBundled;
-import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonObjBinary;
+import mightypork.ion.IonObjBundled;
+import mightypork.ion.IonOutput;
 
 
 /**
  * Very simple integer coordinate
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
-public class Coord implements IonObjBundled, IonObjBinary {
+public class Coord implements IonObjBinary, IonObjBundled {
 	
-	public static final short ION_MARK = 255;
+	public static final int ION_MARK = 255;
 	
 	public int x;
 	public int y;
@@ -180,31 +180,24 @@ public class Coord implements IonObjBundled, IonObjBinary {
 	}
 	
 	
-	@Override
-	public void load(IonBundle bundle) throws IOException
-	{
-		x = bundle.get("x", 0);
-		y = bundle.get("y", 0);
-	}
-	
-	
-	@Override
-	public void save(IonBundle bundle) throws IOException
-	{
-		bundle.put("x", x);
-		bundle.put("y", y);
-	}
-	
-	
-	@Override
-	public short getIonMark()
-	{
-		return ION_MARK;
-	}
-	
-	
 	public static Coord fromVect(Vect vect)
 	{
 		return make((int) Math.floor(vect.x()), (int) Math.floor(vect.y()));
+	}
+	
+	
+	@Override
+	public void load(IonBundle in)
+	{
+		x = in.get("x", x);
+		y = in.get("y", y);
+	}
+	
+	
+	@Override
+	public void save(IonBundle out)
+	{
+		out.put("x", x);
+		out.put("y", y);
 	}
 }

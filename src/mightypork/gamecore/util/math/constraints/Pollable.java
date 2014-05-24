@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.constraints;
 /**
  * Can be asked to update it's state
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface Pollable {
 	

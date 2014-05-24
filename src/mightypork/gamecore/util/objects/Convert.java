@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.constraints.vect.VectConst;
  * Utility for converting Object to data types; Can also convert strings to data
  * types.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class Convert {
 	

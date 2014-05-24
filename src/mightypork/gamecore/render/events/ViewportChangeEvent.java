@@ -10,7 +10,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Screen resolution or mode was changed
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @NonConsumableEvent
 @NotLoggedEvent

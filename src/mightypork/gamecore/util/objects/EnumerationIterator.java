@@ -8,7 +8,7 @@ import java.util.Iterator;
 /**
  * Helper class for iterationg over an {@link Enumeration}
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  * @param <T> target element type (will be cast)
  */
 public class EnumerationIterator<T> implements Iterable<T> {

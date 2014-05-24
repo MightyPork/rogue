@@ -4,7 +4,7 @@ package mightypork.gamecore.gui;
 /**
  * Element that can be assigned an action (ie. button);
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface ActionTrigger {
 	

@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Polar coordinate
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class Polar {
 	

@@ -16,7 +16,7 @@ import mightypork.gamecore.util.objects.Convert;
 /**
  * Property manager with advanced formatting and value checking.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class PropertyManager {
 	

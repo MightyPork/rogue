@@ -9,7 +9,7 @@ import mightypork.gamecore.util.annot.DefaultImpl;
 /**
  * Bus node that should be directly attached to the bus.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class RootBusNode extends BusNode implements Destroyable {
 	

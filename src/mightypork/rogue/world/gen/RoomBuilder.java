@@ -9,7 +9,7 @@ import mightypork.gamecore.util.math.algo.Coord;
 /**
  * Room model
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface RoomBuilder {
 	

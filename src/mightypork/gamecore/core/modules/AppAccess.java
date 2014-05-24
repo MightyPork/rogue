@@ -10,7 +10,7 @@ import mightypork.gamecore.resources.audio.SoundSystem;
 /**
  * App interface visible to subsystems
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface AppAccess extends BusAccess {
 	

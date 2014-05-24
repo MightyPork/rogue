@@ -16,7 +16,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectAdapter;
  * default.
  * </p>
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class AbstractRectCache extends RectAdapter implements ConstraintCache<Rect> {
 	

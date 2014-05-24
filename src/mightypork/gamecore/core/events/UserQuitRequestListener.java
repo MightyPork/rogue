@@ -4,7 +4,7 @@ package mightypork.gamecore.core.events;
 /**
  * Quit request listener; implementing client can abort shutdown.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface UserQuitRequestListener {
 	

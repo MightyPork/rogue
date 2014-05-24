@@ -14,14 +14,14 @@ import mightypork.gamecore.eventbus.clients.DelegatingClient;
 /**
  * Screen with multiple instances of {@link ScreenLayer}
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class LayeredScreen extends Screen {
 	
 	/**
 	 * Wrapper for delegating client, to use custom client ordering.
 	 * 
-	 * @author MightyPork
+	 * @author Ondřej Hruška
 	 */
 	private class LayersClient implements DelegatingClient {
 		

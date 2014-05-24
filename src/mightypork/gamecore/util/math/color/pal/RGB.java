@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.color.Color;
 /**
  * Basic RGB palette
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class RGB {
 	

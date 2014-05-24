@@ -25,7 +25,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 /**
  * Render utilities
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class Render {
 	

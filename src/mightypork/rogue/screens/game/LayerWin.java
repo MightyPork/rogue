@@ -15,7 +15,6 @@ import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.impl.FadingLayer;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.gamecore.util.math.constraints.num.Num;
@@ -81,6 +80,7 @@ public class LayerWin extends FadingLayer {
 	{
 		return 300;
 	}
+	
 	
 	@Override
 	protected void onShowFinished()

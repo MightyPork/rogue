@@ -1,23 +1,21 @@
 package mightypork.rogue.world.entity.modules;
 
 
-import java.io.IOException;
-
 import mightypork.gamecore.eventbus.events.Updateable;
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.gamecore.util.math.constraints.vect.mutable.VectAnimated;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonObjBundled;
 
 
 /**
  * Entity position
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 class EntityPos implements IonObjBundled, Updateable {
 	
@@ -49,7 +47,7 @@ class EntityPos implements IonObjBundled, Updateable {
 	
 	
 	@Override
-	public void load(IonBundle in) throws IOException
+	public void load(IonBundle in)
 	{
 		in.loadBundled("pos", coord);
 		walkOffset.reset();
@@ -57,7 +55,7 @@ class EntityPos implements IonObjBundled, Updateable {
 	
 	
 	@Override
-	public void save(IonBundle out) throws IOException
+	public void save(IonBundle out)
 	{
 		out.putBundled("pos", coord);
 	}

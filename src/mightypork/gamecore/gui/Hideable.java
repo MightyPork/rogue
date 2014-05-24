@@ -4,7 +4,7 @@ package mightypork.gamecore.gui;
 /**
  * Element that can be hidden or visible
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface Hideable {
 	

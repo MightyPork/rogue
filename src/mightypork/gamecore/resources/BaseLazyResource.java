@@ -6,14 +6,13 @@ import java.io.IOException;
 import mightypork.gamecore.eventbus.events.Destroyable;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.logging.LogAlias;
-import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.strings.StringUtils;
 
 
 /**
  * Deferred resource abstraction.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @LogAlias(name = "Resource")
 public abstract class BaseLazyResource implements LazyResource, Destroyable {
@@ -51,7 +50,7 @@ public abstract class BaseLazyResource implements LazyResource, Destroyable {
 				throw new NullPointerException("Resource string cannot be null for non-null resource.");
 			}
 			
-			long time = Profiler.begin();
+			final long time = Profiler.begin();
 			Log.f3("(res) + Load: " + this);
 			loadResource(resource);
 			Log.f3("(res) - Done: " + this + " in " + Profiler.endStr(time));

@@ -7,7 +7,7 @@ import mightypork.gamecore.util.annot.DefaultImpl;
 /**
  * Screen display layer
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class ScreenLayer extends Overlay {
 	

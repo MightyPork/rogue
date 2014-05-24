@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  * Screenshot object, can be used to extract image or write to file.<br>
  * Screenshot, once taken, can be safely processed in separate thread.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class Screenshot {
 	

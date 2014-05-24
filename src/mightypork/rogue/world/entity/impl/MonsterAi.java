@@ -1,17 +1,16 @@
 package mightypork.rogue.world.entity.impl;
 
 
-import java.io.IOException;
 import java.util.List;
 
 import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinderProxy;
+import mightypork.ion.IonBundle;
 import mightypork.rogue.world.entity.AiTimer;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;
@@ -132,7 +131,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	
 	
 	@Override
-	public void save(IonBundle bundle) throws IOException
+	public void save(IonBundle bundle)
 	{
 		bundle.putBundled("tscan", timerFindPrey);
 		bundle.putBundled("tattack", timerAttack);
@@ -144,7 +143,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	
 	
 	@Override
-	public void load(IonBundle bundle) throws IOException
+	public void load(IonBundle bundle)
 	{
 		bundle.loadBundled("tscan", timerFindPrey);
 		bundle.loadBundled("tattack", timerAttack);

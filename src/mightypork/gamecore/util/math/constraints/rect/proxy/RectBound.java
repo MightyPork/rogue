@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 /**
  * Rect constraint (ie. region)
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface RectBound {
 	

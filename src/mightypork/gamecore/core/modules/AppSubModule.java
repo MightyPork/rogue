@@ -13,7 +13,7 @@ import mightypork.gamecore.resources.audio.SoundSystem;
  * Delegating bus client, to be attached to any {@link DelegatingClient}, such
  * as a {@link RootBusNode}.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class AppSubModule extends BusNode implements AppAccess {
 	

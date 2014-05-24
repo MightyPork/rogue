@@ -17,7 +17,7 @@ import mightypork.gamecore.util.files.FileUtils;
 /**
  * Class for building a zip file
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class ZipBuilder {
 	

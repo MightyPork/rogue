@@ -15,7 +15,7 @@ import java.util.Map;
  * Map&lt;String, Integer&gt; args = new VarargsParser&lt;String, Integer&gt;().parse(array);
  * </pre>
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  * @param <K> Type for Map keys
  * @param <V> Type for Map values
  */

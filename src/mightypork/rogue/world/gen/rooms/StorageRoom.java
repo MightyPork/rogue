@@ -18,7 +18,7 @@ public class StorageRoom extends SecretRoom {
 		int maxStuff = Calc.randInt(rand, 3, 5);
 		
 		// at least one meat or cheese.
-		boolean oneMeat = rand.nextBoolean();
+		final boolean oneMeat = rand.nextBoolean();
 		
 		for (int i = 0; i < Calc.randInt(rand, oneMeat ? 1 : 0, 3); i++) {
 			map.addItemInArea(Items.MEAT.createItem(), min, max, 50);

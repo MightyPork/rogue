@@ -3,20 +3,18 @@ package mightypork.gamecore.util.math.algo;
 
 import java.io.IOException;
 
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonObjBinary;
-import mightypork.gamecore.util.ion.IonObjBundled;
-import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonObjBinary;
+import mightypork.ion.IonOutput;
 
 
 /**
  * Path step.<br>
  * Must be binary in order to be saveable in lists.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
-public class Move implements IonObjBinary, IonObjBundled {
+public class Move implements IonObjBinary {
 	
 	public static final int ION_MARK = 254;
 	
@@ -77,13 +75,6 @@ public class Move implements IonObjBinary, IonObjBundled {
 	
 	
 	@Override
-	public short getIonMark()
-	{
-		return ION_MARK;
-	}
-	
-	
-	@Override
 	public String toString()
 	{
 		return "(" + x + ";" + y + ")";
@@ -104,21 +95,4 @@ public class Move implements IonObjBinary, IonObjBundled {
 		out.writeByte(x);
 		out.writeByte(y);
 	}
-	
-	
-	@Override
-	public void load(IonBundle bundle) throws IOException
-	{
-		x = bundle.get("x", x);
-		y = bundle.get("y", y);
-	}
-	
-	
-	@Override
-	public void save(IonBundle bundle) throws IOException
-	{
-		bundle.put("x", x);
-		bundle.put("y", y);
-	}
-	
 }

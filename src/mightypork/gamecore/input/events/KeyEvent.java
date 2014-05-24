@@ -10,7 +10,7 @@ import org.lwjgl.input.Keyboard;
 /**
  * A keyboard event
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @NotLoggedEvent
 public class KeyEvent extends BusEvent<KeyEventHandler> {

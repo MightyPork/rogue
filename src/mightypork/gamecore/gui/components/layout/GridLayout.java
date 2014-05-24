@@ -11,7 +11,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 /**
  * Holder with table cells
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class GridLayout extends LayoutComponent {
 	

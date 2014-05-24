@@ -24,7 +24,7 @@ import org.lwjgl.opengl.DisplayMode;
 /**
  * Display system
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class DisplaySystem extends AppModule implements RectBound {
 	

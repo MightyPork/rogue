@@ -13,7 +13,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
  * Color.<br>
  * All values are 0-1
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class Color {
 	

@@ -1,7 +1,6 @@
 package mightypork.gamecore.resources.fonts;
 
 
-import mightypork.gamecore.resources.TextureBasedResource;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 
@@ -9,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Interface bor drawable font.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface GLFont {
 	

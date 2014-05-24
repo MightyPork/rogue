@@ -1,7 +1,6 @@
 package mightypork.rogue.world.entity;
 
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,10 +10,10 @@ import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.error.IllegalValueException;
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
@@ -25,7 +24,7 @@ import mightypork.rogue.world.level.render.MapRenderContext;
 /**
  * World entity (mob or player). Entities are attached to the event bus.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class Entity implements IonObjBundled, Updateable, DelegatingClient {
 	
@@ -57,7 +56,7 @@ public abstract class Entity implements IonObjBundled, Updateable, DelegatingCli
 	
 	
 	@Override
-	public final void save(IonBundle bundle) throws IOException
+	public final void save(IonBundle bundle)
 	{
 		bundle.put("eid", entityId);
 		
@@ -80,7 +79,7 @@ public abstract class Entity implements IonObjBundled, Updateable, DelegatingCli
 	
 	
 	@Override
-	public final void load(IonBundle bundle) throws IOException
+	public final void load(IonBundle bundle)
 	{
 		entityId = bundle.get("eid", -1);
 		if (entityId < 0) throw new IllegalValueException("Bad entity id: " + entityId);

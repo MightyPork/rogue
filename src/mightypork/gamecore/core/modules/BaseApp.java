@@ -11,9 +11,9 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
 import mightypork.gamecore.core.Config;
-import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.core.Config.ConfigSetup;
 import mightypork.gamecore.core.Config.KeySetup;
+import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.core.WorkDir.RouteSetup;
 import mightypork.gamecore.eventbus.EventBus;
 import mightypork.gamecore.eventbus.events.DestroyEvent;
@@ -31,16 +31,16 @@ import mightypork.gamecore.resources.ResourceSetup;
 import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.files.InstanceLock;
-import mightypork.gamecore.util.ion.Ion;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Move;
+import mightypork.ion.Ion;
 
 
 /**
  * Basic screen-based game with subsystems.<br>
  * This class takes care of the initialization sequence.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	
@@ -320,8 +320,8 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	{
 		logSystemInfo();
 	}
-
-
+	
+	
 	protected void logSystemInfo()
 	{
 		String txt = "";
@@ -344,8 +344,8 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	
 	protected void registerIonizables()
 	{
-		Ion.registerType(Coord.ION_MARK, Coord.class);
-		Ion.registerType(Move.ION_MARK, Move.class);
+		Ion.register(Coord.class);
+		Ion.register(Move.class);
 	}
 	
 	

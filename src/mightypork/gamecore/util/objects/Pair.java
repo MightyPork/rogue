@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.Calc;
 /**
  * Structure of 2 objects.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  * @copy (c) 2012
  * @param <T1> 1st object class
  * @param <T2> 2nd object class

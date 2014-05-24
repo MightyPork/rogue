@@ -18,7 +18,7 @@ import mightypork.rogue.world.level.Level;
 /**
  * Convenient access to player-related methods and data in world.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class PlayerFacade {
 	

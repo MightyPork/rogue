@@ -4,8 +4,8 @@ package mightypork.rogue.world.tile.impl;
 import java.io.IOException;
 import java.util.Stack;
 
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonOutput;
 import mightypork.rogue.Const;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.Items;

@@ -8,7 +8,7 @@ import mightypork.gamecore.input.KeyStroke.Edge;
 /**
  * Can bind events to keys.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface KeyBinder {
 	

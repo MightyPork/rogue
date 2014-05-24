@@ -2,7 +2,6 @@ package mightypork.rogue.world;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -13,10 +12,10 @@ import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.error.CorruptDataException;
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.timing.Pauseable;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.events.GameWinHandler;
@@ -27,7 +26,7 @@ import mightypork.rogue.world.level.Level;
 /**
  * World object.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable, Updateable, PlayerDeathHandler, GameWinHandler {
 	
@@ -71,7 +70,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	
 	
 	@Override
-	public void load(IonBundle in) throws IOException
+	public void load(IonBundle in)
 	{
 		seed = in.get("seed", seed);
 		eid = in.get("next_eid", eid);
@@ -106,7 +105,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	
 	
 	@Override
-	public void save(IonBundle out) throws IOException
+	public void save(IonBundle out)
 	{
 		out.put("seed", seed);
 		out.put("next_eid", eid);

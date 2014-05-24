@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.timing.Pauseable;
  * When both in and out easings are set differently, then they'll be used for
  * fade-in and fade-out respectively. Otherwise both use the same.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class NumAnimated extends NumMutable implements Updateable, Pauseable {
 	

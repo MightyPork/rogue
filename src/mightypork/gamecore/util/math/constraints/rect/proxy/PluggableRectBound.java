@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.constraints.rect.proxy;
 /**
  * Pluggable rect bound
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface PluggableRectBound extends RectBound {
 	

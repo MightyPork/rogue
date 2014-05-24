@@ -9,7 +9,7 @@ import mightypork.rogue.screens.LoadingOverlay;
 /**
  * Request to execute a given task in a loading overlay
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @SingleReceiverEvent
 public class LoadingOverlayRequest extends BusEvent<LoadingOverlay> {

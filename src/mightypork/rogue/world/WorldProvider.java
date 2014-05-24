@@ -7,7 +7,8 @@ import java.io.IOException;
 import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.ion.Ion;
+import mightypork.ion.Ion;
+import mightypork.ion.IonBundle;
 import mightypork.rogue.world.gen.WorldCreator;
 import mightypork.rogue.world.level.Level;
 
@@ -15,7 +16,7 @@ import mightypork.rogue.world.level.Level;
 /**
  * Global singleton world holder and storage
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class WorldProvider extends RootBusNode {
 	
@@ -92,7 +93,9 @@ public class WorldProvider extends RootBusNode {
 	public void loadWorld(File file) throws IOException
 	{
 		Log.f2("Loading world from: " + file);
-		setWorld(Ion.fromFile(file, World.class));
+		
+		final IonBundle bu = Ion.fromFile(file);
+		setWorld(bu.loadBundled("world", new World()));
 		world.setSaveFile(file);
 	}
 	
@@ -111,7 +114,12 @@ public class WorldProvider extends RootBusNode {
 		}
 		
 		Log.f2("Saving world to: " + file);
-		Ion.toFile(file, world);
+		
+		final IonBundle bu = new IonBundle();
+		bu.put("level", world.getPlayer().getLevelNumber());
+		bu.putBundled("world", world);
+		
+		Ion.toFile(file, bu);
 	}
 	
 	

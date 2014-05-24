@@ -3,8 +3,8 @@ package mightypork.rogue.world.tile;
 
 import java.io.IOException;
 
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonOutput;
 import mightypork.rogue.world.tile.impl.NullTile;
 import mightypork.rogue.world.tile.impl.brick.*;
 
@@ -12,7 +12,7 @@ import mightypork.rogue.world.tile.impl.brick.*;
 /**
  * Tile registry
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public final class Tiles {
 	

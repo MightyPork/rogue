@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Mutable rectangle; operations change it's state.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class RectMutable extends Rect {
 	

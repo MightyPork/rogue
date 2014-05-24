@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.timing.TimedTask;
 /**
  * Layer that smoothly appears/disappears when shown/hidden
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class FadingLayer extends ScreenLayer {
 	

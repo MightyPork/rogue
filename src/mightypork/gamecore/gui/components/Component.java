@@ -9,7 +9,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 /**
  * Basic UI component interface
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface Component extends Enableable, Hideable, PluggableRenderable {
 	

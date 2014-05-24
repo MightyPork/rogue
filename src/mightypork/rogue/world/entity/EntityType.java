@@ -4,7 +4,7 @@ package mightypork.rogue.world.entity;
 /**
  * Type of an entity
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public enum EntityType
 {

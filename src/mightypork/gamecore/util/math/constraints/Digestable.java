@@ -18,7 +18,7 @@ package mightypork.gamecore.util.math.constraints;
  * that digest caching is enabled, and a flag that a digest is dirty.
  * </p>
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  * @param <D> digest class
  */
 public interface Digestable<D> {

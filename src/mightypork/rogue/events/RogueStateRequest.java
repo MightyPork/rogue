@@ -9,7 +9,7 @@ import mightypork.rogue.RogueStateManager.RogueState;
 /**
  * Request for a game state change
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class RogueStateRequest extends BusEvent<RogueStateManager> {
 	

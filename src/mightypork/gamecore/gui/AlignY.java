@@ -4,7 +4,7 @@ package mightypork.gamecore.gui;
 /**
  * Vertical align sides
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public enum AlignY
 {

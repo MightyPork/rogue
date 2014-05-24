@@ -10,7 +10,7 @@ import mightypork.gamecore.util.math.color.Color;
 /**
  * Draws image in given rect
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class QuadPainter extends BaseComponent {
 	

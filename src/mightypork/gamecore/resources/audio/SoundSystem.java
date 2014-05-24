@@ -3,9 +3,7 @@ package mightypork.gamecore.resources.audio;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
@@ -26,7 +24,7 @@ import org.newdawn.slick.openal.SoundStore;
 /**
  * Sound system class (only one instance should be made per application)
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class SoundSystem extends RootBusNode implements Updateable {
 	
@@ -164,7 +162,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	 */
 	private LazyAudio createResource(String res)
 	{
-		final LazyAudio a = new LazyAudio(res);		
+		final LazyAudio a = new LazyAudio(res);
 		getEventBus().send(new ResourceLoadRequest(a));
 		resources.add(a);
 		return a;

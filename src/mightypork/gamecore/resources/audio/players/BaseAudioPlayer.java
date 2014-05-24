@@ -9,7 +9,7 @@ import mightypork.gamecore.resources.audio.Volume;
 /**
  * Basic abstract player
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class BaseAudioPlayer implements Destroyable {
 	

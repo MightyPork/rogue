@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +24,7 @@ import mightypork.gamecore.util.Utils;
  * An event bus, accommodating multiple EventChannels.<br>
  * Channel will be created when an event of type is first encountered.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 final public class EventBus implements Destroyable, BusAccess {
 	
@@ -135,13 +134,13 @@ final public class EventBus implements Destroyable, BusAccess {
 	private final QueuePollingThread busThread;
 	
 	/** Registered clients */
-	private final Set<Object> clients = Collections.newSetFromMap(new ConcurrentHashMap<Object,Boolean>());
+	private final Set<Object> clients = Collections.newSetFromMap(new ConcurrentHashMap<Object, Boolean>());
 	
 	/** Whether the bus was destroyed */
 	private boolean dead = false;
 	
 	/** Message channels */
-	private final Set<EventChannel<?, ?>> channels = Collections.newSetFromMap(new ConcurrentHashMap<EventChannel<?, ?>,Boolean>());
+	private final Set<EventChannel<?, ?>> channels = Collections.newSetFromMap(new ConcurrentHashMap<EventChannel<?, ?>, Boolean>());
 	
 	/** Messages queued for delivery */
 	private final DelayQueue<DelayQueueEntry> sendQueue = new DelayQueue<>();

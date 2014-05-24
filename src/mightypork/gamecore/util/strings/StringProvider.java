@@ -4,7 +4,7 @@ package mightypork.gamecore.util.strings;
 /**
  * Can be used for dynamic string generating
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface StringProvider {
 	

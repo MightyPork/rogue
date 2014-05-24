@@ -7,7 +7,7 @@ import mightypork.gamecore.util.annot.FactoryMethod;
 /**
  * EasingFunction function.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class Easing {
 	
@@ -62,7 +62,7 @@ public abstract class Easing {
 	/**
 	 * Reverse EasingFunction
 	 * 
-	 * @author MightyPork
+	 * @author Ondřej Hruška
 	 */
 	private static class Reverse extends Easing {
 		
@@ -88,7 +88,7 @@ public abstract class Easing {
 	/**
 	 * Composite EasingFunction (0-0.5 EasingFunction A, 0.5-1 EasingFunction B)
 	 * 
-	 * @author MightyPork
+	 * @author Ondřej Hruška
 	 */
 	private static class Composite extends Easing {
 		

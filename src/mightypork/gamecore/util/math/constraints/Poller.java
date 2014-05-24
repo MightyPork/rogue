@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Used to poll a number of {@link Pollable}s
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class Poller implements Pollable {
 	

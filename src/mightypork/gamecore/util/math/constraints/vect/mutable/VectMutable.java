@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Mutable coord
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 abstract class VectMutable extends Vect {
 	

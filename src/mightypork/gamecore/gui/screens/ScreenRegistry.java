@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.newdawn.slick.opengl.GLUtils;
-
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppModule;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
@@ -22,7 +20,7 @@ import mightypork.gamecore.util.annot.DefaultImpl;
 /**
  * Game screens holder; Takes care of rendering and screen requests.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class ScreenRegistry extends AppModule implements ScreenRequestListener, ViewportChangeListener, Renderable {
 	
@@ -114,7 +112,7 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	@Override
 	public void onViewportChanged(ViewportChangeEvent event)
 	{
-		if(active != null) fireLayoutUpdateEvent();
+		if (active != null) fireLayoutUpdateEvent();
 	}
 	
 	

@@ -9,7 +9,7 @@ import mightypork.gamecore.logging.Log;
 /**
  * Basic sprite sheet
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class TxSheet {
 	

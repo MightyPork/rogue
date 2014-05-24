@@ -5,7 +5,7 @@ package mightypork.gamecore.util.math.constraints.vect.mutable;
  * Mutable coordinate.<br>
  * All Vec methods (except copy) alter data values and return this instance.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class VectVar extends VectMutable {
 	

@@ -1,17 +1,16 @@
 package mightypork.rogue.world.entity.modules;
 
 
-import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-import mightypork.gamecore.util.ion.IonBundle;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.constraints.vect.VectConst;
+import mightypork.ion.IonBundle;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;
 
@@ -40,7 +39,7 @@ public class EntityModulePosition extends EntityModule {
 	
 	
 	@Override
-	public void save(IonBundle bundle) throws IOException
+	public void save(IonBundle bundle)
 	{
 		bundle.putSequence("path", path);
 		bundle.putBundled("lpos", lastPos);
@@ -50,7 +49,7 @@ public class EntityModulePosition extends EntityModule {
 	
 	
 	@Override
-	public void load(IonBundle bundle) throws IOException
+	public void load(IonBundle bundle)
 	{
 		bundle.loadSequence("path", path);
 		bundle.loadBundled("lpos", lastPos);

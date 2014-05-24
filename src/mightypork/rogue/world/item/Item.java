@@ -1,17 +1,12 @@
 package mightypork.rogue.world.item;
 
 
-import java.io.IOException;
-
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonObjBlob;
-import mightypork.gamecore.util.ion.IonObjBundled;
-import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.PlayerFacade;
 
 
@@ -44,7 +39,7 @@ public abstract class Item implements IonObjBundled {
 	
 	@Override
 	@DefaultImpl
-	public void save(IonBundle out) throws IOException
+	public void save(IonBundle out)
 	{
 		out.put("c", amount);
 		out.put("u", uses);
@@ -53,7 +48,7 @@ public abstract class Item implements IonObjBundled {
 	
 	@Override
 	@DefaultImpl
-	public void load(IonBundle in) throws IOException
+	public void load(IonBundle in)
 	{
 		amount = in.get("c", amount);
 		uses = in.get("u", uses);

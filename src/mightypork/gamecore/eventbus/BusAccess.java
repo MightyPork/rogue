@@ -4,7 +4,7 @@ package mightypork.gamecore.eventbus;
 /**
  * Access to an {@link EventBus} instance
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface BusAccess {
 	

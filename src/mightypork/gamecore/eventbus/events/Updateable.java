@@ -4,7 +4,7 @@ package mightypork.gamecore.eventbus.events;
 /**
  * Uses delta timing
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface Updateable {
 	

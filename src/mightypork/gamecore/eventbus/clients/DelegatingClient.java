@@ -9,7 +9,7 @@ import java.util.Collection;
  * of clients is ordered, the clients will be served in that order. In any case,
  * the {@link DelegatingClient} itself will be served beforehand.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface DelegatingClient {
 	

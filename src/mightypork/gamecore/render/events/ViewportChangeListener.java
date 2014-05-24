@@ -4,7 +4,7 @@ package mightypork.gamecore.render.events;
 /**
  * {@link ViewportChangeEvent} listener
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface ViewportChangeListener {
 	

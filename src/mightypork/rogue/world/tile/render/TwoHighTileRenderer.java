@@ -12,7 +12,7 @@ import mightypork.rogue.world.tile.TileRenderer;
 /**
  * Tile that spans across two tiles visually (two-high)
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class TwoHighTileRenderer extends TileRenderer {
 	

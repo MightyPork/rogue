@@ -4,9 +4,9 @@ package mightypork.rogue.world.item;
 import java.io.IOException;
 import java.util.Collection;
 
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonOutput;
 import mightypork.rogue.world.item.impl.active.ItemHeartPiece;
 import mightypork.rogue.world.item.impl.food.ItemCheese;
 import mightypork.rogue.world.item.impl.food.ItemMeat;
@@ -17,7 +17,7 @@ import mightypork.rogue.world.item.impl.weapons.*;
 /**
  * Item registry
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public final class Items {
 	
@@ -76,7 +76,7 @@ public final class Items {
 		
 		out.writeIntByte(model.id);
 		
-		IonBundle ib = new IonBundle();
+		final IonBundle ib = new IonBundle();
 		model.saveItem(ib, item);
 		out.writeBundle(ib);
 	}

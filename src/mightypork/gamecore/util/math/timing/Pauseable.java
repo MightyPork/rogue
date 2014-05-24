@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.timing;
 /**
  * Can be paused & resumed
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface Pauseable {
 	

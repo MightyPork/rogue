@@ -9,7 +9,7 @@ import mightypork.gamecore.eventbus.event_flags.NonConsumableEvent;
 /**
  * Invoke destroy() method of all subscribers. Used to deinit a system.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @DirectEvent
 @NonConsumableEvent

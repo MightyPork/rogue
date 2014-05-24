@@ -10,7 +10,7 @@ import mightypork.gamecore.resources.textures.TxQuad;
 /**
  * Button in the ingame nav
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class NavButton extends ClickableComponent {
 	

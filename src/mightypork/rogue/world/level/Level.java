@@ -10,10 +10,6 @@ import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.eventbus.clients.ToggleableClient;
 import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonObjBinary;
-import mightypork.gamecore.util.ion.IonOutput;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Move;
@@ -21,6 +17,10 @@ import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.gamecore.util.math.algo.floodfill.FloodFill;
 import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.noise.NoiseGen;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonObjBinary;
+import mightypork.ion.IonOutput;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
@@ -35,7 +35,7 @@ import mightypork.rogue.world.tile.Tiles;
 /**
  * One level of the dungeon
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class Level implements BusAccess, Updateable, DelegatingClient, ToggleableClient, IonObjBinary {
 	
@@ -285,13 +285,6 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		}
 		
 		Entities.saveEntities(out, entityList);
-	}
-	
-	
-	@Override
-	public short getIonMark()
-	{
-		return ION_MARK;
 	}
 	
 	

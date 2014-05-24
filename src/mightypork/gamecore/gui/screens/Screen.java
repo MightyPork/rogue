@@ -20,7 +20,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 /**
  * Screen class.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class Screen extends AppSubModule implements Renderable, RectBound, KeyBinder, LayoutChangeListener {
 	

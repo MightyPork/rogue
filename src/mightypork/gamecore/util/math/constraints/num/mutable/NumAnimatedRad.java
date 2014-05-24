@@ -9,7 +9,7 @@ import mightypork.gamecore.util.math.Easing;
 /**
  * Radians animator
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class NumAnimatedRad extends NumAnimated {
 	

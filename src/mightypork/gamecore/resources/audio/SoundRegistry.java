@@ -13,7 +13,7 @@ import mightypork.gamecore.resources.audio.players.LoopPlayer;
 /**
  * Audio resource storage
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class SoundRegistry extends AppAccessAdapter {
 	

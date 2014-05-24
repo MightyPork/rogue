@@ -16,7 +16,7 @@ import mightypork.gamecore.util.strings.filtering.StringFilter;
 /**
  * Utilities for manipulating zip files
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class ZipUtils {
 	

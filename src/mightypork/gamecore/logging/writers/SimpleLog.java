@@ -18,7 +18,7 @@ import mightypork.gamecore.logging.monitors.LogMonitor;
 /**
  * Basic logger
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class SimpleLog implements LogWriter {
 	

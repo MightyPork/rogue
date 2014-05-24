@@ -20,7 +20,7 @@ import mightypork.gamecore.render.events.ScreenshotRequestListener;
 import mightypork.gamecore.render.events.ViewportChangeEvent;
 import mightypork.gamecore.render.events.ViewportChangeListener;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.util.ion.Ion;
+import mightypork.ion.Ion;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.FpsOverlay;
@@ -37,7 +37,7 @@ import mightypork.rogue.world.level.Level;
 /**
  * Main class
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public final class RogueApp extends BaseApp implements ViewportChangeListener, ScreenshotRequestListener {
 	
@@ -61,8 +61,8 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	{
 		super.registerIonizables();
 		
-		Ion.registerType(Level.ION_MARK, Level.class);
-		Ion.registerType(Inventory.ION_MARK, Inventory.class);
+		Ion.register(Level.class);
+		Ion.register(Inventory.class);
 	}
 	
 	

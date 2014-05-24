@@ -13,7 +13,7 @@ import mightypork.gamecore.eventbus.EventBus;
  * Client that can be attached to the {@link EventBus}, or added as a child
  * client to another {@link DelegatingClient}
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class BusNode implements BusAccess, ClientHub {
 	

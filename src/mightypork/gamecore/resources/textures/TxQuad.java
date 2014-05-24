@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.rect.RectConst;
 /**
  * Texture Quad (describing a part of a texture)
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class TxQuad {
 	

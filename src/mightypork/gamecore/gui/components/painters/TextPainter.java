@@ -19,7 +19,7 @@ import mightypork.gamecore.util.strings.StringWrapper;
 /**
  * Text painting component.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class TextPainter extends BaseComponent implements DynamicWidthComponent {
 	

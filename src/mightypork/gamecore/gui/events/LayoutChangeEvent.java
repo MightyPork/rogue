@@ -11,7 +11,7 @@ import mightypork.gamecore.eventbus.event_flags.NonRejectableEvent;
  * Intended use is to notify UI component sub-clients that they should poll
  * their cached constraints.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @DirectEvent
 @NonConsumableEvent

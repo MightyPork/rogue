@@ -9,7 +9,7 @@ import mightypork.gamecore.logging.writers.LogWriter;
 /**
  * Used to redirect slick log into main logger.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class SlickLogRedirector implements org.newdawn.slick.util.LogSystem {
 	

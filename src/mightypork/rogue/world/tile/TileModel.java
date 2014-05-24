@@ -3,14 +3,14 @@ package mightypork.rogue.world.tile;
 
 import java.io.IOException;
 
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonOutput;
 
 
 /**
  * Tile model (builder)
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public final class TileModel {
 	

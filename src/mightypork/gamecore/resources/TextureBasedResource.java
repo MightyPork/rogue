@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  * Resource that is texture-based and therefore needs to be loaded in the main
  * thread (ie. main loop).
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 
 @Retention(RetentionPolicy.RUNTIME)

@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 /**
  * Numeric constraint
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface NumBound {
 	

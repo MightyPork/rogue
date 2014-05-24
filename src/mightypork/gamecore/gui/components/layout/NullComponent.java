@@ -7,7 +7,7 @@ import mightypork.gamecore.gui.components.BaseComponent;
 /**
  * Invisible component that does nothing at all; Null object pattern
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class NullComponent extends BaseComponent {
 	

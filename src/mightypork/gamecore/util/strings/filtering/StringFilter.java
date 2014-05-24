@@ -4,7 +4,7 @@ package mightypork.gamecore.util.strings.filtering;
 /**
  * Utility interface for string filters (accepting filepaths and similar)
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface StringFilter {
 	

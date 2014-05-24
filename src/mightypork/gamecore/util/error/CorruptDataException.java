@@ -1,15 +1,12 @@
 package mightypork.gamecore.util.error;
 
 
-import java.io.IOException;
-
-
 /**
  * Thrown when data could not be read successfully.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
-public class CorruptDataException extends IOException {
+public class CorruptDataException extends RuntimeException {
 	
 	public CorruptDataException()
 	{

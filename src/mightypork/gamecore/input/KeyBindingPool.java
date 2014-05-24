@@ -14,7 +14,7 @@ import mightypork.gamecore.logging.Log;
 /**
  * Key binding pool
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class KeyBindingPool implements KeyBinder, KeyEventHandler {
 	

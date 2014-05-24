@@ -1,11 +1,9 @@
 package mightypork.rogue.world.entity;
 
 
-import java.io.IOException;
-
-import mightypork.gamecore.util.ion.IonBundle;
-import mightypork.gamecore.util.ion.IonObjBundled;
 import mightypork.gamecore.util.math.timing.TaskRepeater;
+import mightypork.ion.IonBundle;
+import mightypork.ion.IonObjBundled;
 
 
 public abstract class AiTimer extends TaskRepeater implements IonObjBundled {
@@ -21,7 +19,7 @@ public abstract class AiTimer extends TaskRepeater implements IonObjBundled {
 	
 	
 	@Override
-	public void load(IonBundle bundle) throws IOException
+	public void load(IonBundle bundle)
 	{
 		final boolean wasPaused = bundle.get("paused", isPaused());
 		if (wasPaused) {
@@ -36,7 +34,7 @@ public abstract class AiTimer extends TaskRepeater implements IonObjBundled {
 	
 	
 	@Override
-	public void save(IonBundle bundle) throws IOException
+	public void save(IonBundle bundle)
 	{
 		bundle.put("paused", isPaused());
 		bundle.put("progress", getProgress());

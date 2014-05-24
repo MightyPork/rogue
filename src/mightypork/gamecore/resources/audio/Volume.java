@@ -8,7 +8,7 @@ import mightypork.gamecore.util.objects.Mutable;
 /**
  * Mutable volume 0-1
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class Volume extends Mutable<Double> {
 	

@@ -2,9 +2,7 @@ package mightypork.gamecore.core.modules;
 
 
 import java.util.Deque;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import mightypork.gamecore.eventbus.events.UpdateEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
@@ -21,7 +19,7 @@ import mightypork.gamecore.util.math.timing.TimerDelta;
 /**
  * Delta-timed game loop with task queue etc.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	
@@ -74,7 +72,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 			getEventBus().sendDirect(new UpdateEvent(delta));
 			
 			Runnable r;
-			long t = Profiler.begin();
+			final long t = Profiler.begin();
 			while ((r = tasks.poll()) != null) {
 				Log.f3(" * Main loop task.");
 				r.run();

@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.color.Color;
 /**
  * PAL16 palette via http://androidarts.com/palette/16pal.htm
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface PAL16 {
 	

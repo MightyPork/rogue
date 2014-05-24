@@ -16,7 +16,7 @@ import mightypork.gamecore.util.math.constraints.vect.proxy.VectAdapter;
  * default.
  * </p>
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public abstract class AbstractVectCache extends VectAdapter implements ConstraintCache<Vect> {
 	

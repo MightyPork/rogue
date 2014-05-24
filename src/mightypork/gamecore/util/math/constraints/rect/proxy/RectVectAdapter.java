@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Rect made of two {@link Vect}s
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class RectVectAdapter extends Rect {
 	

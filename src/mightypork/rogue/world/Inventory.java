@@ -3,9 +3,9 @@ package mightypork.rogue.world;
 
 import java.io.IOException;
 
-import mightypork.gamecore.util.ion.IonInput;
-import mightypork.gamecore.util.ion.IonObjBinary;
-import mightypork.gamecore.util.ion.IonOutput;
+import mightypork.ion.IonInput;
+import mightypork.ion.IonObjBinary;
+import mightypork.ion.IonOutput;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.Items;
 
@@ -70,13 +70,6 @@ public class Inventory implements IonObjBinary {
 		}
 		// close sequence
 		out.endSequence();
-	}
-	
-	
-	@Override
-	public short getIonMark()
-	{
-		return ION_MARK;
 	}
 	
 	

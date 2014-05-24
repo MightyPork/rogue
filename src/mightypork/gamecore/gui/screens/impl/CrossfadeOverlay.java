@@ -15,7 +15,7 @@ import mightypork.gamecore.util.math.timing.TimedTask;
 /**
  * Overlay used for cross-fading between screens
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class CrossfadeOverlay extends Overlay {
 	
@@ -67,7 +67,7 @@ public class CrossfadeOverlay extends Overlay {
 	{
 		requestedScreenName = screen;
 		
-		if(screen == null) {
+		if (screen == null) {
 			// going for halt
 			getSoundSystem().fadeOutAllLoops();
 		}

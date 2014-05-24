@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 /**
  * Gap in linear layout
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class LinearGap extends LinearRectangle {
 	

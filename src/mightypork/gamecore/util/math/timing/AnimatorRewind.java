@@ -9,7 +9,7 @@ import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
  * Animator that upon reaching top, jumps straight to zero and continues another
  * cycle.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class AnimatorRewind extends Animator {
 	

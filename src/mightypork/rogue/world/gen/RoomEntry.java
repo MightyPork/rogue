@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.algo.Coord;
 /**
  * Room description entry for {@link ScratchMap}
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class RoomEntry {
 	

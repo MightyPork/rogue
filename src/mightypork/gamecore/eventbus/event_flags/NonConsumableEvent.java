@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 /**
  * Event that cannot be consumed
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

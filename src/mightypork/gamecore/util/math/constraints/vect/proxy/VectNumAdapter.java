@@ -9,7 +9,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Coord view composed of given {@link NumBound}s, using their current values.
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class VectNumAdapter extends Vect {
 	

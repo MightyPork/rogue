@@ -4,7 +4,7 @@ package mightypork.gamecore.util.objects;
 /**
  * Mutable object
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  * @param <T> type
  */
 public class Mutable<T> {

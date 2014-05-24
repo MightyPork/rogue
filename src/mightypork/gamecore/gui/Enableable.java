@@ -6,7 +6,7 @@ package mightypork.gamecore.gui;
  * Implementations should take appropriate action (ie. stop listening to events,
  * updating etc.)
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public interface Enableable {
 	

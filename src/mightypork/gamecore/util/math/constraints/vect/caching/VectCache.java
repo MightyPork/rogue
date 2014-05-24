@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Vect cache implementation
  * 
- * @author MightyPork
+ * @author Ondřej Hruška
  */
 public class VectCache extends AbstractVectCache {
 	
