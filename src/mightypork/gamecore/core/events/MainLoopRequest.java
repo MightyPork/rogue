@@ -9,7 +9,7 @@ import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 /**
  * Request to execute given {@link Runnable} in main loop.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @SingleReceiverEvent
 public class MainLoopRequest extends BusEvent<MainLoop> {

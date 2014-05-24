@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.Calc;
 /**
  * Move lists, bit masks and other utilities
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class Moves {
 	

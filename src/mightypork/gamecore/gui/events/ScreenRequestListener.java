@@ -4,7 +4,7 @@ package mightypork.gamecore.gui.events;
 /**
  * {@link ScreenRequest} listener
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface ScreenRequestListener {
 	

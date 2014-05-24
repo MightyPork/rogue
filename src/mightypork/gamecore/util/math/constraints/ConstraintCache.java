@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.constraints;
 /**
  * Constraint cache
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  * @param <C> constraint type
  */
 public interface ConstraintCache<C> extends Pollable {

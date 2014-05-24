@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.timing;
 /**
  * Timer for interpolated timing
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class TimerFps {
 	

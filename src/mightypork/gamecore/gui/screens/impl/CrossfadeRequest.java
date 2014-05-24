@@ -6,7 +6,7 @@ import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 
 
 /**
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @SingleReceiverEvent
 public class CrossfadeRequest extends BusEvent<CrossfadeOverlay> {

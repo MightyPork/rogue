@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.constraints.vect.proxy;
 /**
  * Pluggable vector constraint
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface PluggableVectBound extends VectBound {
 	

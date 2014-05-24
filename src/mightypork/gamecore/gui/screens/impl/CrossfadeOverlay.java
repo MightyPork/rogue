@@ -15,7 +15,7 @@ import mightypork.gamecore.util.math.timing.TimedTask;
 /**
  * Overlay used for cross-fading between screens
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class CrossfadeOverlay extends Overlay {
 	

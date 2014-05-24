@@ -14,7 +14,7 @@ import mightypork.gamecore.util.Utils;
 /**
  * Event delivery channel, module of {@link EventBus}
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  * @param <EVENT> event type
  * @param <CLIENT> client (subscriber) type
  */

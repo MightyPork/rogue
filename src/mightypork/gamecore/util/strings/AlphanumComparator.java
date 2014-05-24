@@ -34,7 +34,7 @@ import java.util.Comparator;
  * @author Daniel Migowski
  * @author Andre Bogus
  * @author David Koelle
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class AlphanumComparator implements Comparator<String> {
 	

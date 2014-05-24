@@ -12,7 +12,7 @@ import mightypork.rogue.world.World;
 /**
  * Entity model - builder
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class EntityModel {
 	

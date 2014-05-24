@@ -12,7 +12,7 @@ import mightypork.ion.IonOutput;
  * Path step.<br>
  * Must be binary in order to be saveable in lists.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class Move implements IonObjBinary {
 	

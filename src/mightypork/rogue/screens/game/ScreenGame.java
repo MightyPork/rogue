@@ -33,7 +33,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 	/**
 	 * Game gui state.
 	 * 
-	 * @author Ondřej Hruška
+	 * @author Ondřej Hruška (MightyPork)
 	 */
 	public enum GScrState
 	{

@@ -13,7 +13,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 /**
  * Holder with same-sized rows, aligned to top or bottom
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class FlowRowLayout extends LayoutComponent {
 	

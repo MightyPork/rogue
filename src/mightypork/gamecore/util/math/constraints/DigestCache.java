@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.constraints;
 /**
  * Parametrized implementation of a {@link Digestable}
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  * @param <D> digest class
  */
 public abstract class DigestCache<D> implements Digestable<D> {

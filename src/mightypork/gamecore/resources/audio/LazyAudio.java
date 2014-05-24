@@ -16,7 +16,7 @@ import org.newdawn.slick.openal.SoundStore;
 /**
  * Wrapper class for slick audio
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @LogAlias(name = "Audio")
 public class LazyAudio extends BaseLazyResource {

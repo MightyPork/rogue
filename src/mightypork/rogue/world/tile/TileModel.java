@@ -10,7 +10,7 @@ import mightypork.ion.IonOutput;
 /**
  * Tile model (builder)
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class TileModel {
 	

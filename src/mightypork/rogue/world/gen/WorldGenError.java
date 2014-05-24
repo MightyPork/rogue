@@ -4,7 +4,7 @@ package mightypork.rogue.world.gen;
 /**
  * Error in world generation
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class WorldGenError extends RuntimeException {
 	

@@ -10,7 +10,7 @@ import mightypork.ion.IonBundle;
 /**
  * Item model (builder)
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class ItemModel {
 	

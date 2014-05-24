@@ -11,7 +11,7 @@ import mightypork.gamecore.util.math.constraints.vect.VectConst;
 /**
  * Mouse button / wheel event triggered
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @NotLoggedEvent
 public class MouseButtonEvent extends BusEvent<MouseButtonHandler> {

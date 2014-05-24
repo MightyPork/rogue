@@ -20,7 +20,7 @@ import mightypork.rogue.world.level.render.TileRenderContext;
 /**
  * World rendering untility
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class WorldRenderer extends RectProxy {
 	

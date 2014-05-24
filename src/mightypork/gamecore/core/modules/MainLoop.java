@@ -19,7 +19,7 @@ import mightypork.gamecore.util.math.timing.TimerDelta;
 /**
  * Delta-timed game loop with task queue etc.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	

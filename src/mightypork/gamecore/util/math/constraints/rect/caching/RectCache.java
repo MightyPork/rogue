@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 /**
  * Rect cache implementation
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class RectCache extends AbstractRectCache {
 	

@@ -8,7 +8,7 @@ import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 /**
  * Request to load a deferred resource.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @SingleReceiverEvent
 public class ResourceLoadRequest extends BusEvent<ResourceLoader> {

@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * implementation) as a convenience.<br>
  * This is a description annotation and has no other function.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)

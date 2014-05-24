@@ -15,7 +15,7 @@ import mightypork.gamecore.util.files.FileUtils;
 /**
  * Logger that cleans directory & archives old logs
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  * @copy (c) 2014
  */
 public class ArchivingLog extends SimpleLog {

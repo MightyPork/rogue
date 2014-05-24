@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 /**
  * Event that should be queued with given delay (default: 0);
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

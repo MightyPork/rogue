@@ -9,7 +9,7 @@ import mightypork.gamecore.util.math.Easing;
 /**
  * Degree animator
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class NumAnimatedDeg extends NumAnimated {
 	

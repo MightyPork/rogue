@@ -26,7 +26,7 @@ import mightypork.rogue.world.level.Level;
 /**
  * World object.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable, Updateable, PlayerDeathHandler, GameWinHandler {
 	

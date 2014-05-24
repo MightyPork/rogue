@@ -15,7 +15,7 @@ import mightypork.gamecore.util.files.config.PropertyManager;
 /**
  * Static application configuration
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class Config {
 	
@@ -63,7 +63,7 @@ public class Config {
 	 * Key property.<br>
 	 * The stored value must be invariant ({@link KeyStroke} is mutable).
 	 * 
-	 * @author Ondřej Hruška
+	 * @author Ondřej Hruška (MightyPork)
 	 */
 	public static class KeyProperty extends Property<KeyStroke> {
 		

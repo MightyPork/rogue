@@ -12,7 +12,7 @@ import mightypork.rogue.world.tile.impl.brick.*;
 /**
  * Tile registry
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class Tiles {
 	

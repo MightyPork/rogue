@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 /**
  * Num cache implementation
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class NumCache extends AbstractNumCache {
 	

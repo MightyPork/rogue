@@ -30,7 +30,7 @@ import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
 /**
  * Level display component
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class MapView extends InputComponent implements DelegatingClient, MouseButtonHandler, Updateable, WorldAscendRequestListener,
 		WorldDescendRequestListener {

@@ -25,7 +25,7 @@ import mightypork.rogue.world.tile.Tiles;
 /**
  * Temporary tile map used for level generation.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class ScratchMap {
 	

@@ -10,7 +10,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 /**
  * Renderable that can be assigned different context
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface PluggableRenderable extends Renderable, PluggableRectBound {
 	

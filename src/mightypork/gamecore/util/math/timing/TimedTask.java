@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 /**
  * Delayed runnable controlled by delta timing.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class TimedTask implements Runnable, Updateable {
 	

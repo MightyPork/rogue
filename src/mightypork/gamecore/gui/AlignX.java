@@ -4,7 +4,7 @@ package mightypork.gamecore.gui;
 /**
  * Horizontal align sides
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public enum AlignX
 {

@@ -35,7 +35,7 @@ import mightypork.rogue.world.tile.Tiles;
 /**
  * One level of the dungeon
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class Level implements BusAccess, Updateable, DelegatingClient, ToggleableClient, IonObjBinary {
 	

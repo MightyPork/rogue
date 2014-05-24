@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Element holding a vector, used for constraint building.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface VectBound {
 	

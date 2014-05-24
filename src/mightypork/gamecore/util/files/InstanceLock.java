@@ -10,7 +10,7 @@ import java.nio.channels.FileLock;
 /**
  * Instance lock (avoid running twice)
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class InstanceLock {
 	

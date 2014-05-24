@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.color.Color;
 /**
  * CGA palette
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface CGA {
 	

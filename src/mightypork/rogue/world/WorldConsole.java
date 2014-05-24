@@ -16,7 +16,7 @@ import mightypork.rogue.world.item.Item;
 /**
  * Message log in world view
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class WorldConsole implements Updateable {
 	

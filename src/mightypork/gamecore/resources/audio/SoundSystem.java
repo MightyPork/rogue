@@ -24,7 +24,7 @@ import org.newdawn.slick.openal.SoundStore;
 /**
  * Sound system class (only one instance should be made per application)
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class SoundSystem extends RootBusNode implements Updateable {
 	

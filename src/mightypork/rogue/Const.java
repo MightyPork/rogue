@@ -4,7 +4,7 @@ package mightypork.rogue;
 /**
  * Application constants
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class Const {
 	

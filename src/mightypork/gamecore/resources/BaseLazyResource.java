@@ -12,7 +12,7 @@ import mightypork.gamecore.util.strings.StringUtils;
 /**
  * Deferred resource abstraction.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @LogAlias(name = "Resource")
 public abstract class BaseLazyResource implements LazyResource, Destroyable {

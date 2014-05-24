@@ -14,7 +14,7 @@ import org.newdawn.slick.opengl.Texture;
 /**
  * Font loader and registry
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class FontRegistry extends AppAccessAdapter {
 	

@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Texture filtering mode
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public enum FilterMode
 {

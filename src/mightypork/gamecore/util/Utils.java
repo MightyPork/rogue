@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Assorted utils
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class Utils {
 	

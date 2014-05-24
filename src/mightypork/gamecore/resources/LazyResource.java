@@ -4,7 +4,7 @@ package mightypork.gamecore.resources;
 /**
  * Deferred resource
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface LazyResource {
 	

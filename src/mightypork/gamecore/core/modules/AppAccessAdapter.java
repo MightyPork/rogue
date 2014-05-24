@@ -10,7 +10,7 @@ import mightypork.gamecore.resources.audio.SoundSystem;
 /**
  * App access adapter (defualt {@link AppAccess} implementation)
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class AppAccessAdapter implements AppAccess {
 	

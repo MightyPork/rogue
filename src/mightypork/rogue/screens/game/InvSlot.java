@@ -23,7 +23,7 @@ import mightypork.rogue.world.item.ItemType;
 /**
  * Button in the ingame nav
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class InvSlot extends ClickableComponent {
 	

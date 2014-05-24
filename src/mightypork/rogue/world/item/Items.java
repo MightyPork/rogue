@@ -17,7 +17,7 @@ import mightypork.rogue.world.item.impl.weapons.*;
 /**
  * Item registry
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class Items {
 	

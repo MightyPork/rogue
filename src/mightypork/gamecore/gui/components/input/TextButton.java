@@ -15,7 +15,7 @@ import mightypork.gamecore.util.math.constraints.vect.mutable.VectVar;
 /**
  * Menu-like button with shadow and push state
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class TextButton extends ClickableComponent implements DynamicWidthComponent {
 	

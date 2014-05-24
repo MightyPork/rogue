@@ -4,7 +4,7 @@ package mightypork.gamecore.gui;
 /**
  * Triggered action
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class Action implements Runnable, Enableable {
 	

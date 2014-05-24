@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 /**
  * Animator that upon reaching max, animates back down and then up again
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class AnimatorBounce extends Animator {
 	

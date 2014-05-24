@@ -4,7 +4,7 @@ package mightypork.gamecore.eventbus.clients;
 /**
  * Client that can toggle receiving messages.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface ToggleableClient {
 	

@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Specify pretty name to be used when logging (eg. <code>Log.str()</code>)
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited

@@ -22,7 +22,7 @@ import org.lwjgl.opengl.Display;
 /**
  * Input system
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	

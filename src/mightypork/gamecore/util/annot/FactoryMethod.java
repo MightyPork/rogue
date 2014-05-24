@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * Marks a static factory method. This is a description annotation and has no
  * other function.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.METHOD)

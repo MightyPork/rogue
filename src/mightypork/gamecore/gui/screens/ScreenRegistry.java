@@ -20,7 +20,7 @@ import mightypork.gamecore.util.annot.DefaultImpl;
 /**
  * Game screens holder; Takes care of rendering and screen requests.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class ScreenRegistry extends AppModule implements ScreenRequestListener, ViewportChangeListener, Renderable {
 	

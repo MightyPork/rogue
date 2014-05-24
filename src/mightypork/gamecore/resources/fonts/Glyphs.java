@@ -4,7 +4,7 @@ package mightypork.gamecore.resources.fonts;
 /**
  * Glyph tables.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class Glyphs {
 	

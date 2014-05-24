@@ -11,7 +11,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Utility for cutting rect into evenly sized cells.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class TiledRect extends RectProxy {
 	

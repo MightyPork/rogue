@@ -21,7 +21,7 @@ import mightypork.rogue.world.level.render.TileRenderContext;
 /**
  * Tile data bundle. Client only renders.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class Tile implements BusAccess, IonObjBinary {
 	

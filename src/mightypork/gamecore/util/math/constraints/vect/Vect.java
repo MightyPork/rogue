@@ -19,7 +19,7 @@ import mightypork.gamecore.util.math.constraints.vect.proxy.VectNumAdapter;
 /**
  * The most basic Vec methods
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class Vect implements VectBound, Digestable<VectDigest> {
 	

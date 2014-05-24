@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.timing;
 /**
  * Timer for delta timing
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class TimerDelta {
 	

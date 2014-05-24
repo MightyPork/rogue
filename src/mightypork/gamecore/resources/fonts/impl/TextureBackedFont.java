@@ -39,7 +39,7 @@ import org.newdawn.slick.opengl.GLUtils;
  * @author Kevin Glass (kevglass)
  * @author Peter Korzuszek (genail)
  * @author David Aaron Muhar (bobjob)
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class TextureBackedFont implements GLFont {
 	

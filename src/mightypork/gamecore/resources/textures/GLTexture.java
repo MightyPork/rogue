@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
 /**
  * Texture with filter and wrap mode
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface GLTexture extends Destroyable {
 	

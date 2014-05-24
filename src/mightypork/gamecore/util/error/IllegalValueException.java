@@ -5,7 +5,7 @@ package mightypork.gamecore.util.error;
  * Thrown when a invalid value is given to a method, or found in a data object /
  * file etc
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class IllegalValueException extends RuntimeException {
 	

@@ -40,7 +40,7 @@ import mightypork.ion.Ion;
  * Basic screen-based game with subsystems.<br>
  * This class takes care of the initialization sequence.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	

@@ -37,7 +37,7 @@ import mightypork.rogue.world.level.Level;
 /**
  * Main class
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class RogueApp extends BaseApp implements ViewportChangeListener, ScreenshotRequestListener {
 	

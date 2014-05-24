@@ -8,7 +8,7 @@ import mightypork.rogue.world.World;
 /**
  * Toggle world pause state
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class WorldPauseRequest extends BusEvent<World> {
 	

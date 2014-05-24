@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Texture wrap mode
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public enum WrapMode
 {

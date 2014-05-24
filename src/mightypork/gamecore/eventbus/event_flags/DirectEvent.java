@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 /**
  * Event that should not be queued.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 /**
  * Map sorting utils
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class MapSort {
 	

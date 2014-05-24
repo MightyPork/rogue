@@ -21,7 +21,7 @@ import mightypork.rogue.world.level.render.MapRenderContext;
  * Renderer for a walking mob with only one strip (right sided), which is
  * flipped for walking left.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class EntityRendererMobLR extends EntityRenderer {
 	

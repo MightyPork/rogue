@@ -24,7 +24,7 @@ import mightypork.rogue.world.level.render.MapRenderContext;
 /**
  * World entity (mob or player). Entities are attached to the event bus.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class Entity implements IonObjBundled, Updateable, DelegatingClient {
 	

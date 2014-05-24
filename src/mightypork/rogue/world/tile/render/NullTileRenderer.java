@@ -8,7 +8,7 @@ import mightypork.rogue.world.tile.TileRenderer;
 /**
  * Do-nothing tile renderer
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class NullTileRenderer extends TileRenderer {
 	

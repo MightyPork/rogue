@@ -15,7 +15,7 @@ import mightypork.ion.IonObjBundled;
 /**
  * Entity position
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 class EntityPos implements IonObjBundled, Updateable {
 	

@@ -4,7 +4,7 @@ package mightypork.gamecore.util.strings;
 /**
  * String provider with constant string
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class StringWrapper implements StringProvider {
 	

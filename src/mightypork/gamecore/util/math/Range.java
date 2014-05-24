@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * Numeric range, able to generate random numbers and give min/max values.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class Range {
 	

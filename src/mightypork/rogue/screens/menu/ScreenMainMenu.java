@@ -28,7 +28,7 @@ import mightypork.rogue.screens.RogueScreen;
 /**
  * Main menu screen
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class ScreenMainMenu extends RogueScreen {
 	
@@ -36,7 +36,7 @@ public class ScreenMainMenu extends RogueScreen {
 	/**
 	 * The layer
 	 * 
-	 * @author Ondřej Hruška
+	 * @author Ondřej Hruška (MightyPork)
 	 */
 	class MenuLayer extends ScreenLayer {
 		

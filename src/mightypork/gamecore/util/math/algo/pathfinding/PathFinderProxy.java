@@ -11,7 +11,7 @@ import mightypork.gamecore.util.math.algo.Move;
  * Pathfinder proxy. Can be used to override individual methods but keep the
  * rest as is.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class PathFinderProxy extends PathFinder {
 	

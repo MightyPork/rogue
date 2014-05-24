@@ -15,7 +15,7 @@ import mightypork.rogue.world.entity.impl.EntityPlayer;
 /**
  * Entity registry
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class Entities {
 	

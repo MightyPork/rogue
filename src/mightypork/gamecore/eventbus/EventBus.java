@@ -24,7 +24,7 @@ import mightypork.gamecore.util.Utils;
  * An event bus, accommodating multiple EventChannels.<br>
  * Channel will be created when an event of type is first encountered.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 final public class EventBus implements Destroyable, BusAccess {
 	

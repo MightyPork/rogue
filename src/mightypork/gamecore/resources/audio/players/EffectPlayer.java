@@ -9,7 +9,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Player for one-off effects
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class EffectPlayer extends BaseAudioPlayer {
 	

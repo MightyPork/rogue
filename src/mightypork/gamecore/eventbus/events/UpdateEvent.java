@@ -10,7 +10,7 @@ import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 /**
  * Delta timing update event. Not logged.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @NotLoggedEvent
 @DirectEvent

@@ -12,7 +12,7 @@ import java.util.Vector;
  * Properties stored in file, alphabetically sorted.<br>
  * Uses UTF-8 encoding and each property can have it's own comment.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class SortedProperties extends java.util.Properties {
 	

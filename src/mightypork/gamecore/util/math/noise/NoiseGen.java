@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.noise;
 /**
  * 2D Perlin noise generator
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class NoiseGen {
 	

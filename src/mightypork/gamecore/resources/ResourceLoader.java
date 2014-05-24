@@ -7,7 +7,7 @@ import mightypork.gamecore.eventbus.BusAccess;
 /**
  * {@link ResourceLoadRequest} listener
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface ResourceLoader {
 	

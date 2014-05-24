@@ -15,7 +15,7 @@ import mightypork.gamecore.util.math.constraints.rect.Rect;
  * Texture storage and quad/sheet registry. Quads and Sheets are interchangeable
  * once registered.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class TextureRegistry extends AppAccessAdapter {
 	

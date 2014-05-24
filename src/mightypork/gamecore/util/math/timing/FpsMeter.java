@@ -5,7 +5,7 @@ package mightypork.gamecore.util.math.timing;
  * Class for counting FPS in games.<br>
  * This class can be used also as a simple frequency meter - output is in Hz.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class FpsMeter {
 	

@@ -13,7 +13,7 @@ import org.lwjgl.openal.AL10;
 /**
  * Audio loop player (with fading, good for music)
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable {
 	

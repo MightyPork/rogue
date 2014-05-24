@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Expandable sum of multiple numbers
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class NumSum extends Num {
 	

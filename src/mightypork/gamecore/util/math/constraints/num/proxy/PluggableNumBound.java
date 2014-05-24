@@ -4,7 +4,7 @@ package mightypork.gamecore.util.math.constraints.num.proxy;
 /**
  * Pluggable numeric constraint
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface PluggableNumBound extends NumBound {
 	

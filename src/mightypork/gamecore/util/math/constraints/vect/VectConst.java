@@ -13,7 +13,7 @@ import mightypork.gamecore.util.math.constraints.vect.caching.VectDigest;
  * It's arranged so that operations with constant arguments yield constant
  * results.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public final class VectConst extends Vect {
 	

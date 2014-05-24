@@ -11,7 +11,7 @@ import mightypork.ion.IonObjBundled;
  * Abstract entity module<br>
  * Modules make up an entity AI and behavior.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class EntityModule implements IonObjBundled, Updateable {
 	

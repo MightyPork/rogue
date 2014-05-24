@@ -17,7 +17,7 @@ import mightypork.ion.IonOutput;
 /**
  * Very simple integer coordinate
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class Coord implements IonObjBinary, IonObjBundled {
 	

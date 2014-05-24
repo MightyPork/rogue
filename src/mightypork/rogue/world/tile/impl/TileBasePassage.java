@@ -11,7 +11,7 @@ import mightypork.rogue.world.tile.render.BasicTileRenderer;
 /**
  * Collapsed wall that's walk-through
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class TileBasePassage extends TileSolid {
 	

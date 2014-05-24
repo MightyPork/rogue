@@ -25,7 +25,7 @@ import mightypork.rogue.screens.RogueScreen;
 /**
  * Main menu screen
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class ScreenSelectWorld extends RogueScreen {
 	

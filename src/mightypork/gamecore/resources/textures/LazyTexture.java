@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Deferred texture
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @LogAlias(name = "Texture")
 @TextureBasedResource

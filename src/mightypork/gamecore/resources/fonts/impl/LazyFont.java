@@ -19,7 +19,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Font obtained from a resource file (TTF).
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 @TextureBasedResource
 @LogAlias(name = "Font")

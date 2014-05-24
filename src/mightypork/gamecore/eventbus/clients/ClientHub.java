@@ -9,7 +9,7 @@ import mightypork.gamecore.eventbus.EventBus;
 /**
  * Common methods for client hubs (ie delegating vlient implementations)
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface ClientHub extends DelegatingClient, ToggleableClient {
 	

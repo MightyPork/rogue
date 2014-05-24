@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.Calc;
 /**
  * Volume combined of multiple volumes, combining them (multiplication).
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class JointVolume extends Volume {
 	

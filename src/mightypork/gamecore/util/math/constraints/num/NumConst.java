@@ -9,7 +9,7 @@ import mightypork.gamecore.util.math.constraints.num.caching.NumDigest;
  * It's arranged so that operations with constant arguments yield constant
  * results.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class NumConst extends Num {
 	

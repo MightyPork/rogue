@@ -20,7 +20,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBoundAdapter;
  * {@link Renderable} with pluggable context. When caching is enabled, the
  * layout update can be triggered by firing the {@link LayoutChangeEvent}.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class BaseComponent extends AbstractRectCache implements Component, LayoutChangeListener, Enableable {
 	

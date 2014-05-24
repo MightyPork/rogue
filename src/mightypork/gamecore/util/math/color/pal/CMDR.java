@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.color.Color;
 /**
  * COMMODORE palette
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface CMDR {
 	

@@ -9,7 +9,7 @@ import mightypork.gamecore.logging.monitors.LogMonitor;
 /**
  * Log interface
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface LogWriter {
 	

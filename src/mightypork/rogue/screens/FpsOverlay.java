@@ -20,7 +20,7 @@ import mightypork.gamecore.util.strings.StringProvider;
 /**
  * FPS indicator overlay
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class FpsOverlay extends Overlay {
 	

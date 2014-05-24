@@ -16,7 +16,7 @@ import mightypork.gamecore.util.math.constraints.num.proxy.NumAdapter;
  * default.
  * </p>
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class AbstractNumCache extends NumAdapter implements ConstraintCache<Num> {
 	

@@ -16,7 +16,7 @@ import mightypork.rogue.world.level.Level;
 /**
  * Global singleton world holder and storage
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class WorldProvider extends RootBusNode {
 	

@@ -22,7 +22,7 @@ import mightypork.gamecore.util.strings.StringProvider;
  * Overlay with blue background and loading-info text, that accompanies an async
  * task.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class LoadingOverlay extends Overlay {
 	

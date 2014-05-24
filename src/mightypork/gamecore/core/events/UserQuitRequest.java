@@ -10,7 +10,7 @@ import mightypork.gamecore.eventbus.EventBus;
  * titlebar button, and if no client consumes it, the application will be shut
  * down.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class UserQuitRequest extends BusEvent<UserQuitRequestListener> {
 	

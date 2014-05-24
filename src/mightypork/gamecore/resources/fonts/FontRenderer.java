@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
 /**
  * Font renderer
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class FontRenderer {
 	

@@ -9,7 +9,7 @@ import mightypork.rogue.world.item.Item;
 /**
  * Player information stored in world.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class PlayerData implements IonObjBundled {
 	

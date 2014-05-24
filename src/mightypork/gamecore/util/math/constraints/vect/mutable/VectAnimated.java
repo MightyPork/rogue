@@ -12,7 +12,7 @@ import mightypork.gamecore.util.math.timing.Pauseable;
 /**
  * 3D coordinated with support for transitions, mutable.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class VectAnimated extends VectMutable implements Pauseable, Updateable {
 	

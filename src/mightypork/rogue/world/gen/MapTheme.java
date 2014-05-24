@@ -7,7 +7,7 @@ import mightypork.rogue.world.tile.TileModel;
 /**
  * Map theme to use for building
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public interface MapTheme {
 	

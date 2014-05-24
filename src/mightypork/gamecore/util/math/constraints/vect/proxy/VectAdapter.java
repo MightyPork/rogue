@@ -8,7 +8,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
  * Vect proxy with abstract method for plugging in / generating coordinates
  * dynamically.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class VectAdapter extends Vect {
 	

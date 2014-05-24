@@ -7,7 +7,7 @@ import mightypork.gamecore.util.math.constraints.num.Num;
 /**
  * Mutable numeric variable
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class NumMutable extends Num {
 	

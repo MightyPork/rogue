@@ -14,7 +14,7 @@ import mightypork.gamecore.logging.Log;
 /**
  * Asynchronous resource loading thread.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class AsyncResourceLoader extends Thread implements ResourceLoader, Destroyable {
 	

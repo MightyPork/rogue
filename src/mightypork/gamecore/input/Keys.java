@@ -11,7 +11,7 @@ import org.lwjgl.input.Keyboard;
 /**
  * Key constants, from LWJGL {@link Keyboard}
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class Keys {
 	

@@ -20,7 +20,7 @@ import mightypork.gamecore.util.math.constraints.vect.VectConst;
 /**
  * Common methods for all kinds of Rects
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class Rect implements RectBound, Digestable<RectDigest> {
 	

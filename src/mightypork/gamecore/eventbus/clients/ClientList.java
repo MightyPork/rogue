@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Array-list with varargs constructor
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class ClientList extends ArrayList<Object> {
 	

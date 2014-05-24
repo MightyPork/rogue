@@ -13,7 +13,7 @@ import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 /**
  * Holder with same-sized columns, aligned to left or right
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class FlowColumnLayout extends LayoutComponent {
 	

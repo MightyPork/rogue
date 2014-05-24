@@ -26,7 +26,7 @@ import mightypork.gamecore.util.math.constraints.vect.Vect;
  * Abstract overlay.<br>
  * Overlay is connected to event bus and is renderable.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public abstract class Overlay extends AppSubModule implements Comparable<Overlay>, Updateable, Renderable, KeyBinder, Hideable, Enableable,
 		LayoutChangeListener {

@@ -4,7 +4,7 @@ package mightypork.gamecore.util.strings;
 /**
  * General purpose string utilities
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class StringUtils {
 	

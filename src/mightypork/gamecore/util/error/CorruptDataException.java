@@ -4,7 +4,7 @@ package mightypork.gamecore.util.error;
 /**
  * Thrown when data could not be read successfully.
  * 
- * @author Ondřej Hruška
+ * @author Ondřej Hruška (MightyPork)
  */
 public class CorruptDataException extends RuntimeException {
 	
