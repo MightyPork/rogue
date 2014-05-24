@@ -1,6 +1,8 @@
 # Rogue - Savage Rats
 
-Manual on [Google Drive](http://goo.gl/AU0IdI)
+**Read the [MANULAL](http://goo.gl/AU0IdI) if you want to play the game.**
+
+It explains it way better than this text file.
 
 ---
 
@@ -44,7 +46,6 @@ more polished code, better docs, and cleaner hierarchy.
 - SlickUtil (texture loader, audio system)
 
 
-
 ## BUILDING FROM SOURCE
 
 1. Export a jar with the `mightypork.*` packages and the `res` folder into 
@@ -58,24 +59,4 @@ more polished code, better docs, and cleaner hierarchy.
 
 The game is controlled by mouse and keyboard.
 
-### In-game controls
-
-- *ARROWS* or *ASDW* - walking
-- *E* - eat smallest food
-- *Z* - Toggle map magnification (zoom)
-- *M* - Toggle the minimap
-- *I* - Toggle inventory screen (pauses the game)
-- *SPACE*, *P*, *PAUSE* - pause / resume the game
-
-- *Left button hold* - walk in the direction
-- *Right click* - find path to the tile (works also on Minimap)
-
-
-### Global controls
-
-- *Ctrl+M* - Jump to main menu
-- *Ctrl+Q* - Quit to DOS
-- *F2* - Take a screenshot
-- *F11* - Toggle fullscreen
-
-
+See the manual (link at the top) for more detailed info.
