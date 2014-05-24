@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.components;
 
 
+import mightypork.dynmath.rect.Rect;
+import mightypork.dynmath.rect.proxy.PluggableRectBound;
+import mightypork.dynmath.rect.proxy.RectBound;
 import mightypork.gamecore.render.Renderable;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.rect.proxy.PluggableRectBound;
-import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 
 
 /**

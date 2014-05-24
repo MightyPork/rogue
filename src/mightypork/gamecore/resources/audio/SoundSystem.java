@@ -5,16 +5,16 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import mightypork.dynmath.vect.Vect;
+import mightypork.dynmath.vect.mutable.VectVar;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
-import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
 import mightypork.gamecore.util.math.Calc.Buffers;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.gamecore.util.math.constraints.vect.mutable.VectVar;
+import mightypork.gamecore.util.math.timing.Updateable;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;

@@ -1,6 +1,7 @@
 package mightypork.rogue;
 
 
+import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.resources.ResourceSetup;
 import mightypork.gamecore.resources.audio.SoundRegistry;
 import mightypork.gamecore.resources.fonts.FontRegistry;
@@ -11,7 +12,6 @@ import mightypork.gamecore.resources.textures.GLTexture;
 import mightypork.gamecore.resources.textures.QuadGrid;
 import mightypork.gamecore.resources.textures.TextureRegistry;
 import mightypork.gamecore.resources.textures.WrapMode;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
 public class RogueResources implements ResourceSetup {

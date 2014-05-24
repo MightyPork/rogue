@@ -6,6 +6,7 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.logging.LogAlias;
 import mightypork.gamecore.resources.BaseLazyResource;
 import mightypork.gamecore.resources.TextureBasedResource;
@@ -13,7 +14,6 @@ import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.gamecore.util.files.FileUtils;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
 
 
 /**

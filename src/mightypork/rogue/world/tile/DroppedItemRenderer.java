@@ -3,13 +3,13 @@ package mightypork.rogue.world.tile;
 
 import java.util.Collection;
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.num.proxy.NumBoundAdapter;
+import mightypork.dynmath.rect.Rect;
+import mightypork.dynmath.rect.proxy.RectBoundAdapter;
 import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.num.proxy.NumBoundAdapter;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.rect.proxy.RectBoundAdapter;
-import mightypork.gamecore.util.math.timing.Animator;
-import mightypork.gamecore.util.math.timing.AnimatorBounce;
+import mightypork.gamecore.util.math.timing.animation.Animator;
+import mightypork.gamecore.util.math.timing.animation.AnimatorBounce;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.render.TileRenderContext;
 

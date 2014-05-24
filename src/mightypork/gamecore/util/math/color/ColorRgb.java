@@ -1,7 +1,7 @@
 package mightypork.gamecore.util.math.color;
 
 
-import mightypork.gamecore.util.math.constraints.num.Num;
+import mightypork.dynmath.num.Num;
 
 
 public class ColorRgb extends Color {

@@ -1,10 +1,10 @@
 package mightypork.rogue.world.item;
 
 
+import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.ion.IonBundle;
 import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.PlayerFacade;

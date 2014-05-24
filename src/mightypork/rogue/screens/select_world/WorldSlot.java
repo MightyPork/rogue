@@ -3,6 +3,8 @@ package mightypork.rogue.screens.select_world;
 
 import java.io.File;
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
@@ -15,8 +17,6 @@ import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.ion.Ion;
 import mightypork.ion.IonBundle;

@@ -8,8 +8,8 @@ import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.gui.screens.Overlay;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.timing.TimedTask;
+import mightypork.gamecore.util.math.timing.animation.NumAnimated;
 
 
 /**

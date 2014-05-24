@@ -1,9 +1,9 @@
 package mightypork.rogue.screens.game;
 
 
+import mightypork.dynmath.num.Num;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.rogue.world.gui.MapView;
 import mightypork.rogue.world.gui.interaction.MIPKeyboard;
 import mightypork.rogue.world.gui.interaction.MIPMouse;

@@ -2,7 +2,8 @@ package mightypork.gamecore.util.math.timing;
 
 
 import mightypork.gamecore.gui.Enableable;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.gamecore.util.math.timing.animation.AnimatorRewind;
+import mightypork.gamecore.util.math.timing.animation.NumAnimated;
 
 
 public abstract class TaskRepeater extends AnimatorRewind implements Runnable, Enableable {

@@ -1,10 +1,10 @@
 package mightypork.gamecore.input.events;
 
 
+import mightypork.dynmath.vect.Vect;
+import mightypork.dynmath.vect.VectConst;
 import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.gamecore.util.math.constraints.vect.VectConst;
 
 
 /**

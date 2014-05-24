@@ -1,8 +1,7 @@
-package mightypork.gamecore.util.math.timing;
+package mightypork.gamecore.util.math.timing.animation;
 
 
 import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 
 
 /**

@@ -1,9 +1,9 @@
 package mightypork.rogue.world.level.render;
 
 
+import mightypork.dynmath.rect.Rect;
+import mightypork.dynmath.rect.builders.TiledRect;
 import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.rect.builders.TiledRect;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 

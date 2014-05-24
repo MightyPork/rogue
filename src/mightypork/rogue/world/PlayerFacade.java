@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Move;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemType;

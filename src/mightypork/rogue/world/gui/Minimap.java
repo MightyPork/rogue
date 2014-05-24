@@ -1,6 +1,10 @@
 package mightypork.rogue.world.gui;
 
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.rect.Rect;
+import mightypork.dynmath.rect.mutable.RectMutable;
+import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonHandler;
@@ -8,10 +12,6 @@ import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.rect.mutable.RectMutable;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.Const;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;

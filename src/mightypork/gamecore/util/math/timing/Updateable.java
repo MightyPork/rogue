@@ -1,4 +1,4 @@
-package mightypork.gamecore.eventbus.events;
+package mightypork.gamecore.util.math.timing;
 
 
 /**

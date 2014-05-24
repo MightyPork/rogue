@@ -1,13 +1,13 @@
 package mightypork.rogue.screens.game;
 
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.num.mutable.NumVar;
+import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumVar;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 
 public class HeartBar extends BaseComponent {

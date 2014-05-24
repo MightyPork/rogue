@@ -1,6 +1,8 @@
 package mightypork.rogue.screens;
 
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
@@ -11,10 +13,8 @@ import mightypork.gamecore.util.Utils;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.pal.PAL16;
 import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.gamecore.util.math.timing.TimedTask;
+import mightypork.gamecore.util.math.timing.animation.NumAnimated;
 import mightypork.gamecore.util.strings.StringProvider;
 
 

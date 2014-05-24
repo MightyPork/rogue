@@ -1,13 +1,13 @@
 package mightypork.rogue.world.gui.interaction;
 
 
-import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.util.math.Calc.Deg;
 import mightypork.gamecore.util.math.Polar;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Moves;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.gamecore.util.math.timing.Updateable;
 import mightypork.rogue.world.entity.impl.EntityPlayer;
 import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;

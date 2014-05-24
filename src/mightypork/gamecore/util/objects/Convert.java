@@ -1,11 +1,11 @@
 package mightypork.gamecore.util.objects;
 
 
+import mightypork.dynmath.vect.Vect;
+import mightypork.dynmath.vect.VectConst;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.Range;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.gamecore.util.math.constraints.vect.VectConst;
 
 
 /**

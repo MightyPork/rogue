@@ -1,8 +1,8 @@
 package mightypork.gamecore.gui.components.layout.linear;
 
 
+import mightypork.dynmath.num.Num;
 import mightypork.gamecore.gui.components.Component;
-import mightypork.gamecore.util.math.constraints.num.Num;
 
 
 public class LinearRectangle extends AbstractLinearWrapper {

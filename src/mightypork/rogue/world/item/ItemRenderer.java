@@ -1,7 +1,7 @@
 package mightypork.rogue.world.item;
 
 
-import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.dynmath.rect.Rect;
 
 
 public abstract class ItemRenderer {

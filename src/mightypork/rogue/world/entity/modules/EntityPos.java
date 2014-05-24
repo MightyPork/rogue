@@ -1,13 +1,13 @@
 package mightypork.rogue.world.entity.modules;
 
 
-import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.dynmath.vect.Vect;
+import mightypork.dynmath.vect.VectConst;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Move;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.gamecore.util.math.constraints.vect.VectConst;
-import mightypork.gamecore.util.math.constraints.vect.mutable.VectAnimated;
+import mightypork.gamecore.util.math.timing.Updateable;
+import mightypork.gamecore.util.math.timing.animation.VectAnimated;
 import mightypork.ion.IonBundle;
 import mightypork.ion.IonObjBundled;
 

@@ -4,6 +4,9 @@ package mightypork.rogue.world.gui;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.num.mutable.NumVar;
+import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.logging.Log;
@@ -13,9 +16,6 @@ import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumVar;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
 import mightypork.rogue.world.WorldConsole;
 import mightypork.rogue.world.WorldProvider;
 

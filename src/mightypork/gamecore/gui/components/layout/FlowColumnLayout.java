@@ -1,13 +1,13 @@
 package mightypork.gamecore.gui.components.layout;
 
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.rect.Rect;
+import mightypork.dynmath.rect.proxy.RectBound;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.gamecore.gui.components.LayoutComponent;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
 
 
 /**

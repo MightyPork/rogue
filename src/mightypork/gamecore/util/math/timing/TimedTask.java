@@ -1,8 +1,8 @@
 package mightypork.gamecore.util.math.timing;
 
+import mightypork.gamecore.util.math.timing.animation.NumAnimated;
 
-import mightypork.gamecore.eventbus.events.Updateable;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
+
 
 
 /**

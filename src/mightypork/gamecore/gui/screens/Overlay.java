@@ -4,9 +4,10 @@ package mightypork.gamecore.gui.screens;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppSubModule;
-import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.Hideable;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
@@ -18,8 +19,7 @@ import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.gamecore.util.math.timing.Updateable;
 
 
 /**

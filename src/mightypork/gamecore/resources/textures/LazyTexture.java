@@ -1,11 +1,11 @@
 package mightypork.gamecore.resources.textures;
 
 
+import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.logging.LogAlias;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.BaseLazyResource;
 import mightypork.gamecore.resources.TextureBasedResource;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
 
 import org.lwjgl.opengl.GL11;
 

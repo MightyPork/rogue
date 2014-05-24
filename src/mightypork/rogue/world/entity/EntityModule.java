@@ -1,8 +1,8 @@
 package mightypork.rogue.world.entity;
 
 
-import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.annot.DefaultImpl;
+import mightypork.gamecore.util.math.timing.Updateable;
 import mightypork.ion.IonBundle;
 import mightypork.ion.IonObjBundled;
 

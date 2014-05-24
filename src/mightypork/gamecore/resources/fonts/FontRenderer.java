@@ -1,12 +1,12 @@
 package mightypork.gamecore.resources.fonts;
 
 
+import mightypork.dynmath.rect.Rect;
+import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.util.math.color.Color;
 import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
 
 
 /**

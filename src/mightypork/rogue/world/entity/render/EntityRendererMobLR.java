@@ -1,6 +1,10 @@
 package mightypork.rogue.world.entity.render;
 
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.num.mutable.NumVar;
+import mightypork.dynmath.rect.Rect;
+import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
@@ -8,10 +12,6 @@ import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumVar;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityRenderer;
 import mightypork.rogue.world.level.render.MapRenderContext;

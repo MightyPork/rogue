@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import mightypork.gamecore.eventbus.clients.DelegatingClient;
-import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.error.IllegalValueException;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
+import mightypork.gamecore.util.math.timing.Updateable;
 import mightypork.ion.IonBundle;
 import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.World;

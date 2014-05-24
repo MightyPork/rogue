@@ -5,6 +5,7 @@ import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.gamecore.eventbus.event_flags.DirectEvent;
 import mightypork.gamecore.eventbus.event_flags.NonConsumableEvent;
 import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
+import mightypork.gamecore.util.math.timing.Updateable;
 
 
 /**

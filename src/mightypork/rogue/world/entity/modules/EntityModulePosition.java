@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+import mightypork.dynmath.vect.VectConst;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Move;
-import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.ion.IonBundle;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;

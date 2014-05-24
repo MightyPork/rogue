@@ -1,13 +1,13 @@
 package mightypork.rogue.world.tile;
 
 
-import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.algo.Moves;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
+import mightypork.gamecore.util.math.timing.Updateable;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.render.NullTileRenderer;
 

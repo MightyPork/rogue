@@ -6,9 +6,9 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.concurrent.LinkedBlockingDeque;
 
-import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.gamecore.util.math.timing.Updateable;
+import mightypork.gamecore.util.math.timing.animation.NumAnimated;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 

@@ -1,17 +1,17 @@
 package mightypork.gamecore.input;
 
 
+import mightypork.dynmath.vect.Vect;
+import mightypork.dynmath.vect.mutable.VectVar;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.eventbus.clients.RootBusNode;
-import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.events.InputReadyEvent;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseMotionEvent;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.gamecore.util.math.constraints.vect.mutable.VectVar;
+import mightypork.gamecore.util.math.timing.Updateable;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;

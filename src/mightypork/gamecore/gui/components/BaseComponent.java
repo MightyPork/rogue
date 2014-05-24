@@ -1,6 +1,11 @@
 package mightypork.gamecore.gui.components;
 
 
+import mightypork.dynmath.num.Num;
+import mightypork.dynmath.rect.Rect;
+import mightypork.dynmath.rect.caching.AbstractRectCache;
+import mightypork.dynmath.rect.proxy.RectBound;
+import mightypork.dynmath.rect.proxy.RectBoundAdapter;
 import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
@@ -9,11 +14,6 @@ import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.rect.Rect;
-import mightypork.gamecore.util.math.constraints.rect.caching.AbstractRectCache;
-import mightypork.gamecore.util.math.constraints.rect.proxy.RectBound;
-import mightypork.gamecore.util.math.constraints.rect.proxy.RectBoundAdapter;
 
 
 /**

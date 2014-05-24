@@ -18,13 +18,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mightypork.dynmath.vect.Vect;
+import mightypork.dynmath.vect.VectConst;
 import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.gamecore.resources.textures.LazyTexture;
 import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.gamecore.util.math.constraints.vect.VectConst;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.util.glu.GLU;

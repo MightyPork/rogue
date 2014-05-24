@@ -3,10 +3,10 @@ package mightypork.gamecore.util.math.algo;
 
 import java.io.IOException;
 
+import mightypork.dynmath.vect.Vect;
+import mightypork.dynmath.vect.VectConst;
 import mightypork.gamecore.util.annot.FactoryMethod;
 import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
-import mightypork.gamecore.util.math.constraints.vect.VectConst;
 import mightypork.ion.IonBundle;
 import mightypork.ion.IonInput;
 import mightypork.ion.IonObjBinary;

@@ -1,7 +1,7 @@
 package mightypork.gamecore.util.math;
 
 
-import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.dynmath.vect.Vect;
 
 
 /**

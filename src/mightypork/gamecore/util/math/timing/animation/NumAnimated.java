@@ -1,10 +1,11 @@
-package mightypork.gamecore.util.math.constraints.num.mutable;
+package mightypork.gamecore.util.math.timing.animation;
 
 
-import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.dynmath.num.mutable.NumMutable;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.timing.Pauseable;
+import mightypork.gamecore.util.math.timing.Updateable;
 
 
 /**

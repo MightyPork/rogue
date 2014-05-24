@@ -3,6 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.IOException;
 
+import mightypork.dynmath.num.Num;
 import mightypork.gamecore.core.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
@@ -19,7 +20,6 @@ import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.constraints.num.Num;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;

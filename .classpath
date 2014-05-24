@@ -33,5 +33,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/Ion"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DynMath"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

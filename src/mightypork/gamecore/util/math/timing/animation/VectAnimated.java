@@ -1,12 +1,12 @@
-package mightypork.gamecore.util.math.constraints.vect.mutable;
+package mightypork.gamecore.util.math.timing.animation;
 
 
-import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.dynmath.vect.Vect;
+import mightypork.dynmath.vect.mutable.VectMutable;
 import mightypork.gamecore.util.annot.FactoryMethod;
 import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
-import mightypork.gamecore.util.math.constraints.vect.Vect;
 import mightypork.gamecore.util.math.timing.Pauseable;
+import mightypork.gamecore.util.math.timing.Updateable;
 
 
 /**

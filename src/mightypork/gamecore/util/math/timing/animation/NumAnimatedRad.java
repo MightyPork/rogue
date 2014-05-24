@@ -1,4 +1,4 @@
-package mightypork.gamecore.util.math.constraints.num.mutable;
+package mightypork.gamecore.util.math.timing.animation;
 
 
 import mightypork.gamecore.util.math.Calc;

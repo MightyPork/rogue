@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import mightypork.gamecore.util.math.constraints.vect.Vect;
+import mightypork.dynmath.vect.Vect;
 
 import org.lwjgl.BufferUtils;
 

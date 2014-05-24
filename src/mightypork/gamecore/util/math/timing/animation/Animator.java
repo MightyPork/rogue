@@ -1,12 +1,12 @@
-package mightypork.gamecore.util.math.timing;
+package mightypork.gamecore.util.math.timing.animation;
 
 
-import mightypork.gamecore.eventbus.events.Updateable;
+import mightypork.dynmath.num.Num;
 import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.gamecore.util.math.Calc;
 import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.constraints.num.Num;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
+import mightypork.gamecore.util.math.timing.Pauseable;
+import mightypork.gamecore.util.math.timing.Updateable;
 
 
 public abstract class Animator extends Num implements Updateable, Pauseable {

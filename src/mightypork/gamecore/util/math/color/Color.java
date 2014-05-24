@@ -4,9 +4,9 @@ package mightypork.gamecore.util.math.color;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
+import mightypork.dynmath.num.Num;
 import mightypork.gamecore.util.annot.FactoryMethod;
 import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.constraints.num.Num;
 
 
 /**

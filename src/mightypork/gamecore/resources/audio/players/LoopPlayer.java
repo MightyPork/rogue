@@ -1,11 +1,11 @@
 package mightypork.gamecore.resources.audio.players;
 
 
-import mightypork.gamecore.eventbus.events.Updateable;
 import mightypork.gamecore.resources.audio.LazyAudio;
 import mightypork.gamecore.resources.audio.Volume;
-import mightypork.gamecore.util.math.constraints.num.mutable.NumAnimated;
 import mightypork.gamecore.util.math.timing.Pauseable;
+import mightypork.gamecore.util.math.timing.Updateable;
+import mightypork.gamecore.util.math.timing.animation.NumAnimated;
 
 import org.lwjgl.openal.AL10;
 
