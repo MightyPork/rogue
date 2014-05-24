@@ -4,6 +4,13 @@
 
 It explains it way better than this text file.
 
+
+DEPENDENCIES:
+-------------
+
+- [MightyPork/ion](https://github.com/MightyPork/ion)
+- [MightyPork/dynmath](https://github.com/MightyPork/dynmath)
+
 ---
 
 The package `mightypork.gamecore` contains the framework part of the project.
