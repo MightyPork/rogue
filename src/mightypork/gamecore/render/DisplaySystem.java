@@ -6,7 +6,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.nio.ByteBuffer;
 
 import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.proxy.RectBound;
+import mightypork.dynmath.rect.RectBound;
 import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppModule;

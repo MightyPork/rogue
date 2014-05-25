@@ -1,8 +1,8 @@
 package mightypork.gamecore.gui.components.layout;
 
 
+import mightypork.dynmath.rect.RectBound;
 import mightypork.dynmath.rect.builders.TiledRect;
-import mightypork.dynmath.rect.proxy.RectBound;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.gamecore.gui.components.LayoutComponent;

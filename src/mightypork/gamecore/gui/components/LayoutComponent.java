@@ -4,7 +4,7 @@ package mightypork.gamecore.gui.components;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import mightypork.dynmath.rect.proxy.RectBound;
+import mightypork.dynmath.rect.RectBound;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppSubModule;
 import mightypork.gamecore.eventbus.EventBus;

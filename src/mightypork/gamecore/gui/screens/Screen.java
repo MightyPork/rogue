@@ -2,7 +2,7 @@ package mightypork.gamecore.gui.screens;
 
 
 import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.proxy.RectBound;
+import mightypork.dynmath.rect.RectBound;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppSubModule;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;

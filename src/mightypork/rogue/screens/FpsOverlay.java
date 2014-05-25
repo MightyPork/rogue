@@ -2,7 +2,7 @@ package mightypork.rogue.screens;
 
 
 import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.proxy.RectBound;
+import mightypork.dynmath.rect.RectBound;
 import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.core.Config;
 import mightypork.gamecore.core.modules.AppAccess;

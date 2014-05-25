@@ -3,9 +3,9 @@ package mightypork.gamecore.gui.components;
 
 import mightypork.dynmath.num.Num;
 import mightypork.dynmath.rect.Rect;
+import mightypork.dynmath.rect.RectBound;
 import mightypork.dynmath.rect.caching.AbstractRectCache;
-import mightypork.dynmath.rect.proxy.RectBound;
-import mightypork.dynmath.rect.proxy.RectBoundAdapter;
+import mightypork.dynmath.rect.proxy.RectProxy;
 import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
@@ -41,7 +41,7 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	@Override
 	public void setRect(RectBound rect)
 	{
-		this.source = new RectBoundAdapter(rect);
+		this.source = new RectProxy(rect);
 	}
 	
 	

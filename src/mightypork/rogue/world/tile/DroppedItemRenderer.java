@@ -4,9 +4,9 @@ package mightypork.rogue.world.tile;
 import java.util.Collection;
 
 import mightypork.dynmath.num.Num;
-import mightypork.dynmath.num.proxy.NumBoundAdapter;
+import mightypork.dynmath.num.proxy.NumProxy;
 import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.proxy.RectBoundAdapter;
+import mightypork.dynmath.rect.proxy.RectProxy;
 import mightypork.gamecore.util.math.Easing;
 import mightypork.gamecore.util.math.timing.animation.Animator;
 import mightypork.gamecore.util.math.timing.animation.AnimatorBounce;
@@ -19,8 +19,8 @@ public class DroppedItemRenderer {
 	private final Animator itemAnim = new AnimatorBounce(2, Easing.SINE_BOTH);
 	
 	// prepared constraints, to avoid re-building each frame
-	private final RectBoundAdapter tileRectAdapter = new RectBoundAdapter();
-	private final NumBoundAdapter offsAdapter = new NumBoundAdapter();
+	private final RectProxy tileRectAdapter = new RectProxy();
+	private final NumProxy offsAdapter = new NumProxy();
 	private final Rect itemRect = tileRectAdapter.shrink(tileRectAdapter.height().perc(12)).moveY(offsAdapter.neg().mul(tileRectAdapter.height().mul(0.2)));
 	
 	

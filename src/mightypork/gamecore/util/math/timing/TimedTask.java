@@ -1,8 +1,7 @@
 package mightypork.gamecore.util.math.timing;
 
+
 import mightypork.gamecore.util.math.timing.animation.NumAnimated;
-
-
 
 
 /**

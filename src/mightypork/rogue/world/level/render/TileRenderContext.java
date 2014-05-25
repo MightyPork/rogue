@@ -2,7 +2,7 @@ package mightypork.rogue.world.level.render;
 
 
 import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.proxy.RectBound;
+import mightypork.dynmath.rect.RectBound;
 import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.gamecore.util.math.algo.Move;
 import mightypork.gamecore.util.math.noise.NoiseGen;

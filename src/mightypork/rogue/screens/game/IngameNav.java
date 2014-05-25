@@ -2,7 +2,7 @@ package mightypork.rogue.screens.game;
 
 
 import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.proxy.RectBound;
+import mightypork.dynmath.rect.RectBound;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.LayoutComponent;

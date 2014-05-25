@@ -2,8 +2,8 @@ package mightypork.gamecore.gui.components.layout.linear;
 
 
 import mightypork.dynmath.num.Num;
-import mightypork.dynmath.num.NumSum;
-import mightypork.dynmath.rect.proxy.RectBound;
+import mightypork.dynmath.num.batch.NumSum;
+import mightypork.dynmath.rect.RectBound;
 import mightypork.dynmath.vect.Vect;
 import mightypork.dynmath.vect.proxy.VectAdapter;
 import mightypork.gamecore.core.modules.AppAccess;
