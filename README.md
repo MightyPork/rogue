@@ -1,6 +1,6 @@
 # Rogue - Savage Rats
 
-**Read the [MANULAL](http://goo.gl/AU0IdI) if you want to play the game.**
+**Read the [MANUAL](http://goo.gl/AU0IdI) if you want to play the game.**
 
 It explains it way better than this text file.
 
