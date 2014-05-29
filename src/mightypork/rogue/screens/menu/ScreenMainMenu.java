@@ -1,8 +1,6 @@
 package mightypork.rogue.screens.menu;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.core.Config;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.core.modules.AppAccess;
@@ -18,11 +16,13 @@ import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.PAL16;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.RogueScreen;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.pal.PAL16;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
 
 
 /**

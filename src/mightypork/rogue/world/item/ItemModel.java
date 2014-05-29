@@ -3,8 +3,8 @@ package mightypork.rogue.world.item;
 
 import java.io.IOException;
 
-import mightypork.gamecore.util.math.Calc;
-import mightypork.ion.IonBundle;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.math.Calc;
 
 
 /**
@@ -45,7 +45,7 @@ public final class ItemModel {
 	}
 	
 	
-	public Item loadItem(IonBundle in) throws IOException
+	public Item loadItem(IonDataBundle in) throws IOException
 	{
 		final Item t = createItem();
 		t.load(in);
@@ -53,7 +53,7 @@ public final class ItemModel {
 	}
 	
 	
-	public void saveItem(IonBundle out, Item item) throws IOException
+	public void saveItem(IonDataBundle out, Item item) throws IOException
 	{
 		if (itemClass != item.getClass()) throw new RuntimeException("Item class mismatch.");
 		item.save(out);

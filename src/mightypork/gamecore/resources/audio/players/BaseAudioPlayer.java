@@ -1,9 +1,9 @@
 package mightypork.gamecore.resources.audio.players;
 
 
-import mightypork.gamecore.eventbus.events.Destroyable;
 import mightypork.gamecore.resources.audio.LazyAudio;
 import mightypork.gamecore.resources.audio.Volume;
+import mightypork.utils.interfaces.Destroyable;
 
 
 /**

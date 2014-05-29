@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.screens;
 
 
-import mightypork.gamecore.util.annot.DefaultImpl;
+import mightypork.utils.annotations.DefaultImpl;
 
 
 /**

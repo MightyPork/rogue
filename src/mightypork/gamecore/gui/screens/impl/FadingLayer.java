@@ -3,10 +3,10 @@ package mightypork.gamecore.gui.screens.impl;
 
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.timing.TimedTask;
-import mightypork.gamecore.util.math.timing.animation.NumAnimated;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.animation.NumAnimated;
+import mightypork.utils.math.timing.TimedTask;
 
 
 /**

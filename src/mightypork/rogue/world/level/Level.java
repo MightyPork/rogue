@@ -2,25 +2,17 @@ package mightypork.rogue.world.level;
 
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import mightypork.dynmath.vect.Vect;
-import mightypork.gamecore.eventbus.BusAccess;
-import mightypork.gamecore.eventbus.EventBus;
-import mightypork.gamecore.eventbus.clients.DelegatingClient;
-import mightypork.gamecore.eventbus.clients.ToggleableClient;
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Move;
-import mightypork.gamecore.util.math.algo.Moves;
-import mightypork.gamecore.util.math.algo.floodfill.FloodFill;
-import mightypork.gamecore.util.math.noise.NoiseGen;
-import mightypork.gamecore.util.math.timing.Updateable;
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonInput;
-import mightypork.ion.IonObjBinary;
-import mightypork.ion.IonOutput;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
@@ -30,6 +22,23 @@ import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
+import mightypork.utils.eventbus.BusAccess;
+import mightypork.utils.eventbus.EventBus;
+import mightypork.utils.eventbus.clients.DelegatingClient;
+import mightypork.utils.eventbus.clients.ToggleableClient;
+import mightypork.utils.interfaces.Updateable;
+import mightypork.utils.ion.IonBinary;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.ion.IonInput;
+import mightypork.utils.ion.IonOutput;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.Calc;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Move;
+import mightypork.utils.math.algo.Moves;
+import mightypork.utils.math.algo.floodfill.FloodFill;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.noise.NoiseGen;
 
 
 /**
@@ -37,28 +46,8 @@ import mightypork.rogue.world.tile.Tiles;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class Level implements BusAccess, Updateable, DelegatingClient, ToggleableClient, IonObjBinary {
+public class Level implements BusAccess, Updateable, DelegatingClient, ToggleableClient, IonBinary {
 	
-	private static class EntityRenderComparator implements Comparator<Entity> {
-		
-		@Override
-		public int compare(Entity o1, Entity o2)
-		{
-			if (o1.isDead() && !o2.isDead()) {
-				return -1;
-			}
-			
-			if (!o1.isDead() && o2.isDead()) {
-				return 1;
-			}
-			
-			int c = Double.compare(o1.pos.getVisualPos().y(), o1.pos.getVisualPos().y());
-			if (c == 0) c = Double.compare(o1.pos.getVisualPos().x(), o1.pos.getVisualPos().x());
-			
-			return c;
-		}
-		
-	}
 	
 	private final FloodFill exploreFiller = new FloodFill() {
 		
@@ -102,11 +91,11 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public static final int ION_MARK = 53;
 	private static final Comparator<Entity> ENTITY_RENDER_CMP = new EntityRenderComparator();
 	
-	private final Coord size = Coord.zero();
+	private Coord size = Coord.zero();
 	private World world;
 	
-	private final Coord enterPoint = Coord.zero();
-	private final Coord exitPoint = Coord.zero();
+	private Coord enterPoint = Coord.zero();
+	private Coord exitPoint = Coord.zero();
 	
 	/** Array of tiles [y][x] */
 	private Tile[][] tiles;
@@ -232,11 +221,11 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public void load(IonInput in) throws IOException
 	{
 		// -- metadata --
-		final IonBundle ib = in.readBundle();
+		final IonDataBundle ib = in.readBundle();
 		seed = ib.get("seed", 0L);
-		ib.loadBundled("size", size);
-		ib.loadBundled("enter_point", enterPoint);
-		ib.loadBundled("exit_point", exitPoint);
+		size = ib.get("size");
+		enterPoint = ib.get("enter_point", enterPoint);
+		exitPoint = ib.get("exit_point", exitPoint);
 		
 		// -- binary data --
 		
@@ -268,11 +257,11 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public void save(IonOutput out) throws IOException
 	{
 		// -- metadata --
-		final IonBundle ib = new IonBundle();
+		final IonDataBundle ib = new IonDataBundle();
 		ib.put("seed", seed);
-		ib.putBundled("size", size);
-		ib.putBundled("enter_point", enterPoint);
-		ib.putBundled("exit_point", exitPoint);
+		ib.put("size", size);
+		ib.put("enter_point", enterPoint);
+		ib.put("exit_point", exitPoint);
 		out.writeBundle(ib);
 		
 		// -- binary data --
@@ -699,5 +688,26 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 		}
 		
 		return false;
+	}
+	
+	private static class EntityRenderComparator implements Comparator<Entity> {
+		
+		@Override
+		public int compare(Entity o1, Entity o2)
+		{
+			if (o1.isDead() && !o2.isDead()) {
+				return -1;
+			}
+			
+			if (!o1.isDead() && o2.isDead()) {
+				return 1;
+			}
+			
+			int c = Double.compare(o1.pos.getVisualPos().y(), o1.pos.getVisualPos().y());
+			if (c == 0) c = Double.compare(o1.pos.getVisualPos().x(), o1.pos.getVisualPos().x());
+			
+			return c;
+		}
+		
 	}
 }

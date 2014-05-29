@@ -1,7 +1,7 @@
 package mightypork.gamecore.resources.audio;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
+import mightypork.utils.eventbus.BusEvent;
 
 
 public class AudioReadyEvent extends BusEvent<AudioReadyListener> {

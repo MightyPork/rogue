@@ -1,8 +1,8 @@
 package mightypork.gamecore.resources.textures;
 
 
-import mightypork.dynmath.rect.Rect;
-import mightypork.gamecore.eventbus.events.Destroyable;
+import mightypork.utils.interfaces.Destroyable;
+import mightypork.utils.math.constraints.rect.Rect;
 
 
 /**

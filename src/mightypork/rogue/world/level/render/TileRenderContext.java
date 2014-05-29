@@ -1,13 +1,13 @@
 package mightypork.rogue.world.level.render;
 
 
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.RectBound;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Move;
-import mightypork.gamecore.util.math.noise.NoiseGen;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Move;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectBound;
+import mightypork.utils.math.noise.NoiseGen;
 
 
 /**

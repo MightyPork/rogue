@@ -1,8 +1,8 @@
 package mightypork.gamecore.resources.audio;
 
 
-import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.objects.Mutable;
+import mightypork.utils.math.Calc;
+import mightypork.utils.struct.Mutable;
 
 
 /**

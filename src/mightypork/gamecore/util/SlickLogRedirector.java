@@ -1,9 +1,9 @@
-package mightypork.gamecore.logging;
+package mightypork.gamecore.util;
 
 
 import java.util.logging.Level;
 
-import mightypork.gamecore.logging.writers.LogWriter;
+import mightypork.utils.logging.writers.LogWriter;
 
 
 /**

@@ -1,11 +1,11 @@
 package mightypork.rogue.world.entity.modules;
 
 
-import mightypork.gamecore.util.error.IllegalValueException;
-import mightypork.gamecore.util.math.Calc;
-import mightypork.ion.IonBundle;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;
+import mightypork.utils.exceptions.IllegalValueException;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.math.Calc;
 
 
 public class EntityModuleHealth extends EntityModule {
@@ -24,7 +24,7 @@ public class EntityModuleHealth extends EntityModule {
 	
 	
 	@Override
-	public void load(IonBundle bundle)
+	public void load(IonDataBundle bundle)
 	{
 		health = bundle.get("health", health);
 		maxHealth = bundle.get("max_health", maxHealth);
@@ -33,7 +33,7 @@ public class EntityModuleHealth extends EntityModule {
 	
 	
 	@Override
-	public void save(IonBundle bundle)
+	public void save(IonDataBundle bundle)
 	{
 		bundle.put("health", health);
 		bundle.put("max_health", maxHealth);

@@ -1,8 +1,8 @@
 package mightypork.gamecore.gui.components.layout.linear;
 
 
-import mightypork.dynmath.num.Num;
 import mightypork.gamecore.gui.components.layout.NullComponent;
+import mightypork.utils.math.constraints.num.Num;
 
 
 /**

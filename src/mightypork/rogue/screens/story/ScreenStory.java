@@ -1,8 +1,6 @@
 package mightypork.rogue.screens.story;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.core.Config;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
@@ -20,14 +18,16 @@ import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonHandler;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.timing.TimedTask;
-import mightypork.gamecore.util.math.timing.animation.NumAnimated;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.RogueScreen;
+import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.animation.NumAnimated;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.timing.TimedTask;
 
 
 public class ScreenStory extends RogueScreen implements MouseButtonHandler {

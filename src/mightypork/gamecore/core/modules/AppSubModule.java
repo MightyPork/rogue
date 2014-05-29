@@ -1,12 +1,12 @@
 package mightypork.gamecore.core.modules;
 
 
-import mightypork.gamecore.eventbus.clients.BusNode;
-import mightypork.gamecore.eventbus.clients.DelegatingClient;
-import mightypork.gamecore.eventbus.clients.RootBusNode;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.audio.SoundSystem;
+import mightypork.utils.eventbus.clients.BusNode;
+import mightypork.utils.eventbus.clients.DelegatingClient;
+import mightypork.utils.eventbus.clients.RootBusNode;
 
 
 /**

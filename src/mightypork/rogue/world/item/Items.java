@@ -4,14 +4,20 @@ package mightypork.rogue.world.item;
 import java.io.IOException;
 import java.util.Collection;
 
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonInput;
-import mightypork.ion.IonOutput;
 import mightypork.rogue.world.item.impl.active.ItemHeartPiece;
 import mightypork.rogue.world.item.impl.food.ItemCheese;
 import mightypork.rogue.world.item.impl.food.ItemMeat;
 import mightypork.rogue.world.item.impl.food.ItemSandwich;
-import mightypork.rogue.world.item.impl.weapons.*;
+import mightypork.rogue.world.item.impl.weapons.ItemAxe;
+import mightypork.rogue.world.item.impl.weapons.ItemBone;
+import mightypork.rogue.world.item.impl.weapons.ItemClub;
+import mightypork.rogue.world.item.impl.weapons.ItemKnife;
+import mightypork.rogue.world.item.impl.weapons.ItemRock;
+import mightypork.rogue.world.item.impl.weapons.ItemSword;
+import mightypork.rogue.world.item.impl.weapons.ItemTwig;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.ion.IonInput;
+import mightypork.utils.ion.IonOutput;
 
 
 /**
@@ -76,7 +82,7 @@ public final class Items {
 		
 		out.writeIntByte(model.id);
 		
-		final IonBundle ib = new IonBundle();
+		final IonDataBundle ib = new IonDataBundle();
 		model.saveItem(ib, item);
 		out.writeBundle(ib);
 	}

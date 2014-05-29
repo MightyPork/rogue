@@ -1,7 +1,7 @@
 package mightypork.gamecore.render.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
+import mightypork.utils.eventbus.BusEvent;
 
 
 public class ScreenshotRequest extends BusEvent<ScreenshotRequestListener> {

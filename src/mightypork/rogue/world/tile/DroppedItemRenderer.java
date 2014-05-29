@@ -3,15 +3,15 @@ package mightypork.rogue.world.tile;
 
 import java.util.Collection;
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.num.proxy.NumProxy;
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.proxy.RectProxy;
-import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.timing.animation.Animator;
-import mightypork.gamecore.util.math.timing.animation.AnimatorBounce;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.render.TileRenderContext;
+import mightypork.utils.math.animation.Animator;
+import mightypork.utils.math.animation.AnimatorBounce;
+import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.proxy.NumProxy;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.proxy.RectProxy;
 
 
 public class DroppedItemRenderer {
@@ -30,7 +30,7 @@ public class DroppedItemRenderer {
 		int cnt = 0;
 		for (final Item i : items) {
 			
-			offsAdapter.setNum(Num.make((itemAnim.value() + (cnt % 3) * 0.1)));
+			offsAdapter.setNum(Num.make((itemAnim.getValue() + (cnt % 3) * 0.1)));
 			
 			i.render(itemRect);
 			

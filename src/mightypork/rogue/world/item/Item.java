@@ -1,16 +1,16 @@
 package mightypork.rogue.world.item;
 
 
-import mightypork.dynmath.rect.Rect;
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.math.Calc;
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.PlayerFacade;
+import mightypork.utils.Support;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.ion.IonBundled;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.math.Calc;
+import mightypork.utils.math.constraints.rect.Rect;
 
 
-public abstract class Item implements IonObjBundled {
+public abstract class Item implements IonBundled {
 	
 	private final ItemModel model;
 	private ItemRenderer renderer;
@@ -39,7 +39,7 @@ public abstract class Item implements IonObjBundled {
 	
 	@Override
 	@DefaultImpl
-	public void save(IonBundle out)
+	public void save(IonDataBundle out)
 	{
 		out.put("c", amount);
 		out.put("u", uses);
@@ -48,7 +48,7 @@ public abstract class Item implements IonObjBundled {
 	
 	@Override
 	@DefaultImpl
-	public void load(IonBundle in)
+	public void load(IonDataBundle in)
 	{
 		amount = in.get("c", amount);
 		uses = in.get("u", uses);
@@ -156,7 +156,7 @@ public abstract class Item implements IonObjBundled {
 	@Override
 	public String toString()
 	{
-		return Log.str(getClass()) + " x " + getAmount();
+		return Support.str(getClass()) + " x " + getAmount();
 	}
 	
 	

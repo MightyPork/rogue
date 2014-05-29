@@ -1,8 +1,8 @@
 package mightypork.gamecore.input.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
+import mightypork.utils.eventbus.BusEvent;
+import mightypork.utils.eventbus.events.flags.NotLoggedEvent;
 
 import org.lwjgl.input.Keyboard;
 

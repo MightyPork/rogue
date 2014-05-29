@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.gamecore.eventbus.event_flags.DirectEvent;
-import mightypork.gamecore.eventbus.event_flags.NonConsumableEvent;
-import mightypork.gamecore.eventbus.event_flags.NonRejectableEvent;
+import mightypork.utils.eventbus.BusEvent;
+import mightypork.utils.eventbus.events.flags.DirectEvent;
+import mightypork.utils.eventbus.events.flags.NonConsumableEvent;
+import mightypork.utils.eventbus.events.flags.NonRejectableEvent;
 
 
 /**

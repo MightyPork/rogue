@@ -1,15 +1,15 @@
 package mightypork.rogue.world.entity.modules;
 
 
-import mightypork.dynmath.vect.Vect;
-import mightypork.dynmath.vect.VectConst;
-import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Move;
-import mightypork.gamecore.util.math.timing.Updateable;
-import mightypork.gamecore.util.math.timing.animation.VectAnimated;
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonObjBundled;
+import mightypork.utils.interfaces.Updateable;
+import mightypork.utils.ion.IonBundled;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Move;
+import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.animation.VectAnimated;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 
 /**
@@ -17,9 +17,9 @@ import mightypork.ion.IonObjBundled;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-class EntityPos implements IonObjBundled, Updateable {
+class EntityPos implements IonBundled, Updateable {
 	
-	private final Coord coord = new Coord(0, 0);
+	private Coord coord = new Coord(0, 0);
 	private final VectAnimated walkOffset = new VectAnimated(Vect.ZERO, Easing.LINEAR);
 	
 	
@@ -47,17 +47,17 @@ class EntityPos implements IonObjBundled, Updateable {
 	
 	
 	@Override
-	public void load(IonBundle in)
+	public void load(IonDataBundle in)
 	{
-		in.loadBundled("pos", coord);
+		coord = in.get("pos", coord);
 		walkOffset.reset();
 	}
 	
 	
 	@Override
-	public void save(IonBundle out)
+	public void save(IonDataBundle out)
 	{
-		out.putBundled("pos", coord);
+		out.put("pos", coord);
 	}
 	
 	

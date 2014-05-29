@@ -1,11 +1,11 @@
 package mightypork.rogue.world.item.render;
 
 
-import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemRenderer;
+import mightypork.utils.math.constraints.rect.Rect;
 
 
 public class QuadItemRenderer extends ItemRenderer {

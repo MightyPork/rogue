@@ -1,20 +1,20 @@
 package mightypork.rogue.world;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.RectConst;
-import mightypork.dynmath.rect.proxy.RectProxy;
-import mightypork.dynmath.vect.Vect;
-import mightypork.dynmath.vect.VectConst;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.rogue.Const;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectConst;
+import mightypork.utils.math.constraints.rect.proxy.RectProxy;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 
 /**

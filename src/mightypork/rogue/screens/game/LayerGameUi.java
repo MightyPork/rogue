@@ -1,18 +1,18 @@
 package mightypork.rogue.screens.game;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.gui.Minimap;
 import mightypork.rogue.world.gui.WorldConsoleRenderer;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.string.StringProvider;
 
 
 public class LayerGameUi extends ScreenLayer {

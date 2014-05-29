@@ -9,9 +9,7 @@ import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.Const;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
@@ -22,6 +20,8 @@ import mightypork.rogue.world.events.GameWinHandler;
 import mightypork.rogue.world.events.PlayerDeathHandler;
 import mightypork.rogue.world.events.WorldPauseRequest;
 import mightypork.rogue.world.events.WorldPauseRequest.PauseAction;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.color.Color;
 
 
 public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameWinHandler {

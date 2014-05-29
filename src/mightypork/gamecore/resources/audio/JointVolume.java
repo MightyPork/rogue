@@ -1,7 +1,7 @@
 package mightypork.gamecore.resources.audio;
 
 
-import mightypork.gamecore.util.math.Calc;
+import mightypork.utils.math.Calc;
 
 
 /**

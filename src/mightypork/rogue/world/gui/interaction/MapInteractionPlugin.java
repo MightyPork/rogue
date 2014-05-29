@@ -1,11 +1,11 @@
 package mightypork.rogue.world.gui.interaction;
 
 
-import mightypork.dynmath.vect.Vect;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.gui.MapView;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 public abstract class MapInteractionPlugin {

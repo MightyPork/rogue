@@ -1,10 +1,10 @@
 package mightypork.gamecore.core.modules;
 
 
-import mightypork.gamecore.eventbus.BusAccess;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.audio.SoundSystem;
+import mightypork.utils.eventbus.BusAccess;
 
 
 /**

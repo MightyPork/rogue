@@ -1,10 +1,10 @@
 package mightypork.rogue.world.entity;
 
 
-import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.math.timing.Updateable;
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonObjBundled;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.interfaces.Updateable;
+import mightypork.utils.ion.IonBundled;
+import mightypork.utils.ion.IonDataBundle;
 
 
 /**
@@ -13,7 +13,7 @@ import mightypork.ion.IonObjBundled;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public abstract class EntityModule implements IonObjBundled, Updateable {
+public abstract class EntityModule implements IonBundled, Updateable {
 	
 	protected final Entity entity;
 	
@@ -32,14 +32,14 @@ public abstract class EntityModule implements IonObjBundled, Updateable {
 	
 	@Override
 	@DefaultImpl
-	public void load(IonBundle bundle)
+	public void load(IonDataBundle bundle)
 	{
 	}
 	
 	
 	@Override
 	@DefaultImpl
-	public void save(IonBundle bundle)
+	public void save(IonDataBundle bundle)
 	{
 	}
 	

@@ -1,19 +1,20 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.RectBound;
-import mightypork.dynmath.rect.caching.AbstractRectCache;
-import mightypork.dynmath.rect.proxy.RectProxy;
-import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.Renderable;
-import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.math.color.Color;
+import mightypork.utils.Support;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.interfaces.Enableable;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectBound;
+import mightypork.utils.math.constraints.rect.caching.AbstractRectCache;
+import mightypork.utils.math.constraints.rect.proxy.RectProxy;
 
 
 /**
@@ -83,7 +84,7 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 		try {
 			poll();
 		} catch (final NullPointerException e) {
-			Log.e("Component is missing a bounding rect, at: " + Log.str(getClass()));
+			Log.e("Component is missing a bounding rect, at: " + Support.str(getClass()));
 		}
 	}
 	

@@ -1,8 +1,8 @@
 package mightypork.gamecore.core.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.gamecore.eventbus.EventBus;
+import mightypork.utils.eventbus.BusEvent;
+import mightypork.utils.eventbus.EventBus;
 
 
 /**

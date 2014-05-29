@@ -1,7 +1,7 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.util.strings.StringUtils;
+import mightypork.utils.string.StringUtil;
 
 import org.lwjgl.input.Keyboard;
 
@@ -90,8 +90,8 @@ public class KeyStroke { //implements Pollable
 		
 		if (dataString1.contains("+")) {
 			
-			final String keyStr = StringUtils.fromLastChar(dataString1, '+');
-			final String modStr = StringUtils.toLastChar(dataString1, '+');
+			final String keyStr = StringUtil.fromLastChar(dataString1, '+');
+			final String modStr = StringUtil.toLastChar(dataString1, '+');
 			
 			setTo(Keys.keyFromString(keyStr), Keys.modFromString(modStr));
 			

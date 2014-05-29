@@ -1,29 +1,29 @@
 package mightypork.rogue.world.gui;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.mutable.RectMutable;
-import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonHandler;
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.rogue.Const;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.var.RectVar;
+import mightypork.utils.math.constraints.vect.Vect;
 
 import org.lwjgl.opengl.GL11;
 
 
 public class Minimap extends InputComponent implements MouseButtonHandler {
 	
-	private final RectMutable bounds = Rect.makeVar();
+	private final RectVar bounds = Rect.makeVar();
 	private int unit = 0;
 	private final Num translucency = Num.make(0.8);
 	private final Color playerColor = RGB.RED;

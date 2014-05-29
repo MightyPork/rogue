@@ -6,21 +6,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
-import mightypork.gamecore.eventbus.BusAccess;
-import mightypork.gamecore.eventbus.EventBus;
-import mightypork.gamecore.eventbus.clients.DelegatingClient;
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.error.CorruptDataException;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.timing.Pauseable;
-import mightypork.gamecore.util.math.timing.Updateable;
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.events.GameWinHandler;
 import mightypork.rogue.world.events.PlayerDeathHandler;
 import mightypork.rogue.world.level.Level;
+import mightypork.utils.eventbus.BusAccess;
+import mightypork.utils.eventbus.EventBus;
+import mightypork.utils.eventbus.clients.DelegatingClient;
+import mightypork.utils.interfaces.Pauseable;
+import mightypork.utils.interfaces.Updateable;
+import mightypork.utils.ion.IonBundled;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.algo.Coord;
 
 
 /**
@@ -28,7 +27,7 @@ import mightypork.rogue.world.level.Level;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class World implements DelegatingClient, BusAccess, IonObjBundled, Pauseable, Updateable, PlayerDeathHandler, GameWinHandler {
+public class World implements DelegatingClient, BusAccess, IonBundled, Pauseable, Updateable, PlayerDeathHandler, GameWinHandler {
 	
 	// not saved stuffs
 	private final PlayerFacade playerFacade = new PlayerFacade(this);
@@ -70,7 +69,7 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 	
 	
 	@Override
-	public void load(IonBundle in)
+	public void load(IonDataBundle in)
 	{
 		seed = in.get("seed", seed);
 		eid = in.get("next_eid", eid);
@@ -99,13 +98,13 @@ public class World implements DelegatingClient, BusAccess, IonObjBundled, Pausea
 				}
 			}
 			
-			throw new CorruptDataException("Player not found in world.");
+			throw new RuntimeException("Player not found in world.");
 		}
 	}
 	
 	
 	@Override
-	public void save(IonBundle out)
+	public void save(IonDataBundle out)
 	{
 		out.put("seed", seed);
 		out.put("next_eid", eid);

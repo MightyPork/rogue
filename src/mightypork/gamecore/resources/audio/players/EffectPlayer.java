@@ -1,9 +1,9 @@
 package mightypork.gamecore.resources.audio.players;
 
 
-import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.resources.audio.LazyAudio;
 import mightypork.gamecore.resources.audio.Volume;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 /**

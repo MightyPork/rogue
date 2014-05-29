@@ -1,7 +1,7 @@
 package mightypork.gamecore.input.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
+import mightypork.utils.eventbus.BusEvent;
 
 
 public class InputReadyEvent extends BusEvent<InputReadyListener> {

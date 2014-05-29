@@ -3,10 +3,10 @@ package mightypork.rogue.world.entity;
 
 import java.io.IOException;
 
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonInput;
-import mightypork.ion.IonOutput;
 import mightypork.rogue.world.World;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.ion.IonInput;
+import mightypork.utils.ion.IonOutput;
 
 
 /**
@@ -59,7 +59,7 @@ public final class EntityModel {
 	
 	public Entity loadEntity(IonInput in) throws IOException
 	{
-		final IonBundle bundle = in.readBundle();
+		final IonDataBundle bundle = in.readBundle();
 		final Entity ent = createEntity(-1);
 		ent.load(bundle);
 		return ent;
@@ -68,7 +68,7 @@ public final class EntityModel {
 	
 	public void saveEntity(IonOutput out, Entity entity) throws IOException
 	{
-		final IonBundle bundle = new IonBundle();
+		final IonDataBundle bundle = new IonDataBundle();
 		entity.save(bundle);
 		out.writeBundle(bundle);
 	}

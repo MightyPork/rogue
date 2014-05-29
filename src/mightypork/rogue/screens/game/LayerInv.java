@@ -1,8 +1,6 @@
 package mightypork.rogue.screens.game;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.core.Config;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
@@ -14,14 +12,16 @@ import mightypork.gamecore.gui.screens.impl.FadingLayer;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.strings.StringProvider;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemType;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.string.StringProvider;
 
 
 public class LayerInv extends FadingLayer {

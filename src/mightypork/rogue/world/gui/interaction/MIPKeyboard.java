@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.core.Config;
-import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.Keys;
-import mightypork.gamecore.util.math.algo.Move;
-import mightypork.gamecore.util.math.algo.Moves;
-import mightypork.gamecore.util.math.timing.Updateable;
 import mightypork.rogue.world.entity.impl.EntityPlayer;
 import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
+import mightypork.utils.eventbus.clients.DelegatingClient;
+import mightypork.utils.interfaces.Updateable;
+import mightypork.utils.math.algo.Move;
+import mightypork.utils.math.algo.Moves;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClient, PlayerStepEndListener, Updateable {

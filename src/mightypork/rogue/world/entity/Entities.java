@@ -4,12 +4,12 @@ package mightypork.rogue.world.entity;
 import java.io.IOException;
 import java.util.Collection;
 
-import mightypork.ion.IonInput;
-import mightypork.ion.IonOutput;
 import mightypork.rogue.world.entity.impl.EntityBossRat;
 import mightypork.rogue.world.entity.impl.EntityBrownRat;
 import mightypork.rogue.world.entity.impl.EntityGrayRat;
 import mightypork.rogue.world.entity.impl.EntityPlayer;
+import mightypork.utils.ion.IonInput;
+import mightypork.utils.ion.IonOutput;
 
 
 /**

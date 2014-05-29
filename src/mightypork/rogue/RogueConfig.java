@@ -2,7 +2,7 @@ package mightypork.rogue;
 
 
 import mightypork.gamecore.core.Config.ConfigSetup;
-import mightypork.gamecore.util.files.config.PropertyManager;
+import mightypork.utils.files.config.PropertyManager;
 
 
 public class RogueConfig implements ConfigSetup {

@@ -4,7 +4,7 @@ package mightypork.rogue;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppModule;
 import mightypork.gamecore.gui.screens.impl.CrossfadeRequest;
-import mightypork.gamecore.logging.Log;
+import mightypork.utils.logging.Log;
 
 
 public class RogueStateManager extends AppModule {

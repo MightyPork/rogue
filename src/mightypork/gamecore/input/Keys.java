@@ -3,7 +3,7 @@ package mightypork.gamecore.input;
 
 import java.util.HashMap;
 
-import mightypork.gamecore.logging.Log;
+import mightypork.utils.logging.Log;
 
 import org.lwjgl.input.Keyboard;
 

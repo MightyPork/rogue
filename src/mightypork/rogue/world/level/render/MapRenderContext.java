@@ -1,11 +1,11 @@
 package mightypork.rogue.world.level.render;
 
 
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.builders.TiledRect;
-import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.builders.TiledRect;
 
 
 public abstract class MapRenderContext {

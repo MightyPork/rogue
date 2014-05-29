@@ -1,9 +1,9 @@
 package mightypork.rogue.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 import mightypork.rogue.screens.LoadingOverlay;
+import mightypork.utils.eventbus.BusEvent;
+import mightypork.utils.eventbus.events.flags.SingleReceiverEvent;
 
 
 /**

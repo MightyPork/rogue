@@ -8,7 +8,7 @@ import java.util.Set;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.KeyEventHandler;
-import mightypork.gamecore.logging.Log;
+import mightypork.utils.logging.Log;
 
 
 /**

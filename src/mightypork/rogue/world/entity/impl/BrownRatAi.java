@@ -1,8 +1,8 @@
 package mightypork.rogue.world.entity.impl;
 
 
-import mightypork.gamecore.util.math.Calc;
 import mightypork.rogue.world.entity.Entity;
+import mightypork.utils.math.Calc;
 
 
 public class BrownRatAi extends GrayRatAi {

@@ -3,12 +3,12 @@ package mightypork.rogue.world.gen.rooms;
 
 import java.util.Random;
 
-import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.ScratchMap;
 import mightypork.rogue.world.gen.WorldGenError;
 import mightypork.rogue.world.item.Item;
+import mightypork.utils.math.Calc;
+import mightypork.utils.math.algo.Coord;
 
 
 public class ItemShrineRoom extends SecretRoom {

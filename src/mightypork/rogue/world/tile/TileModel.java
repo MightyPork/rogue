@@ -3,8 +3,8 @@ package mightypork.rogue.world.tile;
 
 import java.io.IOException;
 
-import mightypork.ion.IonInput;
-import mightypork.ion.IonOutput;
+import mightypork.utils.ion.IonInput;
+import mightypork.utils.ion.IonOutput;
 
 
 /**

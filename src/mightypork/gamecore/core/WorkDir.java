@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.logging.Log;
+import mightypork.utils.logging.Log;
 
 
 /**

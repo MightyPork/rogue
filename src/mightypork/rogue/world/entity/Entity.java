@@ -6,19 +6,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import mightypork.gamecore.eventbus.clients.DelegatingClient;
-import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.error.IllegalValueException;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
-import mightypork.gamecore.util.math.timing.Updateable;
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.eventbus.clients.DelegatingClient;
+import mightypork.utils.exceptions.IllegalValueException;
+import mightypork.utils.interfaces.Updateable;
+import mightypork.utils.ion.IonBundled;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.pathfinding.PathFinder;
 
 
 /**
@@ -26,7 +26,7 @@ import mightypork.rogue.world.level.render.MapRenderContext;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public abstract class Entity implements IonObjBundled, Updateable, DelegatingClient {
+public abstract class Entity implements IonBundled, Updateable, DelegatingClient {
 	
 	private Level level;
 	private final EntityModel model;
@@ -56,47 +56,47 @@ public abstract class Entity implements IonObjBundled, Updateable, DelegatingCli
 	
 	
 	@Override
-	public final void save(IonBundle bundle)
+	public final void save(IonDataBundle bundle)
 	{
 		bundle.put("eid", entityId);
 		
-		final IonBundle modulesBundle = new IonBundle();
+		final IonDataBundle modulesBundle = new IonDataBundle();
 		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
 			modulesBundle.putBundled(entry.getKey(), entry.getValue());
 		}
 		bundle.put("modules", modulesBundle);
 		
-		final IonBundle extra = new IonBundle();
+		final IonDataBundle extra = new IonDataBundle();
 		saveExtra(extra);
 		bundle.put("extra", extra);
 	}
 	
 	
 	@DefaultImpl
-	protected void saveExtra(IonBundle bundle)
+	protected void saveExtra(IonDataBundle bundle)
 	{
 	}
 	
 	
 	@Override
-	public final void load(IonBundle bundle)
+	public final void load(IonDataBundle bundle)
 	{
 		entityId = bundle.get("eid", -1);
 		if (entityId < 0) throw new IllegalValueException("Bad entity id: " + entityId);
 		
-		final IonBundle modulesBundle = bundle.get("modules", new IonBundle());
+		final IonDataBundle modulesBundle = bundle.get("modules", new IonDataBundle());
 		
 		for (final Entry<String, EntityModule> entry : modules.entrySet()) {
 			modulesBundle.loadBundled(entry.getKey(), entry.getValue());
 		}
 		
-		final IonBundle extra = bundle.get("extra", new IonBundle());
+		final IonDataBundle extra = bundle.get("extra", new IonDataBundle());
 		loadExtra(extra);
 	}
 	
 	
 	@DefaultImpl
-	protected void loadExtra(IonBundle bundle)
+	protected void loadExtra(IonDataBundle bundle)
 	{
 	}
 	

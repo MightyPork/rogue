@@ -1,20 +1,20 @@
 package mightypork.rogue.world.entity.render;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.num.mutable.NumVar;
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.resources.textures.TxSheet;
-import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.color.Color;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityRenderer;
 import mightypork.rogue.world.level.render.MapRenderContext;
+import mightypork.utils.math.Calc;
+import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.var.NumVar;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 /**

@@ -1,8 +1,8 @@
 package mightypork.rogue.world.level.render;
 
 
-import mightypork.dynmath.rect.Rect;
 import mightypork.rogue.world.level.Level;
+import mightypork.utils.math.constraints.rect.Rect;
 
 
 public class EntityRenderContext extends MapRenderContext {

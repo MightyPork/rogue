@@ -1,9 +1,6 @@
 package mightypork.rogue.screens.game;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.caching.RectCache;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.ClickableComponent;
@@ -11,13 +8,16 @@ import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
-import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemType;
+import mightypork.utils.Support;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.caching.RectCache;
 
 
 /**
@@ -137,7 +137,7 @@ public class InvSlot extends ClickableComponent {
 			}
 			
 			if (itm.getType() == ItemType.FOOD) {
-				rtTxP.setText(Calc.toString(itm.getFoodPoints() / 2D));
+				rtTxP.setText(Support.str(itm.getFoodPoints() / 2D));
 				rtTxP.setColor(RGB.GREEN);
 				rtTxP.render();
 			} else if (itm.getType() == ItemType.WEAPON) {

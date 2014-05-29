@@ -4,12 +4,12 @@ package mightypork.rogue.world.tile.impl;
 import java.io.IOException;
 
 import mightypork.gamecore.resources.textures.TxSheet;
-import mightypork.ion.IonInput;
-import mightypork.ion.IonOutput;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.TileType;
 import mightypork.rogue.world.tile.render.DoorTileRenderer;
+import mightypork.utils.ion.IonInput;
+import mightypork.utils.ion.IonOutput;
 
 
 public abstract class TileBaseDoor extends TileSolid {

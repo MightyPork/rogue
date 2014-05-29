@@ -32,7 +32,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Rogue/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/Ion"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DynMath"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MightyUtils"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

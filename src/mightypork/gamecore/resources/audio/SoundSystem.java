@@ -5,16 +5,16 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import mightypork.dynmath.vect.Vect;
-import mightypork.dynmath.vect.mutable.VectVar;
 import mightypork.gamecore.core.modules.AppAccess;
-import mightypork.gamecore.eventbus.clients.RootBusNode;
-import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
-import mightypork.gamecore.util.math.Calc.Buffers;
-import mightypork.gamecore.util.math.timing.Updateable;
+import mightypork.gamecore.util.BufferHelper;
+import mightypork.utils.eventbus.clients.RootBusNode;
+import mightypork.utils.interfaces.Updateable;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.var.VectVar;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
@@ -43,16 +43,16 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	public static void setListener(Vect pos)
 	{
 		listener.setTo(pos);
-		final FloatBuffer buf3 = Buffers.alloc(3);
-		final FloatBuffer buf6 = Buffers.alloc(6);
+		final FloatBuffer buf3 = BufferHelper.alloc(3);
+		final FloatBuffer buf6 = BufferHelper.alloc(6);
 		buf3.clear();
-		Buffers.fill(buf3, (float) pos.x(), (float) pos.y(), (float) pos.z());
+		BufferHelper.fill(buf3, (float) pos.x(), (float) pos.y(), (float) pos.z());
 		AL10.alListener(AL10.AL_POSITION, buf3);
 		buf3.clear();
-		Buffers.fill(buf3, 0, 0, 0);
+		BufferHelper.fill(buf3, 0, 0, 0);
 		AL10.alListener(AL10.AL_VELOCITY, buf3);
 		buf6.clear();
-		Buffers.fill(buf6, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
+		BufferHelper.fill(buf6, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
 		AL10.alListener(AL10.AL_ORIENTATION, buf6);
 	}
 	

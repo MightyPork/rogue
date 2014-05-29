@@ -3,15 +3,15 @@ package mightypork.rogue.world.gen.rooms;
 
 import java.util.Random;
 
-import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Moves;
 import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.RoomBuilder;
 import mightypork.rogue.world.gen.RoomEntry;
 import mightypork.rogue.world.gen.ScratchMap;
 import mightypork.rogue.world.gen.TileProtectLevel;
 import mightypork.rogue.world.tile.TileModel;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Moves;
 
 
 public abstract class AbstractRectRoom implements RoomBuilder {

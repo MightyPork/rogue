@@ -1,9 +1,9 @@
 package mightypork.rogue.world.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.gamecore.eventbus.event_flags.NotLoggedEvent;
 import mightypork.rogue.world.entity.impl.EntityPlayer;
+import mightypork.utils.eventbus.BusEvent;
+import mightypork.utils.eventbus.events.flags.NotLoggedEvent;
 
 
 @NotLoggedEvent

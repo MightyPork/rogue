@@ -1,16 +1,16 @@
 package mightypork.gamecore.gui.components.layout.linear;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.num.batch.NumSum;
-import mightypork.dynmath.rect.RectBound;
-import mightypork.dynmath.vect.Vect;
-import mightypork.dynmath.vect.proxy.VectAdapter;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.gui.components.LayoutComponent;
 import mightypork.gamecore.gui.components.LinearComponent;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.batch.NumSum;
+import mightypork.utils.math.constraints.rect.RectBound;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.proxy.VectAdapter;
 
 
 public class LinearLayout extends LayoutComponent {

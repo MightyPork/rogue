@@ -1,12 +1,12 @@
 package mightypork.rogue.world.entity;
 
 
-import mightypork.gamecore.util.math.timing.TaskRepeater;
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonObjBundled;
+import mightypork.utils.ion.IonBundled;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.math.timing.TaskRepeater;
 
 
-public abstract class AiTimer extends TaskRepeater implements IonObjBundled {
+public abstract class AiTimer extends TaskRepeater implements IonBundled {
 	
 	public AiTimer(double duration)
 	{
@@ -19,7 +19,7 @@ public abstract class AiTimer extends TaskRepeater implements IonObjBundled {
 	
 	
 	@Override
-	public void load(IonBundle bundle)
+	public void load(IonDataBundle bundle)
 	{
 		final boolean wasPaused = bundle.get("paused", isPaused());
 		if (wasPaused) {
@@ -34,7 +34,7 @@ public abstract class AiTimer extends TaskRepeater implements IonObjBundled {
 	
 	
 	@Override
-	public void save(IonBundle bundle)
+	public void save(IonDataBundle bundle)
 	{
 		bundle.put("paused", isPaused());
 		bundle.put("progress", getProgress());

@@ -1,7 +1,7 @@
 package mightypork.rogue.world.tile;
 
 
-import mightypork.gamecore.util.math.color.Color;
+import mightypork.utils.math.color.Color;
 
 
 /**

@@ -7,19 +7,20 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Move;
-import mightypork.gamecore.util.math.algo.Moves;
-import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
+import mightypork.utils.Support;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.Calc;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Move;
+import mightypork.utils.math.algo.Moves;
+import mightypork.utils.math.algo.pathfinding.Heuristic;
+import mightypork.utils.math.algo.pathfinding.PathFinder;
 
 
 /**
@@ -620,7 +621,7 @@ public class ScratchMap {
 				//@formatter:off
 				throw new WorldGenError(
 						"Could not put entity into a level map: e_pos="	+ pos
-						+ ", tile: " + Log.str(t)
+						+ ", tile: " + Support.str(t)
 						+ ", t.wa " + t.isWalkable()
 						+ ", t.oc " + t.isOccupied()
 						+ ", ent.. " + e.getVisualName());

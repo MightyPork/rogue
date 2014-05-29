@@ -3,7 +3,6 @@ package mightypork.rogue.screens.game;
 
 import java.io.File;
 
-import mightypork.dynmath.num.Num;
 import mightypork.gamecore.core.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
@@ -17,10 +16,11 @@ import mightypork.gamecore.gui.screens.impl.FadingLayer;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.world.WorldProvider;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
 
 
 public class LayerWin extends FadingLayer {

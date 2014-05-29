@@ -1,8 +1,6 @@
 package mightypork.gamecore.gui.screens;
 
 
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.RectBound;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppSubModule;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
@@ -14,7 +12,9 @@ import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.Renderable;
-import mightypork.gamecore.util.annot.DefaultImpl;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectBound;
 
 
 /**

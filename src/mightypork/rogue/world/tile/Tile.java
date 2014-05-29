@@ -3,19 +3,20 @@ package mightypork.rogue.world.tile;
 
 import java.io.IOException;
 
-import mightypork.gamecore.eventbus.BusAccess;
-import mightypork.gamecore.eventbus.EventBus;
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.math.color.Color;
-import mightypork.ion.IonInput;
-import mightypork.ion.IonObjBinary;
-import mightypork.ion.IonOutput;
 import mightypork.rogue.Const;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
+import mightypork.utils.Support;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.eventbus.BusAccess;
+import mightypork.utils.eventbus.EventBus;
+import mightypork.utils.ion.IonBinary;
+import mightypork.utils.ion.IonInput;
+import mightypork.utils.ion.IonOutput;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.color.Color;
 
 
 /**
@@ -23,7 +24,7 @@ import mightypork.rogue.world.level.render.TileRenderContext;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public abstract class Tile implements BusAccess, IonObjBinary {
+public abstract class Tile implements BusAccess, IonBinary {
 	
 	// tmp extras
 	public final TileGenData genData = new TileGenData();
@@ -78,7 +79,7 @@ public abstract class Tile implements BusAccess, IonObjBinary {
 			renderer = makeRenderer();
 			
 			if (renderer == /*still*/null) {
-				Log.w("No renderer for tile " + Log.str(this));
+				Log.w("No renderer for tile " + Support.str(this));
 				renderer = TileRenderer.NONE;
 				return;
 			}

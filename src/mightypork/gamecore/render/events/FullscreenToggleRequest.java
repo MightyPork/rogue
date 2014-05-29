@@ -1,9 +1,9 @@
 package mightypork.gamecore.render.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
-import mightypork.gamecore.eventbus.event_flags.SingleReceiverEvent;
 import mightypork.gamecore.render.DisplaySystem;
+import mightypork.utils.eventbus.BusEvent;
+import mightypork.utils.eventbus.events.flags.SingleReceiverEvent;
 
 
 @SingleReceiverEvent

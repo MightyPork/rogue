@@ -7,12 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import mightypork.gamecore.util.math.Range;
-import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
+import mightypork.utils.math.Range;
+import mightypork.utils.math.algo.Coord;
 
 
 public class LevelBuilder {

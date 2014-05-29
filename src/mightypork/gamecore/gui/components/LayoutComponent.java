@@ -4,14 +4,14 @@ package mightypork.gamecore.gui.components;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import mightypork.dynmath.rect.RectBound;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppSubModule;
-import mightypork.gamecore.eventbus.EventBus;
-import mightypork.gamecore.eventbus.clients.ClientHub;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.audio.SoundSystem;
+import mightypork.utils.eventbus.EventBus;
+import mightypork.utils.eventbus.clients.ClientHub;
+import mightypork.utils.math.constraints.rect.RectBound;
 
 
 public abstract class LayoutComponent extends BaseComponent implements ClientHub, AppAccess {

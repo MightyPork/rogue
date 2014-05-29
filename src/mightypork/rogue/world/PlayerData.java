@@ -1,9 +1,9 @@
 package mightypork.rogue.world;
 
 
-import mightypork.ion.IonBundle;
-import mightypork.ion.IonObjBundled;
 import mightypork.rogue.world.item.Item;
+import mightypork.utils.ion.IonBundled;
+import mightypork.utils.ion.IonDataBundle;
 
 
 /**
@@ -11,7 +11,7 @@ import mightypork.rogue.world.item.Item;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class PlayerData implements IonObjBundled {
+public class PlayerData implements IonBundled {
 	
 	/** Player inventory size */
 	private static final int INV_SIZE = 8;
@@ -29,7 +29,7 @@ public class PlayerData implements IonObjBundled {
 	
 	
 	@Override
-	public void load(IonBundle bundle)
+	public void load(IonDataBundle bundle)
 	{
 		eid = bundle.get("eid", -1);
 		level = bundle.get("floor", -1);
@@ -40,7 +40,7 @@ public class PlayerData implements IonObjBundled {
 	
 	
 	@Override
-	public void save(IonBundle bundle)
+	public void save(IonDataBundle bundle)
 	{
 		bundle.put("eid", eid);
 		bundle.put("floor", level);

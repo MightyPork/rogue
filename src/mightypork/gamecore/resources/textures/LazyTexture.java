@@ -1,11 +1,11 @@
 package mightypork.gamecore.resources.textures;
 
 
-import mightypork.dynmath.rect.Rect;
-import mightypork.gamecore.logging.LogAlias;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.BaseLazyResource;
 import mightypork.gamecore.resources.TextureBasedResource;
+import mightypork.utils.annotations.Alias;
+import mightypork.utils.math.constraints.rect.Rect;
 
 import org.lwjgl.opengl.GL11;
 
@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-@LogAlias(name = "Texture")
+@Alias(name = "Texture")
 @TextureBasedResource
 public class LazyTexture extends BaseLazyResource implements GLTexture {
 	

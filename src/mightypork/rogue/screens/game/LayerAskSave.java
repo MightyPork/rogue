@@ -3,7 +3,6 @@ package mightypork.rogue.screens.game;
 
 import java.io.IOException;
 
-import mightypork.dynmath.num.Num;
 import mightypork.gamecore.core.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
@@ -14,12 +13,13 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.impl.FadingLayer;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;
 import mightypork.rogue.world.WorldProvider;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
 
 
 public class LayerAskSave extends FadingLayer {

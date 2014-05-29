@@ -4,6 +4,8 @@ package mightypork.gamecore.gui;
 import java.util.HashSet;
 import java.util.Set;
 
+import mightypork.utils.interfaces.Enableable;
+
 
 public class ActionGroup implements Enableable {
 	

@@ -1,7 +1,7 @@
 package mightypork.gamecore.resources;
 
 
-import mightypork.gamecore.eventbus.BusAccess;
+import mightypork.utils.eventbus.BusAccess;
 
 
 /**

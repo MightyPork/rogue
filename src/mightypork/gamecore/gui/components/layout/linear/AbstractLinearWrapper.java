@@ -3,10 +3,10 @@ package mightypork.gamecore.gui.components.layout.linear;
 
 import java.util.Collection;
 
-import mightypork.gamecore.eventbus.clients.ClientList;
-import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.gamecore.gui.components.LinearComponent;
+import mightypork.utils.eventbus.clients.ClientList;
+import mightypork.utils.eventbus.clients.DelegatingClient;
 
 
 /**

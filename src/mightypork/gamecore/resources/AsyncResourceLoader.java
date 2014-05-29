@@ -6,9 +6,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import mightypork.gamecore.core.events.MainLoopRequest;
-import mightypork.gamecore.eventbus.BusAccess;
-import mightypork.gamecore.eventbus.events.Destroyable;
-import mightypork.gamecore.logging.Log;
+import mightypork.utils.Support;
+import mightypork.utils.eventbus.BusAccess;
+import mightypork.utils.interfaces.Destroyable;
+import mightypork.utils.logging.Log;
 
 
 /**
@@ -59,7 +60,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 			if (!mainLoopQueuing) {
 				// just let it be
 			} else {
-				Log.f3("(loader) Delegating to main thread: " + Log.str(resource));
+				Log.f3("(loader) Delegating to main thread: " + Support.str(resource));
 				
 				app.getEventBus().send(new MainLoopRequest(new Runnable() {
 					
@@ -91,7 +92,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 				
 				if (!def.isLoaded()) {
 					
-					Log.f3("(loader) Scheduling... " + Log.str(def));
+					Log.f3("(loader) Scheduling... " + Support.str(def));
 					
 					exs.submit(new Runnable() {
 						

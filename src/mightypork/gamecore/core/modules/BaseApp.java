@@ -15,25 +15,28 @@ import mightypork.gamecore.core.Config.ConfigSetup;
 import mightypork.gamecore.core.Config.KeySetup;
 import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.core.WorkDir.RouteSetup;
-import mightypork.gamecore.eventbus.EventBus;
-import mightypork.gamecore.eventbus.events.DestroyEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.logging.SlickLogRedirector;
-import mightypork.gamecore.logging.writers.LogWriter;
 import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.AsyncResourceLoader;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.ResourceLoader;
 import mightypork.gamecore.resources.ResourceSetup;
 import mightypork.gamecore.resources.audio.SoundSystem;
-import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.files.InstanceLock;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Move;
-import mightypork.ion.Ion;
+import mightypork.gamecore.util.SlickLogRedirector;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.eventbus.EventBus;
+import mightypork.utils.eventbus.events.DestroyEvent;
+import mightypork.utils.files.InstanceLock;
+import mightypork.utils.ion.Ion;
+import mightypork.utils.ion.IonInput;
+import mightypork.utils.ion.IonOutput;
+import mightypork.utils.ion.IonizerBinary;
+import mightypork.utils.logging.Log;
+import mightypork.utils.logging.writers.LogWriter;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Move;
 
 
 /**
@@ -344,8 +347,46 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	
 	protected void registerIonizables()
 	{
-		Ion.register(Coord.class);
-		Ion.register(Move.class);
+		Ion.registerIndirect(255, new IonizerBinary<Coord>() {
+			
+			@Override
+			public void save(Coord object, IonOutput out) throws IOException
+			{
+				out.writeInt(object.x);
+				out.writeInt(object.y);
+			}
+			
+			
+			@Override
+			public Coord load(IonInput in) throws IOException
+			{
+				final int x = in.readInt();
+				final int y = in.readInt();
+				return new Coord(x, y);
+			}
+			
+		});
+		
+		
+		Ion.registerIndirect(254, new IonizerBinary<Move>() {
+			
+			@Override
+			public void save(Move object, IonOutput out) throws IOException
+			{
+				out.writeInt(object.x());
+				out.writeInt(object.y());
+			}
+			
+			
+			@Override
+			public Move load(IonInput in) throws IOException
+			{
+				final int x = in.readInt();
+				final int y = in.readInt();
+				return new Move(x, y);
+			}
+			
+		});
 	}
 	
 	

@@ -3,11 +3,11 @@ package mightypork.rogue.world.entity;
 
 import java.util.List;
 
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Move;
-import mightypork.gamecore.util.math.algo.Moves;
-import mightypork.gamecore.util.math.algo.pathfinding.Heuristic;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Move;
+import mightypork.utils.math.algo.Moves;
+import mightypork.utils.math.algo.pathfinding.Heuristic;
+import mightypork.utils.math.algo.pathfinding.PathFinder;
 
 
 /**

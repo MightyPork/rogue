@@ -5,9 +5,9 @@ import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.core.events.UserQuitRequestListener;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.screens.LayeredScreen;
-import mightypork.gamecore.util.annot.DefaultImpl;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
+import mightypork.utils.annotations.DefaultImpl;
 
 
 public class RogueScreen extends LayeredScreen implements UserQuitRequestListener {

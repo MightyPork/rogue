@@ -7,9 +7,9 @@ import java.util.Map;
 
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.files.config.Property;
-import mightypork.gamecore.util.files.config.PropertyManager;
+import mightypork.utils.files.config.Property;
+import mightypork.utils.files.config.PropertyManager;
+import mightypork.utils.logging.Log;
 
 
 /**

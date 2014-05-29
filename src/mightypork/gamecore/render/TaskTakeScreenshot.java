@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.IOException;
 
 import mightypork.gamecore.core.WorkDir;
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.Utils;
+import mightypork.utils.Support;
+import mightypork.utils.logging.Log;
 
 import org.newdawn.slick.opengl.GLUtils;
 
@@ -26,7 +26,7 @@ public class TaskTakeScreenshot implements Runnable {
 	@Override
 	public void run()
 	{
-		final String fname = Utils.getTime("yyyy-MM-dd_HH-mm-ss");
+		final String fname = Support.getTime("yyyy-MM-dd_HH-mm-ss");
 		
 		// generate unique filename
 		File file;

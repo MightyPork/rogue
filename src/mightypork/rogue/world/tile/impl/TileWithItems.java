@@ -4,8 +4,6 @@ package mightypork.rogue.world.tile.impl;
 import java.io.IOException;
 import java.util.Stack;
 
-import mightypork.ion.IonInput;
-import mightypork.ion.IonOutput;
 import mightypork.rogue.Const;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.Items;
@@ -13,6 +11,8 @@ import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.DroppedItemRenderer;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
+import mightypork.utils.ion.IonInput;
+import mightypork.utils.ion.IonOutput;
 
 
 public abstract class TileWithItems extends Tile {

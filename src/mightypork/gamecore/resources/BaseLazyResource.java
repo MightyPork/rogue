@@ -3,10 +3,11 @@ package mightypork.gamecore.resources;
 
 import java.io.IOException;
 
-import mightypork.gamecore.eventbus.events.Destroyable;
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.logging.LogAlias;
-import mightypork.gamecore.util.strings.StringUtils;
+import mightypork.utils.annotations.Alias;
+import mightypork.utils.interfaces.Destroyable;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.timing.Profiler;
+import mightypork.utils.string.StringUtil;
 
 
 /**
@@ -14,7 +15,7 @@ import mightypork.gamecore.util.strings.StringUtils;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-@LogAlias(name = "Resource")
+@Alias(name = "Resource")
 public abstract class BaseLazyResource implements LazyResource, Destroyable {
 	
 	private final String resource;
@@ -106,7 +107,7 @@ public abstract class BaseLazyResource implements LazyResource, Destroyable {
 	@Override
 	public String toString()
 	{
-		return StringUtils.fromLastChar(resource, '/');
+		return StringUtil.fromLastChar(resource, '/');
 	}
 	
 	

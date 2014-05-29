@@ -1,9 +1,9 @@
 package mightypork.gamecore.gui.components.layout;
 
 
-import mightypork.dynmath.rect.RectBound;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.components.Component;
+import mightypork.utils.math.constraints.rect.RectBound;
 
 
 public class ColumnLayout extends GridLayout {

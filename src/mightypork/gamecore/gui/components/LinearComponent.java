@@ -1,11 +1,11 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.RectBound;
-import mightypork.dynmath.vect.Vect;
-import mightypork.dynmath.vect.proxy.VectAdapter;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.RectBound;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.proxy.VectAdapter;
 
 
 public abstract class LinearComponent extends BaseComponent implements DynamicWidthComponent {

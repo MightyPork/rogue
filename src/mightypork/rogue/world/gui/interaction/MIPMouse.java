@@ -1,17 +1,17 @@
 package mightypork.rogue.world.gui.interaction;
 
 
-import mightypork.dynmath.vect.Vect;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.util.math.Calc.Deg;
-import mightypork.gamecore.util.math.Polar;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Moves;
-import mightypork.gamecore.util.math.timing.Updateable;
 import mightypork.rogue.world.entity.impl.EntityPlayer;
 import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.utils.interfaces.Updateable;
+import mightypork.utils.math.Polar;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Moves;
+import mightypork.utils.math.angles.Deg;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListener, Updateable {
@@ -93,7 +93,7 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 		
 		final Polar p = Polar.fromCoord(clicked.x - plpos.x, clicked.y - plpos.y);
 		
-		final int dir = Deg.round90(p.getAngleDeg()) / 90;
+		final int dir = Deg.roundTo90(p.getAngleDeg()) / 90;
 		
 		switch (dir) {
 			case 0:

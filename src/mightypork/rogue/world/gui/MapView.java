@@ -5,19 +5,10 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.vect.Vect;
-import mightypork.gamecore.eventbus.clients.DelegatingClient;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonHandler;
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.timing.TimedTask;
-import mightypork.gamecore.util.math.timing.Updateable;
-import mightypork.gamecore.util.math.timing.animation.NumAnimated;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
@@ -25,6 +16,15 @@ import mightypork.rogue.world.WorldRenderer;
 import mightypork.rogue.world.events.WorldAscendRequestListener;
 import mightypork.rogue.world.events.WorldDescendRequestListener;
 import mightypork.rogue.world.gui.interaction.MapInteractionPlugin;
+import mightypork.utils.eventbus.clients.DelegatingClient;
+import mightypork.utils.interfaces.Updateable;
+import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.animation.NumAnimated;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.timing.TimedTask;
 
 
 /**

@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.logging.Level;
 
 import mightypork.gamecore.core.modules.BaseApp;
-import mightypork.gamecore.util.files.OsUtils;
+import mightypork.utils.files.OsUtils;
 
 
 public class Launcher {

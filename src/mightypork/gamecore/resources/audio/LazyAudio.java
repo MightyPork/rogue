@@ -4,10 +4,10 @@ package mightypork.gamecore.resources.audio;
 import java.io.IOException;
 import java.io.InputStream;
 
-import mightypork.dynmath.vect.Vect;
-import mightypork.gamecore.logging.LogAlias;
 import mightypork.gamecore.resources.BaseLazyResource;
-import mightypork.gamecore.util.files.FileUtils;
+import mightypork.utils.annotations.Alias;
+import mightypork.utils.files.FileUtils;
+import mightypork.utils.math.constraints.vect.Vect;
 
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;
@@ -18,7 +18,7 @@ import org.newdawn.slick.openal.SoundStore;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-@LogAlias(name = "Audio")
+@Alias(name = "Audio")
 public class LazyAudio extends BaseLazyResource {
 	
 	private enum PlayMode

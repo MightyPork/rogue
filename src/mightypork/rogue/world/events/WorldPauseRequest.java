@@ -1,8 +1,8 @@
 package mightypork.rogue.world.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.rogue.world.World;
+import mightypork.utils.eventbus.BusEvent;
 
 
 /**

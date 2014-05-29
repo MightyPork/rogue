@@ -6,10 +6,10 @@ import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.gui.screens.Overlay;
-import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.color.pal.RGB;
-import mightypork.gamecore.util.math.timing.TimedTask;
-import mightypork.gamecore.util.math.timing.animation.NumAnimated;
+import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.animation.NumAnimated;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.timing.TimedTask;
 
 
 /**

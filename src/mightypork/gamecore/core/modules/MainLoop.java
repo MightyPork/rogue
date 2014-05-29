@@ -4,16 +4,16 @@ package mightypork.gamecore.core.modules;
 import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
-import mightypork.gamecore.eventbus.events.UpdateEvent;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
-import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.render.TaskTakeScreenshot;
 import mightypork.gamecore.render.events.ScreenshotRequestListener;
-import mightypork.gamecore.resources.Profiler;
-import mightypork.gamecore.util.Utils;
-import mightypork.gamecore.util.annot.DefaultImpl;
-import mightypork.gamecore.util.math.timing.TimerDelta;
+import mightypork.utils.Support;
+import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.eventbus.events.UpdateEvent;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.timing.Profiler;
+import mightypork.utils.math.timing.TimerDelta;
 
 
 /**
@@ -147,7 +147,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 			@Override
 			public void run()
 			{
-				Utils.runAsThread(new TaskTakeScreenshot());
+				Support.runAsThread(new TaskTakeScreenshot());
 			}
 		}, false);
 	}

@@ -3,8 +3,8 @@ package mightypork.gamecore.gui.components.painters;
 
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.render.Render;
-import mightypork.gamecore.util.annot.FactoryMethod;
-import mightypork.gamecore.util.math.color.Color;
+import mightypork.utils.annotations.FactoryMethod;
+import mightypork.utils.math.color.Color;
 
 
 /**

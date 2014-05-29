@@ -4,13 +4,13 @@ package mightypork.rogue.world;
 import java.io.File;
 import java.io.IOException;
 
-import mightypork.gamecore.eventbus.BusAccess;
-import mightypork.gamecore.eventbus.clients.RootBusNode;
-import mightypork.gamecore.logging.Log;
-import mightypork.ion.Ion;
-import mightypork.ion.IonBundle;
 import mightypork.rogue.world.gen.WorldCreator;
 import mightypork.rogue.world.level.Level;
+import mightypork.utils.eventbus.BusAccess;
+import mightypork.utils.eventbus.clients.RootBusNode;
+import mightypork.utils.ion.Ion;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.logging.Log;
 
 
 /**
@@ -94,7 +94,7 @@ public class WorldProvider extends RootBusNode {
 	{
 		Log.f2("Loading world from: " + file);
 		
-		final IonBundle bu = Ion.fromFile(file);
+		final IonDataBundle bu = Ion.fromFile(file);
 		setWorld(bu.loadBundled("world", new World()));
 		world.setSaveFile(file);
 	}
@@ -115,7 +115,7 @@ public class WorldProvider extends RootBusNode {
 		
 		Log.f2("Saving world to: " + file);
 		
-		final IonBundle bu = new IonBundle();
+		final IonDataBundle bu = new IonDataBundle();
 		bu.put("level", world.getPlayer().getLevelNumber());
 		bu.putBundled("world", world);
 		

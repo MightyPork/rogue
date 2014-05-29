@@ -1,6 +1,9 @@
 package mightypork.gamecore.gui;
 
 
+import mightypork.utils.interfaces.Enableable;
+
+
 /**
  * Triggered action
  * 

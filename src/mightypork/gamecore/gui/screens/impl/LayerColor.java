@@ -4,7 +4,7 @@ package mightypork.gamecore.gui.screens.impl;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.util.math.color.Color;
+import mightypork.utils.math.color.Color;
 
 
 public class LayerColor extends ScreenLayer {

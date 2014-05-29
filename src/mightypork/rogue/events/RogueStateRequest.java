@@ -1,9 +1,9 @@
 package mightypork.rogue.events;
 
 
-import mightypork.gamecore.eventbus.BusEvent;
 import mightypork.rogue.RogueStateManager;
 import mightypork.rogue.RogueStateManager.RogueState;
+import mightypork.utils.eventbus.BusEvent;
 
 
 /**

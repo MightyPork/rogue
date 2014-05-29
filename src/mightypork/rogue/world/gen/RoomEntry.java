@@ -1,7 +1,7 @@
 package mightypork.rogue.world.gen;
 
 
-import mightypork.gamecore.util.math.algo.Coord;
+import mightypork.utils.math.algo.Coord;
 
 
 /**

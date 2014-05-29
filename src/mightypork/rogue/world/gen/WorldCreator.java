@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import mightypork.gamecore.logging.Log;
-import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.Range;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
@@ -16,6 +13,9 @@ import mightypork.rogue.world.gen.themes.ThemeBrick;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemModel;
 import mightypork.rogue.world.item.Items;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.Calc;
+import mightypork.utils.math.Range;
 
 
 public class WorldCreator {

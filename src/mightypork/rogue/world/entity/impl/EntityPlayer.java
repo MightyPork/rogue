@@ -1,15 +1,20 @@
 package mightypork.rogue.world.entity.impl;
 
 
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
-import mightypork.rogue.world.entity.*;
+import mightypork.rogue.world.entity.Entity;
+import mightypork.rogue.world.entity.EntityModel;
+import mightypork.rogue.world.entity.EntityModule;
+import mightypork.rogue.world.entity.EntityPathFinder;
+import mightypork.rogue.world.entity.EntityRenderer;
+import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
 import mightypork.rogue.world.events.PlayerKilledEvent;
 import mightypork.rogue.world.events.PlayerStepEndEvent;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.pathfinding.PathFinder;
 
 
 public class EntityPlayer extends Entity {

@@ -1,13 +1,13 @@
 package mightypork.rogue.world.tile.render;
 
 
-import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxSheet;
-import mightypork.gamecore.util.math.timing.TimedTask;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.impl.TileBaseDoor;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.timing.TimedTask;
 
 
 public class DoorTileRenderer extends TileRenderer {

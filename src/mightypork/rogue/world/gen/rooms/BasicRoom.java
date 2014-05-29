@@ -3,10 +3,10 @@ package mightypork.rogue.world.gen.rooms;
 
 import java.util.Random;
 
-import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.TileProtectLevel;
 import mightypork.rogue.world.tile.TileModel;
+import mightypork.utils.math.algo.Coord;
 
 
 public class BasicRoom extends AbstractRectRoom {

@@ -1,9 +1,9 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.dynmath.num.Num;
-import mightypork.gamecore.gui.Enableable;
 import mightypork.gamecore.gui.Hideable;
+import mightypork.utils.interfaces.Enableable;
+import mightypork.utils.math.constraints.num.Num;
 
 
 /**

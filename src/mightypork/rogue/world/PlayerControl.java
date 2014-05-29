@@ -4,14 +4,14 @@ package mightypork.rogue.world;
 import java.util.HashSet;
 import java.util.Set;
 
-import mightypork.dynmath.vect.Vect;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Move;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.tile.Tile;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Move;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 public abstract class PlayerControl {

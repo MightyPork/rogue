@@ -3,7 +3,7 @@ package mightypork.gamecore.resources.textures;
 
 import java.util.Random;
 
-import mightypork.gamecore.logging.Log;
+import mightypork.utils.logging.Log;
 
 
 /**

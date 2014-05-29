@@ -1,15 +1,15 @@
 package mightypork.gamecore.gui.components.input;
 
 
-import mightypork.dynmath.vect.Vect;
-import mightypork.dynmath.vect.mutable.VectVar;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.RGB;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.var.VectVar;
 
 
 /**

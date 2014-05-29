@@ -6,14 +6,14 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import mightypork.dynmath.vect.Vect;
-import mightypork.gamecore.logging.LogAlias;
 import mightypork.gamecore.resources.BaseLazyResource;
 import mightypork.gamecore.resources.TextureBasedResource;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.resources.textures.FilterMode;
-import mightypork.gamecore.util.files.FileUtils;
-import mightypork.gamecore.util.math.color.Color;
+import mightypork.utils.annotations.Alias;
+import mightypork.utils.files.FileUtils;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.constraints.vect.Vect;
 
 
 /**
@@ -22,7 +22,7 @@ import mightypork.gamecore.util.math.color.Color;
  * @author Ondřej Hruška (MightyPork)
  */
 @TextureBasedResource
-@LogAlias(name = "Font")
+@Alias(name = "Font")
 public class LazyFont extends BaseLazyResource implements GLFont {
 	
 	public static enum FontStyle

@@ -3,12 +3,12 @@ package mightypork.rogue.world.gen.rooms;
 
 import java.util.Random;
 
-import mightypork.gamecore.util.math.algo.Coord;
 import mightypork.rogue.world.entity.Entities;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.gen.MapTheme;
 import mightypork.rogue.world.gen.ScratchMap;
 import mightypork.rogue.world.gen.WorldGenError;
+import mightypork.utils.math.algo.Coord;
 
 
 public class BossRoom extends SecretRoom {

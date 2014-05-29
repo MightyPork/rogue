@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-import mightypork.dynmath.vect.VectConst;
-import mightypork.gamecore.util.math.algo.Coord;
-import mightypork.gamecore.util.math.algo.Move;
-import mightypork.ion.IonBundle;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModule;
+import mightypork.utils.ion.IonDataBundle;
+import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.algo.Move;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 
 public class EntityModulePosition extends EntityModule {
 	
 	/** Last pos, will be freed upon finishing move */
-	private final Coord lastPos = new Coord(0, 0);
+	private Coord lastPos = new Coord(0, 0);
 	private boolean walking = false;
 	
 	private final Queue<Move> path = new LinkedList<>();
@@ -39,20 +39,20 @@ public class EntityModulePosition extends EntityModule {
 	
 	
 	@Override
-	public void save(IonBundle bundle)
+	public void save(IonDataBundle bundle)
 	{
 		bundle.putSequence("path", path);
-		bundle.putBundled("lpos", lastPos);
+		bundle.put("lpos", lastPos);
 		bundle.putBundled("pos", entityPos);
 		bundle.put("step_time", stepTime);
 	}
 	
 	
 	@Override
-	public void load(IonBundle bundle)
+	public void load(IonDataBundle bundle)
 	{
 		bundle.loadSequence("path", path);
-		bundle.loadBundled("lpos", lastPos);
+		lastPos = bundle.get("lpos", lastPos);
 		bundle.loadBundled("pos", entityPos);
 		
 		stepTime = bundle.get("step_time", stepTime);

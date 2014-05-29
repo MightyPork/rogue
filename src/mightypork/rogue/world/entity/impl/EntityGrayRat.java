@@ -1,8 +1,6 @@
 package mightypork.rogue.world.entity.impl;
 
 
-import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.algo.pathfinding.PathFinder;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModel;
 import mightypork.rogue.world.entity.EntityPathFinder;
@@ -10,6 +8,8 @@ import mightypork.rogue.world.entity.EntityRenderer;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
 import mightypork.rogue.world.item.Items;
+import mightypork.utils.math.Calc;
+import mightypork.utils.math.algo.pathfinding.PathFinder;
 
 
 public class EntityGrayRat extends Entity {

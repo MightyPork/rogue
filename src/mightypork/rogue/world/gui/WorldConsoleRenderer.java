@@ -4,20 +4,20 @@ package mightypork.rogue.world.gui;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 
-import mightypork.dynmath.num.Num;
-import mightypork.dynmath.num.mutable.NumVar;
-import mightypork.dynmath.rect.Rect;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
-import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.FontRenderer;
-import mightypork.gamecore.util.math.Calc;
-import mightypork.gamecore.util.math.Easing;
-import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.RGB;
 import mightypork.rogue.world.WorldConsole;
 import mightypork.rogue.world.WorldProvider;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.Calc;
+import mightypork.utils.math.animation.Easing;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.num.Num;
+import mightypork.utils.math.constraints.num.var.NumVar;
+import mightypork.utils.math.constraints.rect.Rect;
 
 
 public class WorldConsoleRenderer extends BaseComponent {

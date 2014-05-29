@@ -5,17 +5,17 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
 
-import mightypork.dynmath.rect.Rect;
-import mightypork.dynmath.rect.caching.RectDigest;
-import mightypork.dynmath.vect.Vect;
-import mightypork.dynmath.vect.VectConst;
-import mightypork.gamecore.logging.Log;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.gamecore.resources.textures.GLTexture;
 import mightypork.gamecore.resources.textures.TxQuad;
-import mightypork.gamecore.util.files.FileUtils;
-import mightypork.gamecore.util.math.color.Color;
-import mightypork.gamecore.util.math.color.pal.RGB;
+import mightypork.utils.files.FileUtils;
+import mightypork.utils.logging.Log;
+import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.pal.RGB;
+import mightypork.utils.math.constraints.rect.Rect;
+import mightypork.utils.math.constraints.rect.caching.RectDigest;
+import mightypork.utils.math.constraints.vect.Vect;
+import mightypork.utils.math.constraints.vect.VectConst;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;

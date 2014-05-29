@@ -4,8 +4,8 @@ package mightypork.gamecore.resources.fonts.impl;
 import java.awt.Font;
 import java.io.IOException;
 
-import mightypork.gamecore.logging.LogAlias;
 import mightypork.gamecore.resources.textures.FilterMode;
+import mightypork.utils.annotations.Alias;
 
 
 /**
@@ -13,7 +13,7 @@ import mightypork.gamecore.resources.textures.FilterMode;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-@LogAlias(name = "FontNative")
+@Alias(name = "FontNative")
 public class LazyFontNative extends LazyFont {
 	
 	/**
