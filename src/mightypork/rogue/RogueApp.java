@@ -45,14 +45,16 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	{
 		super(workdir, singleInstance);
 		
-		opt().addRoutes(new RogueRoutes());
-		opt().addResources(new RogueResources());
-		opt().addKeys(new RogueKeys());
-		opt().addConfig(new RogueConfig());
-		opt().setBusLogging(true);
+		AppInitOptions opt = getInitOptions();
 		
-		opt().setConfigFile("config.ini", "Rogue config file");
-		opt().setLogOptions("logs", "runtime", 5, java.util.logging.Level.ALL);
+		opt.addRoutes(new RogueRoutes());
+		opt.addResources(new RogueResources());
+		opt.addKeys(new RogueKeys());
+		opt.addConfig(new RogueConfig());
+		opt.setBusLogging(true);
+		
+		opt.setConfigFile("config.ini", "Rogue config file");
+		opt.setLogOptions("logs", "runtime", 5, java.util.logging.Level.ALL);
 	}
 	
 	

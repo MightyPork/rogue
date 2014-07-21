@@ -65,7 +65,7 @@ public class Launcher {
 			}
 			
 			if (!localWorkdir) {
-				workdir = OsUtils.getHomeWorkDir(".rogue-save");
+				workdir = OsUtils.getHomeWorkDir(".rogue");
 			} else {
 				workdir = new File(lwdDir);
 			}
@@ -79,8 +79,8 @@ public class Launcher {
 		
 		final BaseApp app = new RogueApp(workdir, true);
 		
-		app.opt().setLogLevel(llFile, llSyso);
-		app.opt().setBusLogging(logBus);
+		app.getInitOptions().setLogLevel(llFile, llSyso);
+		app.getInitOptions().setBusLogging(logBus);
 		
 		app.start();
 	}

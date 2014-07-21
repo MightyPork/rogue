@@ -166,7 +166,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 * 
 	 * @return opt holder
 	 */
-	public AppInitOptions opt()
+	public AppInitOptions getInitOptions()
 	{
 		if (started) {
 			throw new IllegalStateException("Cannot alter init options after starting the App.");
