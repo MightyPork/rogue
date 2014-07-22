@@ -1,11 +1,11 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.core.Config;
-import mightypork.gamecore.core.Config.KeyOpts;
+import mightypork.gamecore.core.config.KeyOpts;
+import mightypork.gamecore.core.config.KeySetup;
 
 
-public class RogueKeys implements Config.KeySetup {
+public class RogueKeys implements KeySetup {
 	
 	@Override
 	public void addKeys(KeyOpts keys)

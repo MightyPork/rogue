@@ -3,7 +3,7 @@ package mightypork.rogue;
 
 import java.io.File;
 
-import mightypork.gamecore.core.Config;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.core.events.ShudownRequest;
 import mightypork.gamecore.core.events.UserQuitRequest;

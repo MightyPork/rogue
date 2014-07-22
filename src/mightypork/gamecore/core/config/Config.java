@@ -1,4 +1,4 @@
-package mightypork.gamecore.core;
+package mightypork.gamecore.core.config;
 
 
 import java.io.File;
@@ -6,111 +6,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.input.Keys;
-import mightypork.utils.files.config.Property;
 import mightypork.utils.files.config.PropertyManager;
 import mightypork.utils.logging.Log;
 
 
 /**
- * Static application configuration
+ * Static application configuration; wrapper around {@link PropertyManager}
  * 
  * @author Ondřej Hruška (MightyPork)
  */
 public class Config {
 	
-	/**
-	 * Config setup. Used to populate the config file.
-	 */
-	public static interface ConfigSetup {
-		
-		void addOptions(PropertyManager prop);
-	}
-	
-	/**
-	 * Key configurator access
-	 */
-	public static class KeyOpts {
-		
-		private KeyOpts()
-		{
-		}
-		
-		
-		public void add(String cfgKey, String dataString)
-		{
-			add(cfgKey, dataString, null);
-		}
-		
-		
-		public void add(String cfgKey, String dataString, String comment)
-		{
-			final KeyProperty kprop = new KeyProperty(prefixKey(cfgKey), KeyStroke.createFromDataString(dataString), comment);
-			strokes.put(prefixKey(cfgKey), kprop);
-			cfg.putProperty(kprop);
-		}
-	}
-	
-	/**
-	 * Key configurator
-	 */
-	public static interface KeySetup {
-		
-		public void addKeys(KeyOpts keys);
-	}
-	
-	/**
-	 * Key property.<br>
-	 * The stored value must be invariant ({@link KeyStroke} is mutable).
-	 * 
-	 * @author Ondřej Hruška (MightyPork)
-	 */
-	public static class KeyProperty extends Property<KeyStroke> {
-		
-		public KeyProperty(String key, KeyStroke defaultValue, String comment)
-		{
-			super(key, defaultValue, comment);
-		}
-		
-		
-		@Override
-		public KeyStroke decode(String string, KeyStroke defval)
-		{
-			if (string != null) {
-				// keep it invariant
-				
-				final int backup_key = getValue().getKey();
-				final int backup_mod = getValue().getMod();
-				
-				getValue().fromDataString(string);
-				if (getValue().getKey() == Keys.NONE) {
-					getValue().setTo(backup_key, backup_mod);
-				}
-			}
-			
-			return getValue();
-		}
-		
-		
-		@Override
-		public String encode(KeyStroke value)
-		{
-			return value.toDataString();
-		}
-		
-		
-		@Override
-		public void setValue(Object value)
-		{
-			// keep it invariant
-			getValue().setTo(((KeyStroke) value).getKey(), ((KeyStroke) value).getMod());
-		}
-	}
-	
-	public static Config.KeyOpts keyOpts = new Config.KeyOpts();
+	public static KeyOpts keyOpts = new KeyOpts();
 	public static Map<String, KeyProperty> strokes = new HashMap<>();
 	
-	private static PropertyManager cfg;
+	static PropertyManager cfg;
 	
 	
 	/**
@@ -204,7 +114,12 @@ public class Config {
 	}
 	
 	
-	private static String prefixKey(String cfgKey)
+	/**
+	 * Add "key." before the given config file key
+	 * @param cfgKey config key
+	 * @return key. + cfgKey
+	 */
+	static String prefixKey(String cfgKey)
 	{
 		return "key." + cfgKey;
 	}
@@ -236,7 +151,7 @@ public class Config {
 	 */
 	public static void setKey(String cfgKey, int key, int mod)
 	{
-		final Config.KeyProperty kp = strokes.get(prefixKey(cfgKey));
+		final KeyProperty kp = strokes.get(prefixKey(cfgKey));
 		if (kp == null) {
 			throw new IllegalArgumentException("No such stroke: " + cfgKey);
 		}

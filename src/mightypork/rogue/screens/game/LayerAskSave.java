@@ -3,7 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.IOException;
 
-import mightypork.gamecore.core.Config;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;

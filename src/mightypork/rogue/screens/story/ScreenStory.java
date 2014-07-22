@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.story;
 
 
-import mightypork.gamecore.core.Config;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;

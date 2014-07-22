@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import mightypork.gamecore.core.Config;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;

@@ -10,11 +10,11 @@ import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
-import mightypork.gamecore.core.Config;
-import mightypork.gamecore.core.Config.ConfigSetup;
-import mightypork.gamecore.core.Config.KeySetup;
 import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.core.WorkDir.RouteSetup;
+import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.core.config.ConfigSetup;
+import mightypork.gamecore.core.config.KeySetup;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 import mightypork.gamecore.input.InputSystem;
@@ -66,7 +66,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		public String lockFile = ".lock";
 		
 		private final List<ResourceSetup> resourceLists = new ArrayList<>();
-		private final List<Config.KeySetup> keyLists = new ArrayList<>();
+		private final List<KeySetup> keyLists = new ArrayList<>();
 		private final List<ConfigSetup> configLists = new ArrayList<>();
 		private final List<RouteSetup> routeLists = new ArrayList<>();
 		
@@ -89,7 +89,7 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		}
 		
 		
-		public void addKeys(Config.KeySetup keys)
+		public void addKeys(KeySetup keys)
 		{
 			keyLists.add(keys);
 		}

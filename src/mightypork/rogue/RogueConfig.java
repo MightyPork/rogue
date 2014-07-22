@@ -1,7 +1,7 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.core.Config.ConfigSetup;
+import mightypork.gamecore.core.config.ConfigSetup;
 import mightypork.utils.files.config.PropertyManager;
 
 

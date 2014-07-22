@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.game;
 
 
-import mightypork.gamecore.core.Config;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
