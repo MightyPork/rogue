@@ -1,8 +1,9 @@
 package mightypork.gamecore.gui.components.painters;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.components.BaseComponent;
-import mightypork.gamecore.render.Render;
+import mightypork.gamecore.render.Grad;
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.color.Color;
 
@@ -27,10 +28,7 @@ public class QuadPainter extends BaseComponent {
 		return new QuadPainter(colorTop, colorTop, colorBottom, colorBottom);
 	}
 	
-	private final Color colorHMinVMin;
-	private final Color colorHMaxVMin;
-	private final Color colorHMaxVMax;
-	private final Color colorHMinVMax;
+	private final Grad grad;
 	
 	
 	/**
@@ -38,35 +36,27 @@ public class QuadPainter extends BaseComponent {
 	 * 
 	 * @param color
 	 */
-	public QuadPainter(Color color)
-	{
-		this.colorHMinVMin = color;
-		this.colorHMaxVMin = color;
-		this.colorHMaxVMax = color;
-		this.colorHMinVMax = color;
+	public QuadPainter(Color color) {
+		this.grad = new Grad(color, color, color, color);
 	}
 	
 	
 	/**
 	 * Painter with coloured vertices.
 	 * 
-	 * @param colorHMinVMin
-	 * @param colorHMaxVMin
-	 * @param colorHMaxVMax
-	 * @param colorHMinVMax
+	 * @param leftTop
+	 * @param rightTop
+	 * @param leftBottom
+	 * @param rightBottom
 	 */
-	public QuadPainter(Color colorHMinVMin, Color colorHMaxVMin, Color colorHMaxVMax, Color colorHMinVMax)
-	{
-		this.colorHMinVMin = colorHMinVMin;
-		this.colorHMaxVMin = colorHMaxVMin;
-		this.colorHMaxVMax = colorHMaxVMax;
-		this.colorHMinVMax = colorHMinVMax;
+	public QuadPainter(Color leftTop, Color rightTop, Color leftBottom, Color rightBottom) {
+		this.grad = new Grad(leftTop, rightTop, rightBottom, leftBottom);
 	}
 	
 	
 	@Override
 	public void renderComponent()
 	{
-		Render.quadColor(getRect(), colorHMinVMin, colorHMaxVMin, colorHMaxVMax, colorHMinVMax);
+		App.gfx().quad(getRect(), grad);
 	}
 }

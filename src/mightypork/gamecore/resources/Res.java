@@ -7,7 +7,7 @@ import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
 import mightypork.gamecore.resources.fonts.FontRegistry;
 import mightypork.gamecore.resources.fonts.GLFont;
-import mightypork.gamecore.resources.textures.GLTexture;
+import mightypork.gamecore.resources.textures.ITexture;
 import mightypork.gamecore.resources.textures.TextureRegistry;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.resources.textures.TxSheet;
@@ -43,7 +43,7 @@ public final class Res {
 	}
 	
 	
-	public static GLTexture getTexture(String key)
+	public static ITexture getTexture(String key)
 	{
 		return textures.getTexture(key);
 	}

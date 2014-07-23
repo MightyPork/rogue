@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.ByteBuffer;
 
+import mightypork.gamecore.backend.lwjgl.AwtScreenshot;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppModule;
 import mightypork.gamecore.render.events.DisplayReadyEvent;
@@ -26,6 +27,7 @@ import org.lwjgl.opengl.DisplayMode;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
+@Deprecated
 public class DisplaySystem extends AppModule implements RectBound {
 	
 	private DisplayMode windowDisplayMode;
@@ -161,7 +163,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 	 * 
 	 * @return screenshot object
 	 */
-	public static Screenshot prepareScreenshot()
+	public static AwtScreenshot prepareScreenshot()
 	{
 		glReadBuffer(GL_FRONT);
 		final int width = Display.getWidth();
@@ -170,7 +172,7 @@ public class DisplaySystem extends AppModule implements RectBound {
 		final ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
 		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 		
-		final Screenshot sc = new Screenshot(width, height, bpp, buffer);
+		final AwtScreenshot sc = new AwtScreenshot(width, height, bpp, buffer);
 		
 		return sc;
 	}

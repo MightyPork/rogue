@@ -3,6 +3,7 @@ package mightypork.rogue;
 
 import java.io.File;
 
+import mightypork.gamecore.backend.lwjgl.LwjglBackend;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.core.events.ShudownRequest;
@@ -44,6 +45,8 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	public RogueApp(File workdir, boolean singleInstance)
 	{
 		super(workdir, singleInstance);
+		
+		setBackend(new LwjglBackend(this));
 		
 		AppInitOptions opt = getInitOptions();
 		

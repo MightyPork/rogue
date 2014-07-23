@@ -7,7 +7,7 @@ import mightypork.gamecore.resources.fonts.FontRegistry;
 import mightypork.gamecore.resources.fonts.Glyphs;
 import mightypork.gamecore.resources.fonts.impl.LazyFont;
 import mightypork.gamecore.resources.textures.FilterMode;
-import mightypork.gamecore.resources.textures.GLTexture;
+import mightypork.gamecore.resources.textures.ITexture;
 import mightypork.gamecore.resources.textures.QuadGrid;
 import mightypork.gamecore.resources.textures.TextureRegistry;
 import mightypork.gamecore.resources.textures.WrapMode;
@@ -76,7 +76,7 @@ public class RogueResources implements ResourceSetup {
 	@Override
 	public void addTextures(TextureRegistry textures)
 	{
-		GLTexture texture;
+		ITexture texture;
 		QuadGrid grid;
 		
 		// gui

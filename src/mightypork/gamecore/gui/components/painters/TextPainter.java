@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.components.painters;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
-import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.fonts.FontRenderer;
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.utils.math.color.Color;
@@ -39,38 +39,32 @@ public class TextPainter extends BaseComponent implements DynamicWidthComponent 
 	/**
 	 * @param font font to use
 	 */
-	public TextPainter(GLFont font)
-	{
+	public TextPainter(GLFont font) {
 		this(font, AlignX.LEFT, RGB.WHITE);
 	}
 	
 	
-	public TextPainter(GLFont font, Color color, String text)
-	{
+	public TextPainter(GLFont font, Color color, String text) {
 		this(font, AlignX.LEFT, color, new StringWrapper(text));
 	}
 	
 	
-	public TextPainter(GLFont font, Color color, StringProvider text)
-	{
+	public TextPainter(GLFont font, Color color, StringProvider text) {
 		this(font, AlignX.LEFT, color, text);
 	}
 	
 	
-	public TextPainter(GLFont font, Color color)
-	{
+	public TextPainter(GLFont font, Color color) {
 		this(font, AlignX.LEFT, color, (StringProvider) null);
 	}
 	
 	
-	public TextPainter(GLFont font, AlignX align, Color color, String text)
-	{
+	public TextPainter(GLFont font, AlignX align, Color color, String text) {
 		this(font, align, color, new StringWrapper(text));
 	}
 	
 	
-	public TextPainter(GLFont font, AlignX align, Color color, StringProvider text)
-	{
+	public TextPainter(GLFont font, AlignX align, Color color, StringProvider text) {
 		this.font = new FontRenderer(font);
 		this.color = color;
 		this.align = align;
@@ -78,8 +72,7 @@ public class TextPainter extends BaseComponent implements DynamicWidthComponent 
 	}
 	
 	
-	public TextPainter(GLFont font, AlignX align, Color color)
-	{
+	public TextPainter(GLFont font, AlignX align, Color color) {
 		this(font, align, color, (StringProvider) null);
 	}
 	
@@ -102,7 +95,7 @@ public class TextPainter extends BaseComponent implements DynamicWidthComponent 
 		final Rect r = (shadow ? rect.move(shadowOffset.neg()) : rect).round();
 		font.draw(str, r, align, color);
 		
-		if (DEBUG_FONT_RENDER) Render.quadColor(r, RGB.PINK.withAlpha(0.4));
+		if (DEBUG_FONT_RENDER) App.gfx().quad(r, RGB.PINK.withAlpha(0.4));
 	}
 	
 	

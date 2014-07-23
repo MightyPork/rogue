@@ -10,6 +10,7 @@ import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
+import mightypork.gamecore.backend.Backend;
 import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.core.WorkDir.RouteSetup;
 import mightypork.gamecore.core.config.Config;
@@ -45,7 +46,7 @@ import mightypork.utils.math.algo.Move;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
+public abstract class BaseApp extends App implements AppAccess, UncaughtExceptionHandler {
 	
 	/**
 	 * Init options holder class
@@ -176,8 +177,8 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	}
 	
 	
-	public BaseApp(File workdir, boolean singleInstance)
-	{
+	public BaseApp(File workdir, boolean singleInstance) {
+		
 		WorkDir.init(workdir);
 		
 		opt.sigleInstance = singleInstance;
@@ -239,7 +240,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 		// connect slickutil to the logger
 		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
 		writeLogHeader();
-		
 		
 		Log.i("=== Starting initialization sequence ===");
 		
@@ -367,7 +367,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 			
 		});
 		
-		
 		Ion.registerIndirect(254, new IonizerBinary<Move>() {
 			
 			@Override
@@ -478,7 +477,6 @@ public abstract class BaseApp implements AppAccess, UncaughtExceptionHandler {
 	 * Triggered when lock cannot be obtained.<br>
 	 * App should terminate gracefully.
 	 */
-	
 	protected void onLockError()
 	{
 		Log.e("Could not obtain lock file.\nOnly one instance can run at a time.");

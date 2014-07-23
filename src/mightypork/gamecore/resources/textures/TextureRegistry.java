@@ -4,6 +4,7 @@ package mightypork.gamecore.resources.textures;
 import java.util.HashMap;
 import java.util.Map;
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppAccessAdapter;
 import mightypork.gamecore.resources.ResourceLoadRequest;
@@ -19,7 +20,7 @@ import mightypork.utils.math.constraints.rect.Rect;
  */
 public class TextureRegistry extends AppAccessAdapter {
 	
-	private final Map<String, GLTexture> textures = new HashMap<>();
+	private final Map<String, ITexture> textures = new HashMap<>();
 	private final Map<String, TxSheet> sheets = new HashMap<>();
 	
 	
@@ -41,7 +42,7 @@ public class TextureRegistry extends AppAccessAdapter {
 	 * @param wrap
 	 * @return texture reference
 	 */
-	public GLTexture addTexture(String resourcePath, FilterMode filter, WrapMode wrap)
+	public ITexture addTexture(String resourcePath, FilterMode filter, WrapMode wrap)
 	{
 		return addTexture(resourcePath, resourcePath, filter, wrap);
 	}
@@ -57,11 +58,11 @@ public class TextureRegistry extends AppAccessAdapter {
 	 * @param wrap
 	 * @return texture reference
 	 */
-	public GLTexture addTexture(String key, String resourcePath, FilterMode filter, WrapMode wrap)
+	public ITexture addTexture(String key, String resourcePath, FilterMode filter, WrapMode wrap)
 	{
 		if (key != null) if (textures.containsKey(key)) throw new KeyAlreadyExistsException();
 		
-		final LazyTexture texture = new LazyTexture(resourcePath);
+		final LazyTexture texture = App.gfx().getLazyTexture(resourcePath);
 		texture.setFilter(filter);
 		texture.setWrap(wrap);
 		
@@ -118,14 +119,14 @@ public class TextureRegistry extends AppAccessAdapter {
 	
 	
 	/**
-	 * Get a loaded {@link GLTexture}
+	 * Get a loaded {@link ITexture}
 	 * 
 	 * @param key texture key
 	 * @return the texture
 	 */
-	public GLTexture getTexture(String key)
+	public ITexture getTexture(String key)
 	{
-		final GLTexture tx = textures.get(key);
+		final ITexture tx = textures.get(key);
 		
 		if (tx == null) throw new RuntimeException("There's no texture called \"" + key + "\"!");
 		

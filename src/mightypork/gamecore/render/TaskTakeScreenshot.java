@@ -4,22 +4,30 @@ package mightypork.gamecore.render;
 import java.io.File;
 import java.io.IOException;
 
+import mightypork.gamecore.backend.lwjgl.AwtScreenshot;
 import mightypork.gamecore.core.WorkDir;
+import mightypork.gamecore.core.modules.App;
 import mightypork.utils.Support;
 import mightypork.utils.logging.Log;
 
 import org.newdawn.slick.opengl.GLUtils;
 
 
+/**
+ * Task that takes screenshot and asynchronously saves it to a file.<br>
+ * Can be run in a separate thread, but must be instantiated in the render
+ * thread.
+ * 
+ * @author MightyPork
+ */
 public class TaskTakeScreenshot implements Runnable {
 	
 	private final Screenshot scr;
 	
 	
-	public TaskTakeScreenshot()
-	{
+	public TaskTakeScreenshot() {
 		GLUtils.checkGLContext();
-		scr = DisplaySystem.prepareScreenshot();
+		scr = App.gfx().takeScreenshot();
 	}
 	
 	

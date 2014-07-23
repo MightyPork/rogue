@@ -10,7 +10,7 @@ import mightypork.utils.math.constraints.rect.Rect;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public interface GLTexture extends Destroyable {
+public interface ITexture extends Destroyable {
 	
 	/**
 	 * Set filter for scaling

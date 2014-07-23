@@ -1,6 +1,7 @@
 package mightypork.gamecore.gui.screens;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppSubModule;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
@@ -10,7 +11,6 @@ import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.DisplaySystem;
-import mightypork.gamecore.render.Render;
 import mightypork.gamecore.render.Renderable;
 import mightypork.utils.annotations.DefaultImpl;
 import mightypork.utils.math.constraints.rect.Rect;
@@ -33,8 +33,7 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 	/**
 	 * @param app app access
 	 */
-	public Screen(AppAccess app)
-	{
+	public Screen(AppAccess app) {
 		super(app);
 		
 		// disable events initially
@@ -123,14 +122,14 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 		if (!isActive()) return;
 		
 		if (needSetupViewport) {
-			Render.setupOrtho(DisplaySystem.getSize());
+			App.gfx().setupProjection(DisplaySystem.getSize());
 		}
 		
-		Render.pushState();
+		App.gfx().pushState();
 		
 		renderScreen();
 		
-		Render.popState();
+		App.gfx().popState();
 	}
 	
 	

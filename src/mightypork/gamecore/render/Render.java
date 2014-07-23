@@ -6,7 +6,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.io.IOException;
 
 import mightypork.gamecore.resources.textures.FilterMode;
-import mightypork.gamecore.resources.textures.GLTexture;
+import mightypork.gamecore.resources.textures.ITexture;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
@@ -27,6 +27,7 @@ import org.newdawn.slick.opengl.TextureLoader;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
+@Deprecated
 public class Render {
 	
 	public static final VectConst AXIS_X = Vect.make(1, 0, 0);
@@ -525,7 +526,7 @@ public class Render {
 	}
 	
 	
-	public static void enterBatchTexturedQuadMode(GLTexture texture)
+	public static void enterBatchTexturedQuadMode(ITexture texture)
 	{
 		texture.bind();
 		glBegin(GL11.GL_QUADS);

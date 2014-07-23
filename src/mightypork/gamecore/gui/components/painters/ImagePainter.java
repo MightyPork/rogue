@@ -1,9 +1,9 @@
 package mightypork.gamecore.gui.components.painters;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
-import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 
 
@@ -29,7 +29,7 @@ public class ImagePainter extends BaseComponent implements DynamicWidthComponent
 	@Override
 	public void renderComponent()
 	{
-		Render.quadTextured(this, txQuad);
+		App.gfx().quad(this, txQuad);
 	}
 	
 	

@@ -379,8 +379,6 @@ public class TextureBackedFont implements GLFont {
 	{
 		GLUtils.checkGLContext();
 		
-		LazyTexture.lastBind = null; // needs rebind.
-		
 		// PUSH
 		glPushAttrib(GL_ENABLE_BIT);
 		
