@@ -21,8 +21,7 @@ public class EntityBrownRat extends Entity {
 	private final BrownRatAi ai = new BrownRatAi(this);
 	
 	
-	public EntityBrownRat(EntityModel model, int eid)
-	{
+	public EntityBrownRat(EntityModel model, int eid) {
 		super(model, eid);
 		
 		addModule("ai", ai);

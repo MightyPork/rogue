@@ -1,10 +1,10 @@
 package mightypork.rogue.world.gui;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonHandler;
-import mightypork.gamecore.render.Render;
 import mightypork.rogue.Const;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
@@ -60,7 +60,7 @@ public class Minimap extends InputComponent implements MouseButtonHandler {
 				
 				final Color clr = t.getMapColor();
 				
-				Render.setColor(clr);
+				App.gfx().setColor(clr);
 				
 				GL11.glVertex2i(point.x, point.y);
 				GL11.glVertex2i(point.x + unit, point.y);
@@ -70,7 +70,7 @@ public class Minimap extends InputComponent implements MouseButtonHandler {
 		}
 		
 		// player
-		Render.setColor(playerColor);
+		App.gfx().setColor(playerColor);
 		
 		final double plx = tl.xi() + plCoord.x() * unit;
 		final double ply = tl.yi() + plCoord.y() * unit;

@@ -1,12 +1,7 @@
 package mightypork.rogue.world.entity.impl;
 
 
-import mightypork.rogue.world.entity.Entity;
-import mightypork.rogue.world.entity.EntityModel;
-import mightypork.rogue.world.entity.EntityModule;
-import mightypork.rogue.world.entity.EntityPathFinder;
-import mightypork.rogue.world.entity.EntityRenderer;
-import mightypork.rogue.world.entity.EntityType;
+import mightypork.rogue.world.entity.*;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
 import mightypork.rogue.world.events.PlayerKilledEvent;
@@ -21,8 +16,7 @@ public class EntityPlayer extends Entity {
 	
 	class PlayerAi extends EntityModule implements EntityMoveListener {
 		
-		public PlayerAi(Entity entity)
-		{
+		public PlayerAi(Entity entity) {
 			super(entity);
 			setDespawnDelay(2);
 			
@@ -86,8 +80,7 @@ public class EntityPlayer extends Entity {
 	private final PlayerAi ai = new PlayerAi(this);
 	
 	
-	public EntityPlayer(EntityModel model, int eid)
-	{
+	public EntityPlayer(EntityModel model, int eid) {
 		super(model, eid);
 		
 		pos.setStepTime(0.25);

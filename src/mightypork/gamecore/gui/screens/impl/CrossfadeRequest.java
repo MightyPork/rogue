@@ -19,8 +19,7 @@ public class CrossfadeRequest extends BusEvent<CrossfadeOverlay> {
 	 * @param screen screen key to show. Null = exit the app.
 	 * @param fromDark true to fade from full black (ie. start of the game)
 	 */
-	public CrossfadeRequest(String screen, boolean fromDark)
-	{
+	public CrossfadeRequest(String screen, boolean fromDark) {
 		super();
 		this.screen = screen;
 		this.fromDark = fromDark;
@@ -30,8 +29,7 @@ public class CrossfadeRequest extends BusEvent<CrossfadeOverlay> {
 	/**
 	 * @param screen screen key to show. Null = exit the app.
 	 */
-	public CrossfadeRequest(String screen)
-	{
+	public CrossfadeRequest(String screen) {
 		super();
 		this.screen = screen;
 		this.fromDark = false;

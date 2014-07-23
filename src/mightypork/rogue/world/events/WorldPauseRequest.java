@@ -20,8 +20,7 @@ public class WorldPauseRequest extends BusEvent<World> {
 	private final PauseAction op;
 	
 	
-	public WorldPauseRequest(PauseAction op)
-	{
+	public WorldPauseRequest(PauseAction op) {
 		super();
 		this.op = op;
 	}

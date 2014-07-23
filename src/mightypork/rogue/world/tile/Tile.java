@@ -9,7 +9,7 @@ import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.utils.Support;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.BusAccess;
 import mightypork.utils.eventbus.EventBus;
 import mightypork.utils.ion.IonBinary;
@@ -40,8 +40,7 @@ public abstract class Tile implements BusAccess, IonBinary {
 	private TileRenderer renderer;
 	
 	
-	public Tile(TileModel model)
-	{
+	public Tile(TileModel model) {
 		this.model = model;
 	}
 	
@@ -51,7 +50,7 @@ public abstract class Tile implements BusAccess, IonBinary {
 	 * 
 	 * @param context rendering ctx
 	 */
-	@DefaultImpl
+	@Stub
 	public void renderTile(TileRenderContext context)
 	{
 		if (!isExplored() && Const.RENDER_UFOG) return;
@@ -64,7 +63,7 @@ public abstract class Tile implements BusAccess, IonBinary {
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	public void renderUFog(TileRenderContext context)
 	{
 		initRenderer();
@@ -96,7 +95,7 @@ public abstract class Tile implements BusAccess, IonBinary {
 	 * 
 	 * @param context
 	 */
-	@DefaultImpl
+	@Stub
 	public void renderExtra(TileRenderContext context)
 	{
 		initRenderer();
@@ -172,7 +171,7 @@ public abstract class Tile implements BusAccess, IonBinary {
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	public void updateTile(double delta)
 	{
 		initRenderer();
@@ -186,7 +185,7 @@ public abstract class Tile implements BusAccess, IonBinary {
 	 * 
 	 * @return true if currently walkable
 	 */
-	@DefaultImpl
+	@Stub
 	public boolean isWalkable()
 	{
 		return isPotentiallyWalkable();
@@ -205,7 +204,7 @@ public abstract class Tile implements BusAccess, IonBinary {
 	public abstract boolean doesCastShadow();
 	
 	
-	@DefaultImpl
+	@Stub
 	public boolean doesReceiveShadow()
 	{
 		return !doesCastShadow();
@@ -252,7 +251,7 @@ public abstract class Tile implements BusAccess, IonBinary {
 	 * 
 	 * @return true if the tile is interactive and did something.
 	 */
-	@DefaultImpl
+	@Stub
 	public boolean onClick()
 	{
 		return false;

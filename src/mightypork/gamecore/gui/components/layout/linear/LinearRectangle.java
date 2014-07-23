@@ -10,8 +10,7 @@ public class LinearRectangle extends AbstractLinearWrapper {
 	private Num width;
 	
 	
-	public LinearRectangle(Component wrapped, Num width)
-	{
+	public LinearRectangle(Component wrapped, Num width) {
 		super(wrapped);
 		this.width = width;
 	}

@@ -21,8 +21,7 @@ public class EntityGrayRat extends Entity {
 	private EntityRenderer renderer;
 	
 	
-	public EntityGrayRat(EntityModel model, int eid)
-	{
+	public EntityGrayRat(EntityModel model, int eid) {
 		super(model, eid);
 		
 		addModule("ai", ai);

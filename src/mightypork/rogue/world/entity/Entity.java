@@ -11,7 +11,7 @@ import mightypork.rogue.world.entity.modules.EntityModuleHealth;
 import mightypork.rogue.world.entity.modules.EntityModulePosition;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.MapRenderContext;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.clients.DelegatingClient;
 import mightypork.utils.exceptions.IllegalValueException;
 import mightypork.utils.interfaces.Updateable;
@@ -44,8 +44,7 @@ public abstract class Entity implements IonBundled, Updateable, DelegatingClient
 	private boolean freed;
 	
 	
-	public Entity(EntityModel model, int eid)
-	{
+	public Entity(EntityModel model, int eid) {
 		this.entityId = eid;
 		this.model = model;
 		
@@ -72,7 +71,7 @@ public abstract class Entity implements IonBundled, Updateable, DelegatingClient
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected void saveExtra(IonDataBundle bundle)
 	{
 	}
@@ -95,7 +94,7 @@ public abstract class Entity implements IonBundled, Updateable, DelegatingClient
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected void loadExtra(IonDataBundle bundle)
 	{
 	}
@@ -154,7 +153,7 @@ public abstract class Entity implements IonBundled, Updateable, DelegatingClient
 	public abstract PathFinder getPathFinder();
 	
 	
-	@DefaultImpl
+	@Stub
 	public final void render(MapRenderContext context)
 	{
 		getRenderer().render(context);
@@ -202,7 +201,7 @@ public abstract class Entity implements IonBundled, Updateable, DelegatingClient
 	/**
 	 * Called right after the entity's health reaches zero.
 	 */
-	@DefaultImpl
+	@Stub
 	public void onKilled()
 	{
 	}
@@ -220,7 +219,7 @@ public abstract class Entity implements IonBundled, Updateable, DelegatingClient
 	/**
 	 * @return whether this dead entity can be removed from level
 	 */
-	@DefaultImpl
+	@Stub
 	public boolean canRemoveCorpse()
 	{
 		return isDead() && health.getTimeSinceLastDamage() > despawnDelay;
@@ -230,7 +229,7 @@ public abstract class Entity implements IonBundled, Updateable, DelegatingClient
 	/**
 	 * Called after the corpse has been cleaned from level.
 	 */
-	@DefaultImpl
+	@Stub
 	public void onCorpseRemoved()
 	{
 	}

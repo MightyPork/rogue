@@ -15,8 +15,7 @@ public class Volume extends Mutable<Double> {
 	/**
 	 * @param d initial value
 	 */
-	public Volume(Double d)
-	{
+	public Volume(Double d) {
 		super(d);
 	}
 	

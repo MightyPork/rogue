@@ -16,8 +16,7 @@ public class ItemShrineRoom extends SecretRoom {
 	private final Item item;
 	
 	
-	public ItemShrineRoom(Item item)
-	{
+	public ItemShrineRoom(Item item) {
 		this.item = item;
 	}
 	

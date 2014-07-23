@@ -1,7 +1,7 @@
 package mightypork.rogue.world.entity.render;
 
 
-import mightypork.gamecore.render.Render;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.resources.textures.TxSheet;
@@ -34,8 +34,7 @@ public class EntityRendererMobLR extends EntityRenderer {
 	private final Color hue = Color.rgb(Num.ONE, animRedVar, animRedVar);
 	
 	
-	public EntityRendererMobLR(Entity entity, String sheetKey)
-	{
+	public EntityRendererMobLR(Entity entity, String sheetKey) {
 		this.entity = entity;
 		this.sheet = Res.getTxSheet(sheetKey);
 	}
@@ -56,26 +55,22 @@ public class EntityRendererMobLR extends EntityRenderer {
 		
 		final double hurtOffset = (1 - Calc.clamp(hurtTime / 0.1, 0, 1)) * (entity.isDead() ? 0.3 : 0.05);
 		
-		
 		Rect spriteRect = Rect.make(visualPos.x() * w, (visualPos.y() - hurtOffset) * w, w, w);
 		spriteRect = spriteRect.shrink(w * 0.05);
 		
 		animRedVar.setTo(hurtTime / 0.3);
 		
-		Render.pushMatrix();
+		App.gfx().pushGeometry();
 		
-		Render.translate(spriteRect.center());
+		App.gfx().translate(spriteRect.center());
 		
 		if (entity.isDead()) {
-			Render.rotateZ(Calc.clamp(hurtTime / 0.3, 0, 1) * 90);
+			App.gfx().rotateZ(Calc.clamp(hurtTime / 0.3, 0, 1) * 90);
 		}
 		
 		final double hw = spriteRect.width().half().value();
 		
-		Render.quadTextured(
-				Vect.ZERO.expand(hw, hw, hw, hw),
-				q,
-				hue.withAlpha(entity.isDead() ? 1 - Easing.CIRC_IN.get(hurtTime / entity.getDespawnDelay()) : 1));
-		Render.popMatrix();
+		App.gfx().quad(Vect.ZERO.expand(hw, hw, hw, hw), q, hue.withAlpha(entity.isDead() ? 1 - Easing.CIRC_IN.get(hurtTime / entity.getDespawnDelay()) : 1));
+		App.gfx().popGeometry();
 	}
 }

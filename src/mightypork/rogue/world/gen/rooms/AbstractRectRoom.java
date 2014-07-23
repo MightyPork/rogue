@@ -9,7 +9,7 @@ import mightypork.rogue.world.gen.RoomEntry;
 import mightypork.rogue.world.gen.ScratchMap;
 import mightypork.rogue.world.gen.TileProtectLevel;
 import mightypork.rogue.world.tile.TileModel;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.math.algo.Coord;
 import mightypork.utils.math.algo.Moves;
 
@@ -92,7 +92,7 @@ public abstract class AbstractRectRoom implements RoomBuilder {
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected void buildExtras(ScratchMap map, MapTheme theme, Random rand, Coord min, Coord max)
 	{
 	}

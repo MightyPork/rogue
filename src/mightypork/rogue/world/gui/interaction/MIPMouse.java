@@ -20,8 +20,7 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 	private static final int RIGHT = 1; // left
 	
 	
-	public MIPMouse(MapView mapView)
-	{
+	public MIPMouse(MapView mapView) {
 		super(mapView);
 	}
 	

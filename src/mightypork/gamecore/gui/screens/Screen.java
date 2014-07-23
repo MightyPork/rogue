@@ -10,9 +10,8 @@ import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.render.Renderable;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.rect.RectBound;
 
@@ -112,7 +111,7 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 	@Override
 	public final Rect getRect()
 	{
-		return getDisplay().getRect();
+		return App.gfx().getRect();
 	}
 	
 	
@@ -122,7 +121,7 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 		if (!isActive()) return;
 		
 		if (needSetupViewport) {
-			App.gfx().setupProjection(DisplaySystem.getSize());
+			App.gfx().setupProjection();
 		}
 		
 		App.gfx().pushState();
@@ -136,7 +135,7 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 	/**
 	 * Called when the screen becomes active
 	 */
-	@DefaultImpl
+	@Stub
 	protected void onScreenEnter()
 	{
 	}
@@ -145,7 +144,7 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 	/**
 	 * Called when the screen is no longer active
 	 */
-	@DefaultImpl
+	@Stub
 	protected void onScreenLeave()
 	{
 	}

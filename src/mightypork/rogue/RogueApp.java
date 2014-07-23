@@ -8,11 +8,12 @@ import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.core.events.ShudownRequest;
 import mightypork.gamecore.core.events.UserQuitRequest;
+import mightypork.gamecore.core.modules.AppInitOptions;
 import mightypork.gamecore.core.modules.BaseApp;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.render.DisplaySystem;
+import mightypork.gamecore.render.RenderModule;
 import mightypork.gamecore.render.events.FullscreenToggleRequest;
 import mightypork.gamecore.render.events.ScreenshotRequest;
 import mightypork.gamecore.render.events.ScreenshotRequestListener;
@@ -42,11 +43,8 @@ import mightypork.utils.logging.Log;
  */
 public final class RogueApp extends BaseApp implements ViewportChangeListener, ScreenshotRequestListener {
 	
-	public RogueApp(File workdir, boolean singleInstance)
-	{
-		super(workdir, singleInstance);
-		
-		setBackend(new LwjglBackend(this));
+	public RogueApp() {
+		super(new LwjglBackend());
 		
 		AppInitOptions opt = getInitOptions();
 		
@@ -72,15 +70,20 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	
 	
 	@Override
-	protected void initDisplay(DisplaySystem display)
+	protected void initDisplay(RenderModule gfx)
 	{
 		// init based on config
 		final int w = Config.getValue("display.width");
 		final int h = Config.getValue("display.height");
 		final boolean fs = Config.getValue("display.fullscreen");
 		
-		display.createMainWindow(w, h, true, fs, Const.TITLEBAR);
-		display.setTargetFps(Const.FPS_RENDER);
+		gfx.setSize(w, h);
+		gfx.setResizable(true);
+		gfx.setFullscreen(fs);
+		gfx.setTitle(Const.TITLEBAR);
+		gfx.setTargetFps(Const.FPS_RENDER);
+		
+		gfx.createDisplay();
 	}
 	
 	
@@ -92,7 +95,6 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 		/* game screen references world provider instance */
 		WorldProvider.init(this);
 		getEventBus().subscribe(new RogueStateManager(this));
-		
 		
 		screens.addScreen("main_menu", new ScreenMainMenu(this));
 		screens.addScreen("select_world", new ScreenSelectWorld(this));
@@ -133,7 +135,6 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	protected void postInit()
 	{
 		
-		
 		getEventBus().send(new MainLoopRequest(new Runnable() {
 			
 			@Override
@@ -154,13 +155,13 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	public void onViewportChanged(ViewportChangeEvent event)
 	{
 		// save viewport size to config file
-		final boolean fs = DisplaySystem.isFullscreen();
+		final boolean fs = gfx().isFullscreen();
 		
 		Config.setValue("display.fullscreen", fs);
 		
 		if (!fs) {
-			Config.setValue("display.width", DisplaySystem.getWidth());
-			Config.setValue("display.height", DisplaySystem.getHeight());
+			Config.setValue("display.width", gfx().getWidth());
+			Config.setValue("display.height", gfx().getHeight());
 		}
 	}
 	

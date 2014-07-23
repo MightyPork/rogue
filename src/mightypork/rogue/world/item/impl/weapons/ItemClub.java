@@ -10,8 +10,7 @@ import mightypork.rogue.world.item.render.QuadItemRenderer;
 
 public class ItemClub extends ItemBaseWeapon {
 	
-	public ItemClub(ItemModel model)
-	{
+	public ItemClub(ItemModel model) {
 		super(model);
 	}
 	

@@ -13,7 +13,7 @@ import mightypork.gamecore.gui.events.ScreenRequestListener;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.render.events.ViewportChangeEvent;
 import mightypork.gamecore.render.events.ViewportChangeListener;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.logging.Log;
 
 
@@ -32,8 +32,7 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	/**
 	 * @param app app access
 	 */
-	public ScreenRegistry(AppAccess app)
-	{
+	public ScreenRegistry(AppAccess app) {
 		super(app);
 	}
 	
@@ -102,7 +101,7 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	
 	
 	@Override
-	@DefaultImpl
+	@Stub
 	protected void deinit()
 	{
 		//

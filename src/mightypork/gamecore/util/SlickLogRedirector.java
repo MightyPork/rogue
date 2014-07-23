@@ -19,8 +19,7 @@ public class SlickLogRedirector implements org.newdawn.slick.util.LogSystem {
 	/**
 	 * @param log log to redirect into
 	 */
-	public SlickLogRedirector(LogWriter log)
-	{
+	public SlickLogRedirector(LogWriter log) {
 		this.writer = log;
 	}
 	

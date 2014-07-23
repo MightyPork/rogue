@@ -22,8 +22,7 @@ public class TxSheet {
 	private final int count;
 	
 	
-	public TxSheet(TxQuad tx, int width, int height)
-	{
+	public TxSheet(TxQuad tx, int width, int height) {
 		this.original = tx;
 		this.width = width;
 		this.count = width * height;

@@ -13,8 +13,7 @@ public abstract class TileBaseFloor extends TileWithItems {
 	private final BasicTileRenderer renderer;
 	
 	
-	public TileBaseFloor(TileModel model, TxSheet sheet)
-	{
+	public TileBaseFloor(TileModel model, TxSheet sheet) {
 		super(model);
 		this.renderer = new BasicTileRenderer(this, sheet);
 	}

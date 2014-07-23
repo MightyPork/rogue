@@ -19,8 +19,7 @@ public class ResourceLoadRequest extends BusEvent<ResourceLoader> {
 	/**
 	 * @param resource resource to load
 	 */
-	public ResourceLoadRequest(LazyResource resource)
-	{
+	public ResourceLoadRequest(LazyResource resource) {
 		this.resource = resource;
 	}
 	

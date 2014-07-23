@@ -11,8 +11,7 @@ import mightypork.rogue.world.tile.TileType;
 
 public class NullTile extends Tile {
 	
-	public NullTile(TileModel model)
-	{
+	public NullTile(TileModel model) {
 		super(model);
 	}
 	

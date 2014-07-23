@@ -32,8 +32,7 @@ public abstract class BaseAudioPlayer implements Destroyable {
 	 * @param baseGain base gain (volume multiplier)
 	 * @param volume colume control
 	 */
-	public BaseAudioPlayer(LazyAudio track, double basePitch, double baseGain, Volume volume)
-	{
+	public BaseAudioPlayer(LazyAudio track, double basePitch, double baseGain, Volume volume) {
 		this.audio = track;
 		
 		this.baseGain = baseGain;

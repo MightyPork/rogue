@@ -22,8 +22,7 @@ public class LoadingOverlayRequest extends BusEvent<LoadingOverlay> {
 	 * @param msg task description
 	 * @param task task runnable
 	 */
-	public LoadingOverlayRequest(String msg, Runnable task)
-	{
+	public LoadingOverlayRequest(String msg, Runnable task) {
 		this.task = task;
 		this.msg = msg;
 	}

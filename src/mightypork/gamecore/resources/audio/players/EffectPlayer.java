@@ -19,8 +19,7 @@ public class EffectPlayer extends BaseAudioPlayer {
 	 * @param baseGain base gain (volume multiplier)
 	 * @param volume volume control
 	 */
-	public EffectPlayer(LazyAudio track, double basePitch, double baseGain, Volume volume)
-	{
+	public EffectPlayer(LazyAudio track, double basePitch, double baseGain, Volume volume) {
 		super(track, (float) basePitch, (float) baseGain, volume);
 	}
 	

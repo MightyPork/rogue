@@ -28,8 +28,7 @@ import mightypork.utils.math.constraints.num.Num;
 
 public class LayerDeath extends FadingLayer {
 	
-	public LayerDeath(final ScreenGame screen)
-	{
+	public LayerDeath(final ScreenGame screen) {
 		super(screen);
 		
 		// darker down to cover console.
@@ -53,7 +52,6 @@ public class LayerDeath extends FadingLayer {
 		
 		linl = new LinearLayout(root, AlignX.CENTER);
 		rl.add(linl);
-		
 		
 		final TextButton btn1 = new TextButton(thick_font, "Retry", ScreenGame.COLOR_BTN_GOOD);
 		btn1.textPainter.setVPaddingPercent(25);

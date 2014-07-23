@@ -12,8 +12,7 @@ public class PlayerStepEndEvent extends BusEvent<PlayerStepEndListener> {
 	private final EntityPlayer player;
 	
 	
-	public PlayerStepEndEvent(EntityPlayer player)
-	{
+	public PlayerStepEndEvent(EntityPlayer player) {
 		super();
 		this.player = player;
 	}

@@ -5,10 +5,10 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonHandler;
-import mightypork.gamecore.render.Render;
 import mightypork.rogue.world.PlayerControl;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
@@ -32,8 +32,7 @@ import mightypork.utils.math.timing.TimedTask;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class MapView extends InputComponent implements DelegatingClient, MouseButtonHandler, Updateable, WorldAscendRequestListener,
-		WorldDescendRequestListener {
+public class MapView extends InputComponent implements DelegatingClient, MouseButtonHandler, Updateable, WorldAscendRequestListener, WorldDescendRequestListener {
 	
 	private static final double transition_time = 0.8;
 	
@@ -73,7 +72,6 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 		}
 	};
 	
-	
 	private final Num tileSize;
 	
 	
@@ -92,8 +90,7 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 	}
 	
 	
-	public MapView()
-	{
+	public MapView() {
 		this.tileSize = height().min(width()).div(9).max(32).mul(Num.make(1).sub(zoom.mul(0.5)));
 		this.worldRenderer = new WorldRenderer(this, tileSize);
 		plc = WorldProvider.get().getPlayerControl();
@@ -107,7 +104,7 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 	{
 		worldRenderer.render();
 		
-		Render.quadColor(this, blackColor);
+		App.gfx().quad(this, blackColor);
 	}
 	
 	

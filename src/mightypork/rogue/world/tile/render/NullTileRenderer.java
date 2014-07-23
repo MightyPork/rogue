@@ -12,8 +12,7 @@ import mightypork.rogue.world.tile.TileRenderer;
  */
 public class NullTileRenderer extends TileRenderer {
 	
-	public NullTileRenderer()
-	{
+	public NullTileRenderer() {
 		super(null);
 	}
 	

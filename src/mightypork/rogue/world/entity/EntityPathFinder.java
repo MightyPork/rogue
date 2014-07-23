@@ -20,8 +20,7 @@ public class EntityPathFinder extends PathFinder {
 	protected final Entity entity;
 	
 	
-	public EntityPathFinder(Entity entity)
-	{
+	public EntityPathFinder(Entity entity) {
 		this.entity = entity;
 	}
 	

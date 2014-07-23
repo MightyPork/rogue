@@ -15,8 +15,7 @@ public abstract class MapRenderContext {
 	private final Rect mapRect;
 	
 	
-	public MapRenderContext(Level map, Rect drawArea)
-	{
+	public MapRenderContext(Level map, Rect drawArea) {
 		this.map = map;
 		
 		this.tiler = drawArea.tiles(map.getWidth(), map.getHeight());

@@ -16,8 +16,7 @@ public enum WrapMode
 	public final int num;
 	
 	
-	private WrapMode(int gl)
-	{
+	private WrapMode(int gl) {
 		this.num = gl;
 	}
 }

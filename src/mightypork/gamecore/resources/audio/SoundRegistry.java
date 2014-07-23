@@ -24,8 +24,7 @@ public class SoundRegistry extends AppAccessAdapter {
 	/**
 	 * @param app app access
 	 */
-	public SoundRegistry(AppAccess app)
-	{
+	public SoundRegistry(AppAccess app) {
 		super(app);
 		if (getSoundSystem() == null) throw new NullPointerException("SoundSystem cannot be null.");
 	}

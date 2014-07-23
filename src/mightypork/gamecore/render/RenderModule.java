@@ -260,11 +260,9 @@ public abstract class RenderModule extends BackendModule {
 	
 	
 	/**
-	 * Setup projection for 2D graphics
-	 * 
-	 * @param screenSize current viewport size
+	 * Setup projection for 2D graphics, using current scren size
 	 */
-	public abstract void setupProjection(Vect screenSize);
+	public abstract void setupProjection();
 	
 	
 	/**
@@ -286,7 +284,7 @@ public abstract class RenderModule extends BackendModule {
 	
 	
 	/**
-	 * Create a main window
+	 * Create a main window, if needed
 	 */
 	public abstract void createDisplay();
 	

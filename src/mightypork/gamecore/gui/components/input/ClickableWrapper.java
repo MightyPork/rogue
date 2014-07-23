@@ -14,8 +14,7 @@ public class ClickableWrapper extends ClickableComponent implements DelegatingCl
 	private final ClientList list;
 	
 	
-	public ClickableWrapper(Component wrapped)
-	{
+	public ClickableWrapper(Component wrapped) {
 		this.wrapped = wrapped;
 		wrapped.setRect(this);
 		

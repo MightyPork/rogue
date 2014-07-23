@@ -120,7 +120,7 @@ public abstract class PlayerControl {
 		
 		final Tile t = getLevel().getTile(Coord.fromVect(pos));
 		if (!t.isPotentiallyWalkable()) return false; // no point in attacking entity thru wall, right?
-		
+			
 		//try to hit entity
 		final Entity prey = getLevel().getClosestEntity(pos, EntityType.MONSTER, 1);
 		if (prey != null) {

@@ -16,8 +16,7 @@ public enum FilterMode
 	public final int num;
 	
 	
-	private FilterMode(int gl)
-	{
+	private FilterMode(int gl) {
 		this.num = gl;
 	}
 }

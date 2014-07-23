@@ -1,7 +1,7 @@
 package mightypork.rogue.world.item.render;
 
 
-import mightypork.gamecore.render.Render;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemRenderer;
@@ -13,8 +13,7 @@ public class QuadItemRenderer extends ItemRenderer {
 	private final TxQuad txq;
 	
 	
-	public QuadItemRenderer(Item item, TxQuad txq)
-	{
+	public QuadItemRenderer(Item item, TxQuad txq) {
 		super(item);
 		this.txq = txq;
 	}
@@ -23,7 +22,7 @@ public class QuadItemRenderer extends ItemRenderer {
 	@Override
 	public void render(Rect r)
 	{
-		Render.quadTextured(r, txq);
+		App.gfx().quad(r, txq);
 	}
 	
 }

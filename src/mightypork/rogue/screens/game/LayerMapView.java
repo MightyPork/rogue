@@ -14,8 +14,7 @@ public class LayerMapView extends ScreenLayer {
 	protected final MapView map;
 	
 	
-	public LayerMapView(Screen screen)
-	{
+	public LayerMapView(Screen screen) {
 		super(screen);
 		
 		// render component

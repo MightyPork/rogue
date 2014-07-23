@@ -21,8 +21,7 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	private final NoiseGen noise;
 	
 	
-	public TileRenderContext(Level map, Rect drawArea)
-	{
+	public TileRenderContext(Level map, Rect drawArea) {
 		super(map, drawArea);
 		
 		//this.tiler.setOverlap(0.002); // avoid gaps (rounding error?)	

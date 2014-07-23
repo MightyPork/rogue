@@ -27,8 +27,7 @@ public class TextureRegistry extends AppAccessAdapter {
 	/**
 	 * @param app app access
 	 */
-	public TextureRegistry(AppAccess app)
-	{
+	public TextureRegistry(AppAccess app) {
 		super(app);
 	}
 	

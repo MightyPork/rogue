@@ -1,7 +1,7 @@
 package mightypork.rogue.world.tile.render;
 
 
-import mightypork.gamecore.render.Render;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
@@ -19,8 +19,7 @@ public class TwoHighTileRenderer extends TileRenderer {
 	private final TxQuad txq;
 	
 	
-	public TwoHighTileRenderer(Tile tile, TxQuad txq)
-	{
+	public TwoHighTileRenderer(Tile tile, TxQuad txq) {
 		super(tile);
 		this.txq = txq;
 	}
@@ -30,6 +29,6 @@ public class TwoHighTileRenderer extends TileRenderer {
 	public void renderTile(TileRenderContext context)
 	{
 		final Rect rect = context.getRect();
-		Render.quadTextured(rect.growUp(rect.height()), txq);
+		App.gfx().quad(rect.growUp(rect.height()), txq);
 	}
 }

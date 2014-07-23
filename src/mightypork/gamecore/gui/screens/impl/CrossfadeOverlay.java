@@ -41,8 +41,7 @@ public class CrossfadeOverlay extends Overlay {
 	};
 	
 	
-	public CrossfadeOverlay(AppAccess app)
-	{
+	public CrossfadeOverlay(AppAccess app) {
 		super(app);
 		
 		final QuadPainter qp = new QuadPainter(RGB.BLACK); // TODO allow custom colors

@@ -21,8 +21,7 @@ public class FontRegistry extends AppAccessAdapter {
 	/**
 	 * @param app app access
 	 */
-	public FontRegistry(AppAccess app)
-	{
+	public FontRegistry(AppAccess app) {
 		super(app);
 	}
 	

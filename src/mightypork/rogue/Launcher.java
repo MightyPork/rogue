@@ -77,7 +77,10 @@ public class Launcher {
 			System.exit(1);
 		}
 		
-		final BaseApp app = new RogueApp(workdir, true);
+		final BaseApp app = new RogueApp();
+		
+		app.getInitOptions().setWorkdir(workdir);
+		app.getInitOptions().setSigleInstance(true);
 		
 		app.getInitOptions().setLogLevel(llFile, llSyso);
 		app.getInitOptions().setBusLogging(logBus);

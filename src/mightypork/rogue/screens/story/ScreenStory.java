@@ -103,12 +103,10 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		private final Color textColor = Color.fromHex(0x7ad8ff);
 		
 		
-		public LayerSlide(Screen screen)
-		{
+		public LayerSlide(Screen screen) {
 			super(screen);
 			
-			final TextPainter help = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, RGB.WHITE.withAlpha(txProceedAlpha.mul(0.3)),
-					"Space / click to proceed.");
+			final TextPainter help = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, RGB.WHITE.withAlpha(txProceedAlpha.mul(0.3)), "Space / click to proceed.");
 			help.setRect(root.bottomEdge().growUp(root.height().perc(4)));
 			help.setVPaddingPercent(5);
 			root.add(help);
@@ -210,13 +208,11 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 	};
 	
 	
-	public ScreenStory(AppAccess app)
-	{
+	public ScreenStory(AppAccess app) {
 		super(app);
 		
 		addLayer(new LayerColor(this, Color.fromHex(0x040c1e), 0));
 		addLayer(slideLayer = new LayerSlide(this));
-		
 		
 		bindKey(new KeyStroke(Keys.SPACE), Edge.RISING, next);
 		bindKey(new KeyStroke(Keys.RIGHT), Edge.RISING, next);

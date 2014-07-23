@@ -1,8 +1,8 @@
 package mightypork.rogue.screens.game;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.components.input.ClickableComponent;
-import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 
@@ -17,8 +17,7 @@ public class NavButton extends ClickableComponent {
 	private final TxQuad base, hover, down, fg;
 	
 	
-	public NavButton(TxQuad fg)
-	{
+	public NavButton(TxQuad fg) {
 		super();
 		this.base = Res.getTxQuad("nav.button.bg.base");
 		this.hover = Res.getTxQuad("nav.button.bg.hover");
@@ -41,9 +40,9 @@ public class NavButton extends ClickableComponent {
 		}
 		
 		if (!isEnabled()) bg = base; // override effects
-		
-		Render.quadTextured(this, bg);
-		Render.quadTextured(this, fg);
+			
+		App.gfx().quad(this, bg);
+		App.gfx().quad(this, fg);
 	}
 	
 }

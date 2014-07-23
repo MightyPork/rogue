@@ -34,8 +34,7 @@ public class MouseButtonEvent extends BusEvent<MouseButtonHandler> {
 	 * @param down button pressed
 	 * @param wheeld wheel change
 	 */
-	public MouseButtonEvent(Vect pos, int button, boolean down, int wheeld)
-	{
+	public MouseButtonEvent(Vect pos, int button, boolean down, int wheeld) {
 		this.button = button;
 		this.down = down;
 		this.pos = pos.freeze();

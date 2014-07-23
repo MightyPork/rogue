@@ -1,7 +1,7 @@
 package mightypork.rogue.world.tile.render;
 
 
-import mightypork.gamecore.render.Render;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.TileRenderer;
@@ -28,8 +28,7 @@ public class DoorTileRenderer extends TileRenderer {
 	};
 	
 	
-	public DoorTileRenderer(TileBaseDoor doorTile, TxSheet locked, TxSheet closed, TxSheet open)
-	{
+	public DoorTileRenderer(TileBaseDoor doorTile, TxSheet locked, TxSheet closed, TxSheet open) {
 		super(doorTile);
 		
 		this.locked = locked;
@@ -50,10 +49,10 @@ public class DoorTileRenderer extends TileRenderer {
 		}
 		
 		if (visuallyOpen) {
-			Render.quadTextured(rect, open.getRandomQuad(context.getTileNoise()));
+			App.gfx().quad(rect, open.getRandomQuad(context.getTileNoise()));
 		} else {
 			final TxSheet sheet = (((TileBaseDoor) tile).isLocked() ? locked : closed);
-			Render.quadTextured(rect, sheet.getRandomQuad(context.getTileNoise()));
+			App.gfx().quad(rect, sheet.getRandomQuad(context.getTileNoise()));
 		}
 	}
 	

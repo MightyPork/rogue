@@ -1,11 +1,11 @@
 package mightypork.rogue.screens.game;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.LayoutComponent;
 import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
-import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.utils.math.constraints.rect.Rect;
@@ -21,20 +21,17 @@ public class IngameNav extends LayoutComponent {
 	private final TxQuad bg;
 	
 	
-	public IngameNav(AppAccess app)
-	{
+	public IngameNav(AppAccess app) {
 		this(app, null);
 	}
 	
 	
-	public IngameNav(AppAccess app, RectBound context)
-	{
+	public IngameNav(AppAccess app, RectBound context) {
 		super(app, context);
 		
 		final Rect shr = this.shrink(height().perc(5));
 		leftFlow = new FlowColumnLayout(app, context, shr.height(), AlignX.LEFT);
 		rightFlow = new FlowColumnLayout(app, context, shr.height(), AlignX.RIGHT);
-		
 		
 		leftFlow.setRect(shr);
 		rightFlow.setRect(shr);
@@ -64,11 +61,10 @@ public class IngameNav extends LayoutComponent {
 	{
 		// draw BG (manually repeat)
 		for (int i = 0; i < Math.ceil(width().value() / paintHelper.width().value()); i++) {
-			Render.quadTextured(paintHelper.moveX(paintHelper.width().value() * i), bg);
+			App.gfx().quad(paintHelper.moveX(paintHelper.width().value() * i), bg);
 		}
 		
 		super.renderComponent();
 	}
-	
 	
 }

@@ -2,7 +2,6 @@ package mightypork.gamecore.core.modules;
 
 
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.utils.eventbus.clients.RootBusNode;
 
@@ -23,8 +22,7 @@ public abstract class AppModule extends RootBusNode implements AppAccess {
 	 * 
 	 * @param app access to app systems
 	 */
-	public AppModule(AppAccess app)
-	{
+	public AppModule(AppAccess app) {
 		super(app);
 		
 		this.app = app;
@@ -42,13 +40,6 @@ public abstract class AppModule extends RootBusNode implements AppAccess {
 	public final InputSystem getInput()
 	{
 		return app.getInput();
-	}
-	
-	
-	@Override
-	public final DisplaySystem getDisplay()
-	{
-		return app.getDisplay();
 	}
 	
 	

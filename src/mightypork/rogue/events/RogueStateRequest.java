@@ -17,15 +17,13 @@ public class RogueStateRequest extends BusEvent<RogueStateManager> {
 	private final boolean fromDark;
 	
 	
-	public RogueStateRequest(RogueState requested)
-	{
+	public RogueStateRequest(RogueState requested) {
 		this.requested = requested;
 		this.fromDark = false;
 	}
 	
 	
-	public RogueStateRequest(RogueState requested, boolean fromDark)
-	{
+	public RogueStateRequest(RogueState requested, boolean fromDark) {
 		this.requested = requested;
 		this.fromDark = fromDark;
 	}

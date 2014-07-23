@@ -28,8 +28,7 @@ public class FlowColumnLayout extends LayoutComponent {
 	 * @param elementWidth width of all elements
 	 * @param align component align. Legal values are LEFT and RIGHT.
 	 */
-	public FlowColumnLayout(AppAccess app, RectBound context, Num elementWidth, AlignX align)
-	{
+	public FlowColumnLayout(AppAccess app, RectBound context, Num elementWidth, AlignX align) {
 		super(app, context);
 		this.elementWidth = elementWidth;
 		this.align = align;
@@ -48,8 +47,7 @@ public class FlowColumnLayout extends LayoutComponent {
 	 * @param elementWidth width of all elements
 	 * @param align component align. Legal values are LEFT and RIGHT.
 	 */
-	public FlowColumnLayout(AppAccess app, Num elementWidth, AlignX align)
-	{
+	public FlowColumnLayout(AppAccess app, Num elementWidth, AlignX align) {
 		this(app, null, elementWidth, align);
 	}
 	

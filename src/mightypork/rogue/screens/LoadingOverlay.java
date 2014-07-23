@@ -64,8 +64,7 @@ public class LoadingOverlay extends Overlay {
 	};
 	
 	
-	public LoadingOverlay(AppAccess app)
-	{
+	public LoadingOverlay(AppAccess app) {
 		super(app);
 		
 		final QuadPainter qp = new QuadPainter(PAL16.SEABLUE);

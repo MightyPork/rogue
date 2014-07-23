@@ -27,8 +27,7 @@ public abstract class BaseLazyResource implements LazyResource, Destroyable {
 	 * @param resource resource path / name; this string is later used in
 	 *            loadResource()
 	 */
-	public BaseLazyResource(String resource)
-	{
+	public BaseLazyResource(String resource) {
 		this.resource = resource;
 	}
 	

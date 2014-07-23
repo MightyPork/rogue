@@ -12,8 +12,7 @@ import mightypork.rogue.world.item.render.QuadItemRenderer;
 
 public class ItemHeartPiece extends Item {
 	
-	public ItemHeartPiece(ItemModel model)
-	{
+	public ItemHeartPiece(ItemModel model) {
 		super(model);
 	}
 	

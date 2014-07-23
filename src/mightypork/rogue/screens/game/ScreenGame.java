@@ -64,7 +64,6 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 	
 	public Action actionToggleInv = new Action() {
 		
-		
 		@Override
 		public void execute()
 		{
@@ -183,7 +182,6 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 			worldActions.setEnabled(false); // disable world actions
 		}
 		
-		
 		if (nstate != GScrState.DEATH) deathLayer.hide();
 		if (nstate != GScrState.WIN) winLayer.hide();
 		if (nstate != GScrState.INV) invLayer.hide();
@@ -239,8 +237,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 	}
 	
 	
-	public ScreenGame(AppAccess app)
-	{
+	public ScreenGame(AppAccess app) {
 		super(app);
 		
 		addLayer(invLayer = new LayerInv(this));

@@ -8,8 +8,7 @@ import mightypork.rogue.world.tile.impl.TileBaseFloor;
 
 public class TileBrickFloor extends TileBaseFloor {
 	
-	public TileBrickFloor(TileModel model)
-	{
+	public TileBrickFloor(TileModel model) {
 		super(model, Res.getTxSheet("tile.brick.floor"));
 	}
 	

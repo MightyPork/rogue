@@ -44,8 +44,7 @@ public class LayerAskSave extends FadingLayer {
 	}
 	
 	
-	public LayerAskSave(final ScreenGame screen)
-	{
+	public LayerAskSave(final ScreenGame screen) {
 		super(screen);
 		this.gscreen = screen;
 		

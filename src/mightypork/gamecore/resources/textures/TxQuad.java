@@ -65,8 +65,7 @@ public class TxQuad {
 	 * @param x2 right bottom X (0-1)
 	 * @param y2 right bottom Y (0-1)
 	 */
-	public TxQuad(ITexture tx, double x1, double y1, double x2, double y2)
-	{
+	public TxQuad(ITexture tx, double x1, double y1, double x2, double y2) {
 		this(tx, Rect.make(x1, y1, x2, y2));
 	}
 	
@@ -75,8 +74,7 @@ public class TxQuad {
 	 * @param tx Texture
 	 * @param uvs Rect of texture UVs (0-1); will be frozen.
 	 */
-	public TxQuad(ITexture tx, Rect uvs)
-	{
+	public TxQuad(ITexture tx, Rect uvs) {
 		this.tx = tx;
 		this.uvs = uvs.freeze();
 	}
@@ -87,8 +85,7 @@ public class TxQuad {
 	 * 
 	 * @param txQuad a copied quad
 	 */
-	public TxQuad(TxQuad txQuad)
-	{
+	public TxQuad(TxQuad txQuad) {
 		this.tx = txQuad.tx;
 		this.uvs = txQuad.uvs;
 		this.flipX = txQuad.flipX;

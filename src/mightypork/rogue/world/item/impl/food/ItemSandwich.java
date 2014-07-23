@@ -10,8 +10,7 @@ import mightypork.rogue.world.item.render.QuadItemRenderer;
 
 public class ItemSandwich extends ItemBaseFood {
 	
-	public ItemSandwich(ItemModel model)
-	{
+	public ItemSandwich(ItemModel model) {
 		super(model);
 	}
 	

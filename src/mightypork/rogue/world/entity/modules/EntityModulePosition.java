@@ -32,8 +32,7 @@ public class EntityModulePosition extends EntityModule {
 	private final Set<EntityMoveListener> moveListeners = new LinkedHashSet<>();
 	
 	
-	public EntityModulePosition(Entity entity)
-	{
+	public EntityModulePosition(Entity entity) {
 		super(entity);
 	}
 	
@@ -112,7 +111,7 @@ public class EntityModulePosition extends EntityModule {
 	public void update(double delta)
 	{
 		if (entity.isDead()) return; // corpses dont walk
-		
+			
 		if (!entityPos.isFinished()) {
 			entityPos.update(delta);
 		}

@@ -28,8 +28,7 @@ public class WorldProvider extends RootBusNode {
 	}
 	
 	
-	public WorldProvider(BusAccess busAccess)
-	{
+	public WorldProvider(BusAccess busAccess) {
 		super(busAccess);
 		setListening(false);
 	}

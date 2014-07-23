@@ -78,8 +78,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	/**
 	 * @param app app access
 	 */
-	public SoundSystem(AppAccess app)
-	{
+	public SoundSystem(AppAccess app) {
 		super(app);
 		
 		if (!soundSystemInited) {
@@ -89,7 +88,6 @@ public class SoundSystem extends RootBusNode implements Updateable {
 				SoundStore.get().setMaxSources(MAX_SOURCES);
 				SoundStore.get().init();
 				setListener(INITIAL_LISTENER_POS);
-				
 				
 				getEventBus().send(new AudioReadyEvent());
 			} catch (final Throwable t) {

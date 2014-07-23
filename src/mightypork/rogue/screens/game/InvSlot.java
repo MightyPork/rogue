@@ -1,11 +1,11 @@
 package mightypork.rogue.screens.game;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.ClickableComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.rogue.world.PlayerFacade;
@@ -47,8 +47,7 @@ public class InvSlot extends ClickableComponent {
 	private final Num hAlpha = Num.make(0.7);
 	
 	
-	public InvSlot(int index, InvSlot[] allSlots)
-	{
+	public InvSlot(int index, InvSlot[] allSlots) {
 		super();
 		this.txBase = Res.getTxQuad("inv.slot.base");
 		this.txSelected = Res.getTxQuad("inv.slot.selected");
@@ -117,7 +116,7 @@ public class InvSlot extends ClickableComponent {
 			bg = txBase;
 		}
 		
-		Render.quadTextured(this, bg);
+		App.gfx().quad(this, bg);
 		
 		final PlayerFacade pl = WorldProvider.get().getPlayer();
 		
@@ -148,17 +147,16 @@ public class InvSlot extends ClickableComponent {
 				rtTxP.render();
 			}
 			
-			
 			if (itm.isDamageable()) {
 				Color.pushAlpha(hAlpha);
 				
-				Render.quadColor(usesRect, RGB.BLACK);
+				App.gfx().quad(usesRect, RGB.BLACK);
 				
 				final double useRatio = (itm.getRemainingUses() / (double) itm.getMaxUses());
 				
 				final Color barColor = (useRatio > 0.6 ? RGB.GREEN : useRatio > 0.2 ? RGB.ORANGE : RGB.RED);
 				
-				Render.quadColor(usesRect.shrinkRight(usesRect.width().value() * (1 - useRatio)), barColor);
+				App.gfx().quad(usesRect.shrinkRight(usesRect.width().value() * (1 - useRatio)), barColor);
 				
 				Color.popAlpha();
 			}

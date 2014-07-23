@@ -20,8 +20,7 @@ public class JointVolume extends Volume {
 	 * @param volumes individual volumes to join
 	 */
 	@SafeVarargs
-	public JointVolume(Volume... volumes)
-	{
+	public JointVolume(Volume... volumes) {
 		super(1D);
 		this.volumes = volumes;
 	}

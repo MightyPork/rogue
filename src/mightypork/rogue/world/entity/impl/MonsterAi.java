@@ -9,7 +9,7 @@ import mightypork.rogue.world.entity.EntityModule;
 import mightypork.rogue.world.entity.EntityType;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.tile.Tile;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.ion.IonDataBundle;
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.algo.Coord;
@@ -75,8 +75,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	private int preyId = -1;
 	
 	
-	public MonsterAi(final Entity entity)
-	{
+	public MonsterAi(final Entity entity) {
 		super(entity);
 		
 		noDoorPf = new PathFinderProxy(entity.getPathFinder()) {
@@ -208,7 +207,7 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 			final List<Coord> noDoorPath = noDoorPf.findPath(entity.getCoord(), prey.getCoord());
 			
 			if (noDoorPath == null) return; // cant reach, give up
-			
+				
 			startChasing(prey);
 		}
 	}
@@ -313,35 +312,35 @@ public class MonsterAi extends EntityModule implements EntityMoveListener {
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected double getScanRadius()
 	{
 		return isIdle() ? Calc.randInt(1, 3) : Calc.randInt(4, 8); // For override
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected int getPreyAbandonDistance()
 	{
 		return Calc.randInt(5, 8); // For override
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected double getAttackDistance()
 	{
 		return 1;
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected int getAttackStrength()
 	{
 		return 1; // For override
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected double getStepTime()
 	{
 		return isIdle() ? 0.7 : 0.4;

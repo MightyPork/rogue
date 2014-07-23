@@ -116,6 +116,7 @@ public class Config {
 	
 	/**
 	 * Add "key." before the given config file key
+	 * 
 	 * @param cfgKey config key
 	 * @return key. + cfgKey
 	 */

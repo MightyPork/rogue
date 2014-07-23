@@ -2,16 +2,7 @@ package mightypork.rogue.world.level;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.entity.Entities;
@@ -47,7 +38,6 @@ import mightypork.utils.math.noise.NoiseGen;
  * @author Ondřej Hruška (MightyPork)
  */
 public class Level implements BusAccess, Updateable, DelegatingClient, ToggleableClient, IonBinary {
-	
 	
 	private final FloodFill exploreFiller = new FloodFill() {
 		
@@ -112,13 +102,11 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	private double timeSinceLastEntitySort;
 	
 	
-	public Level()
-	{
+	public Level() {
 	}
 	
 	
-	public Level(int width, int height)
-	{
+	public Level(int width, int height) {
 		size.setTo(width, height);
 		buildArray();
 	}
@@ -154,7 +142,7 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public final Tile getTile(Coord pos)
 	{
 		if (!pos.isInRange(0, 0, size.x - 1, size.y - 1)) return Tiles.NULL.createTile(); // out of range
-		
+			
 		return tiles[pos.y][pos.x];
 	}
 	

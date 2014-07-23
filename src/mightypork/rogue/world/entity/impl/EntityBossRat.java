@@ -21,8 +21,7 @@ public class EntityBossRat extends Entity {
 	private final BossRatAi ai = new BossRatAi(this);
 	
 	
-	public EntityBossRat(EntityModel model, int eid)
-	{
+	public EntityBossRat(EntityModel model, int eid) {
 		super(model, eid);
 		
 		addModule("ai", ai);

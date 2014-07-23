@@ -1,12 +1,13 @@
 package mightypork.rogue.world.tile;
 
 
-import mightypork.gamecore.render.Render;
+import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.render.RenderModule;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.render.NullTileRenderer;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.interfaces.Updateable;
 import mightypork.utils.math.algo.Moves;
 import mightypork.utils.math.constraints.rect.Rect;
@@ -40,8 +41,7 @@ public abstract class TileRenderer implements Updateable {
 	}
 	
 	
-	public TileRenderer(Tile tile)
-	{
+	public TileRenderer(Tile tile) {
 		this.tile = tile;
 		
 		if (!inited) {
@@ -90,21 +90,24 @@ public abstract class TileRenderer implements Updateable {
 		
 		if (shadows == 0) return;
 		final Rect rect = context.getRect();
+
+
+		final RenderModule gfx = App.gfx();
 		
-		if ((shadows & Moves.BITS_NW_CORNER) == Moves.BIT_NW) Render.quadTextured(rect, SH_NW);
-		if ((shadows & Moves.BIT_N) != 0) Render.quadTextured(rect, SH_N);
-		if ((shadows & Moves.BITS_NE_CORNER) == Moves.BIT_NE) Render.quadTextured(rect, SH_NE);
+		if ((shadows & Moves.BITS_NW_CORNER) == Moves.BIT_NW) gfx.quad(rect, SH_NW);
+		if ((shadows & Moves.BIT_N) != 0) gfx.quad(rect, SH_N);
+		if ((shadows & Moves.BITS_NE_CORNER) == Moves.BIT_NE) gfx.quad(rect, SH_NE);
 		
-		if ((shadows & Moves.BIT_W) != 0) Render.quadTextured(rect, SH_W);
-		if ((shadows & Moves.BIT_E) != 0) Render.quadTextured(rect, SH_E);
+		if ((shadows & Moves.BIT_W) != 0) gfx.quad(rect, SH_W);
+		if ((shadows & Moves.BIT_E) != 0) gfx.quad(rect, SH_E);
 		
-		if ((shadows & Moves.BITS_SW_CORNER) == Moves.BIT_SW) Render.quadTextured(rect, SH_SW);
-		if ((shadows & Moves.BIT_S) != 0) Render.quadTextured(rect, SH_S);
-		if ((shadows & Moves.BITS_SE_CORNER) == Moves.BIT_SE) Render.quadTextured(rect, SH_SE);
+		if ((shadows & Moves.BITS_SW_CORNER) == Moves.BIT_SW) gfx.quad(rect, SH_SW);
+		if ((shadows & Moves.BIT_S) != 0) gfx.quad(rect, SH_S);
+		if ((shadows & Moves.BITS_SE_CORNER) == Moves.BIT_SE) gfx.quad(rect, SH_SE);
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	public void renderExtra(TileRenderContext context)
 	{
 	}
@@ -113,11 +116,13 @@ public abstract class TileRenderer implements Updateable {
 	public void renderUnexploredFog(TileRenderContext context)
 	{
 		// TODO cache values, update neighbouring tiles upon "explored" flag changed.
+
+		final RenderModule gfx = App.gfx();
 		
 		final Rect rect = context.getRect();
 		
 		if (!context.getTile().isExplored()) {
-			Render.quadTextured(rect, UFOG_FULL);
+			gfx.quad(rect, UFOG_FULL);
 			return;
 		}
 		
@@ -132,16 +137,17 @@ public abstract class TileRenderer implements Updateable {
 		
 		if (ufog == 0) return;
 		
-		if ((ufog & Moves.BITS_NW_CORNER) == Moves.BIT_NW) Render.quadTextured(rect, UFOG_NW);
-		if ((ufog & Moves.BIT_N) != 0) Render.quadTextured(rect, UFOG_N);
-		if ((ufog & Moves.BITS_NE_CORNER) == Moves.BIT_NE) Render.quadTextured(rect, UFOG_NE);
 		
-		if ((ufog & Moves.BIT_W) != 0) Render.quadTextured(rect, UFOG_W);
-		if ((ufog & Moves.BIT_E) != 0) Render.quadTextured(rect, UFOG_E);
+		if ((ufog & Moves.BITS_NW_CORNER) == Moves.BIT_NW) gfx.quad(rect, UFOG_NW);
+		if ((ufog & Moves.BIT_N) != 0) gfx.quad(rect, UFOG_N);
+		if ((ufog & Moves.BITS_NE_CORNER) == Moves.BIT_NE) gfx.quad(rect, UFOG_NE);
 		
-		if ((ufog & Moves.BITS_SW_CORNER) == Moves.BIT_SW) Render.quadTextured(rect, UFOG_SW);
-		if ((ufog & Moves.BIT_S) != 0) Render.quadTextured(rect, UFOG_S);
-		if ((ufog & Moves.BITS_SE_CORNER) == Moves.BIT_SE) Render.quadTextured(rect, UFOG_SE);
+		if ((ufog & Moves.BIT_W) != 0) gfx.quad(rect, UFOG_W);
+		if ((ufog & Moves.BIT_E) != 0) gfx.quad(rect, UFOG_E);
+		
+		if ((ufog & Moves.BITS_SW_CORNER) == Moves.BIT_SW) gfx.quad(rect, UFOG_SW);
+		if ((ufog & Moves.BIT_S) != 0) gfx.quad(rect, UFOG_S);
+		if ((ufog & Moves.BITS_SE_CORNER) == Moves.BIT_SE) gfx.quad(rect, UFOG_SE);
 		
 	}
 	

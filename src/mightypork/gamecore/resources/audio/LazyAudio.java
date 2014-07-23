@@ -43,8 +43,7 @@ public class LazyAudio extends BaseLazyResource {
 	 * 
 	 * @param resourceName resource to load when needed
 	 */
-	public LazyAudio(String resourceName)
-	{
+	public LazyAudio(String resourceName) {
 		super(resourceName);
 	}
 	
@@ -92,7 +91,7 @@ public class LazyAudio extends BaseLazyResource {
 	{
 		final String ext = FileUtils.getExtension(resource);
 		
-		try(final InputStream stream = FileUtils.getResource(resource)) {
+		try (final InputStream stream = FileUtils.getResource(resource)) {
 			
 			if (ext.equalsIgnoreCase("ogg")) {
 				backingAudio = SoundStore.get().getOgg(resource, stream);

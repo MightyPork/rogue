@@ -34,8 +34,7 @@ public class WorldConsole implements Updateable {
 		private double elapsed = 0;
 		
 		
-		private Entry(String text)
-		{
+		private Entry(String text) {
 			this.text = text;
 			this.fadeout = new NumAnimated(1, Easing.LINEAR);
 			this.fadeout.setDefaultDuration(0.5);

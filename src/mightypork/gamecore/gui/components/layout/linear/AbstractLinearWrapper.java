@@ -23,8 +23,7 @@ public abstract class AbstractLinearWrapper extends LinearComponent implements D
 	/**
 	 * @param wrapped wrapped component. Can be null.
 	 */
-	public AbstractLinearWrapper(Component wrapped)
-	{
+	public AbstractLinearWrapper(Component wrapped) {
 		this.wrapped = wrapped;
 		if (wrapped != null) {
 			if (wrapped instanceof LinearComponent) {

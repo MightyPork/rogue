@@ -4,14 +4,7 @@ package mightypork.rogue.world.tile;
 import java.io.IOException;
 
 import mightypork.rogue.world.tile.impl.NullTile;
-import mightypork.rogue.world.tile.impl.brick.TileBrickChest;
-import mightypork.rogue.world.tile.impl.brick.TileBrickDoor;
-import mightypork.rogue.world.tile.impl.brick.TileBrickEntrance;
-import mightypork.rogue.world.tile.impl.brick.TileBrickExit;
-import mightypork.rogue.world.tile.impl.brick.TileBrickFloor;
-import mightypork.rogue.world.tile.impl.brick.TileBrickPassage;
-import mightypork.rogue.world.tile.impl.brick.TileBrickSecretDoor;
-import mightypork.rogue.world.tile.impl.brick.TileBrickWall;
+import mightypork.rogue.world.tile.impl.brick.*;
 import mightypork.utils.ion.IonInput;
 import mightypork.utils.ion.IonOutput;
 

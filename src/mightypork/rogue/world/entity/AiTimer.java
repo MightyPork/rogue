@@ -8,8 +8,7 @@ import mightypork.utils.math.timing.TaskRepeater;
 
 public abstract class AiTimer extends TaskRepeater implements IonBundled {
 	
-	public AiTimer(double duration)
-	{
+	public AiTimer(double duration) {
 		super(duration);
 	}
 	

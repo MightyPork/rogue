@@ -28,8 +28,7 @@ public enum TileType
 	private final boolean potentiallyWalkable;
 	
 	
-	private TileType(Color defaultMapColor, boolean potentiallyWalkable)
-	{
+	private TileType(Color defaultMapColor, boolean potentiallyWalkable) {
 		this.mapColor = defaultMapColor;
 		this.potentiallyWalkable = potentiallyWalkable;
 	}

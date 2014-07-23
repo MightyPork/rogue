@@ -8,8 +8,7 @@ import mightypork.rogue.world.tile.TileModel;
 
 public abstract class TileSolid extends Tile {
 	
-	public TileSolid(TileModel model)
-	{
+	public TileSolid(TileModel model) {
 		super(model);
 	}
 	

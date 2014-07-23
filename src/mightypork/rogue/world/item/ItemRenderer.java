@@ -9,8 +9,7 @@ public abstract class ItemRenderer {
 	protected final Item item;
 	
 	
-	public ItemRenderer(Item item)
-	{
+	public ItemRenderer(Item item) {
 		this.item = item;
 	}
 	

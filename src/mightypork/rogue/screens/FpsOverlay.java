@@ -2,6 +2,7 @@ package mightypork.rogue.screens;
 
 
 import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
@@ -27,8 +28,7 @@ public class FpsOverlay extends Overlay {
 	TextPainter tp;
 	
 	
-	public FpsOverlay(AppAccess screen)
-	{
+	public FpsOverlay(AppAccess screen) {
 		super(screen);
 		
 		/*
@@ -53,7 +53,7 @@ public class FpsOverlay extends Overlay {
 			@Override
 			public String getString()
 			{
-				return getDisplay().getFps() + " fps";
+				return App.gfx().getFps() + " fps";
 			}
 		});
 		

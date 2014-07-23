@@ -29,14 +29,11 @@ import mightypork.utils.math.constraints.rect.Rect;
  */
 public class ScreenSelectWorld extends RogueScreen {
 	
-	
-	public ScreenSelectWorld(AppAccess app)
-	{
+	public ScreenSelectWorld(AppAccess app) {
 		super(app);
 		
 		addLayer(new WorldsLayer(this));
 	}
-	
 	
 	class WorldsLayer extends ScreenLayer {
 		
@@ -45,8 +42,7 @@ public class ScreenSelectWorld extends RogueScreen {
 		private WorldSlot slot3;
 		
 		
-		public WorldsLayer(Screen screen)
-		{
+		public WorldsLayer(Screen screen) {
 			super(screen);
 			
 			init();
@@ -56,7 +52,6 @@ public class ScreenSelectWorld extends RogueScreen {
 		private void init()
 		{
 			final Rect menuBox = root.shrink(root.width().perc(25), root.height().perc(30)).moveY(root.height().perc(-10));
-			
 			
 			final QuadPainter bg = QuadPainter.gradV(Color.fromHex(0x007eb3), PAL16.SEABLUE);
 			bg.setRect(root);

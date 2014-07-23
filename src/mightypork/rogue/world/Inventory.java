@@ -17,14 +17,12 @@ public class Inventory implements IonBinary {
 	private int lastAddIndex = 0;
 	
 	
-	public Inventory(int size)
-	{
+	public Inventory(int size) {
 		this.items = new Item[size];
 	}
 	
 	
-	public Inventory()
-	{
+	public Inventory() {
 		// ION constructor
 	}
 	
@@ -184,8 +182,10 @@ public class Inventory implements IonBinary {
 			s += i + ": ";
 			final Item itm = getItem(i);
 			
-			if (itm == null) s += "<null>";
-			else s += itm;
+			if (itm == null)
+				s += "<null>";
+			else
+				s += itm;
 		}
 		s += "]";
 		return s;

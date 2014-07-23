@@ -40,8 +40,7 @@ public class LayerGameUi extends ScreenLayer {
 	private final ScreenGame gameScreen;
 	
 	
-	public LayerGameUi(ScreenGame screen)
-	{
+	public LayerGameUi(ScreenGame screen) {
 		super(screen);
 		this.gameScreen = screen;
 		
@@ -126,7 +125,6 @@ public class LayerGameUi extends ScreenLayer {
 		
 		nav.addRight(btn = new NavButton(Res.getTxQuad("nav.button.fg.pause")));
 		btn.setAction(gameScreen.actionTogglePause);
-		
 		
 		// TODO actions
 		//nav.addLeft(new NavButton(Res.txq("nav.button.fg.options")));

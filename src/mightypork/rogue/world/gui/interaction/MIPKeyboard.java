@@ -56,8 +56,7 @@ public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClien
 	}
 	
 	
-	public MIPKeyboard(MapView mapView)
-	{
+	public MIPKeyboard(MapView mapView) {
 		super(mapView);
 		
 		// bind keys

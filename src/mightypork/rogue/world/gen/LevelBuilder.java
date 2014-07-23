@@ -29,8 +29,7 @@ public class LevelBuilder {
 		boolean important;
 		
 		
-		public RoomEntry(RoomBuilder room, int count, boolean important)
-		{
+		public RoomEntry(RoomBuilder room, int count, boolean important) {
 			this.count = count;
 			this.room = room;
 			this.important = important;
@@ -43,8 +42,7 @@ public class LevelBuilder {
 		boolean important;
 		
 		
-		public ItemEntry(Item item, boolean important)
-		{
+		public ItemEntry(Item item, boolean important) {
 			this.item = item;
 			this.important = important;
 		}
@@ -56,8 +54,7 @@ public class LevelBuilder {
 		boolean important;
 		
 		
-		public EntityEntry(Entity item, boolean important)
-		{
+		public EntityEntry(Entity item, boolean important) {
 			this.entity = item;
 			this.important = important;
 		}
@@ -82,8 +79,7 @@ public class LevelBuilder {
 	 * @param theme tiles theme
 	 * @param seed level seed
 	 */
-	public LevelBuilder(int max_size, MapTheme theme, long seed)
-	{
+	public LevelBuilder(int max_size, MapTheme theme, long seed) {
 		this.rand = new Random(seed);
 		this.map = new ScratchMap(max_size, theme, rand);
 	}

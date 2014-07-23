@@ -25,8 +25,7 @@ import mightypork.utils.math.constraints.num.Num;
 
 public class LayerWin extends FadingLayer {
 	
-	public LayerWin(final ScreenGame screen)
-	{
+	public LayerWin(final ScreenGame screen) {
 		super(screen);
 		
 		// darker down to cover console.

@@ -18,8 +18,7 @@ public class QuadGrid {
 	private final double tileH;
 	
 	
-	public QuadGrid(ITexture tx, int tilesX, int tilesY)
-	{
+	public QuadGrid(ITexture tx, int tilesX, int tilesY) {
 		this.tx = tx;
 		this.txWidth = tilesX;
 		this.txHeight = tilesY;

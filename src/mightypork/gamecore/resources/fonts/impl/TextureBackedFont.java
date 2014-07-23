@@ -20,7 +20,6 @@ import java.util.Map;
 
 import mightypork.gamecore.resources.fonts.GLFont;
 import mightypork.gamecore.resources.textures.FilterMode;
-import mightypork.gamecore.resources.textures.LazyTexture;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.vect.Vect;
@@ -90,8 +89,7 @@ public class TextureBackedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public TextureBackedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars)
-	{
+	public TextureBackedFont(java.awt.Font font, boolean antialias, FilterMode filter, String chars) {
 		this(font, antialias, filter, (" " + chars).toCharArray());
 	}
 	
@@ -104,8 +102,7 @@ public class TextureBackedFont implements GLFont {
 	 * @param filter used Gl filter
 	 * @param chars chars to load
 	 */
-	public TextureBackedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars)
-	{
+	public TextureBackedFont(java.awt.Font font, boolean antialias, FilterMode filter, char[] chars) {
 		GLUtils.checkGLContext();
 		
 		this.font = font;
@@ -165,8 +162,7 @@ public class TextureBackedFont implements GLFont {
 				public int height;
 				
 				
-				public LoadedGlyph(char c, BufferedImage image)
-				{
+				public LoadedGlyph(char c, BufferedImage image) {
 					this.image = image;
 					this.c = c;
 					this.width = image.getWidth();
@@ -302,8 +298,7 @@ public class TextureBackedFont implements GLFont {
 				
 				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(newI);
 			} else {
-				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder())
-						.put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
+				byteBuffer = ByteBuffer.allocateDirect(width * height * (bpp / 8)).order(ByteOrder.nativeOrder()).put(((DataBufferByte) (bufferedImage.getData().getDataBuffer())).getData());
 			}
 			
 			byteBuffer.flip();

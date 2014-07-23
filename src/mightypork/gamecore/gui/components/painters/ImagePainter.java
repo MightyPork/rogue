@@ -20,8 +20,7 @@ public class ImagePainter extends BaseComponent implements DynamicWidthComponent
 	/**
 	 * @param txQuad drawn image
 	 */
-	public ImagePainter(TxQuad txQuad)
-	{
+	public ImagePainter(TxQuad txQuad) {
 		this.txQuad = txQuad;
 	}
 	

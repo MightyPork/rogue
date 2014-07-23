@@ -10,8 +10,7 @@ import mightypork.utils.math.Calc;
 
 public class EntityModuleHealth extends EntityModule {
 	
-	public EntityModuleHealth(Entity entity)
-	{
+	public EntityModuleHealth(Entity entity) {
 		super(entity);
 	}
 	

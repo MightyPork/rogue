@@ -10,8 +10,7 @@ import mightypork.utils.math.color.Color;
 
 public abstract class TileBaseEntrance extends TileBaseStairs {
 	
-	public TileBaseEntrance(TileModel model)
-	{
+	public TileBaseEntrance(TileModel model) {
 		super(model);
 	}
 	

@@ -102,8 +102,7 @@ public class LayerInv extends FadingLayer {
 	}
 	
 	
-	public LayerInv(final ScreenGame screen)
-	{
+	public LayerInv(final ScreenGame screen) {
 		super(screen);
 		this.gscreen = screen;
 		

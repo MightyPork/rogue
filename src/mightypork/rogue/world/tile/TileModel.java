@@ -19,8 +19,7 @@ public final class TileModel {
 	public final Class<? extends Tile> tileClass;
 	
 	
-	public TileModel(int id, Class<? extends Tile> tile)
-	{
+	public TileModel(int id, Class<? extends Tile> tile) {
 		Tiles.register(id, this);
 		this.id = id;
 		this.tileClass = tile;

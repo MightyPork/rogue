@@ -8,8 +8,7 @@ import mightypork.rogue.world.tile.impl.TileBaseDoor;
 
 public class TileBrickDoor extends TileBaseDoor {
 	
-	public TileBrickDoor(TileModel model)
-	{
+	public TileBrickDoor(TileModel model) {
 		//@formatter:off
 		super(
 			model,

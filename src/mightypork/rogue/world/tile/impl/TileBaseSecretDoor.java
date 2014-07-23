@@ -16,8 +16,7 @@ public abstract class TileBaseSecretDoor extends TileBaseDoor {
 	private int clicks = 2;
 	
 	
-	public TileBaseSecretDoor(TileModel model, TxSheet secret, TxSheet closed, TxSheet open)
-	{
+	public TileBaseSecretDoor(TileModel model, TxSheet secret, TxSheet closed, TxSheet open) {
 		super(model, secret, closed, open);
 	}
 	

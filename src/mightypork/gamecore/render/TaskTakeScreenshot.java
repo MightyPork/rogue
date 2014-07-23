@@ -4,7 +4,6 @@ package mightypork.gamecore.render;
 import java.io.File;
 import java.io.IOException;
 
-import mightypork.gamecore.backend.lwjgl.AwtScreenshot;
 import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.core.modules.App;
 import mightypork.utils.Support;

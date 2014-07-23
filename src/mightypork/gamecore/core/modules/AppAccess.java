@@ -2,7 +2,6 @@ package mightypork.gamecore.core.modules;
 
 
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.utils.eventbus.BusAccess;
 
@@ -24,12 +23,6 @@ public interface AppAccess extends BusAccess {
 	 * @return input system
 	 */
 	abstract InputSystem getInput();
-	
-	
-	/**
-	 * @return display system
-	 */
-	abstract DisplaySystem getDisplay();
 	
 	
 	/**

@@ -1,9 +1,9 @@
 package mightypork.rogue.screens.game;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
-import mightypork.gamecore.render.Render;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.var.NumVar;
@@ -22,8 +22,7 @@ public class HeartBar extends BaseComponent {
 	private final Rect heart;
 	
 	
-	public HeartBar(Num total, Num active, TxQuad img_on, TxQuad img_half, TxQuad img_off, AlignX align)
-	{
+	public HeartBar(Num total, Num active, TxQuad img_on, TxQuad img_half, TxQuad img_off, AlignX align) {
 		super();
 		this.total = total;
 		this.active = active;
@@ -58,7 +57,7 @@ public class HeartBar extends BaseComponent {
 			index.setTo(i);
 			
 			final double rem = active.value() - i;
-			Render.quadTextured(heart, (rem > 0.6 ? img_on : rem > 0.25 ? img_half : img_off));
+			App.gfx().quad(heart, (rem > 0.6 ? img_on : rem > 0.25 ? img_half : img_off));
 		}
 	}
 	

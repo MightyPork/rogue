@@ -8,8 +8,7 @@ import mightypork.rogue.world.tile.impl.TileBasePassage;
 
 public class TileBrickPassage extends TileBasePassage {
 	
-	public TileBrickPassage(TileModel model)
-	{
+	public TileBrickPassage(TileModel model) {
 		super(model, Res.getTxSheet("tile.brick.passage"));
 	}
 	

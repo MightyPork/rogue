@@ -15,8 +15,7 @@ public class RoomEntry {
 	final Coord max;
 	
 	
-	public RoomEntry(Coord min, Coord max)
-	{
+	public RoomEntry(Coord min, Coord max) {
 		super();
 		this.min = min;
 		this.max = max;

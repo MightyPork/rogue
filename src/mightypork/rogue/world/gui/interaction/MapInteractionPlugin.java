@@ -13,8 +13,7 @@ public abstract class MapInteractionPlugin {
 	protected final MapView mapView;
 	
 	
-	public MapInteractionPlugin(MapView mapView)
-	{
+	public MapInteractionPlugin(MapView mapView) {
 		super();
 		this.mapView = mapView;
 	}

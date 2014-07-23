@@ -6,7 +6,7 @@ import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.render.Renderable;
 import mightypork.utils.Support;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.interfaces.Enableable;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.Color;
@@ -33,8 +33,7 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	private Num alphaMul = Num.ONE;
 	
 	
-	public BaseComponent()
-	{
+	public BaseComponent() {
 		enableCaching(false);
 	}
 	
@@ -110,7 +109,7 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	
 	
 	@Override
-	@DefaultImpl
+	@Stub
 	public void updateLayout()
 	{
 	}

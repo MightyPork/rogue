@@ -23,20 +23,17 @@ class EntityPos implements IonBundled, Updateable {
 	private final VectAnimated walkOffset = new VectAnimated(Vect.ZERO, Easing.LINEAR);
 	
 	
-	public EntityPos(Coord pos)
-	{
+	public EntityPos(Coord pos) {
 		this.coord.setTo(pos);
 	}
 	
 	
-	public EntityPos(int x, int y)
-	{
+	public EntityPos(int x, int y) {
 		this.coord.setTo(x, y);
 	}
 	
 	
-	public EntityPos()
-	{
+	public EntityPos() {
 	}
 	
 	

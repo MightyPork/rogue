@@ -32,8 +32,7 @@ public class LazyFont extends BaseLazyResource implements GLFont {
 		int numval;
 		
 		
-		private FontStyle(int style)
-		{
+		private FontStyle(int style) {
 			this.numval = style;
 		}
 	}
@@ -56,8 +55,7 @@ public class LazyFont extends BaseLazyResource implements GLFont {
 	 * @param chars chars to load; null to load basic chars only
 	 * @param size size (px)
 	 */
-	public LazyFont(String resourcePath, String chars, double size)
-	{
+	public LazyFont(String resourcePath, String chars, double size) {
 		this(resourcePath, chars, size, FontStyle.PLAIN, false, FilterMode.NEAREST);
 	}
 	
@@ -72,8 +70,7 @@ public class LazyFont extends BaseLazyResource implements GLFont {
 	 * @param antialias use antialiasing for caching texture
 	 * @param filter gl filtering mode
 	 */
-	public LazyFont(String resourcePath, String chars, double size, FontStyle style, boolean antialias, FilterMode filter)
-	{
+	public LazyFont(String resourcePath, String chars, double size, FontStyle style, boolean antialias, FilterMode filter) {
 		super(resourcePath);
 		this.size = size;
 		this.style = style;
@@ -134,7 +131,7 @@ public class LazyFont extends BaseLazyResource implements GLFont {
 	 */
 	protected Font getAwtFont(String resource, float size, int style) throws IOException
 	{
-		try(InputStream in = FileUtils.getResource(resource)) {
+		try (InputStream in = FileUtils.getResource(resource)) {
 			
 			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, in);
 			

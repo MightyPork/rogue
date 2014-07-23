@@ -7,8 +7,7 @@ import mightypork.utils.math.constraints.rect.Rect;
 
 public class EntityRenderContext extends MapRenderContext {
 	
-	public EntityRenderContext(Level map, Rect drawArea)
-	{
+	public EntityRenderContext(Level map, Rect drawArea) {
 		super(map, drawArea);
 	}
 	

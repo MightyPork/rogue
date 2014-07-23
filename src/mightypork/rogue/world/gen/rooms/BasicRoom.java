@@ -11,7 +11,6 @@ import mightypork.utils.math.algo.Coord;
 
 public class BasicRoom extends AbstractRectRoom {
 	
-	
 	@Override
 	protected TileModel getDoorType(MapTheme theme, Random rand)
 	{

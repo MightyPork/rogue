@@ -9,7 +9,7 @@ import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.render.TaskTakeScreenshot;
 import mightypork.gamecore.render.events.ScreenshotRequestListener;
 import mightypork.utils.Support;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.events.UpdateEvent;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.timing.Profiler;
@@ -35,8 +35,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	/**
 	 * @param app {@link AppAccess} instance
 	 */
-	public MainLoop(AppAccess app)
-	{
+	public MainLoop(AppAccess app) {
 		super(app);
 	}
 	
@@ -61,7 +60,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 		timer = new TimerDelta();
 		
 		while (running) {
-			getDisplay().beginFrame();
+			App.gfx().beginFrame();
 			
 			double delta = timer.getDelta();
 			if (delta > MAX_DELTA) {
@@ -90,7 +89,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 			
 			afterRender();
 			
-			getDisplay().endFrame();
+			App.gfx().endFrame();
 		}
 	}
 	
@@ -98,7 +97,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	/**
 	 * Called before render
 	 */
-	@DefaultImpl
+	@Stub
 	protected void beforeRender()
 	{
 		//
@@ -108,7 +107,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	/**
 	 * Called after render
 	 */
-	@DefaultImpl
+	@Stub
 	protected void afterRender()
 	{
 		//

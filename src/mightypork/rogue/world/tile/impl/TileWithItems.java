@@ -22,8 +22,7 @@ public abstract class TileWithItems extends Tile {
 	protected final Stack<Item> items = new Stack<>();
 	
 	
-	public TileWithItems(TileModel model)
-	{
+	public TileWithItems(TileModel model) {
 		super(model);
 	}
 	
@@ -105,7 +104,6 @@ public abstract class TileWithItems extends Tile {
 	{
 		return !items.isEmpty();
 	}
-	
 	
 //	@Override
 //	public boolean onClick()

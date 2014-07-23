@@ -32,7 +32,6 @@ import mightypork.utils.math.constraints.rect.Rect;
  */
 public class ScreenMainMenu extends RogueScreen {
 	
-	
 	/**
 	 * The layer
 	 * 
@@ -40,8 +39,7 @@ public class ScreenMainMenu extends RogueScreen {
 	 */
 	class MenuLayer extends ScreenLayer {
 		
-		public MenuLayer(Screen screen)
-		{
+		public MenuLayer(Screen screen) {
 			super(screen);
 			
 			init();
@@ -51,7 +49,6 @@ public class ScreenMainMenu extends RogueScreen {
 		private void init()
 		{
 			final Rect menuBox = root.shrink(Num.ZERO, root.height().perc(15)).moveY(root.height().perc(-4));
-			
 			
 			final QuadPainter bg = QuadPainter.gradV(Color.fromHex(0x007eb3), PAL16.SEABLUE);
 			bg.setRect(root);
@@ -83,7 +80,6 @@ public class ScreenMainMenu extends RogueScreen {
 			rows.add(btn, 2);
 			rows.skip(1);
 			
-			
 			btn = new TextButton(btnFont, "Story", PAL16.CLOUDBLUE);
 			btn.setAction(new Action() {
 				
@@ -108,7 +104,6 @@ public class ScreenMainMenu extends RogueScreen {
 			});
 			rows.add(btn, 2);
 			
-			
 			bindKey(Config.getKey("general.close"), Edge.RISING, new Runnable() {
 				
 				@Override
@@ -129,8 +124,7 @@ public class ScreenMainMenu extends RogueScreen {
 	}
 	
 	
-	public ScreenMainMenu(AppAccess app)
-	{
+	public ScreenMainMenu(AppAccess app) {
 		super(app);
 		
 		addLayer(new MenuLayer(this));

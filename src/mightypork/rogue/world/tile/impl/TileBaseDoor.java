@@ -18,8 +18,7 @@ public abstract class TileBaseDoor extends TileSolid {
 	protected boolean locked = false;
 	
 	
-	public TileBaseDoor(TileModel model, TxSheet locked, TxSheet closed, TxSheet open)
-	{
+	public TileBaseDoor(TileModel model, TxSheet locked, TxSheet closed, TxSheet open) {
 		super(model);
 		
 		this.renderer = new DoorTileRenderer(this, locked, closed, open);

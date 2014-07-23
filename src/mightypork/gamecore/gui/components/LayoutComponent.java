@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.core.modules.AppSubModule;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.utils.eventbus.EventBus;
 import mightypork.utils.eventbus.clients.ClientHub;
@@ -20,16 +19,14 @@ public abstract class LayoutComponent extends BaseComponent implements ClientHub
 	final LinkedList<Component> components = new LinkedList<>();
 	
 	
-	public LayoutComponent(AppAccess app, RectBound context)
-	{
+	public LayoutComponent(AppAccess app, RectBound context) {
 		this.subModule = new AppSubModule(app);
 		setRect(context);
 		enableCaching(true); // layout is typically updated only when screen resizes.
 	}
 	
 	
-	public LayoutComponent(AppAccess app)
-	{
+	public LayoutComponent(AppAccess app) {
 		this(app, null);
 	}
 	
@@ -73,13 +70,6 @@ public abstract class LayoutComponent extends BaseComponent implements ClientHub
 	public InputSystem getInput()
 	{
 		return subModule.getInput();
-	}
-	
-	
-	@Override
-	public DisplaySystem getDisplay()
-	{
-		return subModule.getDisplay();
 	}
 	
 	

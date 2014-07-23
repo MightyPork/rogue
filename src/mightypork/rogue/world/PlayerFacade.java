@@ -38,8 +38,7 @@ public class PlayerFacade {
 	/**
 	 * @param world
 	 */
-	PlayerFacade(World world)
-	{
+	PlayerFacade(World world) {
 		this.world = world;
 	}
 	

@@ -21,8 +21,7 @@ public final class EntityModel {
 	public final Class<? extends Entity> tileClass;
 	
 	
-	public EntityModel(int id, Class<? extends Entity> entity)
-	{
+	public EntityModel(int id, Class<? extends Entity> entity) {
 		Entities.register(id, this);
 		this.id = id;
 		this.tileClass = entity;

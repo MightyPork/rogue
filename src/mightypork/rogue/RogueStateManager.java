@@ -9,8 +9,7 @@ import mightypork.utils.logging.Log;
 
 public class RogueStateManager extends AppModule {
 	
-	public RogueStateManager(AppAccess app)
-	{
+	public RogueStateManager(AppAccess app) {
 		super(app);
 	}
 	
@@ -48,6 +47,5 @@ public class RogueStateManager extends AppModule {
 				break;
 		}
 	}
-	
 	
 }

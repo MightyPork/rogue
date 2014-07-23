@@ -3,7 +3,7 @@ package mightypork.rogue.world.item;
 
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.utils.Support;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.ion.IonBundled;
 import mightypork.utils.ion.IonDataBundle;
 import mightypork.utils.math.Calc;
@@ -18,8 +18,7 @@ public abstract class Item implements IonBundled {
 	private int uses = 1;
 	
 	
-	public Item(ItemModel model)
-	{
+	public Item(ItemModel model) {
 		this.model = model;
 	}
 	
@@ -38,7 +37,7 @@ public abstract class Item implements IonBundled {
 	
 	
 	@Override
-	@DefaultImpl
+	@Stub
 	public void save(IonDataBundle out)
 	{
 		out.put("c", amount);
@@ -47,7 +46,7 @@ public abstract class Item implements IonBundled {
 	
 	
 	@Override
-	@DefaultImpl
+	@Stub
 	public void load(IonDataBundle in)
 	{
 		amount = in.get("c", amount);
@@ -61,7 +60,7 @@ public abstract class Item implements IonBundled {
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected int getMaxStackSize()
 	{
 		return isStackable() ? 65535 : 1;
@@ -188,7 +187,7 @@ public abstract class Item implements IonBundled {
 	public abstract String getVisualName();
 	
 	
-	@DefaultImpl
+	@Stub
 	public boolean pickUp(PlayerFacade pl)
 	{
 		return pl.addItem(this);

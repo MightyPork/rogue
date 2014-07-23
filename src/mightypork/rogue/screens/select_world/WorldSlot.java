@@ -46,8 +46,7 @@ public class WorldSlot extends ConstraintLayout {
 	private TextButton delBtn;
 	
 	
-	public WorldSlot(AppAccess app, File worldFile)
-	{
+	public WorldSlot(AppAccess app, File worldFile) {
 		super(app);
 		
 		this.file = worldFile;
@@ -173,7 +172,7 @@ public class WorldSlot extends ConstraintLayout {
 				final int lvl = worldBundle.get("level", -1);
 				
 				if (lvl == -1) throw new RuntimeException("Invalid save format."); // let the catch block handle it
-				
+					
 				label = "Level " + (lvl + 1);
 			} catch (final Exception e) {
 				Log.w("Error loading world save.", e);

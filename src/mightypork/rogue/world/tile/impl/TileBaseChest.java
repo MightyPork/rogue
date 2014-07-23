@@ -19,8 +19,7 @@ public abstract class TileBaseChest extends TileWithItems {
 	private int clicks = 1;
 	
 	
-	public TileBaseChest(TileModel model)
-	{
+	public TileBaseChest(TileModel model) {
 		super(model);
 	}
 	
@@ -66,7 +65,6 @@ public abstract class TileBaseChest extends TileWithItems {
 				clicks--;
 			}
 		}
-		
 		
 		return true;
 	}

@@ -16,7 +16,6 @@ import mightypork.utils.math.constraints.rect.Rect;
 
 public class RogueResources implements ResourceSetup {
 	
-	
 	@Override
 	public void addFonts(FontRegistry fonts)
 	{
@@ -111,7 +110,6 @@ public class RogueResources implements ResourceSetup {
 		textures.add("inv.slot.base", grid.makeQuad(0, 5));
 		textures.add("inv.slot.selected", grid.makeQuad(1, 5));
 		
-		
 		// sprites
 		texture = textures.addTexture("/res/img/sprites.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
@@ -120,7 +118,6 @@ public class RogueResources implements ResourceSetup {
 		textures.add("sprite.rat.brown", grid.makeSheet(0, 2, 4, 1));
 		textures.add("sprite.rat.boss", grid.makeSheet(0, 3, 4, 1));
 		textures.add("sprite.zzz", grid.makeQuad(0, 7)); // sleep thingy
-		
 		
 		// logo
 		texture = textures.addTexture("/res/img/logo.png", FilterMode.NEAREST, WrapMode.CLAMP);
@@ -134,7 +131,6 @@ public class RogueResources implements ResourceSetup {
 		textures.add("story_1", grid.makeQuad(0, 2, 3, 1));
 		textures.add("story_2", grid.makeQuad(3, 2, 3, 1));
 		textures.add("story_3", grid.makeQuad(0, 3, 3, 1));
-		
 		
 		// tiles
 		texture = textures.addTexture("tiles", "/res/img/tiles.png", FilterMode.NEAREST, WrapMode.CLAMP);
@@ -175,7 +171,6 @@ public class RogueResources implements ResourceSetup {
 		textures.add("tile.ufog.sw", grid.makeQuad(5, 7).flipY());
 		textures.add("tile.ufog.se", grid.makeQuad(5, 7).flipY().flipX());
 		textures.add("tile.ufog.full", grid.makeQuad(6, 7));
-		
 		
 		texture = textures.addTexture("items", "/res/img/items.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);

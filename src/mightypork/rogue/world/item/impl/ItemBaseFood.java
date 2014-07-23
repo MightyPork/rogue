@@ -8,8 +8,7 @@ import mightypork.rogue.world.item.ItemType;
 
 public abstract class ItemBaseFood extends Item {
 	
-	public ItemBaseFood(ItemModel model)
-	{
+	public ItemBaseFood(ItemModel model) {
 		super(model);
 	}
 	

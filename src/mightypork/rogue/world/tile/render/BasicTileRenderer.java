@@ -1,7 +1,7 @@
 package mightypork.rogue.world.tile.render;
 
 
-import mightypork.gamecore.render.Render;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.resources.textures.TxSheet;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.Tile;
@@ -14,8 +14,7 @@ public class BasicTileRenderer extends TileRenderer {
 	private final TxSheet sheet;
 	
 	
-	public BasicTileRenderer(Tile tile, TxSheet sheet)
-	{
+	public BasicTileRenderer(Tile tile, TxSheet sheet) {
 		super(tile);
 		this.sheet = sheet;
 	}
@@ -25,6 +24,6 @@ public class BasicTileRenderer extends TileRenderer {
 	public void renderTile(TileRenderContext context)
 	{
 		final Rect rect = context.getRect();
-		Render.quadTextured(rect, sheet.getRandomQuad(context.getTileNoise()));
+		App.gfx().quad(rect, sheet.getRandomQuad(context.getTileNoise()));
 	}
 }

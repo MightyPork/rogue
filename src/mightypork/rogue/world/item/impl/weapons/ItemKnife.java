@@ -10,8 +10,7 @@ import mightypork.rogue.world.item.render.QuadItemRenderer;
 
 public class ItemKnife extends ItemBaseWeapon {
 	
-	public ItemKnife(ItemModel model)
-	{
+	public ItemKnife(ItemModel model) {
 		super(model);
 	}
 	

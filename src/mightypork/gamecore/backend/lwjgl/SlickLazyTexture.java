@@ -4,10 +4,11 @@ package mightypork.gamecore.backend.lwjgl;
 import java.io.IOException;
 
 import mightypork.gamecore.resources.TextureBasedResource;
-import mightypork.gamecore.resources.textures.*;
+import mightypork.gamecore.resources.textures.LazyTexture;
 import mightypork.utils.annotations.Alias;
 import mightypork.utils.files.FileUtils;
 import mightypork.utils.logging.Log;
+
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -26,12 +27,14 @@ public class SlickLazyTexture extends LazyTexture {
 	private boolean alpha;
 	private boolean alphal;
 	
+	
 	/**
 	 * @param resourcePath resource path
 	 */
 	public SlickLazyTexture(String resourcePath) {
 		super(resourcePath);
 	}
+	
 	
 	@Override
 	protected synchronized void loadResource(String path)

@@ -27,8 +27,7 @@ public class WorldConsoleRenderer extends BaseComponent {
 	private final Rect itemViewRect;
 	
 	
-	public WorldConsoleRenderer(Num rowHeight)
-	{
+	public WorldConsoleRenderer(Num rowHeight) {
 		this.rowHeight = rowHeight;
 		this.fr = new FontRenderer(Res.getFont("tiny"));
 		
@@ -71,7 +70,6 @@ public class WorldConsoleRenderer extends BaseComponent {
 		} catch (final ConcurrentModificationException e) {
 			Log.e(e); // this should not happen
 		}
-		
 		
 		if (console.lastPickupItem != null) {
 			

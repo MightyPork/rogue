@@ -7,15 +7,13 @@ import mightypork.utils.eventbus.clients.RootBusNode;
 
 
 /**
- * Application backend interface (set of core modules)
+ * Application backend interface (set of core modules).<br>
+ * Backend is created without a bus access, which will be assigned during app
+ * initialization.
  * 
  * @author MightyPork
  */
 public abstract class Backend extends RootBusNode {
-	
-	public Backend(BusAccess busAccess) {
-		super(busAccess);
-	}
 	
 	
 	/**

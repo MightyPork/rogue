@@ -12,8 +12,7 @@ import mightypork.utils.math.algo.Coord;
 
 public class TreasureChestRoom extends ItemShrineRoom {
 	
-	public TreasureChestRoom(Item item)
-	{
+	public TreasureChestRoom(Item item) {
 		super(item);
 	}
 	

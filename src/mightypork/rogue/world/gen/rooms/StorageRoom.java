@@ -50,6 +50,5 @@ public class StorageRoom extends SecretRoom {
 			if (--maxStuff == 0) return;
 		}
 		
-		
 	}
 }

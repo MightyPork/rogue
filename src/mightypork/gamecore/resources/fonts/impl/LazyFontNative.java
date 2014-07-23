@@ -26,8 +26,7 @@ public class LazyFontNative extends LazyFont {
 	 * @param antialias use antialiasing when drawn on the cache texture
 	 * @param filter GL filtering mode
 	 */
-	public LazyFontNative(String fontName, String extraChars, double size, FontStyle style, boolean antialias, FilterMode filter)
-	{
+	public LazyFontNative(String fontName, String extraChars, double size, FontStyle style, boolean antialias, FilterMode filter) {
 		super(fontName, extraChars, size, style, antialias, filter);
 	}
 	

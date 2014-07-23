@@ -2,7 +2,6 @@ package mightypork.gamecore.core.modules;
 
 
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.render.DisplaySystem;
 import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.utils.eventbus.EventBus;
 
@@ -20,8 +19,7 @@ public class AppAccessAdapter implements AppAccess {
 	/**
 	 * @param app app access
 	 */
-	public AppAccessAdapter(AppAccess app)
-	{
+	public AppAccessAdapter(AppAccess app) {
 		if (app == null) throw new NullPointerException("AppAccess instance cannot be null.");
 		
 		this.app = app;
@@ -39,13 +37,6 @@ public class AppAccessAdapter implements AppAccess {
 	public final InputSystem getInput()
 	{
 		return app.getInput();
-	}
-	
-	
-	@Override
-	public final DisplaySystem getDisplay()
-	{
-		return app.getDisplay();
 	}
 	
 	

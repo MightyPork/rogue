@@ -121,8 +121,7 @@ public class ScratchMap {
 	private static final boolean FIX_GLITCHES = true;
 	
 	
-	public ScratchMap(int max_size, MapTheme theme, Random rand)
-	{
+	public ScratchMap(int max_size, MapTheme theme, Random rand) {
 		map = new Tile[max_size][max_size];
 		
 		genMin = Coord.make((max_size / 2) - 1, (max_size / 2) - 1);
@@ -409,7 +408,7 @@ public class ScratchMap {
 				
 				final Tile current = getTile(c);
 				if (!current.isNull() && (current.isPotentiallyWalkable() || current.isStairs())) continue; // floor already, let it be
-				
+					
 				if (i == 0 && j == 0) {
 					set(c, theme.floor());
 				} else {
@@ -714,7 +713,7 @@ public class ScratchMap {
 		if (!isIn(pos)) return false;
 		
 		if (pos.dist(enterPoint) < 4) return false; // protected distance.
-		
+			
 		final Tile t = getTile(pos);
 		if (!t.isWalkable()) return false;
 		

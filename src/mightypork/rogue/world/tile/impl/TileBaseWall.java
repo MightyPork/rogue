@@ -12,8 +12,7 @@ public abstract class TileBaseWall extends TileSolid {
 	private final BasicTileRenderer renderer;
 	
 	
-	public TileBaseWall(TileModel model, TxSheet sheet)
-	{
+	public TileBaseWall(TileModel model, TxSheet sheet) {
 		super(model);
 		this.renderer = new BasicTileRenderer(this, sheet);
 	}

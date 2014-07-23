@@ -19,8 +19,7 @@ public final class ItemModel {
 	public final Class<? extends Item> itemClass;
 	
 	
-	public ItemModel(int id, Class<? extends Item> item)
-	{
+	public ItemModel(int id, Class<? extends Item> item) {
 		Items.register(id, this);
 		this.id = id;
 		this.itemClass = item;

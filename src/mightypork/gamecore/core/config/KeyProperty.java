@@ -1,8 +1,10 @@
 package mightypork.gamecore.core.config;
 
+
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.utils.files.config.Property;
+
 
 /**
  * Key property.<br>
@@ -12,8 +14,7 @@ import mightypork.utils.files.config.Property;
  */
 public class KeyProperty extends Property<KeyStroke> {
 	
-	public KeyProperty(String key, KeyStroke defaultValue, String comment)
-	{
+	public KeyProperty(String key, KeyStroke defaultValue, String comment) {
 		super(key, defaultValue, comment);
 	}
 	

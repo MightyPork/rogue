@@ -18,8 +18,7 @@ public class BossRatAi extends GrayRatAi {
 	};
 	
 	
-	public BossRatAi(Entity entity)
-	{
+	public BossRatAi(Entity entity) {
 		super(entity);
 		
 		setAttackTime(0.3);

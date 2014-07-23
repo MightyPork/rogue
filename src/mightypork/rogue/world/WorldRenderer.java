@@ -1,7 +1,12 @@
 package mightypork.rogue.world;
 
 
-import mightypork.gamecore.render.Render;
+import java.awt.GradientPaint;
+
+import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.render.GradH;
+import mightypork.gamecore.render.GradV;
+import mightypork.gamecore.render.RenderModule;
 import mightypork.gamecore.resources.Res;
 import mightypork.rogue.Const;
 import mightypork.rogue.world.entity.Entity;
@@ -40,8 +45,7 @@ public class WorldRenderer extends RectProxy {
 	private TileRenderContext trc;
 	
 	
-	public WorldRenderer(Rect viewport, Num tileSize)
-	{
+	public WorldRenderer(Rect viewport, Num tileSize) {
 		super(viewport);
 		
 		this.tileSize = tileSize;
@@ -80,11 +84,13 @@ public class WorldRenderer extends RectProxy {
 	{
 		prepareRenderContextIfNeeded();
 		
-		Render.pushMatrix();
-		Render.setColor(RGB.WHITE);
-		Render.translate(center());
-		Render.scaleXY(tileSize.value());
-		Render.translate(getOffset());
+		final RenderModule gfx = App.gfx();
+		
+		gfx.pushGeometry();
+		gfx.setColor(RGB.WHITE);
+		gfx.translate(center());
+		gfx.scaleXY(tileSize.value());
+		gfx.translate(getOffset());
 		
 		// tiles to render
 		
@@ -105,17 +111,19 @@ public class WorldRenderer extends RectProxy {
 		// === TILES ===
 		
 		// batch rendering of the tiles
-		if (USE_BATCH_RENDERING) {
-			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles"));
-		}
+		// TODO
+//		if (USE_BATCH_RENDERING) {
+//			gfx.enterBatchTexturedQuadMode(Res.getTexture("tiles"));
+//		}
 		for (trc.pos.x = x1; trc.pos.x <= x2; trc.pos.x++) {
 			for (trc.pos.y = y1; trc.pos.y <= y2; trc.pos.y++) {
 				trc.renderTile();
 			}
 		}
-		if (USE_BATCH_RENDERING) {
-			Render.leaveBatchTexturedQuadMode();
-		}
+		// TODO
+//		if (USE_BATCH_RENDERING) {
+//			gfx.leaveBatchTexturedQuadMode();
+//		}
 		
 		// === ITEMS ON TILES ===
 		
@@ -143,28 +151,32 @@ public class WorldRenderer extends RectProxy {
 		// === unexplored fog ===
 		
 		// batch rendering of the tiles
-		if (USE_BATCH_RENDERING) {
-			Render.setColor(RGB.WHITE, Const.RENDER_UFOG ? 1 : 0.6);
-			Render.enterBatchTexturedQuadMode(Res.getTexture("tiles"));
-		}
+		// TODO
+//		if (USE_BATCH_RENDERING) {
+//			gfx.setColor(RGB.WHITE, Const.RENDER_UFOG ? 1 : 0.6);
+//			gfx.enterBatchTexturedQuadMode(Res.getTexture("tiles"));
+//		}
+		// TODO use Const.RENDER_UFOG
 		for (trc.pos.x = x1; trc.pos.x <= x2; trc.pos.x++) {
 			for (trc.pos.y = y1; trc.pos.y <= y2; trc.pos.y++) {
 				trc.renderUFog();
 			}
 		}
-		if (USE_BATCH_RENDERING) {
-			Render.leaveBatchTexturedQuadMode();
-		}
+		// TODO
+//		if (USE_BATCH_RENDERING) {
+//			gfx.leaveBatchTexturedQuadMode();
+//		}
 		
 		// === OVERLAY SHADOW ===
 		
-		Render.popMatrix();
+		gfx.popGeometry();
 		
-		Render.quadGradH(leftShadow, RGB.BLACK, RGB.NONE);
-		Render.quadGradH(rightShadow, RGB.NONE, RGB.BLACK);
 		
-		Render.quadGradV(topShadow, RGB.BLACK, RGB.NONE);
-		Render.quadGradV(bottomShadow, RGB.NONE, RGB.BLACK);
+		gfx.quad(leftShadow, new GradH(RGB.BLACK, RGB.NONE));
+		gfx.quad(rightShadow, new GradH(RGB.NONE, RGB.BLACK));
+		
+		gfx.quad(topShadow, new GradV(RGB.BLACK, RGB.NONE));
+		gfx.quad(bottomShadow, new GradV(RGB.NONE, RGB.BLACK));
 	}
 	
 	

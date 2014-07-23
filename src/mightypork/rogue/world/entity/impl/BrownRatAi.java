@@ -7,8 +7,7 @@ import mightypork.utils.math.Calc;
 
 public class BrownRatAi extends GrayRatAi {
 	
-	public BrownRatAi(Entity entity)
-	{
+	public BrownRatAi(Entity entity) {
 		super(entity);
 		
 		setAttackTime(1.2);

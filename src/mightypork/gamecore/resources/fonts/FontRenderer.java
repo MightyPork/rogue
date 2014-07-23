@@ -24,8 +24,7 @@ public class FontRenderer {
 	/**
 	 * @param font used font
 	 */
-	public FontRenderer(GLFont font)
-	{
+	public FontRenderer(GLFont font) {
 		this(font, RGB.WHITE);
 	}
 	
@@ -34,8 +33,7 @@ public class FontRenderer {
 	 * @param font used font
 	 * @param color drawing color
 	 */
-	public FontRenderer(GLFont font, Color color)
-	{
+	public FontRenderer(GLFont font, Color color) {
 		this.font = font;
 		this.color = color;
 	}

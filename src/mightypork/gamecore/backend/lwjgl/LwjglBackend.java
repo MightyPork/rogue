@@ -13,11 +13,6 @@ import mightypork.utils.eventbus.BusAccess;
  */
 public class LwjglBackend extends Backend {
 	
-	public LwjglBackend(BusAccess busAccess) {
-		super(busAccess);
-	}
-
-
 	private LwjglRenderModule renderer;
 	
 	

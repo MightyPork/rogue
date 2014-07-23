@@ -18,8 +18,7 @@ public abstract class TileBasePassage extends TileSolid {
 	private final BasicTileRenderer renderer;
 	
 	
-	public TileBasePassage(TileModel model, TxSheet sheet)
-	{
+	public TileBasePassage(TileModel model, TxSheet sheet) {
 		super(model);
 		
 		this.renderer = new BasicTileRenderer(this, sheet);

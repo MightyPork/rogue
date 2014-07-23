@@ -19,7 +19,6 @@ public class PlayerData implements IonBundled {
 	/** Attack str with bare hands */
 	public static final int BARE_ATTACK = 1;
 	
-	
 	private int eid = -1; // marks not initialized
 	private int level;
 	

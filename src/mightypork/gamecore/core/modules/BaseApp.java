@@ -4,9 +4,6 @@ package mightypork.gamecore.core.modules;
 import java.io.File;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
@@ -19,14 +16,12 @@ import mightypork.gamecore.core.config.KeySetup;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.render.DisplaySystem;
-import mightypork.gamecore.resources.AsyncResourceLoader;
+import mightypork.gamecore.render.RenderModule;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.ResourceLoader;
 import mightypork.gamecore.resources.ResourceSetup;
 import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.gamecore.util.SlickLogRedirector;
-import mightypork.utils.annotations.DefaultImpl;
+import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.EventBus;
 import mightypork.utils.eventbus.events.DestroyEvent;
 import mightypork.utils.files.InstanceLock;
@@ -48,109 +43,8 @@ import mightypork.utils.math.algo.Move;
  */
 public abstract class BaseApp extends App implements AppAccess, UncaughtExceptionHandler {
 	
-	/**
-	 * Init options holder class
-	 */
-	public class AppInitOptions {
-		
-		private String logDir = "log";
-		private String logFilePrefix = "runtime";
-		
-		private String screenshotDir = "screenshots";
-		
-		private int logArchiveCount = 0;
-		private boolean busLogging = false;
-		
-		private String configFile = "settings.cfg";
-		private String configComment = "Main config file";
-		
-		public String lockFile = ".lock";
-		
-		private final List<ResourceSetup> resourceLists = new ArrayList<>();
-		private final List<KeySetup> keyLists = new ArrayList<>();
-		private final List<ConfigSetup> configLists = new ArrayList<>();
-		private final List<RouteSetup> routeLists = new ArrayList<>();
-		
-		private ResourceLoader resourceLoader = new AsyncResourceLoader();
-		private Level logLevel = Level.ALL;
-		public boolean sigleInstance;
-		private Level logSoutLevel;
-		
-		
-		public void setConfigFile(String filename, String comment)
-		{
-			configFile = filename;
-			configComment = comment;
-		}
-		
-		
-		public void addConfig(ConfigSetup cfg)
-		{
-			configLists.add(cfg);
-		}
-		
-		
-		public void addKeys(KeySetup keys)
-		{
-			keyLists.add(keys);
-		}
-		
-		
-		public void addRoutes(RouteSetup keys)
-		{
-			routeLists.add(keys);
-		}
-		
-		
-		public void addResources(ResourceSetup res)
-		{
-			resourceLists.add(res);
-		}
-		
-		
-		public void setBusLogging(boolean yes)
-		{
-			busLogging = yes;
-		}
-		
-		
-		public void setLogOptions(String logDir, String filePrefix, int archivedCount, Level logLevel)
-		{
-			this.logDir = logDir;
-			this.logFilePrefix = filePrefix;
-			this.logArchiveCount = archivedCount;
-			this.logLevel = logLevel;
-		}
-		
-		
-		public void setResourceLoader(ResourceLoader resLoader)
-		{
-			resourceLoader = resLoader;
-		}
-		
-		
-		public void setScreenshotDir(String path)
-		{
-			this.screenshotDir = path;
-		}
-		
-		
-		public void setLockFile(String lockFile)
-		{
-			this.lockFile = lockFile;
-		}
-		
-		
-		public void setLogLevel(Level logLevel, Level soutLevel)
-		{
-			this.logLevel = logLevel;
-			this.logSoutLevel = soutLevel;
-		}
-	}
-	
 	// modules
 	private InputSystem inputSystem;
-	private DisplaySystem displaySystem;
 	private SoundSystem soundSystem;
 	private EventBus eventBus;
 	private MainLoop gameLoop;
@@ -177,11 +71,11 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 	}
 	
 	
-	public BaseApp(File workdir, boolean singleInstance) {
+	public BaseApp(Backend backend) {
 		
-		WorkDir.init(workdir);
-		
-		opt.sigleInstance = singleInstance;
+		eventBus = new EventBus();
+		setBackend(backend);
+		backend.setBusAccess(this);
 	}
 	
 	
@@ -207,6 +101,8 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 	 */
 	protected void initialize()
 	{
+		WorkDir.init(opt.workdir);
+		
 		if (opt.sigleInstance) initLock();
 		lockObtained = true;
 		
@@ -265,8 +161,7 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 		 * Display
 		 */
 		Log.f2("Initializing Display System...");
-		displaySystem = new DisplaySystem(this);
-		initDisplay(displaySystem);
+		initDisplay(gfx());
 		
 		/*
 		 * Audio
@@ -393,7 +288,7 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 	 * Called at the beginning of the initialization sequence, right after lock
 	 * was obtained.
 	 */
-	@DefaultImpl
+	@Stub
 	protected void preInit()
 	{
 	}
@@ -402,22 +297,26 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 	/**
 	 * Called at the end of init sequence, before main loop starts.
 	 */
-	@DefaultImpl
+	@Stub
 	protected void postInit()
 	{
 	}
 	
 	
 	/**
-	 * Create window and configure display system
+	 * Create window and configure rendering system
 	 * 
-	 * @param display
+	 * @param gfx Graphics module
 	 */
-	@DefaultImpl
-	protected void initDisplay(DisplaySystem display)
+	@Stub
+	protected void initDisplay(RenderModule gfx)
 	{
-		display.createMainWindow(800, 600, true, false, "LWJGL game");
-		display.setTargetFps(60);
+		gfx.setSize(800, 600);
+		gfx.setResizable(true);
+		gfx.setTitle("New Game");
+		gfx.setTargetFps(60);
+		
+		gfx.createDisplay();
 	}
 	
 	
@@ -426,7 +325,7 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 	 * 
 	 * @param audio
 	 */
-	@DefaultImpl
+	@Stub
 	protected void initSoundSystem(SoundSystem audio)
 	{
 	}
@@ -467,7 +366,7 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 	}
 	
 	
-	@DefaultImpl
+	@Stub
 	protected void initInputSystem(InputSystem input)
 	{
 	}
@@ -505,13 +404,6 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 	public final InputSystem getInput()
 	{
 		return inputSystem;
-	}
-	
-	
-	@Override
-	public final DisplaySystem getDisplay()
-	{
-		return displaySystem;
 	}
 	
 	

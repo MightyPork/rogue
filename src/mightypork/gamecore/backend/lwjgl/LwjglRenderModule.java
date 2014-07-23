@@ -6,12 +6,6 @@ import static org.lwjgl.opengl.GL11.*;
 import java.nio.ByteBuffer;
 import java.util.Stack;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
-
 import mightypork.gamecore.render.Grad;
 import mightypork.gamecore.render.RenderModule;
 import mightypork.gamecore.render.Screenshot;
@@ -28,6 +22,12 @@ import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.rect.caching.RectDigest;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.timing.FpsMeter;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 
 /**
@@ -376,13 +376,17 @@ public class LwjglRenderModule extends RenderModule {
 	
 	
 	@Override
-	public void setupProjection(Vect screenSize)
+	public void setupProjection()
 	{
 		// fix projection for changed size
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glViewport(0, 0, screenSize.xi(), screenSize.yi());
-		glOrtho(0, screenSize.xi(), screenSize.yi(), 0, -1000, 1000);
+		
+		int w = Display.getWidth();
+		int h = Display.getHeight();
+		
+		glViewport(0, 0, w, h);
+		glOrtho(0, w, h, 0, -1000, 1000);
 		
 		// back to modelview
 		glMatrixMode(GL_MODELVIEW);
