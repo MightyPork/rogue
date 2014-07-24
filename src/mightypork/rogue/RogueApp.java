@@ -1,8 +1,6 @@
 package mightypork.rogue;
 
 
-import java.io.File;
-
 import mightypork.gamecore.backend.lwjgl.LwjglBackend;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.MainLoopRequest;
@@ -11,9 +9,9 @@ import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.core.modules.AppInitOptions;
 import mightypork.gamecore.core.modules.BaseApp;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
+import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.input.KeyStroke.Edge;
-import mightypork.gamecore.render.RenderModule;
+import mightypork.gamecore.render.GraphicsModule;
 import mightypork.gamecore.render.events.FullscreenToggleRequest;
 import mightypork.gamecore.render.events.ScreenshotRequest;
 import mightypork.gamecore.render.events.ScreenshotRequestListener;
@@ -70,7 +68,7 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	
 	
 	@Override
-	protected void initDisplay(RenderModule gfx)
+	protected void initDisplay(GraphicsModule gfx)
 	{
 		// init based on config
 		final int w = Config.getValue("display.width");

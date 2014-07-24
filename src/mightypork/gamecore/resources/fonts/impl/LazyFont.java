@@ -6,9 +6,9 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import mightypork.gamecore.resources.BaseLazyResource;
-import mightypork.gamecore.resources.TextureBasedResource;
-import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.resources.BaseDeferredResource;
+import mightypork.gamecore.resources.MustLoadInRenderingContext;
+import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.utils.annotations.Alias;
 import mightypork.utils.files.FileUtils;
@@ -21,9 +21,9 @@ import mightypork.utils.math.constraints.vect.Vect;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-@TextureBasedResource
+@MustLoadInRenderingContext
 @Alias(name = "Font")
-public class LazyFont extends BaseLazyResource implements GLFont {
+public class LazyFont extends BaseDeferredResource implements IFont {
 	
 	public static enum FontStyle
 	{
@@ -37,7 +37,7 @@ public class LazyFont extends BaseLazyResource implements GLFont {
 		}
 	}
 	
-	private GLFont font = null;
+	private IFont font = null;
 	private double size;
 	private FontStyle style;
 	private String chars;
@@ -140,7 +140,7 @@ public class LazyFont extends BaseLazyResource implements GLFont {
 			
 			return awtFont;
 		} catch (final FontFormatException e) {
-			throw new IOException("Could not load font,  bad format.", e);
+			throw new IOException("Could not load font, bad format.", e);
 		}
 	}
 	

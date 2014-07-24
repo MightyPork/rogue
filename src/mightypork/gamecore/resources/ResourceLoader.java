@@ -1,7 +1,6 @@
 package mightypork.gamecore.resources;
 
 
-import mightypork.utils.eventbus.BusAccess;
 
 
 /**
@@ -16,7 +15,7 @@ public interface ResourceLoader {
 	 * 
 	 * @param resource
 	 */
-	void loadResource(LazyResource resource);
+	void loadResource(DeferredResource resource);
 	
 	
 	/**
@@ -25,5 +24,5 @@ public interface ResourceLoader {
 	 * @param app app the loader works for. The event bus must already be
 	 *            initialized.
 	 */
-	void init(BusAccess app);
+	void init();
 }

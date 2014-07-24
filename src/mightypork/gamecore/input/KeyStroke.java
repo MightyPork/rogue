@@ -7,34 +7,43 @@ import org.lwjgl.input.Keyboard;
 
 
 /**
- * Key stroke trigger
+ * Key stroke description
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class KeyStroke { //implements Pollable
-
-	public static enum Edge
-	{
-		FALLING, RISING;
-	}
+public class KeyStroke {
 	
 	private int mod;
 	private int key;
 	
 	
 	/**
-	 * KeyStroke
+	 * Create a Key Stroke
 	 * 
 	 * @param key key code
-	 * @param mod_mask mods mask
+	 * @param modmask modifiers
 	 */
-	public KeyStroke(int key, int mod_mask) {
-		setTo(key, mod_mask);
+	public KeyStroke(int key, int modmask) {
+		setTo(key, modmask);
+	}
+	
+	
+	// FIXME TODO can probably be immutable!
+	/**
+	 * Change to...
+	 * 
+	 * @param key key code
+	 * @param modmask modifiers
+	 */
+	public void setTo(int key, int modmask)
+	{
+		this.key = key;
+		this.mod = modmask | Keys.keyToMod(key); // for mods alone
 	}
 	
 	
 	/**
-	 * Rising edge keystroke
+	 * Create a new keystroke without modifiers
 	 * 
 	 * @param key key code
 	 */
@@ -52,13 +61,6 @@ public class KeyStroke { //implements Pollable
 		st &= (InputSystem.getActiveModKeys() == mod);
 		
 		return st;
-	}
-	
-	
-	public void setTo(int key, int mod_mask)
-	{
-		this.key = key;
-		this.mod = mod_mask | Keys.keyToMod(key); // for mods alone
 	}
 	
 	

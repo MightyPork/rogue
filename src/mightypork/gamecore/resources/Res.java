@@ -1,12 +1,11 @@
 package mightypork.gamecore.resources;
 
 
-import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.resources.audio.SoundRegistry;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
 import mightypork.gamecore.resources.fonts.FontRegistry;
-import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.gamecore.resources.textures.ITexture;
 import mightypork.gamecore.resources.textures.TextureRegistry;
 import mightypork.gamecore.resources.textures.TxQuad;
@@ -32,14 +31,14 @@ public final class Res {
 	 * 
 	 * @param app app access
 	 */
-	public static void init(AppAccess app)
+	public static void init()
 	{
 		if (initialized) return;
 		initialized = true;
 		
-		textures = new TextureRegistry(app);
-		sounds = new SoundRegistry(app);
-		fonts = new FontRegistry(app);
+		textures = new TextureRegistry();
+		sounds = new SoundRegistry();
+		fonts = new FontRegistry();
 	}
 	
 	
@@ -85,7 +84,7 @@ public final class Res {
 	}
 	
 	
-	public static GLFont getFont(String key)
+	public static IFont getFont(String key)
 	{
 		return fonts.getFont(key);
 	}

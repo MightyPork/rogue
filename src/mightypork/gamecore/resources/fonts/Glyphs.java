@@ -2,7 +2,7 @@ package mightypork.gamecore.resources.fonts;
 
 
 /**
- * Glyph tables.
+ * Glyph tables, can be used for font loading.
  * 
  * @author Ondřej Hruška (MightyPork)
  */

@@ -1,7 +1,6 @@
 package mightypork.gamecore.gui.components.layout;
 
 
-import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.gamecore.gui.components.LayoutComponent;
 import mightypork.utils.math.constraints.rect.RectBound;
@@ -14,12 +13,11 @@ import mightypork.utils.math.constraints.rect.RectBound;
  */
 public class ConstraintLayout extends LayoutComponent {
 	
-	public ConstraintLayout(AppAccess app) {
-		super(app);
+	public ConstraintLayout() {
 	}
 	
 	
-	public ConstraintLayout(AppAccess app, RectBound context) {
+	public ConstraintLayout(RectBound context) {
 		super(app, context);
 	}
 	

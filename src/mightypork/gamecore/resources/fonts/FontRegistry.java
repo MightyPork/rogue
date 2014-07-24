@@ -3,10 +3,10 @@ package mightypork.gamecore.resources.fonts;
 
 import java.util.HashMap;
 
-import mightypork.gamecore.core.modules.AppAccess;
-import mightypork.gamecore.core.modules.AppAccessAdapter;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.fonts.impl.LazyFont;
+import mightypork.utils.eventbus.clients.BusNode;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -16,16 +16,9 @@ import org.newdawn.slick.opengl.Texture;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class FontRegistry extends AppAccessAdapter {
+public class FontRegistry extends BusNode {
 	
-	/**
-	 * @param app app access
-	 */
-	public FontRegistry(AppAccess app) {
-		super(app);
-	}
-	
-	private final HashMap<String, GLFont> fonts = new HashMap<>();
+	private final HashMap<String, IFont> fonts = new HashMap<>();
 	private final HashMap<String, String> aliases = new HashMap<>();
 	
 	
@@ -37,19 +30,19 @@ public class FontRegistry extends AppAccessAdapter {
 	 */
 	public void addFont(String key, LazyFont font)
 	{
-		getEventBus().send(new ResourceLoadRequest(font));
+		App.bus().send(new ResourceLoadRequest(font));
 		
 		fonts.put(key, font);
 	}
 	
 	
 	/**
-	 * Add a {@link GLFont} to the bank.
+	 * Add a {@link IFont} to the bank.
 	 * 
 	 * @param key font key
 	 * @param font font instance
 	 */
-	public void addFont(String key, GLFont font)
+	public void addFont(String key, IFont font)
 	{
 		fonts.put(key, font);
 	}
@@ -73,9 +66,9 @@ public class FontRegistry extends AppAccessAdapter {
 	 * @param key texture key
 	 * @return the texture
 	 */
-	public GLFont getFont(String key)
+	public IFont getFont(String key)
 	{
-		GLFont f = fonts.get(key);
+		IFont f = fonts.get(key);
 		
 		if (f == null) f = fonts.get(aliases.get(key));
 		

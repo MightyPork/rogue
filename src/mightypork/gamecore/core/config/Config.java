@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mightypork.gamecore.input.KeyStroke;
+import mightypork.utils.files.config.Property;
 import mightypork.utils.files.config.PropertyManager;
 import mightypork.utils.logging.Log;
 
@@ -17,45 +18,101 @@ import mightypork.utils.logging.Log;
  */
 public class Config {
 	
-	public static KeyOpts keyOpts = new KeyOpts();
-	public static Map<String, KeyProperty> strokes = new HashMap<>();
+	private static Map<String, KeyProperty> strokes = new HashMap<>();
 	
-	static PropertyManager cfg;
+	private static PropertyManager propertyManager;
 	
 	
 	/**
 	 * Initialize property manger for a file
 	 * 
 	 * @param file config file
-	 * @param comment file comment
+	 * @param headComment file comment
 	 */
-	public static void init(File file, String comment)
+	public static void init(File file, String headComment)
 	{
-		cfg = new PropertyManager(file, comment);
-		cfg.cfgNewlineBeforeComments(true);
-		cfg.cfgSeparateSections(true);
+		propertyManager = new PropertyManager(file, headComment);
+		
+		propertyManager.cfgNewlineBeforeComments(true);
+		propertyManager.cfgSeparateSections(true);
 	}
 	
 	
 	/**
-	 * populate config with keys from a key setup
+	 * Add a keystroke property
 	 * 
-	 * @param keys key setup to add
+	 * @param key key in config file
+	 * @param defval default value (keystroke datastring)
+	 * @param comment optional comment, can be null
 	 */
-	public static void registerKeys(KeySetup keys)
+	public void addKeyProperty(String key, String defval, String comment)
 	{
-		keys.addKeys(Config.keyOpts);
+		final KeyProperty kprop = new KeyProperty(Config.prefixKey(key), KeyStroke.createFromDataString(defval), comment);
+		strokes.put(Config.prefixKey(key), kprop);
+		propertyManager.putProperty(kprop);
 	}
 	
 	
 	/**
-	 * Populate config with options from a config setup
+	 * Add a boolean property (flag)
 	 * 
-	 * @param conf config setup to add
+	 * @param key key in config file
+	 * @param defval default value
+	 * @param comment optional comment, can be null
 	 */
-	public static void registerOptions(ConfigSetup conf)
+	public void addBooleanProperty(String key, boolean defval, String comment)
 	{
-		conf.addOptions(Config.cfg);
+		propertyManager.putBoolean(key, defval, comment);
+	}
+	
+	
+	/**
+	 * Add an integer property
+	 * 
+	 * @param key key in config file
+	 * @param defval default value
+	 * @param comment optional comment, can be null
+	 */
+	public void addIntegerProperty(String key, int defval, String comment)
+	{
+		propertyManager.putInteger(key, defval, comment);
+	}
+	
+	
+	/**
+	 * Add a double property
+	 * 
+	 * @param key key in config file
+	 * @param defval default value
+	 * @param comment optional comment, can be null
+	 */
+	public void addDoubleProperty(String key, double defval, String comment)
+	{
+		propertyManager.putDouble(key, defval, comment);
+	}
+	
+	
+	/**
+	 * Add a string property
+	 * 
+	 * @param key key in config file
+	 * @param defval default value
+	 * @param comment optional comment, can be null
+	 */
+	public void addStringProperty(String key, String defval, String comment)
+	{
+		propertyManager.putString(key, defval, comment);
+	}
+	
+	
+	/**
+	 * Add an arbitrary property (can be custom type)
+	 * 
+	 * @param prop the property to add
+	 */
+	public <T> void addProperty(Property<T> prop)
+	{
+		propertyManager.putProperty(prop);
 	}
 	
 	
@@ -64,7 +121,7 @@ public class Config {
 	 */
 	public static void load()
 	{
-		cfg.load();
+		propertyManager.load();
 	}
 	
 	
@@ -74,7 +131,7 @@ public class Config {
 	public static void save()
 	{
 		Log.f3("Saving config.");
-		cfg.save();
+		propertyManager.save();
 	}
 	
 	
@@ -87,11 +144,11 @@ public class Config {
 	public static <T> T getValue(String key)
 	{
 		try {
-			if (cfg.getProperty(key) == null) {
+			if (propertyManager.getProperty(key) == null) {
 				throw new IllegalArgumentException("No such property: " + key);
 			}
 			
-			return cfg.getValue(key);
+			return propertyManager.getValue(key);
 		} catch (final ClassCastException cce) {
 			throw new RuntimeException("Property of incompatible type: " + key);
 		}
@@ -99,18 +156,19 @@ public class Config {
 	
 	
 	/**
-	 * Set option to a value
+	 * Set option to a value. Call the save() method to make the change
+	 * permanent.
 	 * 
 	 * @param key option key
 	 * @param value value to set
 	 */
 	public static <T> void setValue(String key, T value)
 	{
-		if (cfg.getProperty(key) == null) {
+		if (propertyManager.getProperty(key) == null) {
 			throw new IllegalArgumentException("No such property: " + key);
 		}
 		
-		cfg.setValue(key, value);
+		propertyManager.setValue(key, value);
 	}
 	
 	
@@ -120,7 +178,7 @@ public class Config {
 	 * @param cfgKey config key
 	 * @return key. + cfgKey
 	 */
-	static String prefixKey(String cfgKey)
+	private static String prefixKey(String cfgKey)
 	{
 		return "key." + cfgKey;
 	}

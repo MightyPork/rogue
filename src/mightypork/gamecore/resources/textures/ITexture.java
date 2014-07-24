@@ -6,7 +6,7 @@ import mightypork.utils.math.constraints.rect.Rect;
 
 
 /**
- * Texture with filter and wrap mode
+ * Texture interface, backend independent
  * 
  * @author Ondřej Hruška (MightyPork)
  */
@@ -46,28 +46,6 @@ public interface ITexture extends Destroyable {
 	
 	
 	/**
-	 * @return OpenGL texture ID
-	 */
-	int getTextureID();
-	
-	
-	/**
-	 * Get the height of the texture, 0..1.<br>
-	 * 
-	 * @return height 0..1
-	 */
-	float getHeight01();
-	
-	
-	/**
-	 * Get the width of the texture, 0..1.<br>
-	 * 
-	 * @return width 0..1
-	 */
-	float getWidth01();
-	
-	
-	/**
 	 * @return source image width (corresponding to width01)
 	 */
 	int getImageWidth();
@@ -77,12 +55,6 @@ public interface ITexture extends Destroyable {
 	 * @return source image height (corresponding to height01)
 	 */
 	int getImageHeight();
-	
-	
-	/**
-	 * Bind to GL context, applying the filters prescribed.
-	 */
-	void bind();
 	
 	
 	/**

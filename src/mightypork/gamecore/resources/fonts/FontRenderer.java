@@ -16,7 +16,7 @@ import mightypork.utils.math.constraints.vect.Vect;
  */
 public class FontRenderer {
 	
-	private GLFont font;
+	private IFont font;
 	
 	private Color color;
 	
@@ -24,7 +24,7 @@ public class FontRenderer {
 	/**
 	 * @param font used font
 	 */
-	public FontRenderer(GLFont font) {
+	public FontRenderer(IFont font) {
 		this(font, RGB.WHITE);
 	}
 	
@@ -33,7 +33,7 @@ public class FontRenderer {
 	 * @param font used font
 	 * @param color drawing color
 	 */
-	public FontRenderer(GLFont font, Color color) {
+	public FontRenderer(IFont font, Color color) {
 		this.font = font;
 		this.color = color;
 	}
@@ -76,7 +76,7 @@ public class FontRenderer {
 	 * 
 	 * @param font font to use for drawing
 	 */
-	public void setFont(GLFont font)
+	public void setFont(IFont font)
 	{
 		this.font = font;
 	}

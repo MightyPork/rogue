@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.gamecore.resources.textures.FilterMode;
+import mightypork.utils.exceptions.IllegalValueException;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.vect.Vect;
@@ -40,7 +41,7 @@ import org.newdawn.slick.opengl.GLUtils;
  * @author David Aaron Muhar (bobjob)
  * @author Ondřej Hruška (MightyPork)
  */
-public class TextureBackedFont implements GLFont {
+public class TextureBackedFont implements IFont {
 	
 	private class CharTile {
 		
@@ -313,9 +314,21 @@ public class TextureBackedFont implements GLFont {
 			
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+			final int filtering;
+			switch (filter) {
+				case NEAREST:
+					filtering = GL_NEAREST;
+					break;
+				case LINEAR:
+					filtering = GL_LINEAR;
+					break;
+				default:
+					throw new IllegalValueException("Unsupported filtering mode.");
+			}
 			
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter.num);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter.num);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filtering);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filtering);
 			
 			GLU.gluBuild2DMipmaps(GL_TEXTURE_2D, internalFormat, width, height, format, GL_UNSIGNED_BYTE, byteBuffer);
 			return textureId.get(0);
@@ -385,9 +398,21 @@ public class TextureBackedFont implements GLFont {
 		
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+		final int filtering;
+		switch (filter) {
+			case NEAREST:
+				filtering = GL_NEAREST;
+				break;
+			case LINEAR:
+				filtering = GL_LINEAR;
+				break;
+			default:
+				throw new IllegalValueException("Unsupported filtering mode.");
+		}
 		
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter.num);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter.num);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filtering);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filtering);
 		
 		glColor4d(color.r(), color.g(), color.b(), color.a());
 		

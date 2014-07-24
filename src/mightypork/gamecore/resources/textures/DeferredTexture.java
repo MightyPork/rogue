@@ -1,8 +1,8 @@
 package mightypork.gamecore.resources.textures;
 
 
-import mightypork.gamecore.resources.BaseLazyResource;
-import mightypork.gamecore.resources.TextureBasedResource;
+import mightypork.gamecore.resources.BaseDeferredResource;
+import mightypork.gamecore.resources.MustLoadInRenderingContext;
 import mightypork.utils.annotations.Alias;
 import mightypork.utils.math.constraints.rect.Rect;
 
@@ -13,8 +13,8 @@ import mightypork.utils.math.constraints.rect.Rect;
  * @author Ondřej Hruška (MightyPork)
  */
 @Alias(name = "Texture")
-@TextureBasedResource
-public abstract class LazyTexture extends BaseLazyResource implements ITexture {
+@MustLoadInRenderingContext
+public abstract class DeferredTexture extends BaseDeferredResource implements ITexture {
 	
 	protected FilterMode filter = FilterMode.NEAREST;
 	protected WrapMode wrap = WrapMode.CLAMP;
@@ -23,7 +23,7 @@ public abstract class LazyTexture extends BaseLazyResource implements ITexture {
 	/**
 	 * @param resourcePath resource path
 	 */
-	public LazyTexture(String resourcePath) {
+	public DeferredTexture(String resourcePath) {
 		super(resourcePath);
 	}
 	

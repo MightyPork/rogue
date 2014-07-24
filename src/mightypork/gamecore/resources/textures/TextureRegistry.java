@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.core.modules.AppAccess;
-import mightypork.gamecore.core.modules.AppAccessAdapter;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.utils.exceptions.KeyAlreadyExistsException;
 import mightypork.utils.math.constraints.rect.Rect;
@@ -18,18 +16,10 @@ import mightypork.utils.math.constraints.rect.Rect;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class TextureRegistry extends AppAccessAdapter {
+public class TextureRegistry {
 	
 	private final Map<String, ITexture> textures = new HashMap<>();
 	private final Map<String, TxSheet> sheets = new HashMap<>();
-	
-	
-	/**
-	 * @param app app access
-	 */
-	public TextureRegistry(AppAccess app) {
-		super(app);
-	}
 	
 	
 	/**
@@ -61,11 +51,11 @@ public class TextureRegistry extends AppAccessAdapter {
 	{
 		if (key != null) if (textures.containsKey(key)) throw new KeyAlreadyExistsException();
 		
-		final LazyTexture texture = App.gfx().getLazyTexture(resourcePath);
+		final DeferredTexture texture = App.gfx().getLazyTexture(resourcePath);
 		texture.setFilter(filter);
 		texture.setWrap(wrap);
 		
-		getEventBus().send(new ResourceLoadRequest(texture));
+		App.bus().send(new ResourceLoadRequest(texture));
 		
 		if (key != null) {
 			textures.put(key, texture);

@@ -1,6 +1,7 @@
 package mightypork.gamecore.core.events;
 
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.core.modules.MainLoop;
 import mightypork.utils.eventbus.BusEvent;
 import mightypork.utils.eventbus.events.flags.NonConsumableEvent;
@@ -25,7 +26,7 @@ public class ShudownRequest extends BusEvent<MainLoop> {
 			@Override
 			public void run()
 			{
-				handler.shutdown();
+				App.shutdown();
 			}
 		}, true);
 	}

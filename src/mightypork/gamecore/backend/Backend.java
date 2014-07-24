@@ -1,9 +1,9 @@
 package mightypork.gamecore.backend;
 
 
-import mightypork.gamecore.render.RenderModule;
-import mightypork.utils.eventbus.BusAccess;
-import mightypork.utils.eventbus.clients.RootBusNode;
+import mightypork.gamecore.render.GraphicsModule;
+import mightypork.gamecore.resources.audio.AudioModule;
+import mightypork.utils.eventbus.clients.BusNode;
 
 
 /**
@@ -13,8 +13,7 @@ import mightypork.utils.eventbus.clients.RootBusNode;
  * 
  * @author MightyPork
  */
-public abstract class Backend extends RootBusNode {
-	
+public abstract class Backend extends BusNode {
 	
 	/**
 	 * Initialize backend modules, add them to event bus.<br>
@@ -28,5 +27,13 @@ public abstract class Backend extends RootBusNode {
 	 * 
 	 * @return graphics module
 	 */
-	public abstract RenderModule getRenderer();
+	public abstract GraphicsModule getGraphics();
+	
+	
+	/**
+	 * Get graphics module (renderer)
+	 * 
+	 * @return graphics module
+	 */
+	public abstract AudioModule getAudio();
 }

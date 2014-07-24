@@ -5,12 +5,14 @@ import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import mightypork.gamecore.gui.screens.ScreenRegistry;
+import mightypork.gamecore.plugins.screenshot.TaskTakeScreenshot;
 import mightypork.gamecore.render.Renderable;
-import mightypork.gamecore.render.TaskTakeScreenshot;
 import mightypork.gamecore.render.events.ScreenshotRequestListener;
 import mightypork.utils.Support;
 import mightypork.utils.annotations.Stub;
+import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.eventbus.events.UpdateEvent;
+import mightypork.utils.interfaces.Destroyable;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.timing.Profiler;
 import mightypork.utils.math.timing.TimerDelta;
@@ -21,7 +23,7 @@ import mightypork.utils.math.timing.TimerDelta;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class MainLoop extends AppModule implements ScreenshotRequestListener {
+public class MainLoop extends BusNode implements Destroyable {
 	
 	private static final double MAX_TIME_TASKS = 1 / 30D; // (avoid queue from hogging timing)
 	private static final double MAX_DELTA = 1 / 20D; // (skip huge gaps caused by loading resources etc)
@@ -29,16 +31,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	private final Deque<Runnable> tasks = new ConcurrentLinkedDeque<>();
 	private TimerDelta timer;
 	private Renderable rootRenderable;
-	private volatile boolean running = true;
-	
-	
-	/**
-	 * @param app {@link AppAccess} instance
-	 */
-	public MainLoop(AppAccess app) {
-		super(app);
-	}
-	
+	private volatile boolean running = true;	
 	
 	/**
 	 * Set primary renderable
@@ -68,7 +61,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 				delta = MAX_DELTA;
 			}
 			
-			getEventBus().sendDirect(new UpdateEvent(delta));
+			App.bus().sendDirect(new UpdateEvent(delta));
 			
 			Runnable r;
 			final long t = Profiler.begin();
@@ -115,7 +108,7 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 	
 	
 	@Override
-	protected void deinit()
+	public void destroy()
 	{
 		running = false;
 	}
@@ -134,21 +127,6 @@ public class MainLoop extends AppModule implements ScreenshotRequestListener {
 		} else {
 			tasks.addLast(request);
 		}
-	}
-	
-	
-	@Override
-	public void onScreenshotRequest()
-	{
-		// ensure it's started in main thread
-		queueTask(new Runnable() {
-			
-			@Override
-			public void run()
-			{
-				Support.runAsThread(new TaskTakeScreenshot());
-			}
-		}, false);
 	}
 	
 }

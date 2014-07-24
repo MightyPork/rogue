@@ -5,18 +5,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.core.modules.AppAccess;
-import mightypork.gamecore.core.modules.AppSubModule;
 import mightypork.gamecore.gui.Hideable;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
+import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.Renderable;
 import mightypork.utils.annotations.Stub;
+import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.interfaces.Enableable;
 import mightypork.utils.interfaces.Updateable;
 import mightypork.utils.math.color.Color;
@@ -30,7 +29,7 @@ import mightypork.utils.math.constraints.vect.Vect;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public abstract class Overlay extends AppSubModule implements Comparable<Overlay>, Updateable, Renderable, KeyBinder, Hideable, Enableable, LayoutChangeListener {
+public abstract class Overlay extends BusNode implements Comparable<Overlay>, Updateable, Renderable, KeyBinder, Hideable, Enableable, LayoutChangeListener {
 	
 	private boolean visible = true;
 	private boolean enabled = true;
@@ -51,13 +50,11 @@ public abstract class Overlay extends AppSubModule implements Comparable<Overlay
 	private Num alphaMul = Num.ONE;
 	
 	
-	public Overlay(AppAccess app) {
-		super(app);
+	public Overlay() {
 		
-		getInput();
 		this.mouse = InputSystem.getMousePos();
 		
-		this.root = new ConstraintLayout(app, App.gfx().getRect());
+		this.root = new ConstraintLayout(App.gfx().getRect());
 		addChildClient(root);
 		addChildClient(keybindings);
 		

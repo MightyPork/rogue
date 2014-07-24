@@ -6,8 +6,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import mightypork.gamecore.core.events.MainLoopRequest;
+import mightypork.gamecore.core.modules.App;
+import mightypork.utils.Reflect;
 import mightypork.utils.Support;
-import mightypork.utils.eventbus.BusAccess;
 import mightypork.utils.interfaces.Destroyable;
 import mightypork.utils.logging.Log;
 
@@ -21,17 +22,15 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 	
 	private final ExecutorService exs = Executors.newFixedThreadPool(2);
 	
-	private final LinkedBlockingQueue<LazyResource> toLoad = new LinkedBlockingQueue<>();
+	private final LinkedBlockingQueue<DeferredResource> toLoad = new LinkedBlockingQueue<>();
 	private volatile boolean stopped;
-	private BusAccess app;
 	private volatile boolean mainLoopQueuing = true;
 	
 	
 	@Override
-	public synchronized void init(BusAccess app)
+	public synchronized void init()
 	{
-		this.app = app;
-		app.getEventBus().subscribe(this);
+		App.bus().subscribe(this); // FIXME bad
 		setDaemon(true);
 		super.start();
 	}
@@ -49,19 +48,19 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 	
 	
 	@Override
-	public void loadResource(final LazyResource resource)
+	public void loadResource(final DeferredResource resource)
 	{
 		if (resource.isLoaded()) return;
 		
 		// textures & fonts needs to be loaded in main thread
-		if (resource.getClass().isAnnotationPresent(TextureBasedResource.class)) {
+		if (Reflect.hasAnnotation(resource, MustLoadInRenderingContext.class)) {
 			
 			if (!mainLoopQueuing) {
 				// just let it be
 			} else {
 				Log.f3("(loader) Delegating to main thread: " + Support.str(resource));
 				
-				app.getEventBus().send(new MainLoopRequest(new Runnable() {
+				App.bus().send(new MainLoopRequest(new Runnable() {
 					
 					@Override
 					public void run()
@@ -86,7 +85,7 @@ public class AsyncResourceLoader extends Thread implements ResourceLoader, Destr
 		while (!stopped) {
 			
 			try {
-				final LazyResource def = toLoad.take();
+				final DeferredResource def = toLoad.take();
 				if (def == null) continue;
 				
 				if (!def.isLoaded()) {

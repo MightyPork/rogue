@@ -1,7 +1,7 @@
 package mightypork.gamecore.resources.audio.players;
 
 
-import mightypork.gamecore.resources.audio.LazyAudio;
+import mightypork.gamecore.resources.audio.DeferredAudio;
 import mightypork.gamecore.resources.audio.Volume;
 import mightypork.utils.math.constraints.vect.Vect;
 
@@ -19,7 +19,7 @@ public class EffectPlayer extends BaseAudioPlayer {
 	 * @param baseGain base gain (volume multiplier)
 	 * @param volume volume control
 	 */
-	public EffectPlayer(LazyAudio track, double basePitch, double baseGain, Volume volume) {
+	public EffectPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume) {
 		super(track, (float) basePitch, (float) baseGain, volume);
 	}
 	
@@ -29,13 +29,12 @@ public class EffectPlayer extends BaseAudioPlayer {
 	 * 
 	 * @param pitch play pitch
 	 * @param gain play gain
-	 * @return source id
 	 */
-	public int play(double pitch, double gain)
+	public void play(double pitch, double gain)
 	{
-		if (!hasAudio()) return -1;
+		if (!hasAudio()) return;
 		
-		return getAudio().playAsEffect(getPitch(pitch), getGain(gain), false);
+		getAudio().play(computePitch(pitch), computeGain(gain), false);
 	}
 	
 	
@@ -43,11 +42,10 @@ public class EffectPlayer extends BaseAudioPlayer {
 	 * Play at listener
 	 * 
 	 * @param gain play gain
-	 * @return source id
 	 */
-	public int play(double gain)
+	public void play(double gain)
 	{
-		return play(1, gain);
+		play(1, gain);
 	}
 	
 	
@@ -57,13 +55,12 @@ public class EffectPlayer extends BaseAudioPlayer {
 	 * @param pitch play pitch
 	 * @param gain play gain
 	 * @param pos play position
-	 * @return source id
 	 */
-	public int play(double pitch, double gain, Vect pos)
+	public void play(double pitch, double gain, Vect pos)
 	{
-		if (!hasAudio()) return -1;
+		if (!hasAudio()) return;
 		
-		return getAudio().playAsEffect(getPitch(pitch), getGain(gain), false, pos);
+		getAudio().play(computePitch(pitch), computeGain(gain), false, pos);
 	}
 	
 }

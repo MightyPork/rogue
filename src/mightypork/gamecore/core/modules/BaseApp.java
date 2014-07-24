@@ -1,11 +1,7 @@
 package mightypork.gamecore.core.modules;
 
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
-
-import javax.swing.JOptionPane;
 
 import mightypork.gamecore.backend.Backend;
 import mightypork.gamecore.core.WorkDir;
@@ -16,23 +12,10 @@ import mightypork.gamecore.core.config.KeySetup;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.render.RenderModule;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.ResourceSetup;
 import mightypork.gamecore.resources.audio.SoundSystem;
-import mightypork.gamecore.util.SlickLogRedirector;
-import mightypork.utils.annotations.Stub;
-import mightypork.utils.eventbus.EventBus;
-import mightypork.utils.eventbus.events.DestroyEvent;
-import mightypork.utils.files.InstanceLock;
-import mightypork.utils.ion.Ion;
-import mightypork.utils.ion.IonInput;
-import mightypork.utils.ion.IonOutput;
-import mightypork.utils.ion.IonizerBinary;
 import mightypork.utils.logging.Log;
-import mightypork.utils.logging.writers.LogWriter;
-import mightypork.utils.math.algo.Coord;
-import mightypork.utils.math.algo.Move;
 
 
 /**
@@ -41,14 +24,12 @@ import mightypork.utils.math.algo.Move;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public abstract class BaseApp extends App implements AppAccess, UncaughtExceptionHandler {
+public abstract class BaseApp extends App implements UncaughtExceptionHandler {
 	
 	// modules
-	private InputSystem inputSystem;
-	private SoundSystem soundSystem;
-	private EventBus eventBus;
 	private MainLoop gameLoop;
 	private ScreenRegistry screenRegistry;
+	
 	private boolean started = false;
 	private boolean lockObtained = false;
 	
@@ -72,25 +53,21 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 	
 	
 	public BaseApp(Backend backend) {
-		
-		eventBus = new EventBus();
-		setBackend(backend);
-		backend.setBusAccess(this);
+		super(backend);
 	}
 	
 	
 	/**
 	 * Start the application
 	 */
+	@Override
 	public final void start()
 	{
-		Thread.setDefaultUncaughtExceptionHandler(this);
-		
 		initialize();
 		
 		Log.i("Starting main loop...");
 		
-		// open first screen	
+		// open first screen	!!!
 		started = true;
 		gameLoop.start();
 	}
@@ -124,38 +101,6 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 			Config.registerOptions(c);
 		}
 		Config.load();
-		
-		/*
-		 * Setup logging
-		 */
-		final LogWriter log = Log.create(opt.logFilePrefix, new File(WorkDir.getDir(opt.logDir), opt.logFilePrefix + ".log"), opt.logArchiveCount);
-		Log.setMainLogger(log);
-		Log.setLevel(opt.logLevel);
-		Log.setSysoutLevel(opt.logSoutLevel);
-		
-		// connect slickutil to the logger
-		org.newdawn.slick.util.Log.setLogSystem(new SlickLogRedirector(log));
-		writeLogHeader();
-		
-		Log.i("=== Starting initialization sequence ===");
-		
-		// pre-init hook
-		Log.f2("Calling pre-init hook...");
-		preInit();
-		
-		/*
-		 * Event bus
-		 */
-		Log.f2("Starting Event Bus...");
-		eventBus = new EventBus();
-		eventBus.subscribe(this);
-		eventBus.detailedLogging = opt.busLogging;
-		
-		/*
-		 * Ionizables
-		 */
-		Log.f3("Initializing ION save system...");
-		registerIonizables();
 		
 		/*
 		 * Display
@@ -208,126 +153,6 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 		 */
 		Log.f2("Registering screens...");
 		initScreens(screenRegistry);
-		
-		postInit();
-		Log.i("=== Initialization sequence completed ===");
-	}
-	
-	
-	protected void writeLogHeader()
-	{
-		logSystemInfo();
-	}
-	
-	
-	protected void logSystemInfo()
-	{
-		String txt = "";
-		
-		txt += "\n### SYSTEM INFO ###\n\n";
-		txt += " Platform ...... " + System.getProperty("os.name") + "\n";
-		txt += " Runtime ....... " + System.getProperty("java.runtime.name") + "\n";
-		txt += " Java .......... " + System.getProperty("java.version") + "\n";
-		txt += " Launch path ... " + System.getProperty("user.dir") + "\n";
-		
-		try {
-			txt += " Workdir ....... " + WorkDir.getWorkDir().getCanonicalPath() + "\n";
-		} catch (final IOException e) {
-			Log.e(e);
-		}
-		
-		Log.i(txt);
-	}
-	
-	
-	protected void registerIonizables()
-	{
-		Ion.registerIndirect(255, new IonizerBinary<Coord>() {
-			
-			@Override
-			public void save(Coord object, IonOutput out) throws IOException
-			{
-				out.writeInt(object.x);
-				out.writeInt(object.y);
-			}
-			
-			
-			@Override
-			public Coord load(IonInput in) throws IOException
-			{
-				final int x = in.readInt();
-				final int y = in.readInt();
-				return new Coord(x, y);
-			}
-			
-		});
-		
-		Ion.registerIndirect(254, new IonizerBinary<Move>() {
-			
-			@Override
-			public void save(Move object, IonOutput out) throws IOException
-			{
-				out.writeInt(object.x());
-				out.writeInt(object.y());
-			}
-			
-			
-			@Override
-			public Move load(IonInput in) throws IOException
-			{
-				final int x = in.readInt();
-				final int y = in.readInt();
-				return new Move(x, y);
-			}
-			
-		});
-	}
-	
-	
-	/**
-	 * Called at the beginning of the initialization sequence, right after lock
-	 * was obtained.
-	 */
-	@Stub
-	protected void preInit()
-	{
-	}
-	
-	
-	/**
-	 * Called at the end of init sequence, before main loop starts.
-	 */
-	@Stub
-	protected void postInit()
-	{
-	}
-	
-	
-	/**
-	 * Create window and configure rendering system
-	 * 
-	 * @param gfx Graphics module
-	 */
-	@Stub
-	protected void initDisplay(RenderModule gfx)
-	{
-		gfx.setSize(800, 600);
-		gfx.setResizable(true);
-		gfx.setTitle("New Game");
-		gfx.setTargetFps(60);
-		
-		gfx.createDisplay();
-	}
-	
-	
-	/**
-	 * Configure sound system (ie. adjust volume)
-	 * 
-	 * @param audio
-	 */
-	@Stub
-	protected void initSoundSystem(SoundSystem audio)
-	{
 	}
 	
 	
@@ -353,104 +178,9 @@ public abstract class BaseApp extends App implements AppAccess, UncaughtExceptio
 	}
 	
 	
-	/*
-	 * Try to obtain lock.
-	 */
-	private void initLock()
-	{
-		final File lock = WorkDir.getFile(opt.lockFile);
-		if (!InstanceLock.onFile(lock)) {
-			onLockError();
-			return;
-		}
-	}
-	
-	
-	@Stub
-	protected void initInputSystem(InputSystem input)
-	{
-	}
-	
-	
-	/**
-	 * Triggered when lock cannot be obtained.<br>
-	 * App should terminate gracefully.
-	 */
-	protected void onLockError()
-	{
-		Log.e("Could not obtain lock file.\nOnly one instance can run at a time.");
-		
-		//@formatter:off
-		JOptionPane.showMessageDialog(
-				null,
-				"Another instance is already running.\n(Delete the "+opt.lockFile +" file in the working directory to override)",
-				"Lock Error",
-				JOptionPane.ERROR_MESSAGE
-		);
-		//@formatter:on
-		
-		shutdown();
-	}
-	
-	
-	@Override
-	public final SoundSystem getSoundSystem()
-	{
-		return soundSystem;
-	}
-	
-	
-	@Override
-	public final InputSystem getInput()
-	{
-		return inputSystem;
-	}
-	
-	
-	@Override
-	public final EventBus getEventBus()
-	{
-		return eventBus;
-	}
-	
-	
 	protected void beforeShutdown()
 	{
+		// ???
 		if (lockObtained) Config.save();
-	}
-	
-	
-	@Override
-	public final void uncaughtException(Thread t, Throwable e)
-	{
-		onCrash(e);
-	}
-	
-	
-	protected void onCrash(Throwable e)
-	{
-		Log.e("The game has crashed.", e);
-		shutdown();
-	}
-	
-	
-	@Override
-	public final void shutdown()
-	{
-		beforeShutdown();
-		
-		Log.i("Shutting down subsystems...");
-		
-		try {
-			if (getEventBus() != null) {
-				getEventBus().send(new DestroyEvent());
-				getEventBus().destroy();
-			}
-		} catch (final Throwable e) {
-			Log.e(e);
-		}
-		
-		Log.i("Terminating...");
-		System.exit(0);
 	}
 }

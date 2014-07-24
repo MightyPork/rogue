@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.utils.eventbus.clients.DelegatingClient;
 
 
@@ -47,11 +46,7 @@ public abstract class LayeredScreen extends Screen {
 	private final LayersClient layersClient = new LayersClient();
 	
 	
-	/**
-	 * @param app app access
-	 */
-	public LayeredScreen(AppAccess app) {
-		super(app);
+	public LayeredScreen() {
 		addChildClient(layersClient);
 	}
 	

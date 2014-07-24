@@ -5,12 +5,14 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import mightypork.gamecore.core.modules.AppAccess;
+import mightypork.gamecore.backend.lwjgl.SlickAudio;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
 import mightypork.gamecore.util.BufferHelper;
-import mightypork.utils.eventbus.clients.RootBusNode;
+import mightypork.utils.eventbus.clients.BusNode;
+import mightypork.utils.interfaces.Destroyable;
 import mightypork.utils.interfaces.Updateable;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.vect.Vect;
@@ -26,7 +28,7 @@ import org.newdawn.slick.openal.SoundStore;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class SoundSystem extends RootBusNode implements Updateable {
+public class SoundSystem extends BusNode implements Updateable, Destroyable {
 	
 	private static final Vect INITIAL_LISTENER_POS = Vect.ZERO;
 	private static final int MAX_SOURCES = 256;
@@ -72,14 +74,13 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	private final Volume loopsVolume = new JointVolume(masterVolume);
 	
 	private final List<LoopPlayer> loopPlayers = new ArrayList<>();
-	private final List<LazyAudio> resources = new ArrayList<>();
+	private final List<DeferredAudio> resources = new ArrayList<>();
 	
 	
 	/**
-	 * @param app app access
+	 * @param busAccess app access
 	 */
-	public SoundSystem(AppAccess app) {
-		super(app);
+	public SoundSystem() {
 		
 		if (!soundSystemInited) {
 			soundSystemInited = true;
@@ -89,7 +90,7 @@ public class SoundSystem extends RootBusNode implements Updateable {
 				SoundStore.get().init();
 				setListener(INITIAL_LISTENER_POS);
 				
-				getEventBus().send(new AudioReadyEvent());
+				App.bus().send(new AudioReadyEvent());
 			} catch (final Throwable t) {
 				Log.e("Error initializing sound system.", t);
 			}
@@ -98,9 +99,9 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	
 	
 	@Override
-	public void deinit()
+	public void destroy()
 	{
-		for (final LazyAudio r : resources) {
+		for (final DeferredAudio r : resources) {
 			r.destroy();
 		}
 		
@@ -152,16 +153,16 @@ public class SoundSystem extends RootBusNode implements Updateable {
 	
 	
 	/**
-	 * Create {@link LazyAudio} for a resource
+	 * Create {@link DeferredAudio} for a resource
 	 * 
 	 * @param res a resource name
 	 * @return the resource
 	 * @throws IllegalArgumentException if resource is already registered
 	 */
-	private LazyAudio createResource(String res)
+	private DeferredAudio createResource(String res)
 	{
-		final LazyAudio a = new LazyAudio(res);
-		getEventBus().send(new ResourceLoadRequest(a));
+		final DeferredAudio a = new SlickAudio(res);
+		App.bus().send(new ResourceLoadRequest(a));
 		resources.add(a);
 		return a;
 	}

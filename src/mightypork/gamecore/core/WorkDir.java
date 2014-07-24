@@ -15,26 +15,6 @@ import mightypork.utils.logging.Log;
  */
 public class WorkDir {
 	
-	/**
-	 * Route configurator.
-	 */
-	public static interface RouteSetup {
-		
-		public void addRoutes(RouteOpts routeOpts);
-	}
-	
-	/**
-	 * Route configurator access
-	 */
-	public static class RouteOpts {
-		
-		public void addPath(String alias, String path)
-		{
-			WorkDir.addPath(alias, path);
-		}
-	}
-	
-	public static RouteOpts routeOpts = new RouteOpts();
 	private static File workdir;
 	private static Map<String, String> namedPaths = new HashMap<>();
 	
@@ -46,7 +26,7 @@ public class WorkDir {
 	
 	
 	/**
-	 * Add a path alias (dir or file)
+	 * Add a path alias (dir or file), relative to the workdir.
 	 * 
 	 * @param alias path alias
 	 * @param path path relative to workdir
@@ -54,12 +34,6 @@ public class WorkDir {
 	public static void addPath(String alias, String path)
 	{
 		namedPaths.put(alias, path);
-	}
-	
-	
-	public static void registerRoutes(RouteSetup rs)
-	{
-		rs.addRoutes(routeOpts);
 	}
 	
 	

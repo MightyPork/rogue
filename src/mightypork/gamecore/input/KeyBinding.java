@@ -1,7 +1,6 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.events.InputReadyListener;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.KeyEventHandler;

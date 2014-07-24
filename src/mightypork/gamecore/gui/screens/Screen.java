@@ -2,16 +2,15 @@ package mightypork.gamecore.gui.screens;
 
 
 import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.core.modules.AppAccess;
-import mightypork.gamecore.core.modules.AppSubModule;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
+import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.render.Renderable;
 import mightypork.utils.annotations.Stub;
+import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.rect.RectBound;
 
@@ -21,7 +20,7 @@ import mightypork.utils.math.constraints.rect.RectBound;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public abstract class Screen extends AppSubModule implements Renderable, RectBound, KeyBinder, LayoutChangeListener {
+public abstract class Screen extends BusNode implements Renderable, RectBound, KeyBinder, LayoutChangeListener {
 	
 	private final KeyBindingPool keybindings = new KeyBindingPool();
 	
@@ -32,8 +31,7 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 	/**
 	 * @param app app access
 	 */
-	public Screen(AppAccess app) {
-		super(app);
+	public Screen() {
 		
 		// disable events initially
 		setListening(false);
@@ -44,7 +42,7 @@ public abstract class Screen extends AppSubModule implements Renderable, RectBou
 	
 	private void fireLayoutChangeEvent()
 	{
-		getEventBus().sendDirectToChildren(this, new LayoutChangeEvent());
+		App.bus().sendDirectToChildren(this, new LayoutChangeEvent());
 	}
 	
 	

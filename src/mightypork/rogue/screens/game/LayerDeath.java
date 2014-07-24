@@ -14,9 +14,9 @@ import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.impl.FadingLayer;
-import mightypork.gamecore.input.KeyStroke.Edge;
+import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;
@@ -36,7 +36,7 @@ public class LayerDeath extends FadingLayer {
 		qp.setRect(root);
 		root.add(qp);
 		
-		final GLFont thick_font = Res.getFont("thick");
+		final IFont thick_font = Res.getFont("thick");
 		
 		final RowLayout rl = new RowLayout(root, 5);
 		rl.setRect(root.shrink(Num.ZERO, root.height().perc(15)));

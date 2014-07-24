@@ -6,15 +6,14 @@ import static org.lwjgl.opengl.GL11.*;
 import java.nio.ByteBuffer;
 import java.util.Stack;
 
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.render.Grad;
-import mightypork.gamecore.render.RenderModule;
+import mightypork.gamecore.render.GraphicsModule;
 import mightypork.gamecore.render.Screenshot;
 import mightypork.gamecore.render.events.DisplayReadyEvent;
 import mightypork.gamecore.render.events.ViewportChangeEvent;
-import mightypork.gamecore.resources.textures.ITexture;
-import mightypork.gamecore.resources.textures.LazyTexture;
+import mightypork.gamecore.resources.textures.DeferredTexture;
 import mightypork.gamecore.resources.textures.TxQuad;
-import mightypork.utils.eventbus.BusAccess;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.color.pal.RGB;
@@ -35,11 +34,7 @@ import org.lwjgl.opengl.GL11;
  * 
  * @author MightyPork
  */
-public class LwjglRenderModule extends RenderModule {
-	
-	public LwjglRenderModule(BusAccess busAccess) {
-		super(busAccess);
-	}
+public class LwjglGraphicsModule extends GraphicsModule {
 	
 	/** Currently binded color */
 	private Color activeColor = null;
@@ -48,7 +43,7 @@ public class LwjglRenderModule extends RenderModule {
 	/** Stack of pushed colors */
 	private Stack<Color> colorPushStack = new Stack<>();
 	/** Currently binded texture */
-	private ITexture activeTexture;
+	private SlickTexture activeTexture;
 	
 	/** Display mode used currently for the window */
 	private DisplayMode windowDisplayMode;
@@ -328,7 +323,7 @@ public class LwjglRenderModule extends RenderModule {
 		// texture is loaded uniquely -> can compare with ==
 		if (activeTexture != txquad.tx) {
 			glEnable(GL_TEXTURE_2D);
-			activeTexture = txquad.tx;
+			activeTexture = (SlickTexture) txquad.tx;
 			activeTexture.bind();
 		}
 		
@@ -355,8 +350,8 @@ public class LwjglRenderModule extends RenderModule {
 			tR = swap;
 		}
 		
-		final double w = txquad.tx.getWidth01();
-		final double h = txquad.tx.getHeight01();
+		final double w = activeTexture.getWidth01();
+		final double h = activeTexture.getHeight01();
 		
 		// quad with texture
 		glTexCoord2d(tL * w, tB * h);
@@ -409,9 +404,9 @@ public class LwjglRenderModule extends RenderModule {
 	
 	
 	@Override
-	public LazyTexture getLazyTexture(String path)
+	public DeferredTexture getLazyTexture(String path)
 	{
-		return new SlickLazyTexture(path);
+		return new SlickTexture(path);
 	}
 	
 	
@@ -444,7 +439,7 @@ public class LwjglRenderModule extends RenderModule {
 				fullscreenSetRequested = false;
 			}
 			
-			getEventBus().send(new DisplayReadyEvent());
+			App.bus().send(new DisplayReadyEvent());
 			
 		} catch (final Exception e) {
 			throw new RuntimeException("Could not initialize display.", e);
@@ -500,7 +495,7 @@ public class LwjglRenderModule extends RenderModule {
 				Display.update();
 			}
 			
-			getEventBus().send(new ViewportChangeEvent(getSize()));
+			App.bus().send(new ViewportChangeEvent(getSize()));
 			
 		} catch (final Throwable t) {
 			Log.e("Failed to change fullscreen mode.", t);
@@ -542,7 +537,7 @@ public class LwjglRenderModule extends RenderModule {
 	{
 		// handle resize
 		if (Display.wasResized()) {
-			getEventBus().send(new ViewportChangeEvent(getSize()));
+			App.bus().send(new ViewportChangeEvent(getSize()));
 		}
 		
 		if (fullscreenToggleRequested) {

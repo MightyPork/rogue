@@ -2,7 +2,6 @@ package mightypork.gamecore.input;
 
 
 import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.input.KeyStroke.Edge;
 
 
 /**

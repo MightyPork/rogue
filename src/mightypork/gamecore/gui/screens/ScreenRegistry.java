@@ -6,14 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-import mightypork.gamecore.core.modules.AppAccess;
-import mightypork.gamecore.core.modules.AppModule;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.ScreenRequestListener;
 import mightypork.gamecore.render.Renderable;
 import mightypork.gamecore.render.events.ViewportChangeEvent;
 import mightypork.gamecore.render.events.ViewportChangeListener;
-import mightypork.utils.annotations.Stub;
+import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.logging.Log;
 
 
@@ -22,19 +21,11 @@ import mightypork.utils.logging.Log;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class ScreenRegistry extends AppModule implements ScreenRequestListener, ViewportChangeListener, Renderable {
+public class ScreenRegistry extends BusNode implements ScreenRequestListener, ViewportChangeListener, Renderable {
 	
 	private final Map<String, Screen> screens = new HashMap<>();
 	private final Collection<Overlay> overlays = new TreeSet<>();
 	private volatile Screen active = null;
-	
-	
-	/**
-	 * @param app app access
-	 */
-	public ScreenRegistry(AppAccess app) {
-		super(app);
-	}
 	
 	
 	/**
@@ -101,14 +92,6 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	
 	
 	@Override
-	@Stub
-	protected void deinit()
-	{
-		//
-	}
-	
-	
-	@Override
 	public void onViewportChanged(ViewportChangeEvent event)
 	{
 		if (active != null) fireLayoutUpdateEvent();
@@ -117,7 +100,7 @@ public class ScreenRegistry extends AppModule implements ScreenRequestListener, 
 	
 	private void fireLayoutUpdateEvent()
 	{
-		getEventBus().sendDirectToChildren(this, new LayoutChangeEvent());
+		App.bus().sendDirectToChildren(this, new LayoutChangeEvent());
 	}
 	
 }

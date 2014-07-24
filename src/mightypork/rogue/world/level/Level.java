@@ -13,7 +13,6 @@ import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.tile.Tile;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.Tiles;
-import mightypork.utils.eventbus.BusAccess;
 import mightypork.utils.eventbus.EventBus;
 import mightypork.utils.eventbus.clients.DelegatingClient;
 import mightypork.utils.eventbus.clients.ToggleableClient;

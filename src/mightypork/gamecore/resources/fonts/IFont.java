@@ -10,7 +10,7 @@ import mightypork.utils.math.constraints.vect.Vect;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public interface GLFont {
+public interface IFont {
 	
 	/**
 	 * Draw without scaling at (0, 0) in given color.

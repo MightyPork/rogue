@@ -2,7 +2,7 @@ package mightypork.gamecore.gui.screens.impl;
 
 
 import mightypork.gamecore.core.events.ShudownRequest;
-import mightypork.gamecore.core.modules.AppAccess;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.gui.screens.Overlay;
@@ -31,9 +31,9 @@ public class CrossfadeOverlay extends Overlay {
 		public void run()
 		{
 			if (requestedScreenName == null) {
-				getEventBus().send(new ShudownRequest());
+				App.bus().send(new ShudownRequest());
 			} else {
-				getEventBus().send(new ScreenRequest(requestedScreenName));
+				App.bus().send(new ScreenRequest(requestedScreenName));
 			}
 			alpha.setEasing(Easing.SINE_OUT);
 			alpha.fadeOut(T_OUT);
@@ -41,9 +41,7 @@ public class CrossfadeOverlay extends Overlay {
 	};
 	
 	
-	public CrossfadeOverlay(AppAccess app) {
-		super(app);
-		
+	public CrossfadeOverlay() {
 		final QuadPainter qp = new QuadPainter(RGB.BLACK); // TODO allow custom colors
 		qp.setRect(root);
 		root.add(qp);

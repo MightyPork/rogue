@@ -2,9 +2,8 @@ package mightypork.gamecore.render;
 
 
 import mightypork.gamecore.backend.BackendModule;
-import mightypork.gamecore.resources.textures.LazyTexture;
+import mightypork.gamecore.resources.textures.DeferredTexture;
 import mightypork.gamecore.resources.textures.TxQuad;
-import mightypork.utils.eventbus.BusAccess;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.vect.Vect;
@@ -19,11 +18,7 @@ import mightypork.utils.math.timing.FpsMeter;
  * 
  * @author MightyPork
  */
-public abstract class RenderModule extends BackendModule {
-	
-	public RenderModule(BusAccess busAccess) {
-		super(busAccess);
-	}
+public abstract class GraphicsModule extends BackendModule {
 	
 	protected static final VectConst AXIS_X = Vect.make(1, 0, 0);
 	protected static final VectConst AXIS_Y = Vect.make(0, 1, 0);
@@ -271,7 +266,7 @@ public abstract class RenderModule extends BackendModule {
 	 * @param path path to texture
 	 * @return the lazy texture
 	 */
-	public abstract LazyTexture getLazyTexture(String path);
+	public abstract DeferredTexture getLazyTexture(String path);
 	
 	
 	/**

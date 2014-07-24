@@ -4,8 +4,7 @@ package mightypork.gamecore.resources.audio;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.core.modules.AppAccess;
-import mightypork.gamecore.core.modules.AppAccessAdapter;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
 
@@ -15,19 +14,10 @@ import mightypork.gamecore.resources.audio.players.LoopPlayer;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class SoundRegistry extends AppAccessAdapter {
+public class SoundRegistry {
 	
 	private final Map<String, EffectPlayer> effects = new HashMap<>();
 	private final Map<String, LoopPlayer> loops = new HashMap<>();
-	
-	
-	/**
-	 * @param app app access
-	 */
-	public SoundRegistry(AppAccess app) {
-		super(app);
-		if (getSoundSystem() == null) throw new NullPointerException("SoundSystem cannot be null.");
-	}
 	
 	
 	/**
@@ -40,7 +30,7 @@ public class SoundRegistry extends AppAccessAdapter {
 	 */
 	public void addEffect(String key, String resource, double pitch, double gain)
 	{
-		effects.put(key, getSoundSystem().createEffect(resource, pitch, gain));
+		effects.put(key, App.audio().createEffect(resource, pitch, gain));
 	}
 	
 	
@@ -56,7 +46,7 @@ public class SoundRegistry extends AppAccessAdapter {
 	 */
 	public void addLoop(String key, String resource, double pitch, double gain, double fadeIn, double fadeOut)
 	{
-		loops.put(key, getSoundSystem().createLoop(resource, pitch, gain, fadeIn, fadeOut));
+		loops.put(key, App.audio().createLoop(resource, pitch, gain, fadeIn, fadeOut));
 	}
 	
 	

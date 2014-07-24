@@ -2,13 +2,13 @@ package mightypork.gamecore.input;
 
 
 import mightypork.gamecore.core.events.UserQuitRequest;
-import mightypork.gamecore.core.modules.AppAccess;
-import mightypork.gamecore.input.KeyStroke.Edge;
+import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.input.events.InputReadyEvent;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseMotionEvent;
-import mightypork.utils.eventbus.clients.RootBusNode;
+import mightypork.utils.eventbus.clients.BusNode;
+import mightypork.utils.interfaces.Destroyable;
 import mightypork.utils.interfaces.Updateable;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.var.VectVar;
@@ -24,7 +24,7 @@ import org.lwjgl.opengl.Display;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
+public class InputSystem extends BusNode implements Updateable, KeyBinder, Destroyable {
 	
 	private static boolean inited = false;
 	
@@ -58,8 +58,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 	/**
 	 * @param app app access
 	 */
-	public InputSystem(AppAccess app) {
-		super(app);
+	public InputSystem() {
 		
 		initDevices();
 		
@@ -67,12 +66,12 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		keybindings = new KeyBindingPool();
 		addChildClient(keybindings);
 		
-		getEventBus().send(new InputReadyEvent());
+		App.bus().send(new InputReadyEvent());
 	}
 	
 	
 	@Override
-	public final void deinit()
+	public final void destroy()
 	{
 		Mouse.destroy();
 		Keyboard.destroy();
@@ -128,7 +127,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		}
 		
 		if (wasMouse && !mouseMove.isZero()) {
-			getEventBus().send(new MouseMotionEvent(mouseLastPos, mouseMove));
+			App.bus().send(new MouseMotionEvent(mouseLastPos, mouseMove));
 		}
 		
 		while (Keyboard.next()) {
@@ -136,7 +135,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		}
 		
 		if (Display.isCloseRequested()) {
-			getEventBus().send(new UserQuitRequest());
+			App.bus().send(new UserQuitRequest());
 		}
 	}
 	
@@ -155,7 +154,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		pos.setY(Display.getHeight() - pos.y());
 		
 		if (button != -1 || wheeld != 0) {
-			getEventBus().send(new MouseButtonEvent(pos.freeze(), button, down, wheeld));
+			App.bus().send(new MouseButtonEvent(pos.freeze(), button, down, wheeld));
 		}
 		
 		moveSum.setTo(moveSum.add(move));
@@ -169,7 +168,7 @@ public class InputSystem extends RootBusNode implements Updateable, KeyBinder {
 		final boolean down = Keyboard.getEventKeyState();
 		final char c = Keyboard.getEventCharacter();
 		
-		getEventBus().send(new KeyEvent(key, c, down));
+		App.bus().send(new KeyEvent(key, c, down));
 	}
 	
 	

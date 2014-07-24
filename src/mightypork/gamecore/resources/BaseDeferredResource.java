@@ -16,7 +16,7 @@ import mightypork.utils.string.StringUtil;
  * @author Ondřej Hruška (MightyPork)
  */
 @Alias(name = "Resource")
-public abstract class BaseLazyResource implements LazyResource, Destroyable {
+public abstract class BaseDeferredResource implements DeferredResource, Destroyable {
 	
 	private final String resource;
 	private volatile boolean loadFailed = false;
@@ -27,7 +27,7 @@ public abstract class BaseLazyResource implements LazyResource, Destroyable {
 	 * @param resource resource path / name; this string is later used in
 	 *            loadResource()
 	 */
-	public BaseLazyResource(String resource) {
+	public BaseDeferredResource(String resource) {
 		this.resource = resource;
 	}
 	
@@ -125,8 +125,8 @@ public abstract class BaseLazyResource implements LazyResource, Destroyable {
 	{
 		if (this == obj) return true;
 		if (obj == null) return false;
-		if (!(obj instanceof BaseLazyResource)) return false;
-		final BaseLazyResource other = (BaseLazyResource) obj;
+		if (!(obj instanceof BaseDeferredResource)) return false;
+		final BaseDeferredResource other = (BaseDeferredResource) obj;
 		if (resource == null) {
 			if (other.resource != null) return false;
 		} else if (!resource.equals(other.resource)) return false;

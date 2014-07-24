@@ -3,7 +3,6 @@ package mightypork.rogue.screens.select_world;
 
 import java.io.File;
 
-import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -12,7 +11,7 @@ import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.rogue.events.LoadingOverlayRequest;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
@@ -71,7 +70,7 @@ public class WorldSlot extends ConstraintLayout {
 		gridl.setRect(innerRect.shrink(shrinkH, shrinkH, shrinkV, shrinkV.half()));
 		add(gridl);
 		
-		final GLFont font = Res.getFont("thick");
+		final IFont font = Res.getFont("thick");
 		
 		gridl.put(loadBtn = new TextButton(font, "", RGB.WHITE), 0, 0, 1, 7);
 		loadBtn.textPainter.setVPaddingPercent(20);

@@ -5,10 +5,9 @@ import java.io.File;
 
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.UserQuitRequest;
-import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
-import mightypork.gamecore.input.KeyStroke.Edge;
+import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.resources.Res;
 import mightypork.rogue.Const;
 import mightypork.rogue.RogueStateManager.RogueState;

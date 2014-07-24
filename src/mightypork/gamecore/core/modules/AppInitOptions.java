@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.logging.Level;
 
 import mightypork.gamecore.backend.Backend;
-import mightypork.gamecore.core.WorkDir.RouteSetup;
 import mightypork.gamecore.core.config.ConfigSetup;
 import mightypork.gamecore.core.config.KeySetup;
 import mightypork.gamecore.resources.AsyncResourceLoader;
@@ -20,28 +19,19 @@ import mightypork.gamecore.resources.ResourceSetup;
  */
 public class AppInitOptions {
 	
-	boolean singleInstance = false;
-	
-	Backend backend = null;
-	File workdir = null;
-	
 	String logDir = "log";
 	String logFilePrefix = "runtime";
 	
 	String screenshotDir = "screenshots";
 	
-	int logArchiveCount = 0;
 	boolean busLogging = false;
 	
 	String configFile = "settings.cfg";
 	String configComment = "Main config file";
 	
-	public String lockFile = ".lock";
-	
 	final List<ResourceSetup> resourceLists = new ArrayList<>();
 	final List<KeySetup> keyLists = new ArrayList<>();
 	final List<ConfigSetup> configLists = new ArrayList<>();
-	final List<RouteSetup> routeLists = new ArrayList<>();
 	
 	ResourceLoader resourceLoader = new AsyncResourceLoader();
 	Level logLevel = Level.ALL;
@@ -65,12 +55,6 @@ public class AppInitOptions {
 	public void addKeys(KeySetup keys)
 	{
 		keyLists.add(keys);
-	}
-	
-	
-	public void addRoutes(RouteSetup keys)
-	{
-		routeLists.add(keys);
 	}
 	
 	

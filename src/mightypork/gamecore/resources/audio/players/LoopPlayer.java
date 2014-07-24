@@ -1,7 +1,7 @@
 package mightypork.gamecore.resources.audio.players;
 
 
-import mightypork.gamecore.resources.audio.LazyAudio;
+import mightypork.gamecore.resources.audio.DeferredAudio;
 import mightypork.gamecore.resources.audio.Volume;
 import mightypork.utils.interfaces.Pauseable;
 import mightypork.utils.interfaces.Updateable;
@@ -40,7 +40,7 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	 * @param baseGain base gain (volume multiplier)
 	 * @param volume volume control
 	 */
-	public LoopPlayer(LazyAudio track, double basePitch, double baseGain, Volume volume) {
+	public LoopPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume) {
 		super(track, (float) basePitch, (float) baseGain, volume);
 		
 		paused = true;
@@ -63,7 +63,7 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 	private void initLoop()
 	{
 		if (hasAudio() && sourceID == -1) {
-			sourceID = getAudio().playAsEffect(getPitch(1), getGain(1), true);
+			getAudio().play(computePitch(1), computeGain(1), true);
 			getAudio().pauseLoop();
 		}
 	}
@@ -95,10 +95,9 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 		
 		initLoop();
 		
-		sourceID = getAudio().resumeLoop();
 		paused = false;
 		
-		adjustGain(getGain(fadeAnim.value()));
+		getAudio().adjustGain(computeGain(fadeAnim.value()));
 	}
 	
 	
@@ -111,19 +110,13 @@ public class LoopPlayer extends BaseAudioPlayer implements Updateable, Pauseable
 		
 		fadeAnim.update(delta);
 		
-		final double gain = getGain(fadeAnim.value());
+		final double gain = computeGain(fadeAnim.value());
 		if (!paused && gain != lastUpdateGain) {
-			adjustGain(gain);
+			getAudio().adjustGain(gain);
 			lastUpdateGain = gain;
 		}
 		
 		if (gain == 0 && !paused) pause(); // pause on zero volume
-	}
-	
-	
-	private void adjustGain(double gain)
-	{
-		AL10.alSourcef(sourceID, AL10.AL_GAIN, (float) gain);
 	}
 	
 	

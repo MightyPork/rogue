@@ -5,7 +5,7 @@ import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.color.pal.RGB;
 import mightypork.utils.math.constraints.vect.Vect;
@@ -32,7 +32,7 @@ public class TextButton extends ClickableComponent implements DynamicWidthCompon
 	private boolean hoverMove = true;
 	
 	
-	public TextButton(GLFont font, String text, Color color) {
+	public TextButton(IFont font, String text, Color color) {
 		this.color = color;
 		
 		this.textPainter = new TextPainter(font, AlignX.CENTER, this.color, text);

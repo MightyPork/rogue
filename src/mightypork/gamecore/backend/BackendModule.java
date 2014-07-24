@@ -2,7 +2,6 @@ package mightypork.gamecore.backend;
 
 
 import mightypork.utils.annotations.Stub;
-import mightypork.utils.eventbus.BusAccess;
 import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.interfaces.Destroyable;
 
@@ -14,20 +13,9 @@ import mightypork.utils.interfaces.Destroyable;
  */
 public abstract class BackendModule extends BusNode implements Destroyable {
 	
-	/**
-	 * Create a module with bus access
-	 * 
-	 * @param busAccess
-	 */
-	public BackendModule(BusAccess busAccess) {
-		super(busAccess);
-	}
-	
-	
 	@Override
 	@Stub
 	public void destroy()
 	{
 	}
-	
 }

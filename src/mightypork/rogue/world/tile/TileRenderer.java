@@ -2,7 +2,7 @@ package mightypork.rogue.world.tile;
 
 
 import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.render.RenderModule;
+import mightypork.gamecore.render.GraphicsModule;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.rogue.world.level.render.TileRenderContext;
@@ -90,9 +90,8 @@ public abstract class TileRenderer implements Updateable {
 		
 		if (shadows == 0) return;
 		final Rect rect = context.getRect();
-
-
-		final RenderModule gfx = App.gfx();
+		
+		final GraphicsModule gfx = App.gfx();
 		
 		if ((shadows & Moves.BITS_NW_CORNER) == Moves.BIT_NW) gfx.quad(rect, SH_NW);
 		if ((shadows & Moves.BIT_N) != 0) gfx.quad(rect, SH_N);
@@ -116,8 +115,8 @@ public abstract class TileRenderer implements Updateable {
 	public void renderUnexploredFog(TileRenderContext context)
 	{
 		// TODO cache values, update neighbouring tiles upon "explored" flag changed.
-
-		final RenderModule gfx = App.gfx();
+		
+		final GraphicsModule gfx = App.gfx();
 		
 		final Rect rect = context.getRect();
 		
@@ -136,7 +135,6 @@ public abstract class TileRenderer implements Updateable {
 		}
 		
 		if (ufog == 0) return;
-		
 		
 		if ((ufog & Moves.BITS_NW_CORNER) == Moves.BIT_NW) gfx.quad(rect, UFOG_NW);
 		if ((ufog & Moves.BIT_N) != 0) gfx.quad(rect, UFOG_N);

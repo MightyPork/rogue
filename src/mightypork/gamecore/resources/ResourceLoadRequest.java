@@ -13,13 +13,13 @@ import mightypork.utils.eventbus.events.flags.SingleReceiverEvent;
 @SingleReceiverEvent
 public class ResourceLoadRequest extends BusEvent<ResourceLoader> {
 	
-	private final LazyResource resource;
+	private final DeferredResource resource;
 	
 	
 	/**
 	 * @param resource resource to load
 	 */
-	public ResourceLoadRequest(LazyResource resource) {
+	public ResourceLoadRequest(DeferredResource resource) {
 		this.resource = resource;
 	}
 	

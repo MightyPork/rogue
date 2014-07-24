@@ -3,7 +3,6 @@ package mightypork.rogue.screens.menu;
 
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.UserQuitRequest;
-import mightypork.gamecore.core.modules.AppAccess;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -13,9 +12,9 @@ import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.input.KeyStroke.Edge;
+import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.fonts.GLFont;
+import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.RogueScreen;
@@ -65,7 +64,7 @@ public class ScreenMainMenu extends RogueScreen {
 			
 			TextButton btn;
 			
-			final GLFont btnFont = Res.getFont("thick");
+			final IFont btnFont = Res.getFont("thick");
 			
 			// world button
 			btn = new TextButton(btnFont, "Play", PAL16.SLIMEGREEN);

@@ -6,10 +6,10 @@ import java.util.Collection;
 import java.util.List;
 
 import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.input.KeyStroke.Edge;
 import mightypork.gamecore.input.Keys;
 import mightypork.rogue.world.entity.impl.EntityPlayer;
 import mightypork.rogue.world.events.PlayerStepEndListener;

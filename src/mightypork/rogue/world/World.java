@@ -11,7 +11,6 @@ import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.events.GameWinHandler;
 import mightypork.rogue.world.events.PlayerDeathHandler;
 import mightypork.rogue.world.level.Level;
-import mightypork.utils.eventbus.BusAccess;
 import mightypork.utils.eventbus.EventBus;
 import mightypork.utils.eventbus.clients.DelegatingClient;
 import mightypork.utils.interfaces.Pauseable;

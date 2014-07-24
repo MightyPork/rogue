@@ -1,14 +1,10 @@
 package mightypork.rogue.world;
 
 
-import java.awt.GradientPaint;
-
 import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.render.GradH;
 import mightypork.gamecore.render.GradV;
-import mightypork.gamecore.render.RenderModule;
-import mightypork.gamecore.resources.Res;
-import mightypork.rogue.Const;
+import mightypork.gamecore.render.GraphicsModule;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
@@ -84,7 +80,7 @@ public class WorldRenderer extends RectProxy {
 	{
 		prepareRenderContextIfNeeded();
 		
-		final RenderModule gfx = App.gfx();
+		final GraphicsModule gfx = App.gfx();
 		
 		gfx.pushGeometry();
 		gfx.setColor(RGB.WHITE);
@@ -170,7 +166,6 @@ public class WorldRenderer extends RectProxy {
 		// === OVERLAY SHADOW ===
 		
 		gfx.popGeometry();
-		
 		
 		gfx.quad(leftShadow, new GradH(RGB.BLACK, RGB.NONE));
 		gfx.quad(rightShadow, new GradH(RGB.NONE, RGB.BLACK));

@@ -1,7 +1,7 @@
 package mightypork.gamecore.resources.audio.players;
 
 
-import mightypork.gamecore.resources.audio.LazyAudio;
+import mightypork.gamecore.resources.audio.DeferredAudio;
 import mightypork.gamecore.resources.audio.Volume;
 import mightypork.utils.interfaces.Destroyable;
 
@@ -14,7 +14,7 @@ import mightypork.utils.interfaces.Destroyable;
 public abstract class BaseAudioPlayer implements Destroyable {
 	
 	/** the track */
-	private final LazyAudio audio;
+	private final DeferredAudio audio;
 	
 	/** base gain for sfx */
 	private final double baseGain;
@@ -32,7 +32,7 @@ public abstract class BaseAudioPlayer implements Destroyable {
 	 * @param baseGain base gain (volume multiplier)
 	 * @param volume colume control
 	 */
-	public BaseAudioPlayer(LazyAudio track, double basePitch, double baseGain, Volume volume) {
+	public BaseAudioPlayer(DeferredAudio track, double basePitch, double baseGain, Volume volume) {
 		this.audio = track;
 		
 		this.baseGain = baseGain;
@@ -54,7 +54,7 @@ public abstract class BaseAudioPlayer implements Destroyable {
 	/**
 	 * @return audio resource
 	 */
-	protected LazyAudio getAudio()
+	protected DeferredAudio getAudio()
 	{
 		return audio;
 	}
@@ -66,7 +66,7 @@ public abstract class BaseAudioPlayer implements Destroyable {
 	 * @param multiplier extra volume adjustment
 	 * @return computed gain
 	 */
-	protected double getGain(double multiplier)
+	protected double computeGain(double multiplier)
 	{
 		return baseGain * gainMultiplier.get() * multiplier;
 	}
@@ -78,7 +78,7 @@ public abstract class BaseAudioPlayer implements Destroyable {
 	 * @param multiplier pitch adjustment
 	 * @return computed pitch
 	 */
-	protected double getPitch(double multiplier)
+	protected double computePitch(double multiplier)
 	{
 		return basePitch * multiplier;
 	}
