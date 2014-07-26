@@ -7,9 +7,7 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.newdawn.slick.openal.SoundStore;
 
-import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.resources.audio.AudioModule;
-import mightypork.gamecore.resources.audio.AudioReadyEvent;
 import mightypork.gamecore.resources.audio.DeferredAudio;
 import mightypork.gamecore.util.BufferHelper;
 import mightypork.utils.logging.Log;
@@ -40,8 +38,6 @@ public class SlickAudioModule extends AudioModule {
 				SoundStore.get().setMaxSources(MAX_SOURCES);
 				SoundStore.get().init();
 				setListenerPos(INITIAL_LISTENER_POS);
-				
-				App.bus().send(new AudioReadyEvent());
 			} catch (final Throwable t) {
 				Log.e("Error initializing sound system.", t);
 			}

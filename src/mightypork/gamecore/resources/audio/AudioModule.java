@@ -19,7 +19,7 @@ import mightypork.utils.math.constraints.vect.Vect;
 
 
 /**
- * Abstract audio backend module
+ * Abstract audio module.
  * 
  * @author Ondřej Hruška (MightyPork)
  */
@@ -61,6 +61,10 @@ public abstract class AudioModule extends BackendModule implements Updateable {
 	}
 	
 	
+	/**
+	 * Deinitialize the soud system, release resources etc.<br>
+	 * Audio resources are already destroyed.
+	 */
 	protected abstract void deinitSoundSystem();
 	
 	
@@ -107,7 +111,8 @@ public abstract class AudioModule extends BackendModule implements Updateable {
 	
 	
 	/**
-	 * Create {@link DeferredAudio} for a resource
+	 * Create {@link DeferredAudio} for a resource, request deferred load and
+	 * add to the resources list.
 	 * 
 	 * @param res a resource name
 	 * @return the resource
@@ -115,7 +120,7 @@ public abstract class AudioModule extends BackendModule implements Updateable {
 	 */
 	protected DeferredAudio createResource(String res)
 	{
-		final DeferredAudio a = doCreateResource(res);;
+		final DeferredAudio a = doCreateResource(res);
 		App.bus().send(new ResourceLoadRequest(a));
 		resources.add(a);
 		return a;
@@ -123,7 +128,7 @@ public abstract class AudioModule extends BackendModule implements Updateable {
 	
 	
 	/**
-	 * Create a backend-specific deferred audio resource instance.
+	 * Create a backend-specific deferred audio resource
 	 * 
 	 * @param res resource path
 	 * @return Deferred Audio
@@ -132,7 +137,7 @@ public abstract class AudioModule extends BackendModule implements Updateable {
 	
 	
 	/**
-	 * Fade out all loops (ie. for screen transitions)
+	 * Fade out all loops (= fade out the currently playing loops)
 	 */
 	public void fadeOutAllLoops()
 	{
@@ -154,42 +159,42 @@ public abstract class AudioModule extends BackendModule implements Updateable {
 	
 	
 	/**
-	 * Set level of master volume
+	 * Set level of master volume (volume multiplier)
 	 * 
-	 * @param d level
+	 * @param volume level (0..1)
 	 */
-	public void setMasterVolume(double d)
+	public void setMasterVolume(double volume)
 	{
-		masterVolume.set(d);
+		masterVolume.set(volume);
 	}
 	
 	
 	/**
-	 * Set level of effects volume
+	 * Set level of effects volume (volume multiplier)
 	 * 
-	 * @param d level
+	 * @param volume level (0..1)
 	 */
-	public void setEffectsVolume(double d)
+	public void setEffectsVolume(double volume)
 	{
-		effectsVolume.set(d);
+		effectsVolume.set(volume);
 	}
 	
 	
 	/**
-	 * Set level of music volume
+	 * Set level of loops volume (volume multiplier)
 	 * 
-	 * @param d level
+	 * @param volume level (0..1)
 	 */
-	public void setMusicVolume(double d)
+	public void setLoopsVolume(double volume)
 	{
-		loopsVolume.set(d);
+		loopsVolume.set(volume);
 	}
 	
 	
 	/**
-	 * Get level of master volume
+	 * Get level of master volume (volume multiplier)
 	 * 
-	 * @return level
+	 * @return level (0..1)
 	 */
 	public double getMasterVolume()
 	{
@@ -198,9 +203,9 @@ public abstract class AudioModule extends BackendModule implements Updateable {
 	
 	
 	/**
-	 * Get level of effects volume
+	 * Get level of effects volume (volume multiplier)
 	 * 
-	 * @return level
+	 * @return level (0..1)
 	 */
 	public double getEffectsVolume()
 	{
@@ -209,11 +214,11 @@ public abstract class AudioModule extends BackendModule implements Updateable {
 	
 	
 	/**
-	 * Get level of music volume
+	 * Get level of loops volume (volume multiplier)
 	 * 
-	 * @return level
+	 * @return level (0..1)
 	 */
-	public double getMusicVolume()
+	public double getLoopsVolume()
 	{
 		return loopsVolume.get();
 	}

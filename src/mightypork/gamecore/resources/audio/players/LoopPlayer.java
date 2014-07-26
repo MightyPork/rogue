@@ -7,8 +7,6 @@ import mightypork.utils.interfaces.Pauseable;
 import mightypork.utils.interfaces.Updateable;
 import mightypork.utils.math.animation.NumAnimated;
 
-import org.lwjgl.openal.AL10;
-
 
 /**
  * Audio loop player (with fading, good for music)

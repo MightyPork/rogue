@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import mightypork.gamecore.resources.audio.DeferredAudio;
-import mightypork.gamecore.resources.audio.SoundSystem;
 import mightypork.utils.files.FileUtils;
-import mightypork.utils.math.constraints.vect.Vect;
-
 import org.lwjgl.openal.AL10;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;
@@ -125,20 +122,6 @@ public class SlickAudio extends DeferredAudio {
 	
 	
 	@Override
-	public void play(double pitch, double gain, boolean loop)
-	{
-		play(pitch, gain, loop, SoundSystem.getListener());
-	}
-	
-	
-	@Override
-	public void play(double pitch, double gain, boolean loop, double x, double y)
-	{
-		play(pitch, gain, loop, x, y, SoundSystem.getListener().z());
-	}
-	
-	
-	@Override
 	public void play(double pitch, double gain, boolean loop, double x, double y, double z)
 	{
 		if (!ensureLoaded()) return;
@@ -148,15 +131,6 @@ public class SlickAudio extends DeferredAudio {
 		looping = loop;
 		
 		sourceID = backingAudio.playAsSoundEffect((float) pitch, (float) gain, loop, (float) x, (float) y, (float) z);
-	}
-	
-	
-	@Override
-	public void play(double pitch, double gain, boolean loop, Vect pos)
-	{
-		if (!ensureLoaded()) return;
-		
-		play(pitch, gain, loop, pos.x(), pos.y(), pos.z());
 	}
 	
 	
