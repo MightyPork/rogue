@@ -1,4 +1,4 @@
-package mightypork.gamecore.core;
+package mightypork.gamecore.core.init.impl;
 
 
 import java.io.File;
@@ -8,6 +8,9 @@ import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
+import mightypork.gamecore.core.App;
+import mightypork.gamecore.core.WorkDir;
+import mightypork.gamecore.core.init.InitTask;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.files.InstanceLock;
 import mightypork.utils.logging.Log;

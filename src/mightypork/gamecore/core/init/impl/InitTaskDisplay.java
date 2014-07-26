@@ -1,6 +1,7 @@
-package mightypork.gamecore.core;
+package mightypork.gamecore.core.init.impl;
 
 
+import mightypork.gamecore.core.init.InitTask;
 import mightypork.gamecore.render.GraphicsModule;
 
 

@@ -1,8 +1,10 @@
-package mightypork.gamecore.core;
+package mightypork.gamecore.core.init.impl;
 
 
 import java.io.IOException;
 
+import mightypork.gamecore.core.WorkDir;
+import mightypork.gamecore.core.init.InitTask;
 import mightypork.utils.logging.Log;
 
 

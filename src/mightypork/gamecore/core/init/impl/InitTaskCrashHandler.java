@@ -1,8 +1,10 @@
-package mightypork.gamecore.core;
+package mightypork.gamecore.core.init.impl;
 
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import mightypork.gamecore.core.App;
+import mightypork.gamecore.core.init.InitTask;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.logging.Log;
 

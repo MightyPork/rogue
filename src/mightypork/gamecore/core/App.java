@@ -8,6 +8,7 @@ import java.util.Map;
 
 import mightypork.gamecore.backend.Backend;
 import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.core.init.InitTask;
 import mightypork.gamecore.core.plugins.AppPlugin;
 import mightypork.gamecore.render.GraphicsModule;
 import mightypork.gamecore.resources.audio.AudioModule;
@@ -124,7 +125,7 @@ public class App extends BusNode {
 		Log.i("=== Starting initialization sequence ===");
 		
 		// sort initializers by order.
-		List<InitTask> orderedInitializers = InitTasks.inOrder(initializers);
+		List<InitTask> orderedInitializers = InitTask.inOrder(initializers);
 		
 		for (InitTask initializer : orderedInitializers) {
 			Log.f1("Running init task \"" + initializer.getName() + "\"...");
