@@ -4,7 +4,7 @@ package mightypork.gamecore.resources.audio;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
 

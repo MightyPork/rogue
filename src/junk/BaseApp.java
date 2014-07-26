@@ -1,14 +1,16 @@
-package mightypork.gamecore.core.modules;
+package junk;
 
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import mightypork.gamecore.WorkDir;
+import mightypork.gamecore.WorkDir.RouteSetup;
 import mightypork.gamecore.backend.Backend;
-import mightypork.gamecore.core.WorkDir;
-import mightypork.gamecore.core.WorkDir.RouteSetup;
-import mightypork.gamecore.core.config.Config;
-import mightypork.gamecore.core.config.ConfigSetup;
-import mightypork.gamecore.core.config.KeySetup;
+import mightypork.gamecore.config.Config;
+import mightypork.gamecore.config.ConfigSetup;
+import mightypork.gamecore.config.KeySetup;
+import mightypork.gamecore.core.App;
+import mightypork.gamecore.core.MainLoop;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
 import mightypork.gamecore.input.InputSystem;

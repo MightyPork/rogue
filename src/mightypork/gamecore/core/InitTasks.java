@@ -1,4 +1,4 @@
-package mightypork.gamecore.initializers;
+package mightypork.gamecore.core;
 
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Set;
 import mightypork.utils.logging.Log;
 
 
-public class InitTaskResolver {
+public class InitTasks {
 	
 	/**
 	 * Order init tasks so that all dependencies are loaded before thye are
@@ -19,7 +19,7 @@ public class InitTaskResolver {
 	 * @param tasks task list
 	 * @return task list ordered
 	 */
-	public static List<InitTask> order(List<InitTask> tasks)
+	public static List<InitTask> inOrder(List<InitTask> tasks)
 	{
 		List<InitTask> remaining = new ArrayList<>(tasks);
 		

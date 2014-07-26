@@ -1,7 +1,7 @@
 package mightypork.gamecore.resources.fonts;
 
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.color.pal.RGB;

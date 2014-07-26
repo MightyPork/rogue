@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.menu;
 
 
-import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.config.Config;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
@@ -103,7 +103,7 @@ public class ScreenMainMenu extends RogueScreen {
 			});
 			rows.add(btn, 2);
 			
-			bindKey(Config.getKey("general.close"), Edge.RISING, new Runnable() {
+			bindKey(Config.getKeyStroke("general.close"), Edge.RISING, new Runnable() {
 				
 				@Override
 				public void run()

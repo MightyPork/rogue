@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.components.InputComponent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseButtonHandler;

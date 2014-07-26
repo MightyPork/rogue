@@ -1,4 +1,4 @@
-package mightypork.gamecore.initializers.tasks;
+package mightypork.gamecore.core;
 
 
 import java.io.File;
@@ -8,9 +8,7 @@ import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
-import mightypork.gamecore.core.WorkDir;
-import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.initializers.InitTask;
+import mightypork.gamecore.WorkDir;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.files.InstanceLock;
 import mightypork.utils.logging.Log;
@@ -21,9 +19,9 @@ import mightypork.utils.logging.Log;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class InitTaskSetupWorkdir extends InitTask {
+public class InitTaskWorkdir extends InitTask {
 	
-	private final File workdirPath;
+	private File workdirPath;
 	private boolean doLock;
 	private String lockFile = ".lock";
 	private Map<String, String> namedPaths = new HashMap<>();
@@ -33,8 +31,31 @@ public class InitTaskSetupWorkdir extends InitTask {
 	 * @param workdir path to the working directory
 	 * @param lock whether to lock the directory (single instance mode)
 	 */
-	public InitTaskSetupWorkdir(File workdir, boolean lock) {
+	public InitTaskWorkdir(File workdir, boolean lock) {
 		this.workdirPath = workdir;
+		this.doLock = lock;
+	}
+	
+	
+	/**
+	 * Set workdir root path
+	 * 
+	 * @param path workdir path
+	 */
+	public void setWorkdirPath(File path)
+	{
+		this.workdirPath = path;
+	}
+	
+	
+	/**
+	 * Set whether the workdir should be locked when the app is running, to
+	 * prevent other instances from running simultaneously.
+	 * 
+	 * @param lock
+	 */
+	public void setInstanceLock(boolean lock)
+	{
 		this.doLock = lock;
 	}
 	
@@ -63,7 +84,7 @@ public class InitTaskSetupWorkdir extends InitTask {
 	
 	
 	@Override
-	public void run(App app)
+	public void run()
 	{
 		WorkDir.init(workdirPath);
 		

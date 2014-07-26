@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.config.Config;
 import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyBindingPool;
@@ -25,10 +25,10 @@ public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClien
 	
 	//@formatter:off
 	private static final KeyStroke[] keys = {
-		Config.getKey("game.walk.left"),
-		Config.getKey("game.walk.right"),
-		Config.getKey("game.walk.up"),
-		Config.getKey("game.walk.down")
+		Config.getKeyStroke("game.walk.left"),
+		Config.getKeyStroke("game.walk.right"),
+		Config.getKeyStroke("game.walk.up"),
+		Config.getKeyStroke("game.walk.down")
 	};
 	
 	private static final Move[] sides = { Moves.W, Moves.E, Moves.N, Moves.S };

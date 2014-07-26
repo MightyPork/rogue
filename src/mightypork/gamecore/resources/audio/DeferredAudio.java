@@ -1,7 +1,7 @@
 package mightypork.gamecore.resources.audio;
 
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.resources.BaseDeferredResource;
 import mightypork.utils.annotations.Alias;
 import mightypork.utils.math.constraints.vect.Vect;

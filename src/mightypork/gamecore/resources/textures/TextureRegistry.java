@@ -4,7 +4,7 @@ package mightypork.gamecore.resources.textures;
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.utils.exceptions.KeyAlreadyExistsException;
 import mightypork.utils.math.constraints.rect.Rect;

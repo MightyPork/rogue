@@ -18,13 +18,12 @@ public class GridLayout extends LayoutComponent {
 	
 	
 	/**
-	 * @param app app access
 	 * @param context context
 	 * @param rows number of rows
 	 * @param cols number of columns
 	 */
-	public GridLayout(AppAccess app, RectBound context, int rows, int cols) {
-		super(app, context);
+	public GridLayout(RectBound context, int rows, int cols) {
+		super(context);
 		this.tiler = tiles(cols, rows);
 	}
 	
@@ -33,12 +32,11 @@ public class GridLayout extends LayoutComponent {
 	 * make a new holder.<br>
 	 * Context must be assigned before rendering.
 	 * 
-	 * @param app app access
 	 * @param rows number of rows
 	 * @param cols number of columns
 	 */
-	public GridLayout(AppAccess app, int rows, int cols) {
-		this(app, null, rows, cols);
+	public GridLayout(int rows, int cols) {
+		this(null, rows, cols);
 	}
 	
 	

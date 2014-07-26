@@ -1,4 +1,4 @@
-package mightypork.gamecore.core.modules;
+package mightypork.gamecore.core;
 
 
 import java.util.ArrayList;
@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import mightypork.gamecore.backend.Backend;
-import mightypork.gamecore.initializers.InitTask;
-import mightypork.gamecore.initializers.InitTaskResolver;
+import mightypork.gamecore.config.Config;
 import mightypork.gamecore.plugins.AppPlugin;
 import mightypork.gamecore.render.GraphicsModule;
 import mightypork.gamecore.resources.audio.AudioModule;
@@ -30,14 +29,17 @@ import mightypork.utils.logging.Log;
  */
 public class App extends BusNode {
 	
-	private static App runningInstance;
+	private static App instance;
 	
-	protected final Backend backend;
-	protected final EventBus eventBus;
-	protected boolean started = false;
+	private final Backend backend;
+	private final EventBus eventBus = new EventBus();
+	private boolean started = false;
 	
-	protected final DelegatingList plugins;
+	protected final DelegatingList plugins = new DelegatingList();
 	protected final List<InitTask> initializers = new ArrayList<>();
+	
+	// visible to Config init task.
+	final Map<String, Config> configs = new HashMap<>();
 	
 	
 	/**
@@ -46,21 +48,17 @@ public class App extends BusNode {
 	 * @param backend
 	 */
 	public App(Backend backend) {
-		if (App.runningInstance != null) {
+		if (App.instance != null) {
 			throw new IllegalStateException("App already initialized");
 		}
 		
 		// store current instance in static field
-		App.runningInstance = this;
-		
-		// create an event bus
-		this.eventBus = new EventBus();
+		App.instance = this;
 		
 		// join the bus
 		this.eventBus.subscribe(this);
 		
 		// create plugin registry attached to bus
-		this.plugins = new DelegatingList();
 		this.eventBus.subscribe(this.plugins);
 		
 		// initialize and use backend
@@ -90,7 +88,6 @@ public class App extends BusNode {
 	/**
 	 * Add an initializer to the app.
 	 * 
-	 * @param order
 	 * @param initializer
 	 */
 	public void addInitializer(InitTask initializer)
@@ -133,11 +130,13 @@ public class App extends BusNode {
 		Log.i("=== Starting initialization sequence ===");
 		
 		// sort initializers by order.
-		List<InitTask> orderedInitializers = InitTaskResolver.order(initializers);
+		List<InitTask> orderedInitializers = InitTasks.inOrder(initializers);
 		
 		for (InitTask initializer : orderedInitializers) {
 			Log.f1("Running init task \"" + initializer.getName() + "\"...");
-			initializer.run(this);
+			initializer.bind(this);
+			initializer.init();
+			initializer.run();
 		}
 		
 		Log.i("=== Initialization sequence completed ===");
@@ -168,16 +167,17 @@ public class App extends BusNode {
 	
 	public static void shutdown()
 	{
-		if (runningInstance == null) throw new IllegalStateException("App is not running.");
+		if (instance == null) throw new IllegalStateException("App is not running.");
 		
 		Log.i("Shutting down subsystems...");
 		
 		// TODO send some shutdown notify event
 		
 		try {
-			if (bus() != null) {
-				bus().send(new DestroyEvent());
-				bus().destroy();
+			final EventBus bus = bus();
+			if (bus != null) {
+				bus.send(new DestroyEvent());
+				bus.destroy();
 			}
 		} catch (final Throwable e) {
 			Log.e(e);
@@ -189,13 +189,24 @@ public class App extends BusNode {
 	
 	
 	/**
+	 * Get the currently running App instance.
+	 * 
+	 * @return app instance
+	 */
+	public static App instance()
+	{
+		return instance;
+	}
+	
+	
+	/**
 	 * Get graphics module from the backend
 	 * 
 	 * @return backend
 	 */
 	public static GraphicsModule gfx()
 	{
-		return runningInstance.backend.getGraphics();
+		return instance.backend.getGraphics();
 	}
 	
 	
@@ -206,7 +217,7 @@ public class App extends BusNode {
 	 */
 	public static AudioModule audio()
 	{
-		return runningInstance.backend.getAudio();
+		return instance.backend.getAudio();
 	}
 	
 	
@@ -217,6 +228,35 @@ public class App extends BusNode {
 	 */
 	public static EventBus bus()
 	{
-		return runningInstance.eventBus;
+		return instance.eventBus;
+	}
+	
+	
+	/**
+	 * Get the main config, if initialized.
+	 * 
+	 * @return main config
+	 * @throws IllegalArgumentException if there is no such config.
+	 */
+	public static Config cfg()
+	{
+		return cfg("main");
+	}
+	
+	
+	/**
+	 * Get a config by alias.
+	 * 
+	 * @param alias config alias
+	 * @return the config
+	 * @throws IllegalArgumentException if there is no such config.
+	 */
+	public static Config cfg(String alias)
+	{
+		Config c = instance.configs.get(alias);
+		if (c == null) {
+			throw new IllegalArgumentException("There is no config with alias \"" + alias + "\"");
+		}
+		return c;
 	}
 }

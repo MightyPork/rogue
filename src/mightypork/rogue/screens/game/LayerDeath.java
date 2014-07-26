@@ -3,7 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.IOException;
 
-import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.config.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -89,9 +89,9 @@ public class LayerDeath extends FadingLayer {
 		btn1.setAction(load);
 		btn2.setAction(quit);
 		
-		bindKey(Config.getKey("game.load"), Edge.RISING, load);
-		bindKey(Config.getKey("general.confirm"), Edge.RISING, load);
-		bindKey(Config.getKey("general.close"), Edge.RISING, quit);
+		bindKey(Config.getKeyStroke("game.load"), Edge.RISING, load);
+		bindKey(Config.getKeyStroke("general.confirm"), Edge.RISING, load);
+		bindKey(Config.getKeyStroke("general.close"), Edge.RISING, quit);
 	}
 	
 	

@@ -1,7 +1,7 @@
 package mightypork.rogue.world.tile;
 
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.render.GraphicsModule;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;

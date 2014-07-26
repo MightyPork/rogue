@@ -1,7 +1,7 @@
 package mightypork.gamecore.core.events;
 
 
-import mightypork.gamecore.core.modules.MainLoop;
+import mightypork.gamecore.core.MainLoop;
 import mightypork.utils.eventbus.BusEvent;
 import mightypork.utils.eventbus.events.flags.SingleReceiverEvent;
 

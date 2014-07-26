@@ -1,8 +1,8 @@
 package mightypork.gamecore.plugins.screenshot;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.events.MainLoopRequest;
-import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.plugins.AppPlugin;
 import mightypork.utils.Support;
 

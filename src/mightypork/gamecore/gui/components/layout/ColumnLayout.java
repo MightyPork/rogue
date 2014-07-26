@@ -10,13 +10,13 @@ public class ColumnLayout extends GridLayout {
 	private int col = 0;
 	
 	
-	public ColumnLayout(AppAccess app, int rows) {
-		this(app, null, rows);
+	public ColumnLayout(int rows) {
+		this(null, rows);
 	}
 	
 	
-	public ColumnLayout(AppAccess app, RectBound context, int cols) {
-		super(app, context, 1, cols);
+	public ColumnLayout(RectBound context, int cols) {
+		super(context, 1, cols);
 	}
 	
 	

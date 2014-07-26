@@ -3,7 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.IOException;
 
-import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.config.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -121,13 +121,13 @@ public class LayerAskSave extends FadingLayer {
 		btn2.setAction(discard);
 		btn3.setAction(cancel);
 		
-		bindKey(Config.getKey("general.close"), Edge.RISING, cancel);
-		bindKey(Config.getKey("general.cancel"), Edge.RISING, cancel);
+		bindKey(Config.getKeyStroke("general.close"), Edge.RISING, cancel);
+		bindKey(Config.getKeyStroke("general.cancel"), Edge.RISING, cancel);
 		
-		bindKey(Config.getKey("general.yes"), Edge.RISING, save);
-		bindKey(Config.getKey("general.confirm"), Edge.RISING, save);
+		bindKey(Config.getKeyStroke("general.yes"), Edge.RISING, save);
+		bindKey(Config.getKeyStroke("general.confirm"), Edge.RISING, save);
 		
-		bindKey(Config.getKey("general.no"), Edge.RISING, discard);
+		bindKey(Config.getKeyStroke("general.no"), Edge.RISING, discard);
 	}
 	
 	

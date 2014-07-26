@@ -4,7 +4,7 @@ package mightypork.gamecore.gui.screens;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.Hideable;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.events.LayoutChangeListener;

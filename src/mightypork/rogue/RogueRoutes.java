@@ -1,8 +1,8 @@
 package mightypork.rogue;
 
 
-import mightypork.gamecore.core.WorkDir.RouteOpts;
-import mightypork.gamecore.core.WorkDir.RouteSetup;
+import mightypork.gamecore.WorkDir.RouteOpts;
+import mightypork.gamecore.WorkDir.RouteSetup;
 
 
 public class RogueRoutes implements RouteSetup {

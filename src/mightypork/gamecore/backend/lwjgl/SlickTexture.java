@@ -7,7 +7,7 @@ import mightypork.gamecore.resources.MustLoadInRenderingContext;
 import mightypork.gamecore.resources.textures.DeferredTexture;
 import mightypork.utils.annotations.Alias;
 import mightypork.utils.exceptions.IllegalValueException;
-import mightypork.utils.files.FileUtils;
+import mightypork.utils.files.FileUtil;
 import mightypork.utils.logging.Log;
 
 import org.lwjgl.opengl.GL11;
@@ -41,7 +41,7 @@ public class SlickTexture extends DeferredTexture {
 	protected synchronized void loadResource(String path)
 	{
 		try {
-			final String ext = FileUtils.getExtension(path).toUpperCase();
+			final String ext = FileUtil.getExtension(path).toUpperCase();
 			
 			final int filtering;
 			switch (filter) {
@@ -55,7 +55,7 @@ public class SlickTexture extends DeferredTexture {
 					throw new IllegalValueException("Unsupported filtering mode.");
 			}
 			
-			final Texture texture = TextureLoader.getTexture(ext, FileUtils.getResource(path), false, filtering);
+			final Texture texture = TextureLoader.getTexture(ext, FileUtil.getResource(path), false, filtering);
 			
 			if (texture == null) {
 				Log.w("Texture " + path + " could not be loaded.");

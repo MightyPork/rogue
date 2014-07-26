@@ -6,11 +6,10 @@ import static org.lwjgl.opengl.GL11.*;
 import java.nio.ByteBuffer;
 import java.util.Stack;
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.render.Grad;
 import mightypork.gamecore.render.GraphicsModule;
 import mightypork.gamecore.render.Screenshot;
-import mightypork.gamecore.render.events.DisplayReadyEvent;
 import mightypork.gamecore.render.events.ViewportChangeEvent;
 import mightypork.gamecore.resources.textures.DeferredTexture;
 import mightypork.gamecore.resources.textures.TxQuad;
@@ -438,8 +437,6 @@ public class LwjglGraphicsModule extends GraphicsModule {
 				Display.update();
 				fullscreenSetRequested = false;
 			}
-			
-			App.bus().send(new DisplayReadyEvent());
 			
 		} catch (final Exception e) {
 			throw new RuntimeException("Could not initialize display.", e);

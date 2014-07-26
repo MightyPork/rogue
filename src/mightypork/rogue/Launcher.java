@@ -4,7 +4,7 @@ package mightypork.rogue;
 import java.io.File;
 import java.util.logging.Level;
 
-import mightypork.gamecore.core.modules.BaseApp;
+import junk.BaseApp;
 import mightypork.utils.files.OsUtils;
 
 

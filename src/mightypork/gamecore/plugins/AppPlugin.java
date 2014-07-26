@@ -1,7 +1,7 @@
 package mightypork.gamecore.plugins;
 
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.clients.BusNode;
 

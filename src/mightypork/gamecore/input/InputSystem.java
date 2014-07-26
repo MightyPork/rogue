@@ -1,8 +1,8 @@
 package mightypork.gamecore.input;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.events.UserQuitRequest;
-import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.input.events.InputReadyEvent;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.MouseButtonEvent;

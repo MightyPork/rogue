@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.components.painters;
 
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.resources.textures.TxQuad;

@@ -1,7 +1,7 @@
 package mightypork.rogue.world.entity.render;
 
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.gamecore.resources.textures.TxSheet;

@@ -1,7 +1,7 @@
 package mightypork.gamecore.gui.screens;
 
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.Edge;

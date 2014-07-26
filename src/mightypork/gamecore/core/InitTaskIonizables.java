@@ -1,10 +1,8 @@
-package mightypork.gamecore.initializers.tasks;
+package mightypork.gamecore.core;
 
 
 import java.io.IOException;
 
-import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.initializers.InitTask;
 import mightypork.utils.ion.Ion;
 import mightypork.utils.ion.IonInput;
 import mightypork.utils.ion.IonOutput;
@@ -19,10 +17,10 @@ import mightypork.utils.math.algo.Move;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class InitTaskRegisterIonizables extends InitTask {
+public class InitTaskIonizables extends InitTask {
 	
 	@Override
-	public void run(App app)
+	public void run()
 	{
 		Ion.registerIndirect(255, new IonizerBinary<Coord>() {
 			

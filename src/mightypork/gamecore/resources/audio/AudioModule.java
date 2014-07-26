@@ -9,7 +9,7 @@ import org.newdawn.slick.openal.SoundStore;
 
 import mightypork.gamecore.backend.BackendModule;
 import mightypork.gamecore.backend.lwjgl.SlickAudio;
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;

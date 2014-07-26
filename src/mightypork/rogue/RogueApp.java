@@ -1,13 +1,13 @@
 package mightypork.rogue;
 
 
+import junk.AppInitOptions;
+import junk.BaseApp;
 import mightypork.gamecore.backend.lwjgl.LwjglBackend;
-import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.config.Config;
 import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.core.events.ShudownRequest;
 import mightypork.gamecore.core.events.UserQuitRequest;
-import mightypork.gamecore.core.modules.AppInitOptions;
-import mightypork.gamecore.core.modules.BaseApp;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.input.InputSystem;
@@ -118,7 +118,7 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	
 	private void bindEventToKey(final BusEvent<?> event, String strokeName)
 	{
-		getInput().bindKey(Config.getKey(strokeName), Edge.RISING, new Runnable() {
+		getInput().bindKey(Config.getKeyStroke(strokeName), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()

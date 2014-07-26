@@ -7,7 +7,8 @@ import java.io.IOException;
 
 /**
  * <p>
- * Screenshot object, can be used to save image to file.
+ * Screenshot object used to save screenshot to a file. The Screenshot object is
+ * created by the Graphics module.
  * </p>
  * <p>
  * Screenshot typically takes a byte buffer and converts it to image before

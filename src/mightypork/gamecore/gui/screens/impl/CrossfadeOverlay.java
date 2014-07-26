@@ -1,8 +1,8 @@
 package mightypork.gamecore.gui.screens.impl;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.events.ShudownRequest;
-import mightypork.gamecore.core.modules.App;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.gui.screens.Overlay;
@@ -66,7 +66,7 @@ public class CrossfadeOverlay extends Overlay {
 		
 		if (screen == null) {
 			// going for halt
-			getSoundSystem().fadeOutAllLoops();
+			App.audio().fadeOutAllLoops();
 		}
 		
 		if (fromDark) {

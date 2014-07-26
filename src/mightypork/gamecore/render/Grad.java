@@ -5,7 +5,7 @@ import mightypork.utils.math.color.Color;
 
 
 /**
- * Linear gradient (each vertex can have different color)
+ * Linear gradient (each corner can have different color)
  * 
  * @author MightyPork
  */

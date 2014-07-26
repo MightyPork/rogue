@@ -4,91 +4,61 @@ package mightypork.gamecore.gui.components;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.resources.audio.SoundSystem;
-import mightypork.utils.eventbus.EventBus;
 import mightypork.utils.eventbus.clients.ClientHub;
+import mightypork.utils.eventbus.clients.DelegatingList;
 import mightypork.utils.math.constraints.rect.RectBound;
 
 
-public abstract class LayoutComponent extends BaseComponent implements ClientHub, AppAccess {
+public abstract class LayoutComponent extends BaseComponent implements ClientHub {
 	
-	private final AppSubModule subModule;
+	private final DelegatingList clientList;
 	final LinkedList<Component> components = new LinkedList<>();
 	
 	
-	public LayoutComponent(AppAccess app, RectBound context) {
-		this.subModule = new AppSubModule(app);
+	public LayoutComponent(RectBound context) {
+		this.clientList = new DelegatingList();
 		setRect(context);
 		enableCaching(true); // layout is typically updated only when screen resizes.
 	}
 	
 	
-	public LayoutComponent(AppAccess app) {
-		this(app, null);
-	}
-	
-	
-	@Override
-	public EventBus getEventBus()
-	{
-		return subModule.getEventBus();
+	public LayoutComponent() {
+		this(null);
 	}
 	
 	
 	@Override
 	public Collection<Object> getChildClients()
 	{
-		return subModule.getChildClients();
+		return clientList;
 	}
 	
 	
 	@Override
 	public boolean doesDelegate()
 	{
-		return subModule.doesDelegate();
+		return clientList.doesDelegate();
 	}
 	
 	
 	@Override
 	public boolean isListening()
 	{
-		return subModule.isListening();
-	}
-	
-	
-	@Override
-	public SoundSystem getSoundSystem()
-	{
-		return subModule.getSoundSystem();
-	}
-	
-	
-	@Override
-	public InputSystem getInput()
-	{
-		return subModule.getInput();
-	}
-	
-	
-	@Override
-	public void shutdown()
-	{
-		subModule.shutdown();
+		return clientList.isListening();
 	}
 	
 	
 	@Override
 	public void addChildClient(Object client)
 	{
-		subModule.addChildClient(client);
+		clientList.add(client);
 	}
 	
 	
 	@Override
 	public void removeChildClient(Object client)
 	{
-		subModule.removeChildClient(client);
+		clientList.remove(client);
 	}
 	
 	
@@ -113,7 +83,9 @@ public abstract class LayoutComponent extends BaseComponent implements ClientHub
 	protected final void attach(Component component)
 	{
 		if (component == null) return;
-		if (component == this) throw new IllegalArgumentException("Uruboros. (infinite recursion evaded)");
+		if (component == this) {
+			throw new IllegalArgumentException("Uruboros. (infinite recursion evaded)");
+		}
 		
 		components.add(component);
 		addChildClient(component);

@@ -1,8 +1,6 @@
-package mightypork.gamecore.initializers.tasks;
+package mightypork.gamecore.core;
 
 
-import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.initializers.InitTask;
 import mightypork.gamecore.render.GraphicsModule;
 
 
@@ -11,7 +9,7 @@ import mightypork.gamecore.render.GraphicsModule;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class InitTaskSetupDisplay extends InitTask {
+public class InitTaskDisplay extends InitTask {
 	
 	private int width = 800, height = 600, fps = 60;
 	private boolean resizable, fullscreen;
@@ -76,7 +74,7 @@ public class InitTaskSetupDisplay extends InitTask {
 	
 	
 	@Override
-	public void run(App app)
+	public void run()
 	{
 		GraphicsModule gfx = app.getBackend().getGraphics();
 		

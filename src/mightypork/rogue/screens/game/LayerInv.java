@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.game;
 
 
-import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.config.Config;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
@@ -29,9 +29,9 @@ public class LayerInv extends FadingLayer {
 	private static final int SLOT_COUNT = 8;
 	private static final int SLOT_ROW = 4;
 	
-	private final KeyStroke keyUse = Config.getKey("game.inv.use");
-	private final KeyStroke keyDrop = Config.getKey("game.inv.drop");
-	private final KeyStroke keyClose = Config.getKey("general.close");
+	private final KeyStroke keyUse = Config.getKeyStroke("game.inv.use");
+	private final KeyStroke keyDrop = Config.getKeyStroke("game.inv.drop");
+	private final KeyStroke keyClose = Config.getKeyStroke("general.close");
 	
 	private final StringProvider contextStrProv = new StringProvider() {
 		
@@ -233,7 +233,7 @@ public class LayerInv extends FadingLayer {
 	private void setupGridWalkKeys()
 	{
 		
-		bindKey(Config.getKey("game.inv.move.left"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.inv.move.left"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -250,7 +250,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(Config.getKey("game.inv.move.right"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.inv.move.right"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -267,7 +267,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(Config.getKey("game.inv.move.up"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.inv.move.up"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -284,7 +284,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(Config.getKey("game.inv.move.down"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.inv.move.down"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()

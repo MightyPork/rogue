@@ -18,7 +18,7 @@ public class ConstraintLayout extends LayoutComponent {
 	
 	
 	public ConstraintLayout(RectBound context) {
-		super(app, context);
+		super(context);
 	}
 	
 	

@@ -1,14 +1,11 @@
-package mightypork.gamecore.core.modules;
+package mightypork.gamecore.core;
 
 
 import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import mightypork.gamecore.gui.screens.ScreenRegistry;
-import mightypork.gamecore.plugins.screenshot.TaskTakeScreenshot;
 import mightypork.gamecore.render.Renderable;
-import mightypork.gamecore.render.events.ScreenshotRequestListener;
-import mightypork.utils.Support;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.eventbus.events.UpdateEvent;

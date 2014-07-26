@@ -11,7 +11,7 @@ import mightypork.gamecore.resources.MustLoadInRenderingContext;
 import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.gamecore.resources.textures.FilterMode;
 import mightypork.utils.annotations.Alias;
-import mightypork.utils.files.FileUtils;
+import mightypork.utils.files.FileUtil;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.vect.Vect;
 
@@ -131,7 +131,7 @@ public class LazyFont extends BaseDeferredResource implements IFont {
 	 */
 	protected Font getAwtFont(String resource, float size, int style) throws IOException
 	{
-		try (InputStream in = FileUtils.getResource(resource)) {
+		try (InputStream in = FileUtil.getResource(resource)) {
 			
 			Font awtFont = Font.createFont(Font.TRUETYPE_FONT, in);
 			

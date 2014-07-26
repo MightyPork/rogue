@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.ScreenRequestListener;
 import mightypork.gamecore.render.Renderable;

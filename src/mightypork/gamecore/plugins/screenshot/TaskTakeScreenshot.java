@@ -4,8 +4,8 @@ package mightypork.gamecore.plugins.screenshot;
 import java.io.File;
 import java.io.IOException;
 
-import mightypork.gamecore.core.WorkDir;
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.WorkDir;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.render.Screenshot;
 import mightypork.utils.Support;
 import mightypork.utils.logging.Log;

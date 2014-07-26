@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import mightypork.gamecore.resources.audio.DeferredAudio;
-import mightypork.utils.files.FileUtils;
+import mightypork.utils.files.FileUtil;
 import org.lwjgl.openal.AL10;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.SoundStore;
@@ -37,9 +37,9 @@ public class SlickAudio extends DeferredAudio {
 	@Override
 	protected void loadResource(String resource) throws IOException
 	{
-		final String ext = FileUtils.getExtension(resource);
+		final String ext = FileUtil.getExtension(resource);
 		
-		try (final InputStream stream = FileUtils.getResource(resource)) {
+		try (final InputStream stream = FileUtil.getResource(resource)) {
 			
 			if (ext.equalsIgnoreCase("ogg")) {
 				backingAudio = SoundStore.get().getOgg(resource, stream);

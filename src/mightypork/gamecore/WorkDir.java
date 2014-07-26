@@ -1,4 +1,4 @@
-package mightypork.gamecore.core;
+package mightypork.gamecore;
 
 
 import java.io.File;

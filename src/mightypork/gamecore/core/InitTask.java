@@ -1,7 +1,6 @@
-package mightypork.gamecore.initializers;
+package mightypork.gamecore.core;
 
 
-import mightypork.gamecore.core.modules.App;
 import mightypork.utils.annotations.Stub;
 
 
@@ -14,12 +13,39 @@ import mightypork.utils.annotations.Stub;
  */
 public abstract class InitTask {
 	
+	protected App app;
+	
+	
+	/**
+	 * Assign the initialized app instance to a protected "app" field.
+	 * 
+	 * @param app app
+	 */
+	public void bind(App app)
+	{
+		if (this.app != null) {
+			throw new IllegalStateException("App instance is already set.");
+		}
+		
+		this.app = app;
+	}
+	
+	
+	/**
+	 * An intialization method that is called before the run() method.<br>
+	 * This method should be left unimplemented in the task, and can be used to
+	 * configure the init task when using it as anonymous inner type.
+	 */
+	@Stub
+	public void init()
+	{
+	}
+	
+	
 	/**
 	 * Run the initalizer on app.
-	 * 
-	 * @param app the app instance.
 	 */
-	public abstract void run(App app);
+	public abstract void run();
 	
 	
 	/**

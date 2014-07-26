@@ -308,7 +308,8 @@ public abstract class GraphicsModule extends BackendModule {
 	
 	/**
 	 * Take screenshot (expensive processing should be done in separate thread
-	 * when screenshot is saved).
+	 * when screenshot is saved).<br>
+	 * This method is utilized by the Screenshot plugin.
 	 * 
 	 * @return screenshot object
 	 */
@@ -316,7 +317,7 @@ public abstract class GraphicsModule extends BackendModule {
 	
 	
 	/**
-	 * FIXME This should be moved to inout module
+	 * FIXME This should probably be moved to input module
 	 * 
 	 * @return true if close was requested recently (i.e. click on cross)
 	 */
@@ -345,7 +346,7 @@ public abstract class GraphicsModule extends BackendModule {
 	
 	
 	/**
-	 * Set titlebar text
+	 * Set window titlebar text
 	 * 
 	 * @param title titlebar text
 	 */
@@ -369,7 +370,7 @@ public abstract class GraphicsModule extends BackendModule {
 	
 	
 	/**
-	 * Get screen rect. Should always return the same Vect instance.
+	 * Get screen rect. Should always return the same Rect instance.
 	 * 
 	 * @return the rect
 	 */
@@ -393,6 +394,14 @@ public abstract class GraphicsModule extends BackendModule {
 	
 	
 	/**
+	 * Get screen size. Should always return the same Vect instance.
+	 * 
+	 * @return size
+	 */
+	public abstract Vect getSize();
+	
+	
+	/**
 	 * @return screen width
 	 */
 	public abstract int getWidth();
@@ -402,12 +411,4 @@ public abstract class GraphicsModule extends BackendModule {
 	 * @return screen height
 	 */
 	public abstract int getHeight();
-	
-	
-	/**
-	 * Get screen size. Should always return the same Vect instance.
-	 * 
-	 * @return size
-	 */
-	public abstract Vect getSize();
 }

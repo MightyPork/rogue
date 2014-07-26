@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.story;
 
 
-import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.config.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.RowLayout;
@@ -217,7 +217,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		bindKey(new KeyStroke(Keys.RIGHT), Edge.RISING, next);
 		bindKey(new KeyStroke(Keys.BACKSPACE), Edge.RISING, prev);
 		bindKey(new KeyStroke(Keys.LEFT), Edge.RISING, prev);
-		bindKey(Config.getKey("general.close"), Edge.RISING, close);
+		bindKey(Config.getKeyStroke("general.close"), Edge.RISING, close);
 	}
 	
 	private int slide = 0;

@@ -1,40 +1,52 @@
-package mightypork.gamecore.core.config;
+package mightypork.gamecore.config;
 
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import mightypork.gamecore.WorkDir;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.utils.files.config.Property;
-import mightypork.utils.files.config.PropertyManager;
+import mightypork.utils.config.propmgr.Property;
+import mightypork.utils.config.propmgr.PropertyManager;
+import mightypork.utils.config.propmgr.PropertyStore;
+import mightypork.utils.config.propmgr.store.PropertyFile;
 import mightypork.utils.logging.Log;
 
 
 /**
- * Static application configuration; wrapper around {@link PropertyManager}
+ * Settings repository.
  * 
  * @author Ondřej Hruška (MightyPork)
  */
 public class Config {
 	
-	private static Map<String, KeyProperty> strokes = new HashMap<>();
+	private Map<String, KeyStrokeProperty> strokes = new HashMap<>();
 	
-	private static PropertyManager propertyManager;
+	private PropertyManager propertyManager;
 	
 	
 	/**
-	 * Initialize property manger for a file
+	 * Initialize property manager for a file
 	 * 
-	 * @param file config file
+	 * @param file config file, relative to workdir
 	 * @param headComment file comment
 	 */
-	public static void init(File file, String headComment)
-	{
-		propertyManager = new PropertyManager(file, headComment);
+	public Config(String file, String headComment) {
+		this(new PropertyFile(WorkDir.getFile(file), headComment));
+	}
+	
+	
+	/**
+	 * Initialize property manager for a given store
+	 * 
+	 * @param store property store backing the property manager
+	 */
+	public Config(PropertyStore store) {
+		if (propertyManager != null) {
+			throw new IllegalStateException("Config already initialized.");
+		}
 		
-		propertyManager.cfgNewlineBeforeComments(true);
-		propertyManager.cfgSeparateSections(true);
+		propertyManager = new PropertyManager(store);
 	}
 	
 	
@@ -45,11 +57,11 @@ public class Config {
 	 * @param defval default value (keystroke datastring)
 	 * @param comment optional comment, can be null
 	 */
-	public void addKeyProperty(String key, String defval, String comment)
+	public void addKeyStroke(String key, String defval, String comment)
 	{
-		final KeyProperty kprop = new KeyProperty(Config.prefixKey(key), KeyStroke.createFromDataString(defval), comment);
-		strokes.put(Config.prefixKey(key), kprop);
-		propertyManager.putProperty(kprop);
+		final KeyStrokeProperty kprop = new KeyStrokeProperty(prefixKeyStroke(key), KeyStroke.createFromDataString(defval), comment);
+		strokes.put(prefixKeyStroke(key), kprop);
+		propertyManager.addProperty(kprop);
 	}
 	
 	
@@ -60,9 +72,9 @@ public class Config {
 	 * @param defval default value
 	 * @param comment optional comment, can be null
 	 */
-	public void addBooleanProperty(String key, boolean defval, String comment)
+	public void addBoolean(String key, boolean defval, String comment)
 	{
-		propertyManager.putBoolean(key, defval, comment);
+		propertyManager.addBoolean(key, defval, comment);
 	}
 	
 	
@@ -73,9 +85,9 @@ public class Config {
 	 * @param defval default value
 	 * @param comment optional comment, can be null
 	 */
-	public void addIntegerProperty(String key, int defval, String comment)
+	public void addInteger(String key, int defval, String comment)
 	{
-		propertyManager.putInteger(key, defval, comment);
+		propertyManager.addInteger(key, defval, comment);
 	}
 	
 	
@@ -86,9 +98,9 @@ public class Config {
 	 * @param defval default value
 	 * @param comment optional comment, can be null
 	 */
-	public void addDoubleProperty(String key, double defval, String comment)
+	public void addDouble(String key, double defval, String comment)
 	{
-		propertyManager.putDouble(key, defval, comment);
+		propertyManager.addDouble(key, defval, comment);
 	}
 	
 	
@@ -99,9 +111,9 @@ public class Config {
 	 * @param defval default value
 	 * @param comment optional comment, can be null
 	 */
-	public void addStringProperty(String key, String defval, String comment)
+	public void addString(String key, String defval, String comment)
 	{
-		propertyManager.putString(key, defval, comment);
+		propertyManager.addString(key, defval, comment);
 	}
 	
 	
@@ -112,14 +124,14 @@ public class Config {
 	 */
 	public <T> void addProperty(Property<T> prop)
 	{
-		propertyManager.putProperty(prop);
+		propertyManager.addProperty(prop);
 	}
 	
 	
 	/**
 	 * Load config from file
 	 */
-	public static void load()
+	public void load()
 	{
 		propertyManager.load();
 	}
@@ -128,7 +140,7 @@ public class Config {
 	/**
 	 * Save config to file
 	 */
-	public static void save()
+	public void save()
 	{
 		Log.f3("Saving config.");
 		propertyManager.save();
@@ -141,7 +153,7 @@ public class Config {
 	 * @param key
 	 * @return option value
 	 */
-	public static <T> T getValue(String key)
+	public <T> T getValue(String key)
 	{
 		try {
 			if (propertyManager.getProperty(key) == null) {
@@ -162,7 +174,7 @@ public class Config {
 	 * @param key option key
 	 * @param value value to set
 	 */
-	public static <T> void setValue(String key, T value)
+	public <T> void setValue(String key, T value)
 	{
 		if (propertyManager.getProperty(key) == null) {
 			throw new IllegalArgumentException("No such property: " + key);
@@ -178,7 +190,7 @@ public class Config {
 	 * @param cfgKey config key
 	 * @return key. + cfgKey
 	 */
-	private static String prefixKey(String cfgKey)
+	private String prefixKeyStroke(String cfgKey)
 	{
 		return "key." + cfgKey;
 	}
@@ -190,9 +202,9 @@ public class Config {
 	 * @param cfgKey stroke identifier in config file
 	 * @return the stroke
 	 */
-	public static KeyStroke getKey(String cfgKey)
+	public KeyStroke getKeyStroke(String cfgKey)
 	{
-		final KeyProperty kp = strokes.get(prefixKey(cfgKey));
+		final KeyStrokeProperty kp = strokes.get(prefixKeyStroke(cfgKey));
 		if (kp == null) {
 			throw new IllegalArgumentException("No such stroke: " + cfgKey);
 		}
@@ -208,9 +220,9 @@ public class Config {
 	 * @param key stroke key
 	 * @param mod stroke modifiers
 	 */
-	public static void setKey(String cfgKey, int key, int mod)
+	public void setKeyStroke(String cfgKey, int key, int mod)
 	{
-		final KeyProperty kp = strokes.get(prefixKey(cfgKey));
+		final KeyStrokeProperty kp = strokes.get(prefixKeyStroke(cfgKey));
 		if (kp == null) {
 			throw new IllegalArgumentException("No such stroke: " + cfgKey);
 		}

@@ -3,7 +3,7 @@ package mightypork.gamecore.resources.fonts;
 
 import java.util.HashMap;
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.fonts.impl.LazyFont;
 import mightypork.utils.eventbus.clients.BusNode;

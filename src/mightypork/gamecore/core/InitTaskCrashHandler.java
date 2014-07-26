@@ -1,10 +1,8 @@
-package mightypork.gamecore.initializers.tasks;
+package mightypork.gamecore.core;
 
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
-import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.initializers.InitTask;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.logging.Log;
 
@@ -16,10 +14,10 @@ import mightypork.utils.logging.Log;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class InitTaskSetupCrashHandler extends InitTask implements UncaughtExceptionHandler {
+public class InitTaskCrashHandler extends InitTask implements UncaughtExceptionHandler {
 	
 	@Override
-	public void run(App app)
+	public void run()
 	{
 		Thread.setDefaultUncaughtExceptionHandler(this);
 	}

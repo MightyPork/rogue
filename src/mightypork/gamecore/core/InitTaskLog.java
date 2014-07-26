@@ -1,14 +1,14 @@
-package mightypork.gamecore.initializers.tasks;
+package mightypork.gamecore.core;
 
 
 import java.io.File;
 import java.util.logging.Level;
 
-import mightypork.gamecore.core.WorkDir;
-import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.initializers.InitTask;
+import mightypork.gamecore.WorkDir;
+import mightypork.utils.files.FileUtil;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.writers.LogWriter;
+import mightypork.utils.string.StringUtil;
 
 
 /**
@@ -17,7 +17,7 @@ import mightypork.utils.logging.writers.LogWriter;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class InitTaskSetupLog extends InitTask {
+public class InitTaskLog extends InitTask {
 	
 	private String logDir = "log";
 	private String logName = "runtime";
@@ -48,7 +48,10 @@ public class InitTaskSetupLog extends InitTask {
 	 */
 	public void setLogName(String logName)
 	{
-		// TODO validate characters
+		if (!StringUtil.isValidFilenameString(logName)) {
+			throw new IllegalArgumentException("Invalid log name.");
+		}
+		
 		this.logName = logName;
 	}
 	
@@ -81,7 +84,7 @@ public class InitTaskSetupLog extends InitTask {
 	
 	
 	@Override
-	public void run(App app)
+	public void run()
 	{
 		final LogWriter log = Log.create(logName, new File(WorkDir.getDir(logDir), logName + ".log"), archiveCount);
 		Log.setMainLogger(log);

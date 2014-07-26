@@ -12,16 +12,22 @@ import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.proxy.VectAdapter;
 
 
+/**
+ * Layout that aligns elements while taking into account their actual
+ * dimensions.<br>
+ * Useful eg. for buttons that stretch based on text length.
+ * 
+ * @author Ondřej Hruška (MightyPork)
+ */
 public class LinearLayout extends LayoutComponent {
 	
-	public LinearLayout(AppAccess app, AlignX align) {
-		super(app);
+	public LinearLayout(AlignX align) {
 		this.align = align;
 	}
 	
 	
-	public LinearLayout(AppAccess app, RectBound context, AlignX align) {
-		super(app, context);
+	public LinearLayout(RectBound context, AlignX align) {
+		super(context);
 		this.align = align;
 	}
 	

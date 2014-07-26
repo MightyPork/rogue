@@ -1,7 +1,7 @@
 package mightypork.rogue.world;
 
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.render.GradH;
 import mightypork.gamecore.render.GradV;
 import mightypork.gamecore.render.GraphicsModule;

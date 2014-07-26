@@ -1,8 +1,8 @@
 package mightypork.gamecore.backend.lwjgl;
 
 
-import mightypork.gamecore.core.modules.App;
-import mightypork.gamecore.initializers.InitTask;
+import mightypork.gamecore.core.App;
+import mightypork.gamecore.core.InitTask;
 import mightypork.gamecore.util.SlickLogRedirector;
 import mightypork.utils.logging.writers.LogWriter;
 
@@ -15,7 +15,7 @@ import mightypork.utils.logging.writers.LogWriter;
 public class InitTaskRedirectSlickLog extends InitTask {
 	
 	@Override
-	public void run(App app)
+	public void run()
 	{
 		LogWriter ml = mightypork.utils.logging.Log.getMainLogger();
 		SlickLogRedirector slr = new SlickLogRedirector(ml);

@@ -3,7 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.File;
 
-import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.config.Config;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
@@ -246,17 +246,17 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		addLayer(worldLayer = new LayerMapView(this));
 		addLayer(askSaveLayer = new LayerAskSave(this));
 		
-		bindKey(Config.getKey("game.pause"), Edge.RISING, actionTogglePause);
+		bindKey(Config.getKeyStroke("game.pause"), Edge.RISING, actionTogglePause);
 		
-		bindKey(Config.getKey("game.inventory"), Edge.RISING, actionToggleInv);
-		bindKey(Config.getKey("game.drop"), Edge.RISING, actionDropLastPickedItem);
-		bindKey(Config.getKey("game.eat"), Edge.RISING, actionEat);
-		bindKey(Config.getKey("game.minimap"), Edge.RISING, actionToggleMinimap);
-		bindKey(Config.getKey("game.zoom"), Edge.RISING, actionToggleZoom);
+		bindKey(Config.getKeyStroke("game.inventory"), Edge.RISING, actionToggleInv);
+		bindKey(Config.getKeyStroke("game.drop"), Edge.RISING, actionDropLastPickedItem);
+		bindKey(Config.getKeyStroke("game.eat"), Edge.RISING, actionEat);
+		bindKey(Config.getKeyStroke("game.minimap"), Edge.RISING, actionToggleMinimap);
+		bindKey(Config.getKeyStroke("game.zoom"), Edge.RISING, actionToggleZoom);
 		
-		bindKey(Config.getKey("game.load"), Edge.RISING, actionLoad);
-		bindKey(Config.getKey("game.save"), Edge.RISING, actionSave);
-		bindKey(Config.getKey("game.quit"), Edge.RISING, actionMenu);
+		bindKey(Config.getKeyStroke("game.load"), Edge.RISING, actionLoad);
+		bindKey(Config.getKeyStroke("game.save"), Edge.RISING, actionSave);
+		bindKey(Config.getKeyStroke("game.quit"), Edge.RISING, actionMenu);
 		
 //		bindKey(new KeyStroke(Keys.W), Edge.RISING, new Runnable() {
 //			
@@ -284,7 +284,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		worldActions.setEnabled(true);
 		
 		// CHEAT - X-ray
-		bindKey(Config.getKey("game.cheat.xray"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.cheat.xray"), Edge.RISING, new Runnable() {
 			
 			@Override
 			public void run()

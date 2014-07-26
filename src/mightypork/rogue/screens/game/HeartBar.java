@@ -1,7 +1,7 @@
 package mightypork.rogue.screens.game;
 
 
-import mightypork.gamecore.core.modules.App;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.resources.textures.TxQuad;
