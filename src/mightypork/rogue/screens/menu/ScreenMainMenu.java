@@ -3,6 +3,7 @@ package mightypork.rogue.screens.menu;
 
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.UserQuitRequest;
+import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.components.input.TextButton;
 import mightypork.gamecore.gui.components.layout.RowLayout;
@@ -13,7 +14,6 @@ import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.RogueScreen;

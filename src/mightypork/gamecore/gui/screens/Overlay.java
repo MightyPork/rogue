@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import mightypork.gamecore.core.App;
+import mightypork.gamecore.graphics.Renderable;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.Edge;
@@ -12,7 +13,6 @@ import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
-import mightypork.gamecore.render.Renderable;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.interfaces.Enableable;

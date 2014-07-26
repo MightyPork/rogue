@@ -2,10 +2,10 @@ package mightypork.gamecore.gui.components.painters;
 
 
 import mightypork.gamecore.core.App;
+import mightypork.gamecore.graphics.fonts.FontRenderer;
+import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
-import mightypork.gamecore.resources.fonts.FontRenderer;
-import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.color.pal.RGB;

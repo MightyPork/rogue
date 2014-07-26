@@ -1,7 +1,7 @@
 package mightypork.rogue.world.tile.impl;
 
 
-import mightypork.gamecore.resources.textures.TxSheet;
+import mightypork.gamecore.graphics.textures.TxSheet;
 import mightypork.rogue.world.tile.TileModel;
 import mightypork.rogue.world.tile.TileRenderer;
 import mightypork.rogue.world.tile.TileType;

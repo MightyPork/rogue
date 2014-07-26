@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.components;
 
 
+import mightypork.gamecore.graphics.Renderable;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.render.Renderable;
 import mightypork.utils.Support;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.interfaces.Enableable;

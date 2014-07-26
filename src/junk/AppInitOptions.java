@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import mightypork.gamecore.backend.Backend;
-import mightypork.gamecore.resources.AsyncResourceLoader;
-import mightypork.gamecore.resources.ResourceLoader;
+import mightypork.gamecore.core.AppBackend;
 import mightypork.gamecore.resources.ResourceSetup;
+import mightypork.gamecore.resources.loading.AsyncResourceLoader;
+import mightypork.gamecore.resources.loading.ResourceLoader;
 
 
 /**
@@ -62,7 +62,7 @@ public class AppInitOptions {
 	}
 	
 	
-	public void setBackend(Backend backend)
+	public void setBackend(AppBackend backend)
 	{
 		this.backend = backend;
 	}

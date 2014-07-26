@@ -2,11 +2,11 @@ package mightypork.rogue.screens.game;
 
 
 import mightypork.gamecore.core.App;
+import mightypork.gamecore.graphics.textures.TxQuad;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.components.input.ClickableComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.rogue.world.PlayerFacade;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.item.Item;

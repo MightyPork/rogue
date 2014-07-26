@@ -2,7 +2,7 @@ package mightypork.rogue.world;
 
 
 import mightypork.gamecore.core.App;
-import mightypork.gamecore.render.GraphicsModule;
+import mightypork.gamecore.graphics.GraphicsModule;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;

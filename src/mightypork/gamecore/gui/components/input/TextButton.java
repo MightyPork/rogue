@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.components.input;
 
 
+import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.input.InputSystem;
-import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.color.pal.RGB;

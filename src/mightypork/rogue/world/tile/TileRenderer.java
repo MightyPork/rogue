@@ -2,9 +2,9 @@ package mightypork.rogue.world.tile;
 
 
 import mightypork.gamecore.core.App;
-import mightypork.gamecore.render.GraphicsModule;
+import mightypork.gamecore.graphics.GraphicsModule;
+import mightypork.gamecore.graphics.textures.TxQuad;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.rogue.world.tile.render.NullTileRenderer;
 import mightypork.utils.annotations.Stub;

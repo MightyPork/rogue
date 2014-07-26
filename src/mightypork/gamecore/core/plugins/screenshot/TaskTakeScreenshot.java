@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.WorkDir;
-import mightypork.gamecore.render.Screenshot;
+import mightypork.gamecore.graphics.Screenshot;
 import mightypork.utils.Support;
 import mightypork.utils.logging.Log;
 

@@ -2,8 +2,8 @@ package mightypork.rogue.screens.game;
 
 
 import mightypork.gamecore.core.App;
+import mightypork.gamecore.graphics.textures.TxQuad;
 import mightypork.gamecore.gui.components.BaseComponent;
-import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.utils.math.AlignX;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.var.NumVar;

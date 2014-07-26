@@ -4,9 +4,9 @@ package mightypork.rogue.world.gui;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 
+import mightypork.gamecore.graphics.fonts.FontRenderer;
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.fonts.FontRenderer;
 import mightypork.rogue.world.WorldConsole;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.utils.logging.Log;

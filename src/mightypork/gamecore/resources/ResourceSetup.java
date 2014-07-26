@@ -1,9 +1,9 @@
 package mightypork.gamecore.resources;
 
 
-import mightypork.gamecore.resources.audio.SoundRegistry;
-import mightypork.gamecore.resources.fonts.FontRegistry;
-import mightypork.gamecore.resources.textures.TextureRegistry;
+import mightypork.gamecore.audio.SoundRegistry;
+import mightypork.gamecore.graphics.fonts.FontRegistry;
+import mightypork.gamecore.graphics.textures.TextureRegistry;
 
 
 /**

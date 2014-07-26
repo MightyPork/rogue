@@ -1,16 +1,17 @@
 package mightypork.rogue;
 
 
+import mightypork.gamecore.audio.SoundRegistry;
+import mightypork.gamecore.backends.lwjgl.graphics.font.DeferredLwjglFont;
+import mightypork.gamecore.graphics.fonts.DeferredFont;
+import mightypork.gamecore.graphics.fonts.FontRegistry;
+import mightypork.gamecore.graphics.fonts.Glyphs;
+import mightypork.gamecore.graphics.textures.FilterMode;
+import mightypork.gamecore.graphics.textures.ITexture;
+import mightypork.gamecore.graphics.textures.QuadGrid;
+import mightypork.gamecore.graphics.textures.TextureRegistry;
+import mightypork.gamecore.graphics.textures.WrapMode;
 import mightypork.gamecore.resources.ResourceSetup;
-import mightypork.gamecore.resources.audio.SoundRegistry;
-import mightypork.gamecore.resources.fonts.FontRegistry;
-import mightypork.gamecore.resources.fonts.Glyphs;
-import mightypork.gamecore.resources.fonts.impl.LazyFont;
-import mightypork.gamecore.resources.textures.FilterMode;
-import mightypork.gamecore.resources.textures.ITexture;
-import mightypork.gamecore.resources.textures.QuadGrid;
-import mightypork.gamecore.resources.textures.TextureRegistry;
-import mightypork.gamecore.resources.textures.WrapMode;
 import mightypork.utils.math.constraints.rect.Rect;
 
 
@@ -19,15 +20,15 @@ public class RogueResources implements ResourceSetup {
 	@Override
 	public void addFonts(FontRegistry fonts)
 	{
-		LazyFont font;
+		DeferredFont font;
 		
 		//fonts.loadFont("polygon_pixel", new DeferredFont("/res/font/PolygonPixel5x7Standard.ttf", Glyphs.basic, 16));
-		fonts.addFont("press_start", font = new LazyFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
+		fonts.addFont("press_start", font = new DeferredLwjglFont("/res/font/PressStart2P.ttf", Glyphs.basic, 16));
 		
-		fonts.addFont("battlenet", font = new LazyFont("/res/font/battlenet.ttf", Glyphs.basic, 16));
+		fonts.addFont("battlenet", font = new DeferredLwjglFont("/res/font/battlenet.ttf", Glyphs.basic, 16));
 		font.setDiscardRatio(3 / 16D, 2 / 16D);
 		
-		fonts.addFont("tinyutf", font = new LazyFont("/res/font/TinyUnicode2.ttf", Glyphs.basic, 16));
+		fonts.addFont("tinyutf", font = new DeferredLwjglFont("/res/font/TinyUnicode2.ttf", Glyphs.basic, 16));
 		font.setDiscardRatio(5 / 16D, 3 / 16D);
 		
 		// aliases

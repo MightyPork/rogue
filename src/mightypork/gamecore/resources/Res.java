@@ -1,15 +1,15 @@
 package mightypork.gamecore.resources;
 
 
-import mightypork.gamecore.resources.audio.SoundRegistry;
-import mightypork.gamecore.resources.audio.players.EffectPlayer;
-import mightypork.gamecore.resources.audio.players.LoopPlayer;
-import mightypork.gamecore.resources.fonts.FontRegistry;
-import mightypork.gamecore.resources.fonts.IFont;
-import mightypork.gamecore.resources.textures.ITexture;
-import mightypork.gamecore.resources.textures.TextureRegistry;
-import mightypork.gamecore.resources.textures.TxQuad;
-import mightypork.gamecore.resources.textures.TxSheet;
+import mightypork.gamecore.audio.SoundRegistry;
+import mightypork.gamecore.audio.players.EffectPlayer;
+import mightypork.gamecore.audio.players.LoopPlayer;
+import mightypork.gamecore.graphics.fonts.FontRegistry;
+import mightypork.gamecore.graphics.fonts.IFont;
+import mightypork.gamecore.graphics.textures.ITexture;
+import mightypork.gamecore.graphics.textures.TextureRegistry;
+import mightypork.gamecore.graphics.textures.TxQuad;
+import mightypork.gamecore.graphics.textures.TxSheet;
 
 
 /**

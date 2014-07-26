@@ -3,6 +3,7 @@ package mightypork.rogue.screens.select_world;
 
 import java.io.File;
 
+import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.components.input.TextButton;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
@@ -10,7 +11,6 @@ import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.events.ScreenRequest;
 import mightypork.gamecore.resources.Res;
-import mightypork.gamecore.resources.fonts.IFont;
 import mightypork.rogue.events.LoadingOverlayRequest;
 import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;

@@ -6,12 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mightypork.gamecore.backend.Backend;
+import mightypork.gamecore.audio.AudioModule;
 import mightypork.gamecore.core.config.Config;
-import mightypork.gamecore.core.init.InitTask;
-import mightypork.gamecore.core.plugins.AppPlugin;
-import mightypork.gamecore.render.GraphicsModule;
-import mightypork.gamecore.resources.audio.AudioModule;
+import mightypork.gamecore.core.init.InitTaskCrashHandler;
+import mightypork.gamecore.core.init.InitTaskIonizables;
+import mightypork.gamecore.core.init.InitTaskLog;
+import mightypork.gamecore.core.init.InitTaskLogHeader;
+import mightypork.gamecore.graphics.GraphicsModule;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.EventBus;
 import mightypork.utils.eventbus.clients.BusNode;
@@ -29,7 +30,7 @@ public class App extends BusNode {
 	
 	private static App instance;
 	
-	private final Backend backend;
+	private final AppBackend backend;
 	private final EventBus eventBus = new EventBus();
 	private boolean started = false;
 	
@@ -42,7 +43,7 @@ public class App extends BusNode {
 	 * 
 	 * @param backend
 	 */
-	public App(Backend backend) {
+	public App(AppBackend backend) {
 		if (App.instance != null) {
 			throw new IllegalStateException("App already initialized");
 		}
@@ -59,6 +60,7 @@ public class App extends BusNode {
 		// initialize and use backend
 		this.backend = backend;
 		this.eventBus.subscribe(backend);
+		this.backend.bind(this);
 		this.backend.initialize();
 	}
 	
@@ -75,8 +77,10 @@ public class App extends BusNode {
 			throw new IllegalStateException("App already started, cannot add plugins.");
 		}
 		
-		plugin.initialize(this);
+		// attach to event bus
 		plugins.add(plugin);
+		plugin.bind(this);
+		plugin.initialize();
 	}
 	
 	
@@ -100,7 +104,7 @@ public class App extends BusNode {
 	 * 
 	 * @return the backend
 	 */
-	public Backend getBackend()
+	public AppBackend getBackend()
 	{
 		return backend;
 	}

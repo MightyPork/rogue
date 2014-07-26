@@ -4,8 +4,8 @@ package mightypork.gamecore.core;
 import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+import mightypork.gamecore.graphics.Renderable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
-import mightypork.gamecore.render.Renderable;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.eventbus.events.UpdateEvent;
