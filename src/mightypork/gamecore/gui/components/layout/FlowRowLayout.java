@@ -1,9 +1,9 @@
 package mightypork.gamecore.gui.components.layout;
 
 
-import mightypork.gamecore.gui.AlignY;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.gamecore.gui.components.LayoutComponent;
+import mightypork.utils.math.AlignY;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.rect.RectBound;
@@ -41,7 +41,6 @@ public class FlowRowLayout extends LayoutComponent {
 	 * make a new holder.<br>
 	 * Context must be assigned before rendering.
 	 * 
-	 * @param app app access
 	 * @param elementHeight height of all elements
 	 * @param align component align. Legal values are TOP and BOTTOM.
 	 */

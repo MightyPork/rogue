@@ -3,16 +3,16 @@ package mightypork.gamecore.backend.lwjgl;
 
 import java.nio.FloatBuffer;
 
-import org.lwjgl.openal.AL;
-import org.lwjgl.openal.AL10;
-import org.newdawn.slick.openal.SoundStore;
-
 import mightypork.gamecore.resources.audio.AudioModule;
 import mightypork.gamecore.resources.audio.DeferredAudio;
 import mightypork.gamecore.util.BufferHelper;
 import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.var.VectVar;
+
+import org.lwjgl.openal.AL;
+import org.lwjgl.openal.AL10;
+import org.newdawn.slick.openal.SoundStore;
 
 
 /**

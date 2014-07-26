@@ -3,9 +3,9 @@ package mightypork.gamecore.gui.components.painters;
 
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.components.BaseComponent;
-import mightypork.gamecore.render.Grad;
 import mightypork.utils.annotations.FactoryMethod;
 import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.Grad;
 
 
 /**

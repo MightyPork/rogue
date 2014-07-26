@@ -3,17 +3,14 @@ package mightypork.gamecore.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import mightypork.gamecore.backend.Backend;
-import mightypork.gamecore.config.Config;
-import mightypork.gamecore.plugins.AppPlugin;
+import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.core.plugins.AppPlugin;
 import mightypork.gamecore.render.GraphicsModule;
 import mightypork.gamecore.resources.audio.AudioModule;
-import mightypork.utils.MapSort;
-import mightypork.utils.Support;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.EventBus;
 import mightypork.utils.eventbus.clients.BusNode;
@@ -37,9 +34,6 @@ public class App extends BusNode {
 	
 	protected final DelegatingList plugins = new DelegatingList();
 	protected final List<InitTask> initializers = new ArrayList<>();
-	
-	// visible to Config init task.
-	final Map<String, Config> configs = new HashMap<>();
 	
 	
 	/**
@@ -90,7 +84,7 @@ public class App extends BusNode {
 	 * 
 	 * @param initializer
 	 */
-	public void addInitializer(InitTask initializer)
+	public void addInitTask(InitTask initializer)
 	{
 		if (started) {
 			throw new IllegalStateException("App already started, cannot add initializers.");
@@ -253,10 +247,6 @@ public class App extends BusNode {
 	 */
 	public static Config cfg(String alias)
 	{
-		Config c = instance.configs.get(alias);
-		if (c == null) {
-			throw new IllegalArgumentException("There is no config with alias \"" + alias + "\"");
-		}
-		return c;
+		return Config.forAlias(alias);
 	}
 }

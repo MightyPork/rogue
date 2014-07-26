@@ -28,7 +28,8 @@ public class MainLoop extends BusNode implements Destroyable {
 	private final Deque<Runnable> tasks = new ConcurrentLinkedDeque<>();
 	private TimerDelta timer;
 	private Renderable rootRenderable;
-	private volatile boolean running = true;	
+	private volatile boolean running = true;
+	
 	
 	/**
 	 * Set primary renderable

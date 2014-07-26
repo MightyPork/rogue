@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
-import mightypork.gamecore.WorkDir;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.files.InstanceLock;
 import mightypork.utils.logging.Log;

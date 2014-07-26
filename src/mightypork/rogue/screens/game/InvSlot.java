@@ -3,7 +3,6 @@ package mightypork.rogue.screens.game;
 
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.ClickableComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.resources.Res;
@@ -13,6 +12,7 @@ import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemType;
 import mightypork.utils.Support;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.color.pal.RGB;
 import mightypork.utils.math.constraints.num.Num;

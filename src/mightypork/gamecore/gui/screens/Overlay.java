@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import mightypork.gamecore.core.App;
-import mightypork.gamecore.gui.Hideable;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.Edge;
@@ -17,6 +16,7 @@ import mightypork.gamecore.render.Renderable;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.interfaces.Enableable;
+import mightypork.utils.interfaces.Hideable;
 import mightypork.utils.interfaces.Updateable;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.constraints.num.Num;

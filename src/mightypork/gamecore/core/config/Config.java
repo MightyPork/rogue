@@ -1,10 +1,10 @@
-package mightypork.gamecore.config;
+package mightypork.gamecore.core.config;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
-import mightypork.gamecore.WorkDir;
+import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.utils.config.propmgr.Property;
 import mightypork.utils.config.propmgr.PropertyManager;
@@ -20,9 +20,45 @@ import mightypork.utils.logging.Log;
  */
 public class Config {
 	
+	protected static Map<String, Config> configs = new HashMap<>();
+	
 	private Map<String, KeyStrokeProperty> strokes = new HashMap<>();
 	
 	private PropertyManager propertyManager;
+	
+	
+	/**
+	 * Get a config from the static map, by given alias
+	 * 
+	 * @param alias alias
+	 * @return the config
+	 */
+	public static Config forAlias(String alias)
+	{
+		Config c = configs.get(alias);
+		
+		if (c == null) {
+			throw new IllegalArgumentException("There is no config with alias \"" + alias + "\"");
+		}
+		
+		return c;
+	}
+	
+	
+	/**
+	 * Register a config by alias.
+	 * 
+	 * @param alias config alias
+	 * @param config the config
+	 */
+	public static void register(String alias, Config config)
+	{
+		if (configs.get(alias) != null) {
+			throw new IllegalArgumentException("The alias \"" + alias + "\" is already used.");
+		}
+		
+		configs.put(alias, config);
+	}
 	
 	
 	/**

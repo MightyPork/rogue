@@ -2,11 +2,11 @@ package mightypork.rogue.screens.game;
 
 
 import mightypork.gamecore.core.App;
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.LayoutComponent;
 import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.textures.TxQuad;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.rect.RectBound;
 

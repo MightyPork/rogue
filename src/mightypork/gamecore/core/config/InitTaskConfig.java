@@ -1,7 +1,7 @@
-package mightypork.gamecore.core;
+package mightypork.gamecore.core.config;
 
 
-import mightypork.gamecore.config.Config;
+import mightypork.gamecore.core.InitTask;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.exceptions.IllegalValueException;
 
@@ -23,11 +23,7 @@ public abstract class InitTaskConfig extends InitTask {
 	 */
 	protected void addConfig(String alias, Config config)
 	{
-		if (app.configs.containsKey(alias)) {
-			throw new IllegalValueException("The alias is already used.");
-		}
-		
-		app.configs.put(alias, config);
+		Config.register(alias, config);
 	}
 	
 	
@@ -49,7 +45,7 @@ public abstract class InitTaskConfig extends InitTask {
 	}
 	
 	
-	// locked uninitialized to encourage the use of the build* methods.
+	// locked to encourage the use of the build* methods.
 	@Override
 	public final void init()
 	{

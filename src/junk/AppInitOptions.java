@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.logging.Level;
 
 import mightypork.gamecore.backend.Backend;
-import mightypork.gamecore.config.ConfigSetup;
-import mightypork.gamecore.config.KeySetup;
 import mightypork.gamecore.resources.AsyncResourceLoader;
 import mightypork.gamecore.resources.ResourceLoader;
 import mightypork.gamecore.resources.ResourceSetup;

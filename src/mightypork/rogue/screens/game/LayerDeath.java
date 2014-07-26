@@ -3,9 +3,8 @@ package mightypork.rogue.screens.game;
 
 import java.io.IOException;
 
-import mightypork.gamecore.config.Config;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
 import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.layout.linear.LinearGap;
@@ -22,6 +21,7 @@ import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.utils.logging.Log;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.pal.RGB;
 import mightypork.utils.math.constraints.num.Num;
 

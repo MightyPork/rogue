@@ -2,13 +2,13 @@ package mightypork.rogue.world;
 
 
 import mightypork.gamecore.core.App;
-import mightypork.gamecore.render.GradH;
-import mightypork.gamecore.render.GradV;
 import mightypork.gamecore.render.GraphicsModule;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.level.Level;
 import mightypork.rogue.world.level.render.TileRenderContext;
 import mightypork.utils.math.algo.Coord;
+import mightypork.utils.math.color.GradH;
+import mightypork.utils.math.color.GradV;
 import mightypork.utils.math.color.pal.RGB;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.Rect;

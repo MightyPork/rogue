@@ -1,5 +1,6 @@
 package mightypork.gamecore.input;
 
+
 /**
  * Type of keystroke (falling / rising edge)
  */

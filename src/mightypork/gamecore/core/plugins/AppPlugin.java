@@ -1,4 +1,4 @@
-package mightypork.gamecore.plugins;
+package mightypork.gamecore.core.plugins;
 
 
 import mightypork.gamecore.core.App;

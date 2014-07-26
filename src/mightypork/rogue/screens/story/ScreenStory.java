@@ -1,9 +1,8 @@
 package mightypork.rogue.screens.story;
 
 
-import mightypork.gamecore.config.Config;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.layout.linear.LinearLayout;
 import mightypork.gamecore.gui.components.painters.ImagePainter;
@@ -20,6 +19,7 @@ import mightypork.gamecore.resources.Res;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.RogueScreen;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.animation.NumAnimated;
 import mightypork.utils.math.color.Color;

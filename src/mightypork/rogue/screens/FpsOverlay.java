@@ -1,15 +1,15 @@
 package mightypork.rogue.screens;
 
 
-import mightypork.gamecore.config.Config;
 import mightypork.gamecore.core.App;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Overlay;
 import mightypork.gamecore.input.Edge;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.IFont;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.pal.RGB;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.RectBound;

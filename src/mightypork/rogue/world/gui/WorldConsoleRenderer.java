@@ -4,13 +4,13 @@ package mightypork.rogue.world.gui;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.BaseComponent;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.fonts.FontRenderer;
 import mightypork.rogue.world.WorldConsole;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.utils.logging.Log;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.Calc;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.color.Color;

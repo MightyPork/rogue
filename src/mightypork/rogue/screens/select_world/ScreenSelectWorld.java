@@ -1,9 +1,8 @@
 package mightypork.rogue.screens.select_world;
 
 
-import mightypork.gamecore.WorkDir;
-import mightypork.gamecore.config.Config;
-import mightypork.gamecore.gui.AlignX;
+import mightypork.gamecore.core.WorkDir;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.components.layout.RowLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
@@ -15,6 +14,7 @@ import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
 import mightypork.rogue.screens.RogueScreen;
 import mightypork.utils.logging.Log;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.color.pal.PAL16;
 import mightypork.utils.math.color.pal.RGB;

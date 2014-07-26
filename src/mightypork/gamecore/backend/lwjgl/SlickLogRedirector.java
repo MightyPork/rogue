@@ -1,4 +1,4 @@
-package mightypork.gamecore.util;
+package mightypork.gamecore.backend.lwjgl;
 
 
 import java.util.logging.Level;

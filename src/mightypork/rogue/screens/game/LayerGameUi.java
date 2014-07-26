@@ -1,7 +1,6 @@
 package mightypork.rogue.screens.game;
 
 
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.resources.Res;
@@ -9,6 +8,7 @@ import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.gui.Minimap;
 import mightypork.rogue.world.gui.WorldConsoleRenderer;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.pal.RGB;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.Rect;

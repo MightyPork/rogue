@@ -1,9 +1,7 @@
 package mightypork.gamecore.backend.lwjgl;
 
 
-import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.InitTask;
-import mightypork.gamecore.util.SlickLogRedirector;
 import mightypork.utils.logging.writers.LogWriter;
 
 

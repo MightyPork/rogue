@@ -314,7 +314,7 @@ public class TextureBackedFont implements IFont {
 			
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
+			
 			final int filtering;
 			switch (filter) {
 				case NEAREST:
@@ -398,7 +398,7 @@ public class TextureBackedFont implements IFont {
 		
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
+		
 		final int filtering;
 		switch (filter) {
 			case NEAREST:

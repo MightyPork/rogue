@@ -1,9 +1,9 @@
 package mightypork.gamecore.gui.components.layout;
 
 
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.Component;
 import mightypork.gamecore.gui.components.LayoutComponent;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.rect.RectBound;
@@ -22,7 +22,6 @@ public class FlowColumnLayout extends LayoutComponent {
 	
 	
 	/**
-	 * @param app app access
 	 * @param context context
 	 * @param elementWidth width of all elements
 	 * @param align component align. Legal values are LEFT and RIGHT.
@@ -42,7 +41,6 @@ public class FlowColumnLayout extends LayoutComponent {
 	 * make a new holder.<br>
 	 * Context must be assigned before rendering.
 	 * 
-	 * @param app app access
 	 * @param elementWidth width of all elements
 	 * @param align component align. Legal values are LEFT and RIGHT.
 	 */

@@ -1,4 +1,4 @@
-package mightypork.gamecore.render.events;
+package mightypork.gamecore.gui.events;
 
 
 /**

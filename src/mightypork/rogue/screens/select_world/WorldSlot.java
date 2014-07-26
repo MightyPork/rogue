@@ -4,7 +4,6 @@ package mightypork.rogue.screens.select_world;
 import java.io.File;
 
 import mightypork.gamecore.gui.Action;
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.input.TextButton;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.components.layout.GridLayout;
@@ -18,6 +17,7 @@ import mightypork.rogue.world.WorldProvider;
 import mightypork.utils.ion.Ion;
 import mightypork.utils.ion.IonDataBundle;
 import mightypork.utils.logging.Log;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.pal.RGB;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.Rect;

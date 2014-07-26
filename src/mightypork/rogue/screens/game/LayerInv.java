@@ -1,8 +1,7 @@
 package mightypork.rogue.screens.game;
 
 
-import mightypork.gamecore.config.Config;
-import mightypork.gamecore.gui.AlignX;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
 import mightypork.gamecore.gui.components.layout.GridLayout;
@@ -18,6 +17,7 @@ import mightypork.rogue.world.World;
 import mightypork.rogue.world.WorldProvider;
 import mightypork.rogue.world.item.Item;
 import mightypork.rogue.world.item.ItemType;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.pal.RGB;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.rect.Rect;

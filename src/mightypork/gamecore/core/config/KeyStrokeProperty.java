@@ -1,4 +1,4 @@
-package mightypork.gamecore.config;
+package mightypork.gamecore.core.config;
 
 
 import mightypork.gamecore.input.KeyStroke;

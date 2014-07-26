@@ -1,10 +1,10 @@
 package mightypork.gamecore.gui.components.layout.linear;
 
 
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.gui.components.LayoutComponent;
 import mightypork.gamecore.gui.components.LinearComponent;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.constraints.num.Num;
 import mightypork.utils.math.constraints.num.batch.NumSum;
 import mightypork.utils.math.constraints.rect.RectBound;

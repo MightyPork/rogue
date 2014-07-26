@@ -1,7 +1,6 @@
-package mightypork.gamecore.render.events;
+package mightypork.gamecore.render;
 
 
-import mightypork.gamecore.render.GraphicsModule;
 import mightypork.utils.eventbus.BusEvent;
 import mightypork.utils.eventbus.events.flags.SingleReceiverEvent;
 

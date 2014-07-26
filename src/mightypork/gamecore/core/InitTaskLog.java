@@ -4,8 +4,6 @@ package mightypork.gamecore.core;
 import java.io.File;
 import java.util.logging.Level;
 
-import mightypork.gamecore.WorkDir;
-import mightypork.utils.files.FileUtil;
 import mightypork.utils.logging.Log;
 import mightypork.utils.logging.writers.LogWriter;
 import mightypork.utils.string.StringUtil;

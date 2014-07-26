@@ -1,12 +1,12 @@
 package mightypork.rogue.screens;
 
 
-import mightypork.gamecore.gui.AlignX;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Overlay;
 import mightypork.gamecore.resources.Res;
 import mightypork.utils.Support;
+import mightypork.utils.math.AlignX;
 import mightypork.utils.math.animation.Easing;
 import mightypork.utils.math.animation.NumAnimated;
 import mightypork.utils.math.color.pal.PAL16;

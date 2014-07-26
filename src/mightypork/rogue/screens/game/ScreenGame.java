@@ -3,7 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.File;
 
-import mightypork.gamecore.config.Config;
+import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;

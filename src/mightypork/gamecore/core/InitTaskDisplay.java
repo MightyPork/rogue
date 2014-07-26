@@ -87,8 +87,8 @@ public class InitTaskDisplay extends InitTask {
 		
 		gfx.createDisplay();
 	}
-
-
+	
+	
 	@Override
 	public String getName()
 	{

@@ -4,17 +4,12 @@ package mightypork.gamecore.resources.audio;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.openal.AL;
-import org.newdawn.slick.openal.SoundStore;
-
 import mightypork.gamecore.backend.BackendModule;
-import mightypork.gamecore.backend.lwjgl.SlickAudio;
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.resources.ResourceLoadRequest;
 import mightypork.gamecore.resources.audio.players.EffectPlayer;
 import mightypork.gamecore.resources.audio.players.LoopPlayer;
 import mightypork.utils.interfaces.Updateable;
-import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.vect.Vect;
 
 

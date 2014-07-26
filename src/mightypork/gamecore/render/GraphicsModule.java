@@ -5,6 +5,7 @@ import mightypork.gamecore.backend.BackendModule;
 import mightypork.gamecore.resources.textures.DeferredTexture;
 import mightypork.gamecore.resources.textures.TxQuad;
 import mightypork.utils.math.color.Color;
+import mightypork.utils.math.color.Grad;
 import mightypork.utils.math.constraints.rect.Rect;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.VectConst;

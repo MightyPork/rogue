@@ -1,8 +1,6 @@
 package mightypork.gamecore.resources;
 
 
-
-
 /**
  * {@link ResourceLoadRequest} listener
  * 

@@ -9,9 +9,9 @@ import java.util.TreeSet;
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.ScreenRequestListener;
+import mightypork.gamecore.gui.events.ViewportChangeEvent;
+import mightypork.gamecore.gui.events.ViewportChangeListener;
 import mightypork.gamecore.render.Renderable;
-import mightypork.gamecore.render.events.ViewportChangeEvent;
-import mightypork.gamecore.render.events.ViewportChangeListener;
 import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.logging.Log;
 

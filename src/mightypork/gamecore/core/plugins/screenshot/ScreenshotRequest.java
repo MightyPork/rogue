@@ -1,4 +1,4 @@
-package mightypork.gamecore.plugins.screenshot;
+package mightypork.gamecore.core.plugins.screenshot;
 
 
 import mightypork.utils.eventbus.BusEvent;
