@@ -49,7 +49,7 @@ public class LwjglGraphicsModule extends GraphicsModule {
 	/** FPS the user wants */
 	private int targetFps;
 	/** FPS meter used for measuring actual FPS */
-	private FpsMeter fpsMeter;
+	private FpsMeter fpsMeter = new FpsMeter();
 	
 	/** Flag that at the end of frame, fullscreen should be toggled. */
 	private boolean fullscreenToggleRequested;
@@ -77,6 +77,17 @@ public class LwjglGraphicsModule extends GraphicsModule {
 	
 	/** Current screen rectangle */
 	private static final Rect rect = Rect.make(screenSize);
+	
+	
+	@Override
+	public void init()
+	{
+		try {
+			Display.create();
+		} catch (final Exception e) {
+			throw new RuntimeException("Could not initialize display.", e);
+		}
+	}
 	
 	
 	@Override
@@ -420,27 +431,6 @@ public class LwjglGraphicsModule extends GraphicsModule {
 	public void setTargetFps(int fps)
 	{
 		this.targetFps = fps;
-	}
-	
-	
-	@Override
-	public void createDisplay()
-	{
-		if (Display.isCreated()) throw new IllegalStateException("Display already created.");
-		try {
-			Display.create();
-			
-			fpsMeter = new FpsMeter();
-			
-			if (fullscreenSetRequested && fullscreenSetState) {
-				doToggleFullscreen();
-				Display.update();
-				fullscreenSetRequested = false;
-			}
-			
-		} catch (final Exception e) {
-			throw new RuntimeException("Could not initialize display.", e);
-		}
 	}
 	
 	

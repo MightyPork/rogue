@@ -6,6 +6,7 @@ import mightypork.gamecore.backends.lwjgl.audio.SlickAudioModule;
 import mightypork.gamecore.backends.lwjgl.graphics.LwjglGraphicsModule;
 import mightypork.gamecore.core.AppBackend;
 import mightypork.gamecore.graphics.GraphicsModule;
+import mightypork.gamecore.input.InputModule;
 
 
 /**
@@ -17,6 +18,7 @@ public class LwjglBackend extends AppBackend {
 	
 	private LwjglGraphicsModule graphics;
 	private SlickAudioModule audio;
+	private LwjglInputModule input;
 	
 	
 	@Override
@@ -24,6 +26,11 @@ public class LwjglBackend extends AppBackend {
 	{
 		addChildClient(graphics = new LwjglGraphicsModule());
 		addChildClient(audio = new SlickAudioModule());
+		addChildClient(input = new LwjglInputModule());
+		
+		graphics.init();
+		audio.init();
+		input.init();
 		
 		app.addInitTask(new InitTaskRedirectSlickLog());
 	}
@@ -40,5 +47,12 @@ public class LwjglBackend extends AppBackend {
 	public AudioModule getAudio()
 	{
 		return audio;
+	}
+	
+	
+	@Override
+	public InputModule getInput()
+	{
+		return input;
 	}
 }

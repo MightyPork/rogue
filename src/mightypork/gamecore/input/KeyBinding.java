@@ -1,7 +1,6 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.input.events.InputReadyListener;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.KeyEventHandler;
 
@@ -11,7 +10,7 @@ import mightypork.gamecore.input.events.KeyEventHandler;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class KeyBinding implements KeyEventHandler, InputReadyListener {
+public class KeyBinding implements KeyEventHandler {
 	
 	private final KeyStroke keystroke;
 	private Runnable handler;
@@ -28,8 +27,7 @@ public class KeyBinding implements KeyEventHandler, InputReadyListener {
 		this.keystroke = stroke;
 		this.handler = handler;
 		this.edge = edge;
-		
-		if (InputSystem.isReady()) wasDown = stroke.isDown();
+		wasDown = stroke.isDown();
 	}
 	
 	
@@ -69,12 +67,4 @@ public class KeyBinding implements KeyEventHandler, InputReadyListener {
 			handler.run();
 		}
 	}
-	
-	
-	@Override
-	public void onInputReady()
-	{
-		wasDown = keystroke.isDown();
-	}
-	
 }

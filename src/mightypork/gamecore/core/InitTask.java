@@ -28,8 +28,9 @@ public abstract class InitTask {
 	 * Assign the initialized app instance to a protected "app" field.
 	 * 
 	 * @param app app
-	 */	
-	void bind(App app) {
+	 */
+	void bind(App app)
+	{
 		this.app = app;
 	}
 	

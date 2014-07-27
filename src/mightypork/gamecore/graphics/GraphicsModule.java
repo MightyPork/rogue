@@ -4,6 +4,7 @@ package mightypork.gamecore.graphics;
 import mightypork.gamecore.core.BackendModule;
 import mightypork.gamecore.graphics.textures.DeferredTexture;
 import mightypork.gamecore.graphics.textures.TxQuad;
+import mightypork.gamecore.gui.events.ViewportChangeEvent;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.color.Grad;
 import mightypork.utils.math.constraints.rect.Rect;
@@ -280,13 +281,9 @@ public abstract class GraphicsModule extends BackendModule {
 	
 	
 	/**
-	 * Create a main window, if needed
-	 */
-	public abstract void createDisplay();
-	
-	
-	/**
-	 * Set fullscreen
+	 * Set fullscreen. The fullscreen state will be changed when possible (eg.
+	 * at the end of the current frame) and a {@link ViewportChangeEvent} will
+	 * be fired.
 	 * 
 	 * @param fs true for fullscreen
 	 */
@@ -294,13 +291,15 @@ public abstract class GraphicsModule extends BackendModule {
 	
 	
 	/**
-	 * Request fullscreen toggle (eg. at the end of render frame)
+	 * Request fullscreen toggle. See setFullscreen() for more info)
 	 */
 	public abstract void switchFullscreen();
 	
 	
 	/**
-	 * Get fullscreen state
+	 * Get fullscreen state (note that methods changing fullscreen may not have
+	 * immediate effect, so this method may report the old state if the
+	 * fullscreen state has not yet been changed).
 	 * 
 	 * @return is fullscreen
 	 */

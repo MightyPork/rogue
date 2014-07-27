@@ -3,7 +3,6 @@ package mightypork.gamecore.core.config;
 
 import mightypork.gamecore.core.InitTask;
 import mightypork.utils.annotations.Stub;
-import mightypork.utils.exceptions.IllegalValueException;
 
 
 /**

@@ -1,6 +1,7 @@
 package mightypork.gamecore.input;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.utils.string.StringUtil;
 
 import org.lwjgl.input.Keyboard;
@@ -28,9 +29,10 @@ public class KeyStroke {
 	}
 	
 	
-	// FIXME TODO can probably be immutable!
 	/**
-	 * Change to...
+	 * Change to...<br>
+	 * (KeyStroke is mutable, so that upon changing it in Config, all existing
+	 * key bindings are updated automatically.)
 	 * 
 	 * @param key key code
 	 * @param modmask modifiers
@@ -58,7 +60,7 @@ public class KeyStroke {
 	public boolean isDown()
 	{
 		boolean st = Keyboard.isKeyDown(key);
-		st &= (InputSystem.getActiveModKeys() == mod);
+		st &= (App.input().getActiveModKeys() == mod);
 		
 		return st;
 	}

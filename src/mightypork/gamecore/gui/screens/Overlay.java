@@ -4,12 +4,12 @@ package mightypork.gamecore.gui.screens;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.graphics.Renderable;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
 import mightypork.gamecore.input.Edge;
-import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
@@ -52,7 +52,7 @@ public abstract class Overlay extends BusNode implements Comparable<Overlay>, Up
 	
 	public Overlay() {
 		
-		this.mouse = InputSystem.getMousePos();
+		this.mouse = App.input().getMousePos();
 		
 		this.root = new ConstraintLayout(App.gfx().getRect());
 		addChildClient(root);

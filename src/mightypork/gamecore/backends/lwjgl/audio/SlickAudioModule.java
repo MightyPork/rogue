@@ -22,33 +22,22 @@ import org.newdawn.slick.openal.SoundStore;
  */
 public class SlickAudioModule extends AudioModule {
 	
-	private static final Vect INITIAL_LISTENER_POS = Vect.ZERO;
-	private static final int MAX_SOURCES = 256;
-	
-	private VectVar listener = Vect.makeVar();
-	private static boolean soundSystemInited = false;
+	private final VectVar listenerPos = Vect.makeVar();
 	
 	
-	public SlickAudioModule() {
-		
-		if (!soundSystemInited) {
-			soundSystemInited = true;
-			
-			try {
-				SoundStore.get().setMaxSources(MAX_SOURCES);
-				SoundStore.get().init();
-				setListenerPos(INITIAL_LISTENER_POS);
-			} catch (final Throwable t) {
-				Log.e("Error initializing sound system.", t);
-			}
-		}
+	@Override
+	public void init()
+	{
+		SoundStore.get().setMaxSources(256);
+		SoundStore.get().init();
+		setListenerPos(Vect.ZERO);
 	}
 	
 	
 	@Override
 	public void setListenerPos(Vect pos)
 	{
-		listener.setTo(pos);
+		listenerPos.setTo(pos);
 		final FloatBuffer buf3 = BufferHelper.alloc(3);
 		final FloatBuffer buf6 = BufferHelper.alloc(6);
 		buf3.clear();
@@ -66,7 +55,7 @@ public class SlickAudioModule extends AudioModule {
 	@Override
 	public Vect getListenerPos()
 	{
-		return listener;
+		return listenerPos;
 	}
 	
 	

@@ -1,7 +1,7 @@
 package mightypork.rogue.world.gui.interaction;
 
 
-import mightypork.gamecore.input.InputSystem;
+import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.rogue.world.entity.impl.EntityPlayer;
 import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;
@@ -30,10 +30,10 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 	{
 		if (isImmobile()) return;
 		
-		final Vect pos = InputSystem.getMousePos();
+		final Vect pos = LwjglInputModule.getMousePos();
 		if (!pos.isInside(mapView)) return;
 		
-		if (InputSystem.isMouseButtonDown(LEFT)) {
+		if (LwjglInputModule.isMouseButtonDown(LEFT)) {
 			if (mouseWalk(pos)) return;
 			if (mapView.plc.getPlayer().isMoving() && troToNav(pos)) return;
 		}
@@ -117,10 +117,10 @@ public class MIPMouse extends MapInteractionPlugin implements PlayerStepEndListe
 	{
 		if (isImmobile()) return;
 		
-		final Vect pos = InputSystem.getMousePos();
+		final Vect pos = LwjglInputModule.getMousePos();
 		if (!pos.isInside(mapView)) return;
 		
-		if (InputSystem.isMouseButtonDown(LEFT)) {
+		if (LwjglInputModule.isMouseButtonDown(LEFT)) {
 			if (mouseWalk(pos)) return;
 			if (mapView.plc.getPlayer().isMoving() && troToNav(pos)) return;
 		}

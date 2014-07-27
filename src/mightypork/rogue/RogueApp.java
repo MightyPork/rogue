@@ -4,6 +4,7 @@ package mightypork.rogue;
 import junk.AppInitOptions;
 import junk.BaseApp;
 import mightypork.gamecore.backends.lwjgl.LwjglBackend;
+import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.core.events.ShudownRequest;
@@ -15,7 +16,6 @@ import mightypork.gamecore.gui.events.ViewportChangeEvent;
 import mightypork.gamecore.gui.events.ViewportChangeListener;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.input.Edge;
-import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.resources.Res;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
@@ -104,7 +104,7 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 	
 	
 	@Override
-	protected void initInputSystem(InputSystem input)
+	protected void initInputSystem(LwjglInputModule input)
 	{
 		// this will work only with reusable events (such as requests)
 		bindEventToKey(new FullscreenToggleRequest(), "global.fullscreen");

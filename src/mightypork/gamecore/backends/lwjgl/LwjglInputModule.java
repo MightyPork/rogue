@@ -1,14 +1,13 @@
-package mightypork.gamecore.input;
+package mightypork.gamecore.backends.lwjgl;
 
 
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.events.UserQuitRequest;
-import mightypork.gamecore.input.events.InputReadyEvent;
+import mightypork.gamecore.input.InputModule;
+import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.input.events.KeyEvent;
 import mightypork.gamecore.input.events.MouseButtonEvent;
 import mightypork.gamecore.input.events.MouseMotionEvent;
-import mightypork.utils.eventbus.clients.BusNode;
-import mightypork.utils.interfaces.Destroyable;
 import mightypork.utils.interfaces.Updateable;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.var.VectVar;
@@ -24,9 +23,7 @@ import org.lwjgl.opengl.Display;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class InputSystem extends BusNode implements Updateable, KeyBinder, Destroyable {
-	
-	private static boolean inited = false;
+public class LwjglInputModule extends InputModule implements Updateable {
 	
 	/** Current mouse position */
 	private static final Vect mousePos = new Vect() {
@@ -49,40 +46,18 @@ public class InputSystem extends BusNode implements Updateable, KeyBinder, Destr
 		}
 	};
 	
-	private final KeyBindingPool keybindings;
-	
-	private final VectVar mouseMove = Vect.makeVar();
-	private final VectVar mouseLastPos = Vect.makeVar();
-	
-	
-	/**
-	 * @param app app access
-	 */
-	public InputSystem() {
-		
-		initDevices();
-		
-		// global keybindings
-		keybindings = new KeyBindingPool();
-		addChildClient(keybindings);
-		
-		App.bus().send(new InputReadyEvent());
-	}
-	
 	
 	@Override
-	public final void destroy()
+	public void destroy()
 	{
 		Mouse.destroy();
 		Keyboard.destroy();
 	}
 	
 	
-	private void initDevices()
+	@Override
+	protected void initDevices()
 	{
-		if (inited) return;
-		inited = true;
-		
 		try {
 			Mouse.create();
 			Keyboard.create();
@@ -92,19 +67,8 @@ public class InputSystem extends BusNode implements Updateable, KeyBinder, Destr
 		}
 	}
 	
-	
-	@Override
-	public final void bindKey(KeyStroke stroke, Edge edge, Runnable task)
-	{
-		keybindings.bindKey(stroke, edge, task);
-	}
-	
-	
-	@Override
-	public void unbindKey(KeyStroke stroke)
-	{
-		keybindings.unbindKey(stroke);
-	}
+	private final VectVar mouseMove = Vect.makeVar();
+	private final VectVar mouseLastPos = Vect.makeVar();
 	
 	
 	@Override
@@ -172,94 +136,62 @@ public class InputSystem extends BusNode implements Updateable, KeyBinder, Destr
 	}
 	
 	
-	/**
-	 * Get absolute mouse position. This vect is final and views at it can
-	 * safely be made.
-	 * 
-	 * @return mouse position
-	 */
-	public static Vect getMousePos()
+	@Override
+	public Vect getMousePos()
 	{
 		return mousePos;
 	}
 	
 	
-	/**
-	 * @return true if mouse is inside window.
-	 */
-	public static boolean isMouseInside()
+	@Override
+	public boolean isMouseInside()
 	{
 		return Mouse.isInsideWindow();
 	}
 	
 	
-	/**
-	 * Trap mouse cursor in the window
-	 * 
-	 * @param grab true to grab
-	 */
-	public static void grabMouse(boolean grab)
+	@Override
+	public void grabMouse(boolean grab)
 	{
 		Mouse.setGrabbed(grab);
 	}
 	
 	
-	/**
-	 * Check if key is down
-	 * 
-	 * @param key key to check (constant from the {@link Keys} class)
-	 * @return is down
-	 */
-	public static boolean isKeyDown(int key)
+	@Override
+	public boolean isKeyDown(int key)
 	{
 		return Keyboard.isKeyDown(key);
 	}
 	
 	
-	/**
-	 * Check mouse button state
-	 * 
-	 * @param button button to test (0 left, 1 right, 2 middle)
-	 * @return button is down
-	 */
-	public static boolean isMouseButtonDown(int button)
+	@Override
+	public boolean isMouseButtonDown(int button)
 	{
 		return Mouse.isButtonDown(button);
 	}
 	
 	
-	/**
-	 * @return bit mask of active mod keys
-	 */
-	public static int getActiveModKeys()
+	@Override
+	public int getActiveModKeys()
 	{
 		int mods = 0;
 		
-		if (Keyboard.isKeyDown(Keys.L_ALT) || Keyboard.isKeyDown(Keys.R_ALT)) {
+		if (isKeyDown(Keys.L_ALT) || isKeyDown(Keys.R_ALT)) {
 			mods |= Keys.MOD_ALT;
 		}
 		
-		if (Keyboard.isKeyDown(Keys.L_SHIFT) || Keyboard.isKeyDown(Keys.R_SHIFT)) {
+		if (isKeyDown(Keys.L_SHIFT) || isKeyDown(Keys.R_SHIFT)) {
 			mods |= Keys.MOD_SHIFT;
 		}
 		
-		if (Keyboard.isKeyDown(Keys.L_CONTROL) || Keyboard.isKeyDown(Keys.R_CONTROL)) {
+		if (isKeyDown(Keys.L_CONTROL) || isKeyDown(Keys.R_CONTROL)) {
 			mods |= Keys.MOD_CONTROL;
 		}
 		
-		if (Keyboard.isKeyDown(Keys.L_META) || Keyboard.isKeyDown(Keys.R_META)) {
+		if (isKeyDown(Keys.L_META) || isKeyDown(Keys.R_META)) {
 			mods |= Keys.MOD_META;
 		}
 		
 		return mods;
-	}
-	
-	
-	/**
-	 * @return true if the system is initialized
-	 */
-	public static boolean isReady()
-	{
-		return inited;
 	}
 }

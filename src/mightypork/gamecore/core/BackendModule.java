@@ -13,6 +13,9 @@ import mightypork.utils.interfaces.Destroyable;
  */
 public abstract class BackendModule extends BusNode implements Destroyable {
 	
+	public abstract void init();
+	
+	
 	@Override
 	@Stub
 	public void destroy()

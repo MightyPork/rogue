@@ -27,7 +27,6 @@ public class DeferredLwjglFont extends DeferredFont {
 	private IFont font = null;
 	
 	
-	
 	/**
 	 * A font from resource
 	 * 

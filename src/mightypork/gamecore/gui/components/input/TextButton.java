@@ -1,10 +1,11 @@
 package mightypork.gamecore.gui.components.input;
 
 
+import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;
 import mightypork.gamecore.gui.components.painters.TextPainter;
-import mightypork.gamecore.input.InputSystem;
 import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.Color;
 import mightypork.utils.math.color.pal.RGB;
@@ -46,7 +47,7 @@ public class TextButton extends ClickableComponent implements DynamicWidthCompon
 	protected void renderComponent()
 	{
 		if (isMouseOver()) {
-			if (InputSystem.isMouseButtonDown(0)) {
+			if (App.input().isMouseButtonDown(0)) {
 				offset.setTo(offsetUnder);
 			} else {
 				offset.setTo(hoverMove ? offsetOver : offsetPassive);

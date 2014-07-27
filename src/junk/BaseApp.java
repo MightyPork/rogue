@@ -3,6 +3,7 @@ package junk;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.AppBackend;
 import mightypork.gamecore.core.MainLoop;
@@ -10,7 +11,6 @@ import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
-import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.resources.Res;
 import mightypork.gamecore.resources.ResourceSetup;
 import mightypork.utils.logging.Log;
@@ -117,7 +117,7 @@ public abstract class BaseApp extends App implements UncaughtExceptionHandler {
 		 * Input
 		 */
 		Log.f2("Initializing Input System...");
-		inputSystem = new InputSystem(this);
+		inputSystem = new LwjglInputModule(this);
 		initInputSystem(inputSystem);
 		
 		/*

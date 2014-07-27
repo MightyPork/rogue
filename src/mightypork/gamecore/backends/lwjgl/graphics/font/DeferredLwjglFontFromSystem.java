@@ -4,7 +4,6 @@ package mightypork.gamecore.backends.lwjgl.graphics.font;
 import java.awt.Font;
 import java.io.IOException;
 
-import mightypork.gamecore.graphics.textures.FilterMode;
 import mightypork.utils.annotations.Alias;
 
 

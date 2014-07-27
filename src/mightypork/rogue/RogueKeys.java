@@ -1,8 +1,6 @@
 package mightypork.rogue;
 
 
-
-
 public class RogueKeys implements KeySetup {
 	
 	@Override

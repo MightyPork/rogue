@@ -85,8 +85,6 @@ public class InitTaskDisplay extends InitTask {
 		gfx.setTargetFps(fps);
 		
 		if (fullscreen) gfx.setFullscreen(true);
-		
-		gfx.createDisplay();
 	}
 	
 	

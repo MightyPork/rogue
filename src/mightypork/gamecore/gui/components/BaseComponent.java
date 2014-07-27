@@ -1,10 +1,11 @@
 package mightypork.gamecore.gui.components;
 
 
+import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.graphics.Renderable;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
-import mightypork.gamecore.input.InputSystem;
 import mightypork.utils.Support;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.interfaces.Enableable;
@@ -98,7 +99,7 @@ public abstract class BaseComponent extends AbstractRectCache implements Compone
 	@Override
 	public final boolean isMouseOver()
 	{
-		return InputSystem.getMousePos().isInside(this);
+		return App.input().getMousePos().isInside(this);
 	}
 	
 	

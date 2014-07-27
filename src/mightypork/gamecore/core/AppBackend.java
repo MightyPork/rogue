@@ -3,6 +3,7 @@ package mightypork.gamecore.core;
 
 import mightypork.gamecore.audio.AudioModule;
 import mightypork.gamecore.graphics.GraphicsModule;
+import mightypork.gamecore.input.InputModule;
 import mightypork.utils.eventbus.clients.BusNode;
 
 
@@ -53,4 +54,12 @@ public abstract class AppBackend extends BusNode {
 	 * @return audio module
 	 */
 	public abstract AudioModule getAudio();
+	
+	
+	/**
+	 * Get input module
+	 * 
+	 * @return input module
+	 */
+	public abstract InputModule getInput();
 }

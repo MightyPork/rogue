@@ -2,17 +2,12 @@ package mightypork.gamecore.core;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import mightypork.gamecore.audio.AudioModule;
 import mightypork.gamecore.core.config.Config;
-import mightypork.gamecore.core.init.InitTaskCrashHandler;
-import mightypork.gamecore.core.init.InitTaskIonizables;
-import mightypork.gamecore.core.init.InitTaskLog;
-import mightypork.gamecore.core.init.InitTaskLogHeader;
 import mightypork.gamecore.graphics.GraphicsModule;
+import mightypork.gamecore.input.InputModule;
 import mightypork.utils.annotations.Stub;
 import mightypork.utils.eventbus.EventBus;
 import mightypork.utils.eventbus.clients.BusNode;
@@ -164,6 +159,10 @@ public class App extends BusNode {
 	}
 	
 	
+	/**
+	 * Shut down the running instance.<br>
+	 * Deinitialize backend modules and terminate the JVM.
+	 */
 	public static void shutdown()
 	{
 		if (instance == null) throw new IllegalStateException("App is not running.");
@@ -199,9 +198,9 @@ public class App extends BusNode {
 	
 	
 	/**
-	 * Get graphics module from the backend
+	 * Get graphics module from the running app's backend
 	 * 
-	 * @return backend
+	 * @return graphics module
 	 */
 	public static GraphicsModule gfx()
 	{
@@ -210,13 +209,24 @@ public class App extends BusNode {
 	
 	
 	/**
-	 * Get audio module from the backend
+	 * Get audio module from the running app's backend
 	 * 
-	 * @return backend
+	 * @return audio module
 	 */
 	public static AudioModule audio()
 	{
 		return instance.backend.getAudio();
+	}
+	
+	
+	/**
+	 * Get input module from the running app's backend
+	 * 
+	 * @return input module
+	 */
+	public static InputModule input()
+	{
+		return instance.backend.getInput();
 	}
 	
 	

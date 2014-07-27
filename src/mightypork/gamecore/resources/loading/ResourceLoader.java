@@ -1,5 +1,6 @@
 package mightypork.gamecore.resources.loading;
 
+
 import mightypork.gamecore.resources.DeferredResource;
 
 

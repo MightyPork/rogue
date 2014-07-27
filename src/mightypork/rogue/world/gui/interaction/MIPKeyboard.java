@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.input.Edge;
-import mightypork.gamecore.input.InputSystem;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
@@ -103,7 +103,7 @@ public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClien
 		
 		if (mapView.plc.getPlayer().getMoveProgress() < 0.8) return false;
 		
-		if (InputSystem.getActiveModKeys() != Keys.MOD_NONE) return false;
+		if (LwjglInputModule.getActiveModKeys() != Keys.MOD_NONE) return false;
 		
 		for (int i = 0; i < 4; i++) {
 			if (keys[i].isDown()) {
