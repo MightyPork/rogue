@@ -4,7 +4,7 @@ package mightypork.rogue.screens.game;
 import java.io.File;
 
 import mightypork.gamecore.core.config.Config;
-import mightypork.gamecore.core.events.UserQuitRequest;
+import mightypork.gamecore.core.events.ShutdownEvent;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
 import mightypork.gamecore.input.Trigger;
@@ -343,7 +343,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 	
 	
 	@Override
-	public void onQuitRequest(UserQuitRequest event)
+	public void onShutdown(ShutdownEvent event)
 	{
 		// if player is dead, don't ask don't ask for save		
 		final PlayerFacade pl = WorldProvider.get().getPlayer();

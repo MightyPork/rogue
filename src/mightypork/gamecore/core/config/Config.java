@@ -96,7 +96,7 @@ public class Config {
 	 */
 	public void addKeyStroke(String key, String defval, String comment)
 	{
-		final KeyStrokeProperty kprop = new KeyStrokeProperty(prefixKeyStroke(key), KeyStroke.createFromDataString(defval), comment);
+		final KeyStrokeProperty kprop = new KeyStrokeProperty(prefixKeyStroke(key), KeyStroke.createFromString(defval), comment);
 		strokes.put(prefixKeyStroke(key), kprop);
 		propertyManager.addProperty(kprop);
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 
 import mightypork.gamecore.audio.AudioModule;
 import mightypork.gamecore.core.config.Config;
+import mightypork.gamecore.core.events.ShutdownEvent;
 import mightypork.gamecore.graphics.GraphicsModule;
 import mightypork.gamecore.input.InputModule;
 import mightypork.utils.annotations.Stub;
@@ -165,24 +166,33 @@ public class App extends BusNode {
 	 */
 	public static void shutdown()
 	{
-		if (instance == null) throw new IllegalStateException("App is not running.");
-		
-		Log.i("Shutting down subsystems...");
-		
-		// TODO send some shutdown notify event
-		
-		try {
-			final EventBus bus = bus();
-			if (bus != null) {
-				bus.send(new DestroyEvent());
-				bus.destroy();
-			}
-		} catch (final Throwable e) {
-			Log.e(e);
+		if (instance != null) {
+			Log.i("Dispatching Shutdown event...");
+			
+			bus().send(new ShutdownEvent(new Runnable() {
+				
+				@Override
+				public void run()
+				{
+					try {
+						final EventBus bus = bus();
+						if (bus != null) {
+							bus.send(new DestroyEvent());
+							bus.destroy();
+						}
+					} catch (final Throwable e) {
+						Log.e(e);
+					}
+					
+					Log.i("Shutdown completed.");
+					System.exit(0);
+				}
+			}));
+			
+		} else {
+			Log.w("App is not running.");
+			System.exit(0);
 		}
-		
-		Log.i("App terminated.");
-		System.exit(0);
 	}
 	
 	

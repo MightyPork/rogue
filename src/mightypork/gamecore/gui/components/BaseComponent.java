@@ -1,7 +1,6 @@
 package mightypork.gamecore.gui.components;
 
 
-import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.graphics.Renderable;
 import mightypork.gamecore.gui.events.LayoutChangeEvent;

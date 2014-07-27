@@ -5,7 +5,7 @@ import mightypork.utils.string.StringUtil;
 
 
 /**
- * Key stroke description
+ * Key stroke
  * 
  * @author Ondřej Hruška (MightyPork)
  */
@@ -62,21 +62,21 @@ public class KeyStroke {
 	}
 	
 	
-	public String toDataString()
+	public String saveToString()
 	{
 		return Keys.modToString(mod) + "+" + key.getName();
 	}
 	
 	
-	public static KeyStroke createFromDataString(String dataString)
+	public static KeyStroke createFromString(String dataString)
 	{
 		final KeyStroke ks = new KeyStroke(Keys.NONE, Keys.MOD_NONE);
-		ks.fromDataString(dataString);
+		ks.loadFromString(dataString);
 		return ks;
 	}
 	
 	
-	public void fromDataString(String dataString)
+	public void loadFromString(String dataString)
 	{
 		final String dataString1 = dataString.toUpperCase().replace('-', '+').replaceAll("[^A-Z0-9_+]", "");
 		
@@ -108,7 +108,7 @@ public class KeyStroke {
 	@Override
 	public String toString()
 	{
-		return toDataString();
+		return saveToString();
 	}
 	
 	

@@ -317,14 +317,6 @@ public abstract class GraphicsModule extends BackendModule {
 	
 	
 	/**
-	 * FIXME This should probably be moved to input module
-	 * 
-	 * @return true if close was requested recently (i.e. click on cross)
-	 */
-	public abstract boolean isCloseRequested();
-	
-	
-	/**
 	 * Start a render frame - clear buffers, prepare rendering context etc.
 	 */
 	public abstract void beginFrame();

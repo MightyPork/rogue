@@ -6,7 +6,6 @@ import java.nio.FloatBuffer;
 import mightypork.gamecore.audio.AudioModule;
 import mightypork.gamecore.audio.DeferredAudio;
 import mightypork.gamecore.backends.lwjgl.BufferHelper;
-import mightypork.utils.logging.Log;
 import mightypork.utils.math.constraints.vect.Vect;
 import mightypork.utils.math.constraints.vect.var.VectVar;
 

@@ -6,7 +6,11 @@ import mightypork.utils.math.constraints.vect.Vect;
 
 
 /**
- * Abstract input module
+ * Abstract input module.<br>
+ * An input module takes care of dispatching mouse and keyboard events, provides
+ * access to mouse position, key states etc.<br>
+ * The input module also takes care of calling App.shutdown() when the user
+ * requests exit (eg. clicks the titlebar close button)
  * 
  * @author Ondřej Hruška (MightyPork)
  */

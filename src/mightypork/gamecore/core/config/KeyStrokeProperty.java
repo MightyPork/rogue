@@ -31,7 +31,7 @@ public class KeyStrokeProperty extends Property<KeyStroke> {
 			final Key backup_key = value.getKey();
 			final int backup_mod = value.getMod();
 			
-			value.fromDataString(string);
+			value.loadFromString(string);
 			if (value.getKey() == Keys.NONE) {
 				value.setTo(backup_key, backup_mod);
 			}
@@ -42,7 +42,7 @@ public class KeyStrokeProperty extends Property<KeyStroke> {
 	@Override
 	public String toString()
 	{
-		return value.toDataString();
+		return value.saveToString();
 	}
 	
 	

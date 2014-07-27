@@ -1,7 +1,6 @@
 package mightypork.gamecore.gui.components.input;
 
 
-import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.gamecore.core.App;
 import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.components.DynamicWidthComponent;

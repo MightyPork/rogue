@@ -7,10 +7,10 @@ import java.util.List;
 
 import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.gamecore.core.config.Config;
-import mightypork.gamecore.input.Trigger;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
+import mightypork.gamecore.input.Trigger;
 import mightypork.rogue.world.entity.impl.EntityPlayer;
 import mightypork.rogue.world.events.PlayerStepEndListener;
 import mightypork.rogue.world.gui.MapView;

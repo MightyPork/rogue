@@ -2,7 +2,7 @@ package mightypork.rogue.screens.menu;
 
 
 import mightypork.gamecore.core.config.Config;
-import mightypork.gamecore.core.events.UserQuitRequest;
+import mightypork.gamecore.core.events.ShutdownEvent;
 import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -98,7 +98,7 @@ public class ScreenMainMenu extends RogueScreen {
 				@Override
 				protected void execute()
 				{
-					getEventBus().send(new UserQuitRequest());
+					getEventBus().send(new ShutdownEvent());
 				}
 			});
 			rows.add(btn, 2);
@@ -108,7 +108,7 @@ public class ScreenMainMenu extends RogueScreen {
 				@Override
 				public void run()
 				{
-					getEventBus().send(new UserQuitRequest());
+					getEventBus().send(new ShutdownEvent());
 				}
 			});
 		}

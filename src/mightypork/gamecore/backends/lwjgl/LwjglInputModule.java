@@ -2,7 +2,6 @@ package mightypork.gamecore.backends.lwjgl;
 
 
 import mightypork.gamecore.core.App;
-import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.input.InputModule;
 import mightypork.gamecore.input.Key;
 import mightypork.gamecore.input.Keys;
@@ -20,12 +19,11 @@ import org.lwjgl.opengl.Display;
 
 
 /**
- * Input system
+ * Lwjgl Input Module.
  * 
  * @author Ondřej Hruška (MightyPork)
  */
 public class LwjglInputModule extends InputModule implements Updateable {
-
 	
 	/** Current mouse position */
 	private static final Vect mousePos = new Vect() {
@@ -61,11 +59,12 @@ public class LwjglInputModule extends InputModule implements Updateable {
 		}
 	}
 	
+	
 	@Override
 	protected void initKeyCodes()
 	{
 		Keys.NONE.setCode(Keyboard.KEY_NONE);
-
+		
 		Keys.NUM_1.setCode(Keyboard.KEY_1);
 		Keys.NUM_2.setCode(Keyboard.KEY_2);
 		Keys.NUM_3.setCode(Keyboard.KEY_3);
@@ -76,7 +75,7 @@ public class LwjglInputModule extends InputModule implements Updateable {
 		Keys.NUM_8.setCode(Keyboard.KEY_8);
 		Keys.NUM_9.setCode(Keyboard.KEY_9);
 		Keys.NUM_0.setCode(Keyboard.KEY_0);
-
+		
 		Keys.Q.setCode(Keyboard.KEY_Q);
 		Keys.W.setCode(Keyboard.KEY_W);
 		Keys.E.setCode(Keyboard.KEY_E);
@@ -103,7 +102,7 @@ public class LwjglInputModule extends InputModule implements Updateable {
 		Keys.B.setCode(Keyboard.KEY_B);
 		Keys.N.setCode(Keyboard.KEY_N);
 		Keys.M.setCode(Keyboard.KEY_M);
-
+		
 		Keys.MINUS.setCode(Keyboard.KEY_MINUS);
 		Keys.EQUALS.setCode(Keyboard.KEY_EQUALS);
 		Keys.SLASH.setCode(Keyboard.KEY_SLASH);
@@ -115,7 +114,7 @@ public class LwjglInputModule extends InputModule implements Updateable {
 		Keys.GRAVE.setCode(Keyboard.KEY_GRAVE);
 		Keys.COMMA.setCode(Keyboard.KEY_COMMA);
 		Keys.PERIOD.setCode(Keyboard.KEY_PERIOD);
-
+		
 		Keys.SPACE.setCode(Keyboard.KEY_SPACE);
 		Keys.BACKSPACE.setCode(Keyboard.KEY_BACK);
 		Keys.TAB.setCode(Keyboard.KEY_TAB);
@@ -125,7 +124,7 @@ public class LwjglInputModule extends InputModule implements Updateable {
 		Keys.POWER.setCode(Keyboard.KEY_POWER);
 		Keys.SLEEP.setCode(Keyboard.KEY_SLEEP);
 		//Keys.MENU.setCode(Keyboard.KEY_MENU); // not defined
-
+		
 		Keys.F1.setCode(Keyboard.KEY_F1);
 		Keys.F2.setCode(Keyboard.KEY_F2);
 		Keys.F3.setCode(Keyboard.KEY_F3);
@@ -141,11 +140,11 @@ public class LwjglInputModule extends InputModule implements Updateable {
 		Keys.F13.setCode(Keyboard.KEY_F13);
 		Keys.F14.setCode(Keyboard.KEY_F14);
 		Keys.F15.setCode(Keyboard.KEY_F15);
-
+		
 		Keys.CAPS_LOCK.setCode(Keyboard.KEY_CAPITAL);
-		Keys.SCROLL_LOCK.setCode(Keyboard.KEY_SCROLL);	
+		Keys.SCROLL_LOCK.setCode(Keyboard.KEY_SCROLL);
 		Keys.NUM_LOCK.setCode(Keyboard.KEY_NUMLOCK);
-
+		
 		Keys.NUMPAD_MINUS.setCode(Keyboard.KEY_SUBTRACT);
 		Keys.NUMPAD_PLUSS.setCode(Keyboard.KEY_ADD);
 		Keys.NUMPAD_0.setCode(Keyboard.KEY_NUMPAD0);
@@ -162,7 +161,7 @@ public class LwjglInputModule extends InputModule implements Updateable {
 		Keys.NUMPAD_ENTER.setCode(Keyboard.KEY_NUMPADENTER);
 		Keys.NUMPAD_DIVIDE.setCode(Keyboard.KEY_DIVIDE);
 		Keys.NUMPAD_MULTIPLY.setCode(Keyboard.KEY_MULTIPLY);
-
+		
 		Keys.CONTROL_LEFT.setCode(Keyboard.KEY_LCONTROL);
 		Keys.CONTROL_RIGHT.setCode(Keyboard.KEY_RCONTROL);
 		Keys.ALT_LEFT.setCode(Keyboard.KEY_LMENU);
@@ -171,18 +170,18 @@ public class LwjglInputModule extends InputModule implements Updateable {
 		Keys.SHIFT_RIGHT.setCode(Keyboard.KEY_RSHIFT);
 		Keys.META_LEFT.setCode(Keyboard.KEY_LMETA);
 		Keys.META_RIGHT.setCode(Keyboard.KEY_RMETA);
-
+		
 		Keys.UP.setCode(Keyboard.KEY_UP);
 		Keys.DOWN.setCode(Keyboard.KEY_DOWN);
 		Keys.LEFT.setCode(Keyboard.KEY_LEFT);
 		Keys.RIGHT.setCode(Keyboard.KEY_RIGHT);
-
+		
 		Keys.HOME.setCode(Keyboard.KEY_HOME);
 		Keys.END.setCode(Keyboard.KEY_END);
-
+		
 		Keys.PAGE_UP.setCode(Keyboard.KEY_PRIOR);
 		Keys.PAGE_DOWN.setCode(Keyboard.KEY_NEXT);
-
+		
 		Keys.RETURN.setCode(Keyboard.KEY_RETURN);
 		Keys.PAUSE.setCode(Keyboard.KEY_PAUSE);
 		Keys.INSERT.setCode(Keyboard.KEY_INSERT);
@@ -230,7 +229,7 @@ public class LwjglInputModule extends InputModule implements Updateable {
 		}
 		
 		if (Display.isCloseRequested()) {
-			App.bus().send(new UserQuitRequest());
+			App.shutdown();
 		}
 	}
 	

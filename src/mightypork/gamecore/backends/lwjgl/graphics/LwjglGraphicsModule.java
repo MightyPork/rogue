@@ -513,13 +513,6 @@ public class LwjglGraphicsModule extends GraphicsModule {
 	
 	
 	@Override
-	public boolean isCloseRequested()
-	{
-		return Display.isCloseRequested();
-	}
-	
-	
-	@Override
 	public void beginFrame()
 	{
 		// handle resize

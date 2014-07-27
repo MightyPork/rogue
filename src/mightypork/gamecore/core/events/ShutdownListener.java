@@ -6,7 +6,7 @@ package mightypork.gamecore.core.events;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public interface UserQuitRequestListener {
+public interface ShutdownListener {
 	
 	/**
 	 * Intercept quit request.<br>
@@ -14,5 +14,5 @@ public interface UserQuitRequestListener {
 	 * 
 	 * @param event quit request event.
 	 */
-	void onQuitRequest(UserQuitRequest event);
+	void onShutdown(ShutdownEvent event);
 }

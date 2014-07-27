@@ -7,8 +7,7 @@ import mightypork.gamecore.backends.lwjgl.LwjglBackend;
 import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.MainLoopRequest;
-import mightypork.gamecore.core.events.ShudownRequest;
-import mightypork.gamecore.core.events.UserQuitRequest;
+import mightypork.gamecore.core.events.ShutdownEvent;
 import mightypork.gamecore.core.plugins.screenshot.ScreenshotRequest;
 import mightypork.gamecore.graphics.FullscreenToggleRequest;
 import mightypork.gamecore.graphics.GraphicsModule;
@@ -110,8 +109,8 @@ public final class RogueApp extends BaseApp implements ViewportChangeListener, S
 		bindEventToKey(new FullscreenToggleRequest(), "global.fullscreen");
 		bindEventToKey(new ScreenshotRequest(), "global.screenshot");
 		
-		bindEventToKey(new UserQuitRequest(), "global.quit");
-		bindEventToKey(new ShudownRequest(), "global.quit_force");
+		bindEventToKey(new ShutdownEvent(), "global.quit");
+		bindEventToKey(new ShutdownEvent(), "global.quit_force");
 	}
 	
 	
