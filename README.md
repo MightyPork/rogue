@@ -4,6 +4,17 @@
 
 It explains it way better than this text file.
 
+NOTE: Master is broken!
+-----------------------
+
+The master branch is used as dev now (sorry about that).
+
+The new engine is being developed here, but it is not finished and the code is in places broken.
+
+The rogue package is not yet updated to work with the new engine structure.
+
+Use the `v5stable` branch to see a working source version!
+
 
 DEPENDENCIES:
 -------------
