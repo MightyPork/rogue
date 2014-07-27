@@ -2,36 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="lib/jinput.jar" sourcepath="lib/lwjgl-source-2.8.4.zip">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Rogue/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/jogg-0.0.7.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Rogue/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Rogue/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl_util.jar" sourcepath="lib/lwjgl-source-2.8.4.zip">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Rogue/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl.jar" sourcepath="lib/lwjgl-source-2.8.4.zip">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Rogue/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/slick-util.jar" sourcepath="lib/slick-util-src.zip">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Rogue/lib"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/MightyUtils"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
