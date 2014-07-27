@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mightypork.gamecore.core.WorkDir;
+import mightypork.gamecore.input.Key;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.utils.config.propmgr.Property;
 import mightypork.utils.config.propmgr.PropertyManager;
@@ -256,7 +257,7 @@ public class Config {
 	 * @param key stroke key
 	 * @param mod stroke modifiers
 	 */
-	public void setKeyStroke(String cfgKey, int key, int mod)
+	public void setKeyStroke(String cfgKey, Key key, int mod)
 	{
 		final KeyStrokeProperty kp = strokes.get(prefixKeyStroke(cfgKey));
 		if (kp == null) {

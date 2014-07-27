@@ -8,7 +8,7 @@ import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
-import mightypork.gamecore.input.Edge;
+import mightypork.gamecore.input.Trigger;
 import mightypork.gamecore.resources.Res;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
@@ -76,7 +76,7 @@ public class ScreenSelectWorld extends RogueScreen {
 			rows.add(slot3);
 			
 			// escape to quitn from here
-			bindKey(Config.getKeyStroke("general.close"), Edge.RISING, new Runnable() {
+			bindKey(Config.getKeyStroke("general.close"), Trigger.RISING, new Runnable() {
 				
 				@Override
 				public void run()

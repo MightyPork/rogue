@@ -27,7 +27,7 @@ public class KeyBindingPool implements KeyBinder, KeyEventHandler {
 	 * @param task handler
 	 */
 	@Override
-	public void bindKey(KeyStroke stroke, Edge edge, Runnable task)
+	public void bindKey(KeyStroke stroke, Trigger edge, Runnable task)
 	{
 		for (final KeyBinding kb : bindings) {
 			if (kb.matches(stroke)) {

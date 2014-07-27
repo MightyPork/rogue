@@ -1,142 +1,153 @@
 package mightypork.gamecore.input;
 
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import mightypork.gamecore.core.App;
 import mightypork.utils.logging.Log;
-
-import org.lwjgl.input.Keyboard;
 
 
 /**
- * Key constants, from LWJGL {@link Keyboard}
+ * Key constants & translation table.
  * 
  * @author Ondřej Hruška (MightyPork)
  */
 public class Keys {
 	
 	//@formatter:off
+	public static final Key NONE            = new Key("NONE", "NULL");
 
-	public static final int NONE            = Keyboard.KEY_NONE;
+	public static final Key NUM_0           = new Key("0", "ZERO");
+	public static final Key NUM_1           = new Key("1", "ONE");
+	public static final Key NUM_2           = new Key("2", "TWO");
+	public static final Key NUM_3           = new Key("3", "THREE");
+	public static final Key NUM_4           = new Key("4", "FOUR");
+	public static final Key NUM_5           = new Key("5", "FIVE");
+	public static final Key NUM_6           = new Key("6", "SIX");
+	public static final Key NUM_7           = new Key("7", "SEVEN");
+	public static final Key NUM_8           = new Key("8", "EIGHT");
+	public static final Key NUM_9           = new Key("9", "NINE");
+	
+	public static final Key Q               = new Key("Q");
+	public static final Key W               = new Key("W");
+	public static final Key E               = new Key("E");
+	public static final Key R               = new Key("R");
+	public static final Key T               = new Key("T");
+	public static final Key Y               = new Key("Y");
+	public static final Key U               = new Key("U");
+	public static final Key I               = new Key("I");
+	public static final Key O               = new Key("O");
+	public static final Key P               = new Key("P");
+	public static final Key A               = new Key("A");
+	public static final Key S               = new Key("S");
+	public static final Key D               = new Key("D");
+	public static final Key F               = new Key("F");
+	public static final Key G               = new Key("G");
+	public static final Key H               = new Key("H");
+	public static final Key J               = new Key("J");
+	public static final Key K               = new Key("K");
+	public static final Key L               = new Key("L");
+	public static final Key Z               = new Key("Z");
+	public static final Key X               = new Key("X");
+	public static final Key C               = new Key("C");
+	public static final Key V               = new Key("V");
+	public static final Key B               = new Key("B");
+	public static final Key N               = new Key("N");
+	public static final Key M               = new Key("M");
 
-	public static final int ESCAPE          = Keyboard.KEY_ESCAPE;
+	public static final Key MINUS           = new Key("MINUS", "DASH");
+	public static final Key EQUALS          = new Key("EQUALS");
+	public static final Key SLASH           = new Key("SLASH");
+	public static final Key BACKSLASH       = new Key("BACKSLASH");
+	public static final Key BRACKET_LEFT    = new Key("LBRACKET", "LEFT_BRACKET");
+	public static final Key BRACKET_RIGHT   = new Key("RBRACKET", "RIGHT_BRACKET");
+	public static final Key SEMICOLON       = new Key("SEMICOLON");
+	public static final Key APOSTROPHE      = new Key("APOSTROPHE", "APOS");
+	public static final Key GRAVE           = new Key("GRAVE", "ACCENT");
+	public static final Key COMMA           = new Key("COMMA");
+	public static final Key PERIOD          = new Key("PERIOD", "DOT", "POINT");
 	
-	public static final int NUM_1           = Keyboard.KEY_1;
-	public static final int NUM_2           = Keyboard.KEY_2;
-	public static final int NUM_3           = Keyboard.KEY_3;
-	public static final int NUM_4           = Keyboard.KEY_4;
-	public static final int NUM_5           = Keyboard.KEY_5;
-	public static final int NUM_6           = Keyboard.KEY_6;
-	public static final int NUM_7           = Keyboard.KEY_7;
-	public static final int NUM_8           = Keyboard.KEY_8;
-	public static final int NUM_9           = Keyboard.KEY_9;
-	public static final int NUM_0           = Keyboard.KEY_0;
+	public static final Key SPACE           = new Key("SPACE", "SPACEBAR");
+	public static final Key BACKSPACE       = new Key("BACKSPACE", "BACK");
+	public static final Key TAB             = new Key("TAB", "TABULATOR", "INDENT");
+	public static final Key ESCAPE          = new Key("ESC", "ESCAPE");
 	
-	public static final int Q               = Keyboard.KEY_Q;
-	public static final int W               = Keyboard.KEY_W;
-	public static final int E               = Keyboard.KEY_E;
-	public static final int R               = Keyboard.KEY_R;
-	public static final int T               = Keyboard.KEY_T;
-	public static final int Y               = Keyboard.KEY_Y;
-	public static final int U               = Keyboard.KEY_U;
-	public static final int I               = Keyboard.KEY_I;
-	public static final int O               = Keyboard.KEY_O;
-	public static final int P               = Keyboard.KEY_P;
-	public static final int A               = Keyboard.KEY_A;
-	public static final int S               = Keyboard.KEY_S;
-	public static final int D               = Keyboard.KEY_D;
-	public static final int F               = Keyboard.KEY_F;
-	public static final int G               = Keyboard.KEY_G;
-	public static final int H               = Keyboard.KEY_H;
-	public static final int J               = Keyboard.KEY_J;
-	public static final int K               = Keyboard.KEY_K;
-	public static final int L               = Keyboard.KEY_L;
-	public static final int Z               = Keyboard.KEY_Z;
-	public static final int X               = Keyboard.KEY_X;
-	public static final int C               = Keyboard.KEY_C;
-	public static final int V               = Keyboard.KEY_V;
-	public static final int B               = Keyboard.KEY_B;
-	public static final int N               = Keyboard.KEY_N;
-	public static final int M               = Keyboard.KEY_M;
+	// those probably can't be used
+	public static final Key APPS            = new Key("APPS");
+	public static final Key POWER           = new Key("POWER");
+	public static final Key SLEEP           = new Key("SLEEP");
+	public static final Key MENU            = new Key("MENU");
+	
+	public static final Key F1              = new Key("F1");
+	public static final Key F2              = new Key("F2");
+	public static final Key F3              = new Key("F3");
+	public static final Key F4              = new Key("F4");
+	public static final Key F5              = new Key("F5");
+	public static final Key F6              = new Key("F6");
+	public static final Key F7              = new Key("F7");
+	public static final Key F8              = new Key("F8");
+	public static final Key F9              = new Key("F9");
+	public static final Key F10             = new Key("F10");
+	public static final Key F11             = new Key("F11");
+	public static final Key F12             = new Key("F12");
+	public static final Key F13             = new Key("F13");
+	public static final Key F14             = new Key("F14");
+	public static final Key F15             = new Key("F15");
 
-	public static final int MINUS           = Keyboard.KEY_MINUS;
-	public static final int EQUALS          = Keyboard.KEY_EQUALS;
-	public static final int SLASH           = Keyboard.KEY_SLASH;
-	public static final int BACKSLASH       = Keyboard.KEY_BACKSLASH;
-	public static final int L_BRACKET       = Keyboard.KEY_LBRACKET;
-	public static final int R_BRACKET       = Keyboard.KEY_RBRACKET;
-	public static final int SEMICOLON       = Keyboard.KEY_SEMICOLON;
-	public static final int APOSTROPHE      = Keyboard.KEY_APOSTROPHE;
-	public static final int GRAVE           = Keyboard.KEY_GRAVE;
-	public static final int COMMA           = Keyboard.KEY_COMMA;
-	public static final int PERIOD          = Keyboard.KEY_PERIOD;
+	// probably not possible to bind to those.
+	public static final Key CAPS_LOCK       = new Key("CAPSLOCK", "CAPS", "CAPITAL");
+	public static final Key SCROLL_LOCK     = new Key("SCROLL", "SCROLL_LOCK");	
+	public static final Key NUM_LOCK        = new Key("NUMLOCK");
 	
-	public static final int SPACE           = Keyboard.KEY_SPACE;
-	public static final int BACKSPACE       = Keyboard.KEY_BACK;
-	public static final int TAB             = Keyboard.KEY_TAB;
+	public static final Key NUMPAD_MINUS    = new Key("SUBTRACT", "NUMPAD_MINUS", "NUMPAD_SUBTRACT");
+	public static final Key NUMPAD_PLUSS    = new Key("ADD", "NUMPAD_PLUS", "NUMPAD_ADD");
+	public static final Key NUMPAD_0        = new Key("NUMPAD_0");
+	public static final Key NUMPAD_1        = new Key("NUMPAD_1");
+	public static final Key NUMPAD_2        = new Key("NUMPAD_2");
+	public static final Key NUMPAD_3        = new Key("NUMPAD_3");
+	public static final Key NUMPAD_4        = new Key("NUMPAD_4");
+	public static final Key NUMPAD_5        = new Key("NUMPAD_5");
+	public static final Key NUMPAD_6        = new Key("NUMPAD_6");
+	public static final Key NUMPAD_7        = new Key("NUMPAD_7");
+	public static final Key NUMPAD_8        = new Key("NUMPAD_8");
+	public static final Key NUMPAD_9        = new Key("NUMPAD_9");
+	public static final Key NUMPAD_DECIMAL  = new Key("DECIMAL", "NUMPAD_DECIMAL", "NUMPAD_PERIOD", "NUMPAD_POINT");
+	public static final Key NUMPAD_ENTER    = new Key("NUMPAD_ENTER", "NUMPADRETURN", "NUMPAD_RETURN");
+	public static final Key NUMPAD_DIVIDE   = new Key("DIVIDE", "NUMPAD_DIVIDE", "NUMPAD_SLASH");
+	public static final Key NUMPAD_MULTIPLY = new Key("MULTIPLY", "NUMPAD_MULTIPLY", "NUMPAD_ASTERISK");
 	
-	public static final int F1              = Keyboard.KEY_F1;
-	public static final int F2              = Keyboard.KEY_F2;
-	public static final int F3              = Keyboard.KEY_F3;
-	public static final int F4              = Keyboard.KEY_F4;
-	public static final int F5              = Keyboard.KEY_F5;
-	public static final int F6              = Keyboard.KEY_F6;
-	public static final int F7              = Keyboard.KEY_F7;
-	public static final int F8              = Keyboard.KEY_F8;
-	public static final int F9              = Keyboard.KEY_F9;
-	public static final int F10             = Keyboard.KEY_F10;
-	public static final int F11             = Keyboard.KEY_F11;
-	public static final int F12             = Keyboard.KEY_F12;
-	public static final int F13             = Keyboard.KEY_F13;
-	public static final int F14             = Keyboard.KEY_F14;
-	public static final int F15             = Keyboard.KEY_F15;
+	public static final Key CONTROL_LEFT    = new Key("LCONTROL", "LEFT_CONTROL", "LCTRL", "LEFT_CTRL");
+	public static final Key CONTROL_RIGHT   = new Key("RCONTROL", "RIGHT_CONTROL", "RCTRL", "RIGHT_CTRL");
+	public static final Key ALT_LEFT        = new Key("LALT", "LMENU", "LEFT_MENU");
+	public static final Key ALT_RIGHT       = new Key("RALT", "RMENU", "RIGHT_MENU");
+	public static final Key SHIFT_LEFT      = new Key("LSHIFT", "LEFT_SHIFT");
+	public static final Key SHIFT_RIGHT     = new Key("RSHIFT", "RIGHT_SHIFT");
+	public static final Key META_LEFT       = new Key("LMETA", "LEFT_META", "LWIN", "LEFT_WIN");
+	public static final Key META_RIGHT      = new Key("RMETA", "RIGHT_META", "RWIN", "RIGHT_WIN");
+	
+	public static final Key UP              = new Key("UP", "ARROW_UP");
+	public static final Key DOWN            = new Key("DOWN", "ARROW_DOWN");
+	public static final Key LEFT            = new Key("LEFT", "ARROW_LEFT");
+	public static final Key RIGHT           = new Key("RIGHT", "ARROW_RIGHT");
 
-	public static final int CAPS_LOCK       = Keyboard.KEY_CAPITAL;
-	public static final int SCROLL_LOCK     = Keyboard.KEY_SCROLL;	
-	public static final int NUM_LOCK        = Keyboard.KEY_NUMLOCK;
+	public static final Key HOME            = new Key("HOME");
+	public static final Key END             = new Key("END");
 	
-	public static final int NUMPAD_MINUS    = Keyboard.KEY_SUBTRACT;
-	public static final int NUMPAD_PLUSS    = Keyboard.KEY_ADD;
-	public static final int NUMPAD_0        = Keyboard.KEY_NUMPAD0;
-	public static final int NUMPAD_1        = Keyboard.KEY_NUMPAD1;
-	public static final int NUMPAD_2        = Keyboard.KEY_NUMPAD2;
-	public static final int NUMPAD_3        = Keyboard.KEY_NUMPAD3;
-	public static final int NUMPAD_4        = Keyboard.KEY_NUMPAD4;
-	public static final int NUMPAD_5        = Keyboard.KEY_NUMPAD5;
-	public static final int NUMPAD_6        = Keyboard.KEY_NUMPAD6;
-	public static final int NUMPAD_7        = Keyboard.KEY_NUMPAD7;
-	public static final int NUMPAD_8        = Keyboard.KEY_NUMPAD8;
-	public static final int NUMPAD_9        = Keyboard.KEY_NUMPAD9;
-	public static final int NUMPAD_DECIMAL  = Keyboard.KEY_DECIMAL;
-	public static final int NUMPAD_ENTER    = Keyboard.KEY_NUMPADENTER;
-	public static final int NUMPAD_DIVIDE   = Keyboard.KEY_DIVIDE;
-	public static final int NUMPAD_MULTIPLY = Keyboard.KEY_MULTIPLY;
-	
-	public static final int L_CONTROL       = Keyboard.KEY_LCONTROL;
-	public static final int R_CONTROL       = Keyboard.KEY_RCONTROL;
-	public static final int L_ALT           = Keyboard.KEY_LMENU;
-	public static final int R_ALT           = Keyboard.KEY_RMENU;
-	public static final int L_SHIFT         = Keyboard.KEY_LSHIFT;
-	public static final int R_SHIFT         = Keyboard.KEY_RSHIFT;
-	public static final int L_META          = Keyboard.KEY_LMETA;
-	public static final int R_META          = Keyboard.KEY_RMETA;
-	
-	public static final int UP              = Keyboard.KEY_UP;
-	public static final int DOWN            = Keyboard.KEY_DOWN;
-	public static final int LEFT            = Keyboard.KEY_LEFT;
-	public static final int RIGHT           = Keyboard.KEY_RIGHT;
+	public static final Key PAGE_UP         = new Key("PAGE_UP", "PGUP", "PRIOR");
+	public static final Key PAGE_DOWN       = new Key("PAGE_DOWN", "PGDN", "NEXT");
 
-	public static final int HOME            = Keyboard.KEY_HOME;
-	public static final int END             = Keyboard.KEY_END;
-	
-	public static final int PAGE_UP         = Keyboard.KEY_PRIOR;
-	public static final int PAGE_DOWN       = Keyboard.KEY_NEXT;
+	public static final Key RETURN          = new Key("ENTER", "RETURN", "CR");
+	public static final Key PAUSE           = new Key("PAUSE", "BREAK");
+	public static final Key INSERT          = new Key("INSERT");
+	public static final Key DELETE          = new Key("DELETE");
+	public static final Key SYSRQ           = new Key("SYSRQ"); // wtf is this anyway?
 
-	public static final int RETURN          = Keyboard.KEY_RETURN;
-	public static final int PAUSE           = Keyboard.KEY_PAUSE;
-	public static final int INSERT          = Keyboard.KEY_INSERT;
-	public static final int DELETE          = Keyboard.KEY_DELETE;
-
+	// here go modifier bits
 	public static final byte MOD_NONE       = 0;
 	public static final byte MOD_ALT        = 1;
 	public static final byte MOD_CONTROL    = 2;
@@ -144,122 +155,220 @@ public class Keys {
 	public static final byte MOD_META       = 8;
 	//@formatter:on
 	
-	private static HashMap<String, String> loadAliasMap = new HashMap<>();
-	private static HashMap<String, String> saveAliasMap = new HashMap<>();
+	private static Map<Integer, Key> lookupByCode = new HashMap<>(100);
+	private static List<Key> keyList = new ArrayList<>(100);
 	
 	static {
-		// init maps		
-		loadAliasMap.put("ENTER", "RETURN");
-		loadAliasMap.put("PGDN", "NEXT");
-		loadAliasMap.put("PGUP", "PRIOR");
-		loadAliasMap.put("PAGE_DOWN", "NEXT");
-		loadAliasMap.put("PAGE_UP", "PRIOR");
-		loadAliasMap.put("SPACEBAR", "SPACE");
-		loadAliasMap.put("ESC", "ESCAPE");
-		loadAliasMap.put("NUMPAD_DIVIDE", "DIVIDE");
-		loadAliasMap.put("NUMPAD_MULTIPLY", "MULTIPLY");
-		loadAliasMap.put("NUMPAD_ADD", "ADD");
-		loadAliasMap.put("NUMPAD_SUBTRACT", "SUBTRACT");
-		loadAliasMap.put("CAPS_LOCK", "CAPITAL");
-		loadAliasMap.put("SCROLL_LOCK", "SROLL");
-		loadAliasMap.put("NUM_LOCK", "NUMLOCK");
-		loadAliasMap.put("BACKSPACE", "BACK");
+		// define none key
+		NONE.setCode(0);
 		
-		saveAliasMap.put("RETURN", "ENTER");
-		saveAliasMap.put("ESCAPE", "ESC");
-		saveAliasMap.put("NEXT", "PGDN");
-		saveAliasMap.put("PRIOR", "PGUP");
-		saveAliasMap.put("DIVIDE", "NUMPAD_DIVIDE");
-		saveAliasMap.put("MULTIPLY", "NUMPAD_MULTIPLY");
-		saveAliasMap.put("ADD", "NUMPAD_ADD");
-		saveAliasMap.put("SUBTRACT", "NUMPAD_SUBTRACT");
-		saveAliasMap.put("CAPITAL", "CAPS_LOCK");
-		saveAliasMap.put("SROLL", "SCROLL_LOCK");
-		saveAliasMap.put("NUMLOCK", "NUM_LOCK");
-		saveAliasMap.put("BACK", "BACKSPACE");
+		// Use reflection to find keys
+		Field[] fields = Keys.class.getFields();
+		try {
+			for (Field field : fields) {
+				int modifiers = field.getModifiers();
+				if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers) && Modifier.isFinal(modifiers) && field.getType().equals(Key.class)) {
+					
+					keyList.add((Key) field.get(null));
+				}
+			}
+		} catch (Exception e) {}
 	}
 	
 	
-	public static int keyFromString(String key)
+	/**
+	 * Build lookup table by key codes
+	 */
+	private static void buildCodeLookupTable()
 	{
-		String key1 = key;
-		if (loadAliasMap.containsKey(key1)) key1 = loadAliasMap.get(key1);
+		lookupByCode.clear();
 		
-		final int index = Keyboard.getKeyIndex(key1);
-		if (index == Keys.NONE && !key1.equals("NONE")) {
-			Log.w("Could not parse key: " + key + " (" + key1 + ")");
+		lookupByCode.put(NONE.getCode(), NONE);
+		
+		for (Key k : keyList) {
+			if (!k.isDefined()) continue;
+			if (!lookupByCode.containsKey(k.getCode())) {
+				lookupByCode.put(k.getCode(), k);
+			}
 		}
-		return index;
+		
+		if (lookupByCode.size() == 1) {
+			// NONE alone
+			Log.w("Key codes are not ininitialized.");
+		}
 	}
 	
 	
-	public static int modFromString(String mod)
+	/**
+	 * Convert a key name to a key code.
+	 * 
+	 * @param keyStr key name
+	 * @return the key, or NONE if none matches
+	 */
+	public static Key stringToKey(String keyStr)
 	{
-		int mod_mask = Keys.MOD_NONE;
-		
-		if (mod.contains("CTRL")) {
-			mod_mask |= Keys.MOD_CONTROL;
+		for (Key k : keyList) {
+			if (k.matches(keyStr)) return k;
 		}
 		
-		if (mod.contains("ALT")) {
-			mod_mask |= Keys.MOD_ALT;
+		Log.w("No such key: " + keyStr);
+		
+		return NONE;
+	}
+	
+	
+	/**
+	 * Convert a mod description to a mod mask. A mod description is a string
+	 * containing CTRL,ALT,SHIFT,META, as in CTRL+ALT.<br>
+	 * If none of the mod identifiers are found in the description, a MOD_NONE
+	 * is returned.<br>
+	 * This method is used for parsing keystroke, together with nameToKey().
+	 * 
+	 * @param modStr mod description (eg. CTRL+ALT)
+	 * @return mod mask
+	 */
+	public static int stringToMod(String modStr)
+	{
+		int mod_mask = MOD_NONE;
+		
+		modStr = modStr.toUpperCase();
+		
+		if (modStr.contains("CTRL")) {
+			mod_mask |= MOD_CONTROL;
 		}
 		
-		if (mod.contains("SHIFT")) {
-			mod_mask |= Keys.MOD_SHIFT;
+		if (modStr.contains("ALT")) {
+			mod_mask |= MOD_ALT;
 		}
 		
-		if (mod.contains("META") || mod.contains("WIN")) {
-			mod_mask |= Keys.MOD_META;
+		if (modStr.contains("SHIFT")) {
+			mod_mask |= MOD_SHIFT;
+		}
+		
+		if (modStr.contains("META") || modStr.contains("WIN")) {
+			mod_mask |= MOD_META;
 		}
 		
 		return mod_mask;
 	}
 	
 	
-	public static String modToString(int mod)
+	/**
+	 * Convert a mod mask to a mod description, in a format recognized by
+	 * stringToMod() - joining mods by +.
+	 * 
+	 * @param modMask mod mask
+	 * @return mods as string (CTRL+ALT)
+	 */
+	public static String modToString(int modMask)
 	{
 		String s = "";
 		
-		if ((mod & Keys.MOD_CONTROL) != 0) {
-			s += "CTRL+";
+		if ((modMask & MOD_CONTROL) != 0) {
+			s += "CTRL";
 		}
 		
-		if ((mod & Keys.MOD_ALT) != 0) {
-			s += "ALT+";
+		if ((modMask & MOD_ALT) != 0) {
+			if (!s.isEmpty()) s += "+";
+			s += "ALT";
 		}
 		
-		if ((mod & Keys.MOD_SHIFT) != 0) {
-			s += "SHIFT+";
+		if ((modMask & MOD_SHIFT) != 0) {
+			if (!s.isEmpty()) s += "+";
+			s += "SHIFT";
 		}
 		
-		if ((mod & Keys.MOD_META) != 0) {
-			s += "META+";
+		if ((modMask & MOD_META) != 0) {
+			if (!s.isEmpty()) s += "+";
+			s += "META";
 		}
 		
 		return s;
 	}
 	
 	
-	public static String keyToString(int key)
+	/**
+	 * Get a {@link Key} for key code.
+	 * 
+	 * @param keyCode code
+	 * @return key instance, or NONE if no key matches.
+	 */
+	public static Key codeToKey(int keyCode)
 	{
-		String s = Keyboard.getKeyName(key);
-		if (saveAliasMap.containsKey(s)) s = saveAliasMap.get(s);
-		if (s == null) {
-			Log.w("Could not stringify key: " + key);
-			s = "NONE";
+		if (lookupByCode.isEmpty()) buildCodeLookupTable();
+		
+		Key k = lookupByCode.get(keyCode);
+		
+		if (k == null) {
+			Log.w("No key for code: " + keyCode);
+			k = NONE;
 		}
-		return s.toUpperCase();
+		
+		return k;
 	}
 	
 	
-	public static int keyToMod(int key)
+	/**
+	 * Convert a key to mod mask, in case the key is one of the mod keys.
+	 * 
+	 * @param key the key
+	 * @return mod mask corresponding to the key
+	 */
+	public static int keyToMod(Key key)
 	{
-		if (key == L_SHIFT || key == R_SHIFT) return MOD_SHIFT;
-		if (key == L_CONTROL || key == R_CONTROL) return MOD_CONTROL;
-		if (key == L_ALT || key == R_ALT) return MOD_ALT;
-		if (key == L_META || key == R_META) return MOD_META;
+		
+		if (key == SHIFT_LEFT || key == SHIFT_RIGHT) return MOD_SHIFT;
+		
+		if (key == CONTROL_LEFT || key == CONTROL_RIGHT) return MOD_CONTROL;
+		if (key == ALT_LEFT || key == ALT_RIGHT) return MOD_ALT;
+		if (key == META_LEFT || key == META_RIGHT) return MOD_META;
+		
 		return MOD_NONE;
+	}
+	
+	
+	/**
+	 * Get if the given key is down (call it's "isDown()" method).<br>
+	 * This method is here just for completeness, since the getActiveMod() is
+	 * also here.
+	 * 
+	 * @param key the key to check
+	 * @return true if the key is down
+	 */
+	public static boolean isKeyDown(Key key)
+	{
+		return key.isDown();
+	}
+	
+	
+	/**
+	 * Get currently active key modifiers
+	 * 
+	 * @return active mod mask (mod bits ored)
+	 */
+	public static int getActiveMod()
+	{
+		int mods = 0;
+		
+		InputModule inp = App.input();
+		
+		if (inp.isKeyDown(Keys.ALT_LEFT) || inp.isKeyDown(Keys.ALT_RIGHT)) {
+			mods |= Keys.MOD_ALT;
+		}
+		
+		if (inp.isKeyDown(Keys.SHIFT_LEFT) || inp.isKeyDown(Keys.SHIFT_RIGHT)) {
+			mods |= Keys.MOD_SHIFT;
+		}
+		
+		if (inp.isKeyDown(Keys.CONTROL_LEFT) || inp.isKeyDown(Keys.CONTROL_RIGHT)) {
+			mods |= Keys.MOD_CONTROL;
+		}
+		
+		if (inp.isKeyDown(Keys.META_LEFT) || inp.isKeyDown(Keys.META_RIGHT)) {
+			mods |= Keys.MOD_META;
+		}
+		
+		return mods;
 	}
 	
 }

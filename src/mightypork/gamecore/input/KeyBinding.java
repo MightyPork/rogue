@@ -14,7 +14,7 @@ public class KeyBinding implements KeyEventHandler {
 	
 	private final KeyStroke keystroke;
 	private Runnable handler;
-	private final Edge edge;
+	private final Trigger edge;
 	private boolean wasDown = false;
 	
 	
@@ -23,7 +23,7 @@ public class KeyBinding implements KeyEventHandler {
 	 * @param stroke trigger keystroke
 	 * @param handler action
 	 */
-	public KeyBinding(KeyStroke stroke, Edge edge, Runnable handler) {
+	public KeyBinding(KeyStroke stroke, Trigger edge, Runnable handler) {
 		this.keystroke = stroke;
 		this.handler = handler;
 		this.edge = edge;
@@ -58,8 +58,8 @@ public class KeyBinding implements KeyEventHandler {
 		final boolean nowDown = keystroke.isDown();
 		
 		boolean trigger = false;
-		trigger |= (edge == Edge.FALLING && (!wasDown && nowDown));
-		trigger |= (edge == Edge.RISING && (wasDown && !nowDown));
+		trigger |= (edge == Trigger.FALLING && (!wasDown && nowDown));
+		trigger |= (edge == Trigger.RISING && (wasDown && !nowDown));
 		wasDown = nowDown;
 		
 		// run handler when event was met

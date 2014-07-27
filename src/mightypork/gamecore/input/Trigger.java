@@ -4,7 +4,7 @@ package mightypork.gamecore.input;
 /**
  * Type of keystroke (falling / rising edge)
  */
-public enum Edge
+public enum Trigger
 {
 	/** Activated by falling edge (press) */
 	FALLING,

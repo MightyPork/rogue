@@ -12,7 +12,7 @@ import mightypork.gamecore.gui.components.layout.linear.LinearLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.impl.FadingLayer;
-import mightypork.gamecore.input.Edge;
+import mightypork.gamecore.input.Trigger;
 import mightypork.gamecore.resources.Res;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;
 import mightypork.rogue.world.WorldProvider;
@@ -121,13 +121,13 @@ public class LayerAskSave extends FadingLayer {
 		btn2.setAction(discard);
 		btn3.setAction(cancel);
 		
-		bindKey(Config.getKeyStroke("general.close"), Edge.RISING, cancel);
-		bindKey(Config.getKeyStroke("general.cancel"), Edge.RISING, cancel);
+		bindKey(Config.getKeyStroke("general.close"), Trigger.RISING, cancel);
+		bindKey(Config.getKeyStroke("general.cancel"), Trigger.RISING, cancel);
 		
-		bindKey(Config.getKeyStroke("general.yes"), Edge.RISING, save);
-		bindKey(Config.getKeyStroke("general.confirm"), Edge.RISING, save);
+		bindKey(Config.getKeyStroke("general.yes"), Trigger.RISING, save);
+		bindKey(Config.getKeyStroke("general.confirm"), Trigger.RISING, save);
 		
-		bindKey(Config.getKeyStroke("general.no"), Edge.RISING, discard);
+		bindKey(Config.getKeyStroke("general.no"), Trigger.RISING, discard);
 	}
 	
 	

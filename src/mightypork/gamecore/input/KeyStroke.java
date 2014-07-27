@@ -1,10 +1,7 @@
 package mightypork.gamecore.input;
 
 
-import mightypork.gamecore.core.App;
 import mightypork.utils.string.StringUtil;
-
-import org.lwjgl.input.Keyboard;
 
 
 /**
@@ -14,8 +11,8 @@ import org.lwjgl.input.Keyboard;
  */
 public class KeyStroke {
 	
-	private int mod;
-	private int key;
+	private byte mod;
+	private Key key;
 	
 	
 	/**
@@ -24,7 +21,7 @@ public class KeyStroke {
 	 * @param key key code
 	 * @param modmask modifiers
 	 */
-	public KeyStroke(int key, int modmask) {
+	public KeyStroke(Key key, int modmask) {
 		setTo(key, modmask);
 	}
 	
@@ -37,44 +34,37 @@ public class KeyStroke {
 	 * @param key key code
 	 * @param modmask modifiers
 	 */
-	public void setTo(int key, int modmask)
+	public void setTo(Key key, int modmask)
 	{
 		this.key = key;
-		this.mod = modmask | Keys.keyToMod(key); // for mods alone
+		this.mod = (byte) (modmask | Keys.keyToMod(key)); // for mods alone
 	}
 	
 	
 	/**
 	 * Create a new keystroke without modifiers
 	 * 
-	 * @param key key code
+	 * @param key key
 	 */
-	public KeyStroke(int key) {
+	public KeyStroke(Key key) {
 		this(key, Keys.MOD_NONE);
 	}
 	
 	
 	/**
-	 * @return true if the keystroke is currently down & modifiers match.
+	 * Get if the key is down and modifiers match
+	 * 
+	 * @return true if the key is currently down & modifiers match
 	 */
 	public boolean isDown()
 	{
-		boolean st = Keyboard.isKeyDown(key);
-		st &= (App.input().getActiveModKeys() == mod);
-		
-		return st;
+		return key.isDown() && (Keys.getActiveMod() == mod);
 	}
 	
 	
 	public String toDataString()
 	{
-		String s = "";
-		
-		if (mod != Keys.MOD_NONE) s = Keys.modToString(mod);
-		
-		s += Keys.keyToString(key);
-		
-		return s;
+		return Keys.modToString(mod) + "+" + key.getName();
 	}
 	
 	
@@ -95,21 +85,21 @@ public class KeyStroke {
 			final String keyStr = StringUtil.fromLastChar(dataString1, '+');
 			final String modStr = StringUtil.toLastChar(dataString1, '+');
 			
-			setTo(Keys.keyFromString(keyStr), Keys.modFromString(modStr));
+			setTo(Keys.stringToKey(keyStr), Keys.stringToMod(modStr));
 			
 		} else {
-			setTo(Keys.keyFromString(dataString1), Keys.MOD_NONE);
+			setTo(Keys.stringToKey(dataString1), Keys.MOD_NONE);
 		}
 	}
 	
 	
-	public int getKey()
+	public Key getKey()
 	{
 		return key;
 	}
 	
 	
-	public int getMod()
+	public byte getMod()
 	{
 		return mod;
 	}
@@ -127,7 +117,7 @@ public class KeyStroke {
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + key;
+		result = prime * result + key.getCode();
 		result = prime * result + mod;
 		return result;
 	}
@@ -140,7 +130,7 @@ public class KeyStroke {
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
 		final KeyStroke other = (KeyStroke) obj;
-		if (key != other.key) return false;
+		if (key.getCode() != other.key.getCode()) return false;
 		if (mod != other.mod) return false;
 		return true;
 	}

@@ -7,7 +7,7 @@ import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.UserQuitRequest;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.ActionGroup;
-import mightypork.gamecore.input.Edge;
+import mightypork.gamecore.input.Trigger;
 import mightypork.gamecore.resources.Res;
 import mightypork.rogue.Const;
 import mightypork.rogue.RogueStateManager.RogueState;
@@ -246,17 +246,17 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		addLayer(worldLayer = new LayerMapView(this));
 		addLayer(askSaveLayer = new LayerAskSave(this));
 		
-		bindKey(Config.getKeyStroke("game.pause"), Edge.RISING, actionTogglePause);
+		bindKey(Config.getKeyStroke("game.pause"), Trigger.RISING, actionTogglePause);
 		
-		bindKey(Config.getKeyStroke("game.inventory"), Edge.RISING, actionToggleInv);
-		bindKey(Config.getKeyStroke("game.drop"), Edge.RISING, actionDropLastPickedItem);
-		bindKey(Config.getKeyStroke("game.eat"), Edge.RISING, actionEat);
-		bindKey(Config.getKeyStroke("game.minimap"), Edge.RISING, actionToggleMinimap);
-		bindKey(Config.getKeyStroke("game.zoom"), Edge.RISING, actionToggleZoom);
+		bindKey(Config.getKeyStroke("game.inventory"), Trigger.RISING, actionToggleInv);
+		bindKey(Config.getKeyStroke("game.drop"), Trigger.RISING, actionDropLastPickedItem);
+		bindKey(Config.getKeyStroke("game.eat"), Trigger.RISING, actionEat);
+		bindKey(Config.getKeyStroke("game.minimap"), Trigger.RISING, actionToggleMinimap);
+		bindKey(Config.getKeyStroke("game.zoom"), Trigger.RISING, actionToggleZoom);
 		
-		bindKey(Config.getKeyStroke("game.load"), Edge.RISING, actionLoad);
-		bindKey(Config.getKeyStroke("game.save"), Edge.RISING, actionSave);
-		bindKey(Config.getKeyStroke("game.quit"), Edge.RISING, actionMenu);
+		bindKey(Config.getKeyStroke("game.load"), Trigger.RISING, actionLoad);
+		bindKey(Config.getKeyStroke("game.save"), Trigger.RISING, actionSave);
+		bindKey(Config.getKeyStroke("game.quit"), Trigger.RISING, actionMenu);
 		
 //		bindKey(new KeyStroke(Keys.W), Edge.RISING, new Runnable() {
 //			
@@ -284,7 +284,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		worldActions.setEnabled(true);
 		
 		// CHEAT - X-ray
-		bindKey(Config.getKeyStroke("game.cheat.xray"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.cheat.xray"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()

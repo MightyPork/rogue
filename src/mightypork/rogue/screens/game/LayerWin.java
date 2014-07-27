@@ -13,7 +13,7 @@ import mightypork.gamecore.gui.components.painters.ImagePainter;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.impl.FadingLayer;
-import mightypork.gamecore.input.Edge;
+import mightypork.gamecore.input.Trigger;
 import mightypork.gamecore.resources.Res;
 import mightypork.rogue.RogueStateManager.RogueState;
 import mightypork.rogue.events.RogueStateRequest;
@@ -69,8 +69,8 @@ public class LayerWin extends FadingLayer {
 		
 		btn1.setAction(quit);
 		
-		bindKey(Config.getKeyStroke("general.confirm"), Edge.RISING, quit);
-		bindKey(Config.getKeyStroke("general.close"), Edge.RISING, quit);
+		bindKey(Config.getKeyStroke("general.confirm"), Trigger.RISING, quit);
+		bindKey(Config.getKeyStroke("general.close"), Trigger.RISING, quit);
 	}
 	
 	

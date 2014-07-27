@@ -1,6 +1,7 @@
 package mightypork.gamecore.core.config;
 
 
+import mightypork.gamecore.input.Key;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.utils.config.propmgr.Property;
@@ -27,7 +28,7 @@ public class KeyStrokeProperty extends Property<KeyStroke> {
 		if (string != null) {
 			// keep the same instance
 			
-			final int backup_key = value.getKey();
+			final Key backup_key = value.getKey();
 			final int backup_mod = value.getMod();
 			
 			value.fromDataString(string);

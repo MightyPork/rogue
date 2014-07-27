@@ -7,7 +7,7 @@ import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Overlay;
-import mightypork.gamecore.input.Edge;
+import mightypork.gamecore.input.Trigger;
 import mightypork.gamecore.resources.Res;
 import mightypork.utils.math.AlignX;
 import mightypork.utils.math.color.pal.RGB;
@@ -33,7 +33,7 @@ public class FpsOverlay extends Overlay {
 		/*
 		 * Toggle key: F3
 		 */
-		bindKey(Config.getKeyStroke("global.fps_meter"), Edge.RISING, new Action() {
+		bindKey(Config.getKeyStroke("global.fps_meter"), Trigger.RISING, new Action() {
 			
 			@Override
 			public void execute()

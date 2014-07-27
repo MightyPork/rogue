@@ -18,17 +18,28 @@ public abstract class InputModule extends BackendModule implements KeyBinder {
 	@Override
 	public final void init()
 	{
+		initKeyCodes();
+		initDevices();
+		
 		keybindings = new KeyBindingPool();
 		addChildClient(keybindings);
-		initDevices();
 	}
 	
 	
+	/**
+	 * Initialize key codes for keys in {@link Keys}
+	 */
+	protected abstract void initKeyCodes();
+	
+	
+	/**
+	 * Initialize input devices (set up infrastructure for getting the input)
+	 */
 	protected abstract void initDevices();
 	
 	
 	@Override
-	public void bindKey(KeyStroke stroke, Edge edge, Runnable task)
+	public void bindKey(KeyStroke stroke, Trigger edge, Runnable task)
 	{
 		keybindings.bindKey(stroke, edge, task);
 	}
@@ -67,25 +78,20 @@ public abstract class InputModule extends BackendModule implements KeyBinder {
 	
 	
 	/**
-	 * Check if key is down (constant from the {@link Keys} class)
+	 * Check if key is down. The key comes from the Keys class, so the code is
+	 * the one assigned in initKeyCodes()
 	 * 
 	 * @param key key to check
 	 * @return is down
 	 */
-	public abstract boolean isKeyDown(int key);
+	public abstract boolean isKeyDown(Key key);
 	
 	
 	/**
 	 * Check mouse button state
 	 * 
-	 * @param button button to test (0 left, 1 right, 2 middle)
-	 * @return button is down
+	 * @param button button to test (0 left, 1 right, 2 middle, 3,4,5... extra)
+	 * @return true if the button exists and is down
 	 */
 	public abstract boolean isMouseButtonDown(int button);
-	
-	
-	/**
-	 * @return bit mask of active mod keys
-	 */
-	public abstract int getActiveModKeys();
 }

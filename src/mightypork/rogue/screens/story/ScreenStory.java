@@ -10,7 +10,7 @@ import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.Screen;
 import mightypork.gamecore.gui.screens.ScreenLayer;
 import mightypork.gamecore.gui.screens.impl.LayerColor;
-import mightypork.gamecore.input.Edge;
+import mightypork.gamecore.input.Trigger;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.input.Keys;
 import mightypork.gamecore.input.events.MouseButtonEvent;
@@ -213,11 +213,11 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		addLayer(new LayerColor(this, Color.fromHex(0x040c1e), 0));
 		addLayer(slideLayer = new LayerSlide(this));
 		
-		bindKey(new KeyStroke(Keys.SPACE), Edge.RISING, next);
-		bindKey(new KeyStroke(Keys.RIGHT), Edge.RISING, next);
-		bindKey(new KeyStroke(Keys.BACKSPACE), Edge.RISING, prev);
-		bindKey(new KeyStroke(Keys.LEFT), Edge.RISING, prev);
-		bindKey(Config.getKeyStroke("general.close"), Edge.RISING, close);
+		bindKey(new KeyStroke(Keys.SPACE), Trigger.RISING, next);
+		bindKey(new KeyStroke(Keys.RIGHT), Trigger.RISING, next);
+		bindKey(new KeyStroke(Keys.BACKSPACE), Trigger.RISING, prev);
+		bindKey(new KeyStroke(Keys.LEFT), Trigger.RISING, prev);
+		bindKey(Config.getKeyStroke("general.close"), Trigger.RISING, close);
 	}
 	
 	private int slide = 0;

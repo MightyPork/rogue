@@ -9,7 +9,7 @@ import mightypork.gamecore.core.App;
 import mightypork.gamecore.graphics.Renderable;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.events.LayoutChangeListener;
-import mightypork.gamecore.input.Edge;
+import mightypork.gamecore.input.Trigger;
 import mightypork.gamecore.input.KeyBinder;
 import mightypork.gamecore.input.KeyBindingPool;
 import mightypork.gamecore.input.KeyStroke;
@@ -63,7 +63,7 @@ public abstract class Overlay extends BusNode implements Comparable<Overlay>, Up
 	
 	
 	@Override
-	public final void bindKey(KeyStroke stroke, Edge edge, Runnable task)
+	public final void bindKey(KeyStroke stroke, Trigger edge, Runnable task)
 	{
 		keybindings.bindKey(stroke, edge, task);
 	}

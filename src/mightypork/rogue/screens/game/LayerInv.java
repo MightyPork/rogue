@@ -8,7 +8,7 @@ import mightypork.gamecore.gui.components.layout.GridLayout;
 import mightypork.gamecore.gui.components.painters.QuadPainter;
 import mightypork.gamecore.gui.components.painters.TextPainter;
 import mightypork.gamecore.gui.screens.impl.FadingLayer;
-import mightypork.gamecore.input.Edge;
+import mightypork.gamecore.input.Trigger;
 import mightypork.gamecore.input.KeyStroke;
 import mightypork.gamecore.resources.Res;
 import mightypork.rogue.screens.game.ScreenGame.GScrState;
@@ -155,7 +155,7 @@ public class LayerInv extends FadingLayer {
 		gl.put(txp2, pos, 0, 1, 1);
 		txp2.setVPaddingPercent(25);
 		
-		bindKey(keyClose, Edge.RISING, new Runnable() {
+		bindKey(keyClose, Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -165,7 +165,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(keyUse, Edge.RISING, new Runnable() {
+		bindKey(keyUse, Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -178,7 +178,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(keyDrop, Edge.RISING, new Runnable() {
+		bindKey(keyDrop, Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -233,7 +233,7 @@ public class LayerInv extends FadingLayer {
 	private void setupGridWalkKeys()
 	{
 		
-		bindKey(Config.getKeyStroke("game.inv.move.left"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.inv.move.left"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -250,7 +250,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(Config.getKeyStroke("game.inv.move.right"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.inv.move.right"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -267,7 +267,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(Config.getKeyStroke("game.inv.move.up"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.inv.move.up"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -284,7 +284,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(Config.getKeyStroke("game.inv.move.down"), Edge.RISING, new Runnable() {
+		bindKey(Config.getKeyStroke("game.inv.move.down"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
