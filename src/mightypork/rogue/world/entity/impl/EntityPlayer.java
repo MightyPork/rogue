@@ -1,6 +1,7 @@
 package mightypork.rogue.world.entity.impl;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.rogue.world.entity.*;
 import mightypork.rogue.world.entity.modules.EntityMoveListener;
 import mightypork.rogue.world.entity.render.EntityRendererMobLR;
@@ -62,7 +63,7 @@ public class EntityPlayer extends Entity {
 		
 		private void fireEvt()
 		{
-			getWorld().getEventBus().send(new PlayerStepEndEvent(EntityPlayer.this));
+			App.bus().send(new PlayerStepEndEvent(EntityPlayer.this));
 		}
 		
 		
@@ -134,7 +135,7 @@ public class EntityPlayer extends Entity {
 	public void onKilled()
 	{
 		// send kill event to listeners, after the entity has despawned (disappeared)
-		getWorld().getEventBus().sendDelayed(new PlayerKilledEvent(), getDespawnDelay());
+		App.bus().sendDelayed(new PlayerKilledEvent(), getDespawnDelay());
 		
 		getWorld().getConsole().msgDie(lastAttacker);
 	}

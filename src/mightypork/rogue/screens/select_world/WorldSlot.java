@@ -3,6 +3,7 @@ package mightypork.rogue.screens.select_world;
 
 import java.io.File;
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.components.input.TextButton;
@@ -45,8 +46,7 @@ public class WorldSlot extends ConstraintLayout {
 	private TextButton delBtn;
 	
 	
-	public WorldSlot(AppAccess app, File worldFile) {
-		super(app);
+	public WorldSlot(File worldFile) {
 		
 		this.file = worldFile;
 		
@@ -64,7 +64,7 @@ public class WorldSlot extends ConstraintLayout {
 		qp.setRect(innerRect);
 		add(qp);
 		
-		final GridLayout gridl = new GridLayout(app, 1, 8);
+		final GridLayout gridl = new GridLayout(1, 8);
 		final Num shrinkH = width().perc(8);
 		final Num shrinkV = height().perc(10);
 		gridl.setRect(innerRect.shrink(shrinkH, shrinkH, shrinkV, shrinkV.half()));
@@ -91,7 +91,7 @@ public class WorldSlot extends ConstraintLayout {
 					msg = "Creating world...";
 				}
 				
-				getEventBus().send(new LoadingOverlayRequest(msg, new Runnable() {
+				App.bus().send(new LoadingOverlayRequest(msg, new Runnable() {
 					
 					@Override
 					public void run()
@@ -106,7 +106,7 @@ public class WorldSlot extends ConstraintLayout {
 								
 								WorldProvider.get().saveWorld();
 								
-								getEventBus().send(new ScreenRequest("game"));
+								App.bus().send(new ScreenRequest("game"));
 								
 							} catch (final Exception t) {
 								Log.e("Could not create & save the world.", t);
@@ -120,7 +120,7 @@ public class WorldSlot extends ConstraintLayout {
 								w.load((IonDataBundle) worldBundle.get("world"));
 								WorldProvider.get().setWorld(w);
 								
-								getEventBus().send(new ScreenRequest("game"));
+								App.bus().send(new ScreenRequest("game"));
 								
 							} catch (final Exception e) {
 								Log.e("Could not load the world.", e);

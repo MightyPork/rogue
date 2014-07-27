@@ -48,6 +48,8 @@ public class Minimap extends InputComponent implements MouseButtonHandler {
 		
 		final Coord point = new Coord(tl.xi(), tl.yi());
 		
+		// FIXME do not use LWJGL directly
+		
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
 		GL11.glBegin(GL11.GL_QUADS);

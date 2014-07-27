@@ -111,7 +111,7 @@ public class LayerGameUi extends ScreenLayer {
 	
 	private void buildNav()
 	{
-		final IngameNav nav = new IngameNav(this);
+		final IngameNav nav = new IngameNav();
 		nav.setRect(root.bottomEdge().growUp(root.height().perc(12)));
 		root.add(nav);
 		

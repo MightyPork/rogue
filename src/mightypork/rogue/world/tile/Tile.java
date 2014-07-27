@@ -23,7 +23,7 @@ import mightypork.utils.math.color.Color;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public abstract class Tile implements BusAccess, IonBinary {
+public abstract class Tile implements IonBinary {
 	
 	// tmp extras
 	public final TileGenData genData = new TileGenData();
@@ -272,13 +272,6 @@ public abstract class Tile implements BusAccess, IonBinary {
 	protected World getWorld()
 	{
 		return level.getWorld();
-	}
-	
-	
-	@Override
-	public EventBus getEventBus()
-	{
-		return level.getEventBus();
 	}
 	
 }

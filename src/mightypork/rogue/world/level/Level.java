@@ -36,7 +36,7 @@ import mightypork.utils.math.noise.NoiseGen;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class Level implements BusAccess, Updateable, DelegatingClient, ToggleableClient, IonBinary {
+public class Level implements Updateable, DelegatingClient, ToggleableClient, IonBinary {
 	
 	private final FloodFill exploreFiller = new FloodFill() {
 		
@@ -633,13 +633,6 @@ public class Level implements BusAccess, Updateable, DelegatingClient, Toggleabl
 	public Collection<Entity> getEntities()
 	{
 		return entityList;
-	}
-	
-	
-	@Override
-	public EventBus getEventBus()
-	{
-		return world.getEventBus();
 	}
 	
 	

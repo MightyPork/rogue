@@ -3,6 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.File;
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.ShutdownEvent;
 import mightypork.gamecore.gui.Action;
@@ -84,7 +85,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		@Override
 		public void execute()
 		{
-			getEventBus().send(new WorldPauseRequest(PauseAction.TOGGLE));
+			App.bus().send(new WorldPauseRequest(PauseAction.TOGGLE));
 		}
 	};
 	
@@ -176,7 +177,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		final boolean gameOver = WorldProvider.get().getWorld().isGameOver();
 		
 		if (nstate != GScrState.WORLD && state == GScrState.WORLD) { // leaving world.
-			getEventBus().send(new WorldPauseRequest(PauseAction.PAUSE));
+			App.bus().send(new WorldPauseRequest(PauseAction.PAUSE));
 			
 			worldActions.setEnabled(false); // disable world actions
 		}
@@ -189,7 +190,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		Runnable task;
 		switch (nstate) {
 			case WORLD:
-				getEventBus().send(new WorldPauseRequest(PauseAction.RESUME));
+				App.bus().send(new WorldPauseRequest(PauseAction.RESUME));
 				worldActions.setEnabled(true);
 				break;
 			
@@ -214,7 +215,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 					@Override
 					public void run()
 					{
-						getEventBus().send(new RogueStateRequest(goal));
+						App.bus().send(new RogueStateRequest(goal));
 					}
 				};
 				
@@ -236,8 +237,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 	}
 	
 	
-	public ScreenGame(AppAccess app) {
-		super(app);
+	public ScreenGame() {
 		
 		addLayer(invLayer = new LayerInv(this));
 		addLayer(deathLayer = new LayerDeath(this));
@@ -246,17 +246,19 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		addLayer(worldLayer = new LayerMapView(this));
 		addLayer(askSaveLayer = new LayerAskSave(this));
 		
-		bindKey(Config.getKeyStroke("game.pause"), Trigger.RISING, actionTogglePause);
+		Config cfg = App.cfg();
 		
-		bindKey(Config.getKeyStroke("game.inventory"), Trigger.RISING, actionToggleInv);
-		bindKey(Config.getKeyStroke("game.drop"), Trigger.RISING, actionDropLastPickedItem);
-		bindKey(Config.getKeyStroke("game.eat"), Trigger.RISING, actionEat);
-		bindKey(Config.getKeyStroke("game.minimap"), Trigger.RISING, actionToggleMinimap);
-		bindKey(Config.getKeyStroke("game.zoom"), Trigger.RISING, actionToggleZoom);
+		bindKey(cfg.getKeyStroke("game.pause"), Trigger.RISING, actionTogglePause);
 		
-		bindKey(Config.getKeyStroke("game.load"), Trigger.RISING, actionLoad);
-		bindKey(Config.getKeyStroke("game.save"), Trigger.RISING, actionSave);
-		bindKey(Config.getKeyStroke("game.quit"), Trigger.RISING, actionMenu);
+		bindKey(cfg.getKeyStroke("game.inventory"), Trigger.RISING, actionToggleInv);
+		bindKey(cfg.getKeyStroke("game.drop"), Trigger.RISING, actionDropLastPickedItem);
+		bindKey(cfg.getKeyStroke("game.eat"), Trigger.RISING, actionEat);
+		bindKey(cfg.getKeyStroke("game.minimap"), Trigger.RISING, actionToggleMinimap);
+		bindKey(cfg.getKeyStroke("game.zoom"), Trigger.RISING, actionToggleZoom);
+		
+		bindKey(cfg.getKeyStroke("game.load"), Trigger.RISING, actionLoad);
+		bindKey(cfg.getKeyStroke("game.save"), Trigger.RISING, actionSave);
+		bindKey(cfg.getKeyStroke("game.quit"), Trigger.RISING, actionMenu);
 		
 //		bindKey(new KeyStroke(Keys.W), Edge.RISING, new Runnable() {
 //			
@@ -284,7 +286,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		worldActions.setEnabled(true);
 		
 		// CHEAT - X-ray
-		bindKey(Config.getKeyStroke("game.cheat.xray"), Trigger.RISING, new Runnable() {
+		bindKey(cfg.getKeyStroke("game.cheat.xray"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -304,7 +306,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		setState(GScrState.WORLD);
 		hideAllPopups();
 		
-		getSoundSystem().fadeOutAllLoops();
+		App.audio().fadeOutAllLoops();
 		Res.getSoundLoop("music.dungeon").fadeIn();
 	}
 	

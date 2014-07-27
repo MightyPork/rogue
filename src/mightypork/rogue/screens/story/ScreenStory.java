@@ -1,6 +1,7 @@
 package mightypork.rogue.screens.story;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.Action;
 import mightypork.gamecore.gui.components.layout.RowLayout;
@@ -202,13 +203,12 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		@Override
 		protected void execute()
 		{
-			getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
+			App.bus().send(new RogueStateRequest(RogueState.MAIN_MENU));
 		}
 	};
 	
 	
-	public ScreenStory(AppAccess app) {
-		super(app);
+	public ScreenStory() {
 		
 		addLayer(new LayerColor(this, Color.fromHex(0x040c1e), 0));
 		addLayer(slideLayer = new LayerSlide(this));
@@ -217,7 +217,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		bindKey(new KeyStroke(Keys.RIGHT), Trigger.RISING, next);
 		bindKey(new KeyStroke(Keys.BACKSPACE), Trigger.RISING, prev);
 		bindKey(new KeyStroke(Keys.LEFT), Trigger.RISING, prev);
-		bindKey(Config.getKeyStroke("general.close"), Trigger.RISING, close);
+		bindKey(App.cfg().getKeyStroke("general.close"), Trigger.RISING, close);
 	}
 	
 	private int slide = 0;
@@ -248,7 +248,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 				break;
 			
 			case 3:
-				getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
+				App.bus().send(new RogueStateRequest(RogueState.MAIN_MENU));
 		}
 	}
 	

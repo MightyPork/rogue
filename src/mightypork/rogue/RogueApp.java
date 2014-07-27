@@ -5,6 +5,7 @@ import junk.AppInitOptions;
 import junk.BaseApp;
 import mightypork.gamecore.backends.lwjgl.LwjglBackend;
 import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.MainLoopRequest;
 import mightypork.gamecore.core.events.ShutdownEvent;
@@ -37,7 +38,7 @@ import mightypork.utils.logging.Log;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public final class RogueApp extends BaseApp implements ViewportChangeListener, ScreenshotRequestListener {
+public final class RogueApp extends App implements ViewportChangeListener {
 	
 	public RogueApp() {
 		super(new LwjglBackend());

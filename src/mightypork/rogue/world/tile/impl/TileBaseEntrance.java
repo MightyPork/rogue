@@ -1,6 +1,7 @@
 package mightypork.rogue.world.tile.impl;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.rogue.world.events.WorldAscendRequest;
 import mightypork.rogue.world.tile.TileColors;
 import mightypork.rogue.world.tile.TileModel;
@@ -21,7 +22,7 @@ public abstract class TileBaseEntrance extends TileBaseStairs {
 		final Coord plpos = getWorld().getPlayer().getCoord();
 		if (!plpos.equals(getLevel().getEnterPoint())) return false;
 		
-		getEventBus().send(new WorldAscendRequest());
+		App.bus().send(new WorldAscendRequest());
 		
 		return true;
 	}

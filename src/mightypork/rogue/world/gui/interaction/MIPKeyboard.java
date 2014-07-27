@@ -23,6 +23,8 @@ import mightypork.utils.math.constraints.vect.Vect;
 
 public class MIPKeyboard extends MapInteractionPlugin implements DelegatingClient, PlayerStepEndListener, Updateable {
 	
+	// FIXME cannot be static.
+	
 	//@formatter:off
 	private static final KeyStroke[] keys = {
 		Config.getKeyStroke("game.walk.left"),

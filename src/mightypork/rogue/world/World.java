@@ -26,14 +26,13 @@ import mightypork.utils.math.algo.Coord;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class World implements DelegatingClient, BusAccess, IonBundled, Pauseable, Updateable, PlayerDeathHandler, GameWinHandler {
+public class World implements DelegatingClient, IonBundled, Pauseable, Updateable, PlayerDeathHandler, GameWinHandler {
 	
 	// not saved stuffs
 	private final PlayerFacade playerFacade = new PlayerFacade(this);
 	
 	final WorldConsole console = new WorldConsole();
 	Entity playerEntity;
-	private BusAccess bus;
 	private int pauseDepth = 0;
 	private boolean gameOver = false;
 	
@@ -172,25 +171,6 @@ public class World implements DelegatingClient, BusAccess, IonBundled, Pauseable
 		playerData.setEID(playerEid);
 		
 		console.msgEnterFloor(0);
-	}
-	
-	
-	/**
-	 * Attach to an event bus
-	 * 
-	 * @param bus event bus
-	 */
-	public void assignBus(BusAccess bus)
-	{
-		this.bus = bus;
-	}
-	
-	
-	@Override
-	public EventBus getEventBus()
-	{
-		if (bus == null) throw new NullPointerException("World doesn't have a bus assigned.");
-		return bus.getEventBus();
 	}
 	
 	

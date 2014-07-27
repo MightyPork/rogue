@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.logging.Level;
 
 import junk.BaseApp;
+import mightypork.gamecore.core.App;
 import mightypork.utils.files.OsUtils;
 
 
@@ -77,7 +78,7 @@ public class Launcher {
 			System.exit(1);
 		}
 		
-		final BaseApp app = new RogueApp();
+		final App app = new RogueApp();
 		
 		app.getInitOptions().setWorkdir(workdir);
 		app.getInitOptions().setSigleInstance(true);

@@ -1,6 +1,7 @@
 package mightypork.rogue.screens.select_world;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.WorkDir;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.components.layout.RowLayout;
@@ -28,9 +29,7 @@ import mightypork.utils.math.constraints.rect.Rect;
  */
 public class ScreenSelectWorld extends RogueScreen {
 	
-	public ScreenSelectWorld(AppAccess app) {
-		super(app);
-		
+	public ScreenSelectWorld() {
 		addLayer(new WorldsLayer(this));
 	}
 	
@@ -56,7 +55,7 @@ public class ScreenSelectWorld extends RogueScreen {
 			bg.setRect(root);
 			root.add(bg);
 			
-			final RowLayout rows = new RowLayout(root, menuBox, 4);
+			final RowLayout rows = new RowLayout(menuBox, 4);
 			rows.enableCaching(true);
 			root.add(rows);
 			
@@ -66,22 +65,22 @@ public class ScreenSelectWorld extends RogueScreen {
 			tp.setVPaddingPercent(20);
 			tp.setShadow(RGB.BLACK_50, tp.height().mul(0.6 / 8D).toVectXY());
 			
-			slot1 = new WorldSlot(root, WorkDir.getFile("slot1"));
+			slot1 = new WorldSlot(WorkDir.getFile("slot1"));
 			rows.add(slot1);
 			
-			slot2 = new WorldSlot(root, WorkDir.getFile("slot2"));
+			slot2 = new WorldSlot(WorkDir.getFile("slot2"));
 			rows.add(slot2);
 			
-			slot3 = new WorldSlot(root, WorkDir.getFile("slot3"));
+			slot3 = new WorldSlot(WorkDir.getFile("slot3"));
 			rows.add(slot3);
 			
 			// escape to quitn from here
-			bindKey(Config.getKeyStroke("general.close"), Trigger.RISING, new Runnable() {
+			bindKey(App.cfg().getKeyStroke("general.close"), Trigger.RISING, new Runnable() {
 				
 				@Override
 				public void run()
 				{
-					getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
+					App.bus().send(new RogueStateRequest(RogueState.MAIN_MENU));
 				}
 			});
 		}

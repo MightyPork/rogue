@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import mightypork.rogue.world.gen.WorldCreator;
 import mightypork.rogue.world.level.Level;
+import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.ion.Ion;
 import mightypork.utils.ion.IonDataBundle;
 import mightypork.utils.logging.Log;
@@ -16,18 +17,18 @@ import mightypork.utils.logging.Log;
  * 
  * @author Ondřej Hruška (MightyPork)
  */
-public class WorldProvider extends RootBusNode {
+public class WorldProvider extends BusNode {
 	
-	public static synchronized void init(BusAccess busAccess)
+	public static synchronized void init()
 	{
 		if (inst == null) {
-			inst = new WorldProvider(busAccess);
+			inst = new WorldProvider();
 		}
 	}
 	
 	
-	public WorldProvider(BusAccess busAccess) {
-		super(busAccess);
+	public WorldProvider()
+	{
 		setListening(false);
 	}
 	
@@ -82,7 +83,6 @@ public class WorldProvider extends RootBusNode {
 		
 		if (newWorld == null) return;
 		
-		world.assignBus(this); // connect to bus (for event dispatching)
 		addChildClient(world);
 	}
 	

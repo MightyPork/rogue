@@ -1,6 +1,7 @@
 package mightypork.rogue.screens.menu;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.events.ShutdownEvent;
 import mightypork.gamecore.graphics.fonts.IFont;
@@ -38,7 +39,8 @@ public class ScreenMainMenu extends RogueScreen {
 	 */
 	class MenuLayer extends ScreenLayer {
 		
-		public MenuLayer(Screen screen) {
+		public MenuLayer(Screen screen)
+		{
 			super(screen);
 			
 			init();
@@ -53,7 +55,7 @@ public class ScreenMainMenu extends RogueScreen {
 			bg.setRect(root);
 			root.add(bg);
 			
-			final RowLayout rows = new RowLayout(root, menuBox, 13);
+			final RowLayout rows = new RowLayout(menuBox, 13);
 			rows.enableCaching(true);
 			root.add(rows);
 			
@@ -73,7 +75,7 @@ public class ScreenMainMenu extends RogueScreen {
 				@Override
 				protected void execute()
 				{
-					getEventBus().send(new RogueStateRequest(RogueState.SELECT_WORLD));
+					App.bus().send(new RogueStateRequest(RogueState.SELECT_WORLD));
 				}
 			});
 			rows.add(btn, 2);
@@ -85,7 +87,7 @@ public class ScreenMainMenu extends RogueScreen {
 				@Override
 				protected void execute()
 				{
-					getEventBus().send(new RogueStateRequest(RogueState.STORY));
+					App.bus().send(new RogueStateRequest(RogueState.STORY));
 				}
 			});
 			rows.add(btn, 2);
@@ -98,17 +100,17 @@ public class ScreenMainMenu extends RogueScreen {
 				@Override
 				protected void execute()
 				{
-					getEventBus().send(new ShutdownEvent());
+					App.shutdown();
 				}
 			});
 			rows.add(btn, 2);
 			
-			bindKey(Config.getKeyStroke("general.close"), Trigger.RISING, new Runnable() {
+			bindKey(App.cfg().getKeyStroke("general.close"), Trigger.RISING, new Runnable() {
 				
 				@Override
 				public void run()
 				{
-					getEventBus().send(new ShutdownEvent());
+					App.shutdown();
 				}
 			});
 		}
@@ -123,9 +125,8 @@ public class ScreenMainMenu extends RogueScreen {
 	}
 	
 	
-	public ScreenMainMenu(AppAccess app) {
-		super(app);
-		
+	public ScreenMainMenu()
+	{
 		addLayer(new MenuLayer(this));
 	}
 	
@@ -135,7 +136,7 @@ public class ScreenMainMenu extends RogueScreen {
 	{
 		super.onScreenEnter();
 		
-		getSoundSystem().fadeOutAllLoops();
+		App.audio().fadeOutAllLoops();
 		Res.getSoundLoop("music.menu").fadeIn();
 	}
 }

@@ -1,15 +1,13 @@
 package mightypork.rogue;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.gui.screens.impl.CrossfadeRequest;
+import mightypork.utils.eventbus.clients.BusNode;
 import mightypork.utils.logging.Log;
 
 
-public class RogueStateManager extends AppModule {
-	
-	public RogueStateManager(AppAccess app) {
-		super(app);
-	}
+public class RogueStateManager extends BusNode {
 	
 	public static enum RogueState
 	{
@@ -21,23 +19,23 @@ public class RogueStateManager extends AppModule {
 	{
 		switch (state) {
 			case MAIN_MENU:
-				getEventBus().send(new CrossfadeRequest("main_menu", fromDark));
+				App.bus().send(new CrossfadeRequest("main_menu", fromDark));
 				break;
 			
 			case SELECT_WORLD:
-				getEventBus().send(new CrossfadeRequest("select_world", fromDark));
+				App.bus().send(new CrossfadeRequest("select_world", fromDark));
 				break;
 			
 			case PLAY_WORLD:
-				getEventBus().send(new CrossfadeRequest("game", fromDark));
+				App.bus().send(new CrossfadeRequest("game", fromDark));
 				break;
 			
 			case STORY:
-				getEventBus().send(new CrossfadeRequest("story", fromDark));
+				App.bus().send(new CrossfadeRequest("story", fromDark));
 				break;
 			
 			case EXIT:
-				getEventBus().send(new CrossfadeRequest(null));
+				App.bus().send(new CrossfadeRequest(null));
 				break;
 			
 			default:

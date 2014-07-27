@@ -1,6 +1,7 @@
 package mightypork.rogue.screens.game;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.gui.components.layout.ConstraintLayout;
 import mightypork.gamecore.gui.components.layout.FlowColumnLayout;
@@ -29,9 +30,9 @@ public class LayerInv extends FadingLayer {
 	private static final int SLOT_COUNT = 8;
 	private static final int SLOT_ROW = 4;
 	
-	private final KeyStroke keyUse = Config.getKeyStroke("game.inv.use");
-	private final KeyStroke keyDrop = Config.getKeyStroke("game.inv.drop");
-	private final KeyStroke keyClose = Config.getKeyStroke("general.close");
+	private final KeyStroke keyUse = App.cfg().getKeyStroke("game.inv.use");
+	private final KeyStroke keyDrop = App.cfg().getKeyStroke("game.inv.drop");
+	private final KeyStroke keyClose = App.cfg().getKeyStroke("general.close");
 	
 	private final StringProvider contextStrProv = new StringProvider() {
 		
@@ -116,7 +117,7 @@ public class LayerInv extends FadingLayer {
 		
 		int pos = 0;
 		
-		final GridLayout gl = new GridLayout(root, fg, 10, 1);
+		final GridLayout gl = new GridLayout(fg, 10, 1);
 		root.add(gl);
 		
 		final TextPainter txp = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.YELLOW, "Inventory");
@@ -232,8 +233,9 @@ public class LayerInv extends FadingLayer {
 	
 	private void setupGridWalkKeys()
 	{
+		Config cfg = App.cfg();
 		
-		bindKey(Config.getKeyStroke("game.inv.move.left"), Trigger.RISING, new Runnable() {
+		bindKey(cfg.getKeyStroke("game.inv.move.left"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -250,7 +252,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(Config.getKeyStroke("game.inv.move.right"), Trigger.RISING, new Runnable() {
+		bindKey(cfg.getKeyStroke("game.inv.move.right"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -267,7 +269,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(Config.getKeyStroke("game.inv.move.up"), Trigger.RISING, new Runnable() {
+		bindKey(cfg.getKeyStroke("game.inv.move.up"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()
@@ -284,7 +286,7 @@ public class LayerInv extends FadingLayer {
 			}
 		});
 		
-		bindKey(Config.getKeyStroke("game.inv.move.down"), Trigger.RISING, new Runnable() {
+		bindKey(cfg.getKeyStroke("game.inv.move.down"), Trigger.RISING, new Runnable() {
 			
 			@Override
 			public void run()

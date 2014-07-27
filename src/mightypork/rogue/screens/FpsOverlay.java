@@ -27,13 +27,12 @@ public class FpsOverlay extends Overlay {
 	TextPainter tp;
 	
 	
-	public FpsOverlay(AppAccess screen) {
-		super(screen);
+	public FpsOverlay() {
 		
 		/*
 		 * Toggle key: F3
 		 */
-		bindKey(Config.getKeyStroke("global.fps_meter"), Trigger.RISING, new Action() {
+		bindKey(App.cfg().getKeyStroke("global.fps_meter"), Trigger.RISING, new Action() {
 			
 			@Override
 			public void execute()

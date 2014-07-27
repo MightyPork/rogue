@@ -1,6 +1,7 @@
 package mightypork.rogue.world.entity.impl;
 
 
+import mightypork.gamecore.core.App;
 import mightypork.rogue.world.entity.Entity;
 import mightypork.rogue.world.entity.EntityModel;
 import mightypork.rogue.world.entity.EntityPathFinder;
@@ -64,7 +65,7 @@ public class EntityBossRat extends Entity {
 	public void onKilled()
 	{
 		// send kill event to listeners, after the entity has despawned (disappeared)
-		getWorld().getEventBus().sendDelayed(new GameWinEvent(), getDespawnDelay() * 1.5); // dramatic pause
+		App.bus().sendDelayed(new GameWinEvent(), getDespawnDelay() * 1.5); // dramatic pause
 	}
 	
 	

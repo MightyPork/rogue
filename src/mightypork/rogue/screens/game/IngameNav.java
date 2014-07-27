@@ -20,17 +20,17 @@ public class IngameNav extends LayoutComponent {
 	private final TxQuad bg;
 	
 	
-	public IngameNav(AppAccess app) {
-		this(app, null);
+	public IngameNav() {
+		this(null);
 	}
 	
 	
-	public IngameNav(AppAccess app, RectBound context) {
-		super(app, context);
+	public IngameNav(RectBound context) {
+		super(context);
 		
 		final Rect shr = this.shrink(height().perc(5));
-		leftFlow = new FlowColumnLayout(app, context, shr.height(), AlignX.LEFT);
-		rightFlow = new FlowColumnLayout(app, context, shr.height(), AlignX.RIGHT);
+		leftFlow = new FlowColumnLayout(context, shr.height(), AlignX.LEFT);
+		rightFlow = new FlowColumnLayout(context, shr.height(), AlignX.RIGHT);
 		
 		leftFlow.setRect(shr);
 		rightFlow.setRect(shr);

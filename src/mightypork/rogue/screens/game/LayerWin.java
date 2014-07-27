@@ -3,6 +3,7 @@ package mightypork.rogue.screens.game;
 
 import java.io.File;
 
+import mightypork.gamecore.core.App;
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.graphics.fonts.IFont;
 import mightypork.gamecore.gui.Action;
@@ -63,14 +64,14 @@ public class LayerWin extends FadingLayer {
 				final File f = WorldProvider.get().getWorld().getSaveFile();
 				f.delete();
 				
-				getEventBus().send(new RogueStateRequest(RogueState.MAIN_MENU));
+				App.bus().send(new RogueStateRequest(RogueState.MAIN_MENU));
 			}
 		};
 		
 		btn1.setAction(quit);
 		
-		bindKey(Config.getKeyStroke("general.confirm"), Trigger.RISING, quit);
-		bindKey(Config.getKeyStroke("general.close"), Trigger.RISING, quit);
+		bindKey(App.cfg().getKeyStroke("general.confirm"), Trigger.RISING, quit);
+		bindKey(App.cfg().getKeyStroke("general.close"), Trigger.RISING, quit);
 	}
 	
 	
@@ -84,7 +85,7 @@ public class LayerWin extends FadingLayer {
 	@Override
 	protected void onShowFinished()
 	{
-		getSoundSystem().fadeOutAllLoops();
+		App.audio().fadeOutAllLoops();
 		Res.getSoundEffect("game.win").play(1);
 	}
 	
