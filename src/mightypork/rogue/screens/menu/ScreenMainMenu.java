@@ -58,13 +58,13 @@ public class ScreenMainMenu extends RogueScreen {
 			root.add(rows);
 
 			final LinearLayout linlayout = new LinearLayout(root, AlignX.CENTER);
-			linlayout.add(new ImagePainter(Res.getTxQuad("logo")));
+			linlayout.add(new ImagePainter(Res.txQuad("logo")));
 			rows.add(linlayout, 4);
 			rows.skip(1);
 
 			TextButton btn;
 
-			final IFont btnFont = Res.getFont("thick");
+			final IFont btnFont = Res.font("thick");
 
 			// world button
 			btn = new TextButton(btnFont, "Play", PAL16.SLIMEGREEN);
@@ -134,7 +134,7 @@ public class ScreenMainMenu extends RogueScreen {
 	{
 		super.onScreenEnter();
 
-		App.audio().fadeOutAllLoops();
-		Res.getSoundLoop("music.menu").fadeIn();
+		App.sound().fadeOutAllLoops();
+		Res.loop("music.menu").fadeIn();
 	}
 }

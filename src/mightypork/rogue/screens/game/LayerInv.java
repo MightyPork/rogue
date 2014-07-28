@@ -121,7 +121,7 @@ public class LayerInv extends FadingLayer {
 		final GridLayout gl = new GridLayout(fg, 10, 1);
 		root.add(gl);
 
-		final TextPainter txp = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.YELLOW, "Inventory");
+		final TextPainter txp = new TextPainter(Res.font("thick"), AlignX.CENTER, RGB.YELLOW, "Inventory");
 		gl.put(txp, pos, 0, 1, 1);
 		txp.setVPaddingPercent(5);
 		pos += 1;
@@ -153,7 +153,7 @@ public class LayerInv extends FadingLayer {
 		row2.add(slots[6] = new InvSlot(6, slots));
 		row2.add(slots[7] = new InvSlot(7, slots));
 
-		final TextPainter txp2 = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.WHITE, contextStrProv);
+		final TextPainter txp2 = new TextPainter(Res.font("thick"), AlignX.CENTER, RGB.WHITE, contextStrProv);
 		gl.put(txp2, pos, 0, 1, 1);
 		txp2.setVPaddingPercent(25);
 

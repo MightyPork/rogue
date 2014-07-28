@@ -20,9 +20,9 @@ public class NavButton extends ClickableComponent {
 	public NavButton(TxQuad fg)
 	{
 		super();
-		this.base = Res.getTxQuad("nav.button.bg.base");
-		this.hover = Res.getTxQuad("nav.button.bg.hover");
-		this.down = Res.getTxQuad("nav.button.bg.down");
+		this.base = Res.txQuad("nav.button.bg.base");
+		this.hover = Res.txQuad("nav.button.bg.hover");
+		this.down = Res.txQuad("nav.button.bg.down");
 		this.fg = fg;
 	}
 

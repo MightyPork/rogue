@@ -62,7 +62,7 @@ public class ScreenSelectWorld extends RogueScreen {
 
 			TextPainter tp;
 
-			rows.add(tp = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.YELLOW, "Save slot:"));
+			rows.add(tp = new TextPainter(Res.font("thick"), AlignX.CENTER, RGB.YELLOW, "Save slot:"));
 			tp.setVPaddingPercent(20);
 			tp.setShadow(RGB.BLACK_50, tp.height().mul(0.6 / 8D).toVectXY());
 

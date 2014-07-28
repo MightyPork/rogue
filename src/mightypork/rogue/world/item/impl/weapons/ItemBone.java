@@ -19,7 +19,7 @@ public class ItemBone extends ItemBaseWeapon {
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
-		return new QuadItemRenderer(this, Res.getTxQuad("item.bone"));
+		return new QuadItemRenderer(this, Res.txQuad("item.bone"));
 	}
 
 

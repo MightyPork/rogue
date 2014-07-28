@@ -71,7 +71,7 @@ public class WorldSlot extends ConstraintLayout {
 		gridl.setRect(innerRect.shrink(shrinkH, shrinkH, shrinkV, shrinkV.half()));
 		add(gridl);
 
-		final IFont font = Res.getFont("thick");
+		final IFont font = Res.font("thick");
 
 		gridl.put(loadBtn = new TextButton(font, "", RGB.WHITE), 0, 0, 1, 7);
 		loadBtn.textPainter.setVPaddingPercent(20);

@@ -38,7 +38,7 @@ public class LayerDeath extends FadingLayer {
 		qp.setRect(root);
 		root.add(qp);
 
-		final IFont thick_font = Res.getFont("thick");
+		final IFont thick_font = Res.font("thick");
 
 		final RowLayout rl = new RowLayout(root, 5);
 		rl.setRect(root.shrink(Num.ZERO, root.height().perc(15)));
@@ -49,7 +49,7 @@ public class LayerDeath extends FadingLayer {
 		txp.setVPaddingPercent(13);
 
 		LinearLayout linl = new LinearLayout(root, AlignX.CENTER);
-		linl.add(new ImagePainter(Res.getTxQuad("death2")));
+		linl.add(new ImagePainter(Res.txQuad("death2")));
 		rl.add(linl, 3);
 
 		linl = new LinearLayout(root, AlignX.CENTER);

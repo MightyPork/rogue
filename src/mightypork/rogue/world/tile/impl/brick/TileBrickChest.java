@@ -19,7 +19,7 @@ public class TileBrickChest extends TileBaseChest {
 	@Override
 	protected TileRenderer makeRenderer()
 	{
-		return new ChestRenderer(this, Res.getTxQuad("tile.brick.floor"), Res.getTxQuad("tile.extra.chest.closed"), Res.getTxQuad("tile.extra.chest.open"));
+		return new ChestRenderer(this, Res.txQuad("tile.brick.floor"), Res.txQuad("tile.extra.chest.closed"), Res.txQuad("tile.extra.chest.open"));
 	}
 
 }

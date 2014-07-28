@@ -48,7 +48,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 			@Override
 			public void run()
 			{
-				img.setTxQuad(Res.getTxQuad(nextImg));
+				img.setTxQuad(Res.txQuad(nextImg));
 				if (nextT1 != null) tp1.setText(nextT1);
 				if (nextT2 != null) tp2.setText(nextT2);
 
@@ -106,7 +106,7 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 		{
 			super(screen);
 
-			final TextPainter help = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, RGB.WHITE.withAlpha(txProceedAlpha.mul(0.3)),
+			final TextPainter help = new TextPainter(Res.font("tiny"), AlignX.CENTER, RGB.WHITE.withAlpha(txProceedAlpha.mul(0.3)),
 					"Space / click to proceed.");
 			help.setRect(root.bottomEdge().growUp(root.height().perc(4)));
 			help.setVPaddingPercent(5);
@@ -119,14 +119,14 @@ public class ScreenStory extends RogueScreen implements MouseButtonHandler {
 
 			final LinearLayout ll = new LinearLayout(root, AlignX.CENTER);
 			rl.add(ll, 7);
-			img = new ImagePainter(Res.getTxQuad("story_1"));
+			img = new ImagePainter(Res.txQuad("story_1"));
 			ll.add(img);
 
-			tp1 = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, textColor.withAlpha(tx1alpha), "");
+			tp1 = new TextPainter(Res.font("tiny"), AlignX.CENTER, textColor.withAlpha(tx1alpha), "");
 			rl.add(tp1);
 			tp1.setVPaddingPercent(19);
 
-			tp2 = new TextPainter(Res.getFont("tiny"), AlignX.CENTER, textColor.withAlpha(tx2alpha), "");
+			tp2 = new TextPainter(Res.font("tiny"), AlignX.CENTER, textColor.withAlpha(tx2alpha), "");
 			rl.add(tp2);
 			tp2.setVPaddingPercent(19);
 

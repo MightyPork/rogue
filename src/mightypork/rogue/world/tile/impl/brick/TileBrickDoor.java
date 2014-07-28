@@ -13,9 +13,9 @@ public class TileBrickDoor extends TileBaseDoor {
 		//@formatter:off
 		super(
 				model,
-				Res.getTxSheet("tile.brick.door.closed"), // LOCKED
-				Res.getTxSheet("tile.brick.door.closed"),
-				Res.getTxSheet("tile.brick.door.open")
+				Res.txSheet("tile.brick.door.closed"), // LOCKED
+				Res.txSheet("tile.brick.door.closed"),
+				Res.txSheet("tile.brick.door.open")
 				);
 		//@formatter:on
 	}

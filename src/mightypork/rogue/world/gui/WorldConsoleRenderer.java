@@ -30,7 +30,7 @@ public class WorldConsoleRenderer extends BaseComponent {
 	public WorldConsoleRenderer(Num rowHeight)
 	{
 		this.rowHeight = rowHeight;
-		this.fr = new FontRenderer(Res.getFont("tiny"));
+		this.fr = new FontRenderer(Res.font("tiny"));
 
 		final Num itmsize = height().perc(25).min(256).max(16);
 

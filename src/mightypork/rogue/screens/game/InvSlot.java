@@ -50,8 +50,8 @@ public class InvSlot extends ClickableComponent {
 	public InvSlot(int index, InvSlot[] allSlots)
 	{
 		super();
-		this.txBase = Res.getTxQuad("inv.slot.base");
-		this.txSelected = Res.getTxQuad("inv.slot.selected");
+		this.txBase = Res.txQuad("inv.slot.base");
+		this.txSelected = Res.txQuad("inv.slot.selected");
 
 		this.index = index;
 		this.slots = allSlots;
@@ -67,7 +67,7 @@ public class InvSlot extends ClickableComponent {
 				.growUp(uiRect.height().perc(30)).cached();
 		//@formatter:on
 
-		rbTxP = new TextPainter(Res.getFont("tiny"), AlignX.RIGHT, RGB.WHITE);
+		rbTxP = new TextPainter(Res.font("tiny"), AlignX.RIGHT, RGB.WHITE);
 		rbTxP.setRect(rbTxRect);
 		rbTxP.setShadow(RGB.BLACK_70, rbTxP.getRect().height().div(7).toVectXY());
 
@@ -76,7 +76,7 @@ public class InvSlot extends ClickableComponent {
 				.growDown(uiRect.height().perc(30)).cached();
 		//@formatter:on
 
-		rtTxP = new TextPainter(Res.getFont("tiny"), AlignX.RIGHT, RGB.GREEN);
+		rtTxP = new TextPainter(Res.font("tiny"), AlignX.RIGHT, RGB.GREEN);
 		rtTxP.setRect(rtTxRect);
 		rtTxP.setShadow(RGB.BLACK_70, rtTxP.getRect().height().div(7).toVectXY());
 

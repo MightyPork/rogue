@@ -41,7 +41,7 @@ public class FpsOverlay extends Overlay {
 			}
 		});
 
-		final IFont font = Res.getFont("thin");
+		final IFont font = Res.font("thin");
 
 		final Num h = root.height();
 		final RectBound constraint = root.shrink(h.perc(3)).topRight().startRect().growDown(h.perc(5).max(16));

@@ -19,7 +19,7 @@ public class ItemRock extends ItemBaseWeapon {
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
-		return new QuadItemRenderer(this, Res.getTxQuad("item.stone"));
+		return new QuadItemRenderer(this, Res.txQuad("item.stone"));
 	}
 
 

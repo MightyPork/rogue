@@ -307,8 +307,8 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		setState(GScrState.WORLD);
 		hideAllPopups();
 
-		App.audio().fadeOutAllLoops();
-		Res.getSoundLoop("music.dungeon").fadeIn();
+		App.sound().fadeOutAllLoops();
+		Res.loop("music.dungeon").fadeIn();
 	}
 
 
@@ -318,7 +318,7 @@ public class ScreenGame extends RogueScreen implements PlayerDeathHandler, GameW
 		super.onScreenLeave();
 		WorldProvider.get().setListening(false);
 
-		Res.getSoundLoop("music.dungeon").fadeOut();
+		Res.loop("music.dungeon").fadeOut();
 	}
 
 

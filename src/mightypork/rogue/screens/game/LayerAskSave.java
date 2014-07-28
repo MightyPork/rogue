@@ -55,7 +55,7 @@ public class LayerAskSave extends FadingLayer {
 		qp.setRect(root);
 		root.add(qp);
 
-		final IFont thick_font = Res.getFont("thick");
+		final IFont thick_font = Res.font("thick");
 
 		final RowLayout rl = new RowLayout(root, 2);
 		rl.setRect(root.shrink(Num.ZERO, root.height().perc(40)).moveY(root.height().perc(-10)));

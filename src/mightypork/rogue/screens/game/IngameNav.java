@@ -41,7 +41,7 @@ public class IngameNav extends LayoutComponent {
 
 		paintHelper = leftEdge().growRight(height().mul(4));
 
-		bg = Res.getTxQuad("nav.bg");
+		bg = Res.txQuad("nav.bg");
 	}
 
 

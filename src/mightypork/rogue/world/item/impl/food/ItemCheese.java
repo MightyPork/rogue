@@ -19,7 +19,7 @@ public class ItemCheese extends ItemBaseFood {
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
-		return new QuadItemRenderer(this, Res.getTxQuad("item.cheese"));
+		return new QuadItemRenderer(this, Res.txQuad("item.cheese"));
 	}
 
 

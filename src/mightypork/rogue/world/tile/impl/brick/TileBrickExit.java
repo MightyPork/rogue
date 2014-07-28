@@ -19,7 +19,7 @@ public class TileBrickExit extends TileBaseExit {
 	@Override
 	protected TileRenderer makeRenderer()
 	{
-		return new OneFrameTileRenderer(this, Res.getTxQuad("tile.brick.stairs.down"));
+		return new OneFrameTileRenderer(this, Res.txQuad("tile.brick.stairs.down"));
 	}
 
 }

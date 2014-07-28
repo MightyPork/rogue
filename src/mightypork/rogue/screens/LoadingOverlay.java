@@ -76,7 +76,7 @@ public class LoadingOverlay extends Overlay {
 		Rect textRect = root.shrink(Num.ZERO, root.height().perc(48));
 		textRect = textRect.moveY(root.height().perc(-10));
 
-		final TextPainter tp = new TextPainter(Res.getFont("thick"), AlignX.CENTER, RGB.WHITE, msgStrProv);
+		final TextPainter tp = new TextPainter(Res.font("thick"), AlignX.CENTER, RGB.WHITE, msgStrProv);
 
 		tp.setRect(textRect);
 		tp.setShadow(RGB.BLACK_60, tp.height().mul(1 / 8D).toVectXY());

@@ -11,11 +11,11 @@ import mightypork.gamecore.graphics.textures.ITexture;
 import mightypork.gamecore.graphics.textures.QuadGrid;
 import mightypork.gamecore.graphics.textures.TextureRegistry;
 import mightypork.gamecore.graphics.textures.WrapMode;
-import mightypork.gamecore.resources.ResourceSetup;
+import mightypork.gamecore.resources.ResourceInitializer;
 import mightypork.utils.math.constraints.rect.Rect;
 
 
-public class RogueResources implements ResourceSetup {
+public class RogueResources implements ResourceInitializer {
 
 	@Override
 	public void addFonts(FontRegistry fonts)
@@ -80,7 +80,7 @@ public class RogueResources implements ResourceSetup {
 		QuadGrid grid;
 
 		// gui
-		texture = textures.addTexture("/res/img/gui.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.loadTexture("/res/img/gui.png", FilterMode.NEAREST, WrapMode.CLAMP);
 
 		// small gui elements
 		grid = texture.grid(32, 32);
@@ -112,7 +112,7 @@ public class RogueResources implements ResourceSetup {
 		textures.add("inv.slot.selected", grid.makeQuad(1, 5));
 
 		// sprites
-		texture = textures.addTexture("/res/img/sprites.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.loadTexture("/res/img/sprites.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		grid = texture.grid(8, 8);
 		textures.add("sprite.player", grid.makeSheet(0, 0, 4, 1));
 		textures.add("sprite.rat.gray", grid.makeSheet(0, 1, 4, 1));
@@ -121,7 +121,7 @@ public class RogueResources implements ResourceSetup {
 		textures.add("sprite.zzz", grid.makeQuad(0, 7)); // sleep thingy
 
 		// logo
-		texture = textures.addTexture("/res/img/logo.png", FilterMode.NEAREST, WrapMode.CLAMP);
+		texture = textures.loadTexture("/res/img/logo.png", FilterMode.NEAREST, WrapMode.CLAMP);
 		textures.add("logo", texture.makeQuad(Rect.make(0, 0, 0.543, 0.203)));
 		grid = texture.grid(8, 8);
 		textures.add("death", grid.makeQuad(0, 2));

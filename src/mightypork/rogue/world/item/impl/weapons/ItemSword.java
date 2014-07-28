@@ -19,7 +19,7 @@ public class ItemSword extends ItemBaseWeapon {
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
-		return new QuadItemRenderer(this, Res.getTxQuad("item.sword"));
+		return new QuadItemRenderer(this, Res.txQuad("item.sword"));
 	}
 
 

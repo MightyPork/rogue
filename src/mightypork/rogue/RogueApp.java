@@ -167,7 +167,7 @@ public final class RogueApp extends App implements ViewportChangeListener {
 	public void onScreenshotRequest()
 	{
 		// screenshot sound
-		Res.getSoundEffect("gui.shutter").play(0.8);
+		Res.sound("gui.shutter").play(0.8);
 	}
 
 

@@ -85,9 +85,9 @@ public class LayerGameUi extends ScreenLayer {
 		final HeartBar hearts = new HeartBar(
 				playerHealthTotal,
 				playerHealthActive,
-				Res.getTxQuad("hud.heart.on"),
-				Res.getTxQuad("hud.heart.half"),
-				Res.getTxQuad("hud.heart.off"),
+				Res.txQuad("hud.heart.on"),
+				Res.txQuad("hud.heart.half"),
+				Res.txQuad("hud.heart.off"),
 				AlignX.LEFT);
 		//@formatter:on
 
@@ -95,7 +95,7 @@ public class LayerGameUi extends ScreenLayer {
 		hearts.setRect(hearts_box);
 		root.add(hearts);
 
-		final TextPainter levelText = new TextPainter(Res.getFont("tiny"), AlignX.RIGHT, RGB.WHITE, new StringProvider() {
+		final TextPainter levelText = new TextPainter(Res.font("tiny"), AlignX.RIGHT, RGB.WHITE, new StringProvider() {
 
 			@Override
 			public String getString()
@@ -118,32 +118,32 @@ public class LayerGameUi extends ScreenLayer {
 
 		NavButton btn;
 
-		nav.addRight(btn = new NavButton(Res.getTxQuad("nav.button.fg.inventory")));
+		nav.addRight(btn = new NavButton(Res.txQuad("nav.button.fg.inventory")));
 		btn.setAction(gameScreen.actionToggleInv);
 
-		nav.addRight(btn = new NavButton(Res.getTxQuad("nav.button.fg.eat")));
+		nav.addRight(btn = new NavButton(Res.txQuad("nav.button.fg.eat")));
 		btn.setAction(gameScreen.actionEat);
 
-		nav.addRight(btn = new NavButton(Res.getTxQuad("nav.button.fg.pause")));
+		nav.addRight(btn = new NavButton(Res.txQuad("nav.button.fg.pause")));
 		btn.setAction(gameScreen.actionTogglePause);
 
 		// TODO actions
 		//nav.addLeft(new NavButton(Res.txq("nav.button.fg.options")));
 		//nav.addLeft(new NavButton(Res.txq("nav.button.fg.help")));
 
-		nav.addLeft(btn = new NavButton(Res.getTxQuad("nav.button.fg.menu")));
+		nav.addLeft(btn = new NavButton(Res.txQuad("nav.button.fg.menu")));
 		btn.setAction(gameScreen.actionMenu);
 
-		nav.addLeft(btn = new NavButton(Res.getTxQuad("nav.button.fg.save")));
+		nav.addLeft(btn = new NavButton(Res.txQuad("nav.button.fg.save")));
 		btn.setAction(gameScreen.actionSave);
 
-		nav.addLeft(btn = new NavButton(Res.getTxQuad("nav.button.fg.load")));
+		nav.addLeft(btn = new NavButton(Res.txQuad("nav.button.fg.load")));
 		btn.setAction(gameScreen.actionLoad);
 
-		nav.addLeft(btn = new NavButton(Res.getTxQuad("nav.button.fg.map")));
+		nav.addLeft(btn = new NavButton(Res.txQuad("nav.button.fg.map")));
 		btn.setAction(gameScreen.actionToggleMinimap);
 
-		nav.addLeft(btn = new NavButton(Res.getTxQuad("nav.button.fg.magnify")));
+		nav.addLeft(btn = new NavButton(Res.txQuad("nav.button.fg.magnify")));
 		btn.setAction(gameScreen.actionToggleZoom);
 
 	}

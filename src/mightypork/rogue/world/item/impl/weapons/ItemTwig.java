@@ -19,7 +19,7 @@ public class ItemTwig extends ItemBaseWeapon {
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
-		return new QuadItemRenderer(this, Res.getTxQuad("item.twig"));
+		return new QuadItemRenderer(this, Res.txQuad("item.twig"));
 	}
 
 
