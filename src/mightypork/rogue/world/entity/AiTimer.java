@@ -7,16 +7,17 @@ import mightypork.utils.math.timing.TaskRepeater;
 
 
 public abstract class AiTimer extends TaskRepeater implements IonBundled {
-	
-	public AiTimer(double duration) {
+
+	public AiTimer(double duration)
+	{
 		super(duration);
 	}
-	
-	
+
+
 	@Override
 	public abstract void run();
-	
-	
+
+
 	@Override
 	public void load(IonDataBundle bundle)
 	{
@@ -26,12 +27,12 @@ public abstract class AiTimer extends TaskRepeater implements IonBundled {
 		} else {
 			resume();
 		}
-		
+
 		setProgress(bundle.get("progress", getProgress()));
 		setDuration(bundle.get("duration", getDuration()));
 	}
-	
-	
+
+
 	@Override
 	public void save(IonDataBundle bundle)
 	{
@@ -39,5 +40,5 @@ public abstract class AiTimer extends TaskRepeater implements IonBundled {
 		bundle.put("progress", getProgress());
 		bundle.put("duration", getDuration());
 	}
-	
+
 }

@@ -11,43 +11,44 @@ import mightypork.utils.math.timing.TimedTask;
 
 
 public class DoorTileRenderer extends TileRenderer {
-	
+
 	private final TxSheet locked;
 	private final TxSheet closed;
 	private final TxSheet open;
-	
+
 	private boolean visuallyOpen = false;
-	
+
 	private final TimedTask closeTask = new TimedTask() {
-		
+
 		@Override
 		public void run()
 		{
 			visuallyOpen = ((TileBaseDoor) tile).isOpen();
 		}
 	};
-	
-	
-	public DoorTileRenderer(TileBaseDoor doorTile, TxSheet locked, TxSheet closed, TxSheet open) {
+
+
+	public DoorTileRenderer(TileBaseDoor doorTile, TxSheet locked, TxSheet closed, TxSheet open)
+	{
 		super(doorTile);
-		
+
 		this.locked = locked;
 		this.closed = closed;
 		this.open = open;
 	}
-	
-	
+
+
 	@Override
 	public void renderTile(TileRenderContext context)
 	{
 		final Rect rect = context.getRect();
-		
+
 		if (!visuallyOpen && ((TileBaseDoor) tile).isOpen()) visuallyOpen = true;
-		
+
 		if (visuallyOpen && !((TileBaseDoor) tile).isOpen()) {
 			if (!closeTask.isRunning()) closeTask.start(0.4);
 		}
-		
+
 		if (visuallyOpen) {
 			App.gfx().quad(rect, open.getRandomQuad(context.getTileNoise()));
 		} else {
@@ -55,12 +56,12 @@ public class DoorTileRenderer extends TileRenderer {
 			App.gfx().quad(rect, sheet.getRandomQuad(context.getTileNoise()));
 		}
 	}
-	
-	
+
+
 	@Override
 	public void update(double delta)
 	{
 		closeTask.update(delta);
 	}
-	
+
 }

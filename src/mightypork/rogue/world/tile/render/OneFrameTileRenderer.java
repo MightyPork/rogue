@@ -10,20 +10,21 @@ import mightypork.rogue.world.tile.TileRenderer;
 
 /**
  * Tile that spans across two tiles visually (two-high)
- * 
+ *
  * @author Ondřej Hruška (MightyPork)
  */
 public class OneFrameTileRenderer extends TileRenderer {
-	
+
 	private final TxQuad txq;
-	
-	
-	public OneFrameTileRenderer(Tile tile, TxQuad txq) {
+
+
+	public OneFrameTileRenderer(Tile tile, TxQuad txq)
+	{
 		super(tile);
 		this.txq = txq;
 	}
-	
-	
+
+
 	@Override
 	public void renderTile(TileRenderContext context)
 	{

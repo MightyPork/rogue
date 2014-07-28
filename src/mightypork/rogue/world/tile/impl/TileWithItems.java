@@ -16,95 +16,96 @@ import mightypork.utils.ion.IonOutput;
 
 
 public abstract class TileWithItems extends Tile {
-	
+
 	private final DroppedItemRenderer itemRenderer = new DroppedItemRenderer();
-	
+
 	protected final Stack<Item> items = new Stack<>();
-	
-	
-	public TileWithItems(TileModel model) {
+
+
+	public TileWithItems(TileModel model)
+	{
 		super(model);
 	}
-	
-	
+
+
 	@Override
 	public void renderExtra(TileRenderContext context)
 	{
 		super.renderExtra(context);
-		
+
 		if ((isExplored() || !Const.RENDER_UFOG) && hasItem() && shouldRenderItems()) {
 			itemRenderer.render(items, context);
 		}
 	}
-	
-	
+
+
 	protected boolean shouldRenderItems()
 	{
 		return true;
 	}
-	
-	
+
+
 	@Override
 	public void updateTile(double delta)
 	{
 		super.updateTile(delta);
 		itemRenderer.update(delta);
 	}
-	
-	
+
+
 	@Override
 	public void save(IonOutput out) throws IOException
 	{
 		super.save(out);
-		
+
 		Items.saveItems(out, items);
 	}
-	
-	
+
+
 	@Override
 	public void load(IonInput in) throws IOException
 	{
 		super.load(in);
-		
+
 		Items.loadItems(in, items);
 	}
-	
-	
+
+
 	@Override
 	public boolean doesCastShadow()
 	{
 		return false;
 	}
-	
-	
+
+
 	@Override
 	public boolean isWalkable()
 	{
 		return true;
 	}
-	
-	
+
+
 	@Override
 	public boolean dropItem(Item item)
 	{
 		items.push(item);
 		return true;
 	}
-	
-	
+
+
 	@Override
 	public Item pickItem()
 	{
 		return hasItem() ? items.pop() : null;
 	}
-	
-	
+
+
 	@Override
 	public boolean hasItem()
 	{
 		return !items.isEmpty();
 	}
-	
+
 //	@Override
 //	public boolean onClick()
 //	{

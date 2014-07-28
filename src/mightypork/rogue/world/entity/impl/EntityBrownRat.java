@@ -13,69 +13,70 @@ import mightypork.utils.math.algo.pathfinding.PathFinder;
 
 
 public class EntityBrownRat extends Entity {
-	
+
 	private EntityRenderer renderer;
-	
+
 	private final PathFinder pathf = new EntityPathFinder(this);
-	
+
 	private final BrownRatAi ai = new BrownRatAi(this);
-	
-	
-	public EntityBrownRat(EntityModel model, int eid) {
+
+
+	public EntityBrownRat(EntityModel model, int eid)
+	{
 		super(model, eid);
-		
+
 		addModule("ai", ai);
 		pos.addMoveListener(ai);
-		
+
 		setDespawnDelay(1);
-		
+
 		health.setHealthMax(16);
 		health.setHealth(Calc.randInt(10, 16)); // tougher to kill
 	}
-	
-	
+
+
 	@Override
 	protected EntityRenderer getRenderer()
 	{
 		if (renderer == null) {
 			renderer = new EntityRendererMobLR(this, "sprite.rat.brown");
 		}
-		
+
 		return renderer;
 	}
-	
-	
+
+
 	@Override
 	public EntityType getType()
 	{
 		return EntityType.MONSTER;
 	}
-	
-	
+
+
 	@Override
 	public PathFinder getPathFinder()
 	{
 		return pathf;
 	}
-	
-	
+
+
 	@Override
 	public void onKilled()
 	{
 		// drop rat stuff
-		
+
 		if (Calc.rand.nextInt(2) != 0) {
 			getLevel().dropNear(getCoord(), Items.MEAT.createItem());
 			return;
 		}
-		
+
 		if (Calc.rand.nextInt(3) == 0) {
 			getLevel().dropNear(getCoord(), Items.CHEESE.createItem());
 			return;
 		}
 	}
-	
-	
+
+
 	@Override
 	public String getVisualName()
 	{

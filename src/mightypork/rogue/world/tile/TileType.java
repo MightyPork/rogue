@@ -6,7 +6,7 @@ import mightypork.utils.math.color.Color;
 
 /**
  * Kinds of tiles
- * 
+ *
  * @author Ondřej Hruška (MightyPork)
  */
 public enum TileType
@@ -23,23 +23,24 @@ public enum TileType
 	PASSAGE(TileColors.COLLAPSED_WALL, true),
 	/** Stairs */
 	STAIRS(TileColors.WALL, false);
-	
+
 	private final Color mapColor;
 	private final boolean potentiallyWalkable;
-	
-	
-	private TileType(Color defaultMapColor, boolean potentiallyWalkable) {
+
+
+	private TileType(Color defaultMapColor, boolean potentiallyWalkable)
+	{
 		this.mapColor = defaultMapColor;
 		this.potentiallyWalkable = potentiallyWalkable;
 	}
-	
-	
+
+
 	public Color getMapColor()
 	{
 		return mapColor;
 	}
-	
-	
+
+
 	public boolean isPotentiallyWalkable()
 	{
 		return potentiallyWalkable;

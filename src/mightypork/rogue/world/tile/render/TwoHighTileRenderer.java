@@ -11,20 +11,21 @@ import mightypork.utils.math.constraints.rect.Rect;
 
 /**
  * Tile that spans across two tiles visually (two-high)
- * 
+ *
  * @author Ondřej Hruška (MightyPork)
  */
 public class TwoHighTileRenderer extends TileRenderer {
-	
+
 	private final TxQuad txq;
-	
-	
-	public TwoHighTileRenderer(Tile tile, TxQuad txq) {
+
+
+	public TwoHighTileRenderer(Tile tile, TxQuad txq)
+	{
 		super(tile);
 		this.txq = txq;
 	}
-	
-	
+
+
 	@Override
 	public void renderTile(TileRenderContext context)
 	{

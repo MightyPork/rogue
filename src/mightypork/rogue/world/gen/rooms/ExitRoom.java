@@ -11,28 +11,28 @@ import mightypork.utils.math.algo.Coord;
 
 
 public class ExitRoom extends AbstractRectRoom {
-	
+
 	@Override
 	protected Coord getInnerSize(Random rand)
 	{
 		return Coord.make(3 + rand.nextInt(2), 3 + rand.nextInt(2));
 	}
-	
-	
+
+
 	@Override
 	protected TileProtectLevel getWallProtectionLevel()
 	{
 		return TileProtectLevel.NONE;
 	}
-	
-	
+
+
 	@Override
 	protected TileModel getDoorType(MapTheme theme, Random rand)
 	{
 		return null;
 	}
-	
-	
+
+
 	@Override
 	protected void buildExtras(ScratchMap map, MapTheme theme, Random rand, Coord min, Coord max)
 	{
@@ -41,12 +41,12 @@ public class ExitRoom extends AbstractRectRoom {
 		map.protect(c, c, TileProtectLevel.STRONG);
 		map.setExit(c.add(-1, 0));
 	}
-	
-	
+
+
 	@Override
 	protected int getDoorCount(Random rand)
 	{
 		return 0;
 	}
-	
+
 }

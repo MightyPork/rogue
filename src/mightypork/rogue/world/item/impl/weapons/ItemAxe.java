@@ -9,33 +9,34 @@ import mightypork.rogue.world.item.render.QuadItemRenderer;
 
 
 public class ItemAxe extends ItemBaseWeapon {
-	
-	public ItemAxe(ItemModel model) {
+
+	public ItemAxe(ItemModel model)
+	{
 		super(model);
 	}
-	
-	
+
+
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
 		return new QuadItemRenderer(this, Res.getTxQuad("item.axe"));
 	}
-	
-	
+
+
 	@Override
 	public int getAttackPoints()
 	{
 		return 4;
 	}
-	
-	
+
+
 	@Override
 	public int getMaxUses()
 	{
 		return 70;
 	}
-	
-	
+
+
 	@Override
 	public String getVisualName()
 	{

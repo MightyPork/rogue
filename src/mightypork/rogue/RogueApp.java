@@ -2,7 +2,6 @@ package mightypork.rogue;
 
 
 import junk.AppInitOptions;
-import junk.BaseApp;
 import mightypork.gamecore.backends.lwjgl.LwjglBackend;
 import mightypork.gamecore.backends.lwjgl.LwjglInputModule;
 import mightypork.gamecore.core.App;
@@ -35,37 +34,38 @@ import mightypork.utils.logging.Log;
 
 /**
  * Main class
- * 
+ *
  * @author Ondřej Hruška (MightyPork)
  */
 public final class RogueApp extends App implements ViewportChangeListener {
-	
-	public RogueApp() {
+
+	public RogueApp()
+	{
 		super(new LwjglBackend());
-		
-		AppInitOptions opt = getInitOptions();
-		
+
+		final AppInitOptions opt = getInitOptions();
+
 		opt.addRoutes(new RogueRoutes());
 		opt.addResources(new RogueResources());
 		opt.addKeys(new RogueKeys());
 		opt.addConfig(new RogueConfig());
 		opt.setBusLogging(true);
-		
+
 		opt.setConfigFile("config.ini", "Rogue config file");
 		opt.setLogOptions("logs", "runtime", 5, java.util.logging.Level.ALL);
 	}
-	
-	
+
+
 	@Override
 	protected void registerIonizables()
 	{
 		super.registerIonizables();
-		
+
 		Ion.register(Level.class);
 		Ion.register(Inventory.class);
 	}
-	
-	
+
+
 	@Override
 	protected void initDisplay(GraphicsModule gfx)
 	{
@@ -73,52 +73,52 @@ public final class RogueApp extends App implements ViewportChangeListener {
 		final int w = Config.getValue("display.width");
 		final int h = Config.getValue("display.height");
 		final boolean fs = Config.getValue("display.fullscreen");
-		
+
 		gfx.setSize(w, h);
 		gfx.setResizable(true);
 		gfx.setFullscreen(fs);
 		gfx.setTitle(Const.TITLEBAR);
 		gfx.setTargetFps(Const.FPS_RENDER);
-		
+
 		gfx.createDisplay();
 	}
-	
-	
+
+
 	@Override
 	protected void initScreens(ScreenRegistry screens)
 	{
 		super.initScreens(screens);
-		
+
 		/* game screen references world provider instance */
-		WorldProvider.init(this);
+		WorldProvider.setBaseDir(this);
 		getEventBus().subscribe(new RogueStateManager(this));
-		
+
 		screens.addScreen("main_menu", new ScreenMainMenu(this));
 		screens.addScreen("select_world", new ScreenSelectWorld(this));
 		screens.addScreen("game", new ScreenGame(this));
 		screens.addScreen("story", new ScreenStory(this));
-		
+
 		screens.addOverlay(new FpsOverlay(this));
 		screens.addOverlay(new LoadingOverlay(this));
 	}
-	
-	
+
+
 	@Override
 	protected void initInputSystem(LwjglInputModule input)
 	{
 		// this will work only with reusable events (such as requests)
 		bindEventToKey(new FullscreenToggleRequest(), "global.fullscreen");
 		bindEventToKey(new ScreenshotRequest(), "global.screenshot");
-		
+
 		bindEventToKey(new ShutdownEvent(), "global.quit");
 		bindEventToKey(new ShutdownEvent(), "global.quit_force");
 	}
-	
-	
+
+
 	private void bindEventToKey(final BusEvent<?> event, String strokeName)
 	{
 		getInput().bindKey(Config.getKeyStroke(strokeName), Trigger.RISING, new Runnable() {
-			
+
 			@Override
 			public void run()
 			{
@@ -126,14 +126,14 @@ public final class RogueApp extends App implements ViewportChangeListener {
 			}
 		});
 	}
-	
-	
+
+
 	@Override
 	protected void postInit()
 	{
-		
+
 		getEventBus().send(new MainLoopRequest(new Runnable() {
-			
+
 			@Override
 			public void run()
 			{
@@ -146,31 +146,31 @@ public final class RogueApp extends App implements ViewportChangeListener {
 			}
 		}, false));
 	}
-	
-	
+
+
 	@Override
 	public void onViewportChanged(ViewportChangeEvent event)
 	{
 		// save viewport size to config file
 		final boolean fs = gfx().isFullscreen();
-		
+
 		Config.setValue("display.fullscreen", fs);
-		
+
 		if (!fs) {
 			Config.setValue("display.width", gfx().getWidth());
 			Config.setValue("display.height", gfx().getHeight());
 		}
 	}
-	
-	
+
+
 	@Override
 	public void onScreenshotRequest()
 	{
 		// screenshot sound
 		Res.getSoundEffect("gui.shutter").play(0.8);
 	}
-	
-	
+
+
 	@Override
 	protected void writeLogHeader()
 	{

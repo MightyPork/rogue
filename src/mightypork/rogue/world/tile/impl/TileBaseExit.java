@@ -10,31 +10,32 @@ import mightypork.utils.math.color.Color;
 
 
 public abstract class TileBaseExit extends TileBaseStairs {
-	
-	public TileBaseExit(TileModel model) {
+
+	public TileBaseExit(TileModel model)
+	{
 		super(model);
 	}
-	
-	
+
+
 	@Override
 	public boolean onClick()
 	{
 		final Coord plpos = getWorld().getPlayer().getCoord();
 		if (!plpos.equals(getLevel().getExitPoint())) return false;
-		
+
 		App.bus().send(new WorldDescendRequest());
-		
+
 		return true;
 	}
-	
-	
+
+
 	@Override
 	public boolean doesCastShadow()
 	{
 		return false;
 	}
-	
-	
+
+
 	@Override
 	public Color getMapColor()
 	{

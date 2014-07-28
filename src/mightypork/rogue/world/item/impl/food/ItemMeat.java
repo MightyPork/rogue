@@ -9,26 +9,27 @@ import mightypork.rogue.world.item.render.QuadItemRenderer;
 
 
 public class ItemMeat extends ItemBaseFood {
-	
-	public ItemMeat(ItemModel model) {
+
+	public ItemMeat(ItemModel model)
+	{
 		super(model);
 	}
-	
-	
+
+
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
 		return new QuadItemRenderer(this, Res.getTxQuad("item.meat"));
 	}
-	
-	
+
+
 	@Override
 	public int getFoodPoints()
 	{
 		return 4;
 	}
-	
-	
+
+
 	@Override
 	public String getVisualName()
 	{

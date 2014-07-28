@@ -10,16 +10,17 @@ import mightypork.utils.math.constraints.rect.Rect;
 
 
 public class BasicTileRenderer extends TileRenderer {
-	
+
 	private final TxSheet sheet;
-	
-	
-	public BasicTileRenderer(Tile tile, TxSheet sheet) {
+
+
+	public BasicTileRenderer(Tile tile, TxSheet sheet)
+	{
 		super(tile);
 		this.sheet = sheet;
 	}
-	
-	
+
+
 	@Override
 	public void renderTile(TileRenderContext context)
 	{

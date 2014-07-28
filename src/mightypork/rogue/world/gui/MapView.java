@@ -29,27 +29,28 @@ import mightypork.utils.math.timing.TimedTask;
 
 /**
  * Level display component
- * 
+ *
  * @author Ondřej Hruška (MightyPork)
  */
-public class MapView extends InputComponent implements DelegatingClient, MouseButtonHandler, Updateable, WorldAscendRequestListener, WorldDescendRequestListener {
-	
+public class MapView extends InputComponent implements DelegatingClient, MouseButtonHandler, Updateable, WorldAscendRequestListener,
+		WorldDescendRequestListener {
+
 	private static final double transition_time = 0.8;
-	
+
 	protected final WorldRenderer worldRenderer;
 	public final PlayerControl plc;
-	
+
 	private final Set<MapInteractionPlugin> plugins = new LinkedHashSet<>();
 	private final NumAnimated zoom = new NumAnimated(0, Easing.SINE_BOTH);
 	private boolean zoom_in = true;
-	
+
 	private final NumAnimated descFadeAnim = new NumAnimated(0);
 	private final Color blackColor = RGB.BLACK.withAlpha(descFadeAnim);
-	
+
 	private int descDir = 0;
-	
+
 	private final TimedTask timerDesc1 = new TimedTask() {
-		
+
 		@Override
 		public void run()
 		{
@@ -62,55 +63,56 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 			}
 		}
 	};
-	
+
 	private final TimedTask timerDesc2 = new TimedTask() {
-		
+
 		@Override
 		public void run()
 		{
 			WorldProvider.get().getWorld().resume();
 		}
 	};
-	
+
 	private final Num tileSize;
-	
-	
+
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Collection getChildClients()
 	{
 		return plugins;
 	}
-	
-	
+
+
 	@Override
 	public boolean doesDelegate()
 	{
 		return true;
 	}
-	
-	
-	public MapView() {
+
+
+	public MapView()
+	{
 		this.tileSize = height().min(width()).div(9).max(32).mul(Num.make(1).sub(zoom.mul(0.5)));
 		this.worldRenderer = new WorldRenderer(this, tileSize);
 		plc = WorldProvider.get().getPlayerControl();
-		
+
 		zoom.setDefaultDuration(0.5);
 	}
-	
-	
+
+
 	@Override
 	protected void renderComponent()
 	{
 		worldRenderer.render();
-		
+
 		App.gfx().quad(this, blackColor);
 	}
-	
-	
+
+
 	/**
 	 * Get tile coord at a screen position
-	 * 
+	 *
 	 * @param pos position on screen (px)
 	 * @return position on map (tiles)
 	 */
@@ -118,13 +120,13 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 	{
 		return worldRenderer.getClickedTile(pos);
 	}
-	
-	
+
+
 	@Override
 	public void receive(MouseButtonEvent event)
 	{
 		if (!event.isOver(this)) return;
-		
+
 		if (event.isButtonEvent()) {
 			for (final MapInteractionPlugin p : plugins) {
 				if (p.onClick(event.getPos(), event.getButton(), event.isDown())) {
@@ -133,7 +135,7 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 				}
 			}
 		}
-		
+
 		if (event.isWheelEvent()) {
 			final int delta = event.getWheelDelta();
 			if (!zoom.isFinished()) return;
@@ -146,8 +148,8 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 			}
 		}
 	}
-	
-	
+
+
 	public void toggleMag()
 	{
 		if (zoom_in) {
@@ -158,19 +160,19 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 			zoom_in = true;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Add interaction plugin
-	 * 
+	 *
 	 * @param plugin
 	 */
 	public void addPlugin(MapInteractionPlugin plugin)
 	{
 		plugins.add(plugin);
 	}
-	
-	
+
+
 	@Override
 	public void update(double delta)
 	{
@@ -179,40 +181,40 @@ public class MapView extends InputComponent implements DelegatingClient, MouseBu
 		timerDesc1.update(delta);
 		timerDesc2.update(delta);
 	}
-	
-	
+
+
 	@Override
 	public void onAscendRequest()
 	{
 		if (descFadeAnim.isInProgress()) return;
-		
+
 		final World w = WorldProvider.get().getWorld();
-		
+
 		if (w.getPlayer().canAscend()) {
 			descDir = -1;
 			startDescAnim();
 		}
 	}
-	
-	
+
+
 	private void startDescAnim()
 	{
 		WorldProvider.get().getWorld().pause();
-		
+
 		timerDesc2.stop();
 		timerDesc1.start(transition_time);
 		descFadeAnim.setTo(0);
 		descFadeAnim.fadeIn(transition_time);
 	}
-	
-	
+
+
 	@Override
 	public void onDescendRequest()
 	{
 		if (descFadeAnim.isInProgress()) return;
-		
+
 		final World w = WorldProvider.get().getWorld();
-		
+
 		if (w.getPlayer().canDescend()) {
 			descDir = 1;
 			startDescAnim();

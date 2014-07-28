@@ -10,79 +10,80 @@ import mightypork.rogue.world.tile.TileType;
 
 
 public class NullTile extends Tile {
-	
-	public NullTile(TileModel model) {
+
+	public NullTile(TileModel model)
+	{
 		super(model);
 	}
-	
-	
+
+
 	@Override
 	protected TileRenderer makeRenderer()
 	{
 		return TileRenderer.NONE;
 	}
-	
-	
+
+
 	@Override
 	public void updateTile(double delta)
 	{
 	}
-	
-	
+
+
 	@Override
 	public void renderTile(TileRenderContext context)
 	{
 	}
-	
-	
+
+
 	@Override
 	public void renderExtra(TileRenderContext context)
 	{
 	}
-	
-	
+
+
 	@Override
 	public boolean isWalkable()
 	{
 		return false;
 	}
-	
-	
+
+
 	@Override
 	public TileType getType()
 	{
 		return TileType.NULL;
 	}
-	
-	
+
+
 	@Override
 	public boolean doesCastShadow()
 	{
 		return false;
 	}
-	
-	
+
+
 	@Override
 	public boolean doesReceiveShadow()
 	{
 		return false;
 	}
-	
-	
+
+
 	@Override
 	public boolean dropItem(Item item)
 	{
 		return false;
 	}
-	
-	
+
+
 	@Override
 	public Item pickItem()
 	{
 		return null;
 	}
-	
-	
+
+
 	@Override
 	public boolean hasItem()
 	{

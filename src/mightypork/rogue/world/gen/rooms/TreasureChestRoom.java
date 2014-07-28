@@ -11,21 +11,22 @@ import mightypork.utils.math.algo.Coord;
 
 
 public class TreasureChestRoom extends ItemShrineRoom {
-	
-	public TreasureChestRoom(Item item) {
+
+	public TreasureChestRoom(Item item)
+	{
 		super(item);
 	}
-	
-	
+
+
 	@Override
 	protected void buildExtras(ScratchMap map, MapTheme theme, Random rand, Coord min, Coord max)
 	{
 		// set tile
 		final Coord center = min.add(2, 2);
-		
+
 		map.set(center, theme.chest());
 		map.protect(center, TileProtectLevel.STRONG);
-		
+
 		// drop item
 		super.buildExtras(map, theme, rand, min, max);
 	}

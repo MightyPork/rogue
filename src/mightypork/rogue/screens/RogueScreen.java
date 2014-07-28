@@ -11,8 +11,8 @@ import mightypork.utils.annotations.Stub;
 
 
 public class RogueScreen extends LayeredScreen implements ShutdownListener {
-	
-	
+
+
 	@Override
 	@Stub
 	public void onShutdown(ShutdownEvent event)

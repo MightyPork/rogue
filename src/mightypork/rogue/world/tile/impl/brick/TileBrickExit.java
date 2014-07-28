@@ -9,16 +9,17 @@ import mightypork.rogue.world.tile.render.OneFrameTileRenderer;
 
 
 public class TileBrickExit extends TileBaseExit {
-	
-	public TileBrickExit(TileModel model) {
+
+	public TileBrickExit(TileModel model)
+	{
 		super(model);
 	}
-	
-	
+
+
 	@Override
 	protected TileRenderer makeRenderer()
 	{
 		return new OneFrameTileRenderer(this, Res.getTxQuad("tile.brick.stairs.down"));
 	}
-	
+
 }
