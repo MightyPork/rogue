@@ -9,17 +9,17 @@ import mightypork.rogue.world.tile.render.OneFrameTileRenderer;
 
 
 public class TileBrickEntrance extends TileBaseEntrance {
-
+	
 	public TileBrickEntrance(TileModel model)
 	{
 		super(model);
 	}
-
-
+	
+	
 	@Override
 	protected TileRenderer makeRenderer()
 	{
 		return new OneFrameTileRenderer(this, Res.txQuad("tile.brick.stairs.up"));
 	}
-
+	
 }

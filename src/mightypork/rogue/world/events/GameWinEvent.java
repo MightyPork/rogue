@@ -5,7 +5,7 @@ import mightypork.utils.eventbus.BusEvent;
 
 
 public class GameWinEvent extends BusEvent<GameWinHandler> {
-
+	
 	@Override
 	protected void handleBy(GameWinHandler handler)
 	{

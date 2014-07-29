@@ -15,17 +15,17 @@ import mightypork.utils.math.constraints.rect.Rect;
  * @author Ondřej Hruška (MightyPork)
  */
 public class TwoHighTileRenderer extends TileRenderer {
-
+	
 	private final TxQuad txq;
-
-
+	
+	
 	public TwoHighTileRenderer(Tile tile, TxQuad txq)
 	{
 		super(tile);
 		this.txq = txq;
 	}
-
-
+	
+	
 	@Override
 	public void renderTile(TileRenderContext context)
 	{

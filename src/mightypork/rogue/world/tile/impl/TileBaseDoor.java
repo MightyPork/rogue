@@ -13,56 +13,56 @@ import mightypork.utils.ion.IonOutput;
 
 
 public abstract class TileBaseDoor extends TileSolid {
-
+	
 	private final DoorTileRenderer renderer;
 	protected boolean locked = false;
-
-
+	
+	
 	public TileBaseDoor(TileModel model, TxSheet locked, TxSheet closed, TxSheet open)
 	{
 		super(model);
-
+		
 		this.renderer = new DoorTileRenderer(this, locked, closed, open);
 	}
-
-
+	
+	
 	@Override
 	protected TileRenderer makeRenderer()
 	{
 		return renderer;
 	}
-
-
+	
+	
 	@Override
 	public boolean isWalkable()
 	{
 		return !locked;
 	}
-
-
+	
+	
 	@Override
 	public TileType getType()
 	{
 		return TileType.DOOR;
 	}
-
-
+	
+	
 	@Override
 	public void load(IonInput in) throws IOException
 	{
 		super.load(in);
 		locked = in.readBoolean();
 	}
-
-
+	
+	
 	@Override
 	public void save(IonOutput out) throws IOException
 	{
 		super.save(out);
 		out.writeBoolean(locked);
 	}
-
-
+	
+	
 	/**
 	 * @return true if the door appears open
 	 */
@@ -70,8 +70,8 @@ public abstract class TileBaseDoor extends TileSolid {
 	{
 		return isOccupied();
 	}
-
-
+	
+	
 	/**
 	 * @return true if the door is locked
 	 */

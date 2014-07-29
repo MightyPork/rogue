@@ -27,57 +27,57 @@ import mightypork.utils.math.constraints.rect.Rect;
  * @author Ondřej Hruška (MightyPork)
  */
 public class ScreenSelectWorld extends RogueScreen {
-
+	
 	public ScreenSelectWorld()
 	{
 		addLayer(new WorldsLayer(this));
 	}
-
+	
 	class WorldsLayer extends ScreenLayer {
-
+		
 		private WorldSlot slot1;
 		private WorldSlot slot2;
 		private WorldSlot slot3;
-
-
+		
+		
 		public WorldsLayer(Screen screen)
 		{
 			super(screen);
-
+			
 			init();
 		}
-
-
+		
+		
 		private void init()
 		{
 			final Rect menuBox = root.shrink(root.width().perc(25), root.height().perc(30)).moveY(root.height().perc(-10));
-
+			
 			final QuadPainter bg = QuadPainter.gradV(Color.fromHex(0x007eb3), PAL16.SEABLUE);
 			bg.setRect(root);
 			root.add(bg);
-
+			
 			final RowLayout rows = new RowLayout(menuBox, 4);
 			rows.enableCaching(true);
 			root.add(rows);
-
+			
 			TextPainter tp;
-
+			
 			rows.add(tp = new TextPainter(Res.font("thick"), AlignX.CENTER, RGB.YELLOW, "Save slot:"));
 			tp.setVPaddingPercent(20);
 			tp.setShadow(RGB.BLACK_50, tp.height().mul(0.6 / 8D).toVectXY());
-
+			
 			slot1 = new WorldSlot(WorkDir.getFile("slot1"));
 			rows.add(slot1);
-
+			
 			slot2 = new WorldSlot(WorkDir.getFile("slot2"));
 			rows.add(slot2);
-
+			
 			slot3 = new WorldSlot(WorkDir.getFile("slot3"));
 			rows.add(slot3);
-
+			
 			// escape to quitn from here
 			bindKey(App.cfg().getKeyStroke("general.close"), Trigger.RISING, new Runnable() {
-
+				
 				@Override
 				public void run()
 				{
@@ -85,20 +85,20 @@ public class ScreenSelectWorld extends RogueScreen {
 				}
 			});
 		}
-
-
+		
+		
 		@Override
 		public int getZIndex()
 		{
 			return 2;
 		}
-
-
+		
+		
 		@Override
 		protected void onScreenEnter()
 		{
 			super.onScreenEnter();
-
+			
 			Log.f3("Refreshing save slots");
 			slot1.refresh();
 			slot2.refresh();

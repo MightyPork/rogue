@@ -14,17 +14,17 @@ import mightypork.rogue.world.tile.TileRenderer;
  * @author Ondřej Hruška (MightyPork)
  */
 public class OneFrameTileRenderer extends TileRenderer {
-
+	
 	private final TxQuad txq;
-
-
+	
+	
 	public OneFrameTileRenderer(Tile tile, TxQuad txq)
 	{
 		super(tile);
 		this.txq = txq;
 	}
-
-
+	
+	
 	@Override
 	public void renderTile(TileRenderContext context)
 	{

@@ -10,7 +10,7 @@ import mightypork.rogue.world.level.render.MapRenderContext;
  * @author Ondřej Hruška (MightyPork)
  */
 public abstract class EntityRenderer {
-
+	
 	public abstract void render(MapRenderContext context);
-
+	
 }

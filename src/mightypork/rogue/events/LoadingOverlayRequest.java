@@ -13,11 +13,11 @@ import mightypork.utils.eventbus.events.flags.SingleReceiverEvent;
  */
 @SingleReceiverEvent
 public class LoadingOverlayRequest extends BusEvent<LoadingOverlay> {
-
+	
 	private final String msg;
 	private final Runnable task;
-
-
+	
+	
 	/**
 	 * @param msg task description
 	 * @param task task runnable
@@ -27,12 +27,12 @@ public class LoadingOverlayRequest extends BusEvent<LoadingOverlay> {
 		this.task = task;
 		this.msg = msg;
 	}
-
-
+	
+	
 	@Override
 	protected void handleBy(LoadingOverlay handler)
 	{
 		handler.show(msg, task);
 	}
-
+	
 }

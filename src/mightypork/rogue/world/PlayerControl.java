@@ -15,82 +15,82 @@ import mightypork.utils.math.constraints.vect.Vect;
 
 
 public abstract class PlayerControl {
-
+	
 	protected Set<EntityMoveListener> playerMoveListeners = new HashSet<>();
-
+	
 	private World lastWorld;
-
-
+	
+	
 	/**
 	 * Implementing classes should return a world instance from this method.
 	 *
 	 * @return
 	 */
 	protected abstract World provideWorld();
-
-
+	
+	
 	public World getWorld()
 	{
 		final World newWorld = provideWorld();
-
+		
 		lastWorld = newWorld;
-
+		
 		return newWorld;
-
+		
 	}
-
-
+	
+	
 	public PlayerFacade getPlayer()
 	{
 		if (getWorld() == null) return null;
-
+		
 		return getWorld().getPlayer();
 	}
-
-
+	
+	
 	public void goNorth()
 	{
 		go(Move.NORTH);
 	}
-
-
+	
+	
 	public void goSouth()
 	{
 		go(Move.SOUTH);
 	}
-
-
+	
+	
 	public void goEast()
 	{
 		go(Move.EAST);
 	}
-
-
+	
+	
 	public void goWest()
 	{
 		go(Move.WEST);
 	}
-
-
+	
+	
 	public void navigateTo(Coord pos)
 	{
 		if (!getLevel().getTile(pos).isExplored()) return;
 		getPlayer().navigateTo(pos);
 	}
-
-
+	
+	
 	public Level getLevel()
 	{
 		return getWorld().getPlayer().getLevel();
 	}
-
-
+	
+	
 	public boolean canGo(Move side)
 	{
 		return getPlayer().canGoTo(side);
 	}
-
-
+	
+	
 	/**
 	 * Click tile on player's side
 	 *
@@ -101,44 +101,44 @@ public abstract class PlayerControl {
 	{
 		return doClickTile(getPlayer().getCoord().add(side).toVect());
 	}
-
-
+	
+	
 	public boolean clickTile(Vect pos)
 	{
 		if (pos.dist(getPlayer().getVisualPos().add(0.5, 0.5)).value() < 1.5) {
 			return doClickTile(pos);
 		}
-
+		
 		return false;
 	}
-
-
+	
+	
 	private boolean doClickTile(Vect pos)
 	{
 		//try to click tile
 		if (getLevel().getTile(Coord.fromVect(pos)).onClick()) return true;
-
+		
 		final Tile t = getLevel().getTile(Coord.fromVect(pos));
 		if (!t.isPotentiallyWalkable()) return false; // no point in attacking entity thru wall, right?
-		
+
 		//try to hit entity
 		final Entity prey = getLevel().getClosestEntity(pos, EntityType.MONSTER, 1);
 		if (prey != null) {
 			getPlayer().attack(prey);
 			return true;
 		}
-
+		
 		return false;
 	}
-
-
+	
+	
 	public void go(Move side)
 	{
 		getPlayer().cancelPath();
 		getPlayer().addPathStep(side);
 	}
-
-
+	
+	
 	public boolean tryGo(Move e)
 	{
 		if (!canGo(e)) return false;

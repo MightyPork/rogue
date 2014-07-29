@@ -7,7 +7,7 @@ import mightypork.rogue.world.tile.impl.TileBaseSecretDoor;
 
 
 public class TileBrickSecretDoor extends TileBaseSecretDoor {
-
+	
 	public TileBrickSecretDoor(TileModel model)
 	{
 		//@formatter:off
@@ -18,7 +18,7 @@ public class TileBrickSecretDoor extends TileBaseSecretDoor {
 				Res.txSheet("tile.brick.door.open")
 				);
 		//@formatter:on
-
+		
 		locked = true; // hide it
 	}
 }

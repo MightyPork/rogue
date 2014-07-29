@@ -26,67 +26,67 @@ import mightypork.utils.math.algo.Coord;
  * @author Ondřej Hruška (MightyPork)
  */
 public class World implements DelegatingClient, IonBundled, Pauseable, Updateable, PlayerDeathHandler, GameWinHandler {
-
+	
 	// not saved stuffs
 	private final PlayerFacade playerFacade = new PlayerFacade(this);
-
+	
 	final WorldConsole console = new WorldConsole();
 	Entity playerEntity;
 	private int pauseDepth = 0;
 	private boolean gameOver = false;
-
+	
 	/** List of world's levels */
 	final ArrayList<Level> levels = new ArrayList<>();
-
+	
 	/** Player data saved together with world */
 	final PlayerData playerData = new PlayerData();
-
+	
 	/** World seed */
 	private long seed;
-
+	
 	/** Next entity ID */
 	private int eid;
-
+	
 	private File saveFile;
-
-
+	
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Collection getChildClients()
 	{
 		return levels;
 	}
-
-
+	
+	
 	@Override
 	public boolean doesDelegate()
 	{
 		return !isPaused();
 	}
-
-
+	
+	
 	@Override
 	public void load(IonDataBundle in)
 	{
 		seed = in.get("seed", seed);
 		eid = in.get("next_eid", eid);
 		in.loadSequence("levels", levels);
-
+		
 		// join levels to world
 		for (final Level lvl : levels) {
 			lvl.setWorld(this);
 		}
-
+		
 		in.loadBundled("player", playerData);
-
+		
 		final int eid = playerData.getEID();
 		final int lvl = playerData.getLevelNumber();
-
+		
 		playerEntity = levels.get(lvl).getEntity(eid);
 		if (playerEntity == null) {
-
+			
 			Log.e("Player entity not found in the world: " + eid + " on floor " + lvl);
-
+			
 			for (int i = 0; i < levels.size(); i++) {
 				final Entity ent = levels.get(i).getEntity(eid);
 				if (ent != null) {
@@ -94,12 +94,12 @@ public class World implements DelegatingClient, IonBundled, Pauseable, Updateabl
 					break;
 				}
 			}
-
+			
 			throw new RuntimeException("Player not found in world.");
 		}
 	}
-
-
+	
+	
 	@Override
 	public void save(IonDataBundle out)
 	{
@@ -107,31 +107,31 @@ public class World implements DelegatingClient, IonBundled, Pauseable, Updateabl
 		out.put("next_eid", eid);
 		out.putSequence("levels", levels);
 		out.putBundled("player", playerData);
-
+		
 		// used for peking in before actually loading the world.
 		out.put("meta.last_level", playerData.getLevelNumber());
 	}
-
-
+	
+	
 	public void addLevel(Level level)
 	{
 		levels.add(level);
 		level.setWorld(this);
 	}
-
-
+	
+	
 	public void setSeed(long seed)
 	{
 		this.seed = seed;
 	}
-
-
+	
+	
 	public long getSeed()
 	{
 		return seed;
 	}
-
-
+	
+	
 	/**
 	 * @return new entity ID
 	 */
@@ -139,79 +139,79 @@ public class World implements DelegatingClient, IonBundled, Pauseable, Updateabl
 	{
 		return eid++;
 	}
-
-
+	
+	
 	public void createPlayer()
 	{
 		if (playerData.isInitialized()) {
 			throw new RuntimeException("Player already created.");
 		}
-
+		
 		// make entity
 		final int playerEid = getNewEID();
-
+		
 		final Level floor = levels.get(0);
-
+		
 		playerEntity = Entities.PLAYER.createEntity(playerEid);
-
+		
 		final Coord spawn = floor.getEnterPoint();
-
+		
 		floor.forceFreeTile(spawn);
 		final Random rand = new Random(seed + 71);
-
+		
 		while (!floor.addEntity(playerEntity, spawn)) {
 			spawn.x += -1 + rand.nextInt(3);
 			spawn.y += -1 + rand.nextInt(3);
 		}
-
+		
 		floor.explore(spawn);
-
+		
 		playerData.setLevelNumber(0);
 		playerData.setEID(playerEid);
-
+		
 		console.msgEnterFloor(0);
 	}
-
-
+	
+	
 	@Override
 	public void pause()
 	{
 		pauseDepth++;
 	}
-
-
+	
+	
 	@Override
 	public void resume()
 	{
 		if (pauseDepth > 0) pauseDepth--;
 	}
-
-
+	
+	
 	@Override
 	public boolean isPaused()
 	{
 		return pauseDepth > 0;
 	}
-
-
+	
+	
 	public PlayerFacade getPlayer()
 	{
 		return playerFacade;
 	}
-
-
+	
+	
 	@Override
 	public void update(double delta)
 	{
 		if (isPaused()) return;
-
+		
 		// update console timing - not as child client
 		console.update(delta);
-
+		
 		if (saveFile == null) Log.w("World has no save file.");
 	}
-
-
+	
+	
 	/**
 	 * @return world console
 	 */
@@ -219,8 +219,8 @@ public class World implements DelegatingClient, IonBundled, Pauseable, Updateabl
 	{
 		return console;
 	}
-
-
+	
+	
 	/**
 	 * Set file for saving
 	 *
@@ -230,8 +230,8 @@ public class World implements DelegatingClient, IonBundled, Pauseable, Updateabl
 	{
 		this.saveFile = file;
 	}
-
-
+	
+	
 	/**
 	 * @return assigned file fro saving
 	 */
@@ -239,22 +239,22 @@ public class World implements DelegatingClient, IonBundled, Pauseable, Updateabl
 	{
 		return saveFile;
 	}
-
-
+	
+	
 	@Override
 	public void onGameWon()
 	{
 		gameOver = true;
 	}
-
-
+	
+	
 	@Override
 	public void onPlayerKilled()
 	{
 		gameOver = true;
 	}
-
-
+	
+	
 	public boolean isGameOver()
 	{
 		return gameOver || getPlayer().isDead();

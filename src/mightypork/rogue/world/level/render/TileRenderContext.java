@@ -16,21 +16,21 @@ import mightypork.utils.math.noise.NoiseGen;
  * @author Ondřej Hruška (MightyPork)
  */
 public final class TileRenderContext extends MapRenderContext implements RectBound {
-
+	
 	public final Coord pos = Coord.zero();
 	private final NoiseGen noise;
-
-
+	
+	
 	public TileRenderContext(Level map, Rect drawArea)
 	{
 		super(map, drawArea);
-
+		
 		//this.tiler.setOverlap(0.002); // avoid gaps (rounding error?)
-
+		
 		this.noise = map.getNoiseGen();
 	}
-
-
+	
+	
 	/**
 	 * @return the rendered tile.
 	 */
@@ -38,8 +38,8 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	{
 		return map.getTile(pos);
 	}
-
-
+	
+	
 	/**
 	 * Get a neighbor tile
 	 *
@@ -50,8 +50,8 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	{
 		return map.getTile(pos.add(offset));
 	}
-
-
+	
+	
 	/**
 	 * @return per-coord noise value 0..1
 	 */
@@ -59,26 +59,26 @@ public final class TileRenderContext extends MapRenderContext implements RectBou
 	{
 		return noise.valueAt(pos.x, pos.y);
 	}
-
-
+	
+	
 	public void renderTile()
 	{
 		map.getTile(pos).renderTile(this);
 	}
-
-
+	
+	
 	public void renderUFog()
 	{
 		map.getTile(pos).renderUFog(this);
 	}
-
-
+	
+	
 	public void renderItems()
 	{
 		map.getTile(pos).renderExtra(this);
 	}
-
-
+	
+	
 	/**
 	 * Rect of the current tile to draw
 	 */

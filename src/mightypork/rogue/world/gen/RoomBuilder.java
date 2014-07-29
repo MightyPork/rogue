@@ -12,6 +12,6 @@ import mightypork.utils.math.algo.Coord;
  * @author Ondřej Hruška (MightyPork)
  */
 public interface RoomBuilder {
-
+	
 	RoomEntry buildRoom(ScratchMap map, MapTheme theme, Random rand, Coord center) throws WorldGenError;
 }

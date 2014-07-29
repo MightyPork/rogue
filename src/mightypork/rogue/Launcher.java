@@ -9,7 +9,7 @@ import mightypork.utils.files.OsUtils;
 
 
 public class Launcher {
-
+	
 	/**
 	 * Launcher
 	 *
@@ -18,72 +18,72 @@ public class Launcher {
 	public static void main(String[] args)
 	{
 //		System.out.println("argv = " + Arrays.toString(args)+"\n");
-
+		
 		Level llSyso = Level.FINER;
-
+		
 		File workdir = null;
 		boolean logBus = false;
-
+		
 		try {
 			boolean localWorkdir = false;
 			String lwdDir = null;
-
+			
 			for (int i = 0; i < args.length; i++) {
 				final String arg = args[i];
-
+				
 				if (arg.equals("--workdir") || arg.equals("-w")) {
 					localWorkdir = true;
 					lwdDir = args[i + 1];
 					i++;
 					continue;
-
+					
 				} else if (arg.equals("--silent") || arg.equals("-s")) {
 					llSyso = Level.OFF;
 					continue;
-
+					
 				} else if (arg.equals("--warn") || arg.equals("-e")) {
 					llSyso = Level.WARNING;
 					continue;
-
+					
 				} else if (arg.equals("--verbose") || arg.equals("-v")) {
 					llSyso = Level.ALL;
 					continue;
-
+					
 				} else if (arg.equals("--help") || arg.equals("-h")) {
 					printHelp();
 					System.exit(0);
-
+					
 				} else if (arg.equals("--debug-bus")) {
 					logBus = true;
-
+					
 				} else {
 					System.err.println("Unknown argument: " + arg);
 					printHelp();
 					System.exit(1);
 				}
 			}
-
+			
 			if (!localWorkdir) {
 				workdir = OsUtils.getHomeWorkDir(".rogue");
 			} else {
 				workdir = new File(lwdDir);
 			}
-
+			
 		} catch (final Exception e) {
 			System.out.println("Error parsing arguments:");
 			e.printStackTrace();
 			printHelp();
 			System.exit(1);
 		}
-
-		final App app = new RogueApp(workdir, llSyso);
 		
-		if (logBus) App.bus().detailedLogging = true;
+		final App app = new RogueApp(workdir, llSyso);
 
+		if (logBus) App.bus().detailedLogging = true;
+		
 		app.start();
 	}
-
-
+	
+	
 	private static void printHelp()
 	{
 		//@formatter:off

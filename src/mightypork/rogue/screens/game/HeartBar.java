@@ -11,17 +11,17 @@ import mightypork.utils.math.constraints.rect.Rect;
 
 
 public class HeartBar extends BaseComponent {
-
+	
 	private final TxQuad img_on;
 	private final TxQuad img_off;
 	private final TxQuad img_half;
 	private final Num total;
 	private final Num active;
-
+	
 	private final NumVar index = new NumVar(0);
 	private final Rect heart;
-
-
+	
+	
 	public HeartBar(Num total, Num active, TxQuad img_on, TxQuad img_half, TxQuad img_off, AlignX align)
 	{
 		super();
@@ -30,10 +30,10 @@ public class HeartBar extends BaseComponent {
 		this.img_on = img_on;
 		this.img_off = img_off;
 		this.img_half = img_half;
-
+		
 		final Num h = height();
 		final Num w = width();
-
+		
 		switch (align) {
 			case LEFT:
 				heart = leftEdge().growRight(h).moveX(index.mul(h));
@@ -47,19 +47,19 @@ public class HeartBar extends BaseComponent {
 			default:
 				heart = null; // impossible
 		}
-
+		
 	}
-
-
+	
+	
 	@Override
 	protected void renderComponent()
 	{
 		for (int i = 0; i < total.value(); i++) {
 			index.setTo(i);
-
+			
 			final double rem = active.value() - i;
 			App.gfx().quad(heart, (rem > 0.6 ? img_on : rem > 0.25 ? img_half : img_off));
 		}
 	}
-
+	
 }

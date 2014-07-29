@@ -17,32 +17,32 @@ import mightypork.utils.math.constraints.vect.Vect;
 
 
 public class Minimap extends InputComponent implements MouseButtonHandler {
-	
+
 	private final RectVar bounds = Rect.makeVar();
 	private int unit = 0;
 	private final Num translucency = Num.make(0.8);
 	private final Color playerColor = RGB.RED;
-	
-	
+
+
 	@Override
 	protected void renderComponent()
 	{
 		Color.pushAlpha(translucency);
-		
+
 		final Level lvl = WorldProvider.get().getCurrentLevel();
 		unit = (int) Math.min(Math.max(2, Math.ceil((height().value() / 2) / (lvl.getHeight() + 2))), 10);
-		
+
 		final Vect plCoord = WorldProvider.get().getPlayer().getVisualPos();
-		
+
 		final int lw = lvl.getWidth();
 		final int lh = lvl.getHeight();
-		
+
 		final Vect tl = topRight().sub(unit * lw, 0);
-		
+
 		bounds.setTo(tl, unit * lw, unit * lh);
-		
+
 		final Coord point = new Coord(tl.xi(), tl.yi());
-		
+
 		// FIXME do not use LWJGL directly
 /*
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -78,11 +78,11 @@ public class Minimap extends InputComponent implements MouseButtonHandler {
 		GL11.glVertex2d(plx, ply + unit);
 
 		GL11.glEnd();*/
-		
+
 		Color.popAlpha();
 	}
-	
-	
+
+
 	@Override
 	public void receive(MouseButtonEvent event)
 	{
@@ -90,14 +90,14 @@ public class Minimap extends InputComponent implements MouseButtonHandler {
 			if (event.isUp()) {
 				final Vect relative = event.getPos().sub(bounds.origin());
 				final Coord actual = Coord.make(relative.xi() / unit, relative.yi() / unit);
-				
+
 				final PlayerFacade player = WorldProvider.get().getPlayer();
-				
+
 				if (player.getLevel().getTile(actual).isExplored()) {
 					player.navigateTo(actual);
 				}
 			}
-			
+
 			event.consume();
 		}
 	}

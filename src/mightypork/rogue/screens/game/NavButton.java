@@ -13,10 +13,10 @@ import mightypork.gamecore.resources.Res;
  * @author Ondřej Hruška (MightyPork)
  */
 public class NavButton extends ClickableComponent {
-
+	
 	private final TxQuad base, hover, down, fg;
-
-
+	
+	
 	public NavButton(TxQuad fg)
 	{
 		super();
@@ -25,13 +25,13 @@ public class NavButton extends ClickableComponent {
 		this.down = Res.txQuad("nav.button.bg.down");
 		this.fg = fg;
 	}
-
-
+	
+	
 	@Override
 	protected void renderComponent()
 	{
 		TxQuad bg;
-
+		
 		if (btnDownOver) {
 			bg = down;
 		} else if (isMouseOver()) {
@@ -39,11 +39,11 @@ public class NavButton extends ClickableComponent {
 		} else {
 			bg = base;
 		}
-
-		if (!isEnabled()) bg = base; // override effects
 		
+		if (!isEnabled()) bg = base; // override effects
+
 		App.gfx().quad(this, bg);
 		App.gfx().quad(this, fg);
 	}
-
+	
 }

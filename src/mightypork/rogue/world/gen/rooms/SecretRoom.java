@@ -11,28 +11,28 @@ import mightypork.utils.math.algo.Coord;
 
 
 public abstract class SecretRoom extends AbstractRectRoom {
-
+	
 	@Override
 	protected TileModel getDoorType(MapTheme theme, Random rand)
 	{
 		return rand.nextInt(5) == 0 ? theme.passage() : theme.secretDoor();
 	}
-
-
+	
+	
 	@Override
 	protected int getDoorCount(Random rand)
 	{
 		return Calc.randInt(rand, 1, 3);
 	}
-
-
+	
+	
 	@Override
 	protected TileProtectLevel getWallProtectionLevel()
 	{
 		return TileProtectLevel.STRONG;
 	}
-
-
+	
+	
 	@Override
 	protected Coord getInnerSize(Random rand)
 	{

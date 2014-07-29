@@ -16,28 +16,28 @@ import mightypork.utils.math.constraints.vect.VectConst;
 
 
 public class EntityModulePosition extends EntityModule {
-
+	
 	/** Last pos, will be freed upon finishing move */
 	private Coord lastPos = new Coord(0, 0);
 	private boolean walking = false;
-
+	
 	private final Queue<Move> path = new LinkedList<>();
 	private final EntityPos entityPos = new EntityPos();
 	private double stepTime = 0.5;
-
+	
 	// marks for simple renderers
 	public int lastXDir = 1;
 	public int lastYDir = 1;
-
+	
 	private final Set<EntityMoveListener> moveListeners = new LinkedHashSet<>();
-
-
+	
+	
 	public EntityModulePosition(Entity entity)
 	{
 		super(entity);
 	}
-
-
+	
+	
 	@Override
 	public void save(IonDataBundle bundle)
 	{
@@ -46,26 +46,26 @@ public class EntityModulePosition extends EntityModule {
 		bundle.putBundled("pos", entityPos);
 		bundle.put("step_time", stepTime);
 	}
-
-
+	
+	
 	@Override
 	public void load(IonDataBundle bundle)
 	{
 		bundle.loadSequence("path", path);
 		lastPos = bundle.get("lpos", lastPos);
 		bundle.loadBundled("pos", entityPos);
-
+		
 		stepTime = bundle.get("step_time", stepTime);
 	}
-
-
+	
+	
 	@Override
 	public boolean isModuleSaved()
 	{
 		return true;
 	}
-
-
+	
+	
 	/**
 	 * Set coord without animation
 	 *
@@ -74,15 +74,15 @@ public class EntityModulePosition extends EntityModule {
 	public void setCoord(Coord coord)
 	{
 		freeTile(); // release old tile
-
+		
 		entityPos.setTo(coord);
 		lastPos.setTo(coord);
 		cancelPath(); // discard remaining steps
-
+		
 		occupyTile();
 	}
-
-
+	
+	
 	/**
 	 * Occupy current tile in level
 	 */
@@ -92,8 +92,8 @@ public class EntityModulePosition extends EntityModule {
 			entity.getLevel().occupyTile(getCoord());
 		}
 	}
-
-
+	
+	
 	/**
 	 * free current tile in level
 	 */
@@ -103,8 +103,8 @@ public class EntityModulePosition extends EntityModule {
 			entity.getLevel().freeTile(getCoord());
 		}
 	}
-
-
+	
+	
 	/**
 	 * @param delta delta time
 	 */
@@ -112,47 +112,47 @@ public class EntityModulePosition extends EntityModule {
 	public void update(double delta)
 	{
 		if (entity.isDead()) return; // corpses dont walk
-		
+
 		if (!entityPos.isFinished()) {
 			entityPos.update(delta);
 		}
-
+		
 		if (walking && entityPos.isFinished()) {
 			walking = false;
-
+			
 			for (final EntityMoveListener l : moveListeners) {
 				l.onStepFinished();
 			}
-
+			
 			if (path.isEmpty()) {
 				for (final EntityMoveListener l : moveListeners) {
 					l.onPathFinished();
 				}
 			}
 		}
-
+		
 		if (!walking && !path.isEmpty()) {
-
+			
 			walking = true;
-
+			
 			final Move step = path.poll();
-
+			
 			final Coord planned = entityPos.getCoord().add(step.toCoord());
-
+			
 			if (!entity.getLevel().isWalkable(planned)) {
 				cancelPath();
-
+				
 				for (final EntityMoveListener l : moveListeners) {
 					l.onPathInterrupted();
 				}
-
+				
 				walking = false;
 			} else {
-
+				
 				// tmp for renderer
 				if (step.x() != 0) this.lastXDir = step.x();
 				if (step.y() != 0) this.lastYDir = step.y();
-
+				
 				freeTile();
 				lastPos.setTo(entityPos.getCoord());
 				entityPos.walk(step, stepTime);
@@ -160,8 +160,8 @@ public class EntityModulePosition extends EntityModule {
 			}
 		}
 	}
-
-
+	
+	
 	/**
 	 * @return true if path buffer is empty
 	 */
@@ -169,8 +169,8 @@ public class EntityModulePosition extends EntityModule {
 	{
 		return entityPos.isFinished() && path.isEmpty();
 	}
-
-
+	
+	
 	/**
 	 * Add a step to path buffer
 	 *
@@ -179,11 +179,11 @@ public class EntityModulePosition extends EntityModule {
 	public void addStep(Move step)
 	{
 		if (path.isEmpty() && !canGoTo(step)) return;
-
+		
 		path.add(step);
 	}
-
-
+	
+	
 	/**
 	 * Discard steps in buffer
 	 */
@@ -191,8 +191,8 @@ public class EntityModulePosition extends EntityModule {
 	{
 		path.clear();
 	}
-
-
+	
+	
 	/**
 	 * Find path to
 	 *
@@ -203,14 +203,14 @@ public class EntityModulePosition extends EntityModule {
 	{
 		if (target.equals(getCoord())) return true;
 		final List<Move> newPath = entity.getPathFinder().findPathRelative(entityPos.getCoord(), target);
-
+		
 		if (newPath == null) return false;
 		cancelPath();
 		addSteps(newPath);
 		return true;
 	}
-
-
+	
+	
 	/**
 	 * Add a move listener. If already present, do nothing.
 	 *
@@ -220,8 +220,8 @@ public class EntityModulePosition extends EntityModule {
 	{
 		moveListeners.add(listener);
 	}
-
-
+	
+	
 	/**
 	 * Add steps to path buffer
 	 *
@@ -231,8 +231,8 @@ public class EntityModulePosition extends EntityModule {
 	{
 		this.path.addAll(path);
 	}
-
-
+	
+	
 	/**
 	 * @return coord in level
 	 */
@@ -240,8 +240,8 @@ public class EntityModulePosition extends EntityModule {
 	{
 		return entityPos.getCoord();
 	}
-
-
+	
+	
 	/**
 	 * Set step time (seconds)
 	 *
@@ -251,8 +251,8 @@ public class EntityModulePosition extends EntityModule {
 	{
 		this.stepTime = stepTime;
 	}
-
-
+	
+	
 	/**
 	 * @return step progress 0..1
 	 */
@@ -260,8 +260,8 @@ public class EntityModulePosition extends EntityModule {
 	{
 		return entityPos.getProgress();
 	}
-
-
+	
+	
 	/**
 	 * @return visual pos in level; interpolated from last to new coord
 	 */
@@ -269,29 +269,29 @@ public class EntityModulePosition extends EntityModule {
 	{
 		return entityPos.getVisualPos();
 	}
-
-
+	
+	
 	public boolean isMoving()
 	{
 		return walking;
 	}
-
-
+	
+	
 	public boolean hasPath()
 	{
 		return isMoving() || !path.isEmpty();
 	}
-
-
+	
+	
 	public boolean canGoTo(Move side)
 	{
 		return entity.getPathFinder().isAccessible(getCoord().add(side));
 	}
-
-
+	
+	
 	public Coord getLastPos()
 	{
 		return lastPos;
 	}
-
+	
 }

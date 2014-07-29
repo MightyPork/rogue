@@ -2,7 +2,7 @@ package mightypork.rogue.init;
 
 
 import mightypork.gamecore.core.App;
-import mightypork.gamecore.core.init.InitTaskScreens;
+import mightypork.gamecore.core.init.InitTaskUI;
 import mightypork.gamecore.graphics.Renderable;
 import mightypork.gamecore.gui.screens.ScreenRegistry;
 import mightypork.gamecore.gui.screens.impl.CrossfadeOverlay;
@@ -16,28 +16,28 @@ import mightypork.rogue.screens.story.ScreenStory;
 import mightypork.rogue.world.WorldProvider;
 
 
-public class InitScreens extends InitTaskScreens {
-	
+public class RogueInitUI extends InitTaskUI {
+
 	@Override
-	protected Renderable getMainRenderableImpl()
+	protected Renderable createMainRenderable()
 	{
 		final ScreenRegistry screens = new ScreenRegistry();
 		app.addChildClient(screens);
-
+		
 		/* game screen references world provider instance */
 		App.bus().subscribe(new RogueStateManager());
 		App.bus().subscribe(WorldProvider.get());
-
-		screens.addOverlay(new CrossfadeOverlay());
 		
+		screens.addOverlay(new CrossfadeOverlay());
+
 		screens.addScreen("main_menu", new ScreenMainMenu());
 		screens.addScreen("select_world", new ScreenSelectWorld());
 		screens.addScreen("game", new ScreenGame());
 		screens.addScreen("story", new ScreenStory());
-		
+
 		screens.addOverlay(new FpsOverlay());
 		screens.addOverlay(new LoadingOverlay());
-
+		
 		return screens;
 	}
 }

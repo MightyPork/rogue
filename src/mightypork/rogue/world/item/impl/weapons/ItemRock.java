@@ -9,34 +9,34 @@ import mightypork.rogue.world.item.render.QuadItemRenderer;
 
 
 public class ItemRock extends ItemBaseWeapon {
-
+	
 	public ItemRock(ItemModel model)
 	{
 		super(model);
 	}
-
-
+	
+	
 	@Override
 	protected ItemRenderer makeRenderer()
 	{
 		return new QuadItemRenderer(this, Res.txQuad("item.stone"));
 	}
-
-
+	
+	
 	@Override
 	public int getAttackPoints()
 	{
 		return 2;
 	}
-
-
+	
+	
 	@Override
 	public int getMaxUses()
 	{
 		return 35;
 	}
-
-
+	
+	
 	@Override
 	public String getVisualName()
 	{

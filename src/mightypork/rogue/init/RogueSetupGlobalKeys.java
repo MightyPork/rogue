@@ -9,7 +9,7 @@ import mightypork.gamecore.input.Trigger;
 import mightypork.utils.eventbus.BusEvent;
 
 
-public class SetupGlobalKeys extends InitTask {
+public class RogueSetupGlobalKeys extends InitTask {
 
 
 	@Override
@@ -55,6 +55,6 @@ public class SetupGlobalKeys extends InitTask {
 	@Override
 	public String[] getDependencies()
 	{
-		return new String[] { "config" };
+		return new String[] { "config", "backend" };
 	}
 }

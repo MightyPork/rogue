@@ -6,14 +6,14 @@ import java.io.File;
 import mightypork.gamecore.core.init.InitTaskWorkdir;
 
 
-public class SetupWorkdir extends InitTaskWorkdir {
-	
-	public SetupWorkdir(File workdir)
+public class RogueSetupWorkdir extends InitTaskWorkdir {
+
+	public RogueSetupWorkdir(File workdir)
 	{
 		super(workdir, true);
 	}
-	
-	
+
+
 	@Override
 	public void init()
 	{

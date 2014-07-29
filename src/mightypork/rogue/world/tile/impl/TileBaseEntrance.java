@@ -10,32 +10,32 @@ import mightypork.utils.math.color.Color;
 
 
 public abstract class TileBaseEntrance extends TileBaseStairs {
-
+	
 	public TileBaseEntrance(TileModel model)
 	{
 		super(model);
 	}
-
-
+	
+	
 	@Override
 	public boolean onClick()
 	{
 		final Coord plpos = getWorld().getPlayer().getCoord();
 		if (!plpos.equals(getLevel().getEnterPoint())) return false;
-
+		
 		App.bus().send(new WorldAscendRequest());
-
+		
 		return true;
 	}
-
-
+	
+	
 	@Override
 	public boolean doesCastShadow()
 	{
 		return false;
 	}
-
-
+	
+	
 	@Override
 	public Color getMapColor()
 	{

@@ -7,7 +7,7 @@ import mightypork.rogue.world.tile.impl.TileBaseDoor;
 
 
 public class TileBrickDoor extends TileBaseDoor {
-
+	
 	public TileBrickDoor(TileModel model)
 	{
 		//@formatter:off
@@ -19,5 +19,5 @@ public class TileBrickDoor extends TileBaseDoor {
 				);
 		//@formatter:on
 	}
-
+	
 }

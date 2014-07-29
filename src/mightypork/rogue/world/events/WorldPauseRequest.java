@@ -11,22 +11,22 @@ import mightypork.utils.eventbus.BusEvent;
  * @author Ondřej Hruška (MightyPork)
  */
 public class WorldPauseRequest extends BusEvent<World> {
-
+	
 	public static enum PauseAction
 	{
 		PAUSE, RESUME, TOGGLE;
 	}
-
+	
 	private final PauseAction op;
-
-
+	
+	
 	public WorldPauseRequest(PauseAction op)
 	{
 		super();
 		this.op = op;
 	}
-
-
+	
+	
 	@Override
 	protected void handleBy(World handler)
 	{
@@ -34,14 +34,14 @@ public class WorldPauseRequest extends BusEvent<World> {
 			handler.pause();
 			return;
 		}
-
+		
 		if (op == PauseAction.RESUME) {
 			handler.resume();
 			return;
 		}
-
+		
 		// else
-
+		
 		// toggle paused state
 		if (!handler.isPaused()) {
 			handler.pause();
@@ -49,5 +49,5 @@ public class WorldPauseRequest extends BusEvent<World> {
 			handler.resume();
 		}
 	}
-
+	
 }

@@ -2,6 +2,7 @@
 /target/
 /~local/
 /.rogue-save/
+/rogue-workdir/
 /build/out/*.jar
 /build/in/*.jar
 *.log

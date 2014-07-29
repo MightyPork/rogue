@@ -10,7 +10,7 @@ import mightypork.rogue.world.gen.TileProtectLevel;
  * @author Ondřej Hruška (MightyPork)
  */
 public class TileGenData {
-
+	
 	public TileProtectLevel protection = TileProtectLevel.NONE;
-
+	
 }

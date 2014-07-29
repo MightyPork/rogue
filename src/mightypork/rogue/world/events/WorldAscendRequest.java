@@ -10,11 +10,11 @@ import mightypork.utils.eventbus.BusEvent;
  * @author Ondřej Hruška (MightyPork)
  */
 public class WorldAscendRequest extends BusEvent<WorldAscendRequestListener> {
-
+	
 	@Override
 	protected void handleBy(WorldAscendRequestListener handler)
 	{
 		handler.onAscendRequest();
 	}
-
+	
 }
