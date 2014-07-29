@@ -1,4 +1,4 @@
-package mightypork.rogue;
+package mightypork.rogue.init;
 
 
 import java.io.File;
@@ -6,9 +6,9 @@ import java.io.File;
 import mightypork.gamecore.core.init.InitTaskWorkdir;
 
 
-public class RogueInitWorkdir extends InitTaskWorkdir {
+public class SetupWorkdir extends InitTaskWorkdir {
 	
-	public RogueInitWorkdir(File workdir)
+	public SetupWorkdir(File workdir)
 	{
 		super(workdir, true);
 	}

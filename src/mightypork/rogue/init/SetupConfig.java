@@ -1,11 +1,11 @@
-package mightypork.rogue;
+package mightypork.rogue.init;
 
 
 import mightypork.gamecore.core.config.Config;
 import mightypork.gamecore.core.config.InitTaskConfig;
 
 
-public class RogueInitConfig extends InitTaskConfig {
+public class SetupConfig extends InitTaskConfig {
 
 	@Override
 	protected Config buildConfig()

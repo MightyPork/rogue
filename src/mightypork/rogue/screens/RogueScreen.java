@@ -11,13 +11,13 @@ import mightypork.utils.annotations.Stub;
 
 
 public class RogueScreen extends LayeredScreen implements ShutdownListener {
-
-
+	
+	
 	@Override
 	@Stub
 	public void onShutdown(ShutdownEvent event)
 	{
 		App.bus().send(new RogueStateRequest(RogueState.EXIT));
-		event.consume();
+		//event.consume(); FIXME we need a "shutdown request" event AND "shutdown" event.
 	}
 }

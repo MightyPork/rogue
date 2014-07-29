@@ -1,4 +1,4 @@
-package mightypork.rogue;
+package mightypork.rogue.init;
 
 
 import mightypork.gamecore.audio.SoundRegistry;
@@ -15,7 +15,7 @@ import mightypork.gamecore.graphics.textures.WrapMode;
 import mightypork.utils.math.constraints.rect.Rect;
 
 
-public class RogueInitResources extends InitTaskResources {
+public class AddResources extends InitTaskResources {
 	
 	@Override
 	public void addFonts(FontRegistry fonts)
