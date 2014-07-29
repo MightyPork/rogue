@@ -2,30 +2,30 @@
 
 **Read the [MANUAL](http://goo.gl/AU0IdI) if you want to play the game.**
 
-It explains it way better than this text file.
 
-NOTE: Master is broken!
------------------------
+NOTE: Master has experimental code
+----------------------------------
 
-The master branch is used as dev now (sorry about that).
+The Master branch holds Rogue based on the new GameCore implementation (see "dependencies" below for link).
 
-The new engine is being developed here, but it is not finished and the code is in places broken.
+The latest **stable** version is in the branch `v5stable`. That branch is stable, debugged and has no dependencies. It's a standalone Eclipse project.
 
-The rogue package is not yet updated to work with the new engine structure.
-
-Use the `v5stable` branch to see a working source version!
+You can use `v5stable` to see the original source and try to build it, but further development of that branch is stopped. The master means the future.
 
 
-DEPENDENCIES:
--------------
+DEPENDENCIES
+------------
 
-- [MightyPork/utils](https://github.com/MightyPork/utils)
+If you intend to **build it from source**, you will need those Eclipse projects in your workspace:
 
----
-
-The package `mightypork.gamecore` contains the framework part of the project. It wil eventually be refactored and turned into a stand-alone linkable library.
+- [MightyPork/gamecore](https://github.com/MightyPork/gamecore) - The "GameCore" game engine
+- [MightyPork/gamecore-lwjgl](https://github.com/MightyPork/gamecore-lwjgl) - LWJGL backend for GameCore
+- [MightyPork/mightyutils](https://github.com/MightyPork/mightyutils) - Game utils
 
 ---
+
+The following is the original readme, applicable to `v5stable` version.
+
 
 ## Description
 
